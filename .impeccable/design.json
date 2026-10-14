@@ -1,0 +1,715 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-14T02:15:08.359017Z",
+  "title": "Design System: 台北城市實驗室",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "primary",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(15% 0.03533 172.45)",
+          "oklch(26% 0.03533 172.45)",
+          "oklch(38% 0.03533 172.45)",
+          "oklch(49% 0.03533 172.45)",
+          "oklch(61% 0.03533 172.45)",
+          "oklch(72% 0.03533 172.45)",
+          "oklch(84% 0.03533 172.45)",
+          "oklch(95% 0.03533 172.45)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "tonalRamp": [
+          "oklch(15% 0.02614 159.45)",
+          "oklch(26% 0.02614 159.45)",
+          "oklch(38% 0.02614 159.45)",
+          "oklch(49% 0.02614 159.45)",
+          "oklch(61% 0.02614 159.45)",
+          "oklch(72% 0.02614 159.45)",
+          "oklch(84% 0.02614 159.45)",
+          "oklch(95% 0.02614 159.45)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "tonalRamp": [
+          "oklch(15% 0.00337 145.55)",
+          "oklch(26% 0.00337 145.55)",
+          "oklch(38% 0.00337 145.55)",
+          "oklch(49% 0.00337 145.55)",
+          "oklch(61% 0.00337 145.55)",
+          "oklch(72% 0.00337 145.55)",
+          "oklch(84% 0.00337 145.55)",
+          "oklch(95% 0.00337 145.55)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "tonalRamp": [
+          "oklch(15% 0.01958 140.50)",
+          "oklch(26% 0.01958 140.50)",
+          "oklch(38% 0.01958 140.50)",
+          "oklch(49% 0.01958 140.50)",
+          "oklch(61% 0.01958 140.50)",
+          "oklch(72% 0.01958 140.50)",
+          "oklch(84% 0.01958 140.50)",
+          "oklch(95% 0.01958 140.50)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Accent",
+        "tonalRamp": [
+          "oklch(15% 0.09364 159.85)",
+          "oklch(26% 0.09364 159.85)",
+          "oklch(38% 0.09364 159.85)",
+          "oklch(49% 0.09364 159.85)",
+          "oklch(61% 0.09364 159.85)",
+          "oklch(72% 0.09364 159.85)",
+          "oklch(84% 0.09364 159.85)",
+          "oklch(95% 0.09364 159.85)"
+        ]
+      },
+      "nav-bg": {
+        "role": "primary",
+        "displayName": "Nav Bg",
+        "tonalRamp": [
+          "oklch(15% 0.04073 172.49)",
+          "oklch(26% 0.04073 172.49)",
+          "oklch(38% 0.04073 172.49)",
+          "oklch(49% 0.04073 172.49)",
+          "oklch(61% 0.04073 172.49)",
+          "oklch(72% 0.04073 172.49)",
+          "oklch(84% 0.04073 172.49)",
+          "oklch(95% 0.04073 172.49)"
+        ]
+      },
+      "nav-text": {
+        "role": "neutral",
+        "displayName": "Nav Text",
+        "tonalRamp": [
+          "oklch(15% 0.02634 158.10)",
+          "oklch(26% 0.02634 158.10)",
+          "oklch(38% 0.02634 158.10)",
+          "oklch(49% 0.02634 158.10)",
+          "oklch(61% 0.02634 158.10)",
+          "oklch(72% 0.02634 158.10)",
+          "oklch(84% 0.02634 158.10)",
+          "oklch(95% 0.02634 158.10)"
+        ]
+      },
+      "nav-active": {
+        "role": "primary",
+        "displayName": "Nav Active",
+        "tonalRamp": [
+          "oklch(15% 0.02171 130.02)",
+          "oklch(26% 0.02171 130.02)",
+          "oklch(38% 0.02171 130.02)",
+          "oklch(49% 0.02171 130.02)",
+          "oklch(61% 0.02171 130.02)",
+          "oklch(72% 0.02171 130.02)",
+          "oklch(84% 0.02171 130.02)",
+          "oklch(95% 0.02171 130.02)"
+        ]
+      },
+      "nav-hover": {
+        "role": "neutral",
+        "displayName": "Nav Hover",
+        "tonalRamp": [
+          "oklch(15% 0.04528 169.11)",
+          "oklch(26% 0.04528 169.11)",
+          "oklch(38% 0.04528 169.11)",
+          "oklch(49% 0.04528 169.11)",
+          "oklch(61% 0.04528 169.11)",
+          "oklch(72% 0.04528 169.11)",
+          "oklch(84% 0.04528 169.11)",
+          "oklch(95% 0.04528 169.11)"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Panel",
+        "tonalRamp": [
+          "oklch(15% 0.00537 95.10)",
+          "oklch(26% 0.00537 95.10)",
+          "oklch(38% 0.00537 95.10)",
+          "oklch(49% 0.00537 95.10)",
+          "oklch(61% 0.00537 95.10)",
+          "oklch(72% 0.00537 95.10)",
+          "oklch(84% 0.00537 95.10)",
+          "oklch(95% 0.00537 95.10)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "tonalRamp": [
+          "oklch(15% 0.00000 0.00)",
+          "oklch(26% 0.00000 0.00)",
+          "oklch(38% 0.00000 0.00)",
+          "oklch(49% 0.00000 0.00)",
+          "oklch(61% 0.00000 0.00)",
+          "oklch(72% 0.00000 0.00)",
+          "oklch(84% 0.00000 0.00)",
+          "oklch(95% 0.00000 0.00)"
+        ]
+      },
+      "primary-hover": {
+        "role": "primary",
+        "displayName": "Primary Hover",
+        "tonalRamp": [
+          "oklch(15% 0.06349 162.28)",
+          "oklch(26% 0.06349 162.28)",
+          "oklch(38% 0.06349 162.28)",
+          "oklch(49% 0.06349 162.28)",
+          "oklch(61% 0.06349 162.28)",
+          "oklch(72% 0.06349 162.28)",
+          "oklch(84% 0.06349 162.28)",
+          "oklch(95% 0.06349 162.28)"
+        ]
+      },
+      "outline-border": {
+        "role": "neutral",
+        "displayName": "Outline Border",
+        "tonalRamp": [
+          "oklch(15% 0.01954 140.50)",
+          "oklch(26% 0.01954 140.50)",
+          "oklch(38% 0.01954 140.50)",
+          "oklch(49% 0.01954 140.50)",
+          "oklch(61% 0.01954 140.50)",
+          "oklch(72% 0.01954 140.50)",
+          "oklch(84% 0.01954 140.50)",
+          "oklch(95% 0.01954 140.50)"
+        ]
+      },
+      "subtle-hover": {
+        "role": "neutral",
+        "displayName": "Subtle Hover",
+        "tonalRamp": [
+          "oklch(15% 0.01395 124.56)",
+          "oklch(26% 0.01395 124.56)",
+          "oklch(38% 0.01395 124.56)",
+          "oklch(49% 0.01395 124.56)",
+          "oklch(61% 0.01395 124.56)",
+          "oklch(72% 0.01395 124.56)",
+          "oklch(84% 0.01395 124.56)",
+          "oklch(95% 0.01395 124.56)"
+        ]
+      },
+      "evidence-bg": {
+        "role": "neutral",
+        "displayName": "Evidence Bg",
+        "tonalRamp": [
+          "oklch(15% 0.02087 124.66)",
+          "oklch(26% 0.02087 124.66)",
+          "oklch(38% 0.02087 124.66)",
+          "oklch(49% 0.02087 124.66)",
+          "oklch(61% 0.02087 124.66)",
+          "oklch(72% 0.02087 124.66)",
+          "oklch(84% 0.02087 124.66)",
+          "oklch(95% 0.02087 124.66)"
+        ]
+      },
+      "evidence-text": {
+        "role": "neutral",
+        "displayName": "Evidence Text",
+        "tonalRamp": [
+          "oklch(15% 0.05671 141.26)",
+          "oklch(26% 0.05671 141.26)",
+          "oklch(38% 0.05671 141.26)",
+          "oklch(49% 0.05671 141.26)",
+          "oklch(61% 0.05671 141.26)",
+          "oklch(72% 0.05671 141.26)",
+          "oklch(84% 0.05671 141.26)",
+          "oklch(95% 0.05671 141.26)"
+        ]
+      },
+      "scene-bg": {
+        "role": "secondary",
+        "displayName": "Scene Bg",
+        "tonalRamp": [
+          "oklch(15% 0.03706 186.76)",
+          "oklch(26% 0.03706 186.76)",
+          "oklch(38% 0.03706 186.76)",
+          "oklch(49% 0.03706 186.76)",
+          "oklch(61% 0.03706 186.76)",
+          "oklch(72% 0.03706 186.76)",
+          "oklch(84% 0.03706 186.76)",
+          "oklch(95% 0.03706 186.76)"
+        ]
+      },
+      "scene-text": {
+        "role": "secondary",
+        "displayName": "Scene Text",
+        "tonalRamp": [
+          "oklch(15% 0.01871 145.42)",
+          "oklch(26% 0.01871 145.42)",
+          "oklch(38% 0.01871 145.42)",
+          "oklch(49% 0.01871 145.42)",
+          "oklch(61% 0.01871 145.42)",
+          "oklch(72% 0.01871 145.42)",
+          "oklch(84% 0.01871 145.42)",
+          "oklch(95% 0.01871 145.42)"
+        ]
+      },
+      "scene-control": {
+        "role": "secondary",
+        "displayName": "Scene Control",
+        "tonalRamp": [
+          "oklch(15% 0.04706 172.25)",
+          "oklch(26% 0.04706 172.25)",
+          "oklch(38% 0.04706 172.25)",
+          "oklch(49% 0.04706 172.25)",
+          "oklch(61% 0.04706 172.25)",
+          "oklch(72% 0.04706 172.25)",
+          "oklch(84% 0.04706 172.25)",
+          "oklch(95% 0.04706 172.25)"
+        ]
+      },
+      "scene-hover": {
+        "role": "secondary",
+        "displayName": "Scene Hover",
+        "tonalRamp": [
+          "oklch(15% 0.05124 165.56)",
+          "oklch(26% 0.05124 165.56)",
+          "oklch(38% 0.05124 165.56)",
+          "oklch(49% 0.05124 165.56)",
+          "oklch(61% 0.05124 165.56)",
+          "oklch(72% 0.05124 165.56)",
+          "oklch(84% 0.05124 165.56)",
+          "oklch(95% 0.05124 165.56)"
+        ]
+      },
+      "scene-gold": {
+        "role": "secondary",
+        "displayName": "Scene Gold",
+        "tonalRamp": [
+          "oklch(15% 0.12426 80.70)",
+          "oklch(26% 0.12426 80.70)",
+          "oklch(38% 0.12426 80.70)",
+          "oklch(49% 0.12426 80.70)",
+          "oklch(61% 0.12426 80.70)",
+          "oklch(72% 0.12426 80.70)",
+          "oklch(84% 0.12426 80.70)",
+          "oklch(95% 0.12426 80.70)"
+        ]
+      },
+      "focus": {
+        "role": "secondary",
+        "displayName": "Focus",
+        "tonalRamp": [
+          "oklch(15% 0.11672 78.80)",
+          "oklch(26% 0.11672 78.80)",
+          "oklch(38% 0.11672 78.80)",
+          "oklch(49% 0.11672 78.80)",
+          "oklch(61% 0.11672 78.80)",
+          "oklch(72% 0.11672 78.80)",
+          "oklch(84% 0.11672 78.80)",
+          "oklch(95% 0.11672 78.80)"
+        ]
+      },
+      "selection": {
+        "role": "neutral",
+        "displayName": "Selection",
+        "tonalRamp": [
+          "oklch(15% 0.03541 132.05)",
+          "oklch(26% 0.03541 132.05)",
+          "oklch(38% 0.03541 132.05)",
+          "oklch(49% 0.03541 132.05)",
+          "oklch(61% 0.03541 132.05)",
+          "oklch(72% 0.03541 132.05)",
+          "oklch(84% 0.03541 132.05)",
+          "oklch(95% 0.03541 132.05)"
+        ]
+      },
+      "csv-paper": {
+        "role": "neutral",
+        "displayName": "Csv Paper",
+        "tonalRamp": [
+          "oklch(15% 0.00666 115.70)",
+          "oklch(26% 0.00666 115.70)",
+          "oklch(38% 0.00666 115.70)",
+          "oklch(49% 0.00666 115.70)",
+          "oklch(61% 0.00666 115.70)",
+          "oklch(72% 0.00666 115.70)",
+          "oklch(84% 0.00666 115.70)",
+          "oklch(95% 0.00666 115.70)"
+        ]
+      },
+      "topic-bins": {
+        "role": "secondary",
+        "displayName": "Topic Bins",
+        "tonalRamp": [
+          "oklch(15% 0.11122 75.96)",
+          "oklch(26% 0.11122 75.96)",
+          "oklch(38% 0.11122 75.96)",
+          "oklch(49% 0.11122 75.96)",
+          "oklch(61% 0.11122 75.96)",
+          "oklch(72% 0.11122 75.96)",
+          "oklch(84% 0.11122 75.96)",
+          "oklch(95% 0.11122 75.96)"
+        ]
+      },
+      "topic-rat": {
+        "role": "secondary",
+        "displayName": "Topic Rat",
+        "tonalRamp": [
+          "oklch(15% 0.09043 31.01)",
+          "oklch(26% 0.09043 31.01)",
+          "oklch(38% 0.09043 31.01)",
+          "oklch(49% 0.09043 31.01)",
+          "oklch(61% 0.09043 31.01)",
+          "oklch(72% 0.09043 31.01)",
+          "oklch(84% 0.09043 31.01)",
+          "oklch(95% 0.09043 31.01)"
+        ]
+      },
+      "topic-traffic": {
+        "role": "secondary",
+        "displayName": "Topic Traffic",
+        "tonalRamp": [
+          "oklch(15% 0.06463 235.83)",
+          "oklch(26% 0.06463 235.83)",
+          "oklch(38% 0.06463 235.83)",
+          "oklch(49% 0.06463 235.83)",
+          "oklch(61% 0.06463 235.83)",
+          "oklch(72% 0.06463 235.83)",
+          "oklch(84% 0.06463 235.83)",
+          "oklch(95% 0.06463 235.83)"
+        ]
+      },
+      "topic-bus": {
+        "role": "secondary",
+        "displayName": "Topic Bus",
+        "tonalRamp": [
+          "oklch(15% 0.05972 296.40)",
+          "oklch(26% 0.05972 296.40)",
+          "oklch(38% 0.05972 296.40)",
+          "oklch(49% 0.05972 296.40)",
+          "oklch(61% 0.05972 296.40)",
+          "oklch(72% 0.05972 296.40)",
+          "oklch(84% 0.05972 296.40)",
+          "oklch(95% 0.05972 296.40)"
+        ]
+      },
+      "topic-buildings": {
+        "role": "secondary",
+        "displayName": "Topic Buildings",
+        "tonalRamp": [
+          "oklch(15% 0.10082 55.52)",
+          "oklch(26% 0.10082 55.52)",
+          "oklch(38% 0.10082 55.52)",
+          "oklch(49% 0.10082 55.52)",
+          "oklch(61% 0.10082 55.52)",
+          "oklch(72% 0.10082 55.52)",
+          "oklch(84% 0.10082 55.52)",
+          "oklch(95% 0.10082 55.52)"
+        ]
+      },
+      "topic-audit": {
+        "role": "secondary",
+        "displayName": "Topic Audit",
+        "tonalRamp": [
+          "oklch(15% 0.06056 189.68)",
+          "oklch(26% 0.06056 189.68)",
+          "oklch(38% 0.06056 189.68)",
+          "oklch(49% 0.06056 189.68)",
+          "oklch(61% 0.06056 189.68)",
+          "oklch(72% 0.06056 189.68)",
+          "oklch(84% 0.06056 189.68)",
+          "oklch(95% 0.06056 189.68)"
+        ]
+      },
+      "map-existing": {
+        "role": "secondary",
+        "displayName": "Map Existing",
+        "tonalRamp": [
+          "oklch(15% 0.08449 161.05)",
+          "oklch(26% 0.08449 161.05)",
+          "oklch(38% 0.08449 161.05)",
+          "oklch(49% 0.08449 161.05)",
+          "oklch(61% 0.08449 161.05)",
+          "oklch(72% 0.08449 161.05)",
+          "oklch(84% 0.08449 161.05)",
+          "oklch(95% 0.08449 161.05)"
+        ]
+      },
+      "map-demand": {
+        "role": "secondary",
+        "displayName": "Map Demand",
+        "tonalRamp": [
+          "oklch(15% 0.07606 249.88)",
+          "oklch(26% 0.07606 249.88)",
+          "oklch(38% 0.07606 249.88)",
+          "oklch(49% 0.07606 249.88)",
+          "oklch(61% 0.07606 249.88)",
+          "oklch(72% 0.07606 249.88)",
+          "oklch(84% 0.07606 249.88)",
+          "oklch(95% 0.07606 249.88)"
+        ]
+      },
+      "map-candidate": {
+        "role": "secondary",
+        "displayName": "Map Candidate",
+        "tonalRamp": [
+          "oklch(15% 0.01334 169.95)",
+          "oklch(26% 0.01334 169.95)",
+          "oklch(38% 0.01334 169.95)",
+          "oklch(49% 0.01334 169.95)",
+          "oklch(61% 0.01334 169.95)",
+          "oklch(72% 0.01334 169.95)",
+          "oklch(84% 0.01334 169.95)",
+          "oklch(95% 0.01334 169.95)"
+        ]
+      },
+      "map-recommended": {
+        "role": "secondary",
+        "displayName": "Map Recommended",
+        "tonalRamp": [
+          "oklch(15% 0.13106 71.24)",
+          "oklch(26% 0.13106 71.24)",
+          "oklch(38% 0.13106 71.24)",
+          "oklch(49% 0.13106 71.24)",
+          "oklch(61% 0.13106 71.24)",
+          "oklch(72% 0.13106 71.24)",
+          "oklch(84% 0.13106 71.24)",
+          "oklch(95% 0.13106 71.24)"
+        ]
+      },
+      "source-link": {
+        "role": "primary",
+        "displayName": "Source Link",
+        "tonalRamp": [
+          "oklch(15% 0.07274 161.95)",
+          "oklch(26% 0.07274 161.95)",
+          "oklch(38% 0.07274 161.95)",
+          "oklch(49% 0.07274 161.95)",
+          "oklch(61% 0.07274 161.95)",
+          "oklch(72% 0.07274 161.95)",
+          "oklch(84% 0.07274 161.95)",
+          "oklch(95% 0.07274 161.95)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "h1 的來源字級、字重與 tracking；字體未自託管，未納入可繼承 display 字體規則。"
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "方法與假設說明。"
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "目前工作台的 title 文字角色。"
+      },
+      "visual-title": {
+        "displayName": "Visual Title",
+        "purpose": "目前工作台的 visual-title 文字角色。"
+      },
+      "scene-title": {
+        "displayName": "Scene Title",
+        "purpose": "目前工作台的 scene-title 文字角色。"
+      },
+      "action": {
+        "displayName": "Action",
+        "purpose": "目前工作台的 action 文字角色。"
+      },
+      "field": {
+        "displayName": "Field",
+        "purpose": "目前工作台的 field 文字角色。"
+      },
+      "metric": {
+        "displayName": "Metric",
+        "purpose": "結果數值；窄螢幕另為 26px。"
+      },
+      "note": {
+        "displayName": "Note",
+        "purpose": "目前工作台的 note 文字角色。"
+      },
+      "csv": {
+        "displayName": "Csv",
+        "purpose": "本機 CSV／JSON 資料內容。"
+      }
+    },
+    "shadows": [
+      {
+        "name": "workspace-flat",
+        "value": "none",
+        "purpose": "目前自寫主要畫面及 toast；不是 Leaflet 陰影禁令。"
+      },
+      {
+        "name": "leaflet-zoom-toolbar",
+        "value": "0 1px 5px rgba(0,0,0,0.65)",
+        "purpose": "Leaflet vendor zoom toolbar。"
+      },
+      {
+        "name": "leaflet-popup",
+        "value": "0 3px 14px rgba(0,0,0,0.4)",
+        "purpose": "Leaflet vendor popup wrapper 及 tip。"
+      },
+      {
+        "name": "leaflet-tooltip",
+        "value": "0 1px 3px rgba(0,0,0,0.4)",
+        "purpose": "Leaflet vendor tooltip。"
+      }
+    ],
+    "motion": [
+      {
+        "name": "toast-opacity",
+        "value": "opacity .2s",
+        "purpose": "Toast 的既有 transition；未新增進場動效。"
+      },
+      {
+        "name": "reduced-motion",
+        "value": "transition:none!important;scroll-behavior:auto!important",
+        "purpose": "prefers-reduced-motion:reduce 中的全域規則。"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "workspace-wide-min",
+        "value": "1500px"
+      },
+      {
+        "name": "workspace-compact-max",
+        "value": "1180px"
+      },
+      {
+        "name": "base-compact-max",
+        "value": "1100px"
+      },
+      {
+        "name": "workspace-horizontal-nav-max",
+        "value": "900px"
+      },
+      {
+        "name": "base-horizontal-nav-max",
+        "value": "850px"
+      },
+      {
+        "name": "workspace-single-column-max",
+        "value": "650px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "儲存方案",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "目前工作台的原生操作按鈕；44px 為最小高度。",
+      "html": "<button class=\"ds-primary\">儲存此方案</button>",
+      "css": ".ds-primary{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;font-size:13px;line-height:1.5;min-height:44px;padding:10px 14px;border-radius:3px;cursor:pointer;color:var(--ink,#213b33);background:var(--ink,#213b33);color:white;border:1px solid var(--ink,#213b33)}.ds-primary:hover{background:#36654f}.ds-primary:focus-visible{outline:3px solid #d5a450;outline-offset:4px}.ds-primary:disabled{cursor:not-allowed;opacity:.55}"
+    },
+    {
+      "name": "次操作",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "目前工作台的原生操作按鈕；44px 為最小高度。",
+      "html": "<button class=\"ds-outline\">匯出 CSV</button>",
+      "css": ".ds-outline{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;font-size:13px;line-height:1.5;min-height:44px;padding:10px 14px;border-radius:3px;cursor:pointer;color:var(--ink,#213b33);background:transparent;border:1px solid #cdd7cb}.ds-outline:hover{background:#e9ede3}.ds-outline:focus-visible{outline:3px solid #d5a450;outline-offset:4px}.ds-outline:disabled{cursor:not-allowed;opacity:.55}"
+    },
+    {
+      "name": "文字操作",
+      "kind": "button",
+      "refersTo": "button-text",
+      "description": "目前工作台的原生操作按鈕；44px 為最小高度。",
+      "html": "<button class=\"ds-text\">重設</button>",
+      "css": ".ds-text{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;font-size:13px;line-height:1.5;min-height:44px;padding:10px 14px;border-radius:3px;cursor:pointer;color:var(--ink,#213b33);border:0;background:none;text-decoration:underline;text-underline-offset:4px}.ds-text:focus-visible{outline:3px solid #d5a450;outline-offset:4px}.ds-text:disabled{cursor:not-allowed;opacity:.55}"
+    },
+    {
+      "name": "參數選單",
+      "kind": "input",
+      "refersTo": "select",
+      "description": "目前參數的原生 select。",
+      "html": "<select class=\"ds-select\" aria-label=\"選取候選／個案\"><option>選取候選／個案</option></select>",
+      "css": ".ds-select{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;width:100%;padding:10px 8px;border:1px solid #d7ded1;border-radius:3px;background:var(--panel,#fffefa);color:var(--ink,#213b33);font-size:14px;min-height:44px}.ds-select:focus-visible{outline:3px solid #d5a450;outline-offset:4px}"
+    },
+    {
+      "name": "本機 CSV 欄位",
+      "kind": "input",
+      "refersTo": "csv-input",
+      "description": "本機 CSV 資料內容；保留程式／資料字體。",
+      "html": "<textarea class=\"ds-csv\" aria-label=\"CSV 資料內容\" placeholder=\"貼上有標題列的 CSV…\"></textarea>",
+      "css": ".ds-csv{width:100%;min-height:145px;resize:vertical;border:1px solid var(--line,#cbd5c9);border-radius:3px;margin:14px 0;padding:12px;background:#f9faf5;color:var(--ink,#213b33);font-family:ui-monospace,monospace;font-size:14px;line-height:1.7}.ds-csv:focus-visible{outline:3px solid #d5a450;outline-offset:4px}"
+    },
+    {
+      "name": "題目導覽",
+      "kind": "nav",
+      "refersTo": "navigation-active",
+      "description": "當前題目保持 aria-current；窄螢幕轉水平題目列。",
+      "html": "<nav class=\"ds-nav\" aria-label=\"市政題目\"><a class=\"ds-nav-link ds-current\" aria-current=\"page\" href=\"#shade\"><span class=\"ds-number\">01</span><span>樹蔭公平</span></a><a class=\"ds-nav-link\" href=\"#bins\"><span class=\"ds-number\">02</span><span>清潔箱配置</span></a></nav>",
+      "css": ".ds-nav{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;display:grid;gap:3px;background:#19382f;color:#eff5ec;padding:18px}.ds-nav-link{display:flex;gap:12px;align-items:center;text-decoration:none;padding:11px 10px;border-radius:3px;min-height:48px;font-size:14px;color:#bdd0c4}.ds-number{font-size:12px;opacity:.8;font-variant-numeric:tabular-nums}.ds-nav-link:hover{background:#27493d}.ds-nav-link.ds-current{background:#e3ebdc;color:#213b33;font-weight:600}.ds-nav-link:focus-visible{outline:3px solid #d5a450;outline-offset:4px}@media(max-width:900px){.ds-nav{display:flex;overflow:auto;gap:4px}.ds-nav-link{white-space:nowrap;min-height:44px;font-size:13px}}@media(max-width:850px){.ds-nav-link{gap:6px}}"
+    },
+    {
+      "name": "證據分類標示",
+      "kind": "chip",
+      "refersTo": "evidence-badge",
+      "description": "非互動文字，說明真實點位與假設情境。",
+      "html": "<span class=\"ds-evidence\">真實樹木點位 × 假設植栽情境</span>",
+      "css": ".ds-evidence{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;font-size:12px;white-space:normal;padding:8px 10px;border:1px solid #d4dfcc;background:#eaf0e1;border-radius:3px;color:#486244;line-height:1.6;max-width:270px}@media(max-width:1180px){.ds-evidence{display:inline-block;max-width:none;margin-top:14px}}"
+    },
+    {
+      "name": "主要視角切換",
+      "kind": "custom",
+      "description": "同一組參數及結果的地圖、3D、圖表按鈕組；僅示範實際狀態樣式。",
+      "html": "<div class=\"ds-views\" role=\"group\" aria-label=\"情境視角\"><button class=\"ds-view\" aria-pressed=\"true\">街道地圖</button><button class=\"ds-view\" aria-pressed=\"false\">3D 情境</button><button class=\"ds-view\" aria-pressed=\"false\">比較圖表</button></div>",
+      "css": ".ds-views{display:flex;gap:0;border-bottom:1px solid var(--line,#cbd5c9)}.ds-view{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;font-size:13px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;min-height:48px;padding:10px 16px;flex:1;cursor:pointer;color:var(--ink,#213b33)}.ds-view[aria-pressed=true]{background:#e3ebdc;color:#19382f;border-color:#39835f}.ds-view:hover{background:#e9ede3}.ds-view:focus-visible{outline:3px solid #d5a450;outline-offset:4px}@media(max-width:650px){.ds-view{padding:10px 8px}}"
+    },
+    {
+      "name": "主要畫面細框",
+      "kind": "card",
+      "refersTo": "visual-panel",
+      "description": "比較圖表的主要容器；此 snippet 不模擬模型或繪圖。",
+      "html": "<section class=\"ds-visual\"><div class=\"ds-visual-heading\"><h2>基準與方案比較</h2><span>相同情境參數</span></div></section>",
+      "css": ".ds-visual{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;background:#fffefa;color:var(--ink,#213b33);border:1px solid var(--line,#cbd5c9);border-radius:4px;box-shadow:none;min-width:0;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;margin:0}.ds-visual-heading{padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px}.ds-visual-heading h2{font-size:17px;margin:0;font-weight:600;line-height:1.5}.ds-visual-heading span{font-size:12px;letter-spacing:0;color:var(--muted,#526359)}"
+    },
+    {
+      "name": "3D 局部控制表面",
+      "kind": "card",
+      "refersTo": "scene-panel",
+      "description": "深綠場景外框、控制及文字；Three.js 畫面需實際應用 runtime，未在 snippet 中偽造。",
+      "html": "<section class=\"ds-scene\"><div class=\"ds-scene-toolbar\"><h2>探索情境</h2><button class=\"ds-scene-button\">俯視</button></div><div class=\"ds-scene-caption\">拖曳旋轉 · 滾輪／雙指縮放 · 方向鍵平移 · 可用按鈕調整視角</div></section>",
+      "css": ".ds-scene{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;background:#102f2c;border:1px solid #294e45;border-radius:4px;overflow:hidden;box-shadow:none;color:#e4efe4;margin:0}.ds-scene-toolbar{padding:16px 18px;display:flex;gap:14px;align-items:center;justify-content:space-between}.ds-scene-toolbar h2{font-size:17px;font-weight:550;line-height:1.5;margin:0}.ds-scene-button{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;border:1px solid #47685d;background:#24493e;color:#e4efe4;border-radius:3px;padding:7px 10px;font-size:12px;min-height:44px;cursor:pointer}.ds-scene-button:hover{background:#375d4d}.ds-scene-button[aria-pressed=true]{background:#ffcc70;border-color:#ffcc70;color:#173b2f}.ds-scene-button:focus-visible{outline:3px solid #d5a450;outline-offset:4px}.ds-scene-caption{padding:14px 18px;font-size:13px;line-height:1.75;color:#a7c0ac}@media(max-width:1100px){.ds-scene-toolbar{display:block}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "綠色市政工作台",
+    "overview": "延續既有深綠導覽、帶綠白底與綠色選取訊號。畫面是檢查七題研究原型的操作空間：主要視角有細框，指標、參數與證據以留白和分隔線建立層次。這是既有識別的整理，不是新的品牌提案。\n\n本文件從目前原始碼的樣式順序與動態內容推導。`dist/index.html` 先載入 Leaflet 樣式，再載入 `dist/styles.css`，最後載入 `dist/workspace.css`；後兩層刻意保留，新增表面須一起讀取。沒有實際瀏覽器 computed-style 取樣、桌機／手機畫面或 GPU 視覺驗證。字體解析、換行與對比不能視為已驗收。",
+    "keyCharacteristics": [
+      "深綠導覽固定識別，題目色服務參數與資料辨識。",
+      "緊湊指標列、單一主要視角、清楚可見的保存與匯出操作。",
+      "主要畫面細框、小圓角；方法與明細直接放在頁面底色上。",
+      "真實來源、合成情境與假設範圍以文字持續揭露。"
+    ],
+    "rules": [
+      {
+        "name": "The Semantic Color Rule",
+        "body": "題目 accent、頁面選取、地圖點位與模型 series 分別保留其功能，不用同一個綠色取代所有資料語意。",
+        "section": "colors"
+      },
+      {
+        "name": "The Cascade Rule",
+        "body": "workspace.css 是有界的整理層，不是 styles.css 的替代品。基底在 1100px／850px 的部分排列與行高仍生效；上表不代表其他 media rules 已刪除。",
+        "section": "layout"
+      }
+    ],
+    "dos": [
+      "Do 同時讀取基底與 workspace 整理層，依實際 cascade 延伸樣式。",
+      "Do 保留資料分類、來源、基準與假設文字，以及每個資料色的既有語意。",
+      "Do 使用可見鍵盤焦點與原生語意控制，讓保存、重設與匯出保持可辨識。",
+      "Do 在窄螢幕保持主要畫面先於參數的閱讀順序。"
+    ],
+    "donts": [
+      "Don't 把指標、方法與明細重新包成重複的大卡片。",
+      "Don't 將 preview tonal ramps 當作已部署的配色或已驗證的對比組合。",
+      "Don't 把 source-derived CSS 值、DOM stub 或自動測試當成桌機／手機／GPU 視覺驗收。"
+    ]
+  }
+}

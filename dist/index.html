@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#19382f">
+  <meta name="description" content="以垃圾桶／清潔箱配置為參賽主線的台北市政研究原型。使用街道地圖與 Three.js，比較設置上限、清運工時、公平性及服務缺口。">
+  <title>垃圾桶配置 — 台北城市實驗室參賽主題</title>
+  <link rel="stylesheet" href="./vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./workspace.css">
+</head>
+<body>
+  <a class="skip" href="#workspace">跳至操作區</a>
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand" href="#bins" aria-label="台北城市實驗室垃圾桶參賽主題首頁"><span class="brand-mark">北</span><span>台北城市<br><strong>實驗室</strong></span></a>
+      <div class="sidebar-caption">垃圾桶配置參賽原型</div>
+      <nav id="navigation" aria-label="七個市政題目"></nav>
+      <div class="sidebar-bottom"><span class="status-dot"></span>研究試作 · 七題互動原型<p>真實資料有來源。<br>情境推估有假設。</p><a href="https://puma.taipei/hackathon" target="_blank" rel="noopener noreferrer">查看原始題目 ↗</a></div>
+    </aside>
+    <main id="workspace" tabindex="-1">
+      <header class="topbar"><span>參賽主題 / 清潔箱配置</span><div><button id="all-export" class="text-button">匯出七題研究包</button><button id="sources-button" class="outline-button">資料來源</button></div></header>
+      <div id="loading" role="status">正在載入資料與七個模型…</div>
+      <section id="module-head"></section>
+      <nav id="task-route" class="task-route" aria-label="此題操作步驟"><button data-jump="analysis">查看位置與情境</button><button data-jump="control-panel">調整方案</button><button data-jump="results">比較與匯出</button></nav>
+      <section id="audit-input" hidden></section>
+      <div id="audit-report"></div>
+      <section id="metrics" class="metrics" aria-label="方案指標"></section>
+      <section class="work-grid">
+        <div id="analysis" class="scene-and-data" tabindex="-1"><div class="view-switch"><div role="group" aria-label="情境視角"><button id="viewmode-map" aria-pressed="false">街道地圖</button><button id="viewmode-3d" aria-pressed="true">3D 情境</button><button id="viewmode-2d" aria-pressed="false">比較圖表</button></div><p id="scene-status" role="status">正在準備場景…</p></div><section id="geographic-panel" class="geography-card" hidden aria-label="實際街道地圖與模型點位"></section><section id="scene-panel" class="scene-card" aria-label="Three.js 互動情境"></section><div id="visualization" class="visual-card" hidden></div></div>
+        <aside id="control-panel" class="control-card" tabindex="-1"><div class="panel-heading"><h2>調整方案</h2><button id="reset" class="text-button">重設</button></div><p class="control-intro">修改參數，即可更新位置與比較結果。</p><div id="controls"></div><div class="control-actions"><button id="save-scenario" class="primary-button">儲存此方案</button><button id="export-csv" class="outline-button">匯出 CSV</button></div><details class="scenario-tools"><summary>分享參數與已存方案</summary><button id="share-scenario" class="text-button">產生此題參數連結</button><div id="share-link"></div><p class="local-note">方案儲存於這個瀏覽器。</p><div id="saved-scenarios"></div></details></aside>
+      </section>
+      <section id="chart-secondary"></section>
+      <section id="workflow"></section>
+      <div class="evidence-grid"><section id="results" class="results-card" tabindex="-1"></section><section id="method" class="method-card"></section></div>
+      <footer>台北城市實驗室 <span>研究試作 · 未代表政策成效或現勘結論</span><span><a href="./RESEARCH.md" download>研究說明</a> · <a href="./RESEARCH-REVIEW.md" download>方法對照</a> · <a href="./DEEPENING-REVIEW.md" download>十輪深化與技能</a> · <a href="./THREE-REVIEW.md" download>3D 設計說明</a> · <a href="./MAP-REVIEW.md" download>地圖說明</a> · <a href="./UI-REVIEW.md" download>介面設計與審查</a> · <a href="./source.zip" download>原始碼</a></span></footer>
+    </main>
+  </div>
+  <dialog id="source-dialog"><div class="dialog-header"><h2>資料來源與適用範圍</h2><button id="close-sources" class="outline-button">關閉</button></div><div id="source-body"></div></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

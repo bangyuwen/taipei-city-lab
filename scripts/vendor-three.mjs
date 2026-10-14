@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+const root=path.resolve(import.meta.dirname,'..');
+const source=path.join(root,'node_modules/three'),target=path.join(root,'dist/vendor/three');
+const version=JSON.parse(fs.readFileSync(path.join(source,'package.json'),'utf8')).version;
+if(version!=='0.180.0')throw new Error('Expected pinned three@0.180.0');
+fs.mkdirSync(target,{recursive:true});
+for(const file of ['three.module.min.js','three.core.min.js'])fs.copyFileSync(path.join(source,'build',file),path.join(target,file));
+const controls=fs.readFileSync(path.join(source,'examples/jsm/controls/OrbitControls.js'),'utf8').replace("from 'three'", "from './three.module.min.js'");
+fs.writeFileSync(path.join(target,'OrbitControls.js'),controls);
+fs.copyFileSync(path.join(source,'LICENSE'),path.join(target,'LICENSE'));
+const files=Object.fromEntries(['three.module.min.js','three.core.min.js','OrbitControls.js','LICENSE'].map(name=>[name,createHash('sha256').update(fs.readFileSync(path.join(target,name))).digest('hex')]));
+fs.writeFileSync(path.join(target,'manifest.json'),JSON.stringify({package:'three',version,origin:'https://github.com/mrdoob/three.js',change:'OrbitControls import rewritten to same-origin vendored module',files},null,2)+'\n');
+console.log('Pinned Three.js and OrbitControls copied to same-origin assets.');
