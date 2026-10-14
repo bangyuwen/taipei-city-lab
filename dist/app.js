@@ -7,6 +7,36 @@ import {inspectCSV} from './modules/audit.js';
 const $=id=>document.getElementById(id);
 const storageKey='taipei-city-lab-v1';
 const badgeText=['真實樹木點位 × 假設植栽情境','真實清潔箱點位 × 模擬需求','模擬街廓 × 治理優先排序','模擬車流 × 錯峰情境','模擬需求 × 休息約束','模擬社區 × 查勘排序','官方資料適用性 × 本機 CSV 健檢'];
+const citizenContent={
+  shade:{question:'夏天走路，哪裡最需要多一片樹蔭？',tip:'先比較補樹的位置，再調整公平權重。樹點影響半徑是局部假設，不能當作真實遮蔭面積。',experiments:[{label:'先補 5 棵',values:{budget:5}},{label:'多顧服務缺口',values:{fairness:80}}]},
+  bins:{question:'提著空杯走一段路，垃圾桶能不能更順路？',tip:'試著少量增設，或提高公平權重，比較同一批模擬需求的服務差異。推薦位置仍需要現勘。',experiments:[{label:'先增設 5 個',values:{budget:5}},{label:'多顧服務缺口',values:{fairness:80}}]},
+  rat:{question:'街角的環境線索，哪些值得先去確認？',tip:'用相同巡查工時比較查核順序。這些街廓與線索是模擬資料，不是真實鼠患評級。',experiments:[{label:'先用 24 人時',values:{budget:24}}]},
+  traffic:{question:'如果一部分人晚點出門，塞車會有什麼不同？',tip:'改變延後出發比例，觀察排隊如何累積與消退。合成車流只用來比較假設，不能預測真實路況。',experiments:[{label:'看看沒有錯峰時',values:{shift:0}},{label:'一半的人晚點出門',values:{shift:50}}]},
+  bus:{question:'少等一班車，也讓駕駛有時間休息，可以嗎？',tip:'比較不同車數與班距，留意休息約束和留站等待。單站模擬需求不代表真實旅運資料。',experiments:[{label:'增加到 6 組車輛',values:{fleet:6}}]},
+  buildings:{question:'社區的健檢與補查，該從哪裡開始？',tip:'先比較訪查工時的分配，再查看文件缺口。排序是準備工作的先後，不是建物安全評級。',experiments:[{label:'先用 24 人時',values:{budget:24}}]},
+  audit:{question:'手上的資料，真的能回答你想問的問題嗎？',tip:'載入範例或帶一份 CSV，看看缺值、重複列與日期。資料只在這個瀏覽器處理。',experiments:[]},
+};
+const topicPaths={
+  shade:'M12 20v-7M7 20h10M12 3l-6 8h3l-4 5h14l-4-5h3z',
+  bins:'M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13M10 10v7M14 10v7',
+  rat:'M4 20V9l8-5 8 5v11M8 20v-6h8v6M8 10h1m6 0h1',
+  traffic:'M7 3v18M17 3v18M12 3v3m0 4v4m0 4v3',
+  bus:'M6 17V6q0-3 6-3t6 3v11H6zM6 9h12M8 13h1m6 0h1M8 17v3m8-3v3',
+  buildings:'M5 21V7h8v14M13 11h6v10M8 10h2m-2 4h2m-2 4h2m6-4h1m-1 4h1M3 21h18',
+  audit:'M6 3h8l4 4v14H6zM14 3v5h4M9 12h6m-6 4h3',
+  close:'m7 7 10 10M17 7 7 17',
+};
+function topicIcon(id){return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${topicPaths[id]}"/></svg>`;}
+function drawGuide(){
+  const content=citizenContent[active.id];
+  $('exploration-guide').innerHTML=`<p><strong>換個條件，看看城市怎麼變。</strong>${esc(content.tip)}</p><div class="experiment-actions">${content.experiments.map((item,index)=>`<button data-experiment="${index}">${esc(item.label)}</button>`).join('')}</div>`;
+  $('exploration-guide').onclick=e=>{
+    const target=e.target.closest?.('[data-experiment]')||e.target;
+    const experiment=content.experiments[target.dataset.experiment];if(!experiment)return;
+    cancelCalculation();state.params[active.id]={...paramsFor(active),...experiment.values};
+    selectedPoint=null;drawControls();drawResult();persist();toast('已套用「'+experiment.label+'」。可調整條件，或回到起點。');
+  };
+}
 let data,active,result,csvText='',auditReport=null,auditSignature=null,selectedPoint=null,toastTimer,inputTimer;
 let auditState={question:'哪些地點需要優先改善？',referenceDate:'2026-10-13',timezone:'Asia/Taipei',contract:''};
 let state={params:{},saved:{},workflows:{}};
@@ -39,16 +69,17 @@ function paramsFor(module){
 function safeURL(url){try{const u=new URL(url);return u.protocol==='https:'?u.href:'#';}catch{return '#';}}
 function drawNavigation(){
   const ordered=[...modules.filter(m=>m.id==='bins'),...modules.filter(m=>m.id!=='bins')];
-  $('navigation').innerHTML=ordered.map(m=>`<a href="#${esc(m.id)}" class="${m.id===active.id?'active':''}" ${m.id===active.id?'aria-current="page"':''}><span class="number">0${m.number}</span><span>${esc(topics[modules.indexOf(m)])}${m.id==='bins'?'<small class="nav-focus">參賽主題</small>':''}</span></a>`).join('');
+  $('navigation').innerHTML=ordered.map(m=>`<a href="#${esc(m.id)}" class="${m.id===active.id?'active':''}" ${m.id===active.id?'aria-current="page"':''}>${topicIcon(m.id)}<span>${esc(topics[modules.indexOf(m)])}</span></a>`).join('');
 }
 function drawControls(){
   $('share-link').innerHTML='';
   const p=paramsFor(active);
-  $('controls').innerHTML=(active.controls||[]).map(c=>{
+  const rendered=(active.controls||[]).map(c=>{
     const id='control-'+c.key;
     if(c.type==='select')return `<div class="control"><label for="${esc(id)}">${esc(c.label)}</label><select id="${esc(id)}" data-key="${esc(c.key)}">${(c.options||[]).map(o=>`<option value="${esc(o.value??o)}" ${(o.value??o)===p[c.key]?'selected':''}>${esc(o.label??o)}</option>`).join('')}</select></div>`;
     return `<div class="control"><label for="${esc(id)}">${esc(c.label)}<output id="value-${esc(c.key)}" for="${esc(id)}">${format(p[c.key])}${esc(c.unit||'')}</output></label><input id="${esc(id)}" data-key="${esc(c.key)}" type="range" min="${c.min}" max="${c.max}" step="${c.step||1}" value="${p[c.key]}"><div class="range-bounds"><span>${c.min}${esc(c.unit||'')}</span><span>${c.max}${esc(c.unit||'')}</span></div></div>`;
-  }).join('');
+  });
+  $('controls').innerHTML=rendered.slice(0,3).join('')+(rendered.length>3?`<details class="advanced-controls"><summary>更多條件與假設</summary><div>${rendered.slice(3).join('')}</div></details>`:'');
   $('controls').oninput=event=>{
     const el=event.target,c=active.controls.find(c=>c.key===el.dataset.key);if(!c)return;
     state.params[active.id]={...paramsFor(active),[c.key]:c.type==='range'?Number(el.value):el.value};
@@ -58,14 +89,15 @@ function drawControls(){
 }
 function drawSaved(){
   const entries=Array.isArray(state.saved[active.id])?state.saved[active.id].filter(s=>record(s)&&record(s.params)&&typeof s.name==='string').slice(-6):[];
-  $('saved-scenarios').innerHTML=entries.map((s,i)=>`<div class="saved-item"><button data-load="${i}">${esc(s.name)}</button><button class="delete" data-delete="${i}" aria-label="刪除${esc(s.name)}">×</button></div>`).join('');
-  $('saved-scenarios').onclick=e=>{const load=e.target.dataset.load,remove=e.target.dataset.delete;if(load!==undefined&&entries[load]){cancelCalculation();state.params[active.id]=entries[load].params;drawControls();drawResult();persist();toast('已套用 '+entries[load].name);}else if(remove!==undefined){entries.splice(Number(remove),1);state.saved[active.id]=entries;drawSaved();persist();}};
+  $('saved-scenarios').innerHTML=entries.map((s,i)=>`<div class="saved-item"><button data-load="${i}">${esc(s.name)}</button><button class="delete" data-delete="${i}" aria-label="刪除${esc(s.name)}">${topicIcon('close')}</button></div>`).join('');
+  $('saved-scenarios').onclick=e=>{const target=e.target.closest?.('button')||e.target;const load=target.dataset.load,remove=target.dataset.delete;if(load!==undefined&&entries[load]){cancelCalculation();state.params[active.id]=entries[load].params;drawControls();drawResult();persist();toast('已套用 '+entries[load].name);}else if(remove!==undefined){entries.splice(Number(remove),1);state.saved[active.id]=entries;drawSaved();persist();}};
 }
 function drawResult(){
   try{result=active.evaluate(paramsFor(active),data);}catch(error){$('visualization').innerHTML=`<div class="fatal-error">計算未完成：${esc(error.message)}。請重設方案再試。</div>`;return;}
   if(result.chart && ['shade','bins','rat','buildings'].includes(active.id))result.chart={...result.chart,type:'bar'};
-  $('metrics').style.setProperty('--metric-columns',result.metrics?.length===4?'4':'3');
-  $('metrics').innerHTML=(result.metrics||[]).map(m=>`<article class="metric"><div class="metric-label">${esc(m.label)}</div><div class="metric-value">${format(m.value)}<span class="metric-unit">${esc(m.unit||'')}</span></div>${m.detail?`<div class="metric-detail">${esc(m.detail)}</div>`:''}</article>`).join('');
+  $('metrics').style.setProperty('--metric-columns',(result.metrics?.length||0)>=4?'4':'3');
+  const metricItems=(result.metrics||[]).map(m=>`<article class="metric"><div class="metric-label">${esc(m.label)}</div><div class="metric-value">${format(m.value)}<span class="metric-unit">${esc(m.unit||'')}</span></div>${m.detail?`<div class="metric-detail">${esc(m.detail)}</div>`:''}</article>`);
+  $('metrics').innerHTML=`<div class="metric-grid">${metricItems.slice(0,4).join('')}</div>`+(metricItems.length>4?`<details class="more-metrics"><summary>查看其他 ${metricItems.length-4} 項模擬指標</summary><div class="metric-grid">${metricItems.slice(4).join('')}</div></details>`:'');
   const heading=`<div class="visual-heading"><h2>${active.id==='bus'?'需求與搭載比較':active.id==='audit'?'資料用途檢查':result.chart?'基準與方案比較':'方案位置與範圍'}</h2><span class="small-tag">相同情境參數</span></div>`;
   $('visualization').innerHTML=heading+(result.chart?chartSVG(result.chart):result.map?mapSVG(result.map,data.meta.bbox):'<div class="empty-state">使用下方資料用途表與 CSV 健檢，確認資料能回答哪些問題。</div>');
   const secondary=result.secondaryChart||(result.map&&result.chart?result.chart:null);
@@ -157,9 +189,11 @@ function activate(){
   if(query&&query.length<=4096){const shared=new URLSearchParams(query),values={};for(const c of active.controls){if(shared.has(c.key))values[c.key]=shared.get(c.key);}state.params[active.id]={...active.defaults,...values};state.params[active.id]=paramsFor(active);}
   const index=modules.indexOf(active);document.documentElement.style.setProperty('--accent',tones[index]);
   viewMode=moduleViews[active.id]||(['shade','bins','rat','buildings'].includes(active.id)?'map':active.id==='audit'?'2d':'3d');
-  document.title=`${topics[index]}${active.id==='bins'?'・參賽主題':''} — 台北城市實驗室`;
-  $('module-head').innerHTML=`<div class="module-head"><div><div class="module-title"><span class="issue-index">${String(active.number).padStart(2,'0')}</span><h1>${esc(active.title)}</h1></div><p class="subtitle">${esc(active.subtitle)}</p></div><span class="badge">${esc(badgeText[index])}</span></div>`;
-  drawNavigation();drawControls();drawSaved();drawResult();drawAuditInput();
+  document.title=`${topics[index]} — 台北城市實驗室`;
+  $('city-intro').hidden=Boolean(id&&id!=='explore');
+  $('sidebar').dataset.menuOpen='false';$('topic-menu-toggle').setAttribute('aria-expanded','false');
+  $('module-head').innerHTML=`<div class="module-head"><div><div class="module-title"><h1>${esc(active.title)}</h1></div><p class="topic-question">${esc(citizenContent[active.id].question)}</p><p class="subtitle">${esc(active.subtitle)}</p></div><span class="badge">${esc(badgeText[index])}</span></div>`;
+  drawNavigation();drawGuide();drawControls();drawSaved();drawResult();drawAuditInput();
   if(viewMode!=='3d')$('scene-status').textContent=viewMode==='map'?'拖曳或縮放地圖，點選位置查看來源與推薦依據。':'2D 圖表與完整明細，使用同一組情境參數。';
 }
 function shareScenario(){
@@ -209,6 +243,8 @@ function renderAuditReport(){
 async function init(){
   const response=await fetch('./data/snapshot.json');if(!response.ok)throw new Error('資料快照讀取失敗 '+response.status);data=await response.json();if(!data.meta||!data.sources)throw new Error('資料快照缺少來源與範圍');
   $('loading').hidden=true;activate();window.addEventListener('hashchange',activate);
+  $('topic-menu-toggle').onclick=()=>{const open=$('sidebar').dataset.menuOpen!=='true';$('sidebar').dataset.menuOpen=String(open);$('topic-menu-toggle').setAttribute('aria-expanded',String(open));};
+  $('begin-exploring').onclick=()=>{$('city-intro').hidden=true;$('module-head').scrollIntoView?.({block:'start',behavior:'auto'});$('module-head').focus?.({preventScroll:true});};
   $('reset').onclick=()=>{cancelCalculation();state.params[active.id]={...active.defaults};selectedPoint=null;drawControls();drawResult();persist();toast('已回到預設方案。');};
   $('save-scenario').onclick=()=>{flushCalculation();const list=Array.isArray(state.saved[active.id])?state.saved[active.id]:[];if(list.length>=6)list.shift();const name='方案 '+new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});list.push({name,params:{...paramsFor(active)}});state.saved[active.id]=list;persist();drawSaved();toast('已儲存目前參數。');};
   $('viewmode-map').onclick=()=>setView('map');$('viewmode-3d').onclick=()=>setView('3d');$('viewmode-2d').onclick=()=>setView('2d');
