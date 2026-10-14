@@ -97,3 +97,7 @@ footer{display:flex;gap:24px;justify-content:space-between;align-items:flex-star
 .experiment-actions:empty{display:none}
 
 a.local-note svg,.source-entry a svg,.geo-readout a svg{width:14px;height:14px;vertical-align:-2px;margin-left:3px}
+.scene-viewport[data-geographic=true] .scene-overlay>span{color:var(--ink);background:var(--paper);padding:4px 8px;border-radius:4px}
+.scene-north{display:flex;align-items:center;gap:4px}
+.scene-north svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.scene-viewport[data-geographic=true] canvas:focus-visible{outline-color:var(--accent)}

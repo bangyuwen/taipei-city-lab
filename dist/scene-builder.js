@@ -40,8 +40,17 @@ function markerInstances(bag,parent,points,id,color,picks){
   if(tree)instances(bag,parent,new THREE.CylinderGeometry(.13,.16,1.4,6),mat(bag,'#baad82'),points,(d,p)=>d.position.set(p.x,.7,p.z));
 }
 function buildSpatial(spec,bag,root){
-  ground(bag,root,spec.project.width,spec.project.depth);
+  // Street tiles provide the ground. The scene background covers loading gaps
+  // without a finite base or oversized geometry competing with marker depth.
   const layers={};for(const key of ['existing','demand','candidate','recommended','coverage'])layers[key]=group(root,key);
+  layers.studyArea=group(root,'studyArea');
+  const x=spec.project.width/2,z=spec.project.depth/2;
+  const boundary=bag.track(new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(-x,.12,-z),new THREE.Vector3(x,.12,-z),
+    new THREE.Vector3(x,.12,z),new THREE.Vector3(-x,.12,z),
+  ]));
+  layers.studyArea.add(new THREE.LineLoop(boundary,bag.track(new THREE.LineBasicMaterial({color:'#586477'}))));
+  layers.studyArea.visible=false;
   const picks=[];
   markerInstances(bag,layers.existing,spec.existing,spec.id,SCENE_COLORS.existing,picks);
   markerInstances(bag,layers.candidate,spec.points.filter(p=>!p.selected),spec.id,SCENE_COLORS.candidate,picks);
@@ -61,9 +70,7 @@ function buildSpatial(spec,bag,root){
     if(demands.instanceColor)demands.instanceColor.needsUpdate=true;
   };
   setPlanned(true);
-  const x=spec.project.width/4,z=spec.project.depth/4;
-  return {layers,picks,setPlanned,labels:[{text:'北 N',position:[0,1,-spec.project.depth/2-5]},
-    ...spec.labels.map((text,i)=>({text,position:[i%2?x:-x,.6,i<2?z:-z]}))],update:()=>({summary:'旋轉查看分區；點選標記檢視資料。'})};
+  return {layers,picks,setPlanned,labels:[],update:()=>({summary:'拖曳探索街道；點選標記檢視資料。'})};
 }
 function carBatch(bag,root,color,count){
   const body=bag.track(new THREE.InstancedMesh(bag.track(new THREE.BoxGeometry(1.8,.7,.9)),mat(bag,color),count));

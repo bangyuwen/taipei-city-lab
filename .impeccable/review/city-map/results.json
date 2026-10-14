@@ -1,0 +1,143 @@
+{
+  "scope": "Continuous geographic map correction: local Chromium, emulated mobile, real HTTPS OSM tiles.",
+  "recordedAt": "2026-10-14T11:57:18.613322",
+  "checks": [
+    {
+      "device": "desktop",
+      "topic": "bins",
+      "defaultScopeOff": true,
+      "noQuadrantLabels": true,
+      "metricsUnchanged": true,
+      "noOverflow": true
+    },
+    {
+      "device": "desktop",
+      "resetMarkersVisible": true,
+      "markerPixels": 169
+    },
+    {
+      "device": "desktop",
+      "topic": "shade",
+      "defaultScopeOff": true,
+      "noQuadrantLabels": true,
+      "metricsUnchanged": true,
+      "noOverflow": true
+    },
+    {
+      "device": "desktop",
+      "topic": "rat",
+      "defaultScopeOff": true,
+      "noQuadrantLabels": true,
+      "metricsUnchanged": true,
+      "noOverflow": true
+    },
+    {
+      "device": "desktop",
+      "topic": "buildings",
+      "defaultScopeOff": true,
+      "noQuadrantLabels": true,
+      "metricsUnchanged": true,
+      "noOverflow": true
+    },
+    {
+      "device": "mobile",
+      "topic": "bins",
+      "defaultScopeOff": true,
+      "noQuadrantLabels": true,
+      "metricsUnchanged": true,
+      "noOverflow": true
+    },
+    {
+      "device": "mobile",
+      "resetMarkersVisible": true,
+      "markerPixels": 141
+    },
+    {
+      "device": "mobile",
+      "topic": "shade",
+      "defaultScopeOff": true,
+      "noQuadrantLabels": true,
+      "metricsUnchanged": true,
+      "noOverflow": true
+    },
+    {
+      "device": "mobile",
+      "topic": "rat",
+      "defaultScopeOff": true,
+      "noQuadrantLabels": true,
+      "metricsUnchanged": true,
+      "noOverflow": true
+    },
+    {
+      "device": "mobile",
+      "topic": "buildings",
+      "defaultScopeOff": true,
+      "noQuadrantLabels": true,
+      "metricsUnchanged": true,
+      "noOverflow": true
+    },
+    {
+      "device": "narrow",
+      "topic": "bins",
+      "defaultScopeOff": true,
+      "noQuadrantLabels": true,
+      "metricsUnchanged": true,
+      "noOverflow": true
+    },
+    {
+      "device": "narrow",
+      "resetMarkersVisible": true,
+      "markerPixels": 117
+    }
+  ],
+  "pageErrors": [],
+  "captures": {
+    "desktop-bins-street.png": "6c9d9393c900f1ca85cad696ab34195e116b8cf7534090e9fca9aee997936732",
+    "desktop-bins-angle.png": "e225e4b58b0fb0141fbc437a9623441cd8b109299fe0fc7d682341da4711e4bf",
+    "desktop-bins-scope.png": "70f05bbfb8ddb883b6dce5bf74cb30895266719d3a78dc1d50c3c17a190865f2",
+    "desktop-bins-top.png": "23ecc2ea6a1e431e65f8ef206ee4626334dab3229e27391459b01f54a93b1cac",
+    "desktop-bins-pan-zoom.png": "37e5a5e77249961cef411628d417b992ba67313c16b8f1a0277343413a130df4",
+    "desktop-bins-focus.png": "166cbee73d1914122f75ccbf9b3a36f838ae160334bb0b0b0e9d300c7d6537f9",
+    "desktop-bins-reset.png": "f0387419b2efcc63123a9376a90cc7604b48a671ff79a4650dddbe1fcac52809",
+    "desktop-shade-street.png": "bc504fa9a8740b17ef67f648c9039f89231540ba83c9f576fce3f74efe1565e4",
+    "desktop-shade-angle.png": "6d906919a96777914e736acd9d7fa62fabdcaec7d4a0d7d354df271fc24a50e2",
+    "desktop-rat-street.png": "a1e8ec891db61fa6a02b506aff4b7fcd963c273376b3fdc62508fe3704ad8759",
+    "desktop-rat-angle.png": "c14bdcd0494dc06abf682dedbd0a1f5a4bd8da4d005e648cc8fb4a694adbe04f",
+    "desktop-buildings-street.png": "6505b90c4924f18abeb36b1ee6e3103d0dd3acf7dc44d071a2d303fecd536112",
+    "desktop-buildings-angle.png": "d044f729c83bf12b3ae87611bb59c058637d3b2a1df3b772e77a7c2d60daf5df",
+    "mobile-bins-street.png": "3003a126d2e6214f1b2e98f9c200fcad141bf5d695fd7027d7b51e7bb39736b0",
+    "mobile-bins-angle.png": "73e65089334c284c473d462531fe84ce41b14a50d965b364b97a23a2e216cb21",
+    "mobile-bins-scope.png": "a9226487010e6b0306c615af76d835dfeff4c620baf04aba7613b940e0b33cd4",
+    "mobile-bins-top.png": "15fc5464b8ee7075ca35c9ec20c779e3862b3d2b7c6d4890e869e7652377cee3",
+    "mobile-bins-pan-zoom.png": "f9eaf3210b67cf7c3b2bdd12c52440b12549f943a2c1f31fb637cc0698685429",
+    "mobile-bins-focus.png": "68295cd5ae053b0fb03b71068dba9c260f53ee95bd21cd91d1fc29a18669158f",
+    "mobile-bins-reset.png": "076e5394666a7990230459ccde0965d9f3a51604e3a276ea2699ed859c2e6994",
+    "mobile-shade-street.png": "5f21f5cdc5f3702c14915c4a86741c6ec31af4b8e4d6d6d992b5c1584da70f62",
+    "mobile-shade-angle.png": "0f22724a1c4edfc2196c6cecc3da175e22ed19c3f5486de62ccf28d8d7e3d714",
+    "mobile-rat-street.png": "ee91b91a383a0dd86974aa32b44d6a756790a066c132d3f36f58f94e8f42e133",
+    "mobile-rat-angle.png": "f1b7ca2842ce516fb228e18bc2e25cc6d5b431918d6fe32f556b6bbf25cac45a",
+    "mobile-buildings-street.png": "f59c6d07b6a2254b459b5fe5427c05f54b0d688df1dea1ca3e0cb44ca7fd212f",
+    "mobile-buildings-angle.png": "8418e6909567ef6f88eb1634caadc15c7eb43969866f0e539e6f3f0767080dc2",
+    "narrow-bins-street.png": "08e4901be16b641aa6d93c80b93b478f288f677ed7cfac0b68632e4161925fd6",
+    "narrow-bins-angle.png": "42c0d849cf93a0c9bf171162c60de1a25063245c17a6af815ca6587a4976ae2b",
+    "narrow-bins-scope.png": "88bcadd4caed5c153b5191dd1abdaa2ba94ed088e52d48a277e1cffef44d1683",
+    "narrow-bins-top.png": "94cf6689fbf46ad9e72c8d21e2cbe3cd528b67ed35f1983300e1b3069d8dcf2b",
+    "narrow-bins-pan-zoom.png": "346fb3d0c079a464d4e4c2f4d4d767b2ab27401d032328e31786b8936aa60e07",
+    "narrow-bins-focus.png": "56202402a3c6eda1740d604fd6c364b9486c0c16916df23aa29bb14a9077f29e",
+    "narrow-bins-reset.png": "9e4029e28143d9bb178899340e5959229fde5dc3b14573e93b2a266f7fa53780",
+    "desktop-bins-workspace.png": "8be61bff60cf66f82e07538bc7f88b1c9ca33131af5e3254c044297e1ddc301b",
+    "mobile-bins-workspace.png": "080b8e90ea65e8ba73ee4b55bc36ab0f831798cb31ee8f453cda28aeba8edff6",
+    "narrow-bins-workspace.png": "778982bc5261304a1e4d63d200ee67ce6796e5d74e63271e3d41b7dc4a4cb121"
+  },
+  "sourceSHA256": {
+    "dist/basemap3d.js": "c5e53665384d8e34821ba86d1f8ea29d4e67a21e0090eb87f20dc8024490a05d",
+    "dist/geo.js": "61de3335548fd1f65f691a52779a4216420bc65525e29dad0a511d4498fc1438",
+    "dist/map-ui.js": "6eec73d26208bbed137b1f21779bc8c1fd3c7eaf511b2885869f74757748ea7d",
+    "dist/scene-builder.js": "462932178c626f071d68ca1a640c924f59ffe54b86320d1e4ff6672a40d4f43d",
+    "dist/scene-data.js": "89de651b24c7de61253c5d287bdaf35b9dc7ed59a2516c4c17a5255a59d4a9d0",
+    "dist/scene-ui.js": "9ed462e7779593d858b970def2491cc9fb1b3054ce6dabd66ad425647d266dc6",
+    "dist/styles.css": "259e284649edf77bfea92cdf6d08bb3967aae2160c54edec7b010775f379b6da"
+  },
+  "engine": "154.0.8037.57",
+  "captureNote": "Bins angle/scope were recaptured from a fresh document without preceding 2D selection; default camera is north-up. Other captures retain their named interaction state. Added workspace context at all three widths."
+}

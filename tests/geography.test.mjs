@@ -6,7 +6,7 @@ import {createHash} from 'node:crypto';
 import * as THREE from '../dist/vendor/three/three.module.min.js';
 import {mercator,unproject,projection,worldPoint,tilePlan,tileURL,TILE_PROVIDER} from '../dist/geo.js';
 import {mapSpec,mapPointIndex} from '../dist/map-data.js';
-import {createBasemap} from '../dist/basemap3d.js';
+import {createBasemap,visibleTilePlan} from '../dist/basemap3d.js';
 import {modules} from '../dist/registry.js';
 import {sceneSpec} from '../dist/scene-data.js';
 import {boot} from './helpers/app-harness.mjs';
@@ -83,6 +83,43 @@ test('late image completions cannot revive disposed map planes or double-dispose
   const counts=new Map();for(const item of base.bag.items){counts.set(item,0);item.addEventListener('dispose',()=>counts.set(item,counts.get(item)+1));}
   base.dispose();const before=statuses.length;for(const request of loader.requests)request.ok();base.dispose();
   assert.equal(statuses.length,before);assert.equal(base.root.children.length,0);assert.ok([...counts.values()].every(n=>n===1));
+});
+test('visible city tiles cover every camera corner beyond the study area at a fixed data scale',()=>{
+  const project=projection(data.meta.bbox);
+  for(const [width,height] of [[790,420],[353,360],[284,360]])for(const view of ['angle','top','edge']){
+    const camera=new THREE.PerspectiveCamera(42,width/height,.1,1800);
+    if(view==='top')camera.position.set(0,260,.01);
+    else if(view==='edge')camera.position.set(110,150,210);
+    else camera.position.set(0,129.6,90);
+    camera.lookAt(view==='edge'?new THREE.Vector3(110,0,80):new THREE.Vector3());camera.updateMatrixWorld();
+    const plan=visibleTilePlan(camera,project,{width,height});
+    assert.equal(plan.project,project);assert.ok(plan.tiles.length>0&&plan.tiles.length<=24);
+    assert.equal(new Set(plan.tiles.map(t=>t.z)).size,1);
+    for(const x of [-1,1])for(const y of [-1,1]){
+      const direction=new THREE.Vector3(x,y,.5).unproject(camera).sub(camera.position).normalize();
+      const point=new THREE.Ray(camera.position,direction).intersectPlane(new THREE.Plane(new THREE.Vector3(0,1,0),-.085),new THREE.Vector3());
+      assert.ok(plan.tiles.some(t=>point.x>=t.world.left&&point.x<=t.world.right&&point.z>=t.world.north&&point.z<=t.world.south));
+    }
+    const before=worldPoint({x:121.55,y:25.04},project),after=worldPoint({x:121.55,y:25.04},plan.project);
+    assert.deepEqual(after,before);
+    assert.ok(plan.tiles.some(t=>t.world.left< -project.width/2||t.world.right>project.width/2||t.world.north< -project.depth/2||t.world.south>project.depth/2));
+  }
+});
+test('panning replaces city tiles without accumulating resources or accepting evicted completions',()=>{
+  const spec=sceneSpec(payload('bins')),loader=new FakeLoader(),statuses=[];
+  const camera=new THREE.PerspectiveCamera(42,1,.1,1800);camera.position.set(0,130,90);camera.lookAt(0,0,0);
+  const base=createBasemap(spec,{loader,camera,viewport:{width:390,height:360},onStatus:s=>statuses.push(s)});
+  const initial=[...base.root.children],requests=[...loader.requests];
+  const counts=new Map();for(const resource of base.bag.items){counts.set(resource,0);resource.addEventListener('dispose',()=>counts.set(resource,counts.get(resource)+1));}
+  assert.equal(base.updateView(camera,{width:390,height:360}),false);
+  for(const x of [400,-400,0,400]){
+    camera.position.set(x,130,90);camera.lookAt(x,0,0);base.updateView(camera,{width:390,height:360});
+    assert.ok(base.root.children.length<=24);assert.equal(base.bag.items.size,base.root.children.length*3);
+  }
+  const before=statuses.length;for(const request of requests)request.ok();
+  assert.equal(statuses.length,before);assert.ok(initial.every(plane=>!plane.parent&&!plane.visible));
+  assert.ok([...counts.values()].every(n=>n===1));
+  base.dispose();for(const request of loader.requests)request.ok();assert.equal(base.bag.items.size,0);
 });
 test('geographic views stay available without WebGL while only the chosen working view is visible',async()=>{
   const h=await boot(null,'#bins');assert.equal(h.nodes.get('geographic-panel').hidden,false);assert.equal(h.nodes.get('scene-panel').hidden,true);

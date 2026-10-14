@@ -1,26 +1,28 @@
 import {createBasemap} from './basemap3d.js';
 import * as THREE from './vendor/three/three.module.min.js';
 import {OrbitControls} from './vendor/three/OrbitControls.js';
-import {sceneSpec} from './scene-data.js';
+import {sceneSpec,SCENE_COLORS} from './scene-data.js';
 import {createSceneModel} from './scene-builder.js';
+import {scopeText} from './geo.js';
 
 export function mountScene(host,payload,onFailure){
   host.innerHTML=`<div class="scene-toolbar"><div><span class="scene-kicker">THREE.JS / 決策空間</span><h2 id="scene-title">探索情境</h2></div><div class="scene-views"><button data-view="angle">斜視</button><button data-view="top">俯視</button><button data-view="reset">全域</button><button data-zoom="in" aria-label="放大">＋</button><button data-zoom="out" aria-label="縮小">−</button></div></div><div class="scene-viewport"><canvas aria-label="3D 情境；拖曳旋轉，滾輪縮放，方向鍵平移" tabindex="0"></canvas><div class="scene-labels" aria-hidden="true"></div><div class="scene-overlay"><span id="scene-badge">位置與造型示意</span><span class="scene-north">N ↑</span></div><div class="scene-tooltip" hidden></div><a class="scene-attribution" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener" hidden>© OpenStreetMap contributors</a></div><div class="scene-controls"><div id="scene-layers"></div><div id="scene-comparison"></div><div id="scene-time" hidden><button id="scene-play" aria-label="播放逐分鐘情境">播放</button><label for="scene-scrub">時間軸</label><input id="scene-scrub" type="range" min="0" max="120" step="1" value="0"><output id="scene-clock" for="scene-scrub"></output></div><div class="scene-select"><label for="scene-pick">選取位置／項目</label><select id="scene-pick"></select><button id="scene-focus">聚焦</button></div></div><div class="scene-readout"><p id="scene-summary" aria-live="polite"></p><p id="scene-details"></p><p id="scene-inspector" aria-live="polite"></p></div><div class="scene-caption"><p id="scene-basemap-status"></p><p id="scene-note"></p><span>拖曳旋轉 · 滾輪／雙指縮放 · 方向鍵平移 · 可用按鈕調整視角</span></div>`;
   const $=selector=>host.querySelector(selector),canvas=$('canvas'),viewport=$('.scene-viewport');
+  $('.scene-north').innerHTML='北 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V4m-5 6 5-6 5 6"/></svg>';
   let renderer;
   try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'low-power'});}
   catch(error){host.innerHTML='';throw error;}
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));
   renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.18;
   const scene=new THREE.Scene();scene.background=new THREE.Color('#202c45');
-  const camera=new THREE.PerspectiveCamera(42,1,.1,1800);
+  const camera=new THREE.PerspectiveCamera(42,1,.5,1800);
   scene.add(new THREE.HemisphereLight('#eaf3e1','#183029',2.3));
   const sunlight=new THREE.DirectionalLight('#fff0cb',3);sunlight.position.set(-70,140,90);scene.add(sunlight);
   const fill=new THREE.DirectionalLight('#9ec3d7',1.5);fill.position.set(70,70,-100);scene.add(fill);
   const controls=new OrbitControls(camera,canvas);controls.enableDamping=false;controls.maxPolarAngle=Math.PI*.485;
   controls.minDistance=8;controls.listenToKeyEvents(canvas);
   const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
-  let currentPayload=payload,basemap=null,basemapKey=null;
+  let currentPayload=payload,basemap=null,basemapKey=null,basemapTimer=null;
   let spec,model,labels=[],disposed=false,frameId=null,elapsed=0,playing=false,lastTime=0;
   let planned=true,layers={},selected=null,lastWidth=0,lastHeight=0;
   const events=[];
@@ -31,7 +33,7 @@ export function mountScene(host,payload,onFailure){
     if(playing){elapsed=Math.min(spec.duration,elapsed+(lastTime?Math.min(.1,(time-lastTime)/1000):0)*12);lastTime=time;if(elapsed>=spec.duration){playing=false;$('#scene-play').textContent='播放';}}
     const width=viewport.clientWidth,height=viewport.clientHeight;
     if(width>0&&height>0){
-      if(width!==lastWidth||height!==lastHeight){renderer.setSize(width,height,false);camera.aspect=width/height;camera.updateProjectionMatrix();lastWidth=width;lastHeight=height;}
+      if(width!==lastWidth||height!==lastHeight){renderer.setSize(width,height,false);camera.aspect=width/height;camera.updateProjectionMatrix();lastWidth=width;lastHeight=height;basemap?.updateView(camera,{width,height});}
       try{controls.update();const view=model.update(elapsed);
       $('#scene-summary').textContent=view.summary;$('#scene-details').textContent=view.details||'';
       $('#scene-scrub').value=String(Math.floor(elapsed));$('#scene-clock').textContent=view.frame?.time||'';
@@ -44,10 +46,20 @@ export function mountScene(host,payload,onFailure){
     for(const item of labels){const v=new THREE.Vector3(...item.position).project(camera);
       item.node.hidden=v.z>1||v.z< -1||Math.abs(v.x)>1||Math.abs(v.y)>1;
       item.node.style.transform=`translate(${(v.x+1)*width/2}px,${(1-v.y)*height/2}px) translate(-50%,-50%)`;}
+    if(spec.kind==='spatial'){
+      const center=controls.target.clone().project(camera),north=controls.target.clone().add(new THREE.Vector3(0,0,-10)).project(camera);
+      $('.scene-north svg').style.transform=`rotate(${Math.atan2((north.x-center.x)*width,(north.y-center.y)*height)}rad)`;
+    }
   }
   function cameraView(view){
     const e=spec.extent;controls.target.set(0,0,0);
-    camera.position.set(view==='top'?0:e*.9,view==='top'?e*1.55:e*.85,view==='top' ? .01 : e*1.05);
+    camera.aspect=Math.max(1,viewport.clientWidth)/Math.max(1,viewport.clientHeight);camera.updateProjectionMatrix();
+    if(spec.kind==='spatial'){
+      const fit=Math.max(spec.project.depth,spec.project.width/camera.aspect)/(2*Math.tan(camera.fov*Math.PI/360))*1.1;
+      if(view==='top')camera.position.set(0,fit,.01);
+      else if(view==='reset')camera.position.set(0,fit*.9,fit*.62);
+      else camera.position.set(0,e*.72,e*.5);
+    }else camera.position.set(view==='top'?0:e*.9,view==='top'?e*1.55:e*.85,view==='top' ? .01 : e*1.05);
     controls.maxDistance=e*4;controls.update();request();
   }
   function applyLayers(){
@@ -70,7 +82,7 @@ export function mountScene(host,payload,onFailure){
     if(notify)currentPayload.onPointSelected?.(point);request();
   }
   function controlsUI(){
-    const name={existing:'既有點位',demand:'需求',candidate:'候選',recommended:'推薦',coverage:'假設範圍'};
+    const name={existing:'既有點位',demand:'需求',candidate:'候選',recommended:'推薦',coverage:'假設範圍',studyArea:'模型計算範圍'};
     const layersHost=$('#scene-layers');layersHost.replaceChildren();
     for(const key of Object.keys(model.layers)){
       const label=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.checked=layers[key]!==false;
@@ -103,20 +115,26 @@ export function mountScene(host,payload,onFailure){
     basemap?.root.removeFromParent();
     if(nextKey!==basemapKey){basemap?.dispose();basemap=null;basemapKey=nextKey;}
     model?.dispose();spec=nextSpec;model=nextModel;scene.add(model.root);
-    if(nextKey&&!basemap)basemap=createBasemap(spec,{onChange:request,onStatus:status=>{
+    const moduleChanged=previousKind!==spec.kind||previousId!==spec.id;
+    controls.maxPolarAngle=spec.kind==='spatial'?Math.PI/3:Math.PI*.485;
+    scene.background.set(spec.kind==='spatial'?SCENE_COLORS.contextGround:'#202c45');viewport.dataset.geographic=String(spec.kind==='spatial');
+    if(moduleChanged){elapsed=0;layers=spec.kind==='spatial'?{demand:false,candidate:false,studyArea:false}:{};planned=true;cameraView('angle');}
+    if(nextKey&&!basemap)basemap=createBasemap(spec,{camera,viewport:{width:viewport.clientWidth,height:viewport.clientHeight},onChange:request,onStatus:status=>{
       $('#scene-basemap-status').textContent=status.failed?'部分 3D 底圖未載入；可使用上方街道地圖。':status.loaded===status.total?'3D 地面已對齊 OpenStreetMap 街道。':'正在載入 3D 街道底圖…';
     }});
-    if(basemap)model.root.add(basemap.root);
+    if(basemap){model.root.add(basemap.root);basemap.updateView(camera,{width:viewport.clientWidth,height:viewport.clientHeight});}
     $('.scene-attribution').hidden=!nextKey;if(!nextKey)$('#scene-basemap-status').textContent='';
     elapsed=Math.min(elapsed,spec.duration||0);playing=false;lastTime=0;$('#scene-play').textContent='播放';selected=null;
     $('#scene-inspector').textContent='';$('#scene-title').textContent=next.title;
-    $('#scene-note').textContent=spec.note;$('#scene-badge').textContent=spec.kind==='spatial'?'座標定位 · 造型示意':spec.kind==='audit'?'資料狀態 · 精確值另列':'合成情境 · 空間示意';
+    $('#scene-note').textContent=spec.kind==='spatial'?scopeText(spec.project.bbox)+' '+spec.note:spec.note;$('#scene-badge').textContent=spec.kind==='spatial'?'座標定位 · 造型示意':spec.kind==='audit'?'資料狀態 · 精確值另列':'合成情境 · 空間示意';
     $('.scene-north').hidden=spec.kind!=='spatial';$('.scene-labels').replaceChildren();
     labels=model.labels.map(item=>{const node=document.createElement('span');node.className='scene-label';node.textContent=item.text;$('.scene-labels').append(node);return {...item,node};});
-    if(previousKind!==spec.kind||previousId!==spec.id){elapsed=0;layers={};planned=true;cameraView('angle');}
     if(typeof next.planned==='boolean')planned=next.planned;controlsUI();applyLayers();request();
   }
-  listen(controls,'change',request);
+  listen(controls,'change',()=>{
+    request();clearTimeout(basemapTimer);
+    if(spec?.kind==='spatial')basemapTimer=setTimeout(()=>{if(!disposed)basemap?.updateView(camera,{width:viewport.clientWidth,height:viewport.clientHeight});},180);
+  });
   listen(canvas,'pointermove',event=>{
     if(event.buttons)return;
     const rect=canvas.getBoundingClientRect();if(!rect.width||!rect.height)return;
@@ -146,7 +164,7 @@ export function mountScene(host,payload,onFailure){
   $('#scene-pick').onchange=e=>{const point=spec.focus.find(p=>String(p.id)===e.target.value);if(point)inspect(point);};
   $('#scene-focus').onclick=()=>{const point=spec.focus.find(p=>String(p.id)===$('#scene-pick').value);if(point)inspect(point,true);};
   function dispose(){
-    if(disposed)return;disposed=true;if(frameId!==null)cancelAnimationFrame(frameId);frameId=null;
+    if(disposed)return;disposed=true;clearTimeout(basemapTimer);if(frameId!==null)cancelAnimationFrame(frameId);frameId=null;
     observer?.disconnect();for(const remove of events)remove();controls.dispose();basemap?.dispose();model?.dispose();
     renderer.renderLists.dispose();renderer.dispose();renderer.forceContextLoss();host.onclick=null;host.innerHTML='';
   }
