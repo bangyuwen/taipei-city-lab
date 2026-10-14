@@ -1,6 +1,6 @@
 ---
 name: 台北城市實驗室
-description: 城市專刊：從生活提問探索地圖與情境比較
+description: 城市專刊：平面分隔與雙聲部排版承載研究閱讀
 colors:
   ink: '#202c45'
   muted: '#60697a'
@@ -112,6 +112,63 @@ typography:
   chart-label:
     fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
     fontSize: 14px
+  reading-intro:
+    fontFamily: '"City Serif","Noto Serif TC",serif'
+    fontSize: 26px
+    fontWeight: 700
+    lineHeight: 1.5
+    letterSpacing: -.02em
+  answer-headline:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 28px
+    fontWeight: 700
+    lineHeight: 1.55
+    letterSpacing: -.02em
+  answer-conclusion:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 18px
+    fontWeight: 400
+    lineHeight: 1.9
+  answer-section-title:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 18px
+    fontWeight: 700
+    lineHeight: 1.6
+  answer-body:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 16px
+    fontWeight: 400
+    lineHeight: 1.9
+  answer-support:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 14px
+    fontWeight: 400
+    lineHeight: 1.8
+  answer-status:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 14px
+    fontWeight: 600
+  answer-summary:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 13px
+    fontWeight: 600
+    lineHeight: 1.6
+  workbench-summary:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 20px
+    fontWeight: 600
+    lineHeight: 1.6
+  mobile-answer-headline:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 23px
+    fontWeight: 700
+    lineHeight: 1.55
+    letterSpacing: -.02em
+  mobile-workbench-summary:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 18px
+    fontWeight: 600
+    lineHeight: 1.6
 rounded:
   flat: '0'
   marker: 4px
@@ -129,6 +186,7 @@ spacing:
   section: 24px
   workspace-gap: 28px
   wide: 32px
+  reading-columns: 40px
 components:
   button-primary:
     backgroundColor: '{colors.signal}'
@@ -206,6 +264,21 @@ components:
     backgroundColor: '{colors.scene-control-bg}'
     textColor: '{colors.scene-muted}'
     padding: 16px 20px
+  research-answer:
+    textColor: '{colors.ink}'
+    typography: '{typography.answer-body}'
+    padding: 8px 0 32px
+  answer-evidence:
+    textColor: '{colors.ink}'
+    typography: '{typography.answer-body}'
+    padding: 24px 0 0
+  model-answer:
+    textColor: '{colors.ink}'
+    typography: '{typography.answer-body}'
+    padding: 8px 0 0
+  research-workbench:
+    textColor: '{colors.ink}'
+    padding: 12px 0
 ---
 
 # Design System: 台北城市實驗室
@@ -216,16 +289,21 @@ components:
 
 使用者於 2026-10-14 選定城市專刊，授權取代原有綠色工作台。深藍提供穩定導覽與文字，暖白承載閱讀，朱橘標出操作與選取。中文宋體標題配無襯線操作；繁體中文及「台北城市實驗室」名稱延續。
 
-介面以平面分隔、留白與灰藍輔助面建立層次。圓角用於原生控制、提示及視覺容器；指標、方法與明細直接放在工作區。生活提問與可回復的情境操作相連，來源分類和推估限制持續可見。
+介面以平面分隔、留白與灰藍輔助面建立層次。較大的無襯線研究正文直接置於暖白閱讀面，標題、結論、正文及補述用不同字級區隔；細線分出相鄰閱讀區段。圓角用於原生控制、提示及視覺容器，原生折疊保留次要內容；來源分類和推估限制持續可見。
 
-本文件從最終原始碼擷取：Leaflet 樣式先載入，其後為 dist/styles.css、dist/workspace.css；動態內容來自 dist/app.js、dist/viz.js 與 dist/map-ui.js。沿用 code-led Operate（seed 0f3e9d23），沒有 approved comp、decision comp 或 QUALITY BAR boards。現已取得本機 PR build 的桌機 1440、平板 850、手機 390／320px Chromium captures；獨立 reviewer 先完成初輪五節審查，再檢視 23 張有效 captures，對手機圖表及來源圖示兩項修正做 Verdict Pass：均 resolved、remaining clear、disposition ship。此 ship 僅涵蓋兩項修正及該批次回歸，不是新的全表面審查。Headless Chromium 154、SwiftShader 軟體 WebGL 與模擬觸控仍不涵蓋實體手機、Safari／Firefox、硬體 FPS 或正式站台完整流程；詳見 docs/acceptance.md、docs/citizen-finish-review.md。
+本文件從完成品原始碼擷取：Leaflet 樣式先載入，其後為 dist/styles.css、dist/workspace.css；動態內容來自 dist/app.js、dist/answers.js、dist/viz.js 與 dist/map-ui.js。歷史 code-led Operate（seed 0f3e9d23）沒有 approved comp、decision comp 或 QUALITY BAR boards。該次本機 PR build 取得桌機 1440、平板 850、手機 390／320px Chromium captures；獨立 reviewer 先完成初輪五節審查，再檢視 23 張有效 captures，對手機圖表及來源圖示兩項修正做 Verdict Pass：均 resolved、remaining clear、disposition ship。此歷史 ship 僅涵蓋兩項修正及該批次回歸，不是新的全表面審查。Headless Chromium 154、SwiftShader 軟體 WebGL 與模擬觸控仍不涵蓋實體手機、Safari／Firefox、硬體 FPS 或正式站台完整流程；詳見 docs/acceptance.md、docs/citizen-finish-review.md。
 
 2026-10-14 的連續城市地圖是既定世界的延伸：dist/basemap3d.js、dist/geo.js、dist/scene-data.js、dist/scene-builder.js 與 dist/scene-ui.js 讓地理 3D 使用相機可見的 OpenStreetMap 街道，清潔箱採固定螢幕尺寸的資料圓點，四個地理題共用持續選取環；模型範圍獨立揭露。記錄依目前原始碼，不改寫前次審查。.impeccable/review/city-map/finish-review.md 保留初輪完整審查；verdict.md 的 Verdict Pass 檢視 1440／390／320px 共 36 張最新 captures，PNG 與七個 runtime 雜湊均符合目前 results.json，點位層次／選取與手機範圍呈現兩項均 resolved、remaining clear、disposition ship。此 ship 僅涵蓋這兩項補修與該批受測回歸，不是新的全表面審查；沒有第二次 detector 或外部 QUALITY BAR 比較。驗證範圍仍是本機 Chromium 154／SwiftShader 與模擬觸控；補修及證據見 docs/city-map-acceptance.md。
+
+同日獲准的 code-led Read 延伸保留世界與 seed，只擴充完成品反覆使用的閱讀字級、無框正文、雙欄細線及原生 details。短篇入口與題目仍為 City Serif；答案標題、結論、依據和缺口改用較大的無襯線角色，舊研究控制、地圖與相機語彙延續。本次沒有新增 comp、QUALITY BAR 或 shipping raster。新增入口字形沿用 Noto Serif TC 700 與 OFL，來源由 dist/fonts/provenance.json 記錄。
+
+本次文件對照 dist/index.html、dist/app.js、dist/answers.js、兩份樣式與字體 provenance，抽看 .impeccable/review/answers/ 下的 desktop-bins.png、narrow-home.png、mobile-bins-comparison.png。results.json 的 28 張 PNG 與六個 runtime／font／provenance 雜湊均符合現有檔案；manifest 記錄 23 項答案流程 checks、零 pageErrors。初輪 finish-review.md 為 fix；最新 verdict.md 的 ship 僅清除 CSV 輸入變更後主結論失效化這一項評分修正及該批回歸，不是全站設計認證或實際研究資料足夠的證明。126 Node tests、靜態檢查及 legacy browser regression 為已報告的驗證，本文件回合未重跑。畫面仍限本機 Chromium／SwiftShader、模擬觸控；外部圖磚被阻擋，workbench captures 呈現 2D 比較圖，不建立其他瀏覽器、實體裝置、效能或實際選址答案的認證。頁面閱讀策略以當前 surface brief 為準。
 
 **Key Characteristics:**
 
 - 深藍外殼、暖白閱讀面、朱橘互動訊號各有明確角色。
 - 中文宋體標題配無襯線操作及等寬資料輸入。
+- 無框研究正文、較大的無襯線閱讀角色與區段細線形成刊物節奏。
 - 細框、平面分隔與灰藍輔助面，控制使用圓角。
 - 原生表單與漸進揭露保留研究能力和資料界線。
 - 地理背景連續延伸，資料點、選取與模型範圍保持各自語意。
@@ -260,7 +338,7 @@ components:
 
 ## Typography
 
-**Display Font:** City Serif，fallback 為 Noto Serif TC、serif。本地 dist/fonts/city-serif.woff 是 Noto Serif TC 靜態粗體（700）當前標題子集（約 16 KB）；SIL OFL 1.1 授權與來源見同目錄的 OFL.txt、provenance.json。新增文字須重新查核字形並擴充子集。
+**Display Font:** City Serif，fallback 為 Noto Serif TC、serif。本地 dist/fonts/city-serif.woff 是 Noto Serif TC 靜態粗體（700）當前標題子集（18,928 bytes），已包含答案版入口標題；SIL OFL 1.1 授權與來源見同目錄的 OFL.txt、provenance.json。新增文字須重新查核字形並擴充子集。
 
 **Body Font:** Noto Sans TC、PingFang TC、Microsoft JhengHei、sans-serif；無襯線字體未自託管，解析由裝置決定。
 
@@ -268,7 +346,7 @@ components:
 
 ### Hierarchy
 
-- **Display:** 入口大標題；42px、700、1.45。1200／980／760／480 邊界依序為 36／34／36／32px，並非單調縮放。
+- **Display／Reading Intro:** display 是保留的歷史入口大標題角色；目前短篇入口採 reading-intro（26px、700、1.5），仍保留 -.02em。dist/workspace.css 載入較晚，在 1200／980／760／480 邊界覆寫入口為 36／34／36／32px，並非單調縮放；早期 display 的 42px 和新基底手機 20px 宣告均不等於目前生效值。
 - **Headline:** 目前題目；34px、700、1.5；760px 以下為 30px。
 - **Title／Visual Title:** 操作與證據標題為 18px；地圖／場景／圖表標題為 16px，皆無襯線、600、1.7。
 - **Body／Question:** 桌機方法與來源為 14px、1.9，最長 72ch；生活提問為 16px、1.8。760px 以下，方法說明、來源正文與健檢結果正文採 mobile-body；生活提問維持 16px，選題 toggle 採 mobile-menu。
@@ -276,26 +354,34 @@ components:
 - **Metric:** 28px、650、1.5、-.02em；1200px 以下為 26px，480px 以下為 25px。單位是較小的正常字重次要文字。
 - **CSV:** 桌機 13px、1.8、等寬；760px 以下 CSV／JSON textarea 採 mobile-csv，保留多行和可調整高度。
 - **Chart Label:** 比較圖軸值與分區／時間標籤採 chart-label，按實際容器寬度重排；CSS 的 14px 不等同實際螢幕字級。最終量測桌機 14px、390px 約 13.91px、850px 約 13.95px、320px 約 13.89px，與 captures 的可讀標籤一致。
+- **Answer Headline／Conclusion:** answer-headline 為無襯線（28px、700、1.55、-.02em），760px 以下採 mobile-answer-headline（23px）；結論採 answer-conclusion（18px、400、1.9），手機採既有 mobile-body（16px、400、1.9）。
+- **Answer Section／Body／Support:** 依據、缺口與比較區標題採 answer-section-title（18px、700、1.6）；依據與模型正文採 answer-body（16px、400、1.9），補述及來源日期採 answer-support（14px、400、1.8）。answer-status 為朱橘、14px、600，來源未另宣告行高。
+- **Answer Summary／Workbench Summary:** 來源與條件式答案的原生 summary 採 answer-summary（13px、600、1.6）；研究工具入口採 workbench-summary（20px、600、1.6），760px 以下為 mobile-workbench-summary（18px）。
 
 **The Two Voices Rule.** 宋體用於入口與題目標題；控制、區域標題及資料保持無襯線。新增標題須補齊本地字形，不能把 fallback 渲染視為字體驗收。
 
+**The Reading Roles Rule.** 無框研究閱讀保留答案標題、結論、正文與補述的字級差；不要把 answer-body 套成研究控制的 field 或 label，宋體也不擴張到整段答案正文。
+
 ## Layout
 
-基底為 242px 固定題目導覽加流動工作區；sidebar 在 viewport 頂部 sticky 且可垂直捲動。main 最大寬度 1760px、兩側 padding 38px。主要工作區為「內容 + 304px 參數」（間距 28px），證據區為 1.25fr／1fr（間距 32px）。地圖／場景基底高 420px。
+基底為 242px 固定題目導覽加流動閱讀區；sidebar 在 viewport 頂部 sticky 且可垂直捲動。main 最大寬度 1760px、兩側 padding 38px。短篇入口為單一橫向 flex、24px 間距，補述最長 44ch；入口底線與內容區相隔。研究閱讀區為 8px 0 32px padding，開頭最長 76ch；依據與缺口採 1.3fr／1fr、40px 間距，頂部細線、28px margin 與 24px padding。1000px 以下間距降為 28px，760px 以下改單欄，缺口前再用細線與 24px padding 分隔。
+
+展開後的研究工作區仍為「內容 + 304px 參數」（間距 28px），下方方法／明細為 1.25fr／1fr（間距 32px）。地圖／場景基底高 420px；這些研究工具排列不取代閱讀區的雙欄規則。
 
 | 邊界 | 來源所宣告的排列 |
 | --- | --- |
 | ≥1500px | main 兩側 50px；參數 320px、間距 32px；viewport 高 480px。 |
 | ≤1200px | 導覽 214px；main 兩側 26px；參數 270px、間距 20px；提示及題目標頭堆疊，證據單欄。 |
-| ≤980px | 導覽 190px；main 兩側 22px；入口單欄、提問列表隱藏；工作區單欄、畫面先於參數；控制及指標雙欄；viewport 高 440px。 |
-| ≤760px | 導覽成頂部預設收合選單，展開題目為兩欄；入口提問列表恢復；viewport 高 390px。最終 mobile 層維持提問／toggle／欄位 16px、輔助說明 14px，方法／來源／健檢正文 16px。 |
+| ≤1000px | 答案依據／缺口間距 28px；仍為雙欄。 |
+| ≤980px | 導覽 190px；main 兩側 22px；短篇入口保持 flex，舊提問列表不顯示；研究工作區單欄、畫面先於參數；控制及指標雙欄；viewport 高 440px。 |
+| ≤760px | 導覽成頂部預設收合選單，展開題目為兩欄；答案依據／缺口單欄，入口補述及舊提問列表隱藏；入口 flex 間距 12px。viewport 高 390px。最終 mobile 層維持提問／toggle／欄位 16px、輔助說明 14px，方法／來源／健檢正文 16px；閱讀角色見 Typography。 |
 | ≤480px | main 兩側 18px；控制回到單欄、保存／匯出全寬；局部 padding 縮小，viewport 高 360px；上述 mobile 字級仍生效。 |
 
 間距沿用前置 scale 與元件 padding。dist/workspace.css 最後的 760px media 層在 480px 規則之後，覆寫早期的 13px 入口說明與 15px 生活提問；延伸手機表面時維持這個 cascade。圖層 label 至少 44px 高，Leaflet zoom 為 44×44px；topbar-title 持續保有至少 44px 高的操作區。
 
 地理視窗是街道的取景框，不是有邊緣的地理板塊。3D 依相機可見地面更新完整 OSM 圖磚，平移、縮放及容器改變不改變研究範圍的固定 Web Mercator 投影、點位或公尺半徑。模型計算範圍為預設關閉的獨立圖層；在 3D 啟用時依視窗長寬比立即切到可容納全範圍的俯視，「全域」在該圖層啟用時也採此視角。周邊街道只供定位，不擴大計算資料。
 
-已由 .impeccable/review/ 的 1440／850／390／320px 畫面驗證重排，final-results.json 記錄四個寬度的受測頁面沒有整頁水平溢出；來源對話框與 320px 柱狀／時間圖另有補充 captures。九組真實 Chromium 操作、14 個 Node 測試檔與 npm run check 通過，runtime errors、failed requests、HTTP errors 為零；scripts/check-browser.py 通過表格鍵盤、dialog 焦點、SVG 圖示、窄螢幕實際圖表字級／時間標籤邊界及地圖／3D 生命週期檢查。Leaflet 卸載後的 redraw callback 防護是行為修正，不是新視覺 token。aXe 僅涵蓋桌機根頁及手機清潔箱頁，零 violations 但仍有 incomplete；不是全站人工鍵盤巡覽或完整 WCAG 認證。圖磚驗收透過 QA-only HTTPS relay 保留實際 browser User-Agent、localhost Referer 與 Accept，維持 OS CA／TLS 檢查且未改持久信任；最初漏 Referer 的 HTTP 200 拒絕圖片已剔除並重拍，最終真實街道底圖經目視確認。
+歷史 citizen 批次曾由 .impeccable/review/ 的 1440／850／390／320px 畫面驗證重排，final-results.json 記錄四個寬度的受測頁面沒有整頁水平溢出；來源對話框與 320px 柱狀／時間圖另有補充 captures。該批九組真實 Chromium 操作、14 個 Node 測試檔與 npm run check 通過，runtime errors、failed requests、HTTP errors 為零；scripts/check-browser.py 通過表格鍵盤、dialog 焦點、SVG 圖示、窄螢幕實際圖表字級／時間標籤邊界及地圖／3D 生命週期檢查。Leaflet 卸載後的 redraw callback 防護是行為修正，不是新視覺 token。該批 aXe 僅涵蓋桌機根頁及手機清潔箱頁，零 violations 但仍有 incomplete；不是全站人工鍵盤巡覽或完整 WCAG 認證。該次圖磚驗收透過 QA-only HTTPS relay 保留實際 browser User-Agent、localhost Referer 與 Accept，維持 OS CA／TLS 檢查且未改持久信任；最初漏 Referer 的 HTTP 200 拒絕圖片已剔除並重拍，最終真實街道底圖經目視確認。本次答案批次的 scope 以 Overview 與 answers/results.json 為準，不沿用歷史圖磚成功來宣稱本次驗證。
 
 **The Cascade Rule.** 按 Leaflet、基底、workspace 的實際載入順序延伸樣式，維持主要畫面先於參數的 DOM 閱讀順序。
 
@@ -349,6 +435,18 @@ Select 與文字欄位是白底、中性描邊、control 圓角、至少 44px �
 
 地圖／3D／比較圖表是原生 button group，aria-pressed 表示目前視角，選取採柔朱橘及朱橘底線，三者維持同一組模型參數。先顯示前四項指標，其餘放在 more-metrics details；先顯示前三項控制，其餘放在 advanced-controls details。這是當前介面模式，並非未來所有表面都必須採固定數量。
 
+### Research Reading and Export
+
+研究正文無外框、圓角或陰影，直接沿用暖白閱讀面。開頭以 answer-headline、answer-conclusion、answer-status 建立層級，每段保留 16px 下緣間距；朱橘狀態是文字，不另包成 badge。匯出沿用既有 Outline button 的 padding、hover 與 focus，沒有新增操作色或造型。此題匯出按鈕與當前可見結論共用 currentAnswer()；CSV 輸入或查核條件改變時，主結論改為待重新檢查文字，不用新視覺 token 表示有效性。
+
+依據與缺口採上述閱讀雙欄，標題為 answer-section-title；清單縮排 22px，相鄰條目間距 12px，正文可換行。真實快照用粗體數量與獨立補述，不改成指標卡。來源日期為 answer-support，真正外連維持 14px inline SVG；來源清單用原生 details。
+
+### Conditional Comparison and Research Disclosure
+
+條件式答案為原生 details，頂部細線、28px 上距、8px 上 padding；summary 至少 44px 高、10px 0 padding、answer-summary 字級。正文用 answer-body，鄰接模型限制用 answer-support。數量比較沿用原生 table、sticky 灰藍表頭、tabular-nums 與可聚焦的局部捲動 region；寬螢幕呈現完整欄位，窄螢幕保留可左右捲動說明，不壓縮成較小正文。
+
+完整研究工具也是原生 details，上下細線、12px 0 padding、下距 32px。入口採 workbench-summary，展開時 summary 下距 8px，補述最長 76ch、下距 24px；內部保留既有控制、地圖、圖表與明細元件。預設狀態與本頁先後順序屬 surface brief，不提升成所有未來表面的固定布局。原生 marker 與文字指出展開狀態，focus-visible 延用 3px outline、4px offset，未另加裝飾 hover 或動畫。
+
 ### Geographic Maps
 
 街道地圖與補樹、清潔箱、鼠患、社區健檢的 3D 使用具來源標示的連續 OSM 街道。地理 3D 不建立厚底座、格線或四區標籤；原有四區仍是比較圖與模型的模擬分區。交通、公車及資料健檢的 3D 維持原有示意圖及其語意，不改稱真實地理路網。
@@ -361,15 +459,16 @@ Select 與文字欄位是白底、中性描邊、control 圓角、至少 44px �
 
 **The Geographic Context Rule.** 地理背景連續延伸供定位，點位與公尺範圍固定於模型投影；選取環辨認記錄，範圍圖層揭露計算邊界，三者不得混用。
 
-### Public Question and Experiment
+### Research Condition Callout
 
-生活提問接續題目標題，灰藍提示提供模型界線與一鍵情境；760px 以下提示正文 14px、生活提問 16px。套用後同步重繪控制、指標及視角，可回到起點。#explore 顯示公眾入口，計算題目預設仍為 bins；原有題目和參數 hash 保留。無 WebGL 2 時轉圖表，地圖載入失敗時保留其他探索方式。
+灰藍提示與一鍵條件按鈕保留既有樣式，現在位於折疊研究工具內；提示正文在 760px 以下為 14px，題目生活提問仍為 16px。套用條件後同步重繪控制、指標及視角，重設沿用 Text button。既有 sidecar 的提示 snippet 保留視覺原型與歷史文案；當前研究文案由 dist/app.js 提供。路由、閱讀次序與模型功能界線留在 surface brief。
 
 ## Do's and Don'ts
 
 ### Do:
 
 - Do 使用深藍、暖白和互動朱橘的既定角色，維持資料系列與圖例原有語意。
+- Do 讓研究閱讀直接使用暖白面、區段細線與 answer 字級角色，保留結論、正文和補述的差別。
 - Do 為新增宋體標題補齊本地字形，保留字體授權及來源。
 - Do 使用原生控制、可見文字、焦點與目前狀態語意，保持畫面先於參數。
 - Do 持續呈現來源、真實與合成分類、方法及推估限制。
@@ -390,6 +489,8 @@ Select 與文字欄位是白底、中性描邊、control 圓角、至少 44px �
 
 本次地圖延伸另保留 /workspace/scratch/taipei-qa/map-detect.json 的原有 16 項 advisory-only 色彩／字級偏離；未重跑 detector、未修正或提升為可繼承 token。這份原有清單不代表最新補修的 rendered visual 驗收。
 
-### 合併前標題語意修正
+答案審查另提及既有 detector.json 的 20 項 advisories 與一項指定暖白底警告；本次 documenter 未重跑 detector、未修復這些既有 advisory drift，也未把它們正規化為新規則。暖白保留是已批准的世界選擇；這些清單與唯一 audit invalidation 修正的 ship 判定分開。
+
+### 合併前標題語意修正（歷史）
 
 入口可見時，歡迎標題是唯一可見 H1、題目標題是 H2；按「先看看垃圾桶怎麼放」或開啟題目深連結後，題目改為 H1，鍵盤焦點仍回到題目區。題目字體以 .topic-title 固定，語意層級不改變桌機 34px／手機 30px 的外觀。 這是 GitHub P2 審查意見的補修，通過獨立瀏覽器回歸與桌機／模擬手機 22 項路徑狀態檢查；最新證據在 .impeccable/review/heading-results.json，不擴大先前 Impeccable 兩項修正的 ship 判定。

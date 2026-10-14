@@ -8,6 +8,7 @@ import {modules, tones, topics} from '../../dist/registry.js';
 import {escapeHTML, format, mapSVG, chartSVG, tableHTML} from '../../dist/viz.js';
 import {research} from '../../dist/research.js';
 import {inspectCSV} from '../../dist/modules/audit.js';
+import {researchAnswer} from '../../dist/answers.js';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const read = name => fs.readFileSync(path.join(root, name), 'utf8');
@@ -83,7 +84,7 @@ export async function boot(saved = null, hash = '#shade') {
   const dom=makeDOM(), fetches=[], storage=new Map();
   if(saved!==null)storage.set('taipei-city-lab-v1',typeof saved==='string'?saved:JSON.stringify(saved));
   const context=vm.createContext({...dom,Blob,URLSearchParams,TextDecoder,TextEncoder,workflowDefs,caseView,advanceCase,modules,tones,topics,research,
-    esc:escapeHTML,format,mapSVG,chartSVG,tableHTML,inspectCSV,location:{hash},
+    esc:escapeHTML,format,mapSVG,chartSVG,tableHTML,inspectCSV,researchAnswer,location:{hash},
     localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value)},
     fetch:async url=>{fetches.push(url);return {ok:true,json:async()=>snapshot};},
   });

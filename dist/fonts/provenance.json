@@ -3,6 +3,6 @@
   "weight": 700,
   "source": "https://github.com/google/fonts/tree/main/ofl/notoseriftc",
   "license": "SIL Open Font License 1.1",
-  "conversion": "Static weight 700, subset for current display headings, WOFF",
-  "sha256": "dffb243dc1fc9a1cf693ef3fe9b31fd261975bd7515b68ff72ff5d87964b6602"
+  "conversion": "Static weight 700, incumbent display glyphs plus answer-first homepage heading, WOFF",
+  "sha256": "dcce0ffb65b2c6e672a5e78f445921dbff523d5feb8bfe0acc990a36a448fbfe"
 }
