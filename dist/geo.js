@@ -22,8 +22,8 @@ export function worldPoint(point,project){
     z:point.y===project.centerY?-0:-(p.y-project.centerMercatorY)*project.mercatorScale};
 }
 export function tileURL(tile,provider=TILE_PROVIDER){return provider.url.replace('{z}',String(tile.z)).replace('{x}',String(tile.x)).replace('{y}',String(tile.y));}
-export function tilePlan(bbox,zoom=14,maxTiles=24){
-  const project=projection(bbox),sw=mercator(bbox[0],bbox[1]),ne=mercator(bbox[2],bbox[3]);
+export function tilePlan(bbox,zoom=14,maxTiles=24,{project=projection(bbox),clip=true}={}){
+  const sw=mercator(bbox[0],bbox[1]),ne=mercator(bbox[2],bbox[3]);
   let z=Math.max(0,Math.min(19,Math.floor(zoom))),range;
   do{const n=2**z,size=2*halfWorld/n;
     range={size,minX:Math.floor((sw.x+halfWorld)/size),maxX:Math.floor((ne.x+halfWorld-1e-7)/size),
@@ -33,11 +33,16 @@ export function tilePlan(bbox,zoom=14,maxTiles=24){
   const tiles=[];
   for(let y=range.minY;y<=range.maxY;y++)for(let x=range.minX;x<=range.maxX;x++){
     const west=x*range.size-halfWorld,east=west+range.size,north=halfWorld-y*range.size,south=north-range.size;
-    const left=Math.max(sw.x,west),right=Math.min(ne.x,east),bottom=Math.max(sw.y,south),top=Math.min(ne.y,north);
+    const left=clip?Math.max(sw.x,west):west,right=clip?Math.min(ne.x,east):east,
+      bottom=clip?Math.max(sw.y,south):south,top=clip?Math.min(ne.y,north):north;
     if(right<=left||top<=bottom)continue;
     const world={left:(left-project.centerMercatorX)*project.mercatorScale,right:(right-project.centerMercatorX)*project.mercatorScale,
       north:-(top-project.centerMercatorY)*project.mercatorScale,south:-(bottom-project.centerMercatorY)*project.mercatorScale};
     tiles.push({x,y,z,world,uv:{left:(left-west)/range.size,right:(right-west)/range.size,bottom:(bottom-south)/range.size,top:(top-south)/range.size}});
   }
   return {project,tiles,zoom:z};
+}
+export function scopeText(bbox){
+  const [west,south,east,north]=bbox;
+  return `模型計算範圍：緯度 ${south}–${north}、經度 ${west}–${east}；周邊街道僅供定位。`;
 }

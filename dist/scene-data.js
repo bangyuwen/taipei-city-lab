@@ -4,7 +4,7 @@ import {bboxOf,validFacilities,coverageBy} from './modules/spatial.js';
 import {syntheticArrivals,shiftArrivals,simulateQueue} from './modules/traffic.js';
 import {simulateShuttle} from './modules/bus.js';
 
-export const SCENE_COLORS={existing:'#75bfa0',demand:'#849fba',candidate:'#a5b8ae',recommended:'#ffcc70',covered:'#55cfb1',newlyCovered:'#ffcc70'};
+export const SCENE_COLORS={existing:'#75bfa0',demand:'#849fba',candidate:'#a5b8ae',recommended:'#ffcc70',covered:'#55cfb1',newlyCovered:'#ffcc70',contextGround:'#e7e9e3',mapExisting:'#236749',mapRecommended:'#b67608',mapCandidate:'#737d79',mapSelection:'#ae432c'};
 export function samplePoints(points,limit=3000){
   if(points.length<=limit)return points;
   const step=points.length/limit;
