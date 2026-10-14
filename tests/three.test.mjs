@@ -111,3 +111,11 @@ test('baseline and planned selected glyphs are mutually exclusive, preventing ov
   model.setPlanned(false);assert.equal(base.visible,true);assert.equal(model.layers.recommended.visible,false);
   model.dispose();
 });
+test('a selected geographic location persists when the plan or marker viewport changes',()=>{
+  const {spec}=fixture('bins'),model=createSceneModel(spec),point=spec.focus[0],selection=model.root.getObjectByName('selected-location');
+  model.setSelected(point);model.setMarkerViewport(360,42);model.setPlanned(false);
+  assert.equal(selection.visible,true);assert.equal(selection.position.x,point.x);assert.equal(selection.position.z,point.z);
+  const coords=selection.position.toArray();model.setMarkerViewport(420,42);assert.deepEqual(selection.position.toArray(),coords);
+  assert.ok(model.picks.filter(p=>p.isSprite).every(p=>p.position.x===p.userData.point.x&&p.position.z===p.userData.point.z));
+  model.setSelected(null);assert.equal(selection.visible,false);model.dispose();
+});

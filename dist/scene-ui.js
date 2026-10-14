@@ -34,7 +34,7 @@ export function mountScene(host,payload,onFailure){
     const width=viewport.clientWidth,height=viewport.clientHeight;
     if(width>0&&height>0){
       if(width!==lastWidth||height!==lastHeight){renderer.setSize(width,height,false);camera.aspect=width/height;camera.updateProjectionMatrix();lastWidth=width;lastHeight=height;basemap?.updateView(camera,{width,height});}
-      try{controls.update();const view=model.update(elapsed);
+      try{controls.update();model.setMarkerViewport?.(height,camera.fov);const view=model.update(elapsed);
       $('#scene-summary').textContent=view.summary;$('#scene-details').textContent=view.details||'';
       $('#scene-scrub').value=String(Math.floor(elapsed));$('#scene-clock').textContent=view.frame?.time||'';
       renderer.render(scene,camera);placeLabels(width,height);
@@ -52,6 +52,7 @@ export function mountScene(host,payload,onFailure){
     }
   }
   function cameraView(view){
+    if(view==='reset'&&layers.studyArea)view='top';
     const e=spec.extent;controls.target.set(0,0,0);
     camera.aspect=Math.max(1,viewport.clientWidth)/Math.max(1,viewport.clientHeight);camera.updateProjectionMatrix();
     if(spec.kind==='spatial'){
@@ -68,6 +69,7 @@ export function mountScene(host,payload,onFailure){
     request();
   }
   function inspect(point,focus=false,notify=true){
+    model.setSelected?.(point);
     selected=point;const coords=point.latitude!==undefined?` · 緯度 ${point.latitude.toFixed(6)}／經度 ${point.longitude.toFixed(6)}`:'';
     $('#scene-inspector').textContent=(point.label||point.id)+' · '+(point.detail||'')+coords;
     if(focus&&spec.kind==='spatial'){
@@ -86,7 +88,13 @@ export function mountScene(host,payload,onFailure){
     const layersHost=$('#scene-layers');layersHost.replaceChildren();
     for(const key of Object.keys(model.layers)){
       const label=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.checked=layers[key]!==false;
-      input.onchange=()=>{layers[key]=input.checked;applyLayers();};label.append(input,document.createTextNode(name[key]));layersHost.append(label);
+      input.onchange=()=>{layers[key]=input.checked;if(key==='studyArea'&&input.checked)cameraView('top');applyLayers();};
+      label.append(input);
+      if(spec.id==='bins'&&['existing','candidate','recommended'].includes(key)){
+        const swatch=document.createElement('span');swatch.className='scene-point-key';swatch.setAttribute('aria-hidden','true');
+        swatch.style.background={existing:SCENE_COLORS.mapExisting,candidate:SCENE_COLORS.mapCandidate,recommended:SCENE_COLORS.mapRecommended}[key];label.append(swatch);
+      }
+      label.append(document.createTextNode(name[key]));layersHost.append(label);
     }
     const comparison=$('#scene-comparison');comparison.replaceChildren();
     if(spec.kind==='spatial'&&['shade','bins'].includes(spec.id))for(const [text,value] of [['既有基準',false],['推薦方案',true]]){
