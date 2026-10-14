@@ -1,0 +1,4 @@
+
+node_modules/
+.agents/skills/impeccable/scripts/bin/
+__pycache__/

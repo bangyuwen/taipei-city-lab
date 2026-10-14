@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+const root=path.resolve(import.meta.dirname,'..'),source=path.join(root,'node_modules/leaflet'),target=path.join(root,'dist/vendor/leaflet');
+const version=JSON.parse(fs.readFileSync(path.join(source,'package.json'),'utf8')).version;
+if(version!=='1.9.4')throw new Error('Expected pinned leaflet@1.9.4');
+fs.mkdirSync(target,{recursive:true});
+const names=['leaflet-src.esm.js','leaflet-src.esm.js.map','leaflet.css'];
+for(const name of names)fs.copyFileSync(path.join(source,'dist',name),path.join(target,name));
+fs.cpSync(path.join(source,'dist/images'),path.join(target,'images'),{recursive:true});
+fs.copyFileSync(path.join(source,'LICENSE'),path.join(target,'LICENSE'));
+const files=[...names,'LICENSE',...fs.readdirSync(path.join(target,'images')).map(name=>'images/'+name)];
+const hashes=Object.fromEntries(files.map(name=>[name,createHash('sha256').update(fs.readFileSync(path.join(target,name))).digest('hex')]));
+fs.writeFileSync(path.join(target,'manifest.json'),JSON.stringify({package:'leaflet',version,origin:'https://leafletjs.com',files:hashes},null,2)+'\n');
+console.log('Pinned Leaflet module, styles, images and license copied.');
