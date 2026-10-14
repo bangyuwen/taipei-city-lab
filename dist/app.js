@@ -194,6 +194,10 @@ function drawWorkflow(){
     }catch(error){toast(error.message);}
   };
 }
+function drawModuleHeading(){
+  const heading=$('city-intro').hidden?'h1':'h2';
+  $('module-head').innerHTML=`<div class="module-head"><div><div class="module-title"><${heading} class="topic-title">${esc(active.title)}</${heading}></div><p class="topic-question">${esc(citizenContent[active.id].question)}</p><p class="subtitle">${esc(active.subtitle)}</p></div><span class="badge">${esc(badgeText[modules.indexOf(active)])}</span></div>`;
+}
 function activate(){
   cancelCalculation();if(active?.id==='audit')captureAuditInputs();const previous=active?.id,fragment=location.hash.slice(1),id=fragment.split('?')[0];active=modules.find(m=>m.id===id)||modules.find(m=>m.id==='bins');if(previous!==active.id)selectedPoint=null;
   const query=fragment.includes('?')?fragment.slice(fragment.indexOf('?')+1):'';
@@ -203,7 +207,7 @@ function activate(){
   document.title=`${topics[index]} — 台北城市實驗室`;
   $('city-intro').hidden=Boolean(id&&id!=='explore');
   $('sidebar').dataset.menuOpen='false';$('topic-menu-toggle').setAttribute('aria-expanded','false');
-  $('module-head').innerHTML=`<div class="module-head"><div><div class="module-title"><h1>${esc(active.title)}</h1></div><p class="topic-question">${esc(citizenContent[active.id].question)}</p><p class="subtitle">${esc(active.subtitle)}</p></div><span class="badge">${esc(badgeText[index])}</span></div>`;
+  drawModuleHeading();
   drawNavigation();drawGuide();drawControls();drawSaved();drawResult();drawAuditInput();
   if(viewMode!=='3d')$('scene-status').textContent=viewMode==='map'?'拖曳或縮放地圖，點選位置查看來源與推薦依據。':'2D 圖表與完整明細，使用同一組情境參數。';
 }
@@ -261,7 +265,7 @@ async function init(){
     observer.observe($('visualization'));observer.observe($('chart-secondary'));
   }
   $('topic-menu-toggle').onclick=()=>{const open=$('sidebar').dataset.menuOpen!=='true';$('sidebar').dataset.menuOpen=String(open);$('topic-menu-toggle').setAttribute('aria-expanded',String(open));};
-  $('begin-exploring').onclick=()=>{$('city-intro').hidden=true;$('module-head').scrollIntoView?.({block:'start',behavior:'auto'});$('module-head').focus?.({preventScroll:true});};
+  $('begin-exploring').onclick=()=>{$('city-intro').hidden=true;drawModuleHeading();$('module-head').scrollIntoView?.({block:'start',behavior:'auto'});$('module-head').focus?.({preventScroll:true});};
   $('reset').onclick=()=>{cancelCalculation();state.params[active.id]={...active.defaults};selectedPoint=null;drawControls();drawResult();persist();toast('已回到預設方案。');};
   $('save-scenario').onclick=()=>{flushCalculation();const list=Array.isArray(state.saved[active.id])?state.saved[active.id]:[];if(list.length>=6)list.shift();const name='方案 '+new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});list.push({name,params:{...paramsFor(active)}});state.saved[active.id]=list;persist();drawSaved();toast('已儲存目前參數。');};
   $('viewmode-map').onclick=()=>setView('map');$('viewmode-3d').onclick=()=>setView('3d');$('viewmode-2d').onclick=()=>setView('2d');
