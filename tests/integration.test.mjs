@@ -184,7 +184,7 @@ test('actual app handlers navigate, update controls, persist, load, delete and r
   h.nodes.get('reset').onclick();assert.equal(h.api.paramsFor(modules[3]).shift,modules[3].defaults.shift);
   h.nodes.get('saved-scenarios').onclick({target:{dataset:{delete:'0'}}});assert.equal(h.api.getState().saved.traffic.length,0);
   assert.equal(JSON.parse(h.storage.get('taipei-city-lab-v1')).params.traffic.shift,modules[3].defaults.shift);
-  h.go('unknown-hash');assert.equal(h.api.getActive().id,'shade');
+  h.go('unknown-hash');assert.equal(h.api.getActive().id,'bins');
   h.go('audit');h.change('question','bus');assert.equal(h.api.paramsFor(modules[6]).question,'bus');
   h.go('bus');assert.equal(h.nodes.get('audit-input').hidden,true);
 });
