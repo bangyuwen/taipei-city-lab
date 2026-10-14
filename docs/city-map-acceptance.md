@@ -22,4 +22,6 @@
 - captures 包含街道、斜視、俯視、範圍開關、平移縮放、聚焦、全域及工作區。清潔箱預設斜視／範圍畫面重新從沒有先前選取的新文件取得；各檔 SHA-256 與受測 runtime SHA-256 一併記錄。
 - 真實圖磚以 QA-only HTTPS relay 保留實際 browser User-Agent、localhost Referer 與 Accept，驗證 OS CA／TLS；沒有替換圖片、停用 TLS 或變更持久信任。
 
-以上為本機 Chromium 154、SwiftShader 與模擬觸控裝置的驗證；不代表 Safari、Firefox、實體手機或硬體效能測試。獨立 Impeccable 完成審查另記於同目錄的 finish-review。
+以上為本機 Chromium 154、SwiftShader 與模擬觸控裝置的驗證；不代表 Safari、Firefox、實體手機或硬體效能測試。
+
+獨立 Impeccable 初輪完整審查確認連續地圖已回應方形底座問題，另提出點位階層／選取及手機範圍顯示兩項修正。修正後的 Verdict Pass 將兩項均評為 resolved，disposition 為 ship，範圍限於這兩項修正。完整審查、原始 manifest 與最終 verdict 保留在儲存庫的 `.impeccable/review/city-map/`；36 張最終 captures 的來源／圖片 SHA-256 全部吻合。
