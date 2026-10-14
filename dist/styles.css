@@ -102,3 +102,23 @@ a.local-note svg,.source-entry a svg,.geo-readout a svg{width:14px;height:14px;v
 .scene-north svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .scene-viewport[data-geographic=true] canvas:focus-visible{outline-color:var(--accent)}
 .scene-point-key{display:inline-block;width:10px;height:10px;border:1px solid var(--paper);border-radius:50%;vertical-align:-1px}
+.city-intro{display:block;padding:24px 0;margin:0;border-bottom:1px solid var(--line)}
+.city-intro .welcome-copy{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.city-intro h1{font-size:26px;line-height:1.5;margin:0}.city-intro h1 em{font-style:normal;color:var(--ink)}
+.city-intro .welcome-copy>p{font-size:14px;max-width:44ch;margin:0}.city-intro .welcome-topics{display:none}
+.research-answer{padding:8px 0 32px}.answer-lede{max-width:76ch}
+.answer-lede h2{font-size:28px;line-height:1.55;margin:0 0 16px;text-wrap:balance;letter-spacing:-.02em}
+.answer-conclusion{font-size:18px;line-height:1.9;margin:0 0 16px}.answer-status{font-size:14px;color:var(--signal);font-weight:600;margin:0 0 16px}
+.answer-evidence{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;border-top:1px solid var(--line);margin-top:28px;padding-top:24px}
+.answer-evidence h3,.model-answer h3{font-size:18px;margin:0 0 12px;line-height:1.6}
+.answer-evidence p,.answer-evidence li,.model-answer p,.model-answer li{line-height:1.9;font-size:16px;overflow-wrap:anywhere}
+.answer-evidence ul,.answer-evidence ol,.model-answer ul{padding-left:22px;margin:0}.answer-evidence li+li{margin-top:12px}
+.answer-evidence .local-note,.model-answer .local-note{font-size:14px;line-height:1.8}
+.observed-facts{margin-top:28px}.observed-facts p{margin:8px 0}.answer-references{margin-top:24px}
+.answer-references a{text-decoration:underline}.answer-references li span{display:block;color:var(--muted);font-size:14px;line-height:1.8}.answer-references a svg{width:14px;height:14px;vertical-align:-2px}
+.model-answer{border-top:1px solid var(--line);margin-top:28px;padding-top:8px}.model-answer h3{margin-top:24px}
+.model-answer summary,.research-workbench>summary,.answer-references summary{cursor:pointer;min-height:44px;padding:10px 0;font-weight:600;line-height:1.6}
+.research-workbench{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 0;margin:0 0 32px}.research-workbench>summary{font-size:20px}
+.research-workbench[open]>summary{margin-bottom:8px}.workbench-note{font-size:14px;color:var(--muted);line-height:1.8;max-width:76ch;margin:0 0 24px}
+@media(max-width:1000px){.answer-evidence{gap:28px}}
+@media(max-width:760px){.city-intro .welcome-copy{gap:12px}.city-intro h1{font-size:20px}.city-intro .welcome-copy>p{display:none}.answer-lede h2{font-size:23px}.answer-conclusion{font-size:16px}.answer-evidence{grid-template-columns:minmax(0,1fr);gap:28px}.answer-gaps{border-top:1px solid var(--line);padding-top:24px}.research-workbench>summary{font-size:18px}}
