@@ -35,6 +35,8 @@ colors:
   map-demand: '#557ca4'
   map-candidate: '#737d79'
   map-recommended: '#b67608'
+  context-ground: '#e7e9e3'
+  map-selection: '#ae432c'
 typography:
   display:
     fontFamily: '"City Serif","Noto Serif TC",serif'
@@ -200,6 +202,10 @@ components:
     textColor: '{colors.evidence-text}'
     rounded: '{rounded.callout}'
     padding: 16px 20px
+  map-layer-control:
+    backgroundColor: '{colors.scene-control-bg}'
+    textColor: '{colors.scene-muted}'
+    padding: 16px 20px
 ---
 
 # Design System: 台北城市實驗室
@@ -214,12 +220,15 @@ components:
 
 本文件從最終原始碼擷取：Leaflet 樣式先載入，其後為 dist/styles.css、dist/workspace.css；動態內容來自 dist/app.js、dist/viz.js 與 dist/map-ui.js。沿用 code-led Operate（seed 0f3e9d23），沒有 approved comp、decision comp 或 QUALITY BAR boards。現已取得本機 PR build 的桌機 1440、平板 850、手機 390／320px Chromium captures；獨立 reviewer 先完成初輪五節審查，再檢視 23 張有效 captures，對手機圖表及來源圖示兩項修正做 Verdict Pass：均 resolved、remaining clear、disposition ship。此 ship 僅涵蓋兩項修正及該批次回歸，不是新的全表面審查。Headless Chromium 154、SwiftShader 軟體 WebGL 與模擬觸控仍不涵蓋實體手機、Safari／Firefox、硬體 FPS 或正式站台完整流程；詳見 docs/acceptance.md、docs/citizen-finish-review.md。
 
+2026-10-14 的連續城市地圖是既定世界的延伸：dist/basemap3d.js、dist/geo.js、dist/scene-data.js、dist/scene-builder.js 與 dist/scene-ui.js 讓地理 3D 使用相機可見的 OpenStreetMap 街道，清潔箱採固定螢幕尺寸的資料圓點，四個地理題共用持續選取環；模型範圍獨立揭露。記錄依目前原始碼，不改寫前次審查。.impeccable/review/city-map/finish-review.md 保留初輪完整審查；verdict.md 的 Verdict Pass 檢視 1440／390／320px 共 36 張最新 captures，PNG 與七個 runtime 雜湊均符合目前 results.json，點位層次／選取與手機範圍呈現兩項均 resolved、remaining clear、disposition ship。此 ship 僅涵蓋這兩項補修與該批受測回歸，不是新的全表面審查；沒有第二次 detector 或外部 QUALITY BAR 比較。驗證範圍仍是本機 Chromium 154／SwiftShader 與模擬觸控；補修及證據見 docs/city-map-acceptance.md。
+
 **Key Characteristics:**
 
 - 深藍外殼、暖白閱讀面、朱橘互動訊號各有明確角色。
 - 中文宋體標題配無襯線操作及等寬資料輸入。
 - 細框、平面分隔與灰藍輔助面，控制使用圓角。
 - 原生表單與漸進揭露保留研究能力和資料界線。
+- 地理背景連續延伸，資料點、選取與模型範圍保持各自語意。
 
 ## Colors
 
@@ -230,17 +239,19 @@ components:
 - **互動朱橘**（signal）：主要操作、文字 hover、視角底線及原生 range／checkbox；hover、按下有較深變體。最後值已按宣告色彩對比修正，不從標誌細線抽取操作色。
 - **柔朱橘**（signal-soft）：當前題目與視角底色；前景仍為深藍。
 - **鍵盤朱橘**（focus）：一般焦點；深藍導覽採亮色 focus-on-navy。
+- **位置選取朱橘**（map-selection）：沿用互動朱橘的值，專指四個地理題的 3D 選取環；它辨認目前檢視的記錄，不重染既有、候選或推薦系列。
 
 ### Secondary
 
 - **證據灰藍**（evidence-bg／evidence-text）：分類標示、表頭與健檢結果；guide-bg 為探索提示，control-bg 為參數及表格 hover。
-- **情境琥珀**（scene-selected）：深藍 3D 控制的選取、時間值與方向，不取代主頁朱橘。
-- **資料層色**（map-existing／map-demand／map-candidate／map-recommended）：Leaflet 的既有設施、合成需求、候選及推薦位置；保持原有圖例。
+- **情境琥珀**（scene-selected）：深藍 3D 控制的選取與時間值，不取代主頁朱橘；地理視圖的方向標示另採暖白底與深藍字。
+- **資料層色**（map-existing／map-demand／map-candidate／map-recommended）：Leaflet 的既有設施、合成需求、候選及推薦位置；清潔箱 3D 的既有、候選及推薦圓點延用對應資料層色，控制列也顯示同色圓形圖例。其他 3D 題目的既有模型系列色保留。
 
 ### Neutral
 
 - **深藍油墨**（ink）：主要文字及深色狀態；同值 nav 專責導覽，場景沿用深藍。
 - **暖白紙張／白色面板**（paper／panel）：頁面與地圖、圖表、欄位、對話框；白色也是主要按鈕文字。
+- **城市地圖中性底**（context-ground）：地理 3D 的背景底色，在街道圖磚載入空隙保持柔和；它不畫出有限底座，也不取代頁面的暖白紙張。
 - **次要油墨／細分隔線**（muted／line）：說明、單位、標籤與區域邊界。
 - **局部深藍層**（nav-muted／nav-hover／scene-control-bg／scene-border／scene-control-border／scene-muted）：深色導覽及場景上的文字、hover 與邊界。
 - **中性操作狀態**（outline-border／outline-hover-border／subtle-hover／text-hover）：描邊與文字操作；CSV 資料區另採 csv-paper。
@@ -282,6 +293,8 @@ components:
 
 間距沿用前置 scale 與元件 padding。dist/workspace.css 最後的 760px media 層在 480px 規則之後，覆寫早期的 13px 入口說明與 15px 生活提問；延伸手機表面時維持這個 cascade。圖層 label 至少 44px 高，Leaflet zoom 為 44×44px；topbar-title 持續保有至少 44px 高的操作區。
 
+地理視窗是街道的取景框，不是有邊緣的地理板塊。3D 依相機可見地面更新完整 OSM 圖磚，平移、縮放及容器改變不改變研究範圍的固定 Web Mercator 投影、點位或公尺半徑。模型計算範圍為預設關閉的獨立圖層；在 3D 啟用時依視窗長寬比立即切到可容納全範圍的俯視，「全域」在該圖層啟用時也採此視角。周邊街道只供定位，不擴大計算資料。
+
 已由 .impeccable/review/ 的 1440／850／390／320px 畫面驗證重排，final-results.json 記錄四個寬度的受測頁面沒有整頁水平溢出；來源對話框與 320px 柱狀／時間圖另有補充 captures。九組真實 Chromium 操作、14 個 Node 測試檔與 npm run check 通過，runtime errors、failed requests、HTTP errors 為零；scripts/check-browser.py 通過表格鍵盤、dialog 焦點、SVG 圖示、窄螢幕實際圖表字級／時間標籤邊界及地圖／3D 生命週期檢查。Leaflet 卸載後的 redraw callback 防護是行為修正，不是新視覺 token。aXe 僅涵蓋桌機根頁及手機清潔箱頁，零 violations 但仍有 incomplete；不是全站人工鍵盤巡覽或完整 WCAG 認證。圖磚驗收透過 QA-only HTTPS relay 保留實際 browser User-Agent、localhost Referer 與 Accept，維持 OS CA／TLS 檢查且未改持久信任；最初漏 Referer 的 HTTP 200 拒絕圖片已剔除並重拍，最終真實街道底圖經目視確認。
 
 **The Cascade Rule.** 按 Leaflet、基底、workspace 的實際載入順序延伸樣式，維持主要畫面先於參數的 DOM 閱讀順序。
@@ -297,6 +310,8 @@ Toast 是唯一自寫 transition（opacity .2s ease-out）；控制直接切換�
 ## Shapes
 
 控制與導覽用 control 圓角，分類用 badge，提示用 callout，地圖／圖表／參數用 panel，對話框用 dialog。視角切換為平直底邊，點位為圓形。邊界多為 1px，選取視角採 2px 底線；3D 標籤和嚴重度標示用 marker 小圓角。品牌記號以現有 dist/mark.svg 為準，其細線不是互動色 token。
+
+清潔箱 3D 圓點帶白色外緣，名義螢幕尺寸為既有／候選 9px、推薦 13px；四個地理題的選取環為 23px，朱橘環內外以白色分隔、中心透明。點與環隨相機朝向，縮放與視窗 resize 維持螢幕尺寸，資料座標不隨圖示尺寸變化。
 
 ## Components
 
@@ -334,6 +349,18 @@ Select 與文字欄位是白底、中性描邊、control 圓角、至少 44px �
 
 地圖／3D／比較圖表是原生 button group，aria-pressed 表示目前視角，選取採柔朱橘及朱橘底線，三者維持同一組模型參數。先顯示前四項指標，其餘放在 more-metrics details；先顯示前三項控制，其餘放在 advanced-controls details。這是當前介面模式，並非未來所有表面都必須採固定數量。
 
+### Geographic Maps
+
+街道地圖與補樹、清潔箱、鼠患、社區健檢的 3D 使用具來源標示的連續 OSM 街道。地理 3D 不建立厚底座、格線或四區標籤；原有四區仍是比較圖與模型的模擬分區。交通、公車及資料健檢的 3D 維持原有示意圖及其語意，不改稱真實地理路網。
+
+清潔箱以朝向相機的 Sprite 圓點表達既有、候選與推薦位置，層色與白色外緣讓資料在街道細節上保持辨識。選取環在四個地理題共用：選單、點選或聚焦會將環留在目前記錄的實際位置；平移、縮放、滑鼠離開及圖層切換不移除它。推薦身分與目前選取是兩種狀態，選取環獨立於資料圖層。
+
+資料層控制沿用深藍操作面、原生 checkbox 與具文字的圓形圖例；圖例圓點為 10×10px、暖白細框。label 桌機至少 32px 高，760px 以下至少 44px、14px 字級；它是圖層開關的辨識，不替代街道上的資料點。
+
+北向為 inline SVG，按相機投影方向旋轉；北向與「座標定位 · 造型示意」在地理視圖採暖白底、深藍文字。模型計算範圍的原始 bbox（緯度 25.02–25.08、經度 121.51–121.57）持續列在說明，可選邊界與街道背景分開。圓點及選取環的 32×32 DataTexture 由原始碼程序建立，是資料標記幾何，不是新增的 shipping raster 檔案；外部街道圖磚持續保留 OSM attribution。
+
+**The Geographic Context Rule.** 地理背景連續延伸供定位，點位與公尺範圍固定於模型投影；選取環辨認記錄，範圍圖層揭露計算邊界，三者不得混用。
+
 ### Public Question and Experiment
 
 生活提問接續題目標題，灰藍提示提供模型界線與一鍵情境；760px 以下提示正文 14px、生活提問 16px。套用後同步重繪控制、指標及視角，可回到起點。#explore 顯示公眾入口，計算題目預設仍為 bins；原有題目和參數 hash 保留。無 WebGL 2 時轉圖表，地圖載入失敗時保留其他探索方式。
@@ -348,6 +375,7 @@ Select 與文字欄位是白底、中性描邊、control 圓角、至少 44px �
 - Do 持續呈現來源、真實與合成分類、方法及推估限制。
 - Do 在新增或修改響應式圖表時量測實際標籤字級，並保留桌機／手機 captures 與明確的 review 範圍。
 - Do 維持手機 16px 欄位、14px 輔助說明、44px 圖層／zoom 操作區，以及可聚焦的表格捲動 region。
+- Do 讓地理背景延伸而保持點位與公尺半徑不變；地理 3D 的選取環持續指向目前記錄，啟用模型範圍立即提供可見全範圍的俯視。
 
 ### Don't:
 
@@ -356,8 +384,11 @@ Select 與文字欄位是白底、中性描邊、control 圓角、至少 44px �
 - Don't 以文字字形作新操作圖示；新圖示沿用 inline SVG。
 - Don't 把 sidecar 合成 tonal ramps 當成已部署配色或已驗證的對比組合。
 - Don't 把原始碼、Node DOM stub、宣告色彩及資產檢查當成 rendered visual、響應式、觸控或 WebGL 驗收。
+- Don't 把周邊街道背景當成新增研究資料，或把地理範圍的可選邊界變成預設地理底座。
 
 未納入可繼承規則：方法／來源／底圖回報的 Unicode 外連箭頭已移除，站內來源按鈕也不再誤示外連；座標圖仍保留方向字形，未在此次局部 Verdict Pass 評分，不作為新增操作圖示標準。單次 detector 完整輸出被截斷且未保存，不能宣稱所有機械發現均已解決；暖白是使用者指定方向的保留，不代表完整機械清單或跨瀏覽器驗收。
+
+本次地圖延伸另保留 /workspace/scratch/taipei-qa/map-detect.json 的原有 16 項 advisory-only 色彩／字級偏離；未重跑 detector、未修正或提升為可繼承 token。這份原有清單不代表最新補修的 rendered visual 驗收。
 
 ### 合併前標題語意修正
 
