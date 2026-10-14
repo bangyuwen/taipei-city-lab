@@ -1,261 +1,321 @@
 ---
-name: "台北城市實驗室"
-description: "七題市政研究原型的綠色操作工作台"
+name: 台北城市實驗室
+description: 城市專刊：從生活提問探索地圖與情境比較
 colors:
-  ink: "#213b33"
-  muted: "#526359"
-  paper: "#f7f9f7"
-  line: "#cbd5c9"
-  accent: "#39835f"
-  nav-bg: "#19382f"
-  nav-text: "#bdd0c4"
-  nav-active: "#e3ebdc"
-  nav-hover: "#27493d"
-  panel: "#fffefa"
-  white: "white"
-  primary-hover: "#36654f"
-  outline-border: "#cdd7cb"
-  subtle-hover: "#e9ede3"
-  evidence-bg: "#eaf0e1"
-  evidence-text: "#486244"
-  scene-bg: "#102f2c"
-  scene-text: "#e4efe4"
-  scene-control: "#24493e"
-  scene-hover: "#375d4d"
-  scene-gold: "#ffcc70"
-  source-link: "#286047"
-  focus: "#d5a450"
-  selection: "#d8e6ce"
-  csv-paper: "#f9faf5"
-  topic-bins: "#a57524"
-  topic-rat: "#a05d51"
-  topic-traffic: "#527f9a"
-  topic-bus: "#70668c"
-  topic-buildings: "#a36537"
-  topic-audit: "#447d79"
-  map-existing: "#236749"
-  map-demand: "#557ca4"
-  map-candidate: "#737d79"
-  map-recommended: "#b67608"
+  ink: '#202c45'
+  muted: '#60697a'
+  paper: '#f3f1eb'
+  panel: '#ffffff'
+  line: '#d3d7de'
+  signal: '#ae432c'
+  signal-soft: '#f5e4db'
+  nav: '#202c45'
+  nav-muted: '#c5cbd7'
+  nav-hover: '#303d57'
+  focus: '#a23d27'
+  focus-on-navy: '#f5b591'
+  primary-hover: '#a63e28'
+  primary-active: '#893322'
+  outline-border: '#aab1bf'
+  outline-hover-border: '#8893a6'
+  subtle-hover: '#e8e6df'
+  text-hover: '#ece9e2'
+  evidence-bg: '#e5e9ee'
+  evidence-text: '#485671'
+  guide-bg: '#e7ebf0'
+  control-bg: '#e9edf2'
+  scene-border: '#45516a'
+  scene-control-border: '#7e8ba4'
+  scene-control-bg: '#28364f'
+  scene-hover: '#465371'
+  scene-muted: '#d4dbe8'
+  scene-selected: '#f6c58b'
+  csv-paper: '#f4f5f7'
+  map-existing: '#236749'
+  map-demand: '#557ca4'
+  map-candidate: '#737d79'
+  map-recommended: '#b67608'
 typography:
   display:
-    fontSize: "clamp(28px,2.5vw,42px)"
+    fontFamily: '"City Serif","Noto Serif TC",serif'
+    fontSize: 42px
+    fontWeight: 700
+    lineHeight: 1.45
+    letterSpacing: -.02em
+  headline:
+    fontFamily: '"City Serif","Noto Serif TC",serif'
+    fontSize: 34px
+    fontWeight: 700
+    lineHeight: 1.5
+    letterSpacing: -.02em
+  title:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 18px
     fontWeight: 600
-    lineHeight: 1.25
-    letterSpacing: "-.02em"
+    lineHeight: 1.7
+  visual-title:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 16px
+    fontWeight: 600
+    lineHeight: 1.7
   body:
     fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
-    fontSize: "14px"
+    fontSize: 14px
+    fontWeight: 400
+    lineHeight: 1.9
+  question:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 16px
+    fontWeight: 400
     lineHeight: 1.8
-  title:
-    fontSize: "18px"
-    fontWeight: 600
-  visual-title:
-    fontSize: "17px"
-    fontWeight: 600
-    lineHeight: 1.5
-  scene-title:
-    fontSize: "17px"
-    fontWeight: 550
-    lineHeight: 1.5
   action:
-    fontSize: "13px"
-    lineHeight: 1.5
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 13px
+    lineHeight: 1.6
   field:
-    fontSize: "14px"
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 13px
+  label:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 12px
+    lineHeight: 1.8
   metric:
-    fontSize: "28px"
-    fontWeight: 620
-    letterSpacing: "-.02em"
-  note:
-    fontSize: "12px"
-    lineHeight: 1.7
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 28px
+    fontWeight: 650
+    lineHeight: 1.5
+    letterSpacing: -.02em
   csv:
-    fontFamily: "ui-monospace,monospace"
-    fontSize: "14px"
-    lineHeight: 1.7
+    fontFamily: ui-monospace,monospace
+    fontSize: 13px
+    lineHeight: 1.8
 rounded:
-  flat: "0"
-  control: "3px"
-  panel: "4px"
+  flat: '0'
+  marker: 4px
+  badge: 6px
+  control: 8px
+  callout: 12px
+  panel: 14px
+  dialog: 16px
 spacing:
-  compact: "8px"
-  small: "12px"
-  medium: "16px"
-  panel: "18px"
-  large: "20px"
-  section: "24px"
-  wide: "30px"
+  compact: 8px
+  small: 12px
+  medium: 16px
+  inset: 18px
+  large: 20px
+  section: 24px
+  workspace-gap: 28px
+  wide: 32px
 components:
   button-primary:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.white}"
-    typography: "{typography.action}"
-    rounded: "{rounded.control}"
-    padding: "10px 14px"
+    backgroundColor: '{colors.signal}'
+    textColor: '{colors.panel}'
+    rounded: '{rounded.control}'
+    padding: 10px 14px
+    typography: '{typography.action}'
   button-primary-hover:
-    backgroundColor: "{colors.primary-hover}"
+    backgroundColor: '{colors.primary-hover}'
+  button-primary-active:
+    backgroundColor: '{colors.primary-active}'
   button-outline:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink}"
-    typography: "{typography.action}"
-    rounded: "{rounded.control}"
-    padding: "10px 14px"
+    backgroundColor: transparent
+    textColor: '{colors.ink}'
+    rounded: '{rounded.control}'
+    padding: 10px 14px
+    typography: '{typography.action}'
   button-outline-hover:
-    backgroundColor: "{colors.subtle-hover}"
+    backgroundColor: '{colors.subtle-hover}'
   button-text:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink}"
-    typography: "{typography.action}"
-    rounded: "{rounded.control}"
-    padding: "10px 14px"
+    backgroundColor: transparent
+    textColor: '{colors.ink}'
+    rounded: '{rounded.control}'
+    padding: 10px 14px
+    typography: '{typography.action}'
+  button-text-hover:
+    backgroundColor: '{colors.text-hover}'
+    textColor: '{colors.signal}'
   select:
-    backgroundColor: "{colors.panel}"
-    textColor: "{colors.ink}"
-    typography: "{typography.field}"
-    rounded: "{rounded.control}"
-    padding: "10px 8px"
+    backgroundColor: '{colors.panel}'
+    textColor: '{colors.ink}'
+    rounded: '{rounded.control}'
+    padding: 10px
+    typography: '{typography.field}'
   csv-input:
-    backgroundColor: "{colors.csv-paper}"
-    typography: "{typography.csv}"
-    rounded: "{rounded.control}"
-    padding: "12px"
+    backgroundColor: '{colors.csv-paper}'
+    textColor: '{colors.ink}'
+    rounded: '{rounded.control}'
+    padding: 12px
+    typography: '{typography.csv}'
   navigation-active:
-    backgroundColor: "{colors.nav-active}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.control}"
-    padding: "11px 10px"
+    backgroundColor: '{colors.signal-soft}'
+    textColor: '{colors.ink}'
+    rounded: '{rounded.control}'
+    padding: 12px 10px
   evidence-badge:
-    backgroundColor: "{colors.evidence-bg}"
-    textColor: "{colors.evidence-text}"
-    rounded: "{rounded.control}"
-    padding: "8px 10px"
+    backgroundColor: '{colors.evidence-bg}'
+    textColor: '{colors.evidence-text}'
+    rounded: '{rounded.badge}'
+    padding: 9px 12px
+  view-selected:
+    backgroundColor: '{colors.signal-soft}'
+    textColor: '{colors.ink}'
+    rounded: '{rounded.flat}'
+    padding: 10px 12px
   visual-panel:
-    backgroundColor: "{colors.panel}"
-    rounded: "{rounded.panel}"
-  scene-panel:
-    backgroundColor: "{colors.scene-bg}"
-    textColor: "{colors.scene-text}"
-    rounded: "{rounded.panel}"
+    backgroundColor: '{colors.panel}'
+    textColor: '{colors.ink}'
+    rounded: '{rounded.panel}'
+  control-panel:
+    backgroundColor: '{colors.control-bg}'
+    textColor: '{colors.ink}'
+    rounded: '{rounded.panel}'
+    padding: 24px 22px
+  exploration-guide:
+    backgroundColor: '{colors.guide-bg}'
+    textColor: '{colors.evidence-text}'
+    rounded: '{rounded.callout}'
+    padding: 16px 20px
 ---
 
 # Design System: 台北城市實驗室
 
 ## Overview
 
-**Creative North Star: "綠色市政工作台"**
+**Creative North Star: "城市專刊"**
 
-延續既有深綠導覽、帶綠白底與綠色選取訊號。畫面是檢查七題研究原型的操作空間：主要視角有細框，指標、參數與證據以留白和分隔線建立層次。這是既有識別的整理，不是新的品牌提案。
+使用者於 2026-10-14 選定城市專刊，授權取代原有綠色工作台。深藍提供穩定導覽與文字，暖白承載閱讀，朱橘標出操作與選取。中文宋體標題配無襯線操作；繁體中文及「台北城市實驗室」名稱延續。
 
-本文件從目前原始碼的樣式順序與動態內容推導。`dist/index.html` 先載入 Leaflet 樣式，再載入 `dist/styles.css`，最後載入 `dist/workspace.css`；後兩層刻意保留，新增表面須一起讀取。沒有實際瀏覽器 computed-style 取樣、桌機／手機畫面或 GPU 視覺驗證。字體解析、換行與對比不能視為已驗收。
+介面以平面分隔、留白與灰藍輔助面建立層次。圓角用於原生控制、提示及視覺容器；指標、方法與明細直接放在工作區。生活提問與可回復的情境操作相連，來源分類和推估限制持續可見。
+
+本文件從最終原始碼擷取：Leaflet 樣式先載入，其後為 dist/styles.css、dist/workspace.css；動態內容來自 dist/app.js。模式為 code-led Operate，沒有 approved comp、quality boards 或桌機／手機截圖。Node 行為、靜態與資產檢查已通過；rendered visual、實際響應式排版、完整鍵盤巡覽、觸控及 WebGL 視覺驗證仍未完成。finish review 的 recapture 是缺少畫面證據的限制，並非視覺出貨判定；詳見 docs/redesign-review.md、docs/citizen-finish-review.md。
 
 **Key Characteristics:**
-- 深綠導覽固定識別，題目色服務參數與資料辨識。
-- 緊湊指標列、單一主要視角、清楚可見的保存與匯出操作。
-- 主要畫面細框、小圓角；方法與明細直接放在頁面底色上。
-- 真實來源、合成情境與假設範圍以文字持續揭露。
+
+- 深藍外殼、暖白閱讀面、朱橘互動訊號各有明確角色。
+- 中文宋體標題配無襯線操作及等寬資料輸入。
+- 細框、平面分隔與灰藍輔助面，控制使用圓角。
+- 原生表單與漸進揭露保留研究能力和資料界線。
 
 ## Colors
 
-色彩以沉穩綠色及冷白底為主；前置 tokens 保留實際 CSS 值。
+配色像深藍油墨與暖白紙張，朱橘負責互動；精確色值以前置 tokens 為準。
 
 ### Primary
-- **墨綠文字 / ink**：主要文字與主操作按鈕。
-- **導覽深綠 / nav-bg**：側欄、街道基準切換的選取態與 toast。
-- **植栽綠 / accent**：初始 range 與 checkbox；主要視角的選取底線固定使用此綠。參數數值輸出固定使用 ink，不隨題目 accent 改色。
-- **選取淺綠 / nav-active**：目前題目與目前視角的底色。
+
+- **互動朱橘**（signal）：主要操作、文字 hover、視角底線及原生 range／checkbox；hover、按下有較深變體。最後值已按宣告色彩對比修正，不從標誌細線抽取操作色。
+- **柔朱橘**（signal-soft）：當前題目與視角底色；前景仍為深藍。
+- **鍵盤朱橘**（focus）：一般焦點；深藍導覽採亮色 focus-on-navy。
 
 ### Secondary
-- **題目色**：`app.js` 依 `registry.js` 改寫 `--accent`。依七題順序使用 accent、topic-bins、topic-rat、topic-traffic、topic-bus、topic-buildings、topic-audit；不是七套獨立品牌。
-- **場景金 / scene-gold**：3D 選取、推薦、時間與焦點；不是一般頁面主按鈕色。
-- **街道資料色**：map-existing 表示既有快照，map-demand 表示合成需求，map-candidate 表示候選，map-recommended 表示推薦。3D、SVG 座標圖及比較圖各有來源定義的資料色；保留 `scene-data.js`、`viz.js` 和各模型的標籤與色彩對應，不把相近顏色合併成同一意義。
-- **來源連結 / source-link**：來源 dialog 中可點選的來源網址。
-- **鍵盤焦點 / focus**：全域可操作元素的外框；選取文字使用 selection，游標使用 nav-bg。
+
+- **證據灰藍**（evidence-bg／evidence-text）：分類標示、表頭與健檢結果；guide-bg 為探索提示，control-bg 為參數及表格 hover。
+- **情境琥珀**（scene-selected）：深藍 3D 控制的選取、時間值與方向，不取代主頁朱橘。
+- **資料層色**（map-existing／map-demand／map-candidate／map-recommended）：Leaflet 的既有設施、合成需求、候選及推薦位置；保持原有圖例。
 
 ### Neutral
-- **工作底 / paper**：全頁底色；panel 是街道圖、圖表與表單底。
-- **次要文字 / muted**：說明、單位、限制與輔助資訊。
-- **分隔 / line**：主要畫面細框及工作區分隔線；outline-border 是次操作按鈕的邊框。
-- **證據淺綠 / evidence-bg、evidence-text**：題目旁的資料分類標示。
-- **深色場景 / scene-bg、scene-text、scene-control**：3D 畫面及其局部控制區。
 
-**The Semantic Color Rule.** 題目 accent、頁面選取、地圖點位與模型 series 分別保留其功能，不用同一個綠色取代所有資料語意。
+- **深藍油墨**（ink）：主要文字及深色狀態；同值 nav 專責導覽，場景沿用深藍。
+- **暖白紙張／白色面板**（paper／panel）：頁面與地圖、圖表、欄位、對話框；白色也是主要按鈕文字。
+- **次要油墨／細分隔線**（muted／line）：說明、單位、標籤與區域邊界。
+- **局部深藍層**（nav-muted／nav-hover／scene-control-bg／scene-border／scene-control-border／scene-muted）：深色導覽及場景上的文字、hover 與邊界。
+- **中性操作狀態**（outline-border／outline-hover-border／subtle-hover／text-hover）：描邊與文字操作；CSV 資料區另採 csv-paper。
 
-Sidecar 的八階 OKLCH 色帶是由前置色值推導的預覽素材，不是網站新增的配色 tokens。
+**The Semantic Color Rule.** 外殼、互動選取與資料系列各自維持顏色角色；不要把朱橘套到所有點位或模型系列。其他圖表與座標圖系列仍以 dist/modules/、dist/viz.js 為準，不與 Leaflet 圖層色互換。
 
 ## Typography
 
-**Body Font:** CJK 優先字體堆疊，見 body token。CSV 內容使用 csv token 的 monospace；不是整個研究介面的裝飾字體。
+**Display Font:** City Serif，fallback 為 Noto Serif TC、serif。本地 dist/fonts/city-serif.woff 是 Noto Serif TC 靜態粗體（700）當前標題子集（約 16 KB）；SIL OFL 1.1 授權與來源見同目錄的 OFL.txt、provenance.json。新增文字須重新查核字形並擴充子集。
+
+**Body Font:** Noto Sans TC、PingFang TC、Microsoft JhengHei、sans-serif；無襯線字體未自託管，解析由裝置決定。
+
+**Label/Mono Font:** 標籤沿用正文；CSV／JSON 用 ui-monospace、monospace。宋體建立刊物感，無襯線保持操作及資料清楚，數值與時間採 tabular-nums。
 
 ### Hierarchy
-- **Display**：題目 h1 使用 display token，窄螢幕（≤650px）為 30px，並使用 balanced text wrapping。
-- **Title**：參數、明細與方法標題使用 title；主要畫面標題使用 visual-title；3D 標題使用 scene-title。
-- **Body**：方法與假設使用 body；題目摘要同為 14px，行高 1.75、最長 72ch。
-- **Action / Field**：操作字級 13px；一般參數與欄位 14px。原始碼沒有設定全頁 body 的固定字級或行高。
-- **Metric**：數值使用 metric，≤650px 為 26px；資料表、指標與時間數字使用 tabular numerals。
-- **Note / CSV**：輔助文字與 CSV 分別使用 note、csv。
 
-目前 h1 明確指定 `"Iowan Old Style","Noto Serif TC",Baskerville,serif`，但沒有自託管 display 字體。此堆疊只記錄為既有、尚未驗證的實作，不納入可繼承的 display 字體規則；實際 CJK／拉丁解析須另做渲染查核。
+- **Display:** 入口大標題；42px、700、1.45。1200／980／760／480 邊界依序為 36／34／36／32px，並非單調縮放。
+- **Headline:** 目前題目；34px、700、1.5；760px 以下為 30px。
+- **Title／Visual Title:** 操作與證據標題為 18px；地圖／場景／圖表標題為 16px，皆無襯線、600、1.7。
+- **Body／Question:** 方法與來源為 14px、1.9，最長 72ch；生活提問為 16px、1.8。480px 以下入口說明為 13px，生活提問為 15px。
+- **Action／Field／Label:** 操作與欄位為 13px，輔助標籤為 12px；分類和部分補述行高為 1.7，其餘按來源角色維持。
+- **Metric:** 28px、650、1.5、-.02em；1200px 以下為 26px，480px 以下為 25px。單位是較小的正常字重次要文字。
+- **CSV:** 13px、1.8、等寬；保留多行和可調整高度。
+
+**The Two Voices Rule.** 宋體用於入口與題目標題；控制、區域標題及資料保持無襯線。新增標題須補齊本地字形，不能把 fallback 渲染視為字體驗收。
 
 ## Layout
 
-主內容最大寬度 1680px。一般桌機側欄 210px，主內容水平 padding 30px，畫面／參數為 `minmax(0,1fr) 292px`、gap 24px。指標依題目採三或四欄，沒有各自的大卡背景。方法／明細為 1.3:1 雙欄，gap 30px；上方以分隔線和 24px padding 分開。
+基底為 242px 固定題目導覽加流動工作區；sidebar 在 viewport 頂部 sticky 且可垂直捲動。main 最大寬度 1760px、兩側 padding 38px。主要工作區為「內容 + 304px 參數」（間距 28px），證據區為 1.25fr／1fr（間距 32px）。地圖／場景基底高 420px。
 
-| 條件 | 最後有效的主要版面 |
+| 邊界 | 來源所宣告的排列 |
 | --- | --- |
-| ≥1500px | 主內容水平 padding 44px；參數欄 320px。 |
-| ≤1180px | 側欄 185px；主內容水平 padding 22px；參數欄 258px、gap 18px；證據單欄。 |
-| ≤900px | 側欄轉上方題目列並水平捲動；指標兩欄、gap 12px；參數欄 264px，取消 sticky。 |
-| ≤650px | 主內容水平 padding 16px；主要畫面、參數依 DOM 順序單欄排列；參數控制單欄；地圖及 3D 高度 360px。 |
+| ≥1500px | main 兩側 50px；參數 320px、間距 32px；viewport 高 480px。 |
+| ≤1200px | 導覽 214px；main 兩側 26px；參數 270px、間距 20px；提示及題目標頭堆疊，證據單欄。 |
+| ≤980px | 導覽 190px；main 兩側 22px；入口單欄、提問列表隱藏；工作區單欄、畫面先於參數；控制及指標雙欄；viewport 高 440px。 |
+| ≤760px | 導覽成頂部預設收合選單，展開題目為兩欄；入口提問列表恢復；viewport 高 390px。 |
+| ≤480px | main 兩側 18px；控制回到單欄、保存／匯出全寬；局部 padding、字級縮小；viewport 高 360px。 |
 
-一般地圖及 3D 高度為 `clamp(350px,48vh,560px)`。參數欄在較寬畫面 sticky top 20px，左側 1px 分隔。頁內目的地 scroll margin 使用 20px／24px。spacing tokens 摘錄重複的 px 間距，不宣稱整站服從等比尺度。
+間距沿用前置 scale 與元件 padding；上述響應式排列是原始碼規則，尚待實際桌機／手機畫面驗證。
 
-**The Cascade Rule.** workspace.css 是有界的整理層，不是 styles.css 的替代品。基底在 1100px／850px 的部分排列與行高仍生效；上表不代表其他 media rules 已刪除。
+**The Cascade Rule.** 按 Leaflet、基底、workspace 的實際載入順序延伸樣式，維持主要畫面先於參數的 DOM 閱讀順序。
 
 ## Elevation & Depth
 
-自寫主要畫面和 toast 的 box-shadow 最後為 none；深度由底色、細框、區域分隔與深色 3D 內容建立。dialog backdrop 保留半透明深綠，但最終沒有 blur。Leaflet 的 zoom toolbar、popup 與 tooltip 仍保留 vendor 陰影，不能把主要表面的平面化解讀成全站陰影禁令。
+自寫介面未宣告卡片或按鈕陰影，以底色、細框與留白建立層次；對話框用半透明深藍 backdrop。Leaflet 保留功能陰影：zoom bar 為 `0 1px 5px rgba(0,0,0,0.65)`，圖層控制為 `0 1px 5px rgba(0,0,0,0.4)`，popup 為 `0 3px 14px rgba(0,0,0,0.4)`，tooltip 為 `0 1px 3px rgba(0,0,0,0.4)`。
 
-Toast 僅以 opacity .2s 切換；一般按鈕沒有新增過場。`prefers-reduced-motion:reduce` 對所有元素停用 transition 並使用 auto scroll behavior。3D 播放是模型操作，不能當作裝飾進場動效。
+Toast 是唯一自寫 transition（opacity .2s ease-out）；控制直接切換狀態，Leaflet 保留 vendor opacity／zoom 動效。prefers-reduced-motion 關閉 transition 並採 auto 捲動。
+
+**The Flat Shell Rule.** 主要介面以平面分隔與色調層次表現深度；地圖 vendor 的功能陰影留在地圖局部，不擴張為卡片裝飾。
 
 ## Shapes
 
-主要畫面、dialog、audit 表面與 toast 使用 panel 圓角；導覽、按鈕、select 和 CSV 欄位使用 control 圓角。指標、參數、結果與方法區為平面。主要視角是 2px 底線的按鈕組，不是 pill；證據分類標示也使用小圓角。
+控制與導覽用 control 圓角，分類用 badge，提示用 callout，地圖／圖表／參數用 panel，對話框用 dialog。視角切換為平直底邊，點位為圓形。邊界多為 1px，選取視角採 2px 底線；3D 標籤和嚴重度標示用 marker 小圓角。品牌記號以現有 dist/mark.svg 為準，其細線不是互動色 token。
 
 ## Components
 
 ### Buttons
-主操作墨綠底白字；次操作透明底、細框；文字操作有底線。共同 padding 為 button tokens，min-height 44px。Hover 依 variant 使用 primary-hover 或 subtle-hover；文字按鈕沒有另設 hover 色。全域 focus-visible 是 3px focus 色外框、offset 4px；disabled 的 opacity .55、cursor not-allowed。3D 按鈕使用局部深綠底，選取時轉場景金。
 
-### Chips
-資料分類是非互動的 evidence-badge；字級 12px、行高 1.6、最大寬度 270px，可換行。它揭露真實點位與假設情境的關係，不當作宣傳標語。
+原生控制，至少 44px 高、control 圓角、action 字級、10px 14px padding。Primary 為朱橘白字、600；hover／按下使用各自較深狀態。Outline 為透明底、深藍字及中性描邊；Text 有可見底線，hover 為朱橘文字和 text-hover 底色。焦點為 3px outline、offset 4px；深藍導覽改亮色。Disabled 採 opacity .55、not-allowed 游標。
+
+### Chips / Classification
+
+分類 badge 非互動：證據灰藍、badge 圓角、9px 12px padding、1.7 行高；桌機最多 270px，1200px 以下移至題目下方。真實、模擬與假設分類用文字持續揭露。
 
 ### Cards / Containers
-地圖、3D、比較圖是細框主要容器，heading padding 16px 18px；3D 使用自己的深色邊框。結果與方法區無卡片背景。CSV 健檢仍保留平面小圓角表面。
+
+地圖／圖表／場景採 panel 圓角、細框；標頭通常為 18px 20px padding。參數採 control-bg、24px 22px padding。指標以底線分隔；方法及結果直接放在頁面。來源 dialog 為 min(820px,92vw)、最大高 85vh。
 
 ### Inputs / Fields
-select 最小高度 44px；CSV textarea 可垂直調整、最小高度 145px（契約欄 95px）。參數 range 使用當題 accent、最小高度 30px，配合 ink 色數值與上下界。Checkbox 為 16px。焦點沿用全域外框；沒有建立新的錯誤或 disabled 欄位視覺 variant。
+
+Select 與文字欄位是白底、中性描邊、control 圓角、至少 44px 高；range 有 label、output 和 min／max，checkbox 和 range 為原生朱橘 accent。CSV／JSON textarea 用等寬、csv-paper、12px padding，可垂直 resize。焦點沿用一般 outline。3D 局部控制是深藍變體，選取採情境琥珀。
 
 ### Navigation
-桌機題目連結 min-height 48px、字級 14px、小圓角；當前題目淺綠底、墨綠字、weight 600，並保留 aria-current。≤900px 改成水平題目列、min-height 44px、字級 13px。頁內操作捷徑使用底線文字按鈕，只移動閱讀位置。
 
-### Main View Switch
-以 aria-pressed 表達地圖／3D／圖表，min-height 48px；選取淺綠底、固定綠色底線。一次呈現一個主要視角，切換共用參數與結果。地圖可把同一點位送往 3D；資料健檢不提供街道地圖。WebGL 2 不可用時退回圖表，街道入口仍依題目能力保留。
+深藍導覽用次要亮文字及 inline SVG；hover 為 nav-hover，active 為柔朱橘與深藍文字，SVG 改朱橘，維持 aria-current。760px 以下 toggle 以 aria-controls／aria-expanded 同步展開；切題收合。
+
+### Views and Progressive Disclosure
+
+地圖／3D／比較圖表是原生 button group，aria-pressed 表示目前視角，選取採柔朱橘及朱橘底線，三者維持同一組模型參數。先顯示前四項指標，其餘放在 more-metrics details；先顯示前三項控制，其餘放在 advanced-controls details。這是當前介面模式，並非未來所有表面都必須採固定數量。
+
+### Public Question and Experiment
+
+生活提問接續題目標題，灰藍提示提供模型界線與一鍵情境；套用後同步重繪控制、指標及視角，可回到起點。#explore 顯示公眾入口，計算題目預設仍為 bins；原有題目和參數 hash 保留。無 WebGL 2 時轉圖表，地圖載入失敗時保留其他探索方式。
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** 同時讀取基底與 workspace 整理層，依實際 cascade 延伸樣式。
-- **Do** 保留資料分類、來源、基準與假設文字，以及每個資料色的既有語意。
-- **Do** 使用可見鍵盤焦點與原生語意控制，讓保存、重設與匯出保持可辨識。
-- **Do** 在窄螢幕保持主要畫面先於參數的閱讀順序。
+
+- Do 使用深藍、暖白和互動朱橘的既定角色，維持資料系列與圖例原有語意。
+- Do 為新增宋體標題補齊本地字形，保留字體授權及來源。
+- Do 使用原生控制、可見文字、焦點與目前狀態語意，保持畫面先於參數。
+- Do 持續呈現來源、真實與合成分類、方法及推估限制。
+- Do 取得有效桌機／手機畫面後完成 finish re-review。
 
 ### Don't:
-- **Don't** 把指標、方法與明細重新包成重複的大卡片。
-- **Don't** 將 preview tonal ramps 當作已部署的配色或已驗證的對比組合。
-- **Don't** 把 source-derived CSS 值、DOM stub 或自動測試當成桌機／手機／GPU 視覺驗收。
 
-**Not canonized:** 基底仍含隱藏 kicker／eyebrow 樣式、部分 Unicode 操作／方向 glyph、9–10px 場景標籤及未自託管的 display 字體堆疊。這些是既有實作與待驗證項，不是未來表面的建議；本次僅記錄，沒有越界修復。
+- Don't 把互動朱橘或舊題目 accent 當成所有點位和模型系列的共同配色。
+- Don't 把每個指標、方法與明細再包成重複的大卡片。
+- Don't 以文字字形作新操作圖示；新圖示沿用 inline SVG。
+- Don't 把 sidecar 合成 tonal ramps 當成已部署配色或已驗證的對比組合。
+- Don't 把原始碼、Node DOM stub、宣告色彩及資產檢查當成 rendered visual、響應式、觸控或 WebGL 驗收。
 
-## 參賽主線入口
-2026-10-14，使用者確認以第二題垃圾桶／清潔箱配置為主要比賽題目。無有效題目 hash 的首頁與品牌連結預設進入 `#bins`。導覽先呈現此題並加上「參賽主題」文字；原題號 02 保留，其餘六題的有效深連結仍可開啟。字級與綠色識別延續既有系統，模型數值與合成／實測來源界線不因入口調整而改變。
+未納入可繼承規則／未修復：動態方法與來源連結仍帶 ↗，座標圖保留方向字形；既有文字圖示缺陷不作為新元件標準，本次只更新文檔。單次 detector 完整輸出被截斷且未保存，不能宣稱所有機械發現均已解決；暖白警告是已選方向的保留，不是完整視覺驗收。

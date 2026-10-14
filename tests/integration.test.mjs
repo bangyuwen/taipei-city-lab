@@ -150,8 +150,8 @@ test('static HTML has every shell event target, safe local assets and mobile lay
   for(const [,target] of html.matchAll(/\b(?:src|href)="(\.\/[^"#]+)"/g))
     assert.ok(fs.existsSync(path.join(root,'dist',target.slice(2))),target);
   assert.deepEqual([...html.matchAll(/<script[^>]*src="([^"]+)"/g)].map(match=>match[1]),['./app.js']);
-  const css=read('dist/styles.css');
-  assert.match(css,/@media\(max-width:650px\)/);assert.match(css,/\.work-grid\{grid-template-columns:1fr\}/);
+  const css=read('dist/styles.css')+read('dist/workspace.css');
+  assert.match(css,/@media\(max-width:760px\)/);assert.match(css,/\.work-grid\{[^}]*grid-template-columns:1fr/);
   assert.match(css,/\.table-scroll\{overflow:auto/);assert.match(css,/prefers-reduced-motion/);
   assert.doesNotMatch(css,/@import|url\(\s*["']?https?:/i);
 });

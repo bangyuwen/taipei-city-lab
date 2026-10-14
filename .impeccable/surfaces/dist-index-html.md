@@ -1,21 +1,25 @@
-# 台北城市實驗室 — 操作介面整理
+---
+version: 1
+slug: "dist-index-html"
+primary_target: "dist/index.html"
+related_targets: ["dist/app.js","dist/styles.css","dist/workspace.css"]
+---
+
+# 台北城市實驗室 — 市民探索介面
 
 ## Visitor mode
-Operate。參賽者以垃圾桶／清潔箱配置為主線，調整情境、比對基準與匯出可重現資料；其餘六題保留作研究參考。首頁與品牌連結進入 bins，導覽將此題放在首位並標示參賽主題。使用者已說明參賽版本會另行重寫。
+Operate。一般市民從生活問題探索情境；原生導覽、視角切換與表單維持熟悉的操作方式。使用者確認重新設計整套視覺，選擇城市專刊方向。
 
 ## Scope
-沿用既有綠色城市實驗室識別，整理目前操作介面的層次與重複展示。這是既有表面的 distill／polish，不建立新的品牌或視覺世界。新增 workspace.css 作為有界的操作樣式層。
+重做整站視覺與資訊層次，加入生活化入口、情境提示與漸進揭露。保留七題模型、資料、深連結、本機保存、來源及匯出。根目錄仍預設清潔箱題；新增 #explore 只提供公眾入口。
 
 ## Direction contract
-- THESIS：一題、一組參數、一個主要視角；讓人先理解結果所在位置，再改條件。
-- OWN-WORLD：既有深綠導覽、帶綠白底、綠色選取訊號。主要畫面有細框，指標與明細用留白和分隔線，不再各自包成大卡。
-- STORY：選七題之一 → 查看街道位置或動態情境 → 調整方案 → 查比較、推薦依據與來源 → 儲存或匯出。
-- FIRST VIEWPORT：左側七題導覽、上方問題與證據分類、緊湊指標列；下方左側為可切換的主要視角，右側是參數和儲存。手機依閱讀順序排列，先畫面後參數。
-- FORM：既有操作工作區的 scoped refinement，沒有替換視覺世界或概念抽籤。簽名互動是地圖點位可切換到同一個 3D 位置；視角切換不改參數或指標。
+- THESIS：用日常提問引導市民比較城市方案，第一眼辨認探索題目與可操作的地圖。
+- OWN-WORLD：深藍導覽、暖白工作區、朱橘選取訊號；自託管思源宋體標題，中文無襯線操作文字。清楚的平面分隔、圓角原生控制。
+- STORY：選一個生活問題 → 讀探索提示 → 查看地圖 → 試改條件 → 看同條件比較 → 查方法、來源或匯出。
+- FIRST VIEWPORT：左側題目導覽，上方短篇市民入口；目前題目、資料分類與四項主要指標接續出現。下方地圖與右側方案參數構成主要工作區，其他指標与進階參數可展開。手機將導覽折疊，工作區先畫面後參數。
+- FORM：七個方向依序為臺北交通導引、里民公告、田野讀本、公園解說牌、城市專刊、展覽目錄、公共圖書館索引。採第五項城市專刊；seed 0f3e9d23，線上服務無法連線，沒有 challengers。使用者於 2026-10-14 明確選擇此方向。signature move 是生活問題旁直接試一種情境，地圖、指標與控制同時更新，保留可回復起點。
 - FINISH：unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
-## States and evidence
-空間題預設地圖，交通／接駁預設 3D，CSV 健檢預設圖表。每題在本次頁面生命週期記住視角。WebGL 2 不可用時退回圖表，地圖按鈕仍可使用；健檢沒有街道地圖入口。來源、合成情境與假設範圍保持可辨識。
-
-## Verification boundary
-Managed Linux 沒有 control-browser 技能。依 Sites 預覽規則，不啟動 preview server、不安裝瀏覽器、不改走其他瀏覽器 QA。實際桌機、手機與 GPU 畫面尚未驗證；Node 的 DOM stub 只驗證行為，不構成視覺通過。
+## Build and verification
+Code-led；沒有 approved comp 或新增裝飾圖片。現有地圖、模型圖及 Three.js 是內容本身。Browser js 工具與受支援的遠端預覽未暴露，無法取得桌機／手機截圖；完成原始碼、行為、資產與宣告色彩驗證，不將它們宣稱為視覺驗收。

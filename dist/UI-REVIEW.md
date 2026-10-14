@@ -1,40 +1,29 @@
-# Impeccable 介面重新思考
+# 2026-10-14 市民探索重新設計
 
-## 安裝
-2026-10-14，從官方 npm 套件以 `npx --yes impeccable@4.5.2 install -y --providers=codex --scope=project --no-hooks` 安裝到 `.agents/skills/impeccable/`。技能版本 4.5.2，搭配官方 engine v0.1.14。安裝於本專案，不宣稱已出現在其他電腦的技能清單。
+使用者確認主要受眾為一般市民，並選擇城市專刊方向：深藍、暖白、朱橘；保留七題模型、真實來源與合成情境界線。
 
-技能原始檔與授權隨專案保存；平台 engine 是可重建的本機二進位，排除於 Git。技能 launcher 可依平台取得 engine。官方來源：<https://github.com/pbakaus/impeccable>，保留 Apache-2.0 授權。網站自寫程式仍使用既有授權。
+## Impeccable
 
-未安裝自動 hook；本次在完成 UI 後手動執行一次官方 detector。它是規則檢查，不能代替視覺與使用者測試。
+使用專案安裝的官方 4.5.2 技能。context 啟動第一次因預設快取不可寫而未執行，依技能 fallback 直接讀取現有專案脈絡；改用工作區快取載入 engine 0.1.14。concept-seed 產生 seed 0f3e9d23，第五個自建方向為城市專刊。線上 roll 與參考庫無法連線，網路啟用後重試仍退化，因此没有 catalog challengers 或 quality boards；使用者透過結構化問題明確選定方向。Operate 使用 code-led。
 
-## 問題與取捨
+## 單次 detector
 
-| 重新思考的問題 | 本次決定 | 檢查方式 |
-|---|---|---|
-| 首頁應先讓人理解什麼？ | 此題目的、資料分類、基準和方案 | 保留題目、來源分類、同條件指標 |
-| 地圖與 3D 是否需要同時呈現？ | 同一區切換視角，避免長頁面重複展示 | 實際事件處理器測試可見性 |
-| 空間題的第一個動作是什麼？ | 先查街道位置，再調參數 | 空間題預設地圖 |
-| 交通題地圖能否代表模型路徑？ | 地圖仍只作地理參考，主要使用動態情境 | 既有 geography／交通測試 |
-| 切換視角會不會換掉方案？ | 同一模型、參數與結果；每題暫存視角偏好 | 比對指標、參數與 CSV 匯出 |
-| 指標需要大卡片嗎？ | 緊湊資訊列，留下畫面空間 | stylesheet 與結構審查；未做渲染量測 |
-| 哪些操作需要隨時出現？ | 參數、重設、儲存、CSV 匯出 | 原有操作測試 |
-| 哪些資訊可按需展開？ | 參數連結與已存方案 | 原生 details；儲存行為不變 |
-| 手機是否先看一大排參數？ | 先主要畫面，再單欄參數 | breakpoint 原始碼審查；未做手機渲染 QA |
-| 什麼證據才足以宣稱完成？ | 自動行為檢查、來源／模型檢查、獨立原始碼審查與發布結果 | 不把 detector 或 DOM stub 當視覺驗證 |
+在 UI 完整實作後，對 index.html、app.js、styles.css、workspace.css 執行一次官方 detect --json。初始輸出包含 hover 文字對比 4.1:1、與舊 DESIGN.md 不同的字體／配色／圓角／字級，以及暖白底色警告。輸出在工具中被截斷，未保留完整 JSON；此記錄不宣稱完整機械清單。朱橘互動 token 已調深為 #ae432c：對 hover 底色 #ece9e2 為 4.76:1，白字對按鈕為 5.77:1。暖白與字體是使用者確認的重新設計方向；新 DESIGN.md 由最後的 documenter 記錄。依技能不重跑 detector。
 
-## 實作
-`dist/workspace.css` 承接現有識別並整理密度、字級、焦點、觸控操作大小與窄螢幕排列。主要視角切換使用原生按鈕與 aria-pressed，圖表視角不重複顯示同一比較圖。頁內操作捷徑只捲動與聚焦，不改變題目的 URL hash。
+## 字體
 
-`dist/app.js` 保留模型、來源資料、CSV 本機處理與原有保存格式；地圖只在選取地圖視角時掛載。空間題與模型的幾何對應、交通參考圖的限制，沿用 `docs/map-review.md`。
+Google Fonts 官方 Noto Serif TC 以 SIL OFL 1.1 授權。將 weight 700 的當前中文 display 標題字形轉為 16 KB 的自託管 WOFF，OFL 與來源 SHA 另附於 dist/fonts。不是遠端 stylesheet 或系统字體替代品。
 
-## 驗證
-115 項 Node 自動測試通過，包含新增的視角切換、獨立偏好、匯出及頁內導覽。`npm run check` 驗證七題模型、語法、資產、來源與輸出。
+## 驗證界線
 
-官方 detector 首輪提出底色、選取邊線、字體三項警告。本次採冷白底、2px 方角選取線與 CJK 優先字體堆疊回應；依技能要求不重跑 detector，因此不宣稱修正後已得到零警告。
+本機 Node DOM stub 及靜態檢查驗證事件、資料、來源、輸出與可用資產；不能證明實際 CSS 佈局、手機觸控、完整鍵盤巡覽或 WebGL 渲染。Browser js 工具及受支援遠端預覽未暴露，沒有取得桌機／手機截圖。未啟動不受支援的瀏覽器控制或預覽替代品。獨立 finish reviewer 因缺少桌機／手機截圖回覆 recapture；依其規則沒有進行局部審查，也未給予視覺 ship 判定。
 
-實際桌機／手機渲染、鍵盤完整巡覽、WebGL GPU 畫面及實際操作速度沒有驗證。獨立審查只能對收到的原始碼、測試與契約下結論。
+## 行為與來源檢查
 
-## 獨立審查與修正
-獨立 finish reviewer 首輪要求三項修正：跨視角保存選取點位、離開 3D 的場景清理，以及 README 與新版行為對齊。三項已完成；新增兩項生命週期回歸測試後，全套為 115 項通過。Reviewer 的 verdict pass 將三項均評為 resolved，disposition 為 `ship`，範圍僅限這三項原始碼／行為修正，不代表整個畫面的視覺驗收。
+更新後 14 個 Node 測試檔通過，包含兩項新增的市民情境／導覽回歸。npm run check 通過七題模型的預設、上下界、來源、產生圖表與靜態資產檢查。宣告 CSS 的所有 URL 均有本機資產，當前 display 標題未缺字。
 
-補充來源層級的色彩計算：主文字 `#213b33` 對底色 `#f7f9f7` 的 WCAG 對比約 11.42:1，輔助文字 `#526359` 約 6.04:1。七題 accent 不全部達到小字 4.5:1，故參數數值使用主文字色、accent 保留於控制圖形。這是宣告色碼的計算，不是整個頁面的實際渲染對比驗證。
+整合測試原本仍預期 fallback 為 shade，但既有公開版本已以 bins 為預設；此次将斷言對齊已存在的入口約束。響應式檢查也改讀實際載入的兩份樣式表，使用新的手機 breakpoint。沒有改寫資料計算測試來遷就新介面。
+
+## 發布工作流
+
+選定既有公開 Site，保留 project_id 與觀眾。此環境未掛載 Sites source helper；以受控的等效 Git 流程從原 Site source repository 取得精確 checkout。短效寫入 credential 只在記憶體與隱藏 stdin 傳遞，未放入來源、命令參數或檔案。部署封裝只包含 hosting manifest 與 dist；公開原始碼 ZIP 排除內部 surface direction contract、選擇頁狀態及 finish review。
