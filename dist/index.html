@@ -2,38 +2,49 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#19382f">
-  <meta name="description" content="以垃圾桶／清潔箱配置為參賽主線的台北市政研究原型。使用街道地圖與 Three.js，比較設置上限、清運工時、公平性及服務缺口。">
-  <title>垃圾桶配置 — 台北城市實驗室參賽主題</title>
+  <meta name="theme-color" content="#202c45">
+  <meta name="description" content="從台北的日常出發，探索樹蔭、清潔箱、通勤與社區問題。用地圖和情境比較，看看不同選擇帶來什麼差異。">
+  <title>台北城市實驗室｜探索日常的另一種可能</title>
+  <link rel="icon" type="image/svg+xml" href="./mark.svg">
   <link rel="stylesheet" href="./vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./workspace.css">
 </head>
 <body>
-  <a class="skip" href="#workspace">跳至操作區</a>
+  <a class="skip" href="#workspace">跳至探索區</a>
   <div class="layout">
-    <aside class="sidebar">
-      <a class="brand" href="#bins" aria-label="台北城市實驗室垃圾桶參賽主題首頁"><span class="brand-mark">北</span><span>台北城市<br><strong>實驗室</strong></span></a>
-      <div class="sidebar-caption">垃圾桶配置參賽原型</div>
-      <nav id="navigation" aria-label="七個市政題目"></nav>
-      <div class="sidebar-bottom"><span class="status-dot"></span>研究試作 · 七題互動原型<p>真實資料有來源。<br>情境推估有假設。</p><a href="https://puma.taipei/hackathon" target="_blank" rel="noopener noreferrer">查看原始題目 ↗</a></div>
+    <aside id="sidebar" class="sidebar" data-menu-open="false">
+      <a class="brand" href="#bins" aria-label="台北城市實驗室首頁"><img src="./mark.svg" width="42" height="42" alt=""><span>台北城市<strong>實驗室</strong></span></a>
+      <a class="home-link" href="#explore">從城市日常開始</a>
+      <button id="topic-menu-toggle" class="topic-menu-toggle" aria-controls="navigation" aria-expanded="false">選擇城市問題<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+      <p class="sidebar-caption">選一個你在意的問題</p>
+      <nav id="navigation" aria-label="七個城市問題"></nav>
+      <div class="sidebar-bottom"><p>城市可以有很多答案。<br>先改一個條件，看看差別。</p><span>研究原型 · 真實資料與模擬情境</span><a href="https://puma.taipei/hackathon" target="_blank" rel="noopener noreferrer">了解原始市政題目<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5h5v5M19 5l-9 9M19 14v5H5V5h5"/></svg></a></div>
     </aside>
     <main id="workspace" tabindex="-1">
-      <header class="topbar"><span>參賽主題 / 清潔箱配置</span><div><button id="all-export" class="text-button">匯出七題研究包</button><button id="sources-button" class="outline-button">資料來源</button></div></header>
-      <div id="loading" role="status">正在載入資料與七個模型…</div>
-      <section id="module-head"></section>
-      <nav id="task-route" class="task-route" aria-label="此題操作步驟"><button data-jump="analysis">查看位置與情境</button><button data-jump="control-panel">調整方案</button><button data-jump="results">比較與匯出</button></nav>
-      <section id="audit-input" hidden></section>
-      <div id="audit-report"></div>
-      <section id="metrics" class="metrics" aria-label="方案指標"></section>
+      <header class="topbar"><a href="#explore" class="topbar-title">一起探索台北</a><div><button id="sources-button" class="outline-button">資料來源</button><details class="research-tools"><summary>研究工具</summary><div><button id="all-export" class="text-button">匯出七題研究包</button><a href="./RESEARCH.md" download>下載研究說明</a></div></details></div></header>
+      <section id="city-intro" class="city-intro" aria-labelledby="welcome-title">
+        <div class="welcome-copy"><h1 id="welcome-title">台北的日常，<br><em>還有別的可能。</em></h1><p>多一片樹蔭、少等一班車、一個順路的垃圾桶。<br>從小問題出發，試試不同的城市選擇。</p><button id="begin-exploring" class="primary-button">先看看垃圾桶怎麼放<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></button></div>
+        <div class="welcome-topics" aria-label="從生活提問選擇題目">
+          <a href="#shade"><span>夏天走路，哪裡最需要樹蔭？</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+          <a href="#traffic"><span>晚一點出門，會少塞多久？</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+          <a href="#buildings"><span>社區健檢，該從哪裡開始？</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+          <p>七個題目，可以隨時切換。<br>這裡的模擬結果，邀請你提問與比較。</p>
+        </div>
+      </section>
+      <div id="loading" role="status">正在載入城市資料與情境…<span class="loading-line"></span><span class="loading-line"></span></div>
+      <section id="module-head" tabindex="-1"></section>
+      <section id="exploration-guide" class="exploration-guide" aria-label="探索提示"></section>
+      <nav id="task-route" class="task-route" aria-label="此題操作步驟"><button data-jump="analysis">看地圖與情境</button><button data-jump="control-panel">改變條件</button><button data-jump="results">了解比較結果</button></nav>
+      <section id="audit-input" hidden></section><div id="audit-report"></div>
+      <section id="metrics" class="metrics" aria-label="目前方案的模擬指標"></section>
       <section class="work-grid">
         <div id="analysis" class="scene-and-data" tabindex="-1"><div class="view-switch"><div role="group" aria-label="情境視角"><button id="viewmode-map" aria-pressed="false">街道地圖</button><button id="viewmode-3d" aria-pressed="true">3D 情境</button><button id="viewmode-2d" aria-pressed="false">比較圖表</button></div><p id="scene-status" role="status">正在準備場景…</p></div><section id="geographic-panel" class="geography-card" hidden aria-label="實際街道地圖與模型點位"></section><section id="scene-panel" class="scene-card" aria-label="Three.js 互動情境"></section><div id="visualization" class="visual-card" hidden></div></div>
-        <aside id="control-panel" class="control-card" tabindex="-1"><div class="panel-heading"><h2>調整方案</h2><button id="reset" class="text-button">重設</button></div><p class="control-intro">修改參數，即可更新位置與比較結果。</p><div id="controls"></div><div class="control-actions"><button id="save-scenario" class="primary-button">儲存此方案</button><button id="export-csv" class="outline-button">匯出 CSV</button></div><details class="scenario-tools"><summary>分享參數與已存方案</summary><button id="share-scenario" class="text-button">產生此題參數連結</button><div id="share-link"></div><p class="local-note">方案儲存於這個瀏覽器。</p><div id="saved-scenarios"></div></details></aside>
+        <aside id="control-panel" class="control-card" tabindex="-1"><div class="panel-heading"><h2>如果改變條件…</h2><button id="reset" class="text-button">回到起點</button></div><p class="control-intro">拖動數值或選擇條件，地圖與比較結果會一起更新。</p><div id="controls"></div><div class="control-actions"><button id="save-scenario" class="primary-button">保留這個想法</button><button id="export-csv" class="outline-button">匯出明細 CSV</button></div><details class="scenario-tools"><summary>分享與已存方案</summary><button id="share-scenario" class="text-button">產生此題參數連結</button><div id="share-link"></div><p class="local-note">方案儲存於這個瀏覽器。</p><div id="saved-scenarios"></div></details></aside>
       </section>
-      <section id="chart-secondary"></section>
-      <section id="workflow"></section>
+      <section id="chart-secondary"></section><section id="workflow"></section>
       <div class="evidence-grid"><section id="results" class="results-card" tabindex="-1"></section><section id="method" class="method-card"></section></div>
-      <footer>台北城市實驗室 <span>研究試作 · 未代表政策成效或現勘結論</span><span><a href="./RESEARCH.md" download>研究說明</a> · <a href="./RESEARCH-REVIEW.md" download>方法對照</a> · <a href="./DEEPENING-REVIEW.md" download>十輪深化與技能</a> · <a href="./THREE-REVIEW.md" download>3D 設計說明</a> · <a href="./MAP-REVIEW.md" download>地圖說明</a> · <a href="./UI-REVIEW.md" download>介面設計與審查</a> · <a href="./source.zip" download>原始碼</a></span></footer>
+      <footer><div class="footer-note"><strong>城市的答案，需要一起驗證。</strong><p>台北城市實驗室是研究試作。模擬結果未代表政策成效或現勘結論。</p></div><details class="research-downloads"><summary>研究文件與原始碼</summary><div><a href="./RESEARCH.md" download>研究說明</a><a href="./RESEARCH-REVIEW.md" download>方法對照</a><a href="./DEEPENING-REVIEW.md" download>深化研究</a><a href="./THREE-REVIEW.md" download>3D 設計</a><a href="./MAP-REVIEW.md" download>地圖說明</a><a href="./UI-REVIEW.md" download>介面設計</a><a href="./source.zip" download>下載原始碼</a></div></details></footer>
     </main>
   </div>
   <dialog id="source-dialog"><div class="dialog-header"><h2>資料來源與適用範圍</h2><button id="close-sources" class="outline-button">關閉</button></div><div id="source-body"></div></dialog>

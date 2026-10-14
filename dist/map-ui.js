@@ -2,10 +2,18 @@ import * as L from './vendor/leaflet/leaflet-src.esm.js';
 import {mapSpec,mapPointIndex} from './map-data.js';
 import {TILE_PROVIDER} from './geo.js';
 
+const LifecycleCanvas=L.Canvas.extend({
+  _redraw(){
+    // Leaflet 1.9.4 may enqueue another redraw while map layers are removed.
+    if(!this._ctx){this._redrawRequest=null;return;}
+    L.Canvas.prototype._redraw.call(this);
+  },
+});
+
 export function mountMap(host,payload,actions={}){
-  host.innerHTML=`<div class="geo-heading"><div><span class="geo-kicker">地理位置 / OPENSTREETMAP</span><h2 id="geo-title">街道底圖與方案位置</h2></div><button id="geo-reset" class="outline-button">全域</button></div><div class="street-map" role="region" aria-label="可縮放與平移的街道地圖"></div><div class="geo-options"><div id="geo-layers"></div><div id="geo-comparison"></div><div class="geo-select"><label for="geo-pick">選取候選／個案</label><select id="geo-pick"></select><button id="geo-focus" class="outline-button">地圖聚焦</button><button id="geo-3d" class="primary-button">3D 聚焦</button></div></div><div class="geo-readout"><p id="geo-details" aria-live="polite"></p><p id="geo-status" role="status">載入街道底圖…</p><p id="geo-note"></p><a href="https://www.openstreetmap.org/fixthemap" target="_blank" rel="noopener">回報底圖問題 ↗</a></div>`;
+  host.innerHTML=`<div class="geo-heading"><div><span class="geo-kicker">地理位置 / OPENSTREETMAP</span><h2 id="geo-title">街道底圖與方案位置</h2></div><button id="geo-reset" class="outline-button">全域</button></div><div class="street-map" role="region" aria-label="可縮放與平移的街道地圖"></div><div class="geo-options"><div id="geo-layers"></div><div id="geo-comparison"></div><div class="geo-select"><label for="geo-pick">選取候選／個案</label><select id="geo-pick"></select><button id="geo-focus" class="outline-button">地圖聚焦</button><button id="geo-3d" class="primary-button">3D 聚焦</button></div></div><div class="geo-readout"><p id="geo-details" aria-live="polite"></p><p id="geo-status" role="status">載入街道底圖…</p><p id="geo-note"></p><a href="https://www.openstreetmap.org/fixthemap" target="_blank" rel="noopener">回報底圖問題 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5h5v5M19 5l-9 9M19 14v5H5V5h5"/></svg></a></div>`;
   const $=selector=>host.querySelector(selector),container=$('.street-map');
-  const map=L.map(container,{preferCanvas:true,zoomControl:true,minZoom:11,maxZoom:19});
+  const map=L.map(container,{preferCanvas:true,renderer:new LifecycleCanvas(),zoomControl:true,minZoom:11,maxZoom:19});
   const tiles=L.tileLayer(TILE_PROVIDER.url,{maxZoom:TILE_PROVIDER.maxZoom,keepBuffer:0,updateWhenIdle:true,detectRetina:false,
     attribution:`© <a href="${TILE_PROVIDER.copyright}" target="_blank" rel="noopener">OpenStreetMap</a> contributors`}).addTo(map);
   L.control.scale({imperial:false}).addTo(map);
