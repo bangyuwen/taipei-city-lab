@@ -89,6 +89,27 @@ typography:
     fontFamily: ui-monospace,monospace
     fontSize: 13px
     lineHeight: 1.8
+  mobile-menu:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 16px
+  mobile-body:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 16px
+    fontWeight: 400
+    lineHeight: 1.9
+  mobile-support:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 14px
+  mobile-field:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 16px
+  mobile-csv:
+    fontFamily: ui-monospace,monospace
+    fontSize: 16px
+    lineHeight: 1.8
+  chart-label:
+    fontFamily: '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif'
+    fontSize: 14px
 rounded:
   flat: '0'
   marker: 4px
@@ -140,12 +161,16 @@ components:
     rounded: '{rounded.control}'
     padding: 10px
     typography: '{typography.field}'
+  select-mobile:
+    typography: '{typography.mobile-field}'
   csv-input:
     backgroundColor: '{colors.csv-paper}'
     textColor: '{colors.ink}'
     rounded: '{rounded.control}'
     padding: 12px
     typography: '{typography.csv}'
+  csv-input-mobile:
+    typography: '{typography.mobile-csv}'
   navigation-active:
     backgroundColor: '{colors.signal-soft}'
     textColor: '{colors.ink}'
@@ -187,7 +212,7 @@ components:
 
 介面以平面分隔、留白與灰藍輔助面建立層次。圓角用於原生控制、提示及視覺容器；指標、方法與明細直接放在工作區。生活提問與可回復的情境操作相連，來源分類和推估限制持續可見。
 
-本文件從最終原始碼擷取：Leaflet 樣式先載入，其後為 dist/styles.css、dist/workspace.css；動態內容來自 dist/app.js。模式為 code-led Operate，沒有 approved comp、quality boards 或桌機／手機截圖。Node 行為、靜態與資產檢查已通過；rendered visual、實際響應式排版、完整鍵盤巡覽、觸控及 WebGL 視覺驗證仍未完成。finish review 的 recapture 是缺少畫面證據的限制，並非視覺出貨判定；詳見 docs/redesign-review.md、docs/citizen-finish-review.md。
+本文件從最終原始碼擷取：Leaflet 樣式先載入，其後為 dist/styles.css、dist/workspace.css；動態內容來自 dist/app.js、dist/viz.js 與 dist/map-ui.js。沿用 code-led Operate（seed 0f3e9d23），沒有 approved comp、decision comp 或 QUALITY BAR boards。現已取得本機 PR build 的桌機 1440、平板 850、手機 390／320px Chromium captures；獨立 reviewer 先完成初輪五節審查，再檢視 23 張有效 captures，對手機圖表及來源圖示兩項修正做 Verdict Pass：均 resolved、remaining clear、disposition ship。此 ship 僅涵蓋兩項修正及該批次回歸，不是新的全表面審查。Headless Chromium 154、SwiftShader 軟體 WebGL 與模擬觸控仍不涵蓋實體手機、Safari／Firefox、硬體 FPS 或正式站台完整流程；詳見 docs/acceptance.md、docs/citizen-finish-review.md。
 
 **Key Characteristics:**
 
@@ -235,10 +260,11 @@ components:
 - **Display:** 入口大標題；42px、700、1.45。1200／980／760／480 邊界依序為 36／34／36／32px，並非單調縮放。
 - **Headline:** 目前題目；34px、700、1.5；760px 以下為 30px。
 - **Title／Visual Title:** 操作與證據標題為 18px；地圖／場景／圖表標題為 16px，皆無襯線、600、1.7。
-- **Body／Question:** 方法與來源為 14px、1.9，最長 72ch；生活提問為 16px、1.8。480px 以下入口說明為 13px，生活提問為 15px。
-- **Action／Field／Label:** 操作與欄位為 13px，輔助標籤為 12px；分類和部分補述行高為 1.7，其餘按來源角色維持。
+- **Body／Question:** 桌機方法與來源為 14px、1.9，最長 72ch；生活提問為 16px、1.8。760px 以下，方法說明、來源正文與健檢結果正文採 mobile-body；生活提問維持 16px，選題 toggle 採 mobile-menu。
+- **Action／Field／Label:** 桌機操作與欄位為 13px，輔助標籤為 12px；分類和部分補述行高為 1.7，其餘按來源角色維持。760px 以下 select、地圖／場景 select、健檢文字欄位與分享欄位採 mobile-field；入口說明、探索提示、題目補述、控制介紹、本機提示、地圖回報、場景 caption、指標標籤／補述、圖例／圖說及方法假設採 mobile-support，保留各自行高。
 - **Metric:** 28px、650、1.5、-.02em；1200px 以下為 26px，480px 以下為 25px。單位是較小的正常字重次要文字。
-- **CSV:** 13px、1.8、等寬；保留多行和可調整高度。
+- **CSV:** 桌機 13px、1.8、等寬；760px 以下 CSV／JSON textarea 採 mobile-csv，保留多行和可調整高度。
+- **Chart Label:** 比較圖軸值與分區／時間標籤採 chart-label，按實際容器寬度重排；CSS 的 14px 不等同實際螢幕字級。最終量測桌機 14px、390px 約 13.91px、850px 約 13.95px、320px 約 13.89px，與 captures 的可讀標籤一致。
 
 **The Two Voices Rule.** 宋體用於入口與題目標題；控制、區域標題及資料保持無襯線。新增標題須補齊本地字形，不能把 fallback 渲染視為字體驗收。
 
@@ -251,10 +277,12 @@ components:
 | ≥1500px | main 兩側 50px；參數 320px、間距 32px；viewport 高 480px。 |
 | ≤1200px | 導覽 214px；main 兩側 26px；參數 270px、間距 20px；提示及題目標頭堆疊，證據單欄。 |
 | ≤980px | 導覽 190px；main 兩側 22px；入口單欄、提問列表隱藏；工作區單欄、畫面先於參數；控制及指標雙欄；viewport 高 440px。 |
-| ≤760px | 導覽成頂部預設收合選單，展開題目為兩欄；入口提問列表恢復；viewport 高 390px。 |
-| ≤480px | main 兩側 18px；控制回到單欄、保存／匯出全寬；局部 padding、字級縮小；viewport 高 360px。 |
+| ≤760px | 導覽成頂部預設收合選單，展開題目為兩欄；入口提問列表恢復；viewport 高 390px。最終 mobile 層維持提問／toggle／欄位 16px、輔助說明 14px，方法／來源／健檢正文 16px。 |
+| ≤480px | main 兩側 18px；控制回到單欄、保存／匯出全寬；局部 padding 縮小，viewport 高 360px；上述 mobile 字級仍生效。 |
 
-間距沿用前置 scale 與元件 padding；上述響應式排列是原始碼規則，尚待實際桌機／手機畫面驗證。
+間距沿用前置 scale 與元件 padding。dist/workspace.css 最後的 760px media 層在 480px 規則之後，覆寫早期的 13px 入口說明與 15px 生活提問；延伸手機表面時維持這個 cascade。圖層 label 至少 44px 高，Leaflet zoom 為 44×44px；topbar-title 持續保有至少 44px 高的操作區。
+
+已由 .impeccable/review/ 的 1440／850／390／320px 畫面驗證重排，final-results.json 記錄四個寬度的受測頁面沒有整頁水平溢出；來源對話框與 320px 柱狀／時間圖另有補充 captures。九組真實 Chromium 操作、14 個 Node 測試檔與 npm run check 通過，runtime errors、failed requests、HTTP errors 為零；scripts/check-browser.py 通過表格鍵盤、dialog 焦點、SVG 圖示、窄螢幕實際圖表字級／時間標籤邊界及地圖／3D 生命週期檢查。Leaflet 卸載後的 redraw callback 防護是行為修正，不是新視覺 token。aXe 僅涵蓋桌機根頁及手機清潔箱頁，零 violations 但仍有 incomplete；不是全站人工鍵盤巡覽或完整 WCAG 認證。圖磚驗收透過 QA-only HTTPS relay 保留實際 browser User-Agent、localhost Referer 與 Accept，維持 OS CA／TLS 檢查且未改持久信任；最初漏 Referer 的 HTTP 200 拒絕圖片已剔除並重拍，最終真實街道底圖經目視確認。
 
 **The Cascade Rule.** 按 Leaflet、基底、workspace 的實際載入順序延伸樣式，維持主要畫面先於參數的 DOM 閱讀順序。
 
@@ -286,11 +314,21 @@ Toast 是唯一自寫 transition（opacity .2s ease-out）；控制直接切換�
 
 ### Inputs / Fields
 
-Select 與文字欄位是白底、中性描邊、control 圓角、至少 44px 高；range 有 label、output 和 min／max，checkbox 和 range 為原生朱橘 accent。CSV／JSON textarea 用等寬、csv-paper、12px padding，可垂直 resize。焦點沿用一般 outline。3D 局部控制是深藍變體，選取採情境琥珀。
+Select 與文字欄位是白底、中性描邊、control 圓角、至少 44px 高；range 有 label、output 和 min／max，checkbox 和 range 為原生朱橘 accent。CSV／JSON textarea 用等寬、csv-paper、12px padding，可垂直 resize；760px 以下 select、健檢／分享文字欄位及 CSV／JSON textarea 為 16px。焦點沿用一般 outline。3D 局部控制是深藍變體，選取採情境琥珀；手機地圖／3D 圖層 label 至少 44px 高，Leaflet zoom 控制為 44×44px。
 
 ### Navigation
 
-深藍導覽用次要亮文字及 inline SVG；hover 為 nav-hover，active 為柔朱橘與深藍文字，SVG 改朱橘，維持 aria-current。760px 以下 toggle 以 aria-controls／aria-expanded 同步展開；切題收合。
+深藍導覽用次要亮文字及 inline SVG；hover 為 nav-hover，active 為柔朱橘與深藍文字，SVG 改朱橘，維持 aria-current。760px 以下 toggle 以 aria-controls／aria-expanded 同步展開，字級 16px；選單題目連結維持 13px、至少 48px 高，切題收合。頂部入口連結至少 44px 高。
+
+### Charts and Tables
+
+比較圖依 host 實寬扣除水平內距建立 240–760-unit、300-unit 高的 viewBox，ResizeObserver 在容器寬度改變或視角顯示時重繪；次要圖維持原有 max-height 300px。柱狀圖分區名按欄寬換行，最多三行，完整文字置於 SVG title；折線圖依寬度減少時間刻度並預留首尾標籤空間。標籤樣式與實際量測見 Typography，不把固定 viewBox 的字級宣告當成手機閱讀證據。
+
+明細保留原生 table、sticky 表頭及局部 overflow:auto，通常最大高 460px、健檢表 240px；不使整頁溢出。捲動容器是 tabindex="0" 的 region，名稱為「資料明細（可捲動）」；focus-visible 使用 3px outline、offset 4px，鍵盤可進入並用 ArrowDown 捲動。
+
+### Source Links
+
+站內來源按鈕以文字開啟 dialog，保留可回到按鈕的焦點，不帶外連提示。真正的案例、原始來源與底圖回報外連沿用既有外連 SVG path（24-unit viewBox），內文圖示為 14×14px、currentColor 線條；深藍 sidebar 的既有外連圖示維持 16px。不把外連箭頭加到站內 dialog 操作。
 
 ### Views and Progressive Disclosure
 
@@ -298,7 +336,7 @@ Select 與文字欄位是白底、中性描邊、control 圓角、至少 44px �
 
 ### Public Question and Experiment
 
-生活提問接續題目標題，灰藍提示提供模型界線與一鍵情境；套用後同步重繪控制、指標及視角，可回到起點。#explore 顯示公眾入口，計算題目預設仍為 bins；原有題目和參數 hash 保留。無 WebGL 2 時轉圖表，地圖載入失敗時保留其他探索方式。
+生活提問接續題目標題，灰藍提示提供模型界線與一鍵情境；760px 以下提示正文 14px、生活提問 16px。套用後同步重繪控制、指標及視角，可回到起點。#explore 顯示公眾入口，計算題目預設仍為 bins；原有題目和參數 hash 保留。無 WebGL 2 時轉圖表，地圖載入失敗時保留其他探索方式。
 
 ## Do's and Don'ts
 
@@ -308,7 +346,8 @@ Select 與文字欄位是白底、中性描邊、control 圓角、至少 44px �
 - Do 為新增宋體標題補齊本地字形，保留字體授權及來源。
 - Do 使用原生控制、可見文字、焦點與目前狀態語意，保持畫面先於參數。
 - Do 持續呈現來源、真實與合成分類、方法及推估限制。
-- Do 取得有效桌機／手機畫面後完成 finish re-review。
+- Do 在新增或修改響應式圖表時量測實際標籤字級，並保留桌機／手機 captures 與明確的 review 範圍。
+- Do 維持手機 16px 欄位、14px 輔助說明、44px 圖層／zoom 操作區，以及可聚焦的表格捲動 region。
 
 ### Don't:
 
@@ -318,4 +357,4 @@ Select 與文字欄位是白底、中性描邊、control 圓角、至少 44px �
 - Don't 把 sidecar 合成 tonal ramps 當成已部署配色或已驗證的對比組合。
 - Don't 把原始碼、Node DOM stub、宣告色彩及資產檢查當成 rendered visual、響應式、觸控或 WebGL 驗收。
 
-未納入可繼承規則／未修復：動態方法與來源連結仍帶 ↗，座標圖保留方向字形；既有文字圖示缺陷不作為新元件標準，本次只更新文檔。單次 detector 完整輸出被截斷且未保存，不能宣稱所有機械發現均已解決；暖白警告是已選方向的保留，不是完整視覺驗收。
+未納入可繼承規則：方法／來源／底圖回報的 Unicode 外連箭頭已移除，站內來源按鈕也不再誤示外連；座標圖仍保留方向字形，未在此次局部 Verdict Pass 評分，不作為新增操作圖示標準。單次 detector 完整輸出被截斷且未保存，不能宣稱所有機械發現均已解決；暖白是使用者指定方向的保留，不代表完整機械清單或跨瀏覽器驗收。

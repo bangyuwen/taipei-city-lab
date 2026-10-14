@@ -51,6 +51,16 @@ python -m http.server 4173 --directory dist
 
 開啟 `http://localhost:4173`，不要直接用 `file://`，以便瀏覽器讀取模組與資料快照。
 
+選用真實瀏覽器回歸檢查（另需 Python Playwright 與 Chromium）：
+
+```sh
+python -m pip install playwright
+python -m playwright install chromium
+python scripts/check-browser.py
+```
+
+也可透過 `--chromium /path/to/chromium` 使用已安裝的瀏覽器；腳本自啟本機伺服器，檢查鍵盤、響應式圖表及繪圖生命週期，刻意阻擋外部圖磚。完整畫面驗收需另確認網路及真實底圖內容。
+
 若要重新產生 Three.js 內附檔案：
 
 ```sh
@@ -75,7 +85,7 @@ python scripts/prepare-data.py --refresh
 
 ## 方法對照與審查
 
-三輪審查與官方案例對照見 `docs/research-review.md`；網站各題的「實務案例與下一步」可開啟原始來源。十輪深化、採用技能與可用性界線見 `docs/deepening-review.md`。Three.js 設計與驗證界線見 `docs/three-review.md`。地圖對齊與來源界線見 `docs/map-review.md`。先前的 Impeccable 操作介面整理見 `docs/impeccable-review.md`，本次市民重新設計見 `docs/redesign-review.md`。新版的 14 個 Node 測試檔與靜態模型檢查通過；實際瀏覽器視覺驗證仍未完成。獨立 finish reviewer 因缺少桌機／手機截圖回覆 `recapture`，未給予視覺發布判定。
+三輪審查與官方案例對照見 `docs/research-review.md`；網站各題的「實務案例與下一步」可開啟原始來源。十輪深化、採用技能與可用性界線見 `docs/deepening-review.md`。Three.js 設計與驗證界線見 `docs/three-review.md`。地圖對齊與來源界線見 `docs/map-review.md`。先前的 Impeccable 操作介面整理見 `docs/impeccable-review.md`，本次市民重新設計見 `docs/redesign-review.md`。新版的 14 個 Node 測試檔、靜態模型檢查及 9 組 Chromium 操作驗收通過；桌機與模擬手機畫面、結果及測試界線見 `docs/acceptance.md`，獨立 Impeccable 初輪審查提出的兩項修正，在 Verdict Pass 均評為 resolved／ship，紀錄見 `docs/citizen-finish-review.md`。
 
 ## 設計技能
 

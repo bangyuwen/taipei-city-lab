@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-14T08:11:09.224741+00:00",
+  "generatedAt": "2026-10-14T10:19:58.081984+00:00",
   "title": "Design System: 台北城市實驗室",
   "extensions": {
     "colorMeta": {
@@ -486,7 +486,7 @@
       },
       "body": {
         "displayName": "Body",
-        "purpose": "方法與來源。"
+        "purpose": "桌機方法與來源正文。"
       },
       "question": {
         "displayName": "Question",
@@ -498,7 +498,7 @@
       },
       "field": {
         "displayName": "Field",
-        "purpose": "select 及文字欄位。"
+        "purpose": "桌機 select 及文字欄位。"
       },
       "label": {
         "displayName": "Label",
@@ -510,7 +510,31 @@
       },
       "csv": {
         "displayName": "Csv",
-        "purpose": "本機 CSV／JSON 等寬內容。"
+        "purpose": "桌機本機 CSV／JSON 等寬內容。"
+      },
+      "mobile-menu": {
+        "displayName": "Mobile Menu",
+        "purpose": "760px 以下的選題 toggle；選單連結維持原有字級。"
+      },
+      "mobile-body": {
+        "displayName": "Mobile Body",
+        "purpose": "760px 以下的方法說明、來源正文與健檢結果正文。"
+      },
+      "mobile-support": {
+        "displayName": "Mobile Support",
+        "purpose": "760px 以下的入口／提示正文、題目補述、控制介紹、本機提示、地圖回報、場景 caption、指標標籤／補述、圖例／圖說及方法假設；保留各自行高。"
+      },
+      "mobile-field": {
+        "displayName": "Mobile Field",
+        "purpose": "760px 以下的 select、健檢文字欄位與分享欄位。"
+      },
+      "mobile-csv": {
+        "displayName": "Mobile CSV",
+        "purpose": "760px 以下本機 CSV／JSON textarea 的等寬內容。"
+      },
+      "chart-label": {
+        "displayName": "Chart Label",
+        "purpose": "按容器寬度重排的比較圖軸值與分區／時間標籤；以實際螢幕量測與 captures 驗證。"
       }
     },
     "shadows": [
@@ -609,23 +633,23 @@
       "name": "參數選單",
       "kind": "input",
       "refersTo": "select",
-      "description": "保留原生 select。",
+      "description": "保留原生 select；760px 以下欄位字級 16px。",
       "html": "<select class=\"ds-select\" aria-label=\"選取候選位置\"><option>選取候選位置</option></select>",
-      "css": ".ds-select{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;width:100%;min-height:44px;min-width:0;padding:10px;border:1px solid #aab1bf;border-radius:8px;background:var(--panel,#ffffff);color:var(--ink,#202c45);font-size:13px}.ds-select:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}"
+      "css": ".ds-select{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;width:100%;min-height:44px;min-width:0;padding:10px;border:1px solid #aab1bf;border-radius:8px;background:var(--panel,#ffffff);color:var(--ink,#202c45);font-size:13px}.ds-select:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}@media(max-width:760px){.ds-select{font-size:16px}}"
     },
     {
       "name": "本機 CSV 欄位",
       "kind": "input",
       "refersTo": "csv-input",
-      "description": "等寬資料輸入；不模擬健檢 runtime。",
+      "description": "等寬資料輸入；760px 以下 16px，不模擬健檢 runtime。",
       "html": "<textarea class=\"ds-csv\" aria-label=\"CSV 資料內容\" placeholder=\"貼上有標題列的 CSV…\"></textarea>",
-      "css": ".ds-csv{width:100%;min-height:150px;resize:vertical;border:1px solid #aab1bf;border-radius:8px;margin:16px 0;padding:12px;background:#f4f5f7;color:var(--ink,#202c45);font-family:ui-monospace,monospace;font-size:13px;line-height:1.8}.ds-csv::placeholder{color:var(--muted,#60697a);opacity:1}.ds-csv:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}"
+      "css": ".ds-csv{width:100%;min-height:150px;resize:vertical;border:1px solid #aab1bf;border-radius:8px;margin:16px 0;padding:12px;background:#f4f5f7;color:var(--ink,#202c45);font-family:ui-monospace,monospace;font-size:13px;line-height:1.8}.ds-csv::placeholder{color:var(--muted,#60697a);opacity:1}.ds-csv:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}@media(max-width:760px){.ds-csv{font-size:16px}}"
     },
     {
       "name": "城市問題導覽",
       "kind": "nav",
       "refersTo": "navigation-active",
-      "description": "目前題目、hover 與焦點；手機 toggle 行為由實際 app 提供。",
+      "description": "目前題目、hover 與焦點；手機題目連結為 13px、至少 48px 高，16px toggle 與展開行為由實際 app 提供。",
       "html": "<nav class=\"ds-nav\" aria-label=\"城市問題\"><a class=\"ds-nav-link ds-current\" aria-current=\"page\" href=\"#bins\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13M10 10v7M14 10v7\"/></svg><span>清潔箱配置</span></a><a class=\"ds-nav-link\" href=\"#shade\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 20v-7M7 20h10M12 3l-6 8h3l-4 5h14l-4-5h3z\"/></svg><span>樹蔭公平</span></a></nav>",
       "css": ".ds-nav{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;display:grid;gap:6px;background:var(--nav,#202c45);padding:32px 22px 24px}.ds-nav-link{display:flex;gap:12px;align-items:center;min-height:52px;padding:12px 10px;border-radius:8px;font-size:14px;color:var(--nav-muted,#c5cbd7);line-height:1.5;text-decoration:none}.ds-nav-link:hover{background:var(--nav-hover,#303d57);color:#fff}.ds-nav-link.ds-current{background:var(--signal-soft,#f5e4db);color:var(--ink,#202c45);font-weight:600}.ds-nav-link.ds-current svg{color:var(--signal,#ae432c)}.ds-nav-link svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.ds-nav-link:focus-visible{outline:3px solid #f5b591;outline-offset:4px}@media(max-width:980px){.ds-nav-link{font-size:13px;gap:8px;padding:10px 8px}.ds-nav-link svg{width:20px;height:20px}}@media(max-width:760px){.ds-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ds-nav-link{min-height:48px}}"
     },
@@ -657,14 +681,14 @@
       "name": "生活問題旁的實驗",
       "kind": "custom",
       "refersTo": "exploration-guide",
-      "description": "模型界線和一鍵情境的實際表面；參數同步由 app runtime 處理。",
+      "description": "模型界線和一鍵情境的實際表面；760px 以下提示正文 14px，參數同步由 app runtime 處理。",
       "html": "<section class=\"ds-guide\"><p><strong>換個條件，看看城市怎麼變。</strong>試著少量增設，或提高公平權重，比較同一批模擬需求的服務差異。推薦位置仍需要現勘。</p><div class=\"ds-experiments\"><button class=\"ds-experiment\">先增設 5 個</button><button class=\"ds-experiment\">多顧服務缺口</button></div></section>",
-      "css": ".ds-guide{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 20px;background:#e7ebf0;border-radius:12px;margin-bottom:18px}.ds-guide p{font-size:13px;line-height:1.8;margin:0;color:#485671;max-width:65ch}.ds-guide strong{display:block;font-size:14px;color:var(--ink,#202c45);font-weight:600;margin-bottom:3px}.ds-experiments{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;flex-shrink:0}.ds-experiment{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;background:var(--paper,#f3f1eb);font-size:12px;padding:10px 12px;min-height:44px;border:1px solid #aab1bf;border-radius:8px;color:var(--ink,#202c45);cursor:pointer}.ds-experiment:hover{background:#fff;border-color:var(--signal,#ae432c);color:var(--signal,#ae432c)}.ds-experiment:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}@media(max-width:1200px){.ds-guide{display:block}.ds-experiments{justify-content:flex-start;margin-top:12px}}@media(max-width:760px){.ds-guide{padding:16px}}@media(max-width:480px){.ds-experiment{flex:1}}"
+      "css": ".ds-guide{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 20px;background:#e7ebf0;border-radius:12px;margin-bottom:18px}.ds-guide p{font-size:13px;line-height:1.8;margin:0;color:#485671;max-width:65ch}.ds-guide strong{display:block;font-size:14px;color:var(--ink,#202c45);font-weight:600;margin-bottom:3px}.ds-experiments{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;flex-shrink:0}.ds-experiment{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;background:var(--paper,#f3f1eb);font-size:12px;padding:10px 12px;min-height:44px;border:1px solid #aab1bf;border-radius:8px;color:var(--ink,#202c45);cursor:pointer}.ds-experiment:hover{background:#fff;border-color:var(--signal,#ae432c);color:var(--signal,#ae432c)}.ds-experiment:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}@media(max-width:1200px){.ds-guide{display:block}.ds-experiments{justify-content:flex-start;margin-top:12px}}@media(max-width:760px){.ds-guide{padding:16px}.ds-guide p{font-size:14px}}@media(max-width:480px){.ds-experiment{flex:1}}"
     }
   ],
   "narrative": {
     "northStar": "城市專刊",
-    "overview": "使用者於 2026-10-14 選定城市專刊，授權取代原有綠色工作台。深藍提供穩定導覽與文字，暖白承載閱讀，朱橘標出操作與選取。中文宋體標題配無襯線操作；繁體中文及「台北城市實驗室」名稱延續。\n\n介面以平面分隔、留白與灰藍輔助面建立層次。圓角用於原生控制、提示及視覺容器；指標、方法與明細直接放在工作區。生活提問與可回復的情境操作相連，來源分類和推估限制持續可見。\n\n本文件從最終原始碼擷取：Leaflet 樣式先載入，其後為 dist/styles.css、dist/workspace.css；動態內容來自 dist/app.js。模式為 code-led Operate，沒有 approved comp、quality boards 或桌機／手機截圖。Node 行為、靜態與資產檢查已通過；rendered visual、實際響應式排版、完整鍵盤巡覽、觸控及 WebGL 視覺驗證仍未完成。finish review 的 recapture 是缺少畫面證據的限制，並非視覺出貨判定；詳見 docs/redesign-review.md、docs/citizen-finish-review.md。",
+    "overview": "使用者於 2026-10-14 選定城市專刊，授權取代原有綠色工作台。深藍提供穩定導覽與文字，暖白承載閱讀，朱橘標出操作與選取。中文宋體標題配無襯線操作；繁體中文及「台北城市實驗室」名稱延續。\n\n介面以平面分隔、留白與灰藍輔助面建立層次。圓角用於原生控制、提示及視覺容器；指標、方法與明細直接放在工作區。生活提問與可回復的情境操作相連，來源分類和推估限制持續可見。\n\n本文件從最終原始碼擷取：Leaflet 樣式先載入，其後為 dist/styles.css、dist/workspace.css；動態內容來自 dist/app.js、dist/viz.js 與 dist/map-ui.js。沿用 code-led Operate（seed 0f3e9d23），沒有 approved comp、decision comp 或 QUALITY BAR boards。現已取得本機 PR build 的桌機 1440、平板 850、手機 390／320px Chromium captures；獨立 reviewer 先完成初輪五節審查，再檢視 23 張有效 captures，對手機圖表及來源圖示兩項修正做 Verdict Pass：均 resolved、remaining clear、disposition ship。此 ship 僅涵蓋兩項修正及該批次回歸，不是新的全表面審查。Headless Chromium 154、SwiftShader 軟體 WebGL 與模擬觸控仍不涵蓋實體手機、Safari／Firefox、硬體 FPS 或正式站台完整流程；詳見 docs/acceptance.md、docs/citizen-finish-review.md。",
     "keyCharacteristics": [
       "深藍外殼、暖白閱讀面、朱橘互動訊號各有明確角色。",
       "中文宋體標題配無襯線操作及等寬資料輸入。",
@@ -698,7 +722,8 @@
       "Do 為新增宋體標題補齊本地字形，保留字體授權及來源。",
       "Do 使用原生控制、可見文字、焦點與目前狀態語意，保持畫面先於參數。",
       "Do 持續呈現來源、真實與合成分類、方法及推估限制。",
-      "Do 取得有效桌機／手機畫面後完成 finish re-review。"
+      "Do 在新增或修改響應式圖表時量測實際標籤字級，並保留桌機／手機 captures 與明確的 review 範圍。",
+      "Do 維持手機 16px 欄位、14px 輔助說明、44px 圖層／zoom 操作區，以及可聚焦的表格捲動 region。"
     ],
     "donts": [
       "Don't 把互動朱橘或舊題目 accent 當成所有點位和模型系列的共同配色。",
