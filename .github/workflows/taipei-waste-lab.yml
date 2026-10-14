@@ -1,0 +1,39 @@
+name: Taipei waste site
+
+on:
+  pull_request:
+    paths:
+      - 'sites/taipei-waste-lab/**'
+      - '.github/workflows/taipei-waste-lab.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'sites/taipei-waste-lab/**'
+      - '.github/workflows/taipei-waste-lab.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: sites/taipei-waste-lab
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - name: Verify preserved data rebuild
+        run: |
+          npm run prepare-data
+          git diff --exit-code -- dist/data/datasets.json
+      - name: Verify data and static assets
+        run: |
+          npm test
+          npm run check
+          node --check dist/app.js

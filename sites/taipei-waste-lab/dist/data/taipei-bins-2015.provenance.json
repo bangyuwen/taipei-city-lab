@@ -1,0 +1,123 @@
+{
+  "description": "2015年公開程式庫保存的12區位置紀錄，並非已驗證的三千組時完整清冊。",
+  "retrieved_on": "2026-10-14",
+  "source_repository": "https://github.com/wagamama/tourist-map",
+  "source_commit": "3ec132bf03fd029cd80c191d991c52fa2c7c3ec0",
+  "preserved_at": "2015-10-31T16:46:44+08:00",
+  "original_observation_date": null,
+  "official_dataset": "https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c",
+  "rows": 2517,
+  "district_record_counts": {
+    "中山區": 275,
+    "中正區": 369,
+    "信義區": 120,
+    "內湖區": 141,
+    "北投區": 116,
+    "南港區": 97,
+    "士林區": 315,
+    "大同區": 195,
+    "大安區": 311,
+    "文山區": 137,
+    "松山區": 205,
+    "萬華區": 236
+  },
+  "numeric_coordinates_in_broad_taiwan_range": 2517,
+  "distinct_coordinate_pairs": 2276,
+  "repeat_coordinate_rows": 241,
+  "coordinate_check": "僅確認可解析及落在119<經度<123、21<緯度<27範圍；未作臺北市行政邊界驗證。",
+  "caveats": [
+    "保存日期是Git commit時間，不是原始調查或資料更新日期。",
+    "筆數為CSV資料列，不逕視為座數或組數。",
+    "原始資料無官方箱號；來源檔案與行號僅供回溯。",
+    "同座標紀錄全部保留，不能據此判定重複箱或配對箱。",
+    "未核實資料對全市清冊的完整性。",
+    "不能以跨年資料缺列直接判定撤除，仍須排除新增、搬移、復設、資料漏列及更新時間差異。"
+  ],
+  "source_files": [
+    {
+      "file": "trash_can1.csv",
+      "sha256": "0166401801552296ae726a684de05da3664fbdbc2101fe560c7a230baf2e70ee",
+      "url": "https://github.com/wagamama/tourist-map/blob/3ec132bf03fd029cd80c191d991c52fa2c7c3ec0/trash_can1.csv"
+    },
+    {
+      "file": "trash_can2.csv",
+      "sha256": "2aedf724a52387e11d73f180fb9bd8e864d157ed57af1345738480ca0be18663",
+      "url": "https://github.com/wagamama/tourist-map/blob/3ec132bf03fd029cd80c191d991c52fa2c7c3ec0/trash_can2.csv"
+    },
+    {
+      "file": "trash_can3.csv",
+      "sha256": "76eaf5085f374ad10ea1c60a1c60dcdc2e1970d37013dec7806854099dd0c938",
+      "url": "https://github.com/wagamama/tourist-map/blob/3ec132bf03fd029cd80c191d991c52fa2c7c3ec0/trash_can3.csv"
+    },
+    {
+      "file": "trash_can4.csv",
+      "sha256": "c9d1c7dea798933259ced2af9e1631c3be0cab9ded995eb51089335eba604116",
+      "url": "https://github.com/wagamama/tourist-map/blob/3ec132bf03fd029cd80c191d991c52fa2c7c3ec0/trash_can4.csv"
+    },
+    {
+      "file": "trash_can5.csv",
+      "sha256": "7f151a10d09d8975b4e9a76c4dd76870f29162886d1274001fed1b881fec346d",
+      "url": "https://github.com/wagamama/tourist-map/blob/3ec132bf03fd029cd80c191d991c52fa2c7c3ec0/trash_can5.csv"
+    },
+    {
+      "file": "trash_can6.csv",
+      "sha256": "7bdba19ea94ec7f14ad9f708e905ff43f68fcf13ca7f2f9fe1de4e9047a8c24e",
+      "url": "https://github.com/wagamama/tourist-map/blob/3ec132bf03fd029cd80c191d991c52fa2c7c3ec0/trash_can6.csv"
+    },
+    {
+      "file": "trash_can7.csv",
+      "sha256": "176eeca53af388a93df38002fe588a27b39d0d7d132d81acf7d45aee0a90aa15",
+      "url": "https://github.com/wagamama/tourist-map/blob/3ec132bf03fd029cd80c191d991c52fa2c7c3ec0/trash_can7.csv"
+    },
+    {
+      "file": "trash_can8.csv",
+      "sha256": "e359c6c336503eeeabd62467451e1c9818d668f0a9fbcc722518c9a7ad7c19ed",
+      "url": "https://github.com/wagamama/tourist-map/blob/3ec132bf03fd029cd80c191d991c52fa2c7c3ec0/trash_can8.csv"
+    },
+    {
+      "file": "trash_can9.csv",
+      "sha256": "00bc64a49954862a6de3fc4744ccfdb5d52b749050501d149c4613578602e3cd",
+      "url": "https://github.com/wagamama/tourist-map/blob/3ec132bf03fd029cd80c191d991c52fa2c7c3ec0/trash_can9.csv"
+    },
+    {
+      "file": "trash_can10.csv",
+      "sha256": "bcb6f38b49f79495272436ccd0eaa288a47736a7f7c295ab70735ac15c7ae716",
+      "url": "https://github.com/wagamama/tourist-map/blob/3ec132bf03fd029cd80c191d991c52fa2c7c3ec0/trash_can10.csv"
+    },
+    {
+      "file": "trash_can11.csv",
+      "sha256": "18c9de8e8be5a7364b6eaaf13ad099863d91009ad95c513d1b20d42c4315b576",
+      "url": "https://github.com/wagamama/tourist-map/blob/3ec132bf03fd029cd80c191d991c52fa2c7c3ec0/trash_can11.csv"
+    },
+    {
+      "file": "trash_can12.csv",
+      "sha256": "1ff423bdd0f35b3b6a8a71b6c80e33a5d2a0330d23117c37d91cb2b21e478f2f",
+      "url": "https://github.com/wagamama/tourist-map/blob/3ec132bf03fd029cd80c191d991c52fa2c7c3ec0/trash_can12.csv"
+    }
+  ],
+  "outputs": {
+    "taipei-bins-2015.csv": {
+      "sha256": "fa071e43c8ae68fcf9b9fcf53e7205e018446b8fb593ddb76ec3b1e467d60ac3"
+    },
+    "taipei-bins-2015.geojson": {
+      "sha256": "9dedba2464788b730d996f3e728752c20c0f1f31e21b111b6a44980e4c0a877b"
+    },
+    "taipei-bins-2015-districts.csv": {
+      "sha256": "b84ce45d0ff46aeb7fab5d346f9176102116587eb494f093d893c3b8cef419c0"
+    }
+  },
+  "rough_taipei_screen": {
+    "bounds": {
+      "longitude": [
+        121.4,
+        121.7
+      ],
+      "latitude": [
+        24.95,
+        25.3
+      ]
+    },
+    "flagged_rows": 12,
+    "note": "粗略矩形並非行政邊界。原座標全數保留，不自動更正或剔除。範圍內也可能有錯誤座標。"
+  }
+}
