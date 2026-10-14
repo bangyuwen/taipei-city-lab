@@ -1,6 +1,6 @@
 import * as L from './vendor/leaflet/leaflet-src.esm.js';
 import {mapSpec,mapPointIndex} from './map-data.js';
-import {TILE_PROVIDER} from './geo.js';
+import {TILE_PROVIDER,scopeText} from './geo.js';
 
 const LifecycleCanvas=L.Canvas.extend({
   _redraw(){
@@ -17,9 +17,9 @@ export function mountMap(host,payload,actions={}){
   const tiles=L.tileLayer(TILE_PROVIDER.url,{maxZoom:TILE_PROVIDER.maxZoom,keepBuffer:0,updateWhenIdle:true,detectRetina:false,
     attribution:`© <a href="${TILE_PROVIDER.copyright}" target="_blank" rel="noopener">OpenStreetMap</a> contributors`}).addTo(map);
   L.control.scale({imperial:false}).addTo(map);
-  let spec,index,disposed=false,planned=true,groups={},demandMarkers=[],flags={},highlight=null,scope=null,tileFailures=0;
-  const defaults={existing:true,demand:false,candidates:false,selected:true,coverage:true,existingCoverage:false};
-  const names={existing:'既有快照',demand:'合成需求',candidates:'候選',selected:'推薦',coverage:'推薦範圍',existingCoverage:'既有範圍'};
+  let spec,index,disposed=false,planned=true,groups={},demandMarkers=[],flags={},highlight=null,tileFailures=0;
+  const defaults={existing:true,demand:false,candidates:false,selected:true,coverage:true,existingCoverage:false,studyArea:false};
+  const names={existing:'既有快照',demand:'合成需求',candidates:'候選',selected:'推薦',coverage:'推薦範圍',existingCoverage:'既有範圍',studyArea:'模型計算範圍'};
   const colors={existing:'#236749',demand:'#557ca4',candidates:'#737d79',selected:'#b67608'};
   const recordElement=(point,withAction=true)=>{
     const box=document.createElement('div'),title=document.createElement('strong'),detail=document.createElement('p');
@@ -57,6 +57,10 @@ export function mountMap(host,payload,actions={}){
   function buildLayers(){
     for(const g of Object.values(groups))g.remove();groups={};demandMarkers=[];
     for(const name of Object.keys(defaults))groups[name]=L.layerGroup();
+    if(spec.kind==='spatial'){
+      const [w,s,e,n]=spec.bbox;
+      L.rectangle([[s,w],[n,e]],{color:'#586477',weight:1.5,dashArray:'6 5',fill:false,interactive:false}).addTo(groups.studyArea);
+    }
     for(const name of ['existing','demand','candidates','selected'])for(const point of spec[name])marker(point,name).addTo(groups[name]);
     if(spec.newRadius>0)for(const p of spec.selected)L.circle([p.lat,p.lng],{radius:spec.newRadius,color:colors.selected,weight:1,fillOpacity:.07,interactive:false}).addTo(groups.coverage);
     if(spec.radius>0)for(const p of spec.existing)L.circle([p.lat,p.lng],{radius:spec.radius,color:colors.existing,weight:.7,fillOpacity:.03,interactive:false}).addTo(groups.existingCoverage);
@@ -76,9 +80,10 @@ export function mountMap(host,payload,actions={}){
   function update(next){
     const previous=spec?.id,nextSpec=mapSpec(next);if(!nextSpec)throw new Error('此題沒有地理位置可顯示');
     spec=nextSpec;index=mapPointIndex(spec);highlight?.remove();highlight=null;map.closePopup();
-    $('#geo-title').textContent=spec.kind==='spatial'?'街道底圖與方案位置':'內湖地理位置參考';$('#geo-note').textContent=spec.note;$('#geo-details').textContent='';
+    $('#geo-title').textContent=spec.kind==='spatial'?'街道底圖與方案位置':'內湖地理位置參考';
+    $('#geo-note').textContent=spec.kind==='spatial'?scopeText(spec.bbox)+' '+spec.note:spec.note;$('#geo-details').textContent='';
     if(previous!==spec.id){flags={...defaults};planned=true;}if(typeof next.planned==='boolean')planned=next.planned;buildLayers();
-    scope?.remove();const [w,s,e,n]=spec.bbox;scope=L.rectangle([[s,w],[n,e]],{color:'#566751',weight:1.5,dashArray:'6 5',fill:false,interactive:false}).addTo(map);
+    const [w,s,e,n]=spec.bbox;
     map.setMaxBounds(L.latLngBounds([[s,w],[n,e]]).pad(1));if(previous!==spec.id)fit();
     const selectNode=$('#geo-pick');selectNode.replaceChildren();
     for(const p of spec.focus){const option=document.createElement('option');option.value=String(p.id);option.textContent=(p.selected?'推薦 · ':'')+(p.label||p.id);selectNode.append(option);}

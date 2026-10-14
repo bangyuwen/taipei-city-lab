@@ -29,7 +29,23 @@ function discInstances(bag,parent,points,radius,color){
   if(radius<=0)return null;
   return instances(bag,parent,new THREE.CircleGeometry(radius,32),mat(bag,color,{transparent:true,opacity:.13,depthWrite:false,side:THREE.DoubleSide}),points,(d,p)=>{d.position.set(p.x,.13,p.z);d.rotation.x=-Math.PI/2;});
 }
-function markerInstances(bag,parent,points,id,color,picks){
+function pointSprites(bag,parent,points,color,picks,screenMarkers,pixelSize,ring=false){
+  const size=32,pixels=new Uint8Array(size*size*4),rgb=[1,3,5].map(i=>parseInt(color.slice(i,i+2),16));
+  for(let y=0;y<size;y++)for(let x=0;x<size;x++){
+    const radius=Math.hypot((x+.5-size/2)/(size/2),(y+.5-size/2)/(size/2)),offset=(y*size+x)*4;
+    const white=radius>.76||(ring&&radius<.58),alpha=Math.max(0,Math.min(1,(1-radius)*size/2));
+    pixels.set(white?[255,255,255]:rgb,offset);pixels[offset+3]=ring&&radius<.44?0:Math.round(alpha*255);
+  }
+  const texture=bag.track(new THREE.DataTexture(pixels,size,size));texture.colorSpace=THREE.SRGBColorSpace;
+  texture.minFilter=THREE.LinearFilter;texture.magFilter=THREE.LinearFilter;texture.needsUpdate=true;
+  const material=bag.track(new THREE.SpriteMaterial({map:texture,sizeAttenuation:false,depthTest:false,depthWrite:false,toneMapped:false}));
+  return points.map(point=>{
+    const sprite=new THREE.Sprite(material);sprite.position.set(point.x,.6,point.z);sprite.renderOrder=ring?30:20;
+    sprite.userData.point=point;parent.add(sprite);screenMarkers.push({sprite,pixelSize});picks?.push(sprite);return sprite;
+  });
+}
+function markerInstances(bag,parent,points,id,color,picks,screenMarkers,pixelSize=9){
+  if(id==='bins'){pointSprites(bag,parent,points,color,picks,screenMarkers,pixelSize);return;}
   const tree=id==='shade',building=['rat','buildings'].includes(id);
   const geometry=tree?new THREE.IcosahedronGeometry(1,1):new THREE.BoxGeometry(1,1,1);
   const item=instances(bag,parent,geometry,mat(bag,color),points,(d,p)=>{
@@ -40,14 +56,24 @@ function markerInstances(bag,parent,points,id,color,picks){
   if(tree)instances(bag,parent,new THREE.CylinderGeometry(.13,.16,1.4,6),mat(bag,'#baad82'),points,(d,p)=>d.position.set(p.x,.7,p.z));
 }
 function buildSpatial(spec,bag,root){
-  ground(bag,root,spec.project.width,spec.project.depth);
+  // Street tiles provide the ground. The scene background covers loading gaps
+  // without a finite base or oversized geometry competing with marker depth.
   const layers={};for(const key of ['existing','demand','candidate','recommended','coverage'])layers[key]=group(root,key);
-  const picks=[];
-  markerInstances(bag,layers.existing,spec.existing,spec.id,SCENE_COLORS.existing,picks);
-  markerInstances(bag,layers.candidate,spec.points.filter(p=>!p.selected),spec.id,SCENE_COLORS.candidate,picks);
+  layers.studyArea=group(root,'studyArea');
+  const x=spec.project.width/2,z=spec.project.depth/2;
+  const boundary=bag.track(new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(-x,.12,-z),new THREE.Vector3(x,.12,-z),
+    new THREE.Vector3(x,.12,z),new THREE.Vector3(-x,.12,z),
+  ]));
+  layers.studyArea.add(new THREE.LineLoop(boundary,bag.track(new THREE.LineBasicMaterial({color:'#586477'}))));
+  layers.studyArea.visible=false;
+  const picks=[],screenMarkers=[],bins=spec.id==='bins';
+  markerInstances(bag,layers.existing,spec.existing,spec.id,bins?SCENE_COLORS.mapExisting:SCENE_COLORS.existing,picks,screenMarkers);
+  markerInstances(bag,layers.candidate,spec.points.filter(p=>!p.selected),spec.id,bins?SCENE_COLORS.mapCandidate:SCENE_COLORS.candidate,picks,screenMarkers);
   const selectedBase=group(layers.candidate,'selected-base');
-  markerInstances(bag,selectedBase,spec.points.filter(p=>p.selected),spec.id,SCENE_COLORS.candidate,picks);
-  markerInstances(bag,layers.recommended,spec.points.filter(p=>p.selected),spec.id,SCENE_COLORS.recommended,picks);
+  markerInstances(bag,selectedBase,spec.points.filter(p=>p.selected),spec.id,bins?SCENE_COLORS.mapCandidate:SCENE_COLORS.candidate,picks,screenMarkers);
+  markerInstances(bag,layers.recommended,spec.points.filter(p=>p.selected),spec.id,bins?SCENE_COLORS.mapRecommended:SCENE_COLORS.recommended,picks,screenMarkers,13);
+  const selection=pointSprites(bag,root,[{x:0,z:0}],SCENE_COLORS.mapSelection,null,screenMarkers,23,true)[0];selection.name='selected-location';selection.visible=false;
   discInstances(bag,layers.coverage,spec.existing,spec.radius,SCENE_COLORS.existing);
   const proposed=group(layers.coverage,'proposed');
   discInstances(bag,proposed,spec.points.filter(p=>p.selected),spec.newRadius,SCENE_COLORS.recommended);
@@ -61,9 +87,10 @@ function buildSpatial(spec,bag,root){
     if(demands.instanceColor)demands.instanceColor.needsUpdate=true;
   };
   setPlanned(true);
-  const x=spec.project.width/4,z=spec.project.depth/4;
-  return {layers,picks,setPlanned,labels:[{text:'北 N',position:[0,1,-spec.project.depth/2-5]},
-    ...spec.labels.map((text,i)=>({text,position:[i%2?x:-x,.6,i<2?z:-z]}))],update:()=>({summary:'旋轉查看分區；點選標記檢視資料。'})};
+  return {layers,picks,setPlanned,labels:[],
+    setSelected(point){selection.visible=Boolean(point);if(point)selection.position.set(point.x,.7,point.z);},
+    setMarkerViewport(height,fov){const unit=2*Math.tan(fov*Math.PI/360)/Math.max(1,height);for(const {sprite,pixelSize} of screenMarkers)sprite.scale.setScalar(unit*pixelSize);},
+    update:()=>({summary:'拖曳探索街道；點選標記檢視資料。'})};
 }
 function carBatch(bag,root,color,count){
   const body=bag.track(new THREE.InstancedMesh(bag.track(new THREE.BoxGeometry(1.8,.7,.9)),mat(bag,color),count));

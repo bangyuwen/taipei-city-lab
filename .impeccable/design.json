@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-14T10:19:58.081984+00:00",
+  "generatedAt": "2026-10-14T12:27:55.453017+00:00",
   "title": "Design System: 台北城市實驗室",
   "extensions": {
     "colorMeta": {
@@ -422,7 +422,8 @@
           "oklch(72.14% 0.08449 161.05)",
           "oklch(83.57% 0.08449 161.05)",
           "oklch(95.00% 0.08449 161.05)"
-        ]
+        ],
+        "purpose": "Leaflet 與清潔箱 3D 共用的既有資料層色；3D 圓點及控制列圖例沿用此語意。"
       },
       "map-demand": {
         "role": "secondary",
@@ -450,7 +451,8 @@
           "oklch(72.14% 0.01334 169.95)",
           "oklch(83.57% 0.01334 169.95)",
           "oklch(95.00% 0.01334 169.95)"
-        ]
+        ],
+        "purpose": "Leaflet 與清潔箱 3D 共用的候選資料層色；3D 圓點及控制列圖例沿用此語意。"
       },
       "map-recommended": {
         "role": "secondary",
@@ -464,6 +466,37 @@
           "oklch(72.14% 0.13106 71.24)",
           "oklch(83.57% 0.13106 71.24)",
           "oklch(95.00% 0.13106 71.24)"
+        ],
+        "purpose": "Leaflet 與清潔箱 3D 共用的推薦資料層色；3D 圓點及控制列圖例沿用此語意。"
+      },
+      "context-ground": {
+        "role": "neutral",
+        "displayName": "城市地圖中性底",
+        "purpose": "SCENE_COLORS.contextGround：地理 3D 街道圖磚載入空隙的背景，不形成有限底座。",
+        "tonalRamp": [
+          "oklch(15.00% 0.00828 121.64)",
+          "oklch(26.43% 0.00828 121.64)",
+          "oklch(37.86% 0.00828 121.64)",
+          "oklch(49.29% 0.00828 121.64)",
+          "oklch(60.71% 0.00828 121.64)",
+          "oklch(72.14% 0.00828 121.64)",
+          "oklch(83.57% 0.00828 121.64)",
+          "oklch(95.00% 0.00828 121.64)"
+        ]
+      },
+      "map-selection": {
+        "role": "primary",
+        "displayName": "位置選取朱橘",
+        "purpose": "SCENE_COLORS.mapSelection：與 signal 同值，專指四個地理題共用的持續 3D 選取環；獨立於資料系列。",
+        "tonalRamp": [
+          "oklch(15.00% 0.14514 33.77)",
+          "oklch(26.43% 0.14514 33.77)",
+          "oklch(37.86% 0.14514 33.77)",
+          "oklch(49.29% 0.14514 33.77)",
+          "oklch(60.71% 0.14514 33.77)",
+          "oklch(72.14% 0.14514 33.77)",
+          "oklch(83.57% 0.14514 33.77)",
+          "oklch(95.00% 0.14514 33.77)"
         ]
       }
     },
@@ -684,16 +717,25 @@
       "description": "模型界線和一鍵情境的實際表面；760px 以下提示正文 14px，參數同步由 app runtime 處理。",
       "html": "<section class=\"ds-guide\"><p><strong>換個條件，看看城市怎麼變。</strong>試著少量增設，或提高公平權重，比較同一批模擬需求的服務差異。推薦位置仍需要現勘。</p><div class=\"ds-experiments\"><button class=\"ds-experiment\">先增設 5 個</button><button class=\"ds-experiment\">多顧服務缺口</button></div></section>",
       "css": ".ds-guide{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 20px;background:#e7ebf0;border-radius:12px;margin-bottom:18px}.ds-guide p{font-size:13px;line-height:1.8;margin:0;color:#485671;max-width:65ch}.ds-guide strong{display:block;font-size:14px;color:var(--ink,#202c45);font-weight:600;margin-bottom:3px}.ds-experiments{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;flex-shrink:0}.ds-experiment{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;background:var(--paper,#f3f1eb);font-size:12px;padding:10px 12px;min-height:44px;border:1px solid #aab1bf;border-radius:8px;color:var(--ink,#202c45);cursor:pointer}.ds-experiment:hover{background:#fff;border-color:var(--signal,#ae432c);color:var(--signal,#ae432c)}.ds-experiment:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}@media(max-width:1200px){.ds-guide{display:block}.ds-experiments{justify-content:flex-start;margin-top:12px}}@media(max-width:760px){.ds-guide{padding:16px}.ds-guide p{font-size:14px}}@media(max-width:480px){.ds-experiment{flex:1}}"
+    },
+    {
+      "name": "清潔箱資料層控制",
+      "kind": "custom",
+      "refersTo": "map-layer-control",
+      "description": "實際清潔箱 3D 圖層控制的三個資料角色；原生 checkbox、10px 圓形圖例，手機 label 至少 44px。樣本不模擬地圖／Sprite runtime。",
+      "html": "<div class=\"ds-map-controls\"><div class=\"ds-map-layers\"><label><input type=\"checkbox\" checked><span class=\"ds-map-key ds-map-existing\" aria-hidden=\"true\"></span>既有點位</label><label><input type=\"checkbox\"><span class=\"ds-map-key ds-map-candidate\" aria-hidden=\"true\"></span>候選</label><label><input type=\"checkbox\" checked><span class=\"ds-map-key ds-map-recommended\" aria-hidden=\"true\"></span>推薦</label></div></div>",
+      "css": ".ds-map-controls{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;padding:16px 20px;border-top:1px solid #45516a;background:#28364f}.ds-map-layers{display:flex;gap:8px 16px;flex-wrap:wrap;font-size:12px;color:#d4dbe8}.ds-map-layers label{display:flex;gap:6px;align-items:center;min-height:32px}.ds-map-layers input[type=checkbox]{accent-color:#f6c58b}.ds-map-layers input:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}.ds-map-key{display:inline-block;width:10px;height:10px;border:1px solid var(--paper,#f3f1eb);border-radius:50%;vertical-align:-1px}.ds-map-existing{background:#236749}.ds-map-candidate{background:#737d79}.ds-map-recommended{background:#b67608}@media(max-width:760px){.ds-map-layers{font-size:14px}.ds-map-layers label{min-height:44px}}"
     }
   ],
   "narrative": {
     "northStar": "城市專刊",
-    "overview": "使用者於 2026-10-14 選定城市專刊，授權取代原有綠色工作台。深藍提供穩定導覽與文字，暖白承載閱讀，朱橘標出操作與選取。中文宋體標題配無襯線操作；繁體中文及「台北城市實驗室」名稱延續。\n\n介面以平面分隔、留白與灰藍輔助面建立層次。圓角用於原生控制、提示及視覺容器；指標、方法與明細直接放在工作區。生活提問與可回復的情境操作相連，來源分類和推估限制持續可見。\n\n本文件從最終原始碼擷取：Leaflet 樣式先載入，其後為 dist/styles.css、dist/workspace.css；動態內容來自 dist/app.js、dist/viz.js 與 dist/map-ui.js。沿用 code-led Operate（seed 0f3e9d23），沒有 approved comp、decision comp 或 QUALITY BAR boards。現已取得本機 PR build 的桌機 1440、平板 850、手機 390／320px Chromium captures；獨立 reviewer 先完成初輪五節審查，再檢視 23 張有效 captures，對手機圖表及來源圖示兩項修正做 Verdict Pass：均 resolved、remaining clear、disposition ship。此 ship 僅涵蓋兩項修正及該批次回歸，不是新的全表面審查。Headless Chromium 154、SwiftShader 軟體 WebGL 與模擬觸控仍不涵蓋實體手機、Safari／Firefox、硬體 FPS 或正式站台完整流程；詳見 docs/acceptance.md、docs/citizen-finish-review.md。\n\n合併前另修復 GitHub P2 標題順序：根頁／#explore 由歡迎 H1 開始，題目為 H2；進入探索／題目深連結時以題目 H1 接替。字體 tokens 不變；heading-results.json 記錄桌機／模擬手機 22 項狀態檢查。這不是擴大先前兩項補修的 Impeccable ship 範圍。",
+    "overview": "使用者於 2026-10-14 選定城市專刊，授權取代原有綠色工作台。深藍提供穩定導覽與文字，暖白承載閱讀，朱橘標出操作與選取。中文宋體標題配無襯線操作；繁體中文及「台北城市實驗室」名稱延續。\n\n介面以平面分隔、留白與灰藍輔助面建立層次。圓角用於原生控制、提示及視覺容器；指標、方法與明細直接放在工作區。生活提問與可回復的情境操作相連，來源分類和推估限制持續可見。\n\n本文件從最終原始碼擷取：Leaflet 樣式先載入，其後為 dist/styles.css、dist/workspace.css；動態內容來自 dist/app.js、dist/viz.js 與 dist/map-ui.js。沿用 code-led Operate（seed 0f3e9d23），沒有 approved comp、decision comp 或 QUALITY BAR boards。現已取得本機 PR build 的桌機 1440、平板 850、手機 390／320px Chromium captures；獨立 reviewer 先完成初輪五節審查，再檢視 23 張有效 captures，對手機圖表及來源圖示兩項修正做 Verdict Pass：均 resolved、remaining clear、disposition ship。此 ship 僅涵蓋兩項修正及該批次回歸，不是新的全表面審查。Headless Chromium 154、SwiftShader 軟體 WebGL 與模擬觸控仍不涵蓋實體手機、Safari／Firefox、硬體 FPS 或正式站台完整流程；詳見 docs/acceptance.md、docs/citizen-finish-review.md。\n\n合併前另修復 GitHub P2 標題順序：根頁／#explore 由歡迎 H1 開始，題目為 H2；進入探索／題目深連結時以題目 H1 接替。字體 tokens 不變；heading-results.json 記錄桌機／模擬手機 22 項狀態檢查。這不是擴大先前兩項補修的 Impeccable ship 範圍。\n\n2026-10-14 的連續城市地圖是既定世界的延伸：dist/basemap3d.js、dist/geo.js、dist/scene-data.js、dist/scene-builder.js 與 dist/scene-ui.js 讓地理 3D 使用相機可見的 OpenStreetMap 街道，清潔箱採固定螢幕尺寸的資料圓點，四個地理題共用持續選取環；模型範圍獨立揭露。記錄依目前原始碼，不改寫前次審查。.impeccable/review/city-map/finish-review.md 保留初輪完整審查；verdict.md 的 Verdict Pass 檢視 1440／390／320px 共 36 張最新 captures，PNG 與七個 runtime 雜湊均符合目前 results.json，點位層次／選取與手機範圍呈現兩項均 resolved、remaining clear、disposition ship。此 ship 僅涵蓋這兩項補修與該批受測回歸，不是新的全表面審查；沒有第二次 detector 或外部 QUALITY BAR 比較。驗證範圍仍是本機 Chromium 154／SwiftShader 與模擬觸控；補修及證據見 docs/city-map-acceptance.md。",
     "keyCharacteristics": [
       "深藍外殼、暖白閱讀面、朱橘互動訊號各有明確角色。",
       "中文宋體標題配無襯線操作及等寬資料輸入。",
       "細框、平面分隔與灰藍輔助面，控制使用圓角。",
-      "原生表單與漸進揭露保留研究能力和資料界線。"
+      "原生表單與漸進揭露保留研究能力和資料界線。",
+      "地理背景連續延伸，資料點、選取與模型範圍保持各自語意。"
     ],
     "rules": [
       {
@@ -715,6 +757,11 @@
         "name": "The Flat Shell Rule",
         "body": "主要介面以平面分隔與色調層次表現深度；地圖 vendor 的功能陰影留在地圖局部，不擴張為卡片裝飾。",
         "section": "elevation"
+      },
+      {
+        "name": "The Geographic Context Rule",
+        "body": "地理背景連續延伸供定位，點位與公尺範圍固定於模型投影；選取環辨認記錄，範圍圖層揭露計算邊界，三者不得混用。",
+        "section": "components"
       }
     ],
     "dos": [
@@ -724,14 +771,16 @@
       "Do 持續呈現來源、真實與合成分類、方法及推估限制。",
       "Do 在新增或修改響應式圖表時量測實際標籤字級，並保留桌機／手機 captures 與明確的 review 範圍。",
       "Do 維持手機 16px 欄位、14px 輔助說明、44px 圖層／zoom 操作區，以及可聚焦的表格捲動 region。",
-      "Do 維持唯一可見 H1：入口可見時用歡迎標題，隱藏入口後用題目標題；固定 .topic-title 字體，不以層級改變外觀。"
+      "Do 維持唯一可見 H1：入口可見時用歡迎標題，隱藏入口後用題目標題；固定 .topic-title 字體，不以層級改變外觀。",
+      "Do 讓地理背景延伸而保持點位與公尺半徑不變；地理 3D 的選取環持續指向目前記錄，啟用模型範圍立即提供可見全範圍的俯視。"
     ],
     "donts": [
       "Don't 把互動朱橘或舊題目 accent 當成所有點位和模型系列的共同配色。",
       "Don't 把每個指標、方法與明細再包成重複的大卡片。",
       "Don't 以文字字形作新操作圖示；新圖示沿用 inline SVG。",
       "Don't 把 sidecar 合成 tonal ramps 當成已部署配色或已驗證的對比組合。",
-      "Don't 把原始碼、Node DOM stub、宣告色彩及資產檢查當成 rendered visual、響應式、觸控或 WebGL 驗收。"
+      "Don't 把原始碼、Node DOM stub、宣告色彩及資產檢查當成 rendered visual、響應式、觸控或 WebGL 驗收。",
+      "Don't 把周邊街道背景當成新增研究資料，或把地理範圍的可選邊界變成預設地理底座。"
     ]
   }
 }
