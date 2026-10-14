@@ -12,7 +12,7 @@ export function mountScene(host,payload,onFailure){
   catch(error){host.innerHTML='';throw error;}
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));
   renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.18;
-  const scene=new THREE.Scene();scene.background=new THREE.Color('#102f2c');
+  const scene=new THREE.Scene();scene.background=new THREE.Color('#202c45');
   const camera=new THREE.PerspectiveCamera(42,1,.1,1800);
   scene.add(new THREE.HemisphereLight('#eaf3e1','#183029',2.3));
   const sunlight=new THREE.DirectionalLight('#fff0cb',3);sunlight.position.set(-70,140,90);scene.add(sunlight);
