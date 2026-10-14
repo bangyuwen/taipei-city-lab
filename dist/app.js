@@ -25,6 +25,7 @@ const topicPaths={
   buildings:'M5 21V7h8v14M13 11h6v10M8 10h2m-2 4h2m-2 4h2m6-4h1m-1 4h1M3 21h18',
   audit:'M6 3h8l4 4v14H6zM14 3v5h4M9 12h6m-6 4h3',
   close:'m7 7 10 10M17 7 7 17',
+  external:'M14 5h5v5M19 5l-9 9M19 14v5H5V5h5',
 };
 function topicIcon(id){return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${topicPaths[id]}"/></svg>`;}
 function drawGuide(){
@@ -92,19 +93,29 @@ function drawSaved(){
   $('saved-scenarios').innerHTML=entries.map((s,i)=>`<div class="saved-item"><button data-load="${i}">${esc(s.name)}</button><button class="delete" data-delete="${i}" aria-label="刪除${esc(s.name)}">${topicIcon('close')}</button></div>`).join('');
   $('saved-scenarios').onclick=e=>{const target=e.target.closest?.('button')||e.target;const load=target.dataset.load,remove=target.dataset.delete;if(load!==undefined&&entries[load]){cancelCalculation();state.params[active.id]=entries[load].params;drawControls();drawResult();persist();toast('已套用 '+entries[load].name);}else if(remove!==undefined){entries.splice(Number(remove),1);state.saved[active.id]=entries;drawSaved();persist();}};
 }
+const chartWidths=new WeakMap();
+function chartWidth(host){
+  const width=Math.round(host.getBoundingClientRect?.().width||0);chartWidths.set(host,width);
+  return width>24?width-24:760;
+}
+function drawCharts(){
+  if(!result)return;
+  const heading=`<div class="visual-heading"><h2>${active.id==='bus'?'需求與搭載比較':active.id==='audit'?'資料用途檢查':result.chart?'基準與方案比較':'方案位置與範圍'}</h2><span class="small-tag">相同情境參數</span></div>`;
+  const main=$('visualization'),secondaryHost=$('chart-secondary');
+  main.innerHTML=heading+(result.chart?chartSVG(result.chart,chartWidth(main)):result.map?mapSVG(result.map,data.meta.bbox):'<div class="empty-state">使用下方資料用途表與 CSV 健檢，確認資料能回答哪些問題。</div>');
+  const secondary=result.secondaryChart||(result.map&&result.chart?result.chart:null);
+  secondaryHost.innerHTML=secondary?`<section class="secondary-chart"><div class="visual-heading"><h2>${esc(secondary.title||'配置成效比較')}</h2><span class="small-tag">相同情境參數</span></div>${chartSVG(secondary,chartWidth(secondaryHost))}</section>`:'';
+}
 function drawResult(){
   try{result=active.evaluate(paramsFor(active),data);}catch(error){$('visualization').innerHTML=`<div class="fatal-error">計算未完成：${esc(error.message)}。請重設方案再試。</div>`;return;}
   if(result.chart && ['shade','bins','rat','buildings'].includes(active.id))result.chart={...result.chart,type:'bar'};
   $('metrics').style.setProperty('--metric-columns',(result.metrics?.length||0)>=4?'4':'3');
   const metricItems=(result.metrics||[]).map(m=>`<article class="metric"><div class="metric-label">${esc(m.label)}</div><div class="metric-value">${format(m.value)}<span class="metric-unit">${esc(m.unit||'')}</span></div>${m.detail?`<div class="metric-detail">${esc(m.detail)}</div>`:''}</article>`);
   $('metrics').innerHTML=`<div class="metric-grid">${metricItems.slice(0,4).join('')}</div>`+(metricItems.length>4?`<details class="more-metrics"><summary>查看其他 ${metricItems.length-4} 項模擬指標</summary><div class="metric-grid">${metricItems.slice(4).join('')}</div></details>`:'');
-  const heading=`<div class="visual-heading"><h2>${active.id==='bus'?'需求與搭載比較':active.id==='audit'?'資料用途檢查':result.chart?'基準與方案比較':'方案位置與範圍'}</h2><span class="small-tag">相同情境參數</span></div>`;
-  $('visualization').innerHTML=heading+(result.chart?chartSVG(result.chart):result.map?mapSVG(result.map,data.meta.bbox):'<div class="empty-state">使用下方資料用途表與 CSV 健檢，確認資料能回答哪些問題。</div>');
-  const secondary=result.secondaryChart||(result.map&&result.chart?result.chart:null);
-  $('chart-secondary').innerHTML=secondary?`<section class="secondary-chart"><div class="visual-heading"><h2>${esc(secondary.title||'配置成效比較')}</h2><span class="small-tag">相同情境參數</span></div>${chartSVG(secondary)}</section>`:'';
+  drawCharts();
   $('results').innerHTML=`<div class="section-heading"><h2>${active.id==='audit'?'資料用途與缺口':'方案明細與推薦依據'}</h2><span>${result.table?.rows?.length||0} 筆</span></div>${tableHTML(result.table)}`;
   drawWorkflow();
-  $('method').innerHTML=`<div class="section-heading"><h2>這個結果怎麼看</h2><span>方法與限制</span></div><p class="explanation">${esc(result.explanation||'')}</p><details open><summary>情境假設與資料限制</summary><ul class="assumptions">${(result.assumptions||[]).map(t=>`<li>${esc(t)}</li>`).join('')}</ul></details><details><summary>實務案例與下一步</summary><p class="explanation">${esc(research[active.id].finding)}</p><p class="explanation">${esc(research[active.id].next)}</p><a class="local-note" href="${esc(research[active.id].url)}" target="_blank" rel="noopener noreferrer">${esc(research[active.id].title)} ↗</a></details><div class="source-links">${(result.sources||[]).map(id=>`<button data-source="${esc(id)}">${esc(data.sources?.[id]?.title||id)} ↗</button>`).join('')}</div>`;
+  $('method').innerHTML=`<div class="section-heading"><h2>這個結果怎麼看</h2><span>方法與限制</span></div><p class="explanation">${esc(result.explanation||'')}</p><details open><summary>情境假設與資料限制</summary><ul class="assumptions">${(result.assumptions||[]).map(t=>`<li>${esc(t)}</li>`).join('')}</ul></details><details><summary>實務案例與下一步</summary><p class="explanation">${esc(research[active.id].finding)}</p><p class="explanation">${esc(research[active.id].next)}</p><a class="local-note" href="${esc(research[active.id].url)}" target="_blank" rel="noopener noreferrer">${esc(research[active.id].title)} ${topicIcon('external')}</a></details><div class="source-links">${(result.sources||[]).map(id=>`<button data-source="${esc(id)}">${esc(data.sources?.[id]?.title||id)}</button>`).join('')}</div>`;
   $('method').onclick=e=>{if(e.target.dataset.source)showSources(e.target.dataset.source);};
   $('visualization').onclick=e=>{const mark=e.target.closest('[data-point-id]');if(!mark)return;const point=result.map.points.find(p=>String(p.id)===mark.dataset.pointId);if(!point)return;selectedPoint=point;$('visualization').querySelector('.record-note')?.remove();$('visualization').insertAdjacentHTML('beforeend',`<div class="record-note">${esc(point.label||point.id)}${point.value!==undefined?' · '+esc(point.value):''}<br>座標 ${point.y.toFixed(6)}, ${point.x.toFixed(6)}；完整推薦依據見方案明細。</div>`);};
   const showPoint=e=>{const mark=e.target.closest('[data-point-id]');if(!mark)return;const point=result.map?.points.find(p=>String(p.id)===mark.dataset.pointId);if(!point)return;const tip=$('visualization').querySelector('.point-tooltip');if(tip){tip.textContent=(point.label||point.id)+' · 緯度 '+point.y.toFixed(6)+'／經度 '+point.x.toFixed(6)+(point.value!==undefined?' · 需求權重／指數 '+format(point.value):'');tip.hidden=false;}};
@@ -207,7 +218,7 @@ function shareScenario(){
 function showSources(id){
   const ids=id?[id]:Object.keys(data.sources||{});
   const retrieved=data.meta.retrievedAt?new Date(data.meta.retrievedAt).toLocaleString('zh-TW',{timeZone:'Asia/Taipei'}):'未提供';
-  $('source-body').innerHTML=`<p class="subtitle">資料取得：${esc(retrieved)}（台北時間）。「資料目錄」表示已核對用途，未將該資料集的觀測值載入模型。</p>${ids.map(key=>{const s=data.sources?.[key];if(!s)return '';const limits=Array.isArray(s.limitations)?s.limitations:[s.limitations].filter(Boolean);return `<article class="source-entry"><h3>${esc(s.title)}<span class="classification">${esc(s.classification||'來源')}</span></h3><a href="${esc(safeURL(s.url))}" target="_blank" rel="noopener noreferrer">開啟原始來源 ↗</a><p>粒度：${esc(s.grain||'未提供')}<br>整合狀態：${esc(s.integrationStatus==='loaded'?'已載入觀測快照':s.integrationStatus==='metadata-only'?'已核對資料目錄，未載入觀測值':'未載入觀測值')}</p>${s.counts?`<p>下載來源 ${format(s.counts.sourceCount)} 列；示範範圍 ${format(s.counts.filteredCount)} 列；無法解析座標 ${format(s.counts.invalidCoordinateCount)} 列。${s.counts.catalogCountMismatch?'目錄筆數與下載內容不一致，本版依下載內容計數。':''}</p>`:''}${s.fields?.length?`<p class="fields">欄位：${esc(s.fields.join('、'))}</p>`:''}<ul>${limits.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></article>`;}).join('')}`;
+  $('source-body').innerHTML=`<p class="subtitle">資料取得：${esc(retrieved)}（台北時間）。「資料目錄」表示已核對用途，未將該資料集的觀測值載入模型。</p>${ids.map(key=>{const s=data.sources?.[key];if(!s)return '';const limits=Array.isArray(s.limitations)?s.limitations:[s.limitations].filter(Boolean);return `<article class="source-entry"><h3>${esc(s.title)}<span class="classification">${esc(s.classification||'來源')}</span></h3><a href="${esc(safeURL(s.url))}" target="_blank" rel="noopener noreferrer">開啟原始來源 ${topicIcon('external')}</a><p>粒度：${esc(s.grain||'未提供')}<br>整合狀態：${esc(s.integrationStatus==='loaded'?'已載入觀測快照':s.integrationStatus==='metadata-only'?'已核對資料目錄，未載入觀測值':'未載入觀測值')}</p>${s.counts?`<p>下載來源 ${format(s.counts.sourceCount)} 列；示範範圍 ${format(s.counts.filteredCount)} 列；無法解析座標 ${format(s.counts.invalidCoordinateCount)} 列。${s.counts.catalogCountMismatch?'目錄筆數與下載內容不一致，本版依下載內容計數。':''}</p>`:''}${s.fields?.length?`<p class="fields">欄位：${esc(s.fields.join('、'))}</p>`:''}<ul>${limits.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></article>`;}).join('')}`;
   const dialog=$('source-dialog');if(dialog.showModal)dialog.showModal();else dialog.setAttribute('open','');
 }
 function download(filename,content,type){const blob=new Blob([content],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
@@ -243,6 +254,12 @@ function renderAuditReport(){
 async function init(){
   const response=await fetch('./data/snapshot.json');if(!response.ok)throw new Error('資料快照讀取失敗 '+response.status);data=await response.json();if(!data.meta||!data.sources)throw new Error('資料快照缺少來源與範圍');
   $('loading').hidden=true;activate();window.addEventListener('hashchange',activate);
+  if(typeof window.ResizeObserver==='function'){
+    const observer=new window.ResizeObserver(entries=>{
+      if(entries.some(({target})=>{const width=Math.round(target.getBoundingClientRect().width);return width>0&&chartWidths.get(target)!==width;}))drawCharts();
+    });
+    observer.observe($('visualization'));observer.observe($('chart-secondary'));
+  }
   $('topic-menu-toggle').onclick=()=>{const open=$('sidebar').dataset.menuOpen!=='true';$('sidebar').dataset.menuOpen=String(open);$('topic-menu-toggle').setAttribute('aria-expanded',String(open));};
   $('begin-exploring').onclick=()=>{$('city-intro').hidden=true;$('module-head').scrollIntoView?.({block:'start',behavior:'auto'});$('module-head').focus?.({preventScroll:true});};
   $('reset').onclick=()=>{cancelCalculation();state.params[active.id]={...active.defaults};selectedPoint=null;drawControls();drawResult();persist();toast('已回到預設方案。');};

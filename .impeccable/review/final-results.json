@@ -1,0 +1,1308 @@
+{
+  "round": "final",
+  "checks": [
+    {
+      "name": "citizen experiment and scenario lifecycle",
+      "passed": true,
+      "evidence": "Experiment, save/load/reset, current CSV, parameter share and view preservation verified in Chromium"
+    },
+    {
+      "name": "keyboard scrolling of recommendation details",
+      "passed": true,
+      "evidence": "Keyboard reaches and scrolls the recommendation table with a visible focus ring"
+    },
+    {
+      "name": "keyboard source dialog and focus restoration",
+      "passed": true,
+      "evidence": "Keyboard Enter opens sources; Escape closes and restores focus"
+    },
+    {
+      "name": "spatial Three.js rendering and point focus",
+      "passed": true,
+      "evidence": {
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "width": 788,
+        "height": 420
+      }
+    },
+    {
+      "name": "all topic routes and traffic/bus time controls",
+      "passed": true,
+      "evidence": {
+        "shade": "樹蔭公平",
+        "rat": "鼠患巡查與源頭查核",
+        "traffic": "內湖錯峰通勤",
+        "bus": "一站公車接駁",
+        "buildings": "先健檢哪裡？",
+        "audit": "市政資料健檢"
+      }
+    },
+    {
+      "name": "local CSV audit and report export",
+      "passed": true,
+      "evidence": {
+        "rowCount": 3,
+        "duplicateCount": 1
+      }
+    },
+    {
+      "name": "mobile touch navigation",
+      "passed": true,
+      "evidence": "Touch opens seven-topic menu and selected topic closes it"
+    },
+    {
+      "name": "mobile map touch pan",
+      "passed": true,
+      "evidence": {
+        "method": "Chromium CDP synthesized touch",
+        "before": "matrix(1, 0, 0, 1, 0, 0)",
+        "after": "matrix(1, 0, 0, 1, 66, 0)"
+      }
+    },
+    {
+      "name": "mobile 3D touch and gesture cancellation",
+      "passed": true,
+      "evidence": "3D rendered; synthesized touch and cancel followed by reset remain usable"
+    }
+  ],
+  "pages": {
+    "desktop-root": {
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "documentWidth": 1440,
+      "bodyWidth": 1440,
+      "heading": "垃圾桶配置",
+      "title": "清潔箱配置 — 台北城市實驗室",
+      "smallTargets": [
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Leaflet",
+          "width": 47,
+          "height": 12
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "OpenStreetMap",
+          "width": 78,
+          "height": 12
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "回報底圖問題",
+          "width": 92,
+          "height": 17
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "新增垃圾桶上限\n20個",
+          "width": 258,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "公平優先權重\n35%",
+          "width": 258,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "步行服務半徑（假設）\n300公尺",
+          "width": 258,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 258,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 258,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 258,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 258,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 258,
+          "height": 23
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "",
+          "width": 168,
+          "height": 17
+        }
+      ],
+      "clippedControls": [
+        {
+          "id": "",
+          "text": "跳至探索區"
+        }
+      ],
+      "mapTiles": {
+        "count": 12,
+        "loaded": 12
+      },
+      "mapStatus": "OpenStreetMap 街道底圖 · 即時載入，不代表設施快照的調查日期。",
+      "sceneStatus": "拖曳或縮放地圖，點選位置查看來源與推薦依據。",
+      "displayFontLoaded": true,
+      "mainTop": 927.109375,
+      "activeTopic": "清潔箱配置",
+      "charts": [
+        {
+          "viewBox": "0 0 760 300",
+          "labels": [
+            {
+              "text": "0",
+              "fontPixels": 14
+            },
+            {
+              "text": "18.31",
+              "fontPixels": 14
+            },
+            {
+              "text": "36.61",
+              "fontPixels": 14
+            },
+            {
+              "text": "54.92",
+              "fontPixels": 14
+            },
+            {
+              "text": "73.23",
+              "fontPixels": 14
+            },
+            {
+              "text": "西南模擬區西南模擬區",
+              "fontPixels": 14
+            },
+            {
+              "text": "東南模擬區東南模擬區",
+              "fontPixels": 14
+            },
+            {
+              "text": "西北模擬區西北模擬區",
+              "fontPixels": 14
+            },
+            {
+              "text": "東北模擬區東北模擬區",
+              "fontPixels": 14
+            }
+          ]
+        }
+      ]
+    },
+    "desktop-bins": {
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "documentWidth": 1440,
+      "bodyWidth": 1440,
+      "heading": "垃圾桶配置",
+      "title": "清潔箱配置 — 台北城市實驗室",
+      "smallTargets": [
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Leaflet",
+          "width": 47,
+          "height": 12
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "OpenStreetMap",
+          "width": 78,
+          "height": 12
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "回報底圖問題",
+          "width": 92,
+          "height": 17
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "新增垃圾桶上限\n20個",
+          "width": 258,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "公平優先權重\n35%",
+          "width": 258,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "步行服務半徑（假設）\n300公尺",
+          "width": 258,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 258,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 258,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 258,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 258,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 258,
+          "height": 23
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "",
+          "width": 168,
+          "height": 17
+        }
+      ],
+      "clippedControls": [
+        {
+          "id": "",
+          "text": "跳至探索區"
+        }
+      ],
+      "mapTiles": {
+        "count": 12,
+        "loaded": 12
+      },
+      "mapStatus": "OpenStreetMap 街道底圖 · 即時載入，不代表設施快照的調查日期。",
+      "sceneStatus": "拖曳或縮放地圖，點選位置查看來源與推薦依據。",
+      "displayFontLoaded": true,
+      "mainTop": 611.140625,
+      "activeTopic": "清潔箱配置",
+      "charts": [
+        {
+          "viewBox": "0 0 760 300",
+          "labels": [
+            {
+              "text": "0",
+              "fontPixels": 14
+            },
+            {
+              "text": "18.31",
+              "fontPixels": 14
+            },
+            {
+              "text": "36.61",
+              "fontPixels": 14
+            },
+            {
+              "text": "54.92",
+              "fontPixels": 14
+            },
+            {
+              "text": "73.23",
+              "fontPixels": 14
+            },
+            {
+              "text": "西南模擬區西南模擬區",
+              "fontPixels": 14
+            },
+            {
+              "text": "東南模擬區東南模擬區",
+              "fontPixels": 14
+            },
+            {
+              "text": "西北模擬區西北模擬區",
+              "fontPixels": 14
+            },
+            {
+              "text": "東北模擬區東北模擬區",
+              "fontPixels": 14
+            }
+          ]
+        }
+      ]
+    },
+    "desktop-3d": {
+      "webgl": {
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "width": 788,
+        "height": 420
+      },
+      "status": "3D 可旋轉、縮放與選取；圖表／明細使用同一個模型結果。",
+      "summary": "旋轉查看分區；點選標記檢視資料。"
+    },
+    "mobile-root": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "bodyWidth": 390,
+      "heading": "垃圾桶配置",
+      "title": "清潔箱配置 — 台北城市實驗室",
+      "smallTargets": [
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Leaflet",
+          "width": 47,
+          "height": 12
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "OpenStreetMap",
+          "width": 78,
+          "height": 12
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "回報底圖問題",
+          "width": 104,
+          "height": 20
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "新增垃圾桶上限\n20個",
+          "width": 316,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "公平優先權重\n35%",
+          "width": 316,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "步行服務半徑（假設）\n300公尺",
+          "width": 316,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 316,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 316,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 316,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 316,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 316,
+          "height": 23
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "",
+          "width": 194,
+          "height": 20
+        }
+      ],
+      "clippedControls": [
+        {
+          "id": "",
+          "text": "跳至探索區"
+        }
+      ],
+      "mapTiles": {
+        "count": 6,
+        "loaded": 6
+      },
+      "mapStatus": "OpenStreetMap 街道底圖 · 即時載入，不代表設施快照的調查日期。",
+      "sceneStatus": "拖曳或縮放地圖，點選位置查看來源與推薦依據。",
+      "displayFontLoaded": true,
+      "mainTop": 1385.546875,
+      "activeTopic": "清潔箱配置",
+      "charts": [
+        {
+          "viewBox": "0 0 330 300",
+          "labels": [
+            {
+              "text": "0",
+              "fontPixels": 13.9146875
+            },
+            {
+              "text": "18.31",
+              "fontPixels": 13.9146875
+            },
+            {
+              "text": "36.61",
+              "fontPixels": 13.9146875
+            },
+            {
+              "text": "54.92",
+              "fontPixels": 13.9146875
+            },
+            {
+              "text": "73.23",
+              "fontPixels": 13.9146875
+            },
+            {
+              "text": "西南模擬區西南模擬區",
+              "fontPixels": 13.9146875
+            },
+            {
+              "text": "東南模擬區東南模擬區",
+              "fontPixels": 13.9146875
+            },
+            {
+              "text": "西北模擬區西北模擬區",
+              "fontPixels": 13.9146875
+            },
+            {
+              "text": "東北模擬區東北模擬區",
+              "fontPixels": 13.9146875
+            }
+          ]
+        }
+      ]
+    },
+    "mobile-bins": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "bodyWidth": 390,
+      "heading": "垃圾桶配置",
+      "title": "清潔箱配置 — 台北城市實驗室",
+      "smallTargets": [
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Leaflet",
+          "width": 47,
+          "height": 12
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "OpenStreetMap",
+          "width": 78,
+          "height": 12
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "回報底圖問題",
+          "width": 104,
+          "height": 20
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "新增垃圾桶上限\n20個",
+          "width": 316,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "公平優先權重\n35%",
+          "width": 316,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "步行服務半徑（假設）\n300公尺",
+          "width": 316,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 316,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 316,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 316,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 316,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 316,
+          "height": 23
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "",
+          "width": 194,
+          "height": 20
+        }
+      ],
+      "clippedControls": [
+        {
+          "id": "",
+          "text": "跳至探索區"
+        }
+      ],
+      "mapTiles": {
+        "count": 6,
+        "loaded": 6
+      },
+      "mapStatus": "OpenStreetMap 街道底圖 · 即時載入，不代表設施快照的調查日期。",
+      "sceneStatus": "拖曳或縮放地圖，點選位置查看來源與推薦依據。",
+      "displayFontLoaded": true,
+      "mainTop": 932.578125,
+      "activeTopic": "清潔箱配置",
+      "charts": [
+        {
+          "viewBox": "0 0 330 300",
+          "labels": [
+            {
+              "text": "0",
+              "fontPixels": 13.9146875
+            },
+            {
+              "text": "18.31",
+              "fontPixels": 13.9146875
+            },
+            {
+              "text": "36.61",
+              "fontPixels": 13.9146875
+            },
+            {
+              "text": "54.92",
+              "fontPixels": 13.9146875
+            },
+            {
+              "text": "73.23",
+              "fontPixels": 13.9146875
+            },
+            {
+              "text": "西南模擬區西南模擬區",
+              "fontPixels": 13.9146875
+            },
+            {
+              "text": "東南模擬區東南模擬區",
+              "fontPixels": 13.9146875
+            },
+            {
+              "text": "西北模擬區西北模擬區",
+              "fontPixels": 13.9146875
+            },
+            {
+              "text": "東北模擬區東北模擬區",
+              "fontPixels": 13.9146875
+            }
+          ]
+        }
+      ]
+    },
+    "mobile-audit": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "documentWidth": 390,
+      "bodyWidth": 390,
+      "heading": "市政資料健檢",
+      "title": "市政資料健檢 — 台北城市實驗室",
+      "smallTargets": [
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "要回答的政策問題",
+          "width": 316,
+          "height": 23
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "",
+          "width": 182,
+          "height": 20
+        }
+      ],
+      "clippedControls": [
+        {
+          "id": "",
+          "text": "跳至探索區"
+        }
+      ],
+      "mapTiles": {
+        "count": 0,
+        "loaded": 0
+      },
+      "mapStatus": null,
+      "sceneStatus": "2D 圖表與完整明細，使用同一組情境參數。",
+      "displayFontLoaded": true,
+      "mainTop": 1651.109375,
+      "activeTopic": "市政資料健檢",
+      "charts": []
+    },
+    "tablet-bins": {
+      "viewport": {
+        "width": 850,
+        "height": 1000
+      },
+      "documentWidth": 850,
+      "bodyWidth": 850,
+      "heading": "垃圾桶配置",
+      "title": "清潔箱配置 — 台北城市實驗室",
+      "smallTargets": [
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Leaflet",
+          "width": 47,
+          "height": 12
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "OpenStreetMap",
+          "width": 78,
+          "height": 12
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "回報底圖問題",
+          "width": 92,
+          "height": 17
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "新增垃圾桶上限\n20個",
+          "width": 277,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "公平優先權重\n35%",
+          "width": 277,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "步行服務半徑（假設）\n300公尺",
+          "width": 277,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 277,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 277,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 277,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 277,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 277,
+          "height": 23
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "",
+          "width": 168,
+          "height": 17
+        }
+      ],
+      "clippedControls": [
+        {
+          "id": "",
+          "text": "跳至探索區"
+        }
+      ],
+      "mapTiles": {
+        "count": 6,
+        "loaded": 6
+      },
+      "mapStatus": "OpenStreetMap 街道底圖 · 即時載入，不代表設施快照的調查日期。",
+      "sceneStatus": "拖曳或縮放地圖，點選位置查看來源與推薦依據。",
+      "displayFontLoaded": true,
+      "mainTop": 812.125,
+      "activeTopic": "清潔箱配置",
+      "charts": [
+        {
+          "viewBox": "0 0 592 300",
+          "labels": [
+            {
+              "text": "0",
+              "fontPixels": 13.952604166666667
+            },
+            {
+              "text": "18.31",
+              "fontPixels": 13.952604166666667
+            },
+            {
+              "text": "36.61",
+              "fontPixels": 13.952604166666667
+            },
+            {
+              "text": "54.92",
+              "fontPixels": 13.952604166666667
+            },
+            {
+              "text": "73.23",
+              "fontPixels": 13.952604166666667
+            },
+            {
+              "text": "西南模擬區西南模擬區",
+              "fontPixels": 13.952604166666667
+            },
+            {
+              "text": "東南模擬區東南模擬區",
+              "fontPixels": 13.952604166666667
+            },
+            {
+              "text": "西北模擬區西北模擬區",
+              "fontPixels": 13.952604166666667
+            },
+            {
+              "text": "東北模擬區東北模擬區",
+              "fontPixels": 13.952604166666667
+            }
+          ]
+        }
+      ]
+    },
+    "mobile-320": {
+      "viewport": {
+        "width": 320,
+        "height": 800
+      },
+      "documentWidth": 320,
+      "bodyWidth": 320,
+      "heading": "垃圾桶配置",
+      "title": "清潔箱配置 — 台北城市實驗室",
+      "smallTargets": [
+        {
+          "tag": "A",
+          "id": "",
+          "text": "© OpenStreetMap contributors",
+          "width": 170,
+          "height": 22
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "text": "",
+          "width": 16,
+          "height": 16
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "新增垃圾桶上限\n20個",
+          "width": 246,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "公平優先權重\n35%",
+          "width": 246,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "步行服務半徑（假設）\n300公尺",
+          "width": 246,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 246,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 246,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 246,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 246,
+          "height": 23
+        },
+        {
+          "tag": "LABEL",
+          "id": "",
+          "text": "",
+          "width": 246,
+          "height": 23
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "",
+          "width": 194,
+          "height": 20
+        }
+      ],
+      "clippedControls": [
+        {
+          "id": "",
+          "text": "跳至探索區"
+        }
+      ],
+      "mapTiles": {
+        "count": 0,
+        "loaded": 0
+      },
+      "mapStatus": null,
+      "sceneStatus": "3D 可旋轉、縮放與選取；圖表／明細使用同一個模型結果。",
+      "displayFontLoaded": true,
+      "mainTop": 1035.546875,
+      "activeTopic": "清潔箱配置",
+      "charts": [
+        {
+          "viewBox": "0 0 260 300",
+          "labels": [
+            {
+              "text": "0",
+              "fontPixels": 13.892083333333334
+            },
+            {
+              "text": "18.31",
+              "fontPixels": 13.892083333333334
+            },
+            {
+              "text": "36.61",
+              "fontPixels": 13.892083333333334
+            },
+            {
+              "text": "54.92",
+              "fontPixels": 13.892083333333334
+            },
+            {
+              "text": "73.23",
+              "fontPixels": 13.892083333333334
+            },
+            {
+              "text": "西南模擬區西南模擬區",
+              "fontPixels": 13.892083333333334
+            },
+            {
+              "text": "東南模擬區東南模擬區",
+              "fontPixels": 13.892083333333334
+            },
+            {
+              "text": "西北模擬區西北模擬區",
+              "fontPixels": 13.892083333333334
+            },
+            {
+              "text": "東北模擬區東北模擬區",
+              "fontPixels": 13.892083333333334
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "axe": {
+    "desktop-root": {
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-prohibited-attr",
+          "count": 1
+        },
+        {
+          "id": "color-contrast",
+          "count": 50
+        }
+      ],
+      "passes": 33
+    },
+    "mobile-bins": {
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "count": 61
+        }
+      ],
+      "passes": 33
+    }
+  },
+  "errors": [],
+  "failed_requests": [],
+  "http_errors": [],
+  "tileTransport": "QA-only HTTPS relay preserving browser User-Agent, Referer and Accept; OS CA/TLS verification retained. Loaded images require visual confirmation, not merely HTTP 200.",
+  "engine": "154.0.8037.57",
+  "rendering": "Headless Chromium, SwiftShader software WebGL; emulated mobile touch, not a physical device"
+}

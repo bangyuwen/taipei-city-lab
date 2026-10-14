@@ -22,4 +22,4 @@ Operate。一般市民從生活問題探索情境；原生導覽、視角切換�
 - FINISH：unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
 ## Build and verification
-Code-led；沒有 approved comp 或新增裝飾圖片。現有地圖、模型圖及 Three.js 是內容本身。Browser js 工具與受支援的遠端預覽未暴露，無法取得桌機／手機截圖；完成原始碼、行為、資產與宣告色彩驗證，不將它們宣稱為視覺驗收。
+Code-led；沒有 approved comp 或新增裝飾圖片。現有地圖、模型圖及 Three.js 是內容本身。後續 PR 驗收已取得桌機1440、平板850、手機390／320的本機 Chromium captures 與九組實際操作檢查，包含鍵盤及合成觸控；有效街道底圖已目視確認，結果見 docs/acceptance.md 與 .impeccable/review/final-results.json。SwiftShader 軟體 WebGL 與模擬手機不等於實體裝置／Safari／Firefox／硬體幀率驗證；最新獨立finish reviewer判定見 docs/citizen-finish-review.md。

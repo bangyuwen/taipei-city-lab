@@ -16,7 +16,9 @@ Google Fonts 官方 Noto Serif TC 以 SIL OFL 1.1 授權。將 weight 700 的當
 
 ## 驗證界線
 
-本機 Node DOM stub 及靜態檢查驗證事件、資料、來源、輸出與可用資產；不能證明實際 CSS 佈局、手機觸控、完整鍵盤巡覽或 WebGL 渲染。Browser js 工具及受支援遠端預覽未暴露，沒有取得桌機／手機截圖。未啟動不受支援的瀏覽器控制或預覽替代品。獨立 finish reviewer 因缺少桌機／手機截圖回覆 recapture；依其規則沒有進行局部審查，也未給予視覺 ship 判定。
+首次設計交付只有 Node DOM stub、靜態及資產檢查，缺少桌機／手機截圖，獨立 finish reviewer 回覆 recapture；該次結果不是視覺出貨判定。
+
+後續 PR 驗收已使用本機 Chromium 捕捉真實桌機、平板、手機畫面，完成九組互動、鍵盤、合成觸控及軟體 WebGL 檢查；已修復表格焦點、手機欄位／點擊尺寸與 Leaflet 卸載後 callback。結果與圖磚驗收工具修正見 `docs/acceptance.md`，最新獨立判定見 `docs/citizen-finish-review.md`。此證據不代表實體手機、Safari／Firefox、硬體幀率或完整 WCAG 認證。
 
 ## 行為與來源檢查
 
