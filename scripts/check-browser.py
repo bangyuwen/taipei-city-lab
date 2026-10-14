@@ -45,6 +45,10 @@ def main():
                 page.wait_for_function("document.getElementById('loading').hidden")
                 page.wait_for_timeout(100)
 
+            def workbench():
+                page.locator('#research-workbench').evaluate('el => el.open=true')
+                page.wait_for_timeout(100)
+
             def heading(intro_visible):
                 expected="H2" if intro_visible else "H1"
                 page.wait_for_function("tag => document.querySelector('.topic-title')?.tagName===tag", arg=expected)
@@ -62,7 +66,8 @@ def main():
             heading(False)
             topic("bins")
             heading(False)
-            page.get_by_role("button", name="先增設 5 個", exact=True).click()
+            workbench()
+            page.get_by_role("button", name="比較 5 個上限（模型）", exact=True).click()
             page.wait_for_function("document.getElementById('control-budget').value==='5'")
             page.locator("#viewmode-2d").click()
             page.locator("#viewmode-map").click()
@@ -98,6 +103,7 @@ def main():
                 })""")
                 assert sizes and min(sizes) >= 12, f"Unreadable chart labels at {width}px: {sizes}"
             topic("traffic")
+            workbench()
             page.locator("#viewmode-2d").click()
             page.wait_for_function("document.querySelector('#visualization .chart-svg').viewBox.baseVal.width<400")
             assert page.locator("#visualization .chart-svg").evaluate("""svg => [...svg.querySelectorAll('text')].every(el => {
@@ -106,10 +112,12 @@ def main():
             })"""), "Traffic chart labels are clipped on a narrow viewport"
             page.set_viewport_size({"width": 1440, "height": 1000})
             topic("bins")
+            workbench()
             page.locator("#viewmode-3d").click()
             page.wait_for_selector("#scene-panel canvas")
             for name in ("shade", "rat", "traffic", "bus", "buildings", "audit", "bins"):
                 topic(name)
+                workbench()
                 if name in ("traffic", "bus"):
                     page.locator("#viewmode-3d").click()
                     page.wait_for_selector("#scene-panel canvas")
