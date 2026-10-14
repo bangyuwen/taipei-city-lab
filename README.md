@@ -87,6 +87,8 @@ python scripts/prepare-data.py --refresh
 
 ## 方法對照與審查
 
+清潔箱題的政策背景與討論邏輯見[台北市垃圾箱減少的研究脈絡](docs/research/bins-context.md)，包含歷史來源、推論、待驗證假設及對現有配置模型的影響。
+
 三輪審查與官方案例對照見 `docs/research-review.md`；網站各題的「實務案例與下一步」可開啟原始來源。十輪深化、採用技能與可用性界線見 `docs/deepening-review.md`。Three.js 設計與驗證界線見 `docs/three-review.md`。地圖對齊與來源界線見 `docs/map-review.md`。先前的 Impeccable 操作介面整理見 `docs/impeccable-review.md`，本次市民重新設計見 `docs/redesign-review.md`。新版的 14 個 Node 測試檔、靜態模型檢查及 9 組 Chromium 操作驗收通過；桌機與模擬手機畫面、結果及測試界線見 `docs/acceptance.md`，獨立 Impeccable 初輪審查提出的兩項修正，在 Verdict Pass 均評為 resolved／ship，紀錄見 `docs/citizen-finish-review.md`。
 
 ## 設計技能
