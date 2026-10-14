@@ -1,0 +1,112 @@
+{
+  "description": "2026 年垃圾箱中心示範範圍的來源與品質紀錄",
+  "snapshot_metadata": {
+    "retrievedAt": "2026-10-13T12:18:35Z",
+    "builtAt": "2026-10-13T12:25:27Z",
+    "buildStatus": "complete",
+    "bbox": [
+      121.51,
+      25.02,
+      121.57,
+      25.08
+    ],
+    "scope": "臺北市中心示範範圍的行人專用清潔箱，並非全市清冊",
+    "coordinateSystem": "EPSG:4326; x=longitude, y=latitude",
+    "sampled": false
+  },
+  "source_metadata": {
+    "title": "臺北市行人專用清潔箱",
+    "url": "https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c",
+    "classification": "官方觀測",
+    "grain": "一列一個行人專用清潔箱位置；來源無唯一設施編號",
+    "limitations": "只有位置，沒有容量、滿溢、清運頻率或行人需求；位置距離不等於可達步行距離。",
+    "fields": [
+      "行政區",
+      "地址",
+      "經度",
+      "緯度",
+      "備註"
+    ],
+    "retrievedAt": "2026-10-13T12:17:36Z",
+    "integrationStatus": "loaded",
+    "license": "依政府資料開放授權條款-第1版",
+    "publisher": "環保局",
+    "catalogUpdatedAt": "2026-09-30 15:57:39",
+    "publishedAt": "2015-05-21",
+    "resourceUpdatedAt": "2026-09-30 15:55:35",
+    "catalogRecordCount": 2009,
+    "resourceUrl": "https://data.taipei/api/dataset/a835f3ba-7f50-4b0d-91a6-9df128632d1c/resource/267d550f-c6ec-46e0-b8af-fd5a464eb098/download",
+    "counts": {
+      "sourceCount": 681,
+      "filteredCount": 294,
+      "invalidCoordinateCount": 1,
+      "invalidCoordinateSourceRows": [
+        655
+      ],
+      "excludedOutsideScopeCount": 386,
+      "nullCounts": {
+        "id": 0,
+        "x": 0,
+        "y": 0,
+        "address": 0,
+        "district": 0
+      },
+      "duplicateIdCount": 0,
+      "duplicateCoordinateCount": 0,
+      "districtCounts": {
+        "中山區": 50,
+        "中正區": 68,
+        "信義區": 56,
+        "士林區": 1,
+        "大同區": 21,
+        "大安區": 46,
+        "松山區": 52
+      },
+      "surveyDateRange": null,
+      "sampled": false,
+      "sha256": "ff3cf5528c057958f89871aa5300fc633b02d0f7b37131ab29d5ddc2f8e2370d",
+      "encoding": "Big5",
+      "identifierType": "衍生快照列編號；來源沒有官方唯一設施 ID",
+      "catalogCountMismatch": true
+    }
+  },
+  "original_download_quality": {
+    "sourceCount": 681,
+    "filteredCount": 294,
+    "invalidCoordinateCount": 1,
+    "invalidCoordinateSourceRows": [
+      655
+    ],
+    "excludedOutsideScopeCount": 386,
+    "nullCounts": {
+      "id": 0,
+      "x": 0,
+      "y": 0,
+      "address": 0,
+      "district": 0
+    },
+    "duplicateIdCount": 0,
+    "duplicateCoordinateCount": 0,
+    "districtCounts": {
+      "中山區": 50,
+      "中正區": 68,
+      "信義區": 56,
+      "士林區": 1,
+      "大同區": 21,
+      "大安區": 46,
+      "松山區": 52
+    },
+    "surveyDateRange": null,
+    "sampled": false,
+    "sha256": "ff3cf5528c057958f89871aa5300fc633b02d0f7b37131ab29d5ddc2f8e2370d",
+    "encoding": "Big5",
+    "identifierType": "衍生快照列編號；來源沒有官方唯一設施 ID",
+    "catalogCountMismatch": true
+  },
+  "preserved_csv_sha256": "f72b9972d1163b01482dc005c701a6e958cf84d32f5cbf8425703df43b40427e",
+  "limitations": [
+    "目前只保存中心示範範圍 294 筆；並非全市。",
+    "原下載表有 681 列、680 列座標有效；目錄筆數不能視為存量。",
+    "來源沒有官方箱號；各資料列不能直接跨年識別。"
+  ]
+}
