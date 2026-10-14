@@ -36,4 +36,4 @@ jobs:
         run: |
           npm test
           npm run check
-          node --check dist/app.js
+          for file in dist/*.js; do node --check "$file"; done
