@@ -73,3 +73,7 @@ Headless Chromium 154.0.8037.57 上，下列九組檢查通過，沒有 page err
 瀏覽器使用 SwiftShader 軟體 WebGL；手機是 viewport／觸控模擬。未驗證實體 iOS／Android、Safari／Firefox、硬體幀率或正式站台的完整瀏覽器流程，也未將模型推估當成政策成效實證。
 
 環境代理的 CA 無法直接由此 Chromium 初始化辨認，驗收用暫時 HTTPS 圖磚轉送保留 OS CA 與 TLS 憑證檢查，未修改持久憑證信任。最初轉送漏掉 browser Referer，OSM 回傳 HTTP 200 的「Access blocked / 418」圖片，因此僅檢查圖片載入會誤判。已保留瀏覽器真實 User-Agent、Referer（本機 origin）與 Accept，重新完成矩陣、目視確認真實臺北街道圖及方案點位；沒有合成替代底圖或假冒正式站台 origin。最終圖磚桌機 12/12、手機與平板 6/6 載入，320px capture 是保留的 3D 視角，沒有 2D tiles 屬預期。
+
+## 合併前標題層級
+
+入口可見時，歡迎標題是唯一可見 H1、題目標題是 H2；按「先看看垃圾桶怎麼放」或開啟題目深連結後，題目改為 H1，鍵盤焦點仍回到題目區。題目字體以 .topic-title 固定，語意層級不改變桌機 34px／手機 30px 的外觀。 桌機／模擬手機 22 項狀態檢查、Node 與瀏覽器回歸通過；證據另存 GitHub 分支的 heading-results.json。先前 Impeccable ship 範圍仍為原兩項修正。

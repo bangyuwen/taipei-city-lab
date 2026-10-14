@@ -41,11 +41,27 @@ def main():
             page.on("pageerror", lambda error: errors.append(str(error)))
 
             def topic(name):
-                page.goto(origin + "#" + name, wait_until="domcontentloaded")
+                page.goto(origin + ("#" + name if name else ""), wait_until="domcontentloaded")
                 page.wait_for_function("document.getElementById('loading').hidden")
                 page.wait_for_timeout(100)
 
+            def heading(intro_visible):
+                expected="H2" if intro_visible else "H1"
+                page.wait_for_function("tag => document.querySelector('.topic-title')?.tagName===tag", arg=expected)
+                assert page.get_by_role("heading", level=1).count()==1, "Expected one visible top-level heading"
+                assert page.get_by_role("heading").first.evaluate("el => el.tagName")=="H1", "Heading navigation must start at H1"
+
+            for name in ("", "explore"):
+                topic(name)
+                heading(True)
+                page.locator("#begin-exploring").focus()
+                page.keyboard.press("Enter")
+                heading(False)
+                assert page.evaluate("document.activeElement.id")=="module-head", "Exploring did not focus the topic"
+            topic("shade")
+            heading(False)
             topic("bins")
+            heading(False)
             page.get_by_role("button", name="先增設 5 個", exact=True).click()
             page.wait_for_function("document.getElementById('control-budget').value==='5'")
             page.locator("#viewmode-2d").click()
@@ -104,7 +120,7 @@ def main():
             page.wait_for_timeout(250)
             assert not errors, "Browser runtime errors: " + "; ".join(errors)
             browser.close()
-            print("Browser regression passed: keyboard scroll, dialog focus/icons, responsive chart labels, map/3D lifecycle")
+            print("Browser regression passed: heading navigation, keyboard scroll, dialog focus/icons, responsive charts, map/3D lifecycle")
     finally:
         server.shutdown()
         server.server_close()

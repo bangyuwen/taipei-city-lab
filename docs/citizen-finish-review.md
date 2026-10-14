@@ -2,6 +2,8 @@ disposition: ship
 
 範圍：本次是同一審查的 Verdict Pass，僅評分初輪的兩項 material fixes，並檢查該修正批次引入的回歸；本次 ship 僅涵蓋已評分的兩項修正，不是全表面的重新核准。初輪完整五節保留於下方歷史區，當時的 contradicted／fix 不代表修正後仍未解決。
 
+合併前後續 GitHub P2 標題層級補修另由 docs/acceptance.md 與 .impeccable/review/heading-results.json 記錄；下列 Impeccable Verdict Pass 保留為前一輪的兩項修正結論，不涵蓋該後續語意補修。
+
 ## verdict
 
 | 原 material fix | 評分 | 本次直接檢視的證據 |

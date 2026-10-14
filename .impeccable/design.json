@@ -688,7 +688,7 @@
   ],
   "narrative": {
     "northStar": "城市專刊",
-    "overview": "使用者於 2026-10-14 選定城市專刊，授權取代原有綠色工作台。深藍提供穩定導覽與文字，暖白承載閱讀，朱橘標出操作與選取。中文宋體標題配無襯線操作；繁體中文及「台北城市實驗室」名稱延續。\n\n介面以平面分隔、留白與灰藍輔助面建立層次。圓角用於原生控制、提示及視覺容器；指標、方法與明細直接放在工作區。生活提問與可回復的情境操作相連，來源分類和推估限制持續可見。\n\n本文件從最終原始碼擷取：Leaflet 樣式先載入，其後為 dist/styles.css、dist/workspace.css；動態內容來自 dist/app.js、dist/viz.js 與 dist/map-ui.js。沿用 code-led Operate（seed 0f3e9d23），沒有 approved comp、decision comp 或 QUALITY BAR boards。現已取得本機 PR build 的桌機 1440、平板 850、手機 390／320px Chromium captures；獨立 reviewer 先完成初輪五節審查，再檢視 23 張有效 captures，對手機圖表及來源圖示兩項修正做 Verdict Pass：均 resolved、remaining clear、disposition ship。此 ship 僅涵蓋兩項修正及該批次回歸，不是新的全表面審查。Headless Chromium 154、SwiftShader 軟體 WebGL 與模擬觸控仍不涵蓋實體手機、Safari／Firefox、硬體 FPS 或正式站台完整流程；詳見 docs/acceptance.md、docs/citizen-finish-review.md。",
+    "overview": "使用者於 2026-10-14 選定城市專刊，授權取代原有綠色工作台。深藍提供穩定導覽與文字，暖白承載閱讀，朱橘標出操作與選取。中文宋體標題配無襯線操作；繁體中文及「台北城市實驗室」名稱延續。\n\n介面以平面分隔、留白與灰藍輔助面建立層次。圓角用於原生控制、提示及視覺容器；指標、方法與明細直接放在工作區。生活提問與可回復的情境操作相連，來源分類和推估限制持續可見。\n\n本文件從最終原始碼擷取：Leaflet 樣式先載入，其後為 dist/styles.css、dist/workspace.css；動態內容來自 dist/app.js、dist/viz.js 與 dist/map-ui.js。沿用 code-led Operate（seed 0f3e9d23），沒有 approved comp、decision comp 或 QUALITY BAR boards。現已取得本機 PR build 的桌機 1440、平板 850、手機 390／320px Chromium captures；獨立 reviewer 先完成初輪五節審查，再檢視 23 張有效 captures，對手機圖表及來源圖示兩項修正做 Verdict Pass：均 resolved、remaining clear、disposition ship。此 ship 僅涵蓋兩項修正及該批次回歸，不是新的全表面審查。Headless Chromium 154、SwiftShader 軟體 WebGL 與模擬觸控仍不涵蓋實體手機、Safari／Firefox、硬體 FPS 或正式站台完整流程；詳見 docs/acceptance.md、docs/citizen-finish-review.md。\n\n合併前另修復 GitHub P2 標題順序：根頁／#explore 由歡迎 H1 開始，題目為 H2；進入探索／題目深連結時以題目 H1 接替。字體 tokens 不變；heading-results.json 記錄桌機／模擬手機 22 項狀態檢查。這不是擴大先前兩項補修的 Impeccable ship 範圍。",
     "keyCharacteristics": [
       "深藍外殼、暖白閱讀面、朱橘互動訊號各有明確角色。",
       "中文宋體標題配無襯線操作及等寬資料輸入。",
@@ -723,7 +723,8 @@
       "Do 使用原生控制、可見文字、焦點與目前狀態語意，保持畫面先於參數。",
       "Do 持續呈現來源、真實與合成分類、方法及推估限制。",
       "Do 在新增或修改響應式圖表時量測實際標籤字級，並保留桌機／手機 captures 與明確的 review 範圍。",
-      "Do 維持手機 16px 欄位、14px 輔助說明、44px 圖層／zoom 操作區，以及可聚焦的表格捲動 region。"
+      "Do 維持手機 16px 欄位、14px 輔助說明、44px 圖層／zoom 操作區，以及可聚焦的表格捲動 region。",
+      "Do 維持唯一可見 H1：入口可見時用歡迎標題，隱藏入口後用題目標題；固定 .topic-title 字體，不以層級改變外觀。"
     ],
     "donts": [
       "Don't 把互動朱橘或舊題目 accent 當成所有點位和模型系列的共同配色。",
