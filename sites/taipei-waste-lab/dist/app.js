@@ -71,6 +71,7 @@ function panel(){
   for(const p of allowedPages)$(`panel-${p}`).hidden=p!==currentPage;
   document.body.classList.toggle('design-mode',currentPage==='design');
   document.body.classList.toggle('comparison-mode',currentPage==='comparison');
+  document.body.classList.toggle('research-mode',currentPage==='research');
   if(currentPage==='design')ensureDesign();
   if(currentPage==='comparison')ensureComparison();
   if(currentPage==='research')ensureResearch();
@@ -192,6 +193,14 @@ async function start(){
     img.addEventListener('error',showPhotoError,{once:true});
     if(img.complete&&!img.naturalWidth)showPhotoError();
   }
+  $('panel-research').addEventListener('click',event=>{
+    const button=event.target.closest('[data-research-target]');
+    if(!button)return;
+    const target=$(button.dataset.researchTarget);
+    if(!target)return;
+    for(let parent=target.parentElement;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;
+    target.focus({preventScroll:true});target.scrollIntoView({block:'start',behavior:'instant'});
+  });
   $('comparison-retry').addEventListener('click',ensureComparison);
   window.addEventListener('hashchange',panel);
   window.addEventListener('popstate',()=>{

@@ -80,3 +80,64 @@
 .implementation-timeline li>div>p{font-size:15px;line-height:1.9;max-width:74ch;margin:0;color:var(--muted)}
 .implementation-plan .service-evidence ol{padding-left:24px}
 @media(max-width:760px){.implementation-scope{padding:16px}.implementation-timeline>li{grid-template-columns:1fr;gap:8px;padding:20px 0}.implementation-time br{display:none}.implementation-timeline h4{font-size:18px}.implementation-timeline li>div>p{font-size:16px}}
+
+/* Reference reading shares the site's quiet green and paper palette. */
+.research-mode .hero{display:none}
+.research-page{--research-muted:#526358}
+.research-page-heading{margin:36px 0 22px}
+.research-page-heading h2{font-family:var(--serif);font-size:32px;font-weight:550;line-height:1.5;margin:0 0 14px;text-wrap:balance}
+.research-page-heading h2>span{display:inline-block}
+.research-page-heading p{font-size:17px;line-height:1.85;max-width:75ch;margin:0 0 12px}
+.research-page-heading .research-update{font-size:13px;color:var(--research-muted)}
+.research-reading-note{font-size:14px;line-height:1.9;max-width:85ch;color:var(--research-muted);margin:0 0 32px}
+.research-reading-layout{display:grid;grid-template-columns:190px minmax(0,1fr);gap:44px;border-top:1px solid var(--line)}
+.research-contents{position:sticky;top:24px;align-self:start;padding-top:24px}
+.research-contents>p{font-size:13px;color:var(--research-muted);margin:0 0 8px}
+.research-contents button,.research-contents a{display:block;width:100%;background:transparent;border:0;text-align:left;padding:12px 0;min-height:46px;font:500 14px/1.6 var(--sans);color:var(--green);text-underline-offset:4px}
+.research-contents button:hover,.research-contents a:hover{text-decoration:underline}
+.research-contents a{font-size:13px;border-top:1px solid var(--line);margin-top:16px}
+.research-reading-body{min-width:0}
+.research-reference-section{padding:28px 0 8px;scroll-margin-top:24px}
+.research-reference-section+.research-reference-section{margin-top:32px;border-top:1px solid var(--line)}
+.research-reference-section>h3{font:550 26px/1.6 var(--serif);margin:0 0 12px;scroll-margin-top:24px}
+.research-section-intro{font-size:15px;line-height:1.9;max-width:75ch;color:var(--research-muted);margin:0 0 24px}
+.research-reference{border-top:1px solid var(--line);padding:26px 0 30px}
+.research-reference h4{font:550 23px/1.6 var(--serif);margin:0 0 8px;scroll-margin-top:24px;text-wrap:pretty}
+.research-reference-meta{font-size:13px;line-height:1.8;color:var(--research-muted);margin:0 0 16px}
+.research-reference-method{font-size:15px;line-height:1.9;margin:0 0 18px;max-width:75ch}
+.research-reference-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;margin:0}
+.research-reference-facts>div{min-width:0}
+.research-reference-facts dt{font-size:14px;font-weight:600;color:var(--green);margin-bottom:8px}
+.research-reference-facts dd{margin:0;font-size:16px;line-height:1.9}
+.research-reference-limit{font-size:14px;line-height:1.9;color:var(--research-muted);margin:20px 0 8px;max-width:82ch}
+.research-reference-source{font-size:14px;line-height:1.9;overflow-wrap:anywhere}
+.research-reference-source>summary{display:list-item;list-style:revert;cursor:pointer;min-height:44px;padding:10px 0;color:var(--green);font-weight:500}
+.research-reference-source>summary::-webkit-details-marker{display:revert}
+.research-reference-source p{max-width:80ch;margin:8px 0;color:var(--research-muted)}
+.research-reference-source a{display:inline-flex;align-items:center;min-height:44px;color:var(--green);text-decoration:underline;text-underline-offset:4px;margin-right:16px}
+.research-synthesis-item{border-top:1px solid var(--line);padding:24px 0}
+.research-synthesis-item h4{font:550 23px/1.6 var(--serif);margin:0 0 14px}
+.research-synthesis-item p{font-size:16px;line-height:1.9;max-width:76ch;margin:0 0 12px}
+.research-synthesis-sources{display:flex;align-items:center;gap:8px 20px;flex-wrap:wrap;font-size:13px;color:var(--research-muted)}
+.research-inline-jump,.research-synthesis-sources button{font:500 14px/1.7 var(--sans);background:transparent;border:0;color:var(--green);min-height:44px;padding:8px 0;text-decoration:underline;text-underline-offset:4px}
+.research-material{border-top:1px solid var(--line);padding:6px 0}
+.research-material>summary{display:list-item;list-style:revert;min-height:48px;padding:16px 0;font-size:16px;line-height:1.8;cursor:pointer;color:var(--green);font-weight:500}
+.research-material>summary::-webkit-details-marker{display:revert}
+.research-material>.research-section{border-top:0;padding-top:14px}
+.research-page .research-literature{grid-template-columns:1fr;gap:0}
+.research-page .research-literature>details{background:transparent;border:0;border-top:1px solid var(--line);padding:12px 0}
+.research-page .research-literature summary{display:list-item;list-style:revert;min-height:44px;padding:8px 0;font-size:15px}
+.research-page .research-literature p{font-size:14px;line-height:1.9}
+.research-page .research-archive{margin:0;padding:6px 0}
+.research-page .research-archive>summary{padding:16px 0;font-size:16px}
+.research-page .service-decision{grid-template-columns:1fr;gap:0}
+.research-page .research-state{border:1px solid var(--line)}
+.research-page :is(button,a,summary,select,[tabindex]):focus-visible{outline:3px solid #94713b;outline-offset:3px}
+.research-page ::selection{background:#c9dbc0;color:#173e33}
+@media(max-width:1000px){.research-reading-layout{grid-template-columns:160px minmax(0,1fr);gap:28px}.research-reference-facts{grid-template-columns:1fr;gap:20px}}
+@media(max-width:760px){
+ .research-page-heading{margin-top:28px}.research-page-heading h2{font-size:27px}.research-page-heading p{font-size:16px}.research-page-heading .research-update{font-size:13px}
+ .research-reading-note{font-size:14px;margin-bottom:24px}.research-reading-layout{display:block}.research-contents{position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px;padding:14px 0;border-bottom:1px solid var(--line)}.research-contents>p{grid-column:1/-1}.research-contents a{grid-column:1/-1;margin-top:6px;border:0}.research-contents button{font-size:14px}
+ .research-reference-section>h3{font-size:24px}.research-section-intro{font-size:15px}.research-reference{padding:24px 0}.research-reference h4,.research-synthesis-item h4{font-size:22px}.research-reference-method{font-size:16px}.research-reference-facts dd{font-size:16px}.research-reference-meta{font-size:13px}.research-reference-source a{max-width:100%}
+ .research-page .research-material>summary,.research-page .research-archive>summary{font-size:15px}.research-page .research-candidates{grid-template-columns:1fr}
+}
