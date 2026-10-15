@@ -1,0 +1,62 @@
+.research-lead{max-width:850px;font-size:17px;line-height:1.9}
+.research-state{padding:22px 26px;border-left:4px solid var(--green);background:var(--light);margin:24px 0}
+.research-state p:last-child{margin-bottom:0}
+.research-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:28px 0 40px}
+.research-flow article{border:1px solid var(--line);padding:20px;background:var(--white)}
+.research-flow h3{font-size:18px;margin:10px 0}.research-flow p{font-size:13px;color:var(--muted);margin:0}
+.research-stage{font-size:12px;color:var(--green);font-weight:600}
+.research-section{border-top:1px solid var(--line);padding:32px 0 12px}
+.research-section h3{font-family:var(--serif);font-size:25px;font-weight:550}
+.research-section>p{max-width:900px;color:var(--muted);line-height:1.9}
+.research-actions{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}
+.research-actions a{display:inline-flex;align-items:center;min-height:44px;padding:10px 15px;border:1px solid var(--line);font-size:13px;background:var(--white);text-decoration:none}
+.research-actions a:first-child{background:var(--green);color:white;border-color:var(--green)}
+.research-filters{display:flex;flex-wrap:wrap;gap:18px;align-items:end;margin:24px 0 16px}
+.research-filters label{display:block;font-size:13px;margin-bottom:6px}.research-filters select{max-width:260px;min-width:170px;background:var(--white)}
+.research-filters button{min-height:42px;padding:8px 14px;background:transparent;border:1px solid var(--line)}
+.research-count{font-size:13px;color:var(--muted)}
+.research-candidates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.research-candidate{background:var(--white);border:1px solid var(--line);padding:22px;min-width:0}
+.research-card-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:11px;color:var(--muted);justify-content:space-between}
+.research-tag{padding:3px 7px;border:1px solid var(--line);color:var(--green)}
+.research-candidate h4{font-family:var(--serif);font-size:20px;margin:16px 0 10px;font-weight:550}
+.research-candidate p{font-size:13px;color:var(--muted);line-height:1.9;overflow-wrap:anywhere}
+.research-candidate .research-address{color:var(--ink);font-size:12px}
+.research-candidate details{font-size:12px;margin:16px 0}.research-candidate summary{cursor:pointer;color:var(--green);padding:6px 0}
+.research-candidate details p{font-size:12px;margin-top:10px}.research-candidate>a{font-size:12px;color:var(--green)}
+.research-empty{grid-column:1/-1;padding:30px;background:var(--light)}
+.research-note-list{padding:22px 30px;background:var(--light);font-size:13px;margin:24px 0;line-height:1.9}
+.research-note-list li{margin:8px 0}.research-literature{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.research-literature details{border:1px solid var(--line);padding:16px;background:var(--white);min-width:0}
+.research-literature summary{cursor:pointer;font-size:14px;font-weight:600;line-height:1.7}
+.research-literature p{font-size:13px;margin:12px 0;color:var(--muted);overflow-wrap:anywhere}.research-literature a{font-size:12px}
+.research-checklist{line-height:2;font-size:14px}.research-stage-table{width:100%;border-collapse:collapse;font-size:13px}
+.research-stage-table th,.research-stage-table td{padding:14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.research-stage-table th{background:var(--light)}
+@media(max-width:1200px){.header-note{display:none}.site-header nav{gap:18px}}
+@media(max-width:1000px){.research-candidates{grid-template-columns:repeat(2,minmax(0,1fr))}.research-flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.site-header nav{flex-wrap:wrap;justify-content:flex-start;gap:0 20px}.research-candidates,.research-literature{grid-template-columns:1fr}.research-state{padding:18px}.research-flow{gap:10px}.research-flow article{padding:15px}.research-section{padding-top:26px}.research-section h3{font-size:22px}.research-lead{font-size:15px}.research-filters>div{flex:1;min-width:125px}.research-filters select{width:100%;min-width:0;font-size:16px}.research-note-list{padding:18px 26px}.research-stage-table th,.research-stage-table td{padding:10px 8px}.research-actions a{width:100%;justify-content:center}}
+
+/* Evidence-led service recommendations; existing map and tools stay intact. */
+.service-hero-note{border-left:0;border-top:1px solid var(--line)}
+.service-evidence-note{max-width:900px;font-size:14px;line-height:1.9;color:var(--muted)}
+.service-decisions{margin:32px 0 8px}
+.service-decision{display:grid;grid-template-columns:minmax(180px,1fr) minmax(0,2.4fr);gap:40px;padding:30px 0;border-top:1px solid var(--line)}
+.service-decision h3{font-family:var(--serif);font-size:27px;font-weight:550;margin-bottom:12px}
+.service-decision-brief{color:var(--muted);font-size:14px}
+.service-decision>div>p{max-width:72ch;line-height:1.9}
+.service-evidence{margin-top:18px;max-width:78ch}
+.service-evidence summary{display:list-item;list-style:revert;font-size:14px;color:var(--green);line-height:1.8;padding:12px 0}
+.service-evidence summary::-webkit-details-marker{display:revert}
+.service-evidence p,.service-evidence li{font-size:14px;line-height:1.9;color:var(--muted)}
+.service-evidence a{color:var(--green);overflow-wrap:anywhere}
+.service-evidence ul{padding-left:22px}.service-evidence li{margin:8px 0}
+.service-response .research-stage-table{min-width:660px;font-size:14px}
+.research-section>.service-outcomes{color:var(--ink);font-size:15px}
+.research-archive{border-top:1px solid var(--line);margin:28px 0}
+.research-archive>summary{display:list-item;list-style:revert;font-size:17px;line-height:1.8;padding:24px 0;color:var(--green)}
+.research-archive>summary::-webkit-details-marker{display:revert}
+.research-archive>p{max-width:900px;color:var(--muted);line-height:1.9}
+@media(max-width:760px){.service-decision{grid-template-columns:1fr;gap:6px;padding:25px 0}.service-decision h3{font-size:24px}.service-decision>div>p{font-size:16px}.service-evidence-note{font-size:14px}.research-archive>summary{font-size:16px}}
+
+.service-budget .research-stage-table{min-width:760px}.service-budget caption{text-align:left;font-size:13px;color:var(--muted);padding:0 0 12px}.service-budget td{font-variant-numeric:tabular-nums}

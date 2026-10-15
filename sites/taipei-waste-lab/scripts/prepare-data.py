@@ -4,10 +4,15 @@ import csv
 import hashlib
 import json
 import re
+import shutil
+import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DEST = ROOT / 'dist/data'
+CANONICAL_RESEARCH = ROOT.parent.parent / 'topics/bins/research'
+RECOVERY = ROOT / 'research/source-recovery-2026-10-15'
 HISTORY_FILES = (
     'taipei-bins-2015-districts.csv',
     'taipei-bins-2015.csv',
@@ -31,10 +36,13 @@ def prepare_sources():
 
     In this monorepo only topics/bins is edited by hand. data/history and
     data/research are generated source packages for a standalone site checkout;
-    neither dist nor the documentation navigation stubs are build inputs.
+    dist is never a build input. The research bundle has the same ownership.
     """
     topic = ROOT.parent.parent / 'topics/bins'
     packaged = ROOT / 'data'
+    if topic.is_dir():
+        shutil.copytree(CANONICAL_RESEARCH, ROOT / 'research', dirs_exist_ok=True,
+                        ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
     source = topic / 'data/history' if topic.is_dir() else packaged / 'history'
     research = topic / 'docs' if topic.is_dir() else packaged / 'research'
 
@@ -70,11 +78,31 @@ def point(row, index, key):
     address = row.get('地址') or (other if road and other.startswith(road) else road + other)
     return {'id': f'{key}-row-{index + 1}', 'district': row['行政區'], 'address': address,
             'x': x, 'y': y, 'plottable': plottable,
+            'rawX': row['經度'], 'rawY': row['緯度'],
             'quality': '通過座標粗篩，尚未逐點核實' if plottable else '座標待核對，保留原始紀錄'}
 
 def main():
     prepare_sources()
-    # Rebuilding never imports another topic's datasets or generates demand.
+    # Retain the prior downloads and import the two frozen recovery snapshots.
+    # Rebuilding never fetches current data or imports another project's data.
+    manifest = json.loads((RECOVERY / 'manifest.json').read_text())
+    for snapshot in manifest['snapshots'][:2]:
+        name = snapshot['file']
+        payload = (RECOVERY / name).read_bytes()
+        if hashlib.sha256(payload).hexdigest() != manifest['files'][name]['sha256']:
+            raise ValueError(f'Recovery input hash mismatch: {name}')
+        (DEST / name).write_bytes(payload)
+    shutil.copytree(RECOVERY, ROOT / 'dist/research/source-recovery-2026-10-15', dirs_exist_ok=True)
+    for snapshot in manifest['snapshots'][:2]:
+        provenance = {**snapshot, 'observedDate': manifest['observed_date'],
+                      'sha256': manifest['files'][snapshot['file']]['sha256'],
+                      'limitations': '完整取得公開檔案，不代表已核實全市現場清冊完整性。',
+                      'sourceManifest': '../research/source-recovery-2026-10-15/manifest.json'}
+        provenance['raw_file'] = '../research/source-recovery-2026-10-15/' + snapshot['raw_file']
+        if 'archive_cdx' in snapshot:
+            provenance['archive_cdx'] = '../research/source-recovery-2026-10-15/' + snapshot['archive_cdx']
+        (DEST / snapshot['file'].replace('.csv', '.provenance.json')).write_text(
+            json.dumps(provenance, ensure_ascii=False, indent=2) + '\n')
     source2026 = json.loads((DEST / 'taipei-bins-2026-study-area.provenance.json').read_text())
 
     definitions = [
@@ -90,14 +118,29 @@ def main():
          'source': 'https://github.com/roto93/react-taipei-trash-can/blob/a4d1a32ceb8155134a185dca0c07837da659436a/pages/api/hello.js',
          'sourceLabel': '2022 固定版本原始資料',
          'note': '保存了 12 區的 1,799 筆紀錄，尚未核實完整性。保存日期不等於清潔箱實際設置或撤除日期。'},
-        {'key': '2024', 'year': '2024', 'label': '2024 部分資料', 'short': '只保存前 1,000 筆',
+        {'key': '2024-archive', 'year': '2024', 'label': '2024 年 10 月封存版', 'short': '10月封存・12區',
+         'file': 'taipei-bins-2024-10-18-archive-utc.csv', 'savedAt': '2024-10-19',
+         'complete': None, 'completeDownload': True,
+         'dateLabel': '2024-10-19 05:17 台北時間封存（UTC 10-18 21:17）；原調查／更新日期未知',
+         'source': 'https://web.archive.org/web/20241018211732id_/https://data.taipei/api/dataset/a835f3ba-7f50-4b0d-91a6-9df128632d1c/resource/267d550f-c6ec-46e0-b8af-fd5a464eb098/download',
+         'sourceLabel': '官方 CSV 封存原檔',
+         'note': '完整取得封存回應 1,971 筆，涵蓋 12 區；全市現場完整性未核實，2 筆座標待核對。這是另一份 10 月快照，不能回填成 5 月的 1,991 筆；5 月缺的 991 筆仍未找回。'},
+        {'key': '2024', 'year': '2024', 'label': '2024 年 5 月缺頁版（舊版）', 'short': '5月缺頁・舊版',
+         'preferred': False,
          'file': 'taipei-bins-2024-05-14-partial.csv', 'savedAt': '2024-06-18', 'complete': False,
          'dateLabel': '2024-06-18 保存；系統匯入日 2024-05-14',
          'source': 'https://github.com/wer53077n/Cleaning-Box/blob/82475ba3659e1c2320efc87dcdfb5685aff015a0/TPcleaningBox.json',
          'sourceLabel': '2024 固定版本 API 回應',
          'reportedTotal': 1991,
          'note': '原 API 回報 1,991 筆，這份副本只有前 1,000 筆，少了 991 筆與其餘行政區。缺列不代表垃圾箱被撤除。'},
-        {'key': '2026', 'year': '2026', 'label': '2026 示範範圍', 'short': '中心示範框 294 筆',
+        {'key': '2026-main', 'year': '2026', 'label': '2026 官方公開主檔', 'short': '官方公開主檔',
+         'file': 'taipei-bins-2026-09-30-published.csv', 'savedAt': '2026-10-15',
+         'complete': None, 'completeDownload': True,
+         'dateLabel': '2026-09-30 來源更新；2026-10-15 下載；原調查日期未知',
+         'source': OFFICIAL, 'sourceLabel': '官方清潔箱資料集',
+         'note': '保留官方主檔全部 681 筆，未裁切示範區；CSV 與 API 一致，非分頁漏抓。目錄仍列 2,009 筆；北投區 0 筆、南港區 4 筆，不能視為當地沒有垃圾箱。全市現場完整性未核實，1 筆座標待核對。'},
+        {'key': '2026', 'year': '2026', 'label': '2026 中心示範區（舊版）', 'short': '中心示範區・舊版',
+         'preferred': False,
          'file': 'taipei-bins-2026-study-area.csv', 'savedAt': '2026-10-13', 'complete': False,
          'dateLabel': '2026-10-13 下載；來源 CSV 更新日 2026-09-30',
          'source': OFFICIAL, 'sourceLabel': '官方清潔箱資料集',
@@ -106,6 +149,12 @@ def main():
     ]
     datasets = []
     for definition in definitions:
+        definition.setdefault('preferred', True)
+        definition['coverageLabel'] = ('僅示範區' if definition.get('bbox') else
+                                       '已知缺頁' if definition['complete'] is False else '全市完整性未核實')
+        provenance = definition['file'].replace('.csv', '.provenance.json')
+        if (DEST / provenance).exists():
+            definition['provenanceFile'] = provenance
         path = DEST / definition['file']
         rows = source_rows(path)
         points = [point(r, i, definition['key']) for i, r in enumerate(rows)]
@@ -119,9 +168,20 @@ def main():
                'officialSource': OFFICIAL,
                'identityNote': '各列 id 僅供本站操作，不是官方箱號，不可跨年識別同一垃圾箱。'}
     (DEST / 'datasets.json').write_text(json.dumps(payload, ensure_ascii=False, separators=(',', ':')) + '\n')
-    assert [d['rows'] for d in datasets] == [2517, 1799, 1000, 294]
+    assert [d['rows'] for d in datasets] == [2517, 1799, 1971, 1000, 681, 294]
     assert datasets[0]['plottableRows'] == 2505
     print(json.dumps([{'key': d['key'], 'rows': d['rows'], 'mapRows': d['plottableRows']} for d in datasets]))
+    subprocess.run([sys.executable, str(ROOT / 'scripts/compare-snapshots.py')], check=True)
+    shutil.copytree(ROOT / 'research/comparison-2024-2026', ROOT / 'dist/research/comparison-2024-2026', dirs_exist_ok=True)
+    comparison_notes = ROOT / 'dist/research/comparison-2024-2026/README.md'
+    comparison_notes.write_text(comparison_notes.read_text().replace('../../dist/data/', '../../data/'))
+    subprocess.run([sys.executable, str(ROOT / 'scripts/analyze-coordinate-distances.py')], check=True)
+    research_source = CANONICAL_RESEARCH if CANONICAL_RESEARCH.is_dir() else ROOT / 'research'
+    shutil.copytree(research_source / 'coordinate-distances-2024-2026', ROOT / 'dist/research/coordinate-distances-2024-2026', dirs_exist_ok=True)
+    distance_notes = ROOT / 'dist/research/coordinate-distances-2024-2026/README.md'
+    distance_notes.write_text(distance_notes.read_text().replace('../../dist/data/', '../../data/'))
+    for script in ['prepare-research-execution.py', 'estimate-budget.py', 'package-research.py']:
+        subprocess.run([sys.executable, str(ROOT / 'scripts' / script)], check=True)
 
 if __name__ == '__main__':
     main()

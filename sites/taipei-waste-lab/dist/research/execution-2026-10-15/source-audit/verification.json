@@ -1,0 +1,581 @@
+{
+  "verified_at_utc": "2026-10-15T06:21:59.705102+00:00",
+  "inputs": {
+    "manifest": "research/source-recovery-2026-10-15/manifest.json",
+    "receipt_01": "research/execution-2026-10-15/source-audit/receipts/01-official-excerpts.json",
+    "receipt_01_sha256": "257a408f4daae4ec6d031abc6ea8bff24d2e5f756a9e24578d9f61125dbb9896",
+    "receipt_02": "research/execution-2026-10-15/source-audit/receipts/02-statistics-and-records.json",
+    "receipt_02_sha256": "79af95c73bf0b957b738b814acb454e7f0fb66d7830862d6f3391a9430be8c95",
+    "receipt_02_contains_statistics_fetch_error": true,
+    "receipt_02_contains_2015_procedure": true,
+    "statistics_attempts": "research/execution-2026-10-15/source-audit/raw/statistics-download-attempts.json",
+    "statistics_attempts_sha256": "583e2e9bae05f15b01150bdc771967d541d6f979d52910f8c598c1c22fe12cb0",
+    "statistics_raw": "research/execution-2026-10-15/source-audit/raw/environment-statistics-response.raw",
+    "statistics_raw_bytes": 2773,
+    "statistics_raw_sha256": "108c98c465361bdc643a83cae696581862ec3e2408729be0e3f8542285195569",
+    "statistics_raw_hash_matches_http_receipt": true
+  },
+  "manifest_file_checks": [
+    {
+      "path": "raw/2024-08-05-techtarian.html",
+      "exists": true,
+      "expected_bytes": 225836,
+      "actual_bytes": 225836,
+      "expected_sha256": "7da18f8eef2f0233f97e40bee9d094590c898ebdca0d2066535030da99902381",
+      "actual_sha256": "7da18f8eef2f0233f97e40bee9d094590c898ebdca0d2066535030da99902381",
+      "match": true
+    },
+    {
+      "path": "raw/2024-10-18-official-archive.csv",
+      "exists": true,
+      "expected_bytes": 184116,
+      "actual_bytes": 184116,
+      "expected_sha256": "fa9b8f5d6f1805ee7f58b081178b9967ccae3a7d7b71f4e62c8ecd2adc19147d",
+      "actual_sha256": "fa9b8f5d6f1805ee7f58b081178b9967ccae3a7d7b71f4e62c8ecd2adc19147d",
+      "match": true
+    },
+    {
+      "path": "raw/2024-original.json",
+      "exists": true,
+      "expected_bytes": 290046,
+      "actual_bytes": 290046,
+      "expected_sha256": "43ac03adcd09ecac7e9981a7bb107ca819794d0d9f3e7fd8aa05912866046811",
+      "actual_sha256": "43ac03adcd09ecac7e9981a7bb107ca819794d0d9f3e7fd8aa05912866046811",
+      "match": true
+    },
+    {
+      "path": "raw/api-offset-0.json",
+      "exists": true,
+      "expected_bytes": 196408,
+      "actual_bytes": 196408,
+      "expected_sha256": "8eaea29e277be00073bc7b3805eb0ef463ea6f130b45e01769b5066aa515d3c1",
+      "actual_sha256": "8eaea29e277be00073bc7b3805eb0ef463ea6f130b45e01769b5066aa515d3c1",
+      "match": true
+    },
+    {
+      "path": "raw/api-offset-1000.json",
+      "exists": true,
+      "expected_bytes": 74,
+      "actual_bytes": 74,
+      "expected_sha256": "0c5948ce4363aed883c20b3c86e89dd40acb1513ff72cdcbc0c0cc0a53e31583",
+      "actual_sha256": "0c5948ce4363aed883c20b3c86e89dd40acb1513ff72cdcbc0c0cc0a53e31583",
+      "match": true
+    },
+    {
+      "path": "raw/api-offset-2000.json",
+      "exists": true,
+      "expected_bytes": 74,
+      "actual_bytes": 74,
+      "expected_sha256": "9030b6ebca30c9de11ccf7f4acbe7cd1aac1e3fff70dbc1c4b8bc6d0b7cb7a5d",
+      "actual_sha256": "9030b6ebca30c9de11ccf7f4acbe7cd1aac1e3fff70dbc1c4b8bc6d0b7cb7a5d",
+      "match": true
+    },
+    {
+      "path": "raw/archive-available.json",
+      "exists": true,
+      "expected_bytes": 177,
+      "actual_bytes": 177,
+      "expected_sha256": "58f8d6816f43d5ef3dd0a0eb1f9ee1c5eca7c1ac16eee22f56286f06f81cfca2",
+      "actual_sha256": "58f8d6816f43d5ef3dd0a0eb1f9ee1c5eca7c1ac16eee22f56286f06f81cfca2",
+      "match": true
+    },
+    {
+      "path": "raw/archive-cdx-catalog.json",
+      "exists": true,
+      "expected_bytes": 3,
+      "actual_bytes": 3,
+      "expected_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "actual_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "match": true
+    },
+    {
+      "path": "raw/archive-cdx-download.json",
+      "exists": true,
+      "expected_bytes": 403,
+      "actual_bytes": 403,
+      "expected_sha256": "f0abec59e25c7b219a4ee9566ddf7081a3b952b345627961fee318a487efd4a9",
+      "actual_sha256": "f0abec59e25c7b219a4ee9566ddf7081a3b952b345627961fee318a487efd4a9",
+      "match": true
+    },
+    {
+      "path": "raw/archive-cdx-opendata.json",
+      "exists": true,
+      "expected_bytes": 3,
+      "actual_bytes": 3,
+      "expected_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "actual_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "match": true
+    },
+    {
+      "path": "raw/archive-cdx-techtarian-data.json",
+      "exists": true,
+      "expected_bytes": 3,
+      "actual_bytes": 3,
+      "expected_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "actual_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "match": true
+    },
+    {
+      "path": "raw/archive-cdx-techtarian.json",
+      "exists": true,
+      "expected_bytes": 444,
+      "actual_bytes": 444,
+      "expected_sha256": "43c1d17c55e2624c36875db37013c09786bbc6411101be8946352e5bd9dd9ad6",
+      "actual_sha256": "43c1d17c55e2624c36875db37013c09786bbc6411101be8946352e5bd9dd9ad6",
+      "match": true
+    },
+    {
+      "path": "raw/archive-cdx.json",
+      "exists": true,
+      "expected_bytes": 3,
+      "actual_bytes": 3,
+      "expected_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "actual_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "match": true
+    },
+    {
+      "path": "raw/catalog-parsed.json",
+      "exists": true,
+      "expected_bytes": 4657,
+      "actual_bytes": 4657,
+      "expected_sha256": "2bfa20803e1e847459bc3609e04b03702aa6a06514174fcca4ef93f44bef3d56",
+      "actual_sha256": "2bfa20803e1e847459bc3609e04b03702aa6a06514174fcca4ef93f44bef3d56",
+      "match": true
+    },
+    {
+      "path": "raw/catalog.html",
+      "exists": true,
+      "expected_bytes": 87258,
+      "actual_bytes": 87258,
+      "expected_sha256": "e6ab900ab0d0bef04ae3458b8016f2c719f2a0c9cc7fd1c6f43e20a7f2f85fb9",
+      "actual_sha256": "e6ab900ab0d0bef04ae3458b8016f2c719f2a0c9cc7fd1c6f43e20a7f2f85fb9",
+      "match": true
+    },
+    {
+      "path": "raw/github-commits.json",
+      "exists": true,
+      "expected_bytes": 3001,
+      "actual_bytes": 3001,
+      "expected_sha256": "6fcee6114e3cc6757873d8bfdec39aae9263d04dfae31690a7f0e831a46e94cf",
+      "actual_sha256": "6fcee6114e3cc6757873d8bfdec39aae9263d04dfae31690a7f0e831a46e94cf",
+      "match": true
+    },
+    {
+      "path": "raw/github-jojoclt-tree.json",
+      "exists": true,
+      "expected_bytes": 47088,
+      "actual_bytes": 47088,
+      "expected_sha256": "a3c9989745aa0bd10397c825f0b592854dc8ecad8094bab8a2d2b792368a9203",
+      "actual_sha256": "a3c9989745aa0bd10397c825f0b592854dc8ecad8094bab8a2d2b792368a9203",
+      "match": true
+    },
+    {
+      "path": "raw/github-original-tree.json",
+      "exists": true,
+      "expected_bytes": 5116,
+      "actual_bytes": 5116,
+      "expected_sha256": "2a025e0da972f797c968f4359adf603729011949ae4d1450edb83cba223751f0",
+      "actual_sha256": "2a025e0da972f797c968f4359adf603729011949ae4d1450edb83cba223751f0",
+      "match": true
+    },
+    {
+      "path": "raw/github-riddleling-tree.json",
+      "exists": true,
+      "expected_bytes": 26820,
+      "actual_bytes": 26820,
+      "expected_sha256": "064468b1793a6e62bfd57986110e9873d167360124501f2027b28c3e434eb208",
+      "actual_sha256": "064468b1793a6e62bfd57986110e9873d167360124501f2027b28c3e434eb208",
+      "match": true
+    },
+    {
+      "path": "raw/github-search-chinese.json",
+      "exists": true,
+      "expected_bytes": 10736,
+      "actual_bytes": 10736,
+      "expected_sha256": "9ff45d22d83e57b3f2db6bc5283ae381add67725fbaf6fef91b8575ba0b0d766",
+      "actual_sha256": "9ff45d22d83e57b3f2db6bc5283ae381add67725fbaf6fef91b8575ba0b0d766",
+      "match": true
+    },
+    {
+      "path": "raw/github-search.json",
+      "exists": true,
+      "expected_bytes": 15695,
+      "actual_bytes": 15695,
+      "expected_sha256": "ca8ea37869d772a9e47359bfd33eefda06fbf7979fe1642948d9083f1a49231c",
+      "actual_sha256": "ca8ea37869d772a9e47359bfd33eefda06fbf7979fe1642948d9083f1a49231c",
+      "match": true
+    },
+    {
+      "path": "raw/github-wlmaplab-tree.json",
+      "exists": true,
+      "expected_bytes": 17113,
+      "actual_bytes": 17113,
+      "expected_sha256": "a0cb35b5512ca93a5dce1ffdcc61fd485a0af5c359c741e09c12f43d5036bbf2",
+      "actual_sha256": "a0cb35b5512ca93a5dce1ffdcc61fd485a0af5c359c741e09c12f43d5036bbf2",
+      "match": true
+    },
+    {
+      "path": "raw/official-download.csv",
+      "exists": true,
+      "expected_bytes": 63540,
+      "actual_bytes": 63540,
+      "expected_sha256": "ff3cf5528c057958f89871aa5300fc633b02d0f7b37131ab29d5ddc2f8e2370d",
+      "actual_sha256": "ff3cf5528c057958f89871aa5300fc633b02d0f7b37131ab29d5ddc2f8e2370d",
+      "match": true
+    },
+    {
+      "path": "raw/official-tourist.csv",
+      "exists": true,
+      "expected_bytes": 5396,
+      "actual_bytes": 5396,
+      "expected_sha256": "47b1ddfb4f0ab4d5e57afab538f71da3d41d22e59c984bdd9c10b4248223b066",
+      "actual_sha256": "47b1ddfb4f0ab4d5e57afab538f71da3d41d22e59c984bdd9c10b4248223b066",
+      "match": true
+    },
+    {
+      "path": "raw/requests.json",
+      "exists": true,
+      "expected_bytes": 14029,
+      "actual_bytes": 14029,
+      "expected_sha256": "ea09a5c01b4941c1872257b9e273488bbf7d419aad4083de2dfce29806337254",
+      "actual_sha256": "ea09a5c01b4941c1872257b9e273488bbf7d419aad4083de2dfce29806337254",
+      "match": true
+    },
+    {
+      "path": "taipei-bin-venues-2026-08-18.csv",
+      "exists": true,
+      "expected_bytes": 6675,
+      "actual_bytes": 6675,
+      "expected_sha256": "e63606bca5da810114f4352d38c0a5f13f0be85ee7959c307ad8c9df56d1ce72",
+      "actual_sha256": "e63606bca5da810114f4352d38c0a5f13f0be85ee7959c307ad8c9df56d1ce72",
+      "match": true
+    },
+    {
+      "path": "taipei-bins-2024-10-18-archive-utc.csv",
+      "exists": true,
+      "expected_bytes": 243970,
+      "actual_bytes": 243970,
+      "expected_sha256": "bb34f092da73d663b49eb0a55d98fe8864377a3dfcc1b103f04affdca4ca6cdb",
+      "actual_sha256": "bb34f092da73d663b49eb0a55d98fe8864377a3dfcc1b103f04affdca4ca6cdb",
+      "match": true
+    },
+    {
+      "path": "taipei-bins-2026-09-30-published.csv",
+      "exists": true,
+      "expected_bytes": 84118,
+      "actual_bytes": 84118,
+      "expected_sha256": "38b4af06dc0d57a38cc1361079fed8963632be746f5033638dec1001c072fda1",
+      "actual_sha256": "38b4af06dc0d57a38cc1361079fed8963632be746f5033638dec1001c072fda1",
+      "match": true
+    }
+  ],
+  "all_manifest_files_match": true,
+  "datasets": {
+    "2024-10-18-archive": {
+      "rows": 1971,
+      "columns": [
+        "行政區",
+        "地址",
+        "經度",
+        "緯度",
+        "備註"
+      ],
+      "district_counts": {
+        "中山區": 202,
+        "中正區": 260,
+        "信義區": 90,
+        "內湖區": 133,
+        "北投區": 98,
+        "南港區": 94,
+        "士林區": 233,
+        "大同區": 200,
+        "大安區": 229,
+        "文山區": 93,
+        "松山區": 175,
+        "萬華區": 164
+      },
+      "empty_required_fields": {
+        "行政區": 0,
+        "地址": 0,
+        "經度": 0,
+        "緯度": 0,
+        "備註": 0
+      },
+      "exact_duplicate_rows": 0
+    },
+    "2026-09-30-published": {
+      "rows": 681,
+      "columns": [
+        "行政區",
+        "地址",
+        "經度",
+        "緯度",
+        "備註"
+      ],
+      "district_counts": {
+        "中山區": 50,
+        "中正區": 83,
+        "信義區": 60,
+        "內湖區": 85,
+        "南港區": 4,
+        "士林區": 142,
+        "大同區": 22,
+        "大安區": 47,
+        "文山區": 51,
+        "松山區": 55,
+        "萬華區": 82
+      },
+      "empty_required_fields": {
+        "行政區": 0,
+        "地址": 0,
+        "經度": 0,
+        "緯度": 0,
+        "備註": 0
+      },
+      "exact_duplicate_rows": 0
+    }
+  },
+  "catalog": {
+    "number_of_data": 2009,
+    "metadata_changed": "2026-09-30 15:55:47",
+    "resource_last_modified": "2026-09-30 15:55:35",
+    "declared_fields": "行政區、地址、經度、緯度、備註",
+    "temporal_coverage_start": "2014-12-25",
+    "temporal_coverage_end": "2018-01-10",
+    "catalog_count_equals_published_csv_rows": false
+  },
+  "annual_statistics": {
+    "official_field": "行人專用清潔箱[個]",
+    "http_status": 200,
+    "content_type": "application/octet-stream",
+    "encoding": "UTF-8 with optional BOM",
+    "year_count": 30,
+    "start_year": 1996,
+    "end_year": 2025,
+    "annual_values_file": "research/execution-2026-10-15/source-audit/annual-values.csv",
+    "annual_values": [
+      {
+        "roc_year": 85,
+        "gregorian_year": 1996,
+        "count": 2418,
+        "unit": "個"
+      },
+      {
+        "roc_year": 86,
+        "gregorian_year": 1997,
+        "count": 2921,
+        "unit": "個"
+      },
+      {
+        "roc_year": 87,
+        "gregorian_year": 1998,
+        "count": 2176,
+        "unit": "個"
+      },
+      {
+        "roc_year": 88,
+        "gregorian_year": 1999,
+        "count": 2225,
+        "unit": "個"
+      },
+      {
+        "roc_year": 89,
+        "gregorian_year": 2000,
+        "count": 2138,
+        "unit": "個"
+      },
+      {
+        "roc_year": 90,
+        "gregorian_year": 2001,
+        "count": 2698,
+        "unit": "個"
+      },
+      {
+        "roc_year": 91,
+        "gregorian_year": 2002,
+        "count": 2672,
+        "unit": "個"
+      },
+      {
+        "roc_year": 92,
+        "gregorian_year": 2003,
+        "count": 2781,
+        "unit": "個"
+      },
+      {
+        "roc_year": 93,
+        "gregorian_year": 2004,
+        "count": 2947,
+        "unit": "個"
+      },
+      {
+        "roc_year": 94,
+        "gregorian_year": 2005,
+        "count": 2696,
+        "unit": "個"
+      },
+      {
+        "roc_year": 95,
+        "gregorian_year": 2006,
+        "count": 2614,
+        "unit": "個"
+      },
+      {
+        "roc_year": 96,
+        "gregorian_year": 2007,
+        "count": 1353,
+        "unit": "個"
+      },
+      {
+        "roc_year": 97,
+        "gregorian_year": 2008,
+        "count": 3484,
+        "unit": "個"
+      },
+      {
+        "roc_year": 98,
+        "gregorian_year": 2009,
+        "count": 3116,
+        "unit": "個"
+      },
+      {
+        "roc_year": 99,
+        "gregorian_year": 2010,
+        "count": 3283,
+        "unit": "個"
+      },
+      {
+        "roc_year": 100,
+        "gregorian_year": 2011,
+        "count": 3221,
+        "unit": "個"
+      },
+      {
+        "roc_year": 101,
+        "gregorian_year": 2012,
+        "count": 3132,
+        "unit": "個"
+      },
+      {
+        "roc_year": 102,
+        "gregorian_year": 2013,
+        "count": 3041,
+        "unit": "個"
+      },
+      {
+        "roc_year": 103,
+        "gregorian_year": 2014,
+        "count": 2928,
+        "unit": "個"
+      },
+      {
+        "roc_year": 104,
+        "gregorian_year": 2015,
+        "count": 2510,
+        "unit": "個"
+      },
+      {
+        "roc_year": 105,
+        "gregorian_year": 2016,
+        "count": 1803,
+        "unit": "個"
+      },
+      {
+        "roc_year": 106,
+        "gregorian_year": 2017,
+        "count": 2009,
+        "unit": "個"
+      },
+      {
+        "roc_year": 107,
+        "gregorian_year": 2018,
+        "count": 1985,
+        "unit": "個"
+      },
+      {
+        "roc_year": 108,
+        "gregorian_year": 2019,
+        "count": 1868,
+        "unit": "個"
+      },
+      {
+        "roc_year": 109,
+        "gregorian_year": 2020,
+        "count": 1807,
+        "unit": "個"
+      },
+      {
+        "roc_year": 110,
+        "gregorian_year": 2021,
+        "count": 1787,
+        "unit": "個"
+      },
+      {
+        "roc_year": 111,
+        "gregorian_year": 2022,
+        "count": 1999,
+        "unit": "個"
+      },
+      {
+        "roc_year": 112,
+        "gregorian_year": 2023,
+        "count": 1982,
+        "unit": "個"
+      },
+      {
+        "roc_year": 113,
+        "gregorian_year": 2024,
+        "count": 1956,
+        "unit": "個"
+      },
+      {
+        "roc_year": 114,
+        "gregorian_year": 2025,
+        "count": 1682,
+        "unit": "個"
+      }
+    ],
+    "statistical_2017_count": 2009,
+    "statistical_2025_count": 1682,
+    "catalog_2009_matches_2017_statistic": true,
+    "interpretation": "The annual statistical series is a separate aggregate measure with unit 個; no source-defined crosswalk to the current CSV row count was found."
+  },
+  "required_observations": {
+    "2024_rows": true,
+    "2026_rows": true,
+    "catalog_number_of_data_is_2009": true,
+    "catalog_count_conflicts_with_published_file": true,
+    "statistics_http_200_and_hash_match": true,
+    "statistics_has_30_annual_values": true,
+    "statistics_2017_value_is_2009": true,
+    "statistics_2025_value_is_1682": true,
+    "2024_beitou_rows": true,
+    "2026_beitou_rows": true,
+    "2024_nangang_rows": true,
+    "2026_nangang_rows": true,
+    "five_location_fields_only": true,
+    "public_csv_has_no_facility_id_or_survey_date_field": true,
+    "no_empty_cells": true
+  },
+  "source_ids_and_dates": {
+    "dataset_id": "a835f3ba-7f50-4b0d-91a6-9df128632d1c",
+    "resource_id": "267d550f-c6ec-46e0-b8af-fd5a464eb098",
+    "archive_capture_utc": "2024-10-18T21:17:32Z",
+    "archive_capture_taipei": "2024-10-19T05:17:32+08:00",
+    "archive_survey_date": null,
+    "published_source_updated_at": "2026-09-30 15:55:35",
+    "published_survey_date": null,
+    "statistics_request_time_utc": "2026-10-15T06:19:29.087233+00:00",
+    "statistics_response_date_header": "Thu, 15 Oct 2026 06:19:31 GMT",
+    "excerpt_sources": 5
+  },
+  "interpretation_guardrails": [
+    "Catalog metadata count 2009 and downloadable CSV row count 681 conflict; reconciliation is not established.",
+    "Rows absent from a later version do not prove physical removal.",
+    "Same-address rows with different coordinates do not prove identity or relocation.",
+    "Snapshot/download/update/capture dates are not field-survey or event dates.",
+    "Historical procedures establish a previous register workflow, not the current post-2022 process or public record availability.",
+    "Neither snapshot proves complete citywide physical inventory."
+  ],
+  "all_required_observations_pass": true
+}

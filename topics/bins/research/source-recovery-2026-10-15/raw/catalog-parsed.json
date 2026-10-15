@@ -1,0 +1,170 @@
+{
+  "pid": "a835f3ba-7f50-4b0d-91a6-9df128632d1c",
+  "name": "00000467",
+  "title": "臺北市行人專用清潔箱",
+  "publish_status": "2",
+  "type": "dataset",
+  "description": "提供民眾本市行人專用清潔箱位置查詢，另民眾可用手機下載「台北通」APP，開啟定位設定並由服務專區進入周邊服務後，自「垃圾清潔、舊衣回收」類別點選「清潔箱」服務項目，即可搜尋鄰近之清潔箱。",
+  "url": "",
+  "author": "莊立意",
+  "author_email": "B52187@gov.taipei",
+  "author_phone": "02-27208889#7268",
+  "maintainer": "項宣銘",
+  "maintainer_email": "la-log4.1384@mail.taipei.gov.tw",
+  "maintainer_phone": "02-27208889-7269",
+  "maintainer_organization_name": "臺北市政府環境保護局",
+  "org_id": "b104a265-3ad8-42a6-a79c-ef0ec87e932e",
+  "org_name": "環保局",
+  "sub_org_id": "",
+  "sub_org_name": "",
+  "check_freq_tid": "1060cdd0-e759-44c7-a0b0-1e10ff1428ed",
+  "check_freq_name": "每月",
+  "update_freq_desc": "不定期更新",
+  "license_id": "4550e68f-6812-4a15-a2e2-f954eee779c5",
+  "license_name": "依政府資料開放授權條款-第1版",
+  "charge": "free",
+  "charge_url": "",
+  "charge_law": "無",
+  "publish_date": "2015-05-21",
+  "category_name": "交通及通訊",
+  "theme_name": "其他",
+  "topic_name": "環保",
+  "creation_type": "原始資料",
+  "language": "zh",
+  "notes": "",
+  "coverage_temporal_start": "2014-12-25",
+  "coverage_temporal_end": "2018-01-10",
+  "coverage_spatial": "",
+  "field_description": "行政區、地址、經度、緯度、備註",
+  "number_of_data": 2009,
+  "quality_badge_type": "",
+  "ndc_quality": "G",
+  "created": "2015-05-12 09:49:59",
+  "changed": "2026-09-30 15:57:39",
+  "metadata_changed": "2026-09-30 15:55:47",
+  "status": "c50",
+  "resources": [
+    {
+      "rid": "267d550f-c6ec-46e0-b8af-fd5a464eb098",
+      "url": "/api/dataset/a835f3ba-7f50-4b0d-91a6-9df128632d1c/resource/267d550f-c6ec-46e0-b8af-fd5a464eb098/download",
+      "url_type": "upload",
+      "position": 0,
+      "name": "臺北市行人專用清潔箱",
+      "description": "",
+      "encoding": "Big5",
+      "file_name": "●行人專用清潔箱總表 .csv",
+      "mimetype": "text/csv",
+      "size": 63540,
+      "meta_url": "",
+      "amount": "",
+      "field_desc": [
+        {
+          "name": "行政區",
+          "desc": ""
+        },
+        {
+          "name": "地址",
+          "desc": ""
+        },
+        {
+          "name": "經度",
+          "desc": ""
+        },
+        {
+          "name": "緯度",
+          "desc": ""
+        },
+        {
+          "name": "備註",
+          "desc": ""
+        }
+      ],
+      "notes": "",
+      "file_format_tid": "32fe643b-f623-4770-9aae-cb49ccb6dcb8",
+      "file_format": "CSV",
+      "request_method": "",
+      "request_parameters": [],
+      "extras": {
+        "qc_level": ""
+      },
+      "resource_type": "",
+      "has_datastore": true,
+      "download_count": 350399,
+      "last_modified": "2026-09-30 15:55:35"
+    },
+    {
+      "rid": "2030d728-9597-437d-81a4-cf2a44c7f114",
+      "url": "/api/dataset/a835f3ba-7f50-4b0d-91a6-9df128632d1c/resource/2030d728-9597-437d-81a4-cf2a44c7f114/download",
+      "url_type": "upload",
+      "position": 1,
+      "name": "行人專用清潔箱總表（景點商圈周邊130點）",
+      "description": "",
+      "encoding": "Big5",
+      "file_name": "●行人專用清潔箱總表(景點商圈周邊130點) .csv",
+      "mimetype": "text/csv",
+      "size": 5396,
+      "meta_url": "",
+      "amount": 0,
+      "field_desc": [
+        {
+          "name": "行政區",
+          "desc": ""
+        },
+        {
+          "name": "地址",
+          "desc": ""
+        },
+        {
+          "name": "經度",
+          "desc": ""
+        },
+        {
+          "name": "緯度",
+          "desc": ""
+        },
+        {
+          "name": "備註",
+          "desc": ""
+        }
+      ],
+      "notes": "",
+      "file_format_tid": "32fe643b-f623-4770-9aae-cb49ccb6dcb8",
+      "file_format": "CSV",
+      "request_method": "",
+      "request_parameters": [],
+      "extras": {
+        "qc_level": ""
+      },
+      "resource_type": "",
+      "has_datastore": true,
+      "download_count": 4702,
+      "last_modified": "2026-08-18 16:27:22"
+    }
+  ],
+  "tags": [
+    {
+      "name": "垃圾"
+    },
+    {
+      "name": "垃圾桶"
+    },
+    {
+      "name": "清潔"
+    },
+    {
+      "name": "清潔箱"
+    },
+    {
+      "name": "環保"
+    },
+    {
+      "name": "環境保護"
+    },
+    {
+      "name": "行人"
+    }
+  ],
+  "textual_status": "0",
+  "authorized": "0",
+  "use_count": 564028
+}

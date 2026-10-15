@@ -1,0 +1,31 @@
+{
+  "version": "1.0",
+  "date": "2026-10-15",
+  "method": "Purposive desk shortlist. One published 2026 source row anchors each provisional segment; context is a planning hypothesis, not a field observation. No ranking of demand or service quality.",
+  "candidates": [
+    {"id":"C01","comparisonId":"comparison-001093","context":"商圈或觀光","label":"武昌街二段","reason":"以西門街區作商業情境候選；來源欄位一致，可與異座標案例分開查核。"},
+    {"id":"C02","comparisonId":"comparison-000314","context":"商圈或觀光","label":"寧夏夜市周邊","reason":"原始地址明列寧夏夜市，適合核對活動時段與管理分工。"},
+    {"id":"C03","comparisonId":"comparison-000857","context":"商圈或觀光","label":"忠孝東路四段","reason":"商業幹道候選，先處理同址異座標，再確認可觀察的人行道範圍。"},
+    {"id":"C04","comparisonId":"comparison-001258","context":"商圈或觀光","label":"國父紀念館周邊","reason":"原始地址明列國館，檢查館外人行道與館內設施的管理邊界。"},
+    {"id":"C05","comparisonId":"comparison-001971","context":"商圈或觀光","label":"貓空纜車站周邊","reason":"原始地址明列纜車站，保留觀光與交通重疊的情境，先評估重訪交通成本。"},
+    {"id":"C06","comparisonId":"comparison-001401","context":"商圈或觀光","label":"士東路百貨周邊","reason":"原始地址明列百貨停車場，檢查車行出入口與人行動線，不預設有障礙。"},
+    {"id":"C07","comparisonId":"comparison-000190","context":"交通節點","label":"古亭站周邊","reason":"地址明列捷運站及對面公車道，須確認安全可達範圍與清運責任。"},
+    {"id":"C08","comparisonId":"comparison-000651","context":"交通節點","label":"中山國小公車站","reason":"公車專用道候選；若無安全固定觀察位置則排除，不進入車道。"},
+    {"id":"C09","comparisonId":"comparison-001417","context":"交通節點","label":"劍潭站一號出口","reason":"以有明確出口側別的地址作錨點，核對桶組及鄰近站牌共用服務。"},
+    {"id":"C10","comparisonId":"comparison-001282","context":"交通節點","label":"市政府站三號出口","reason":"原始地址有出口與序號，先確認列、箱體及桶組是否一對一。"},
+    {"id":"C11","comparisonId":"comparison-001756","context":"交通節點","label":"葫洲站二號出口","reason":"以出口地址作錨點，核對單側步行路線、開放時段與替代投放。"},
+    {"id":"C12","comparisonId":"comparison-000346","context":"交通節點","label":"民權西路站五號出口","reason":"以出口與街名作固定地標候選；須檢查與其他樣本的服務範圍是否重疊。"},
+    {"id":"C13","comparisonId":"comparison-000795","context":"住宅混合候選","label":"民生東路五段","reason":"以門牌側別為錨點；沿街用途與居民使用皆待踏查，不推估人口需求。"},
+    {"id":"C14","comparisonId":"comparison-000265","context":"住宅混合候選","label":"承德路三段","reason":"保留不同區位的門牌案例；住宅混合分類須現場確認，不以路名判定用途。"},
+    {"id":"C15","comparisonId":"comparison-001739","context":"住宅混合候選","label":"內湖路二段","reason":"以明確門牌建立重訪錨點，先檢查實際沿街用途及管理責任。"},
+    {"id":"C16","comparisonId":"comparison-001954","context":"住宅混合候選","label":"忠順街二段","reason":"原始地址明列超市側別，可查日常採買情境；不由整袋外觀推定家戶垃圾。"},
+    {"id":"C17","comparisonId":"comparison-001940","context":"住宅混合候選","label":"景福街","reason":"同址異座標案例，先核對道路兩側與門牌；用途及可用設施未核實。"},
+    {"id":"C18","comparisonId":"comparison-000185","context":"住宅混合候選","label":"羅斯福路一段","reason":"門牌型幹道候選，確認住宅與商業混合程度；不以欄位一致當運作正常。"}
+  ],
+  "exclusions": [
+    {"scope":"北投區","reason":"2026 主檔零列，另列覆蓋查核；不以2024點位冒充現行服務，不據此認為無需求。"},
+    {"scope":"南港區","reason":"主檔只有4列，樣本範圍解釋待核對；本輪街段池暫不納入，保留查核，不宣稱無服務。"},
+    {"scope":"菁山路最大座標差距案例","reason":"留在75對資料查核中；不因差距最大就列為高需求或優先介入街段。"},
+    {"scope":"同一桶組的多列及近鄰候選","reason":"不重複計為獨立街段；現勘後以服務重疊與可能外移判斷合併或替換。"}
+  ]
+}

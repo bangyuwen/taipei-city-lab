@@ -1,0 +1,64 @@
+{
+  "receipt_date": "2026-10-15",
+  "capture_note": "These excerpts transcribe the visible web tool page output from the first official-source search/open call. They are excerpts, not complete HTTP response bodies. The complete later web tool result is preserved in 02-statistics-and-records.json.",
+  "search_queries": [
+    "site:data.taipei/dataset/detail 清潔箱 設置 地點 數量 2009",
+    "site:gov.taipei OR site:dep.gov.taipei 臺北市 清潔箱 設置 清冊 編號 異動",
+    "site:data.gov.tw 清潔箱 臺北市 清潔箱 2,009 筆",
+    "site:議會.taipei OR site:議會.taipei 清潔箱 臺北市 環保局"
+  ],
+  "sources": [
+    {
+      "web_ref": "turn54view0",
+      "title": "臺北市行人專用清潔箱",
+      "url": "https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c",
+      "observed_lines": "22-38",
+      "excerpts": [
+        "Main CSV update time: 2026-09-30 15:55:35; separate venue file update time: 2026-08-18 16:27:22.",
+        "Main fields: 行政區、地址、經度、緯度、備註.",
+        "Coverage period metadata: 2014-12-25 to 2018-01-10; update frequency: irregular; metadata updated 2026-09-30 15:55:47.",
+        "Dataset description says it provides locations of pedestrian-specific cleaning boxes for public search."
+      ]
+    },
+    {
+      "web_ref": "turn54view1",
+      "title": "臺北市環境衛生管理概況",
+      "url": "https://data.taipei/dataset/detail?id=a6838eac-4f04-48d8-bf17-9d0fd9886f57",
+      "observed_lines": "28-36",
+      "excerpts": [
+        "Annual statistical series has a field 行人專用清潔箱[個], coverage metadata 1996-01-01 to 2025-12-31, annual update frequency.",
+        "The linked timeseries endpoint returned an application/octet-stream response that the web reader could not parse; no annual values were independently read in this audit."
+      ]
+    },
+    {
+      "web_ref": "turn54view2",
+      "title": "臺北市政府環境保護局行人專用清潔箱設置管理作業程序（已廢止／停止適用）",
+      "url": "https://laws.gov.taipei/Law/LawSearch/LawArticleContent/FL076512",
+      "observed_lines": "15-27, 33-48",
+      "excerpts": [
+        "The legal-system record says it stopped applying from 2022-08-24.",
+        "The then-procedure defined responsible district teams, direct team and environmental-cleaning section; covered installation, relocation, removal, GPS reporting and maintenance.",
+        "It said each box should carry a box number and be registered; new installation/removal/relocation required site review, approval and a form; installation/relocation GPS and a register file were sent the same day; the central section submitted citywide deployment/management reports every two months."
+      ]
+    },
+    {
+      "web_ref": "turn54view3",
+      "title": "2021-02-02 historical version of the procedure",
+      "url": "https://laws.gov.taipei/Law/LawSearch/LawArticleContent/FL076512?date=20210202",
+      "observed_lines": "41-46",
+      "excerpts": [
+        "The 2021 version specifies site review, a setting/repair application, the same-day managed-register file for installation/relocation, GPS update transmission, and bimonthly reporting."
+      ]
+    },
+    {
+      "web_ref": "turn54view4",
+      "title": "2021 procedure amendment explanation",
+      "url": "https://laws.gov.taipei/Law/LawSearch/LawReason/FL076512?date=20210202",
+      "observed_lines": "21-28",
+      "excerpts": [
+        "The 2021 revision was effective 2021-02-02 and said forms were to be prescribed by the environmental-cleaning section."
+      ]
+    }
+  ],
+  "interpretation": "Procedural existence of numbered boxes and internal records is evidenced for the historical period. Public release, current process after 2022-08-24, current retention, and linkage to either snapshot remain unverified. A location row is not proven to equal one physical box."
+}

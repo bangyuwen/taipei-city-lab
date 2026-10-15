@@ -1,0 +1,14 @@
+{
+  "file": "taipei-bins-2026-09-30-published.csv",
+  "raw_file": "../research/source-recovery-2026-10-15/raw/official-download.csv",
+  "source_updated_at_literal": "2026-09-30 15:55:35",
+  "downloaded_date": "2026-10-15",
+  "survey_date": null,
+  "complete_download": true,
+  "citywide_inventory_complete": null,
+  "note": "All rows of the current official main CSV, with no study-area filter; current API also returns 681 rows. This does not verify physical inventory completeness.",
+  "observedDate": "2026-10-15",
+  "sha256": "38b4af06dc0d57a38cc1361079fed8963632be746f5033638dec1001c072fda1",
+  "limitations": "完整取得公開檔案，不代表已核實全市現場清冊完整性。",
+  "sourceManifest": "../research/source-recovery-2026-10-15/manifest.json"
+}

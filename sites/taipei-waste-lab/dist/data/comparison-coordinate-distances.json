@@ -1,0 +1,3063 @@
+{
+  "meta": {
+    "analysisVersion": "1.0.0",
+    "comparisonFile": "dist/data/comparison-2024-2026.json",
+    "comparisonSHA256": "8416e21c2b360d19c88e98a8579f71e17add5d0b6aeb17cc271b919c85a777ea",
+    "comparisonProtocolVersion": "1.0.0",
+    "sources": {
+      "before": {
+        "key": "2024-archive",
+        "file": "taipei-bins-2024-10-18-archive-utc.csv",
+        "sha256": "bb34f092da73d663b49eb0a55d98fe8864377a3dfcc1b103f04affdca4ca6cdb",
+        "rows": 1971,
+        "date": "Archive capture 2024-10-18T21:17:32Z / Taipei 2024-10-19; survey date unknown"
+      },
+      "after": {
+        "key": "2026-main",
+        "file": "taipei-bins-2026-09-30-published.csv",
+        "sha256": "38b4af06dc0d57a38cc1361079fed8963632be746f5033638dec1001c072fda1",
+        "rows": 681,
+        "date": "Official update 2026-09-30; downloaded 2026-10-15"
+      }
+    },
+    "method": {
+      "name": "Haversine",
+      "radiusMeters": 6371000,
+      "referenceURL": "https://www.movable-type.co.uk/scripts/latlong.html",
+      "description": "Spherical shortest surface distance in meters. Coordinates interpreted as decimal longitude and latitude; no route, elevation or ellipsoid correction."
+    },
+    "selection": "same_address_changed",
+    "unit": "one original unique-address source-row pair; not a confirmed facility identity",
+    "limitations": [
+      "Same address does not establish the same physical bin. Distances do not confirm relocation, removal or installation.",
+      "Coordinate changes can reflect precision, correction, geocoding or data-entry differences; causes require separate evidence.",
+      "Spherical distance is an approximation, not walking distance or surveyed movement. No datum transformation or field verification is performed.",
+      "The 2024 archive capture is Taipei 2024-10-19 (UTC 2024-10-18), not an original survey/update date. The 2026 source update is 2026-09-30; download 2026-10-15.",
+      "Both snapshots have unverified physical citywide completeness. Preserve source IDs, physical start lines, raw coordinates, dates, and original 75-pair membership."
+    ]
+  },
+  "summary": {
+    "pairCount": 75,
+    "calculatedPairs": 75,
+    "unavailablePairs": 0,
+    "coarseFlaggedPairs": 0,
+    "minMeters": 0.00010074444278484661,
+    "medianMeters": 16.67535878093429,
+    "maxMeters": 1572.745492371272,
+    "buckets": [
+      {
+        "key": "lt1",
+        "label": "小於 1 公尺",
+        "count": 6
+      },
+      {
+        "key": "1to10",
+        "label": "1 至未滿 10 公尺",
+        "count": 22
+      },
+      {
+        "key": "10to50",
+        "label": "10 至未滿 50 公尺",
+        "count": 33
+      },
+      {
+        "key": "50to100",
+        "label": "50 至未滿 100 公尺",
+        "count": 5
+      },
+      {
+        "key": "100to500",
+        "label": "100 至未滿 500 公尺",
+        "count": 6
+      },
+      {
+        "key": "ge500",
+        "label": "500 公尺以上",
+        "count": 3
+      }
+    ]
+  },
+  "districts": [
+    {
+      "district": "中正區",
+      "pairCount": 9,
+      "calculatedPairs": 9,
+      "unavailablePairs": 0,
+      "coarseFlaggedPairs": 0,
+      "minMeters": 0.00010074444278484661,
+      "medianMeters": 0.004029786700982874,
+      "maxMeters": 20.494598292178487,
+      "buckets": [
+        {
+          "key": "lt1",
+          "label": "小於 1 公尺",
+          "count": 5
+        },
+        {
+          "key": "1to10",
+          "label": "1 至未滿 10 公尺",
+          "count": 2
+        },
+        {
+          "key": "10to50",
+          "label": "10 至未滿 50 公尺",
+          "count": 2
+        },
+        {
+          "key": "50to100",
+          "label": "50 至未滿 100 公尺",
+          "count": 0
+        },
+        {
+          "key": "100to500",
+          "label": "100 至未滿 500 公尺",
+          "count": 0
+        },
+        {
+          "key": "ge500",
+          "label": "500 公尺以上",
+          "count": 0
+        }
+      ]
+    },
+    {
+      "district": "大同區",
+      "pairCount": 0,
+      "calculatedPairs": 0,
+      "unavailablePairs": 0,
+      "coarseFlaggedPairs": 0,
+      "minMeters": null,
+      "medianMeters": null,
+      "maxMeters": null,
+      "buckets": [
+        {
+          "key": "lt1",
+          "label": "小於 1 公尺",
+          "count": 0
+        },
+        {
+          "key": "1to10",
+          "label": "1 至未滿 10 公尺",
+          "count": 0
+        },
+        {
+          "key": "10to50",
+          "label": "10 至未滿 50 公尺",
+          "count": 0
+        },
+        {
+          "key": "50to100",
+          "label": "50 至未滿 100 公尺",
+          "count": 0
+        },
+        {
+          "key": "100to500",
+          "label": "100 至未滿 500 公尺",
+          "count": 0
+        },
+        {
+          "key": "ge500",
+          "label": "500 公尺以上",
+          "count": 0
+        }
+      ]
+    },
+    {
+      "district": "中山區",
+      "pairCount": 3,
+      "calculatedPairs": 3,
+      "unavailablePairs": 0,
+      "coarseFlaggedPairs": 0,
+      "minMeters": 19.542766542254427,
+      "medianMeters": 25.717764438034838,
+      "maxMeters": 133.7264627761801,
+      "buckets": [
+        {
+          "key": "lt1",
+          "label": "小於 1 公尺",
+          "count": 0
+        },
+        {
+          "key": "1to10",
+          "label": "1 至未滿 10 公尺",
+          "count": 0
+        },
+        {
+          "key": "10to50",
+          "label": "10 至未滿 50 公尺",
+          "count": 2
+        },
+        {
+          "key": "50to100",
+          "label": "50 至未滿 100 公尺",
+          "count": 0
+        },
+        {
+          "key": "100to500",
+          "label": "100 至未滿 500 公尺",
+          "count": 1
+        },
+        {
+          "key": "ge500",
+          "label": "500 公尺以上",
+          "count": 0
+        }
+      ]
+    },
+    {
+      "district": "松山區",
+      "pairCount": 9,
+      "calculatedPairs": 9,
+      "unavailablePairs": 0,
+      "coarseFlaggedPairs": 0,
+      "minMeters": 0.5505579303501958,
+      "medianMeters": 22.926078362713568,
+      "maxMeters": 524.7634541532012,
+      "buckets": [
+        {
+          "key": "lt1",
+          "label": "小於 1 公尺",
+          "count": 1
+        },
+        {
+          "key": "1to10",
+          "label": "1 至未滿 10 公尺",
+          "count": 0
+        },
+        {
+          "key": "10to50",
+          "label": "10 至未滿 50 公尺",
+          "count": 6
+        },
+        {
+          "key": "50to100",
+          "label": "50 至未滿 100 公尺",
+          "count": 0
+        },
+        {
+          "key": "100to500",
+          "label": "100 至未滿 500 公尺",
+          "count": 1
+        },
+        {
+          "key": "ge500",
+          "label": "500 公尺以上",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "district": "大安區",
+      "pairCount": 19,
+      "calculatedPairs": 19,
+      "unavailablePairs": 0,
+      "coarseFlaggedPairs": 0,
+      "minMeters": 2.995966499254345,
+      "medianMeters": 8.569338038568691,
+      "maxMeters": 549.7114202806412,
+      "buckets": [
+        {
+          "key": "lt1",
+          "label": "小於 1 公尺",
+          "count": 0
+        },
+        {
+          "key": "1to10",
+          "label": "1 至未滿 10 公尺",
+          "count": 10
+        },
+        {
+          "key": "10to50",
+          "label": "10 至未滿 50 公尺",
+          "count": 6
+        },
+        {
+          "key": "50to100",
+          "label": "50 至未滿 100 公尺",
+          "count": 1
+        },
+        {
+          "key": "100to500",
+          "label": "100 至未滿 500 公尺",
+          "count": 1
+        },
+        {
+          "key": "ge500",
+          "label": "500 公尺以上",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "district": "萬華區",
+      "pairCount": 0,
+      "calculatedPairs": 0,
+      "unavailablePairs": 0,
+      "coarseFlaggedPairs": 0,
+      "minMeters": null,
+      "medianMeters": null,
+      "maxMeters": null,
+      "buckets": [
+        {
+          "key": "lt1",
+          "label": "小於 1 公尺",
+          "count": 0
+        },
+        {
+          "key": "1to10",
+          "label": "1 至未滿 10 公尺",
+          "count": 0
+        },
+        {
+          "key": "10to50",
+          "label": "10 至未滿 50 公尺",
+          "count": 0
+        },
+        {
+          "key": "50to100",
+          "label": "50 至未滿 100 公尺",
+          "count": 0
+        },
+        {
+          "key": "100to500",
+          "label": "100 至未滿 500 公尺",
+          "count": 0
+        },
+        {
+          "key": "ge500",
+          "label": "500 公尺以上",
+          "count": 0
+        }
+      ]
+    },
+    {
+      "district": "信義區",
+      "pairCount": 3,
+      "calculatedPairs": 3,
+      "unavailablePairs": 0,
+      "coarseFlaggedPairs": 0,
+      "minMeters": 9.947191412913348,
+      "medianMeters": 10.670747828620609,
+      "maxMeters": 37.29347161610353,
+      "buckets": [
+        {
+          "key": "lt1",
+          "label": "小於 1 公尺",
+          "count": 0
+        },
+        {
+          "key": "1to10",
+          "label": "1 至未滿 10 公尺",
+          "count": 1
+        },
+        {
+          "key": "10to50",
+          "label": "10 至未滿 50 公尺",
+          "count": 2
+        },
+        {
+          "key": "50to100",
+          "label": "50 至未滿 100 公尺",
+          "count": 0
+        },
+        {
+          "key": "100to500",
+          "label": "100 至未滿 500 公尺",
+          "count": 0
+        },
+        {
+          "key": "ge500",
+          "label": "500 公尺以上",
+          "count": 0
+        }
+      ]
+    },
+    {
+      "district": "士林區",
+      "pairCount": 20,
+      "calculatedPairs": 20,
+      "unavailablePairs": 0,
+      "coarseFlaggedPairs": 0,
+      "minMeters": 5.743590845373204,
+      "medianMeters": 17.868224077140184,
+      "maxMeters": 1572.745492371272,
+      "buckets": [
+        {
+          "key": "lt1",
+          "label": "小於 1 公尺",
+          "count": 0
+        },
+        {
+          "key": "1to10",
+          "label": "1 至未滿 10 公尺",
+          "count": 5
+        },
+        {
+          "key": "10to50",
+          "label": "10 至未滿 50 公尺",
+          "count": 8
+        },
+        {
+          "key": "50to100",
+          "label": "50 至未滿 100 公尺",
+          "count": 4
+        },
+        {
+          "key": "100to500",
+          "label": "100 至未滿 500 公尺",
+          "count": 2
+        },
+        {
+          "key": "ge500",
+          "label": "500 公尺以上",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "district": "北投區",
+      "pairCount": 0,
+      "calculatedPairs": 0,
+      "unavailablePairs": 0,
+      "coarseFlaggedPairs": 0,
+      "minMeters": null,
+      "medianMeters": null,
+      "maxMeters": null,
+      "buckets": [
+        {
+          "key": "lt1",
+          "label": "小於 1 公尺",
+          "count": 0
+        },
+        {
+          "key": "1to10",
+          "label": "1 至未滿 10 公尺",
+          "count": 0
+        },
+        {
+          "key": "10to50",
+          "label": "10 至未滿 50 公尺",
+          "count": 0
+        },
+        {
+          "key": "50to100",
+          "label": "50 至未滿 100 公尺",
+          "count": 0
+        },
+        {
+          "key": "100to500",
+          "label": "100 至未滿 500 公尺",
+          "count": 0
+        },
+        {
+          "key": "ge500",
+          "label": "500 公尺以上",
+          "count": 0
+        }
+      ]
+    },
+    {
+      "district": "內湖區",
+      "pairCount": 5,
+      "calculatedPairs": 5,
+      "unavailablePairs": 0,
+      "coarseFlaggedPairs": 0,
+      "minMeters": 10.751902342815356,
+      "medianMeters": 27.528374648485606,
+      "maxMeters": 47.54131183054288,
+      "buckets": [
+        {
+          "key": "lt1",
+          "label": "小於 1 公尺",
+          "count": 0
+        },
+        {
+          "key": "1to10",
+          "label": "1 至未滿 10 公尺",
+          "count": 0
+        },
+        {
+          "key": "10to50",
+          "label": "10 至未滿 50 公尺",
+          "count": 5
+        },
+        {
+          "key": "50to100",
+          "label": "50 至未滿 100 公尺",
+          "count": 0
+        },
+        {
+          "key": "100to500",
+          "label": "100 至未滿 500 公尺",
+          "count": 0
+        },
+        {
+          "key": "ge500",
+          "label": "500 公尺以上",
+          "count": 0
+        }
+      ]
+    },
+    {
+      "district": "南港區",
+      "pairCount": 0,
+      "calculatedPairs": 0,
+      "unavailablePairs": 0,
+      "coarseFlaggedPairs": 0,
+      "minMeters": null,
+      "medianMeters": null,
+      "maxMeters": null,
+      "buckets": [
+        {
+          "key": "lt1",
+          "label": "小於 1 公尺",
+          "count": 0
+        },
+        {
+          "key": "1to10",
+          "label": "1 至未滿 10 公尺",
+          "count": 0
+        },
+        {
+          "key": "10to50",
+          "label": "10 至未滿 50 公尺",
+          "count": 0
+        },
+        {
+          "key": "50to100",
+          "label": "50 至未滿 100 公尺",
+          "count": 0
+        },
+        {
+          "key": "100to500",
+          "label": "100 至未滿 500 公尺",
+          "count": 0
+        },
+        {
+          "key": "ge500",
+          "label": "500 公尺以上",
+          "count": 0
+        }
+      ]
+    },
+    {
+      "district": "文山區",
+      "pairCount": 7,
+      "calculatedPairs": 7,
+      "unavailablePairs": 0,
+      "coarseFlaggedPairs": 0,
+      "minMeters": 2.445134539767101,
+      "medianMeters": 7.894771283085731,
+      "maxMeters": 111.15365389939925,
+      "buckets": [
+        {
+          "key": "lt1",
+          "label": "小於 1 公尺",
+          "count": 0
+        },
+        {
+          "key": "1to10",
+          "label": "1 至未滿 10 公尺",
+          "count": 4
+        },
+        {
+          "key": "10to50",
+          "label": "10 至未滿 50 公尺",
+          "count": 2
+        },
+        {
+          "key": "50to100",
+          "label": "50 至未滿 100 公尺",
+          "count": 0
+        },
+        {
+          "key": "100to500",
+          "label": "100 至未滿 500 公尺",
+          "count": 1
+        },
+        {
+          "key": "ge500",
+          "label": "500 公尺以上",
+          "count": 0
+        }
+      ]
+    }
+  ],
+  "pairs": [
+    {
+      "comparisonId": "comparison-001578",
+      "district": "士林區",
+      "address": "菁山路山豬湖山公車站旁(菁山路)",
+      "before": {
+        "id": "2024-archive-row-233",
+        "sourceRow": 234,
+        "district": "士林區",
+        "address": "菁山路山豬湖山公車站旁(菁山路)",
+        "rawX": "121.546946",
+        "rawY": "25.130802",
+        "x": 121.546946,
+        "y": 25.130802,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-626",
+        "sourceRow": 627,
+        "district": "士林區",
+        "address": "菁山路山豬湖山公車站旁(菁山路)",
+        "rawX": "121.556003",
+        "rawY": "25.142327",
+        "x": 121.556003,
+        "y": 25.142327,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 1572.745492371272,
+      "rank": 1,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000860",
+      "district": "大安區",
+      "address": "忠孝東路4段122號(公車)",
+      "before": {
+        "id": "2024-archive-row-450",
+        "sourceRow": 451,
+        "district": "大安區",
+        "address": "忠孝東路4段122號(公車)",
+        "rawX": "121.552802",
+        "rawY": "25.041314",
+        "x": 121.552802,
+        "y": 25.041314,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-87",
+        "sourceRow": 88,
+        "district": "大安區",
+        "address": "忠孝東路4段122號(公車)",
+        "rawX": "121.547348",
+        "rawY": "25.041466",
+        "x": 121.547348,
+        "y": 25.041466,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 549.7114202806412,
+      "rank": 2,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000803",
+      "district": "松山區",
+      "address": "民生東路5段180號前",
+      "before": {
+        "id": "2024-archive-row-1801",
+        "sourceRow": 1803,
+        "district": "松山區",
+        "address": "民生東路5段180號前",
+        "rawX": "121.56833",
+        "rawY": "25.058539",
+        "x": 121.56833,
+        "y": 25.058539,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-337",
+        "sourceRow": 338,
+        "district": "松山區",
+        "address": "民生東路5段180號前",
+        "rawX": "121.563126",
+        "rawY": "25.058319",
+        "x": 121.563126,
+        "y": 25.058319,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 524.7634541532012,
+      "rank": 3,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000819",
+      "district": "松山區",
+      "address": "民生東路5段165號右側社區門口前",
+      "before": {
+        "id": "2024-archive-row-1817",
+        "sourceRow": 1819,
+        "district": "松山區",
+        "address": "民生東路5段165號右側社區門口前",
+        "rawX": "121.5594018",
+        "rawY": "25.0588704",
+        "x": 121.5594018,
+        "y": 25.0588704,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-341",
+        "sourceRow": 342,
+        "district": "松山區",
+        "address": "民生東路5段165號右側社區門口前",
+        "rawX": "121.564195",
+        "rawY": "25.059222",
+        "x": 121.564195,
+        "y": 25.059222,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 484.39144562852,
+      "rank": 4,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001553",
+      "district": "士林區",
+      "address": "雨聲街120號對面人行道",
+      "before": {
+        "id": "2024-archive-row-208",
+        "sourceRow": 209,
+        "district": "士林區",
+        "address": "雨聲街120號對面人行道",
+        "rawX": "121.532074",
+        "rawY": "25.101876",
+        "x": 121.532074,
+        "y": 25.101876,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-612",
+        "sourceRow": 613,
+        "district": "士林區",
+        "address": "雨聲街120號對面人行道",
+        "rawX": "121.5320716",
+        "rawY": "25.1044627",
+        "x": 121.5320716,
+        "y": 25.1044627,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 287.62801827119847,
+      "rank": 5,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001482",
+      "district": "士林區",
+      "address": "基河路420號 郵局門口",
+      "before": {
+        "id": "2024-archive-row-135",
+        "sourceRow": 136,
+        "district": "士林區",
+        "address": "基河路420號 郵局門口",
+        "rawX": "121.51764",
+        "rawY": "25.0953",
+        "x": 121.51764,
+        "y": 25.0953,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-597",
+        "sourceRow": 598,
+        "district": "士林區",
+        "address": "基河路420號 郵局門口",
+        "rawX": "121.519667",
+        "rawY": "25.09375",
+        "x": 121.519667,
+        "y": 25.09375,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 267.14994220782677,
+      "rank": 6,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000554",
+      "district": "中山區",
+      "address": "復興北路386號",
+      "before": {
+        "id": "2024-archive-row-1554",
+        "sourceRow": 1556,
+        "district": "中山區",
+        "address": "復興北路386號",
+        "rawX": "121.544022",
+        "rawY": "25.06006",
+        "x": 121.544022,
+        "y": 25.06006,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-245",
+        "sourceRow": 246,
+        "district": "中山區",
+        "address": "復興北路386號",
+        "rawX": "121.544065",
+        "rawY": "25.061262",
+        "x": 121.544065,
+        "y": 25.061262,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 133.7264627761801,
+      "rank": 7,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000874",
+      "district": "大安區",
+      "address": "敦化南路1段226號(狗便袋盒)",
+      "before": {
+        "id": "2024-archive-row-465",
+        "sourceRow": 466,
+        "district": "大安區",
+        "address": "敦化南路1段226號(狗便袋盒)",
+        "rawX": "121.547569",
+        "rawY": "25.041382",
+        "x": 121.547569,
+        "y": 25.041382,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-92",
+        "sourceRow": 93,
+        "district": "大安區",
+        "address": "敦化南路1段226號(狗便袋盒)",
+        "rawX": "121.548651",
+        "rawY": "25.040915",
+        "x": 121.548651,
+        "y": 25.040915,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 120.7409983110095,
+      "rank": 8,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001942",
+      "district": "文山區",
+      "address": "景福街125號對面",
+      "before": {
+        "id": "2024-archive-row-929",
+        "sourceRow": 930,
+        "district": "文山區",
+        "address": "景福街125號對面",
+        "rawX": "121.53602",
+        "rawY": "24.99674",
+        "x": 121.53602,
+        "y": 24.99674,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-636",
+        "sourceRow": 637,
+        "district": "文山區",
+        "address": "景福街125號對面",
+        "rawX": "121.5365",
+        "rawY": "24.99764",
+        "x": 121.5365,
+        "y": 24.99764,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 111.15365389939925,
+      "rank": 9,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000866",
+      "district": "大安區",
+      "address": "忠孝東路4段59號",
+      "before": {
+        "id": "2024-archive-row-456",
+        "sourceRow": 457,
+        "district": "大安區",
+        "address": "忠孝東路4段59號",
+        "rawX": "121.546501",
+        "rawY": "25.041748",
+        "x": 121.546501,
+        "y": 25.041748,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-89",
+        "sourceRow": 90,
+        "district": "大安區",
+        "address": "忠孝東路4段59號",
+        "rawX": "121.545723",
+        "rawY": "25.041676",
+        "x": 121.545723,
+        "y": 25.041676,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 78.78556914963794,
+      "rank": 10,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001495",
+      "district": "士林區",
+      "address": "大南路138號(福德宮前)",
+      "before": {
+        "id": "2024-archive-row-148",
+        "sourceRow": 149,
+        "district": "士林區",
+        "address": "大南路138號(福德宮前)",
+        "rawX": "121.5231",
+        "rawY": "25.08958",
+        "x": 121.5231,
+        "y": 25.08958,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-599",
+        "sourceRow": 600,
+        "district": "士林區",
+        "address": "大南路138號(福德宮前)",
+        "rawX": "121.522583",
+        "rawY": "25.090028",
+        "x": 121.522583,
+        "y": 25.090028,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 72.05673012274423,
+      "rank": 11,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001348",
+      "district": "士林區",
+      "address": "環河北路3段跨堤路橋入口處",
+      "before": {
+        "id": "2024-archive-row-1",
+        "sourceRow": 2,
+        "district": "士林區",
+        "address": "環河北路3段跨堤路橋入口處",
+        "rawX": "121.507258",
+        "rawY": "25.083019",
+        "x": 121.507258,
+        "y": 25.083019,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-485",
+        "sourceRow": 486,
+        "district": "士林區",
+        "address": "環河北路3段跨堤路橋入口處",
+        "rawX": "121.506947",
+        "rawY": "25.083554",
+        "x": 121.506947,
+        "y": 25.083554,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 67.23047901557499,
+      "rank": 12,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001501",
+      "district": "士林區",
+      "address": "基河路台北表演藝術中心-1",
+      "before": {
+        "id": "2024-archive-row-154",
+        "sourceRow": 155,
+        "district": "士林區",
+        "address": "基河路台北表演藝術中心-1",
+        "rawX": "121.52471",
+        "rawY": "25.08614",
+        "x": 121.52471,
+        "y": 25.08614,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-589",
+        "sourceRow": 590,
+        "district": "士林區",
+        "address": "基河路台北表演藝術中心-1",
+        "rawX": "121.52503",
+        "rawY": "25.085639",
+        "x": 121.52503,
+        "y": 25.085639,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 64.35813922502643,
+      "rank": 13,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001351",
+      "district": "士林區",
+      "address": "環河北路3段95號前左側樓梯下",
+      "before": {
+        "id": "2024-archive-row-4",
+        "sourceRow": 5,
+        "district": "士林區",
+        "address": "環河北路3段95號前左側樓梯下",
+        "rawX": "121.5070208",
+        "rawY": "25.0835808",
+        "x": 121.5070208,
+        "y": 25.0835808,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-488",
+        "sourceRow": 489,
+        "district": "士林區",
+        "address": "環河北路3段95號前左側樓梯下",
+        "rawX": "121.507217",
+        "rawY": "25.083103",
+        "x": 121.507217,
+        "y": 25.083103,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 56.68422337262042,
+      "rank": 14,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000794",
+      "district": "松山區",
+      "address": "民生東路5段40號前",
+      "before": {
+        "id": "2024-archive-row-1792",
+        "sourceRow": 1794,
+        "district": "松山區",
+        "address": "民生東路5段40號前",
+        "rawX": "121.5575",
+        "rawY": "25.058611",
+        "x": 121.5575,
+        "y": 25.058611,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-329",
+        "sourceRow": 330,
+        "district": "松山區",
+        "address": "民生東路5段40號前",
+        "rawX": "121.557252",
+        "rawY": "25.058226",
+        "x": 121.557252,
+        "y": 25.058226,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 49.56549564555839,
+      "rank": 15,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001795",
+      "district": "內湖區",
+      "address": "民權東路6段13號對面民權大橋站牌",
+      "before": {
+        "id": "2024-archive-row-1938",
+        "sourceRow": 1940,
+        "district": "內湖區",
+        "address": "民權東路6段13號對面民權大橋站牌",
+        "rawX": "121.579519",
+        "rawY": "25.066866",
+        "x": 121.579519,
+        "y": 25.066866,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-209",
+        "sourceRow": 210,
+        "district": "內湖區",
+        "address": "民權東路6段13號對面民權大橋站牌",
+        "rawX": "121.579944",
+        "rawY": "25.067052",
+        "x": 121.579944,
+        "y": 25.067052,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 47.54131183054288,
+      "rank": 16,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001804",
+      "district": "內湖區",
+      "address": "新湖二路233號",
+      "before": {
+        "id": "2024-archive-row-1947",
+        "sourceRow": 1949,
+        "district": "內湖區",
+        "address": "新湖二路233號",
+        "rawX": "121.5811",
+        "rawY": "25.0637",
+        "x": 121.5811,
+        "y": 25.0637,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-217",
+        "sourceRow": 218,
+        "district": "內湖區",
+        "address": "新湖二路233號",
+        "rawX": "121.580796",
+        "rawY": "25.063457",
+        "x": 121.580796,
+        "y": 25.063457,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 40.83750802465925,
+      "rank": 17,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001257",
+      "district": "信義區",
+      "address": "仁愛路4段光復南路口2",
+      "before": {
+        "id": "2024-archive-row-1115",
+        "sourceRow": 1116,
+        "district": "信義區",
+        "address": "仁愛路4段光復南路口2",
+        "rawX": "121.5578921",
+        "rawY": "25.0377966",
+        "x": 121.5578921,
+        "y": 25.0377966,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-344",
+        "sourceRow": 345,
+        "district": "信義區",
+        "address": "仁愛路4段光復南路口2",
+        "rawX": "121.558262",
+        "rawY": "25.0377837",
+        "x": 121.558262,
+        "y": 25.0377837,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 37.29347161610353,
+      "rank": 18,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001938",
+      "district": "文山區",
+      "address": "羅斯福路6段142巷與景福街交叉口",
+      "before": {
+        "id": "2024-archive-row-925",
+        "sourceRow": 926,
+        "district": "文山區",
+        "address": "羅斯福路6段142巷與景福街交叉口",
+        "rawX": "121.536848",
+        "rawY": "24.99841",
+        "x": 121.536848,
+        "y": 24.99841,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-632",
+        "sourceRow": 633,
+        "district": "文山區",
+        "address": "羅斯福路6段142巷與景福街交叉口",
+        "rawX": "121.53675",
+        "rawY": "24.99811",
+        "x": 121.53675,
+        "y": 24.99811,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 34.789779291419634,
+      "rank": 19,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001352",
+      "district": "士林區",
+      "address": "環河北路與葫蘆街街口",
+      "before": {
+        "id": "2024-archive-row-5",
+        "sourceRow": 6,
+        "district": "士林區",
+        "address": "環河北路與葫蘆街街口",
+        "rawX": "121.5075006",
+        "rawY": "25.082586",
+        "x": 121.5075006,
+        "y": 25.082586,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-489",
+        "sourceRow": 490,
+        "district": "士林區",
+        "address": "環河北路與葫蘆街街口",
+        "rawX": "121.507339",
+        "rawY": "25.082842",
+        "x": 121.507339,
+        "y": 25.082842,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 32.78976494548212,
+      "rank": 20,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000917",
+      "district": "大安區",
+      "address": "仁愛路4段266巷口公車站牌",
+      "before": {
+        "id": "2024-archive-row-508",
+        "sourceRow": 509,
+        "district": "大安區",
+        "address": "仁愛路4段266巷口公車站牌",
+        "rawX": "121.5524225",
+        "rawY": "25.0376012",
+        "x": 121.5524225,
+        "y": 25.0376012,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-95",
+        "sourceRow": 96,
+        "district": "大安區",
+        "address": "仁愛路4段266巷口公車站牌",
+        "rawX": "121.552719",
+        "rawY": "25.0376587",
+        "x": 121.552719,
+        "y": 25.0376587,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 30.54777280528283,
+      "rank": 21,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000857",
+      "district": "大安區",
+      "address": "忠孝東路4段124號",
+      "before": {
+        "id": "2024-archive-row-447",
+        "sourceRow": 448,
+        "district": "大安區",
+        "address": "忠孝東路4段124號",
+        "rawX": "121.54732",
+        "rawY": "25.041285",
+        "x": 121.54732,
+        "y": 25.041285,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-84",
+        "sourceRow": 85,
+        "district": "大安區",
+        "address": "忠孝東路4段124號",
+        "rawX": "121.547549",
+        "rawY": "25.041449",
+        "x": 121.547549,
+        "y": 25.041449,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 29.407156780075777,
+      "rank": 22,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001506",
+      "district": "士林區",
+      "address": "基河路中正路418號-側2",
+      "before": {
+        "id": "2024-archive-row-159",
+        "sourceRow": 160,
+        "district": "士林區",
+        "address": "基河路中正路418號-側2",
+        "rawX": "121.51994",
+        "rawY": "25.09364",
+        "x": 121.51994,
+        "y": 25.09364,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-588",
+        "sourceRow": 589,
+        "district": "士林區",
+        "address": "基河路中正路418號-側2",
+        "rawX": "121.519694",
+        "rawY": "25.093778",
+        "x": 121.519694,
+        "y": 25.093778,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 29.139763721727103,
+      "rank": 23,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001721",
+      "district": "內湖區",
+      "address": "成功路2段(石潭公園成功站牌)",
+      "before": {
+        "id": "2024-archive-row-1864",
+        "sourceRow": 1866,
+        "district": "內湖區",
+        "address": "成功路2段(石潭公園成功站牌)",
+        "rawX": "121.591071",
+        "rawY": "25.060907",
+        "x": 121.591071,
+        "y": 25.060907,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-169",
+        "sourceRow": 170,
+        "district": "內湖區",
+        "address": "成功路2段(石潭公園成功站牌)",
+        "rawX": "121.590992",
+        "rawY": "25.061144",
+        "x": 121.590992,
+        "y": 25.061144,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 27.528374648485606,
+      "rank": 24,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000622",
+      "district": "中山區",
+      "address": "南京東路3段29號",
+      "before": {
+        "id": "2024-archive-row-1622",
+        "sourceRow": 1624,
+        "district": "中山區",
+        "address": "南京東路3段29號",
+        "rawX": "121.537726",
+        "rawY": "25.052123",
+        "x": 121.537726,
+        "y": 25.052123,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-272",
+        "sourceRow": 273,
+        "district": "中山區",
+        "address": "南京東路3段29號",
+        "rawX": "121.537979",
+        "rawY": "25.052154",
+        "x": 121.537979,
+        "y": 25.052154,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 25.717764438034838,
+      "rank": 25,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000800",
+      "district": "松山區",
+      "address": "民生東路5段206-2號前",
+      "before": {
+        "id": "2024-archive-row-1798",
+        "sourceRow": 1800,
+        "district": "松山區",
+        "address": "民生東路5段206-2號前",
+        "rawX": "121.565",
+        "rawY": "25.058889",
+        "x": 121.565,
+        "y": 25.058889,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-335",
+        "sourceRow": 336,
+        "district": "松山區",
+        "address": "民生東路5段206-2號前",
+        "rawX": "121.564808",
+        "rawY": "25.058741",
+        "x": 121.564808,
+        "y": 25.058741,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 25.394070140357062,
+      "rank": 26,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001754",
+      "district": "內湖區",
+      "address": "康寧路3段220號",
+      "before": {
+        "id": "2024-archive-row-1897",
+        "sourceRow": 1899,
+        "district": "內湖區",
+        "address": "康寧路3段220號",
+        "rawX": "121.611502",
+        "rawY": "25.067608",
+        "x": 121.611502,
+        "y": 25.067608,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-189",
+        "sourceRow": 190,
+        "district": "內湖區",
+        "address": "康寧路3段220號",
+        "rawX": "121.611676",
+        "rawY": "25.067764",
+        "x": 121.611676,
+        "y": 25.067764,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 24.6584855158539,
+      "rank": 27,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000971",
+      "district": "大安區",
+      "address": "和平東路2段134-29號",
+      "before": {
+        "id": "2024-archive-row-562",
+        "sourceRow": 563,
+        "district": "大安區",
+        "address": "和平東路2段134-29號",
+        "rawX": "121.545670",
+        "rawY": "25.024627",
+        "x": 121.54567,
+        "y": 25.024627,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-111",
+        "sourceRow": 112,
+        "district": "大安區",
+        "address": "和平東路2段134-29號",
+        "rawX": "121.5454296",
+        "rawY": "25.024659",
+        "x": 121.5454296,
+        "y": 25.024659,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 24.481848928257197,
+      "rank": 28,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000752",
+      "district": "松山區",
+      "address": "南京東路4段189號",
+      "before": {
+        "id": "2024-archive-row-1750",
+        "sourceRow": 1752,
+        "district": "松山區",
+        "address": "南京東路4段189號",
+        "rawX": "121.5568949",
+        "rawY": "25.0516596",
+        "x": 121.5568949,
+        "y": 25.0516596,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-316",
+        "sourceRow": 317,
+        "district": "松山區",
+        "address": "南京東路4段189號",
+        "rawX": "121.556698",
+        "rawY": "25.051763",
+        "x": 121.556698,
+        "y": 25.051763,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 22.926078362713568,
+      "rank": 29,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000166",
+      "district": "中正區",
+      "address": "濟南路1段1號旁",
+      "before": {
+        "id": "2024-archive-row-828",
+        "sourceRow": 829,
+        "district": "中正區",
+        "address": "濟南路1段1號旁",
+        "rawX": "121.519508",
+        "rawY": "25.043223",
+        "x": 121.519508,
+        "y": 25.043223,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-40",
+        "sourceRow": 41,
+        "district": "中正區",
+        "address": "濟南路1段1號旁",
+        "rawX": "121.519705",
+        "rawY": "25.043177",
+        "x": 121.519705,
+        "y": 25.043177,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 20.494598292178487,
+      "rank": 30,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000139",
+      "district": "中正區",
+      "address": "濟南路1段2號對面公車站牌",
+      "before": {
+        "id": "2024-archive-row-801",
+        "sourceRow": 802,
+        "district": "中正區",
+        "address": "濟南路1段2號對面公車站牌",
+        "rawX": "121.5197439",
+        "rawY": "25.0431298",
+        "x": 121.5197439,
+        "y": 25.0431298,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-34",
+        "sourceRow": 35,
+        "district": "中正區",
+        "address": "濟南路1段2號對面公車站牌",
+        "rawX": "121.519563",
+        "rawY": "25.043213",
+        "x": 121.519563,
+        "y": 25.043213,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 20.437886281395844,
+      "rank": 31,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000720",
+      "district": "松山區",
+      "address": "南京東路4段102號",
+      "before": {
+        "id": "2024-archive-row-1718",
+        "sourceRow": 1720,
+        "district": "松山區",
+        "address": "南京東路4段102號",
+        "rawX": "121.554167",
+        "rawY": "25.051535",
+        "x": 121.554167,
+        "y": 25.051535,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-302",
+        "sourceRow": 303,
+        "district": "松山區",
+        "address": "南京東路4段102號",
+        "rawX": "121.554322",
+        "rawY": "25.051428",
+        "x": 121.554322,
+        "y": 25.051428,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 19.63037298218214,
+      "rank": 32,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000984",
+      "district": "大安區",
+      "address": "敦化南路2段196號",
+      "before": {
+        "id": "2024-archive-row-575",
+        "sourceRow": 576,
+        "district": "大安區",
+        "address": "敦化南路2段196號",
+        "rawX": "121.548389",
+        "rawY": "25.023335",
+        "x": 121.548389,
+        "y": 25.023335,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-114",
+        "sourceRow": 115,
+        "district": "大安區",
+        "address": "敦化南路2段196號",
+        "rawX": "121.5483789",
+        "rawY": "25.02351107",
+        "x": 121.5483789,
+        "y": 25.02351107,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 19.60452121563421,
+      "rank": 33,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000599",
+      "district": "中山區",
+      "address": "建國北路2段與民生東路3段交叉口(橋下東南側)",
+      "before": {
+        "id": "2024-archive-row-1599",
+        "sourceRow": 1601,
+        "district": "中山區",
+        "address": "建國北路2段與民生東路3段交叉口(橋下東南側)",
+        "rawX": "121.537209",
+        "rawY": "25.05778",
+        "x": 121.537209,
+        "y": 25.05778,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-262",
+        "sourceRow": 263,
+        "district": "中山區",
+        "address": "建國北路2段與民生東路3段交叉口(橋下東南側)",
+        "rawX": "121.537015",
+        "rawY": "25.057778",
+        "x": 121.537015,
+        "y": 25.057778,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 19.542766542254427,
+      "rank": 34,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001502",
+      "district": "士林區",
+      "address": "基河路台北表演藝術中心-2",
+      "before": {
+        "id": "2024-archive-row-155",
+        "sourceRow": 156,
+        "district": "士林區",
+        "address": "基河路台北表演藝術中心-2",
+        "rawX": "121.52497",
+        "rawY": "25.08547",
+        "x": 121.52497,
+        "y": 25.08547,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-590",
+        "sourceRow": 591,
+        "district": "士林區",
+        "address": "基河路台北表演藝術中心-2",
+        "rawX": "121.52494",
+        "rawY": "25.085306",
+        "x": 121.52494,
+        "y": 25.085306,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 18.48453894646194,
+      "rank": 35,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000798",
+      "district": "松山區",
+      "address": "民生東路5段186號前",
+      "before": {
+        "id": "2024-archive-row-1796",
+        "sourceRow": 1798,
+        "district": "松山區",
+        "address": "民生東路5段186號前",
+        "rawX": "121.563605",
+        "rawY": "25.058502",
+        "x": 121.563605,
+        "y": 25.058502,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-333",
+        "sourceRow": 334,
+        "district": "松山區",
+        "address": "民生東路5段186號前",
+        "rawX": "121.563783",
+        "rawY": "25.058485",
+        "x": 121.563783,
+        "y": 25.058485,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 18.029098009507127,
+      "rank": 36,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001503",
+      "district": "士林區",
+      "address": "基河路基河路382號前(天文館前-1)",
+      "before": {
+        "id": "2024-archive-row-156",
+        "sourceRow": 157,
+        "district": "士林區",
+        "address": "基河路基河路382號前(天文館前-1)",
+        "rawX": "121.51854",
+        "rawY": "25.09533",
+        "x": 121.51854,
+        "y": 25.09533,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-602",
+        "sourceRow": 603,
+        "district": "士林區",
+        "address": "基河路基河路382號前(天文館前-1)",
+        "rawX": "121.518417",
+        "rawY": "25.095222",
+        "x": 121.518417,
+        "y": 25.095222,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 17.251909207818425,
+      "rank": 37,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000993",
+      "district": "大安區",
+      "address": "和平東路3段60號",
+      "before": {
+        "id": "2024-archive-row-584",
+        "sourceRow": 585,
+        "district": "大安區",
+        "address": "和平東路3段60號",
+        "rawX": "121.549196",
+        "rawY": "25.024387",
+        "x": 121.549196,
+        "y": 25.024387,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-119",
+        "sourceRow": 120,
+        "district": "大安區",
+        "address": "和平東路3段60號",
+        "rawX": "121.5490472",
+        "rawY": "25.02445265",
+        "x": 121.5490472,
+        "y": 25.02445265,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 16.67535878093429,
+      "rank": 38,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001350",
+      "district": "士林區",
+      "address": "環河北路3段與海光公園交叉口",
+      "before": {
+        "id": "2024-archive-row-3",
+        "sourceRow": 4,
+        "district": "士林區",
+        "address": "環河北路3段與海光公園交叉口",
+        "rawX": "121.507463",
+        "rawY": "25.082431",
+        "x": 121.507463,
+        "y": 25.082431,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-487",
+        "sourceRow": 488,
+        "district": "士林區",
+        "address": "環河北路3段與海光公園交叉口",
+        "rawX": "121.507529",
+        "rawY": "25.082301",
+        "x": 121.507529,
+        "y": 25.082301,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 15.910276124315354,
+      "rank": 39,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000751",
+      "district": "松山區",
+      "address": "南京東路5段79號",
+      "before": {
+        "id": "2024-archive-row-1749",
+        "sourceRow": 1751,
+        "district": "松山區",
+        "address": "南京東路5段79號",
+        "rawX": "121.5598664",
+        "rawY": "25.0515853",
+        "x": 121.5598664,
+        "y": 25.0515853,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-315",
+        "sourceRow": 316,
+        "district": "松山區",
+        "address": "南京東路5段79號",
+        "rawX": "121.559834",
+        "rawY": "25.05171",
+        "x": 121.559834,
+        "y": 25.05171,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 14.244947189810283,
+      "rank": 40,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001354",
+      "district": "士林區",
+      "address": "重慶北路4段146號",
+      "before": {
+        "id": "2024-archive-row-7",
+        "sourceRow": 8,
+        "district": "士林區",
+        "address": "重慶北路4段146號",
+        "rawX": "121.512409",
+        "rawY": "25.083578",
+        "x": 121.512409,
+        "y": 25.083578,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-491",
+        "sourceRow": 492,
+        "district": "士林區",
+        "address": "重慶北路4段146號",
+        "rawX": "121.512272",
+        "rawY": "25.083555",
+        "x": 121.512272,
+        "y": 25.083555,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 14.03205272025975,
+      "rank": 41,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000915",
+      "district": "大安區",
+      "address": "仁愛路4段130號公車站牌",
+      "before": {
+        "id": "2024-archive-row-506",
+        "sourceRow": 507,
+        "district": "大安區",
+        "address": "仁愛路4段130號公車站牌",
+        "rawX": "121.550684",
+        "rawY": "25.0376584",
+        "x": 121.550684,
+        "y": 25.0376584,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-94",
+        "sourceRow": 95,
+        "district": "大安區",
+        "address": "仁愛路4段130號公車站牌",
+        "rawX": "121.550815",
+        "rawY": "25.0376894",
+        "x": 121.550815,
+        "y": 25.0376894,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 13.640445458425747,
+      "rank": 42,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001349",
+      "district": "士林區",
+      "address": "重慶北路4段60號",
+      "before": {
+        "id": "2024-archive-row-2",
+        "sourceRow": 3,
+        "district": "士林區",
+        "address": "重慶北路4段60號",
+        "rawX": "121.513168",
+        "rawY": "25.081529",
+        "x": 121.513168,
+        "y": 25.081529,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-486",
+        "sourceRow": 487,
+        "district": "士林區",
+        "address": "重慶北路4段60號",
+        "rawX": "121.513191",
+        "rawY": "25.081423",
+        "x": 121.513191,
+        "y": 25.081423,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 12.012109743283448,
+      "rank": 43,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001940",
+      "district": "文山區",
+      "address": "景福街131號對面",
+      "before": {
+        "id": "2024-archive-row-927",
+        "sourceRow": 928,
+        "district": "文山區",
+        "address": "景福街131號對面",
+        "rawX": "121.536035",
+        "rawY": "24.996542",
+        "x": 121.536035,
+        "y": 24.996542,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-633",
+        "sourceRow": 634,
+        "district": "文山區",
+        "address": "景福街131號對面",
+        "rawX": "121.53592",
+        "rawY": "24.996542",
+        "x": 121.53592,
+        "y": 24.996542,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 11.589661348758524,
+      "rank": 44,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001764",
+      "district": "內湖區",
+      "address": "金湖路365號衛勤訓練中心公車站牌",
+      "before": {
+        "id": "2024-archive-row-1907",
+        "sourceRow": 1909,
+        "district": "內湖區",
+        "address": "金湖路365號衛勤訓練中心公車站牌",
+        "rawX": "121.6025983",
+        "rawY": "25.0735604",
+        "x": 121.6025983,
+        "y": 25.0735604,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-196",
+        "sourceRow": 197,
+        "district": "內湖區",
+        "address": "金湖路365號衛勤訓練中心公車站牌",
+        "rawX": "121.6027",
+        "rawY": "25.073531",
+        "x": 121.6027,
+        "y": 25.073531,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 10.751902342815356,
+      "rank": 45,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001327",
+      "district": "信義區",
+      "address": "基隆路1段133號",
+      "before": {
+        "id": "2024-archive-row-1185",
+        "sourceRow": 1186,
+        "district": "信義區",
+        "address": "基隆路1段133號",
+        "rawX": "121.566414",
+        "rawY": "25.044174",
+        "x": 121.566414,
+        "y": 25.044174,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-393",
+        "sourceRow": 394,
+        "district": "信義區",
+        "address": "基隆路1段133號",
+        "rawX": "121.566367",
+        "rawY": "25.044088",
+        "x": 121.566367,
+        "y": 25.044088,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 10.670747828620609,
+      "rank": 46,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001353",
+      "district": "士林區",
+      "address": "環河北路3段與延平北路5段285巷口",
+      "before": {
+        "id": "2024-archive-row-6",
+        "sourceRow": 7,
+        "district": "士林區",
+        "address": "環河北路3段與延平北路5段285巷口",
+        "rawX": "121.506804",
+        "rawY": "25.083908",
+        "x": 121.506804,
+        "y": 25.083908,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-490",
+        "sourceRow": 491,
+        "district": "士林區",
+        "address": "環河北路3段與延平北路5段285巷口",
+        "rawX": "121.50683",
+        "rawY": "25.083821",
+        "x": 121.50683,
+        "y": 25.083821,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 10.02205203736063,
+      "rank": 47,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001547",
+      "district": "士林區",
+      "address": "至誠路1段30號對面 ",
+      "before": {
+        "id": "2024-archive-row-202",
+        "sourceRow": 203,
+        "district": "士林區",
+        "address": "至誠路1段30號對面 ",
+        "rawX": "121.536453",
+        "rawY": "25.101421",
+        "x": 121.536453,
+        "y": 25.101421,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-611",
+        "sourceRow": 612,
+        "district": "士林區",
+        "address": "至誠路1段30號對面 ",
+        "rawX": "121.5363598",
+        "rawY": "25.1013909",
+        "x": 121.5363598,
+        "y": 25.1013909,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 9.963611132875483,
+      "rank": 48,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001256",
+      "district": "信義區",
+      "address": "仁愛路4段光復南路口1",
+      "before": {
+        "id": "2024-archive-row-1114",
+        "sourceRow": 1115,
+        "district": "信義區",
+        "address": "仁愛路4段光復南路口1",
+        "rawX": "121.5577934",
+        "rawY": "25.037799",
+        "x": 121.5577934,
+        "y": 25.037799,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-343",
+        "sourceRow": 344,
+        "district": "信義區",
+        "address": "仁愛路4段光復南路口1",
+        "rawX": "121.5578921",
+        "rawY": "25.0377966",
+        "x": 121.5578921,
+        "y": 25.0377966,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 9.947191412913348,
+      "rank": 49,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001386",
+      "district": "士林區",
+      "address": "中山北路7段171號（天母公車站）",
+      "before": {
+        "id": "2024-archive-row-39",
+        "sourceRow": 40,
+        "district": "士林區",
+        "address": "中山北路7段171號（天母公車站）",
+        "rawX": "121.5325355",
+        "rawY": "25.1243277",
+        "x": 121.5325355,
+        "y": 25.1243277,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-517",
+        "sourceRow": 518,
+        "district": "士林區",
+        "address": "中山北路7段171號（天母公車站）",
+        "rawX": "121.5325023",
+        "rawY": "25.1242482",
+        "x": 121.5325023,
+        "y": 25.1242482,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 9.450776076806712,
+      "rank": 50,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001505",
+      "district": "士林區",
+      "address": "基河路中正路418號-側1",
+      "before": {
+        "id": "2024-archive-row-158",
+        "sourceRow": 159,
+        "district": "士林區",
+        "address": "基河路中正路418號-側1",
+        "rawX": "121.519944",
+        "rawY": "25.093503",
+        "x": 121.519944,
+        "y": 25.093503,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-587",
+        "sourceRow": 588,
+        "district": "士林區",
+        "address": "基河路中正路418號-側1",
+        "rawX": "121.519917",
+        "rawY": "25.093583",
+        "x": 121.519917,
+        "y": 25.093583,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 9.30182820477823,
+      "rank": 51,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000992",
+      "district": "大安區",
+      "address": "敦化南路2段293巷口-北",
+      "before": {
+        "id": "2024-archive-row-583",
+        "sourceRow": 584,
+        "district": "大安區",
+        "address": "敦化南路2段293巷口-北",
+        "rawX": "121.549001",
+        "rawY": "25.023846",
+        "x": 121.549001,
+        "y": 25.023846,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-118",
+        "sourceRow": 119,
+        "district": "大安區",
+        "address": "敦化南路2段293巷口-北",
+        "rawX": "121.5490197",
+        "rawY": "25.02377082",
+        "x": 121.5490197,
+        "y": 25.02377082,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 8.569338038568691,
+      "rank": 52,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000995",
+      "district": "大安區",
+      "address": "辛亥路3段55號",
+      "before": {
+        "id": "2024-archive-row-586",
+        "sourceRow": 587,
+        "district": "大安區",
+        "address": "辛亥路3段55號",
+        "rawX": "121.545999",
+        "rawY": "25.02017",
+        "x": 121.545999,
+        "y": 25.02017,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-121",
+        "sourceRow": 122,
+        "district": "大安區",
+        "address": "辛亥路3段55號",
+        "rawX": "121.5459465",
+        "rawY": "25.02022452",
+        "x": 121.5459465,
+        "y": 25.02022452,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 8.04582129458162,
+      "rank": 53,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-002007",
+      "district": "文山區",
+      "address": "新光路2段8號貓纜動物園站水舞區(河川側)-2",
+      "before": {
+        "id": "2024-archive-row-1002",
+        "sourceRow": 1003,
+        "district": "文山區",
+        "address": "新光路2段8號貓纜動物園站水舞區(河川側)-2",
+        "rawX": "121.5754",
+        "rawY": "24.996063",
+        "x": 121.5754,
+        "y": 24.996063,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-674",
+        "sourceRow": 675,
+        "district": "文山區",
+        "address": "新光路2段8號貓纜動物園站水舞區(河川側)-2",
+        "rawX": "121.575329",
+        "rawY": "24.996033",
+        "x": 121.575329,
+        "y": 24.996033,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 7.894771283085731,
+      "rank": 54,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001546",
+      "district": "士林區",
+      "address": "至誠路1段62巷對面 ",
+      "before": {
+        "id": "2024-archive-row-201",
+        "sourceRow": 202,
+        "district": "士林區",
+        "address": "至誠路1段62巷對面 ",
+        "rawX": "121.536218",
+        "rawY": "25.101491",
+        "x": 121.536218,
+        "y": 25.101491,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-610",
+        "sourceRow": 611,
+        "district": "士林區",
+        "address": "至誠路1段62巷對面 ",
+        "rawX": "121.5362924",
+        "rawY": "25.1014715",
+        "x": 121.5362924,
+        "y": 25.1014715,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 7.799068892830893,
+      "rank": 55,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000168",
+      "district": "中正區",
+      "address": "徐州路5號",
+      "before": {
+        "id": "2024-archive-row-830",
+        "sourceRow": 831,
+        "district": "中正區",
+        "address": "徐州路5號",
+        "rawX": "121.5194",
+        "rawY": "25.0417",
+        "x": 121.5194,
+        "y": 25.0417,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-41",
+        "sourceRow": 42,
+        "district": "中正區",
+        "address": "徐州路5號",
+        "rawX": "121.519387",
+        "rawY": "25.041766",
+        "x": 121.519387,
+        "y": 25.041766,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 7.454806098164045,
+      "rank": 56,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000989",
+      "district": "大安區",
+      "address": "基隆路3段8號",
+      "before": {
+        "id": "2024-archive-row-580",
+        "sourceRow": 581,
+        "district": "大安區",
+        "address": "基隆路3段8號",
+        "rawX": "121.547911",
+        "rawY": "25.020502",
+        "x": 121.547911,
+        "y": 25.020502,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-117",
+        "sourceRow": 118,
+        "district": "大安區",
+        "address": "基隆路3段8號",
+        "rawX": "121.5478765",
+        "rawY": "25.02045135",
+        "x": 121.5478765,
+        "y": 25.02045135,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 6.618443577621793,
+      "rank": 57,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-002006",
+      "district": "文山區",
+      "address": "新光路2段8號貓纜動物園站水舞區(河川側)-1",
+      "before": {
+        "id": "2024-archive-row-1001",
+        "sourceRow": 1002,
+        "district": "文山區",
+        "address": "新光路2段8號貓纜動物園站水舞區(河川側)-1",
+        "rawX": "121.57541",
+        "rawY": "24.996069",
+        "x": 121.57541,
+        "y": 24.996069,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-673",
+        "sourceRow": 674,
+        "district": "文山區",
+        "address": "新光路2段8號貓纜動物園站水舞區(河川側)-1",
+        "rawX": "121.575352",
+        "rawY": "24.996046",
+        "x": 121.575352,
+        "y": 24.996046,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 6.3802502379256225,
+      "rank": 58,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000169",
+      "district": "中正區",
+      "address": "徐州路9號",
+      "before": {
+        "id": "2024-archive-row-831",
+        "sourceRow": 832,
+        "district": "中正區",
+        "address": "徐州路9號",
+        "rawX": "121.5202",
+        "rawY": "25.0415",
+        "x": 121.5202,
+        "y": 25.0415,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-42",
+        "sourceRow": 43,
+        "district": "中正區",
+        "address": "徐州路9號",
+        "rawX": "121.520193",
+        "rawY": "25.041553",
+        "x": 121.520193,
+        "y": 25.041553,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 5.935373408790171,
+      "rank": 59,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-001355",
+      "district": "士林區",
+      "address": "重慶北路4段138號",
+      "before": {
+        "id": "2024-archive-row-8",
+        "sourceRow": 9,
+        "district": "士林區",
+        "address": "重慶北路4段138號",
+        "rawX": "121.5123681",
+        "rawY": "25.0835017",
+        "x": 121.5123681,
+        "y": 25.0835017,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-492",
+        "sourceRow": 493,
+        "district": "士林區",
+        "address": "重慶北路4段138號",
+        "rawX": "121.512419",
+        "rawY": "25.083525",
+        "x": 121.512419,
+        "y": 25.083525,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 5.743590845373204,
+      "rank": 60,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000987",
+      "district": "大安區",
+      "address": "基隆路3段16號旁",
+      "before": {
+        "id": "2024-archive-row-578",
+        "sourceRow": 579,
+        "district": "大安區",
+        "address": "基隆路3段16號旁",
+        "rawX": "121.547595",
+        "rawY": "25.020153",
+        "x": 121.547595,
+        "y": 25.020153,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-116",
+        "sourceRow": 117,
+        "district": "大安區",
+        "address": "基隆路3段16號旁",
+        "rawX": "121.5475513",
+        "rawY": "25.02018571",
+        "x": 121.5475513,
+        "y": 25.02018571,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 5.7111737580307045,
+      "rank": 61,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000996",
+      "district": "大安區",
+      "address": "基隆路2段224號",
+      "before": {
+        "id": "2024-archive-row-587",
+        "sourceRow": 588,
+        "district": "大安區",
+        "address": "基隆路2段224號",
+        "rawX": "121.551397",
+        "rawY": "25.023471",
+        "x": 121.551397,
+        "y": 25.023471,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-122",
+        "sourceRow": 123,
+        "district": "大安區",
+        "address": "基隆路2段224號",
+        "rawX": "121.5513409",
+        "rawY": "25.0234724",
+        "x": 121.5513409,
+        "y": 25.0234724,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 5.65464283555669,
+      "rank": 62,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000994",
+      "district": "大安區",
+      "address": "和平東路3段76號",
+      "before": {
+        "id": "2024-archive-row-585",
+        "sourceRow": 586,
+        "district": "大安區",
+        "address": "和平東路3段76號",
+        "rawX": "121.550732",
+        "rawY": "25.024362",
+        "x": 121.550732,
+        "y": 25.024362,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-120",
+        "sourceRow": 121,
+        "district": "大安區",
+        "address": "和平東路3段76號",
+        "rawX": "121.5506799",
+        "rawY": "25.02435594",
+        "x": 121.5506799,
+        "y": 25.02435594,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 5.292503344124959,
+      "rank": 63,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000858",
+      "district": "大安區",
+      "address": "忠孝東路4段128號(公車)(狗便袋盒)",
+      "before": {
+        "id": "2024-archive-row-448",
+        "sourceRow": 449,
+        "district": "大安區",
+        "address": "忠孝東路4段128號(公車)(狗便袋盒)",
+        "rawX": "121.547824",
+        "rawY": "25.041386",
+        "x": 121.547824,
+        "y": 25.041386,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-85",
+        "sourceRow": 86,
+        "district": "大安區",
+        "address": "忠孝東路4段128號(公車)(狗便袋盒)",
+        "rawX": "121.54783",
+        "rawY": "25.041431",
+        "x": 121.54783,
+        "y": 25.041431,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 5.0401487598722134,
+      "rank": 64,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000986",
+      "district": "大安區",
+      "address": "敦化南路2段234號",
+      "before": {
+        "id": "2024-archive-row-577",
+        "sourceRow": 578,
+        "district": "大安區",
+        "address": "敦化南路2段234號",
+        "rawX": "121.548396",
+        "rawY": "25.021205",
+        "x": 121.548396,
+        "y": 25.021205,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-115",
+        "sourceRow": 116,
+        "district": "大安區",
+        "address": "敦化南路2段234號",
+        "rawX": "121.5483766",
+        "rawY": "25.02124214",
+        "x": 121.5483766,
+        "y": 25.02124214,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 4.569032609015449,
+      "rank": 65,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000977",
+      "district": "大安區",
+      "address": "和平東路3段46號 ",
+      "before": {
+        "id": "2024-archive-row-568",
+        "sourceRow": 569,
+        "district": "大安區",
+        "address": "和平東路3段46號 ",
+        "rawX": "121.547802",
+        "rawY": "25.024517",
+        "x": 121.547802,
+        "y": 25.024517,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-113",
+        "sourceRow": 114,
+        "district": "大安區",
+        "address": "和平東路3段46號 ",
+        "rawX": "121.5477592",
+        "rawY": "25.02451046",
+        "x": 121.5477592,
+        "y": 25.02451046,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 4.373274029265257,
+      "rank": 66,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-002011",
+      "district": "文山區",
+      "address": "新光路2段8號貓纜動物園站(河川側)-2",
+      "before": {
+        "id": "2024-archive-row-1006",
+        "sourceRow": 1007,
+        "district": "文山區",
+        "address": "新光路2段8號貓纜動物園站(河川側)-2",
+        "rawX": "121.575768",
+        "rawY": "24.996293",
+        "x": 121.575768,
+        "y": 24.996293,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-678",
+        "sourceRow": 679,
+        "district": "文山區",
+        "address": "新光路2段8號貓纜動物園站(河川側)-2",
+        "rawX": "121.575733",
+        "rawY": "24.996278",
+        "x": 121.575733,
+        "y": 24.996278,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 3.9017668287171072,
+      "rank": 67,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000975",
+      "district": "大安區",
+      "address": "和平東路2段134號",
+      "before": {
+        "id": "2024-archive-row-566",
+        "sourceRow": 567,
+        "district": "大安區",
+        "address": "和平東路2段134號",
+        "rawX": "121.544806",
+        "rawY": "25.024679",
+        "x": 121.544806,
+        "y": 25.024679,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-112",
+        "sourceRow": 113,
+        "district": "大安區",
+        "address": "和平東路2段134號",
+        "rawX": "121.5448108",
+        "rawY": "25.02470559",
+        "x": 121.5448108,
+        "y": 25.02470559,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 2.995966499254345,
+      "rank": 68,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-002010",
+      "district": "文山區",
+      "address": "新光路2段8號貓纜動物園站(河川側)-1",
+      "before": {
+        "id": "2024-archive-row-1005",
+        "sourceRow": 1006,
+        "district": "文山區",
+        "address": "新光路2段8號貓纜動物園站(河川側)-1",
+        "rawX": "121.575779",
+        "rawY": "24.996298",
+        "x": 121.575779,
+        "y": 24.996298,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-677",
+        "sourceRow": 678,
+        "district": "文山區",
+        "address": "新光路2段8號貓纜動物園站(河川側)-1",
+        "rawX": "121.575756",
+        "rawY": "24.996291",
+        "x": 121.575756,
+        "y": 24.996291,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 2.445134539767101,
+      "rank": 69,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000799",
+      "district": "松山區",
+      "address": "民生東路5段188號前",
+      "before": {
+        "id": "2024-archive-row-1797",
+        "sourceRow": 1799,
+        "district": "松山區",
+        "address": "民生東路5段188號前",
+        "rawX": "121.56389",
+        "rawY": "25.058611",
+        "x": 121.56389,
+        "y": 25.058611,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-334",
+        "sourceRow": 335,
+        "district": "松山區",
+        "address": "民生東路5段188號前",
+        "rawX": "121.563895",
+        "rawY": "25.058613",
+        "x": 121.563895,
+        "y": 25.058613,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 0.5505579303501958,
+      "rank": 70,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000082",
+      "district": "中正區",
+      "address": "仁愛路1段1號",
+      "before": {
+        "id": "2024-archive-row-744",
+        "sourceRow": 745,
+        "district": "中正區",
+        "address": "仁愛路1段1號",
+        "rawX": "121.51858214",
+        "rawY": "25.03919547",
+        "x": 121.51858214,
+        "y": 25.03919547,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-15",
+        "sourceRow": 16,
+        "district": "中正區",
+        "address": "仁愛路1段1號",
+        "rawX": "121.5185821",
+        "rawY": "25.03919547",
+        "x": 121.5185821,
+        "y": 25.03919547,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 0.004029786700982874,
+      "rank": 71,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000081",
+      "district": "中正區",
+      "address": "仁愛路1段1號台大醫學院正門左側",
+      "before": {
+        "id": "2024-archive-row-743",
+        "sourceRow": 744,
+        "district": "中正區",
+        "address": "仁愛路1段1號台大醫學院正門左側",
+        "rawX": "121.51978318",
+        "rawY": "25.03910491",
+        "x": 121.51978318,
+        "y": 25.03910491,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-14",
+        "sourceRow": 15,
+        "district": "中正區",
+        "address": "仁愛路1段1號台大醫學院正門左側",
+        "rawX": "121.5197832",
+        "rawY": "25.03910491",
+        "x": 121.5197832,
+        "y": 25.03910491,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 0.002014893556486416,
+      "rank": 72,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000094",
+      "district": "中正區",
+      "address": "仁愛路1段北側(停車場出入口)",
+      "before": {
+        "id": "2024-archive-row-756",
+        "sourceRow": 757,
+        "district": "中正區",
+        "address": "仁愛路1段北側(停車場出入口)",
+        "rawX": "121.52062599",
+        "rawY": "25.0389752",
+        "x": 121.52062599,
+        "y": 25.0389752,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-18",
+        "sourceRow": 19,
+        "district": "中正區",
+        "address": "仁愛路1段北側(停車場出入口)",
+        "rawX": "121.520626",
+        "rawY": "25.0389752",
+        "x": 121.520626,
+        "y": 25.0389752,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 0.0010074478436558952,
+      "rank": 73,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000111",
+      "district": "中正區",
+      "address": "仁愛路1段南側近中山南路口(張榮發基金會)",
+      "before": {
+        "id": "2024-archive-row-773",
+        "sourceRow": 774,
+        "district": "中正區",
+        "address": "仁愛路1段南側近中山南路口(張榮發基金會)",
+        "rawX": "121.51857569",
+        "rawY": "25.03914514",
+        "x": 121.51857569,
+        "y": 25.03914514,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-27",
+        "sourceRow": 28,
+        "district": "中正區",
+        "address": "仁愛路1段南側近中山南路口(張榮發基金會)",
+        "rawX": "121.5185757",
+        "rawY": "25.03914514",
+        "x": 121.5185757,
+        "y": 25.03914514,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 0.0010074464478007717,
+      "rank": 74,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    },
+    {
+      "comparisonId": "comparison-000103",
+      "district": "中正區",
+      "address": "仁愛路1段42號(公車站內)南側",
+      "before": {
+        "id": "2024-archive-row-765",
+        "sourceRow": 766,
+        "district": "中正區",
+        "address": "仁愛路1段42號(公車站內)南側",
+        "rawX": "121.523671299",
+        "rawY": "25.0384548",
+        "x": 121.523671299,
+        "y": 25.0384548,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "after": {
+        "id": "2026-main-row-22",
+        "sourceRow": 23,
+        "district": "中正區",
+        "address": "仁愛路1段42號(公車站內)南側",
+        "rawX": "121.5236713",
+        "rawY": "25.0384548",
+        "x": 121.5236713,
+        "y": 25.0384548,
+        "plottable": true,
+        "quality": "通過座標粗篩，尚未逐點核實"
+      },
+      "distanceMeters": 0.00010074444278484661,
+      "rank": 75,
+      "quality": "both_pass_coarse",
+      "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
+    }
+  ]
+}

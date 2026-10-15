@@ -9,6 +9,8 @@ const site = new URL('../', import.meta.url);
 const history = new URL('data/history/', site);
 const research = new URL('data/research/', site);
 const expectedCatalog = JSON.parse(await readFile(new URL('dist/data/datasets.json', site)));
+const expectedComparison = JSON.parse(await readFile(new URL('dist/data/comparison-2024-2026.json', site)));
+const expectedDistances = JSON.parse(await readFile(new URL('dist/data/comparison-coordinate-distances.json', site)));
 
 for (const monorepo of [true, false]) {
   test(`rebuilds preserved downloads and research from ${monorepo ? 'canonical topic' : 'standalone source package'}`, async t => {
@@ -16,7 +18,14 @@ for (const monorepo of [true, false]) {
     t.after(() => rm(fixture, {recursive: true, force: true}));
     const output = join(fixture, 'sites/taipei-waste-lab');
     await mkdir(join(output, 'scripts'), {recursive: true});
-    await cp(new URL('scripts/prepare-data.py', site), join(output, 'scripts/prepare-data.py'));
+    for (const script of ['prepare-data.py', 'compare-snapshots.py', 'analyze-coordinate-distances.py',
+                          'prepare-research-execution.py', 'estimate-budget.py', 'package-research.py']) {
+      await cp(new URL('scripts/'+script, site), join(output, 'scripts', script));
+    }
+    await mkdir(join(output, 'dist'), {recursive: true});
+    await cp(new URL('dist/index.html', site), join(output, 'dist/index.html'));
+    const bundle = monorepo ? join(fixture, 'topics/bins/research') : join(output, 'research');
+    await cp(new URL('research/', site), bundle, {recursive: true});
     const inputs = monorepo ? join(fixture, 'topics/bins') : join(output, 'data');
     const inputHistory = monorepo ? join(inputs, 'data/history') : join(inputs, 'history');
     const inputResearch = monorepo ? join(inputs, 'docs') : join(inputs, 'research');
@@ -26,11 +35,39 @@ for (const monorepo of [true, false]) {
       // Stale packaged files must never override the repository's source data.
       await mkdir(join(output, 'data/history'), {recursive: true});
       await writeFile(join(output, 'data/history/taipei-bins-2015.csv'), 'stale package');
+      await writeFile(join(bundle, 'coordinate-distances-2024-2026/README.md'), 'stale derived notes');
+      await mkdir(join(output, 'research/budget-2026-10-15'), {recursive: true});
+      await writeFile(join(output, 'research/budget-2026-10-15/inputs.json'), 'stale research');
     }
-    const result = spawnSync('python', [join(output, 'scripts/prepare-data.py')], {encoding: 'utf8'});
+    const result = spawnSync(process.env.PYTHON_BIN || 'python3', [join(output, 'scripts/prepare-data.py')], {encoding: 'utf8'});
     assert.equal(result.status, 0, result.stderr || result.stdout);
+    for (const name of ['README.md', 'inputs.json', 'estimate.csv']) {
+      const expected = await readFile(new URL('research/budget-2026-10-15/'+name, site));
+      assert.deepEqual(await readFile(join(output, 'research/budget-2026-10-15', name)), expected);
+      assert.deepEqual(await readFile(join(output, 'dist/research/budget-2026-10-15', name)), expected);
+    }
     const rebuilt = JSON.parse(await readFile(join(output, 'dist/data/datasets.json')));
     assert.deepEqual(rebuilt, expectedCatalog);
+    assert.deepEqual(JSON.parse(await readFile(join(output, 'dist/data/comparison-2024-2026.json'))), expectedComparison);
+    assert.deepEqual(JSON.parse(await readFile(join(output, 'dist/data/comparison-coordinate-distances.json'))), expectedDistances);
+    for (const name of ['README.md', 'protocol.json']) {
+      const original = await readFile(new URL('research/comparison-2024-2026/' + name, site), 'utf8');
+      const deployed = await readFile(join(output, 'dist/research/comparison-2024-2026', name), 'utf8');
+      assert.equal(deployed, name === 'README.md' ? original.replaceAll('../../dist/data/', '../../data/') : original);
+      for (const [, target] of deployed.matchAll(/\]\(([^()\s]+)\)/g)) {
+        if (/^[a-z]+:|^#|^\//i.test(target)) continue;
+        assert.ok((await readFile(join(output, 'dist/research/comparison-2024-2026', target))).length, `comparison link: ${target}`);
+      }
+    }
+    for (const name of ['README.md', 'protocol.json']) {
+      const original = await readFile(new URL('research/coordinate-distances-2024-2026/' + name, site), 'utf8');
+      const deployed = await readFile(join(output, 'dist/research/coordinate-distances-2024-2026', name), 'utf8');
+      assert.equal(deployed, name === 'README.md' ? original.replaceAll('../../dist/data/', '../../data/') : original);
+      for (const [, target] of deployed.matchAll(/\]\(([^()\s]+)\)/g)) {
+        if (/^[a-z]+:|^#|^\//i.test(target)) continue;
+        assert.ok((await readFile(join(output, 'dist/research/coordinate-distances-2024-2026', target))).length, `distance link: ${target}`);
+      }
+    }
     const names = await readdir(history);
     assert.equal(names.length, 9);
     for (const name of names) {

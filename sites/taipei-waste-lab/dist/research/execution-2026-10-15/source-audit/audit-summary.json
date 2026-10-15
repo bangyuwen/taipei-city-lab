@@ -1,0 +1,98 @@
+{
+  "date": "2026-10-15",
+  "issues": [
+    {
+      "id": "catalog_count_vs_public_csv",
+      "title": "資料目錄 2,009 與 2026 主檔 681 列不一致",
+      "status": "pending_reconciliation",
+      "evidence": [
+        "目錄 metadata number_of_data=2009；目錄 metadata 更新時間 2026-09-30 15:55:47，主檔更新時間 2026-09-30 15:55:35。",
+        "保存的 2026-09-30 官方主檔為 681 列；既有官方 API offset 0 回傳 681，offset 1000/2000 為空，CSV 與 API 五欄多重集合一致。",
+        "獨立官方年統計 2017 年為 2,009 個、2025 年為 1,682 個；沒有來源定義或逐箱對照證明目錄 2,009 與 2017 統計同源或同口徑。"
+      ],
+      "impact": "不能把 2,009-681 當成撤除量，也不能宣稱已知目錄數字的原因或全市設施完整度。",
+      "nextEvidence": "取得環保局對 number_of_data 計數口徑、基準日、納入範圍的書面說明，以及與同日完整清冊的欄位／列數對照。",
+      "sourceUrls": [
+        "https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c",
+        "https://data.taipei/dataset/detail?id=a6838eac-4f04-48d8-bf17-9d0fd9886f57",
+        "https://tsis.dbas.gov.taipei/statis/webMain.aspx?compmode=0&cycle=4&deflst=2&funid=A05034201&kind=21&nzo=1&outkind=1&outmode=12&sys=220&type=0&ymf=8500"
+      ]
+    },
+    {
+      "id": "district_source_coverage",
+      "title": "北投與南港跨版列數落差",
+      "status": "pending_inventory_confirmation",
+      "evidence": [
+        "2024-10-18 封存檔：北投 98 列、南港 94 列；2026-09-30 主檔：北投 0 列、南港 4 列。",
+        "2024 檔 1,971 列涵蓋 12 區；2026 檔 681 列涵蓋 11 區。"
+      ],
+      "impact": "這是兩份公開檔案的覆蓋差異；不證明北投現場無箱或南港撤除。",
+      "nextEvidence": "取得具基準日、行政區、全市範圍、維護機關及納入／排除規則的官方全量清冊或書面覆蓋確認。",
+      "sourceUrls": [
+        "https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c"
+      ]
+    },
+    {
+      "id": "public_grain_id_and_dates",
+      "title": "公開欄位未定義資料列、實體箱與觀測日期的關係",
+      "status": "public_schema_insufficient",
+      "evidence": [
+        "主檔只有行政區、地址、經度、緯度、備註；沒有箱號、穩定設施 ID、數量、狀態、調查日或異動日。",
+        "另列 130 點景點商圈資料是場所粒度，不能併入主檔當箱數；主計處年度統計欄位則以「個」為單位。"
+      ],
+      "impact": "無法從一列推定一個實體箱，也無法單靠兩版位置列建立逐箱歷史。",
+      "nextEvidence": "取得官方資料字典，定義位置列、箱、箱組、場所與統計個數口徑，並給出各列調查／有效日期。",
+      "sourceUrls": [
+        "https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c",
+        "https://data.taipei/dataset/detail?id=a6838eac-4f04-48d8-bf17-9d0fd9886f57"
+      ]
+    },
+    {
+      "id": "annual_statistical_series",
+      "title": "官方年度統計 1996–2025 已取得，仍與位置列分開解讀",
+      "status": "available_unreconciled",
+      "evidence": [
+        "HTTP 200；原始回應 2,773 bytes，UTF-8 with BOM，SHA-256 108c98c465361bdc643a83cae696581862ec3e2408729be0e3f8542285195569。",
+        "欄位「行人專用清潔箱[個]」有 30 個年度值：民國 85–114 年（西元 1996–2025）；2017 年為 2,009 個，2025 年為 1,682 個。完整序列在 annual-values.csv。",
+        "目錄 2,009 與 2017 統計值數字相同，但未找到官方口徑對照；統計無逐箱識別碼。"
+      ],
+      "impact": "可作歷年總量的獨立官方統計參考，不能用來驗證 2026 主檔完整度或調和 681/2,009。",
+      "nextEvidence": "向主計處／環保局確認年度統計的盤點時點、納入範圍、計數單位及與公開清冊的關係。",
+      "sourceUrls": [
+        "https://data.taipei/dataset/detail?id=a6838eac-4f04-48d8-bf17-9d0fd9886f57",
+        "https://tsis.dbas.gov.taipei/statis/webMain.aspx?compmode=0&cycle=4&deflst=2&funid=A05034201&kind=21&nzo=1&outkind=1&outmode=12&sys=220&type=0&ymf=8500"
+      ]
+    },
+    {
+      "id": "case_event_records",
+      "title": "歷史規範證實曾有編號與異動紀錄流程，現行取得狀態未明",
+      "status": "historical_process_verified_current_access_pending",
+      "evidence": [
+        "2015/2021 歷史規範記載箱體標示箱號、列管清冊、會勘／申請表及新設或遷移 GPS 回報；2021 版規定定期呈報配置管理情形。",
+        "法規系統記載該程序自 2022-08-24 起停止適用；公開位置檔沒有對應的箱號或事件欄位。"
+      ],
+      "impact": "證明過去有預期產生的內部記錄類型，不證明今日仍按該流程、文件仍留存或能公開取得。",
+      "nextEvidence": "查明現行流程及可調閱的指定期間個案表單、會勘結論、列管清冊和定位變更。單一案例可由日期明確且唯一辨識地點的官方個案文件確認；不必一律有箱號。",
+      "sourceUrls": [
+        "https://laws.gov.taipei/Law/LawSearch/LawArticleContent/FL076512?date=20210202",
+        "https://laws.gov.taipei/Law/LawSearch/LawArticleContent/FL076512?date=20150311",
+        "https://laws.gov.taipei/Law/LawSearch/LawArticleContent/FL076512"
+      ]
+    },
+    {
+      "id": "cross_version_candidates",
+      "title": "75 對同址異座標仍是配對候選",
+      "status": "candidate_only",
+      "evidence": [
+        "既有固定規則比較：522 組完全欄位相同、75 對同址一對一異座標、1,371 列只在 2024 地址鍵出現、82 列只在 2026 出現。",
+        "75 對座標差中位數 16.7 公尺、最大 1,572.7 公尺；差值是來源座標差，不是經證實的實體移動距離。"
+      ],
+      "impact": "地址同一或座標差距不能單獨確立實體身分、搬遷、新增或撤除。",
+      "nextEvidence": "確認單一事件可採日期明確、地點唯一且明載事件／前後位置的官方個案文件；批次估算則需全量清冊與跨版對照。",
+      "sourceUrls": [
+        "https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c",
+        "https://laws.gov.taipei/Law/LawSearch/LawArticleContent/FL076512?date=20210202"
+      ]
+    }
+  ]
+}

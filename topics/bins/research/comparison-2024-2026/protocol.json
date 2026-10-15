@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "frozenBeforeCalculation": true,
+  "unit": "published source row; no stable official facility ID",
+  "before": {"key":"2024-archive","file":"taipei-bins-2024-10-18-archive-utc.csv","sha256":"bb34f092da73d663b49eb0a55d98fe8864377a3dfcc1b103f04affdca4ca6cdb","expectedRows":1971,"date":"Archive capture 2024-10-18T21:17:32Z / Taipei 2024-10-19; survey date unknown"},
+  "after": {"key":"2026-main","file":"taipei-bins-2026-09-30-published.csv","sha256":"38b4af06dc0d57a38cc1361079fed8963632be746f5033638dec1001c072fda1","expectedRows":681,"date":"Official update 2026-09-30; downloaded 2026-10-15"},
+  "addressNormalization": "Unicode NFKC; remove Unicode whitespace; replace 臺 with 台. Key includes district and full address. Preserve numbers, directions and punctuation. No fuzzy or spatial pairing.",
+  "coordinateNormalization": "Finite Decimal values normalized numerically. Non-numeric tokens retain NFKC text with whitespace removed. Do not repair malformed values.",
+  "rules": [
+    "Within each district/address group, pair equal normalized longitude and latitude fields as a multiset, in source row order: same_fields.",
+    "If the original address group has exactly one row on each side, pair differing coordinate fields: same_address_changed. This is a candidate for checking, not a confirmed move.",
+    "Shared addresses with multiple original rows keep all unpaired rows as ambiguous. Do not force residual pairs, even when only one side remains.",
+    "A district/address key absent entirely in 2026 is not_reappeared. The inverse is only_2026. These are source-coverage categories, not removal or installation events."
+  ],
+  "invariants": ["Every source row occurs exactly once in entries.","Before rows = same_fields pairs + same_address_changed pairs + ambiguous before rows + not_reappeared rows.","After rows = same_fields pairs + same_address_changed pairs + ambiguous after rows + only_2026 rows.","Apply conservation globally and in every district. Preserve raw fields and source line numbers."],
+  "limits": ["Neither snapshot has verified physical citywide completeness; current catalog count differs from the downloadable main file.","Addresses can be renamed or reformatted beyond these normalization rules; absence of a match is not evidence of removal.","Equal address and coordinate fields do not establish physical facility identity. Co-located rows remain distinct.","Archive capture is not an original survey or update date. Do not estimate removals or new installations from row deltas."]
+}

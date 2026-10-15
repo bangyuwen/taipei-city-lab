@@ -3,17 +3,41 @@ import {resolve} from 'node:path';
 import {createHash} from 'node:crypto';
 const root=resolve(import.meta.dirname,'../dist');
 const html=await readFile(resolve(root,'index.html'),'utf8');
-let hosting;
-try{hosting=JSON.parse(await readFile(resolve(root,'../.openai/hosting.json')));}
-catch(error){if(error.code!=='ENOENT'||process.argv.includes('--require-hosting'))throw error;}
-if(hosting&&(!hosting.project_id||hosting.static?.directory!=='dist'))throw Error('Hosting manifest incomplete');
+const hosting=JSON.parse(await readFile(resolve(root,'../.openai/hosting.json')));
+if(!hosting.project_id||hosting.static?.directory!=='dist')throw Error('Hosting manifest incomplete');
 const files=['app.js','history.js','data-utils.js','styles.css','mark.svg','data/datasets.json','data/taipei-bins-2026-study-area.provenance.json',
+  'comparison-ui.js','comparison-utils.js','comparison.css','data/comparison-2024-2026.json','data/comparison-2024-2026.csv',
+  'research/comparison-2024-2026/README.md','research/comparison-2024-2026/protocol.json',
+  'data/comparison-coordinate-distances.json','data/comparison-coordinate-distances.csv',
+  'research/coordinate-distances-2024-2026/README.md','research/coordinate-distances-2024-2026/protocol.json',
   'design-ui.js','design-model.js','bin-scene.js','design.css','research/bin-design.md',
   'vendor/three/three.module.js','vendor/three/three.core.js','vendor/three/OrbitControls.js','vendor/three/LICENSE','vendor/three/manifest.json'];
 for(const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)){
   const url=match[1];if(!/^https?:/.test(url))files.push(url);
 }
 for(const file of new Set(files))await access(resolve(root,file));
+const catalog=JSON.parse(await readFile(resolve(root,'data/datasets.json'),'utf8'));
+const comparison=JSON.parse(await readFile(resolve(root,'data/comparison-2024-2026.json'),'utf8'));
+const distances=JSON.parse(await readFile(resolve(root,'data/comparison-coordinate-distances.json'),'utf8'));
+if(createHash('sha256').update(await readFile(resolve(root,'data/comparison-2024-2026.json'))).digest('hex')!==distances.meta.comparisonSHA256)throw Error('Coordinate analysis comparison hash mismatch');
+for(const side of ['before','after']){
+  const source=comparison.meta[side];
+  const bytes=await readFile(resolve(root,'data',source.file));
+  if(createHash('sha256').update(bytes).digest('hex')!==source.sha256)throw Error(`Comparison source hash mismatch: ${side}`);
+}
+for(const dataset of catalog.datasets){
+  await access(resolve(root,'data',dataset.file));
+  if(dataset.provenanceFile){
+    const provenance=JSON.parse(await readFile(resolve(root,'data',dataset.provenanceFile),'utf8'));
+    if(provenance.sourceManifest)await access(resolve(root,'data',provenance.sourceManifest));
+  }
+}
+const recovery=resolve(root,'research/source-recovery-2026-10-15');
+const recoveryManifest=JSON.parse(await readFile(resolve(recovery,'manifest.json'),'utf8'));
+for(const [file,entry] of Object.entries(recoveryManifest.files)){
+  const bytes=await readFile(resolve(recovery,file));
+  if(createHash('sha256').update(bytes).digest('hex')!==entry.sha256)throw Error(`Recovery input hash mismatch: ${file}`);
+}
 const three=JSON.parse(await readFile(resolve(root,'vendor/three/manifest.json'),'utf8'));
 for(const [file,entry] of Object.entries(three.files)){
   const bytes=await readFile(resolve(root,'vendor/three',file));
@@ -25,4 +49,4 @@ const css=await readFile(resolve(root,'styles.css'),'utf8');
 for(const match of css.matchAll(/url\(['"]?([^)'"\s]+)['"]?\)/g))await access(resolve(root,match[1]));
 const notes=await readFile(resolve(root,'research/bin-removal-history.md'),'utf8');
 for(const match of notes.matchAll(/\]\(\.\.\/data\/([^\)]+)\)/g))await access(resolve(root,'data',match[1]));
-console.log(`Static assets, research downloads${hosting?', hosting identity':''} and ${ids.length} unique HTML IDs verified.`);
+console.log(`Static assets, research downloads, hosting identity and ${ids.length} unique HTML IDs verified.`);
