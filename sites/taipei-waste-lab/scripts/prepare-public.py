@@ -24,11 +24,10 @@ ASSETS = (
     'images/countries/finland-molok.jpg',
     'images/countries/korea-rfid.jpg',
     'images/countries/paris-street-bin.jpg',
-    'images/countries/amsterdam-new-bin.jpg',
-    'images/countries/singapore-street-bins.jpg',
+    'images/countries/amsterdam-deposit-holder.jpg',
+    'images/countries/singapore-hort-park.jpg',
     'images/countries/indore-collection.jpg',
-    'images/countries/melbourne-compactor.jpg',
-    'images/countries/cape-town-bin.jpg',
+    'images/countries/cape-town-waterfront.jpg',
 )
 
 

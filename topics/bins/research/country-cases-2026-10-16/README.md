@@ -43,7 +43,7 @@ This supplement preserves the primary-source scope behind the country page. It e
 
 **Sources:** [200 桶安裝公告 · 2026-10-05](https://www.amsterdam.nl/en/news/new-litter-bins/) · [試辦及改造估算 · 2026-04-23](https://www.amsterdam.nl/bestuur-organisatie/pers/persberichten/persberichten-nieuws-hester-buren/aangepaste-prullenbak-zorgt-minder/)
 
-**Photo:** 市府新桶公告照片，2026-10-05 發布；拍攝日期未列。對應新設計，照片不證明全數安裝完成。 City of Amsterdam；攝影者及開放授權未列，署名引用原圖作設備比較。 [Original page](https://www.amsterdam.nl/en/news/new-litter-bins/)
+**Photo:** 阿姆斯特丹 Hoftuin 的獨立押金瓶罐捐贈箱，2026-03-19。這是相關用途實例，不是下述市府 2026 自閉門新桶。 Lars van der Heide／Wikimedia Commons；CC BY-SA 4.0，使用來源縮圖，未裁切或改作。 [Original page](https://commons.wikimedia.org/wiki/File:Amsterdam_-_Statiegeldbak_in_Hoftuin.jpg) [License](https://creativecommons.org/licenses/by-sa/4.0/) [Official case photo](https://www.amsterdam.nl/en/news/new-litter-bins/)
 
 ### 新加坡 — 依人流配置的行人桶
 
@@ -53,13 +53,13 @@ This supplement preserves the primary-source scope behind the country page. It e
 
 NEA 2023-12-08 列逾 11,000 桶；2025 回顧報熱點垃圾計數降 36%，伴隨巡查、執法與宣導，不能歸因增加垃圾桶。
 
-**Cost basis:** 所查 NEA 資料未列單價、維護合約或每次清運費。 照片不提供規格或價格證據；旅遊觀察也不作成效評估。
+**Cost basis:** 所查 NEA 資料未列單價、維護合約或每次清運費。 園區照片不提供 NEA 街桶規格、價格或成效證據。
 
 **Taipei interpretation:** 先把人流、民眾回報與清運資源接起來；評估增桶時，另外記錄清掃及執法變化。
 
 **Sources:** [NEA 配置與服務說明 · 2023](https://www.nea.gov.sg/media/readers-letters/index/there-are-more-than-10-000-trash-cans-across-the-island) · [NEA 治理組合觀察 · 2025](https://www.nea.gov.sg/media/news/news/index/cleaner-neighbourhoods-with-stepped-up-efforts-in-the-year-of-public-hygiene)
 
-**Photo:** 新加坡街頭實拍，原文發布 2024-06-22；確切拍攝日與型號未列。照片僅比較外觀，不能代表全島統一規格。 THIS-IS-TOURISTSHIP／一般社團法人ツーリストシップ；未列開放授權，署名引用原圖作設備比較。 [Original page](https://note.com/touristship/n/nb5698e6ec609)
+**Photo:** 新加坡 HortPark 的一般垃圾與分類回收桶，2011-03-31。園區實例，不能代表 NEA 全島街桶規格或目前設備狀態。 epSos.de／Wikimedia Commons；CC BY 2.0，使用來源縮圖，未裁切或改作。 [Original page](https://commons.wikimedia.org/wiki/File:Trash_Recycling_with_Disposal_Containers.jpg) [License](https://creativecommons.org/licenses/by/2.0/)
 
 ### 印度・Indore — 家戶到戶收運，與行人桶分工
 
@@ -91,7 +91,7 @@ NEA 2023-12-08 列逾 11,000 桶；2025 回顧報熱點垃圾計數降 36%，伴
 
 **Sources:** [Bullens Lane 監測試點 · 2021](https://participate.melbourne.vic.gov.au/emerging-tech-testbed/bullens-lane) · [資源回收計畫 · 2015–18](https://participate.melbourne.vic.gov.au/application/files/5614/4400/0207/Waste_and_Resource_Recovery_Plan_2015-18.pdf) · [行人桶設計規範 · 2022](https://mvga-prod-files.s3.ap-southeast-4.amazonaws.com/public/SiteCollectionDocuments/design-and-construction-standards.pdf)
 
-**Photo:** 市府 Bullens Lane 試點頁所附壓縮設備作業照；拍攝日期未確認。這是共用巷道站，不是行人小型桶。 City of Melbourne；攝影者及開放授權未列，署名引用原圖作設備比較。 [Original page](https://participate.melbourne.vic.gov.au/emerging-tech-testbed/bullens-lane)
+**Photo:** The official case page contains an actual compactor operation photograph; its capture date and reuse permission were not confirmed. Link to the original instead of redistributing it. [Official photo](https://participate.melbourne.vic.gov.au/emerging-tech-testbed/bullens-lane)
 
 ### 南非・開普敦 — 商場周邊行人桶與每日清運
 
@@ -107,10 +107,10 @@ NEA 2023-12-08 列逾 11,000 桶；2025 回顧報熱點垃圾計數降 36%，伴
 
 **Sources:** [開普敦市府設桶與收運公告 · 2022](https://www.capetown.gov.za/media-and-news/ikwezi-park-to-shine-with-new-public-litter-bins/)
 
-**Photo:** 市府 Site C Plaza 周邊設桶公告實拍，2022-12-07 發布；拍攝日期未列。 City of Cape Town Media Office；攝影者及開放授權未列，署名引用原圖作設備比較。 [Original page](https://www.capetown.gov.za/media-and-news/ikwezi-park-to-shine-with-new-public-litter-bins/)
+**Photo:** 開普敦 V&A Waterfront 的一般垃圾與分類回收設施，2018-07-23。不同地點與桶型，不是下述 Site C Plaza 設置案。 Daniel Case／Wikimedia Commons；CC BY-SA 3.0，使用來源縮圖，未裁切或改作。 [Original page](https://commons.wikimedia.org/wiki/File:Sorted_waste_containers_at_Victoria_%26_Alfred_Waterfront,_Cape_Town.jpg) [License](https://creativecommons.org/licenses/by-sa/3.0/) [Official case photo](https://www.capetown.gov.za/media-and-news/ikwezi-park-to-shine-with-new-public-litter-bins/)
 
 ## Image evidence
 
-The private `dist/images/countries/sources.json` manifest records original URLs, image bytes hashes, dimensions, credit, rights notes and retrieval dates. All six new assets were visually inspected. Amsterdam, Cape Town and Melbourne use original official-page images. Paris is a dated street-bin example with unknown model. Singapore uses a first-person photo essay only for the visual; all service and outcome claims cite NEA. Indore illustrates doorstep collection, not a pedestrian-bin model. No photo is an AI reconstruction or an equal-scale drawing.
+The private `dist/images/countries/sources.json` manifest records original URLs, image byte hashes, dimensions, credit, license links and retrieval dates. The five new embedded assets were visually inspected and have documented CC licenses. Amsterdam illustrates a separate deposit-donation container, not the 2026 municipal design. Cape Town illustrates a Waterfront sorting facility, not Site C Plaza. Both link to official case photographs for the actual design. Singapore shows a dated HortPark general-waste/recycling cluster, not a uniform NEA street model. Paris is a dated street-bin example with unknown model. Indore illustrates doorstep collection, not a pedestrian-bin model. Melbourne links to the official compactor photograph without redistributing it because reuse permission was not confirmed. No photo is an AI reconstruction or an equal-scale drawing.
 
-Singapore alternatives rejected: the NEA Orchard Road 2020 image is an illustration; recycling-only Commons photos do not illustrate the general litter-bin service. Neither was presented as an actual street-bin photo.
+The new Amsterdam, Singapore, Melbourne and Cape Town images initially collected from official/news/photo-essay pages were excluded from the final package because their reuse permission was not established. A NEA Orchard Road illustration and recycling-only Singapore photos were also rejected as unsuitable evidence of general litter-bin appearance.
