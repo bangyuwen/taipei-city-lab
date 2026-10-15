@@ -168,7 +168,7 @@ def desktop_checks(page):
 
     page.evaluate('window.__designQaCanvas = document.querySelector("#design-viewport canvas")')
     for panel in ['history', 'sources', 'map', 'design', 'history', 'design']:
-        page.locator(f'[data-page="{panel}"]').click()
+        navigate(page, panel)
         expect(page.locator('#panel-' + panel)).to_be_visible()
     expect(page.locator('#design-viewport canvas')).to_have_count(1)
     assert page.evaluate('window.__designQaCanvas === document.querySelector("#design-viewport canvas")')
@@ -202,6 +202,11 @@ def mobile_checks(page, width):
     page.wait_for_timeout(700)
     page.screenshot(path=str(QA / f'mobile-{width}-design.png'), full_page=True)
 
+
+def navigate(page, panel):
+    if panel in ('map', 'comparison', 'history') and not page.locator('#history-navigation').is_visible():
+        page.locator('[data-section="history"]').click()
+    page.locator(f'[data-page="{panel}"]').click()
 
 def main():
     QA.mkdir(exist_ok=True)
@@ -251,7 +256,7 @@ def main():
         trial(page, 'cup', True)
         control(page, 'height', 120)
         expect(page.locator('#design-height-value')).to_have_text('120 cm')
-        page.locator('[data-page="history"]').click()
+        navigate(page, 'history')
         expect(page.locator('#panel-history')).to_be_visible()
         page.locator('[data-page="design"]').click()
         expect(page.locator('#design-viewport canvas')).to_have_count(1)

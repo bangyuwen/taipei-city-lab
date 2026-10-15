@@ -16,6 +16,11 @@ def ready(page):
     page.wait_for_selector('#load-status[hidden]', state='attached')
     page.wait_for_selector('.leaflet-container')
 
+def navigate(page, panel):
+    if panel in ('map', 'comparison', 'history') and not page.locator('#history-navigation').is_visible():
+        page.locator('[data-section="history"]').click()
+    page.locator(f'[data-page="{panel}"]').click()
+
 def main():
     with sync_playwright() as p:
         browser = p.chromium.launch(executable_path='/usr/bin/chromium', headless=True,
@@ -69,7 +74,7 @@ def main():
         assert '0 筆可繪製' in page.locator('#result-map-count').inner_text()
         assert page.locator('.point-row button').is_disabled()
         page.click('#reset-filters')
-        page.click('[data-page="history"]')
+        navigate(page, 'history')
         assert page.locator('#panel-history').is_visible()
         assert page.locator('.timeline-event').count()==11
         page.click('[data-event-filter="removal"]')
@@ -81,7 +86,7 @@ def main():
         assert page.evaluate("Array.from(document.querySelectorAll('a[href]')).every(a => /^(https?:|#)/i.test(a.getAttribute('href')))"), 'Local attachment anchor remains'
         check_no_overflow(page)
         page.screenshot(path=str(QA/'desktop-sources.png'),full_page=True)
-        page.click('[data-page="map"]')
+        navigate(page, 'map')
         # Returning from a hidden panel must restore the visible map bounds.
         page.wait_for_function('''() => {
           const c=document.querySelector('.leaflet-overlay-pane canvas');
@@ -100,10 +105,10 @@ def main():
         phone.route('https://tile.openstreetmap.org/**',lambda route:route.abort())
         ready(phone)
         for panel in ['map','history','sources']:
-            phone.click(f'[data-page="{panel}"]')
+            navigate(phone, panel)
             assert phone.locator(f'#panel-{panel}').is_visible()
             check_no_overflow(phone)
-        phone.click('[data-page="map"]')
+        navigate(phone, 'map')
         phone.click('[data-year="2024-archive"]')
         phone.select_option('#district','大安區')
         assert phone.locator('#result-count').inner_text()=='229'
@@ -120,7 +125,7 @@ def main():
         failure.wait_for_selector('.load-status.error')
         assert failure.locator('#district').is_disabled()
         assert failure.locator('[download], #export-csv, #comparison-export, #comparison-district-export').count() == 0
-        failure.click('[data-page="history"]')
+        navigate(failure, 'history')
         assert failure.locator('#panel-history').is_visible()
         assert failure.locator('.timeline-event').count()==11
         failure.click('[data-event-filter="removal"]')

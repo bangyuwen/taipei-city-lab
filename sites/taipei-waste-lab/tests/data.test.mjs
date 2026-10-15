@@ -70,3 +70,8 @@ test('export safely quotes text and labels row IDs as local identifiers',()=>{
   assert.match(csv,/非官方箱號/);assert.match(csv,/"'=1\+1,""測試"""/);
   assert.equal(pageFromHash('#sources'),'sources');assert.equal(pageFromHash('#unknown'),'map');
 });
+
+test('history deep links and the independent country page remain addressable',()=>{
+  for(const page of ['map','comparison','history','countries'])assert.equal(pageFromHash('#'+page),page);
+  assert.equal(pageFromHash('#unknown'),'map');
+});
