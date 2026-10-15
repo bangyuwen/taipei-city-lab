@@ -1,12 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {shade} from '../dist/modules/shade.js';
-import {bins} from '../dist/modules/bins.js';
-import {traffic,simulateQueue} from '../dist/modules/traffic.js';
-import {bus,simulateShuttle} from '../dist/modules/bus.js';
-import {clusteredDemand,syntheticGrid,bboxOf,greedyCoverage,coverageBy,coverageStats} from '../dist/modules/spatial.js';
-import {workflowDefs,caseView,advanceCase} from '../dist/workflows.js';
-import {inspectCSV} from '../dist/modules/audit.js';
+import {shade} from '../sites/taipei-city-lab/dist/modules/shade.js';
+import {bins} from '../sites/taipei-city-lab/dist/modules/bins.js';
+import {traffic,simulateQueue} from '../sites/taipei-city-lab/dist/modules/traffic.js';
+import {bus,simulateShuttle} from '../sites/taipei-city-lab/dist/modules/bus.js';
+import {clusteredDemand,syntheticGrid,bboxOf,greedyCoverage,coverageBy,coverageStats} from '../sites/taipei-city-lab/dist/modules/spatial.js';
+import {workflowDefs,caseView,advanceCase} from '../sites/taipei-city-lab/dist/workflows.js';
+import {inspectCSV} from '../sites/taipei-city-lab/dist/modules/audit.js';
 import {boot} from './helpers/app-harness.mjs';
 const metric=(r,label)=>r.metrics.find(m=>m.label===label).value;
 

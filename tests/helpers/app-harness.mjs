@@ -1,20 +1,20 @@
-import {workflowDefs,caseView,advanceCase} from '../../dist/workflows.js';
+import {workflowDefs,caseView,advanceCase} from '../../sites/taipei-city-lab/dist/workflows.js';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import {fileURLToPath} from 'node:url';
-import {modules, tones, topics} from '../../dist/registry.js';
-import {escapeHTML, format, mapSVG, chartSVG, tableHTML} from '../../dist/viz.js';
-import {research} from '../../dist/research.js';
-import {inspectCSV} from '../../dist/modules/audit.js';
-import {researchAnswer} from '../../dist/answers.js';
+import {modules, tones, topics} from '../../sites/taipei-city-lab/dist/registry.js';
+import {escapeHTML, format, mapSVG, chartSVG, tableHTML} from '../../sites/taipei-city-lab/dist/viz.js';
+import {research} from '../../sites/taipei-city-lab/dist/research.js';
+import {inspectCSV} from '../../sites/taipei-city-lab/dist/modules/audit.js';
+import {researchAnswer} from '../../sites/taipei-city-lab/dist/answers.js';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const read = name => fs.readFileSync(path.join(root, name), 'utf8');
-const snapshot = JSON.parse(read('dist/data/snapshot.json'));
-const html = read('dist/index.html');
-const app = read('dist/app.js');
+const snapshot = JSON.parse(read('sites/taipei-city-lab/dist/data/snapshot.json'));
+const html = read('sites/taipei-city-lab/dist/index.html');
+const app = read('sites/taipei-city-lab/dist/app.js');
 const decode = value => value.replace(/&(?:amp|lt|gt|quot|#39);/g, token =>
   ({'&amp;':'&','&lt;':'<','&gt;':'>','&quot;':'"','&#39;':"'"}[token]));
 

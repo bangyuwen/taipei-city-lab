@@ -1,0 +1,872 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-14T15:10:17.725682+00:00",
+  "title": "Design System: 台北城市實驗室",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(15.00% 0.04875 264.07)",
+          "oklch(26.43% 0.04875 264.07)",
+          "oklch(37.86% 0.04875 264.07)",
+          "oklch(49.29% 0.04875 264.07)",
+          "oklch(60.71% 0.04875 264.07)",
+          "oklch(72.14% 0.04875 264.07)",
+          "oklch(83.57% 0.04875 264.07)",
+          "oklch(95.00% 0.04875 264.07)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "tonalRamp": [
+          "oklch(15.00% 0.02908 263.19)",
+          "oklch(26.43% 0.02908 263.19)",
+          "oklch(37.86% 0.02908 263.19)",
+          "oklch(49.29% 0.02908 263.19)",
+          "oklch(60.71% 0.02908 263.19)",
+          "oklch(72.14% 0.02908 263.19)",
+          "oklch(83.57% 0.02908 263.19)",
+          "oklch(95.00% 0.02908 263.19)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "tonalRamp": [
+          "oklch(15.00% 0.00826 91.48)",
+          "oklch(26.43% 0.00826 91.48)",
+          "oklch(37.86% 0.00826 91.48)",
+          "oklch(49.29% 0.00826 91.48)",
+          "oklch(60.71% 0.00826 91.48)",
+          "oklch(72.14% 0.00826 91.48)",
+          "oklch(83.57% 0.00826 91.48)",
+          "oklch(95.00% 0.00826 91.48)"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Panel",
+        "tonalRamp": [
+          "oklch(15.00% 0.00000 0.00)",
+          "oklch(26.43% 0.00000 0.00)",
+          "oklch(37.86% 0.00000 0.00)",
+          "oklch(49.29% 0.00000 0.00)",
+          "oklch(60.71% 0.00000 0.00)",
+          "oklch(72.14% 0.00000 0.00)",
+          "oklch(83.57% 0.00000 0.00)",
+          "oklch(95.00% 0.00000 0.00)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "tonalRamp": [
+          "oklch(15.00% 0.01055 261.79)",
+          "oklch(26.43% 0.01055 261.79)",
+          "oklch(37.86% 0.01055 261.79)",
+          "oklch(49.29% 0.01055 261.79)",
+          "oklch(60.71% 0.01055 261.79)",
+          "oklch(72.14% 0.01055 261.79)",
+          "oklch(83.57% 0.01055 261.79)",
+          "oklch(95.00% 0.01055 261.79)"
+        ]
+      },
+      "signal": {
+        "role": "primary",
+        "displayName": "Signal",
+        "tonalRamp": [
+          "oklch(15.00% 0.14514 33.77)",
+          "oklch(26.43% 0.14514 33.77)",
+          "oklch(37.86% 0.14514 33.77)",
+          "oklch(49.29% 0.14514 33.77)",
+          "oklch(60.71% 0.14514 33.77)",
+          "oklch(72.14% 0.14514 33.77)",
+          "oklch(83.57% 0.14514 33.77)",
+          "oklch(95.00% 0.14514 33.77)"
+        ]
+      },
+      "signal-soft": {
+        "role": "primary",
+        "displayName": "Signal Soft",
+        "tonalRamp": [
+          "oklch(15.00% 0.02228 49.92)",
+          "oklch(26.43% 0.02228 49.92)",
+          "oklch(37.86% 0.02228 49.92)",
+          "oklch(49.29% 0.02228 49.92)",
+          "oklch(60.71% 0.02228 49.92)",
+          "oklch(72.14% 0.02228 49.92)",
+          "oklch(83.57% 0.02228 49.92)",
+          "oklch(95.00% 0.02228 49.92)"
+        ]
+      },
+      "nav": {
+        "role": "neutral",
+        "displayName": "Nav",
+        "tonalRamp": [
+          "oklch(15.00% 0.04875 264.07)",
+          "oklch(26.43% 0.04875 264.07)",
+          "oklch(37.86% 0.04875 264.07)",
+          "oklch(49.29% 0.04875 264.07)",
+          "oklch(60.71% 0.04875 264.07)",
+          "oklch(72.14% 0.04875 264.07)",
+          "oklch(83.57% 0.04875 264.07)",
+          "oklch(95.00% 0.04875 264.07)"
+        ]
+      },
+      "nav-muted": {
+        "role": "neutral",
+        "displayName": "Nav Muted",
+        "tonalRamp": [
+          "oklch(15.00% 0.01794 264.47)",
+          "oklch(26.43% 0.01794 264.47)",
+          "oklch(37.86% 0.01794 264.47)",
+          "oklch(49.29% 0.01794 264.47)",
+          "oklch(60.71% 0.01794 264.47)",
+          "oklch(72.14% 0.01794 264.47)",
+          "oklch(83.57% 0.01794 264.47)",
+          "oklch(95.00% 0.01794 264.47)"
+        ]
+      },
+      "nav-hover": {
+        "role": "neutral",
+        "displayName": "Nav Hover",
+        "tonalRamp": [
+          "oklch(15.00% 0.04852 263.68)",
+          "oklch(26.43% 0.04852 263.68)",
+          "oklch(37.86% 0.04852 263.68)",
+          "oklch(49.29% 0.04852 263.68)",
+          "oklch(60.71% 0.04852 263.68)",
+          "oklch(72.14% 0.04852 263.68)",
+          "oklch(83.57% 0.04852 263.68)",
+          "oklch(95.00% 0.04852 263.68)"
+        ]
+      },
+      "focus": {
+        "role": "primary",
+        "displayName": "Focus",
+        "tonalRamp": [
+          "oklch(15.00% 0.13881 33.89)",
+          "oklch(26.43% 0.13881 33.89)",
+          "oklch(37.86% 0.13881 33.89)",
+          "oklch(49.29% 0.13881 33.89)",
+          "oklch(60.71% 0.13881 33.89)",
+          "oklch(72.14% 0.13881 33.89)",
+          "oklch(83.57% 0.13881 33.89)",
+          "oklch(95.00% 0.13881 33.89)"
+        ]
+      },
+      "focus-on-navy": {
+        "role": "primary",
+        "displayName": "Focus On Navy",
+        "tonalRamp": [
+          "oklch(15.00% 0.08911 50.45)",
+          "oklch(26.43% 0.08911 50.45)",
+          "oklch(37.86% 0.08911 50.45)",
+          "oklch(49.29% 0.08911 50.45)",
+          "oklch(60.71% 0.08911 50.45)",
+          "oklch(72.14% 0.08911 50.45)",
+          "oklch(83.57% 0.08911 50.45)",
+          "oklch(95.00% 0.08911 50.45)"
+        ]
+      },
+      "primary-hover": {
+        "role": "primary",
+        "displayName": "Primary Hover",
+        "tonalRamp": [
+          "oklch(15.00% 0.14207 33.64)",
+          "oklch(26.43% 0.14207 33.64)",
+          "oklch(37.86% 0.14207 33.64)",
+          "oklch(49.29% 0.14207 33.64)",
+          "oklch(60.71% 0.14207 33.64)",
+          "oklch(72.14% 0.14207 33.64)",
+          "oklch(83.57% 0.14207 33.64)",
+          "oklch(95.00% 0.14207 33.64)"
+        ]
+      },
+      "primary-active": {
+        "role": "primary",
+        "displayName": "Primary Active",
+        "tonalRamp": [
+          "oklch(15.00% 0.12150 33.05)",
+          "oklch(26.43% 0.12150 33.05)",
+          "oklch(37.86% 0.12150 33.05)",
+          "oklch(49.29% 0.12150 33.05)",
+          "oklch(60.71% 0.12150 33.05)",
+          "oklch(72.14% 0.12150 33.05)",
+          "oklch(83.57% 0.12150 33.05)",
+          "oklch(95.00% 0.12150 33.05)"
+        ]
+      },
+      "outline-border": {
+        "role": "neutral",
+        "displayName": "Outline Border",
+        "tonalRamp": [
+          "oklch(15.00% 0.02151 264.44)",
+          "oklch(26.43% 0.02151 264.44)",
+          "oklch(37.86% 0.02151 264.44)",
+          "oklch(49.29% 0.02151 264.44)",
+          "oklch(60.71% 0.02151 264.44)",
+          "oklch(72.14% 0.02151 264.44)",
+          "oklch(83.57% 0.02151 264.44)",
+          "oklch(95.00% 0.02151 264.44)"
+        ]
+      },
+      "outline-hover-border": {
+        "role": "neutral",
+        "displayName": "Outline Hover Border",
+        "tonalRamp": [
+          "oklch(15.00% 0.03101 261.43)",
+          "oklch(26.43% 0.03101 261.43)",
+          "oklch(37.86% 0.03101 261.43)",
+          "oklch(49.29% 0.03101 261.43)",
+          "oklch(60.71% 0.03101 261.43)",
+          "oklch(72.14% 0.03101 261.43)",
+          "oklch(83.57% 0.03101 261.43)",
+          "oklch(95.00% 0.03101 261.43)"
+        ]
+      },
+      "subtle-hover": {
+        "role": "neutral",
+        "displayName": "Subtle Hover",
+        "tonalRamp": [
+          "oklch(15.00% 0.00962 93.57)",
+          "oklch(26.43% 0.00962 93.57)",
+          "oklch(37.86% 0.00962 93.57)",
+          "oklch(49.29% 0.00962 93.57)",
+          "oklch(60.71% 0.00962 93.57)",
+          "oklch(72.14% 0.00962 93.57)",
+          "oklch(83.57% 0.00962 93.57)",
+          "oklch(95.00% 0.00962 93.57)"
+        ]
+      },
+      "text-hover": {
+        "role": "neutral",
+        "displayName": "Text Hover",
+        "tonalRamp": [
+          "oklch(15.00% 0.00991 87.47)",
+          "oklch(26.43% 0.00991 87.47)",
+          "oklch(37.86% 0.00991 87.47)",
+          "oklch(49.29% 0.00991 87.47)",
+          "oklch(60.71% 0.00991 87.47)",
+          "oklch(72.14% 0.00991 87.47)",
+          "oklch(83.57% 0.00991 87.47)",
+          "oklch(95.00% 0.00991 87.47)"
+        ]
+      },
+      "evidence-bg": {
+        "role": "secondary",
+        "displayName": "Evidence Bg",
+        "tonalRamp": [
+          "oklch(15.00% 0.00802 253.86)",
+          "oklch(26.43% 0.00802 253.86)",
+          "oklch(37.86% 0.00802 253.86)",
+          "oklch(49.29% 0.00802 253.86)",
+          "oklch(60.71% 0.00802 253.86)",
+          "oklch(72.14% 0.00802 253.86)",
+          "oklch(83.57% 0.00802 253.86)",
+          "oklch(95.00% 0.00802 253.86)"
+        ]
+      },
+      "evidence-text": {
+        "role": "secondary",
+        "displayName": "Evidence Text",
+        "tonalRamp": [
+          "oklch(15.00% 0.04783 263.27)",
+          "oklch(26.43% 0.04783 263.27)",
+          "oklch(37.86% 0.04783 263.27)",
+          "oklch(49.29% 0.04783 263.27)",
+          "oklch(60.71% 0.04783 263.27)",
+          "oklch(72.14% 0.04783 263.27)",
+          "oklch(83.57% 0.04783 263.27)",
+          "oklch(95.00% 0.04783 263.27)"
+        ]
+      },
+      "guide-bg": {
+        "role": "secondary",
+        "displayName": "Guide Bg",
+        "tonalRamp": [
+          "oklch(15.00% 0.00800 253.85)",
+          "oklch(26.43% 0.00800 253.85)",
+          "oklch(37.86% 0.00800 253.85)",
+          "oklch(49.29% 0.00800 253.85)",
+          "oklch(60.71% 0.00800 253.85)",
+          "oklch(72.14% 0.00800 253.85)",
+          "oklch(83.57% 0.00800 253.85)",
+          "oklch(95.00% 0.00800 253.85)"
+        ]
+      },
+      "control-bg": {
+        "role": "secondary",
+        "displayName": "Control Bg",
+        "tonalRamp": [
+          "oklch(15.00% 0.00799 253.85)",
+          "oklch(26.43% 0.00799 253.85)",
+          "oklch(37.86% 0.00799 253.85)",
+          "oklch(49.29% 0.00799 253.85)",
+          "oklch(60.71% 0.00799 253.85)",
+          "oklch(72.14% 0.00799 253.85)",
+          "oklch(83.57% 0.00799 253.85)",
+          "oklch(95.00% 0.00799 253.85)"
+        ]
+      },
+      "scene-border": {
+        "role": "neutral",
+        "displayName": "Scene Border",
+        "tonalRamp": [
+          "oklch(15.00% 0.04429 264.66)",
+          "oklch(26.43% 0.04429 264.66)",
+          "oklch(37.86% 0.04429 264.66)",
+          "oklch(49.29% 0.04429 264.66)",
+          "oklch(60.71% 0.04429 264.66)",
+          "oklch(72.14% 0.04429 264.66)",
+          "oklch(83.57% 0.04429 264.66)",
+          "oklch(95.00% 0.04429 264.66)"
+        ]
+      },
+      "scene-control-border": {
+        "role": "neutral",
+        "displayName": "Scene Control Border",
+        "tonalRamp": [
+          "oklch(15.00% 0.04060 263.49)",
+          "oklch(26.43% 0.04060 263.49)",
+          "oklch(37.86% 0.04060 263.49)",
+          "oklch(49.29% 0.04060 263.49)",
+          "oklch(60.71% 0.04060 263.49)",
+          "oklch(72.14% 0.04060 263.49)",
+          "oklch(83.57% 0.04060 263.49)",
+          "oklch(95.00% 0.04060 263.49)"
+        ]
+      },
+      "scene-control-bg": {
+        "role": "neutral",
+        "displayName": "Scene Control Bg",
+        "tonalRamp": [
+          "oklch(15.00% 0.04831 261.60)",
+          "oklch(26.43% 0.04831 261.60)",
+          "oklch(37.86% 0.04831 261.60)",
+          "oklch(49.29% 0.04831 261.60)",
+          "oklch(60.71% 0.04831 261.60)",
+          "oklch(72.14% 0.04831 261.60)",
+          "oklch(83.57% 0.04831 261.60)",
+          "oklch(95.00% 0.04831 261.60)"
+        ]
+      },
+      "scene-hover": {
+        "role": "neutral",
+        "displayName": "Scene Hover",
+        "tonalRamp": [
+          "oklch(15.00% 0.05230 266.20)",
+          "oklch(26.43% 0.05230 266.20)",
+          "oklch(37.86% 0.05230 266.20)",
+          "oklch(49.29% 0.05230 266.20)",
+          "oklch(60.71% 0.05230 266.20)",
+          "oklch(72.14% 0.05230 266.20)",
+          "oklch(83.57% 0.05230 266.20)",
+          "oklch(95.00% 0.05230 266.20)"
+        ]
+      },
+      "scene-muted": {
+        "role": "neutral",
+        "displayName": "Scene Muted",
+        "tonalRamp": [
+          "oklch(15.00% 0.01938 263.00)",
+          "oklch(26.43% 0.01938 263.00)",
+          "oklch(37.86% 0.01938 263.00)",
+          "oklch(49.29% 0.01938 263.00)",
+          "oklch(60.71% 0.01938 263.00)",
+          "oklch(72.14% 0.01938 263.00)",
+          "oklch(83.57% 0.01938 263.00)",
+          "oklch(95.00% 0.01938 263.00)"
+        ]
+      },
+      "scene-selected": {
+        "role": "secondary",
+        "displayName": "Scene Selected",
+        "tonalRamp": [
+          "oklch(15.00% 0.09295 70.77)",
+          "oklch(26.43% 0.09295 70.77)",
+          "oklch(37.86% 0.09295 70.77)",
+          "oklch(49.29% 0.09295 70.77)",
+          "oklch(60.71% 0.09295 70.77)",
+          "oklch(72.14% 0.09295 70.77)",
+          "oklch(83.57% 0.09295 70.77)",
+          "oklch(95.00% 0.09295 70.77)"
+        ]
+      },
+      "csv-paper": {
+        "role": "neutral",
+        "displayName": "Csv Paper",
+        "tonalRamp": [
+          "oklch(15.00% 0.00287 264.54)",
+          "oklch(26.43% 0.00287 264.54)",
+          "oklch(37.86% 0.00287 264.54)",
+          "oklch(49.29% 0.00287 264.54)",
+          "oklch(60.71% 0.00287 264.54)",
+          "oklch(72.14% 0.00287 264.54)",
+          "oklch(83.57% 0.00287 264.54)",
+          "oklch(95.00% 0.00287 264.54)"
+        ]
+      },
+      "map-existing": {
+        "role": "secondary",
+        "displayName": "Map Existing",
+        "tonalRamp": [
+          "oklch(15.00% 0.08449 161.05)",
+          "oklch(26.43% 0.08449 161.05)",
+          "oklch(37.86% 0.08449 161.05)",
+          "oklch(49.29% 0.08449 161.05)",
+          "oklch(60.71% 0.08449 161.05)",
+          "oklch(72.14% 0.08449 161.05)",
+          "oklch(83.57% 0.08449 161.05)",
+          "oklch(95.00% 0.08449 161.05)"
+        ],
+        "purpose": "Leaflet 與清潔箱 3D 共用的既有資料層色；3D 圓點及控制列圖例沿用此語意。"
+      },
+      "map-demand": {
+        "role": "secondary",
+        "displayName": "Map Demand",
+        "tonalRamp": [
+          "oklch(15.00% 0.07606 249.88)",
+          "oklch(26.43% 0.07606 249.88)",
+          "oklch(37.86% 0.07606 249.88)",
+          "oklch(49.29% 0.07606 249.88)",
+          "oklch(60.71% 0.07606 249.88)",
+          "oklch(72.14% 0.07606 249.88)",
+          "oklch(83.57% 0.07606 249.88)",
+          "oklch(95.00% 0.07606 249.88)"
+        ]
+      },
+      "map-candidate": {
+        "role": "secondary",
+        "displayName": "Map Candidate",
+        "tonalRamp": [
+          "oklch(15.00% 0.01334 169.95)",
+          "oklch(26.43% 0.01334 169.95)",
+          "oklch(37.86% 0.01334 169.95)",
+          "oklch(49.29% 0.01334 169.95)",
+          "oklch(60.71% 0.01334 169.95)",
+          "oklch(72.14% 0.01334 169.95)",
+          "oklch(83.57% 0.01334 169.95)",
+          "oklch(95.00% 0.01334 169.95)"
+        ],
+        "purpose": "Leaflet 與清潔箱 3D 共用的候選資料層色；3D 圓點及控制列圖例沿用此語意。"
+      },
+      "map-recommended": {
+        "role": "secondary",
+        "displayName": "Map Recommended",
+        "tonalRamp": [
+          "oklch(15.00% 0.13106 71.24)",
+          "oklch(26.43% 0.13106 71.24)",
+          "oklch(37.86% 0.13106 71.24)",
+          "oklch(49.29% 0.13106 71.24)",
+          "oklch(60.71% 0.13106 71.24)",
+          "oklch(72.14% 0.13106 71.24)",
+          "oklch(83.57% 0.13106 71.24)",
+          "oklch(95.00% 0.13106 71.24)"
+        ],
+        "purpose": "Leaflet 與清潔箱 3D 共用的推薦資料層色；3D 圓點及控制列圖例沿用此語意。"
+      },
+      "context-ground": {
+        "role": "neutral",
+        "displayName": "城市地圖中性底",
+        "purpose": "SCENE_COLORS.contextGround：地理 3D 街道圖磚載入空隙的背景，不形成有限底座。",
+        "tonalRamp": [
+          "oklch(15.00% 0.00828 121.64)",
+          "oklch(26.43% 0.00828 121.64)",
+          "oklch(37.86% 0.00828 121.64)",
+          "oklch(49.29% 0.00828 121.64)",
+          "oklch(60.71% 0.00828 121.64)",
+          "oklch(72.14% 0.00828 121.64)",
+          "oklch(83.57% 0.00828 121.64)",
+          "oklch(95.00% 0.00828 121.64)"
+        ]
+      },
+      "map-selection": {
+        "role": "primary",
+        "displayName": "位置選取朱橘",
+        "purpose": "SCENE_COLORS.mapSelection：與 signal 同值，專指四個地理題共用的持續 3D 選取環；獨立於資料系列。",
+        "tonalRamp": [
+          "oklch(15.00% 0.14514 33.77)",
+          "oklch(26.43% 0.14514 33.77)",
+          "oklch(37.86% 0.14514 33.77)",
+          "oklch(49.29% 0.14514 33.77)",
+          "oklch(60.71% 0.14514 33.77)",
+          "oklch(72.14% 0.14514 33.77)",
+          "oklch(83.57% 0.14514 33.77)",
+          "oklch(95.00% 0.14514 33.77)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "保留的歷史入口大標題；當前短篇入口採 reading-intro，生效字級按 workspace cascade。"
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "目前題目宋體標題。"
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "操作及證據區標題。"
+      },
+      "visual-title": {
+        "displayName": "Visual Title",
+        "purpose": "地圖、場景與圖表標題。"
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "桌機方法與來源正文。"
+      },
+      "question": {
+        "displayName": "Question",
+        "purpose": "題目下生活提問。"
+      },
+      "action": {
+        "displayName": "Action",
+        "purpose": "原生操作。"
+      },
+      "field": {
+        "displayName": "Field",
+        "purpose": "桌機 select 及文字欄位。"
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "單位、標籤及補述。"
+      },
+      "metric": {
+        "displayName": "Metric",
+        "purpose": "模擬指標數值，採 tabular-nums。"
+      },
+      "csv": {
+        "displayName": "Csv",
+        "purpose": "桌機本機 CSV／JSON 等寬內容。"
+      },
+      "mobile-menu": {
+        "displayName": "Mobile Menu",
+        "purpose": "760px 以下的選題 toggle；選單連結維持原有字級。"
+      },
+      "mobile-body": {
+        "displayName": "Mobile Body",
+        "purpose": "760px 以下的方法說明、來源正文與健檢結果正文。"
+      },
+      "mobile-support": {
+        "displayName": "Mobile Support",
+        "purpose": "760px 以下的入口／提示正文、題目補述、控制介紹、本機提示、地圖回報、場景 caption、指標標籤／補述、圖例／圖說及方法假設；保留各自行高。"
+      },
+      "mobile-field": {
+        "displayName": "Mobile Field",
+        "purpose": "760px 以下的 select、健檢文字欄位與分享欄位。"
+      },
+      "mobile-csv": {
+        "displayName": "Mobile CSV",
+        "purpose": "760px 以下本機 CSV／JSON textarea 的等寬內容。"
+      },
+      "chart-label": {
+        "displayName": "Chart Label",
+        "purpose": "按容器寬度重排的比較圖軸值與分區／時間標籤；以實際螢幕量測與 captures 驗證。"
+      },
+      "reading-intro": {
+        "displayName": "Reading Intro",
+        "purpose": "目前短篇入口的宋體角色；較晚的 workspace media rules 覆寫字級。"
+      },
+      "answer-headline": {
+        "displayName": "Answer Headline",
+        "purpose": "七題無框研究答案的無襯線主標題；手機採 mobile-answer-headline。"
+      },
+      "answer-conclusion": {
+        "displayName": "Answer Conclusion",
+        "purpose": "研究結論段落；760px 以下沿用 mobile-body。"
+      },
+      "answer-section-title": {
+        "displayName": "Answer Section Title",
+        "purpose": "依據、缺口、真實快照與條件式比較區標題。"
+      },
+      "answer-body": {
+        "displayName": "Answer Body",
+        "purpose": "七題依據、缺口與條件式模型正文；保留閱讀行高。"
+      },
+      "answer-support": {
+        "displayName": "Answer Support",
+        "purpose": "來源查核日期、模型限制與研究工具補述。"
+      },
+      "answer-status": {
+        "displayName": "Answer Status",
+        "purpose": "朱橘文字的研究或待查狀態；來源未另宣告行高。"
+      },
+      "answer-summary": {
+        "displayName": "Answer Summary",
+        "purpose": "來源與條件式答案的原生 summary。"
+      },
+      "workbench-summary": {
+        "displayName": "Workbench Summary",
+        "purpose": "完整研究工具的原生 details 入口。"
+      },
+      "mobile-answer-headline": {
+        "displayName": "Mobile Answer Headline",
+        "purpose": "760px 以下答案主標題；仍為無襯線。"
+      },
+      "mobile-workbench-summary": {
+        "displayName": "Mobile Workbench Summary",
+        "purpose": "760px 以下研究工具入口。"
+      }
+    },
+    "shadows": [
+      {
+        "name": "leaflet-zoom-toolbar",
+        "value": "0 1px 5px rgba(0,0,0,0.65)",
+        "purpose": "Leaflet vendor bar 控制。"
+      },
+      {
+        "name": "leaflet-layer-control",
+        "value": "0 1px 5px rgba(0,0,0,0.4)",
+        "purpose": "Leaflet vendor 圖層控制。"
+      },
+      {
+        "name": "leaflet-popup",
+        "value": "0 3px 14px rgba(0,0,0,0.4)",
+        "purpose": "Leaflet popup wrapper 與 tip。"
+      },
+      {
+        "name": "leaflet-tooltip",
+        "value": "0 1px 3px rgba(0,0,0,0.4)",
+        "purpose": "Leaflet tooltip。"
+      }
+    ],
+    "motion": [
+      {
+        "name": "toast-opacity",
+        "value": "opacity .2s ease-out",
+        "purpose": "唯一自寫 transition。"
+      },
+      {
+        "name": "leaflet-opacity",
+        "value": "opacity 0.2s linear",
+        "purpose": "保留 Leaflet vendor opacity 動效。"
+      },
+      {
+        "name": "leaflet-zoom",
+        "value": "transform 0.25s cubic-bezier(0,0,0.25,1)",
+        "purpose": "保留 Leaflet vendor zoom 動效。"
+      },
+      {
+        "name": "reduced-motion",
+        "value": "transition:none!important;scroll-behavior:auto!important",
+        "purpose": "prefers-reduced-motion:reduce 中的來源規則。"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide-min",
+        "value": "1500px"
+      },
+      {
+        "name": "compact-max",
+        "value": "1200px"
+      },
+      {
+        "name": "answer-compact-max",
+        "value": "1000px"
+      },
+      {
+        "name": "stacked-workspace-max",
+        "value": "980px"
+      },
+      {
+        "name": "mobile-nav-max",
+        "value": "760px"
+      },
+      {
+        "name": "small-mobile-max",
+        "value": "480px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "保留這個想法",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "原生主要操作，至少 44px 高。",
+      "html": "<button class=\"ds-primary\">保留這個想法</button>",
+      "css": ".ds-primary{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;font-size:13px;min-height:44px;padding:10px 14px;border-radius:8px;line-height:1.6;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}.ds-primary:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}.ds-primary:disabled{cursor:not-allowed;opacity:.55}.ds-primary{border:1px solid transparent;background:var(--signal,#ae432c);color:#fff;font-weight:600}.ds-primary:hover{background:#a63e28}.ds-primary:active{background:#893322}"
+    },
+    {
+      "name": "匯出明細 CSV",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "中性描邊的次操作。",
+      "html": "<button class=\"ds-outline\">匯出明細 CSV</button>",
+      "css": ".ds-outline{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;font-size:13px;min-height:44px;padding:10px 14px;border-radius:8px;line-height:1.6;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}.ds-outline:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}.ds-outline:disabled{cursor:not-allowed;opacity:.55}.ds-outline{border:1px solid #aab1bf;background:transparent;color:var(--ink,#202c45)}.ds-outline:hover{background:#e8e6df;border-color:#8893a6}"
+    },
+    {
+      "name": "回到起點",
+      "kind": "button",
+      "refersTo": "button-text",
+      "description": "帶底線的文字操作。",
+      "html": "<button class=\"ds-text\">回到起點</button>",
+      "css": ".ds-text{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;font-size:13px;min-height:44px;padding:10px 14px;border-radius:8px;line-height:1.6;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}.ds-text:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}.ds-text:disabled{cursor:not-allowed;opacity:.55}.ds-text{border:0;background:transparent;color:var(--ink,#202c45);text-decoration:underline;text-underline-offset:4px}.ds-text:hover{color:var(--signal,#ae432c);background:#ece9e2}"
+    },
+    {
+      "name": "參數選單",
+      "kind": "input",
+      "refersTo": "select",
+      "description": "保留原生 select；760px 以下欄位字級 16px。",
+      "html": "<select class=\"ds-select\" aria-label=\"選取候選位置\"><option>選取候選位置</option></select>",
+      "css": ".ds-select{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;width:100%;min-height:44px;min-width:0;padding:10px;border:1px solid #aab1bf;border-radius:8px;background:var(--panel,#ffffff);color:var(--ink,#202c45);font-size:13px}.ds-select:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}@media(max-width:760px){.ds-select{font-size:16px}}"
+    },
+    {
+      "name": "本機 CSV 欄位",
+      "kind": "input",
+      "refersTo": "csv-input",
+      "description": "等寬資料輸入；760px 以下 16px，不模擬健檢 runtime。",
+      "html": "<textarea class=\"ds-csv\" aria-label=\"CSV 資料內容\" placeholder=\"貼上有標題列的 CSV…\"></textarea>",
+      "css": ".ds-csv{width:100%;min-height:150px;resize:vertical;border:1px solid #aab1bf;border-radius:8px;margin:16px 0;padding:12px;background:#f4f5f7;color:var(--ink,#202c45);font-family:ui-monospace,monospace;font-size:13px;line-height:1.8}.ds-csv::placeholder{color:var(--muted,#60697a);opacity:1}.ds-csv:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}@media(max-width:760px){.ds-csv{font-size:16px}}"
+    },
+    {
+      "name": "城市問題導覽",
+      "kind": "nav",
+      "refersTo": "navigation-active",
+      "description": "目前題目、hover 與焦點；手機題目連結為 13px、至少 48px 高，16px toggle 與展開行為由實際 app 提供。",
+      "html": "<nav class=\"ds-nav\" aria-label=\"城市問題\"><a class=\"ds-nav-link ds-current\" aria-current=\"page\" href=\"#bins\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13M10 10v7M14 10v7\"/></svg><span>清潔箱配置</span></a><a class=\"ds-nav-link\" href=\"#shade\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 20v-7M7 20h10M12 3l-6 8h3l-4 5h14l-4-5h3z\"/></svg><span>樹蔭公平</span></a></nav>",
+      "css": ".ds-nav{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;display:grid;gap:6px;background:var(--nav,#202c45);padding:32px 22px 24px}.ds-nav-link{display:flex;gap:12px;align-items:center;min-height:52px;padding:12px 10px;border-radius:8px;font-size:14px;color:var(--nav-muted,#c5cbd7);line-height:1.5;text-decoration:none}.ds-nav-link:hover{background:var(--nav-hover,#303d57);color:#fff}.ds-nav-link.ds-current{background:var(--signal-soft,#f5e4db);color:var(--ink,#202c45);font-weight:600}.ds-nav-link.ds-current svg{color:var(--signal,#ae432c)}.ds-nav-link svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.ds-nav-link:focus-visible{outline:3px solid #f5b591;outline-offset:4px}@media(max-width:980px){.ds-nav-link{font-size:13px;gap:8px;padding:10px 8px}.ds-nav-link svg{width:20px;height:20px}}@media(max-width:760px){.ds-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ds-nav-link{min-height:48px}}"
+    },
+    {
+      "name": "資料分類標示",
+      "kind": "chip",
+      "refersTo": "evidence-badge",
+      "description": "非互動標示，持續揭露真實及模擬界線。",
+      "html": "<span class=\"ds-evidence\">真實清潔箱點位 × 模擬需求</span>",
+      "css": ".ds-evidence{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;display:inline-block;font-size:12px;padding:9px 12px;line-height:1.7;max-width:270px;background:#e5e9ee;color:#485671;border-radius:6px}@media(max-width:1200px){.ds-evidence{max-width:none;margin-top:14px}}"
+    },
+    {
+      "name": "視角選取",
+      "kind": "custom",
+      "refersTo": "view-selected",
+      "description": "同一組模型參數的三種視角；snippet 只示範狀態樣式。",
+      "html": "<div class=\"ds-views\" role=\"group\" aria-label=\"情境視角\"><button class=\"ds-view\" aria-pressed=\"true\">街道地圖</button><button class=\"ds-view\" aria-pressed=\"false\">3D 情境</button><button class=\"ds-view\" aria-pressed=\"false\">比較圖表</button></div>",
+      "css": ".ds-views{display:flex;gap:0;border-bottom:1px solid var(--line,#d3d7de)}.ds-view{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;flex:1;min-height:48px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:var(--muted,#60697a);padding:10px 12px;font-size:13px;cursor:pointer}.ds-view[aria-pressed=true]{background:var(--signal-soft,#f5e4db);border-bottom-color:var(--signal,#ae432c);color:var(--ink,#202c45);font-weight:600}.ds-view:hover{background:#e8e6df;color:var(--ink,#202c45)}.ds-view:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}@media(max-width:480px){.ds-view{font-size:12px;padding:10px 8px}}"
+    },
+    {
+      "name": "主要視覺容器",
+      "kind": "card",
+      "refersTo": "visual-panel",
+      "description": "細框白底的標頭；不偽造地圖或模型輸出。",
+      "html": "<section class=\"ds-panel\"><div class=\"ds-heading\"><h2>基準與方案比較</h2><span>相同情境參數</span></div></section>",
+      "css": ".ds-panel{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;border:1px solid var(--line,#d3d7de);border-radius:var(--radius,14px);overflow:hidden;background:var(--panel,#ffffff);color:var(--ink,#202c45);min-width:0}.ds-heading{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}.ds-heading h2{font-size:16px;font-weight:600;line-height:1.7;margin:0}.ds-heading span{font-size:12px;line-height:1.7;color:var(--muted,#60697a)}@media(max-width:760px){.ds-heading{align-items:flex-start}.ds-heading span{max-width:120px}}@media(max-width:480px){.ds-heading{padding:16px}}"
+    },
+    {
+      "name": "生活問題旁的實驗",
+      "kind": "custom",
+      "refersTo": "exploration-guide",
+      "description": "既有提示與一鍵情境按鈕的視覺原型，保留歷史文案；當前位置為折疊研究工具，實際研究文案以 app.js 為準。760px 以下提示正文 14px；不模擬參數 runtime。",
+      "html": "<section class=\"ds-guide\"><p><strong>換個條件，看看城市怎麼變。</strong>試著少量增設，或提高公平權重，比較同一批模擬需求的服務差異。推薦位置仍需要現勘。</p><div class=\"ds-experiments\"><button class=\"ds-experiment\">先增設 5 個</button><button class=\"ds-experiment\">多顧服務缺口</button></div></section>",
+      "css": ".ds-guide{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 20px;background:#e7ebf0;border-radius:12px;margin-bottom:18px}.ds-guide p{font-size:13px;line-height:1.8;margin:0;color:#485671;max-width:65ch}.ds-guide strong{display:block;font-size:14px;color:var(--ink,#202c45);font-weight:600;margin-bottom:3px}.ds-experiments{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;flex-shrink:0}.ds-experiment{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;background:var(--paper,#f3f1eb);font-size:12px;padding:10px 12px;min-height:44px;border:1px solid #aab1bf;border-radius:8px;color:var(--ink,#202c45);cursor:pointer}.ds-experiment:hover{background:#fff;border-color:var(--signal,#ae432c);color:var(--signal,#ae432c)}.ds-experiment:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}@media(max-width:1200px){.ds-guide{display:block}.ds-experiments{justify-content:flex-start;margin-top:12px}}@media(max-width:760px){.ds-guide{padding:16px}.ds-guide p{font-size:14px}}@media(max-width:480px){.ds-experiment{flex:1}}"
+    },
+    {
+      "name": "清潔箱資料層控制",
+      "kind": "custom",
+      "refersTo": "map-layer-control",
+      "description": "實際清潔箱 3D 圖層控制的三個資料角色；原生 checkbox、10px 圓形圖例，手機 label 至少 44px。樣本不模擬地圖／Sprite runtime。",
+      "html": "<div class=\"ds-map-controls\"><div class=\"ds-map-layers\"><label><input type=\"checkbox\" checked><span class=\"ds-map-key ds-map-existing\" aria-hidden=\"true\"></span>既有點位</label><label><input type=\"checkbox\"><span class=\"ds-map-key ds-map-candidate\" aria-hidden=\"true\"></span>候選</label><label><input type=\"checkbox\" checked><span class=\"ds-map-key ds-map-recommended\" aria-hidden=\"true\"></span>推薦</label></div></div>",
+      "css": ".ds-map-controls{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;padding:16px 20px;border-top:1px solid #45516a;background:#28364f}.ds-map-layers{display:flex;gap:8px 16px;flex-wrap:wrap;font-size:12px;color:#d4dbe8}.ds-map-layers label{display:flex;gap:6px;align-items:center;min-height:32px}.ds-map-layers input[type=checkbox]{accent-color:#f6c58b}.ds-map-layers input:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}.ds-map-key{display:inline-block;width:10px;height:10px;border:1px solid var(--paper,#f3f1eb);border-radius:50%;vertical-align:-1px}.ds-map-existing{background:#236749}.ds-map-candidate{background:#737d79}.ds-map-recommended{background:#b67608}@media(max-width:760px){.ds-map-layers{font-size:14px}.ds-map-layers label{min-height:44px}}"
+    },
+    {
+      "name": "研究結論與匯出",
+      "kind": "custom",
+      "refersTo": "research-answer",
+      "description": "七題共用的無框研究開頭；以目前清潔箱結論示範層級。匯出沿用 Outline button，snippet 不模擬下載或 currentAnswer runtime。",
+      "html": "<section class=\"ds-research-answer\"><div class=\"ds-answer-lede\"><h2>先盤點高人流節點，再決定新增、移位或清運調整。</h2><p class=\"ds-answer-conclusion\">建議優先查核商圈、夜市、景點及交通場站的服務缺口，同時盤點既有公共與合作回收據點。現在的資料還不足以交付實際新增位置清單。</p><p class=\"ds-answer-status\">研究方向可支持；實際方案待驗證</p><button class=\"ds-answer-export\">匯出此題結論與證據</button></div></section>",
+      "css": ".ds-research-answer{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;color:var(--ink,#202c45);padding:8px 0 32px}.ds-answer-lede{max-width:76ch}.ds-answer-lede h2{font-size:28px;font-weight:700;line-height:1.55;margin:0 0 16px;text-wrap:balance;letter-spacing:-.02em}.ds-answer-conclusion{font-size:18px;line-height:1.9;margin:0 0 16px}.ds-answer-status{font-size:14px;color:var(--signal,#ae432c);font-weight:600;margin:0 0 16px}.ds-answer-export{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;font-size:13px;min-height:44px;padding:10px 14px;border:1px solid #aab1bf;border-radius:8px;line-height:1.6;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;background:transparent;color:var(--ink,#202c45)}.ds-answer-export:hover{background:#e8e6df;border-color:#8893a6}.ds-answer-export:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}.ds-answer-export:disabled{cursor:not-allowed;opacity:.55}@media(max-width:760px){.ds-answer-lede h2{font-size:23px}.ds-answer-conclusion{font-size:16px}}"
+    },
+    {
+      "name": "依據、快照與證據缺口",
+      "kind": "custom",
+      "refersTo": "answer-evidence",
+      "description": "1.3fr／1fr 的閱讀雙欄，1000px 收窄間距、760px 堆疊；文字來源與 native details 可單獨查核。樣本節錄目前清潔箱內容。",
+      "html": "<div class=\"ds-answer-evidence\"><div><h3>這個判斷的依據</h3><ul><li>目前真實清潔箱快照可支持既有位置盤點；144 個合成需求與候選點只能支援方法比較。</li></ul><div class=\"ds-observed-facts\"><h3>真實快照現況</h3><p><strong>294 個已知清潔箱</strong>，位於本次示範範圍；資料取得 2026-10-13。</p><p class=\"ds-answer-note\">僅涵蓋範圍內快照，不是全市總數，也不代表所有既有回收據點。</p></div><details class=\"ds-answer-references\"><summary>來源與查核日期</summary><ul><li><a href=\"https://www.dep.gov.taipei/News_Content.aspx?n=D6521D207DE817C2&amp;s=4C05484B6C9CE4B4&amp;sms=53780C1906F94AB4\" target=\"_blank\" rel=\"noopener noreferrer\">環保局：高人流配置與滾動調整 <svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M14 5h5v5M19 5l-9 9M19 14v5H5V5h5\"/></svg></a><span>已查核官方說明 · 查核 2026-10-14 · 來源更新 2026-09-03</span></li></ul></details></div><div class=\"ds-answer-gaps\"><h3>形成實際方案，還缺什麼？</h3><ol><li>實測分時人流、隨身垃圾量及滿溢紀錄，確認需求而非用網格權重代替。</li><li>人行路網、可設置空間與土地／設施管理條件，形成實際候選名單。</li></ol><p class=\"ds-answer-note\">完成這些查核，才能把研究方向轉成具體位置、班表或行動清單。</p></div></div>",
+      "css": ".ds-answer-evidence{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;color:var(--ink,#202c45);display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;border-top:1px solid var(--line,#d3d7de);margin-top:28px;padding-top:24px}.ds-answer-evidence h3{font-size:18px;font-weight:700;margin:0 0 12px;line-height:1.6}.ds-answer-evidence p,.ds-answer-evidence li{font-size:16px;line-height:1.9;overflow-wrap:anywhere}.ds-answer-evidence ul,.ds-answer-evidence ol{padding-left:22px;margin:0}.ds-answer-evidence li+li{margin-top:12px}.ds-answer-evidence .ds-answer-note{font-size:14px;line-height:1.8;color:var(--muted,#60697a)}.ds-observed-facts{margin-top:28px}.ds-observed-facts p{margin:8px 0}.ds-answer-references{margin-top:24px}.ds-answer-references summary{cursor:pointer;min-height:44px;padding:10px 0;font-size:13px;font-weight:600;line-height:1.6}.ds-answer-references summary:hover{cursor:pointer}.ds-answer-references summary:focus-visible,.ds-answer-references a:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}.ds-answer-references a{color:inherit;text-decoration:underline;text-underline-offset:4px}.ds-answer-references li span{display:block;color:var(--muted,#60697a);font-size:14px;line-height:1.8}.ds-answer-references a svg{width:14px;height:14px;vertical-align:-2px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}@media(max-width:1000px){.ds-answer-evidence{gap:28px}}@media(max-width:760px){.ds-answer-evidence{grid-template-columns:minmax(0,1fr)}.ds-answer-gaps{border-top:1px solid var(--line,#d3d7de);padding-top:24px}}"
+    },
+    {
+      "name": "條件式答案與數量比較",
+      "kind": "custom",
+      "refersTo": "model-answer",
+      "description": "原生 details 與可聚焦的局部捲動比較表；0／5／10／20 使用目前預設條件的真實模型輸出，只示範樣式，不宣稱實際設置或重新計算。",
+      "html": "<details class=\"ds-model-answer\"><summary>查看目前模型的條件式答案與數量比較</summary><p>以下數值是目前參數下的模型結果，並非實際政策成效。</p><h3>新增數量的同條件比較</h3><p class=\"ds-model-note\">僅改新增上限，其他條件保持目前值。需求是合成權重，清運為同質工時；各列不是已驗證的實際設置方案。比較表可左右捲動，查看增益與清運工時。</p><div class=\"ds-model-table-scroll\" tabindex=\"0\" role=\"region\" aria-label=\"資料明細（可捲動）\"><table><thead><tr><th>新增上限（個）</th><th>模型選出（個）</th><th>模型服務率（%）</th><th>模型增益（百分點）</th><th>假設新增清運（人時／日）</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>46.76</td><td>0</td><td>0</td></tr><tr><td>5</td><td>5</td><td>52.39</td><td>5.63</td><td>1</td></tr><tr><td>10</td><td>10</td><td>57.45</td><td>10.69</td><td>2</td></tr><tr><td>20</td><td>20</td><td>66.54</td><td>19.78</td><td>4</td></tr></tbody></table></div><p class=\"ds-model-note\">完整參數、假設與模型推薦座標在下方研究工具；模型推薦不是已核准或現勘可行的位置。</p></details>",
+      "css": ".ds-model-answer{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;color:var(--ink,#202c45);border-top:1px solid var(--line,#d3d7de);margin-top:28px;padding-top:8px}.ds-model-answer summary{cursor:pointer;min-height:44px;padding:10px 0;font-size:13px;font-weight:600;line-height:1.6}.ds-model-answer summary:hover{cursor:pointer}.ds-model-answer summary:focus-visible,.ds-model-table-scroll:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}.ds-model-answer h3{font-size:18px;font-weight:700;margin:24px 0 12px;line-height:1.6}.ds-model-answer p{line-height:1.9;font-size:16px;overflow-wrap:anywhere}.ds-model-answer .ds-model-note{font-size:14px;line-height:1.8;color:var(--muted,#60697a)}.ds-model-table-scroll{overflow:auto;max-height:460px}.ds-model-table-scroll table{border-collapse:collapse;width:100%;font-size:13px;text-align:left;font-variant-numeric:tabular-nums}.ds-model-table-scroll th{font-weight:500;color:#485671;padding:12px 10px;background:#e5e9ee;position:sticky;top:0;white-space:nowrap}.ds-model-table-scroll td{padding:12px 10px;border-bottom:1px solid var(--line,#d3d7de);line-height:1.8;min-width:65px;max-width:250px}.ds-model-table-scroll tr:hover td{background:#e9edf2}"
+    },
+    {
+      "name": "折疊完整研究工具",
+      "kind": "custom",
+      "refersTo": "research-workbench",
+      "description": "完整研究工具的原生 details 入口與模型限制；此樣本只抽取可展開的入口，內部研究元件保留原有 snippets，不模擬地圖／相機 runtime。",
+      "html": "<details class=\"ds-research-workbench\"><summary>查核模型、地圖與參數</summary><p class=\"ds-workbench-note\">以下是可重現的研究工具。合成需求下的推薦點及服務率，不能直接當作實際設置位置或政策成效。</p></details>",
+      "css": ".ds-research-workbench{font-family:\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",sans-serif;color:var(--ink,#202c45);border-top:1px solid var(--line,#d3d7de);border-bottom:1px solid var(--line,#d3d7de);padding:12px 0;margin:0 0 32px}.ds-research-workbench>summary{cursor:pointer;min-height:44px;padding:10px 0;font-size:20px;font-weight:600;line-height:1.6}.ds-research-workbench>summary:hover{cursor:pointer}.ds-research-workbench>summary:focus-visible{outline:3px solid var(--focus,#a23d27);outline-offset:4px}.ds-research-workbench[open]>summary{margin-bottom:8px}.ds-workbench-note{font-size:14px;color:var(--muted,#60697a);line-height:1.8;max-width:76ch;margin:0 0 24px}@media(max-width:760px){.ds-research-workbench>summary{font-size:18px}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "城市專刊",
+    "overview": "適用範圍為共用模板、整合站及六個由模板生成的單題站。sites/taipei-waste-lab/ 使用自己的介面與設計；修改垃圾箱獨立站時依其現有程式與研究脈絡維護，不套用本 sidecar 的深藍、朱橘或七題導覽規則。\n\n共用呈現程式與靜態資產維護於 shared/web/template/，純模型工具在 shared/lib/。本 sidecar 與 shared/docs/design.md 一起描述現行共用介面，不作為已完成畫面或現場驗收的證明。\n\n使用者於 2026-10-14 選定城市專刊，授權取代原有綠色工作台。深藍提供穩定導覽與文字，暖白承載閱讀，朱橘標出操作與選取。中文宋體標題配無襯線操作；繁體中文及「台北城市實驗室」名稱延續。\n\n介面以平面分隔、留白與灰藍輔助面建立層次。較大的無襯線研究正文直接置於暖白閱讀面，標題、結論、正文及補述用不同字級區隔；細線分出相鄰閱讀區段。圓角用於原生控制、提示及視覺容器，原生折疊保留次要內容；來源分類和推估限制持續可見。\n\n共用樣式按 Leaflet、shared/web/template/styles.css、shared/web/template/workspace.css 的順序載入；動態內容由同目錄的 app.js、answers.js、viz.js 與 map-ui.js 維護。短篇入口與題目使用 City Serif；答案標題、結論、依據和缺口使用較大的無襯線角色。字體授權與來源見 shared/web/template/fonts/。\n\n地理 3D 以相機可見的 OpenStreetMap 街道供定位，清潔箱採固定螢幕尺寸的資料圓點，四個地理題共用持續選取環。模型計算範圍為預設關閉的獨立圖層；街道背景、點位、選取與計算邊界各自維持語意，不擴大研究資料。",
+    "keyCharacteristics": [
+      "深藍外殼、暖白閱讀面、朱橘互動訊號各有明確角色。",
+      "中文宋體標題配無襯線操作及等寬資料輸入。",
+      "無框研究正文、較大的無襯線閱讀角色與區段細線形成刊物節奏。",
+      "細框、平面分隔與灰藍輔助面，控制使用圓角。",
+      "原生表單與漸進揭露保留研究能力和資料界線。",
+      "地理背景連續延伸，資料點、選取與模型範圍保持各自語意。"
+    ],
+    "rules": [
+      {
+        "name": "The Semantic Color Rule",
+        "body": "外殼、互動選取與資料系列各自維持顏色角色；不要把朱橘套到所有點位或模型系列。其他圖表與座標圖系列仍以 topics/*/model.js、shared/web/template/viz.js 為準，不與 Leaflet 圖層色互換。",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Voices Rule",
+        "body": "宋體用於入口與題目標題；控制、區域標題及資料保持無襯線。新增標題須補齊本地字形，不能把 fallback 渲染視為字體驗收。",
+        "section": "typography"
+      },
+      {
+        "name": "The Reading Roles Rule",
+        "body": "無框研究閱讀保留答案標題、結論、正文與補述的字級差；不要把 answer-body 套成研究控制的 field 或 label，宋體也不擴張到整段答案正文。",
+        "section": "typography"
+      },
+      {
+        "name": "The Cascade Rule",
+        "body": "按 Leaflet、基底、workspace 的實際載入順序延伸樣式，維持主要畫面先於參數的 DOM 閱讀順序。",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat Shell Rule",
+        "body": "主要介面以平面分隔與色調層次表現深度；地圖 vendor 的功能陰影留在地圖局部，不擴張為卡片裝飾。",
+        "section": "elevation"
+      },
+      {
+        "name": "The Geographic Context Rule",
+        "body": "地理背景連續延伸供定位，點位與公尺範圍固定於模型投影；選取環辨認記錄，範圍圖層揭露計算邊界，三者不得混用。",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do 使用深藍、暖白和互動朱橘的既定角色，維持資料系列與圖例原有語意。",
+      "Do 讓研究閱讀直接使用暖白面、區段細線與 answer 字級角色，保留結論、正文和補述的差別。",
+      "Do 為新增宋體標題補齊本地字形，保留字體授權及來源。",
+      "Do 使用原生控制、可見文字、焦點與目前狀態語意，保持畫面先於參數。",
+      "Do 持續呈現來源、真實與合成分類、方法及推估限制。",
+      "Do 在新增或修改響應式圖表時量測實際標籤字級，並保留桌機／手機 captures 與明確的 review 範圍。",
+      "Do 維持手機 16px 欄位、14px 輔助說明、44px 圖層／zoom 操作區，以及可聚焦的表格捲動 region。",
+      "Do 讓地理背景延伸而保持點位與公尺半徑不變；地理 3D 的選取環持續指向目前記錄，啟用模型範圍立即提供可見全範圍的俯視。"
+    ],
+    "donts": [
+      "Don't 把互動朱橘或舊題目 accent 當成所有點位和模型系列的共同配色。",
+      "Don't 把每個指標、方法與明細再包成重複的大卡片。",
+      "Don't 以文字字形作新操作圖示；新圖示沿用 inline SVG。",
+      "Don't 把 sidecar 合成 tonal ramps 當成已部署配色或已驗證的對比組合。",
+      "Don't 把原始碼、Node DOM stub、宣告色彩及資產檢查當成 rendered visual、響應式、觸控或 WebGL 驗收。",
+      "Don't 把周邊街道背景當成新增研究資料，或把地理範圍的可選邊界變成預設地理底座。"
+    ]
+  }
+}

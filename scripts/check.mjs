@@ -1,19 +1,20 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {spawnSync} from 'node:child_process';
-import {modules} from '../dist/registry.js';
-import {mapSVG,chartSVG,tableHTML} from '../dist/viz.js';
+import {modules} from '../sites/taipei-city-lab/dist/registry.js';
+import {mapSVG,chartSVG,tableHTML} from '../sites/taipei-city-lab/dist/viz.js';
 
 const root=path.resolve(import.meta.dirname,'..');
+const siteDist=path.join(root,'sites/taipei-city-lab/dist');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
-const data=JSON.parse(read('dist/data/snapshot.json'));
+const data=JSON.parse(read('sites/taipei-city-lab/dist/data/snapshot.json'));
 const assert=(test,message)=>{if(!test)throw new Error(message);};
-for(const script of ['build-topic-models.py','build-topic-data.py','build-topic-sites.py']){
+for(const script of ['build-topic-models.py','build-topic-data.py','build-integrated-site.py','build-topic-sites.py']){
   const check=spawnSync('python',[path.join(root,'scripts',script),'--check'],{cwd:root,encoding:'utf8'});
   assert(check.status===0,check.stdout+check.stderr);
 }
 function files(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?files(path.join(dir,e.name)):[path.join(dir,e.name)]);}
-for(const file of files(path.join(root,'dist')).filter(f=>f.endsWith('.js'))){const c=spawnSync(process.execPath,['--check',file],{encoding:'utf8'});assert(c.status===0,c.stderr);assert(file.includes(path.sep+'vendor'+path.sep)||read(path.relative(root,file)).split('\n').length<=500,'File exceeds 500 LOC: '+file);}
+for(const file of files(siteDist).filter(f=>f.endsWith('.js'))){const c=spawnSync(process.execPath,['--check',file],{encoding:'utf8'});assert(c.status===0,c.stderr);assert(file.includes(path.sep+'vendor'+path.sep)||read(path.relative(root,file)).split('\n').length<=500,'File exceeds 500 LOC: '+file);}
 assert(modules.length===7,'Must have seven modules');
 assert(new Set(modules.map(m=>m.id)).size===7,'Module identities must be unique');
 for(const m of modules){
@@ -33,8 +34,8 @@ for(const m of modules){
   }
   console.log(m.id+': defaults, zero/low, high, sources and generated views checked');
 }
-const index=read('dist/index.html');
+const index=read('sites/taipei-city-lab/dist/index.html');
 assert(index.includes('lang="zh-Hant"'),'Missing Traditional Chinese language');
-for(const ref of [...index.matchAll(/(?:src|href)="(\.\/[^"#]+)"/g)].map(m=>m[1]))assert(fs.existsSync(path.resolve(root,'dist',ref)),'Missing asset '+ref);
+for(const ref of [...index.matchAll(/(?:src|href)="(\.\/[^"#]+)"/g)].map(m=>m[1]))assert(fs.existsSync(path.resolve(siteDist,ref)),'Missing asset '+ref);
 for(const source of Object.values(data.sources))assert(/^https:\/\//.test(source.url),'Sources require HTTPS');
 console.log('Seven-module static asset, syntax, data and generated-view checks passed.');

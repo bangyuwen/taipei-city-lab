@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {boot} from './helpers/app-harness.mjs';
-import {inspectCSV} from '../dist/modules/audit.js';
+import {inspectCSV} from '../sites/taipei-city-lab/dist/modules/audit.js';
 import fs from 'node:fs';
 
 test('export flushes a pending parameter calculation before downloading CSV', async()=>{
@@ -79,7 +79,7 @@ test('naive timestamps use the declared timezone and invalid timezones fail visi
 });
 
 test('public source catalogue and data snapshot agree on publication state',()=>{
-  const read=name=>JSON.parse(fs.readFileSync(new URL('../dist/data/'+name,import.meta.url),'utf8'));
+  const read=name=>JSON.parse(fs.readFileSync(new URL('../sites/taipei-city-lab/dist/data/'+name,import.meta.url),'utf8'));
   const snapshot=read('snapshot.json'),catalogue=read('source-catalog.json');
   assert.equal(catalogue.meta.buildStatus,snapshot.meta.buildStatus);
   assert.equal(catalogue.meta.retrievedAt,snapshot.meta.retrievedAt);

@@ -2,20 +2,20 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
-import * as THREE from '../dist/vendor/three/three.module.min.js';
-import {modules} from '../dist/registry.js';
-import {sceneSpec,projection,worldPoint,samplePoints,trafficFrame,busFrame,vehicleFrame} from '../dist/scene-data.js';
-import {createSceneModel} from '../dist/scene-builder.js';
-import {simulateShuttle} from '../dist/modules/bus.js';
-import {inspectCSV} from '../dist/modules/audit.js';
+import * as THREE from '../sites/taipei-city-lab/dist/vendor/three/three.module.min.js';
+import {modules} from '../sites/taipei-city-lab/dist/registry.js';
+import {sceneSpec,projection,worldPoint,samplePoints,trafficFrame,busFrame,vehicleFrame} from '../sites/taipei-city-lab/dist/scene-data.js';
+import {createSceneModel} from '../sites/taipei-city-lab/dist/scene-builder.js';
+import {simulateShuttle} from '../sites/taipei-city-lab/dist/modules/bus.js';
+import {inspectCSV} from '../sites/taipei-city-lab/dist/modules/audit.js';
 import {boot} from './helpers/app-harness.mjs';
-const data=JSON.parse(fs.readFileSync(new URL('../dist/data/snapshot.json',import.meta.url)));
+const data=JSON.parse(fs.readFileSync(new URL('../sites/taipei-city-lab/dist/data/snapshot.json',import.meta.url)));
 const fixture=id=>{const m=modules.find(m=>m.id===id),result=m.evaluate(m.defaults,data);return {m,result,spec:sceneSpec({id,result,data,params:m.defaults})};};
 const finite=value=>{if(typeof value==='number')assert.ok(Number.isFinite(value));else if(Array.isArray(value))value.forEach(finite);else if(value&&typeof value==='object')Object.values(value).forEach(finite);};
 
 test('Three.js dependency is pinned and every vendored byte matches its recorded SHA',()=>{
   assert.equal(THREE.REVISION,'180');
-  const root=new URL('../dist/vendor/three/',import.meta.url),manifest=JSON.parse(fs.readFileSync(new URL('manifest.json',root)));
+  const root=new URL('../sites/taipei-city-lab/dist/vendor/three/',import.meta.url),manifest=JSON.parse(fs.readFileSync(new URL('manifest.json',root)));
   assert.equal(manifest.version,'0.180.0');
   for(const [file,hash] of Object.entries(manifest.files))assert.equal(createHash('sha256').update(fs.readFileSync(new URL(file,root))).digest('hex'),hash);
   const controls=fs.readFileSync(new URL('OrbitControls.js',root),'utf8');

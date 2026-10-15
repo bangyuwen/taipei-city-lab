@@ -20,7 +20,8 @@ class QuietHandler(SimpleHTTPRequestHandler):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--chromium", help="Path to a system Chromium executable")
-    parser.add_argument("--dist", type=Path, default=Path(__file__).resolve().parents[1] / "dist")
+    parser.add_argument("--dist", type=Path,
+                        default=Path(__file__).resolve().parents[1] / "sites/taipei-city-lab/dist")
     args = parser.parse_args()
     handler = functools.partial(QuietHandler, directory=str(args.dist.resolve()))
     server = ThreadingHTTPServer(("127.0.0.1", 0), handler)

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { bins } from '../dist/modules/bins.js';
+import { bins } from '../sites/taipei-city-lab/dist/modules/bins.js';
 
 const metric = (result, label) => result.metrics.find((item) => item.label === label).value;
 
@@ -67,7 +67,7 @@ test('極端、空值與非法座標輸入仍有限且可重現', () => {
 });
 
 test('正式垃圾桶快照預設 300 公尺、20 個新增點有正服務增益', () => {
-  const data = JSON.parse(readFileSync(new URL('../dist/data/snapshot.json', import.meta.url), 'utf8'));
+  const data = JSON.parse(readFileSync(new URL('../sites/taipei-city-lab/dist/data/snapshot.json', import.meta.url), 'utf8'));
   const result = bins.evaluate(bins.defaults, data);
   assert.ok(metric(result, '快照內已知垃圾桶') > 0);
   assert.ok(metric(result, '已知垃圾桶基準服務率') < 100);
