@@ -182,6 +182,11 @@ function renderTimeline(){
 }
 async function start(){
   renderHistory();
+  for(const img of document.querySelectorAll('.country-photo img')){
+    const showPhotoError=()=>{img.hidden=true;img.nextElementSibling.hidden=false};
+    img.addEventListener('error',showPhotoError,{once:true});
+    if(img.complete&&!img.naturalWidth)showPhotoError();
+  }
   window.addEventListener('hashchange',panel);
   window.addEventListener('popstate',()=>{
     if(catalog){

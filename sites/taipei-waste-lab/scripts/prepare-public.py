@@ -17,6 +17,12 @@ ASSETS = (
     'data/datasets.json', 'data/comparison-2024-2026.json',
     'data/comparison-coordinate-distances.json',
     'research/execution-2026-10-15/desk-results.json',
+    'images/countries/osaka-smago.jpg',
+    'images/countries/london-bigbelly.jpg',
+    'images/countries/copenhagen-citysolar.jpg',
+    'images/countries/san-francisco-slim-silhouette.jpg',
+    'images/countries/finland-molok.jpg',
+    'images/countries/korea-rfid.jpg',
 )
 
 
