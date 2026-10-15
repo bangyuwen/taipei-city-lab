@@ -493,9 +493,9 @@
       "calculatedPairs": 75,
       "unavailablePairs": 0,
       "coarseFlaggedPairs": 0,
-      "minMeters": 0.00010074444278484661,
-      "medianMeters": 16.67535878093429,
-      "maxMeters": 1572.745492371272,
+      "minMeters": 0.000100744,
+      "medianMeters": 16.675358781,
+      "maxMeters": 1572.745492371,
       "buckets": [
         {
           "key": "lt1",
@@ -532,7 +532,7 @@
   },
   "inputHashes": {
     "comparison": "8416e21c2b360d19c88e98a8579f71e17add5d0b6aeb17cc271b919c85a777ea",
-    "distances": "f92f3088856e17b9c96b3c987c80c3a0dbfea3c2d8ffa1bfe4b8f1fa345f6b24",
+    "distances": "812c0247a892daba0f5bff5e1fb1382713da4623a67f503629f0ac6223c44c4f",
     "selection": "9f1d87b3bbefe49aa4f79acaf9b713c6b583c1e961894dfd07b64304ab4ff920"
   }
 }

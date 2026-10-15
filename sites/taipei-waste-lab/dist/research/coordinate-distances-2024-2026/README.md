@@ -4,12 +4,13 @@
 
 ## 凍結來源與方法
 
-- 分析協定：[1.0.0](protocol.json)；比較協定版本：1.0.0。
+- 分析協定：[1.0.1](protocol.json)；比較協定版本：1.0.0。
 - 比較檔 SHA-256：`8416e21c2b360d19c88e98a8579f71e17add5d0b6aeb17cc271b919c85a777ea`。分析使用的候選列、分類與配對沒有變更。
 - 2024 來源：`taipei-bins-2024-10-18-archive-utc.csv`，Archive capture 2024-10-18T21:17:32Z / Taipei 2024-10-19; survey date unknown，SHA-256 `bb34f092da73d663b49eb0a55d98fe8864377a3dfcc1b103f04affdca4ca6cdb`。
 - 2026 來源：`taipei-bins-2026-09-30-published.csv`，Official update 2026-09-30; downloaded 2026-10-15，SHA-256 `38b4af06dc0d57a38cc1361079fed8963632be746f5033638dec1001c072fda1`。
 - 方法：球面 Haversine，半徑 6,371,000 公尺；座標以十進位經緯度解讀，使用最短球面路徑，不校正路線、高程或橢球體。
 - 參考：[Haversine formula](https://www.movable-type.co.uk/scripts/latlong.html)。
+- 儲存修正：1.0.1 在計算後訂定小數 9 位公尺輸出，消除已觀察到的跨平台浮點末位差異；原始 [1.0.0 協定](protocol-v1.0.0.json) 保留。先以未四捨五入值排名、分組與計算統計，再統一輸出精度；儲存位數不代表測量精度。
 - 原始 `x` 為經度、`y` 為緯度；保留兩側完整原始列、原始座標、來源列 ID 與實體起始行號。
 
 ## 整體結果

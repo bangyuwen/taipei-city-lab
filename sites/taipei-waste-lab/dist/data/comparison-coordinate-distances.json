@@ -1,6 +1,6 @@
 {
   "meta": {
-    "analysisVersion": "1.0.0",
+    "analysisVersion": "1.0.1",
     "comparisonFile": "dist/data/comparison-2024-2026.json",
     "comparisonSHA256": "8416e21c2b360d19c88e98a8579f71e17add5d0b6aeb17cc271b919c85a777ea",
     "comparisonProtocolVersion": "1.0.0",
@@ -34,16 +34,17 @@
       "Spherical distance is an approximation, not walking distance or surveyed movement. No datum transformation or field verification is performed.",
       "The 2024 archive capture is Taipei 2024-10-19 (UTC 2024-10-18), not an original survey/update date. The 2026 source update is 2026-09-30; download 2026-10-15.",
       "Both snapshots have unverified physical citywide completeness. Preserve source IDs, physical start lines, raw coordinates, dates, and original 75-pair membership."
-    ]
+    ],
+    "storageDecimalPlaces": 9
   },
   "summary": {
     "pairCount": 75,
     "calculatedPairs": 75,
     "unavailablePairs": 0,
     "coarseFlaggedPairs": 0,
-    "minMeters": 0.00010074444278484661,
-    "medianMeters": 16.67535878093429,
-    "maxMeters": 1572.745492371272,
+    "minMeters": 0.000100744,
+    "medianMeters": 16.675358781,
+    "maxMeters": 1572.745492371,
     "buckets": [
       {
         "key": "lt1",
@@ -84,9 +85,9 @@
       "calculatedPairs": 9,
       "unavailablePairs": 0,
       "coarseFlaggedPairs": 0,
-      "minMeters": 0.00010074444278484661,
-      "medianMeters": 0.004029786700982874,
-      "maxMeters": 20.494598292178487,
+      "minMeters": 0.000100744,
+      "medianMeters": 0.004029787,
+      "maxMeters": 20.494598292,
       "buckets": [
         {
           "key": "lt1",
@@ -168,9 +169,9 @@
       "calculatedPairs": 3,
       "unavailablePairs": 0,
       "coarseFlaggedPairs": 0,
-      "minMeters": 19.542766542254427,
-      "medianMeters": 25.717764438034838,
-      "maxMeters": 133.7264627761801,
+      "minMeters": 19.542766542,
+      "medianMeters": 25.717764438,
+      "maxMeters": 133.726462776,
       "buckets": [
         {
           "key": "lt1",
@@ -210,9 +211,9 @@
       "calculatedPairs": 9,
       "unavailablePairs": 0,
       "coarseFlaggedPairs": 0,
-      "minMeters": 0.5505579303501958,
-      "medianMeters": 22.926078362713568,
-      "maxMeters": 524.7634541532012,
+      "minMeters": 0.55055793,
+      "medianMeters": 22.926078363,
+      "maxMeters": 524.763454153,
       "buckets": [
         {
           "key": "lt1",
@@ -252,9 +253,9 @@
       "calculatedPairs": 19,
       "unavailablePairs": 0,
       "coarseFlaggedPairs": 0,
-      "minMeters": 2.995966499254345,
-      "medianMeters": 8.569338038568691,
-      "maxMeters": 549.7114202806412,
+      "minMeters": 2.995966499,
+      "medianMeters": 8.569338039,
+      "maxMeters": 549.711420281,
       "buckets": [
         {
           "key": "lt1",
@@ -336,9 +337,9 @@
       "calculatedPairs": 3,
       "unavailablePairs": 0,
       "coarseFlaggedPairs": 0,
-      "minMeters": 9.947191412913348,
-      "medianMeters": 10.670747828620609,
-      "maxMeters": 37.29347161610353,
+      "minMeters": 9.947191413,
+      "medianMeters": 10.670747829,
+      "maxMeters": 37.293471616,
       "buckets": [
         {
           "key": "lt1",
@@ -378,9 +379,9 @@
       "calculatedPairs": 20,
       "unavailablePairs": 0,
       "coarseFlaggedPairs": 0,
-      "minMeters": 5.743590845373204,
-      "medianMeters": 17.868224077140184,
-      "maxMeters": 1572.745492371272,
+      "minMeters": 5.743590845,
+      "medianMeters": 17.868224077,
+      "maxMeters": 1572.745492371,
       "buckets": [
         {
           "key": "lt1",
@@ -462,9 +463,9 @@
       "calculatedPairs": 5,
       "unavailablePairs": 0,
       "coarseFlaggedPairs": 0,
-      "minMeters": 10.751902342815356,
-      "medianMeters": 27.528374648485606,
-      "maxMeters": 47.54131183054288,
+      "minMeters": 10.751902343,
+      "medianMeters": 27.528374648,
+      "maxMeters": 47.541311831,
       "buckets": [
         {
           "key": "lt1",
@@ -546,9 +547,9 @@
       "calculatedPairs": 7,
       "unavailablePairs": 0,
       "coarseFlaggedPairs": 0,
-      "minMeters": 2.445134539767101,
-      "medianMeters": 7.894771283085731,
-      "maxMeters": 111.15365389939925,
+      "minMeters": 2.44513454,
+      "medianMeters": 7.894771283,
+      "maxMeters": 111.153653899,
       "buckets": [
         {
           "key": "lt1",
@@ -612,7 +613,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 1572.745492371272,
+      "distanceMeters": 1572.745492371,
       "rank": 1,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -645,7 +646,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 549.7114202806412,
+      "distanceMeters": 549.711420281,
       "rank": 2,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -678,7 +679,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 524.7634541532012,
+      "distanceMeters": 524.763454153,
       "rank": 3,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -711,7 +712,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 484.39144562852,
+      "distanceMeters": 484.391445629,
       "rank": 4,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -744,7 +745,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 287.62801827119847,
+      "distanceMeters": 287.628018271,
       "rank": 5,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -777,7 +778,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 267.14994220782677,
+      "distanceMeters": 267.149942208,
       "rank": 6,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -810,7 +811,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 133.7264627761801,
+      "distanceMeters": 133.726462776,
       "rank": 7,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -843,7 +844,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 120.7409983110095,
+      "distanceMeters": 120.740998311,
       "rank": 8,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -876,7 +877,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 111.15365389939925,
+      "distanceMeters": 111.153653899,
       "rank": 9,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -909,7 +910,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 78.78556914963794,
+      "distanceMeters": 78.78556915,
       "rank": 10,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -942,7 +943,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 72.05673012274423,
+      "distanceMeters": 72.056730123,
       "rank": 11,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -975,7 +976,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 67.23047901557499,
+      "distanceMeters": 67.230479016,
       "rank": 12,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1008,7 +1009,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 64.35813922502643,
+      "distanceMeters": 64.358139225,
       "rank": 13,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1041,7 +1042,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 56.68422337262042,
+      "distanceMeters": 56.684223373,
       "rank": 14,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1074,7 +1075,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 49.56549564555839,
+      "distanceMeters": 49.565495646,
       "rank": 15,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1107,7 +1108,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 47.54131183054288,
+      "distanceMeters": 47.541311831,
       "rank": 16,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1140,7 +1141,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 40.83750802465925,
+      "distanceMeters": 40.837508025,
       "rank": 17,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1173,7 +1174,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 37.29347161610353,
+      "distanceMeters": 37.293471616,
       "rank": 18,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1206,7 +1207,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 34.789779291419634,
+      "distanceMeters": 34.789779291,
       "rank": 19,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1239,7 +1240,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 32.78976494548212,
+      "distanceMeters": 32.789764945,
       "rank": 20,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1272,7 +1273,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 30.54777280528283,
+      "distanceMeters": 30.547772805,
       "rank": 21,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1305,7 +1306,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 29.407156780075777,
+      "distanceMeters": 29.40715678,
       "rank": 22,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1338,7 +1339,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 29.139763721727103,
+      "distanceMeters": 29.139763722,
       "rank": 23,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1371,7 +1372,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 27.528374648485606,
+      "distanceMeters": 27.528374648,
       "rank": 24,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1404,7 +1405,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 25.717764438034838,
+      "distanceMeters": 25.717764438,
       "rank": 25,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1437,7 +1438,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 25.394070140357062,
+      "distanceMeters": 25.39407014,
       "rank": 26,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1470,7 +1471,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 24.6584855158539,
+      "distanceMeters": 24.658485516,
       "rank": 27,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1503,7 +1504,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 24.481848928257197,
+      "distanceMeters": 24.481848928,
       "rank": 28,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1536,7 +1537,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 22.926078362713568,
+      "distanceMeters": 22.926078363,
       "rank": 29,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1569,7 +1570,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 20.494598292178487,
+      "distanceMeters": 20.494598292,
       "rank": 30,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1602,7 +1603,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 20.437886281395844,
+      "distanceMeters": 20.437886281,
       "rank": 31,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1635,7 +1636,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 19.63037298218214,
+      "distanceMeters": 19.630372982,
       "rank": 32,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1668,7 +1669,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 19.60452121563421,
+      "distanceMeters": 19.604521216,
       "rank": 33,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1701,7 +1702,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 19.542766542254427,
+      "distanceMeters": 19.542766542,
       "rank": 34,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1734,7 +1735,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 18.48453894646194,
+      "distanceMeters": 18.484538946,
       "rank": 35,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1767,7 +1768,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 18.029098009507127,
+      "distanceMeters": 18.02909801,
       "rank": 36,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1800,7 +1801,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 17.251909207818425,
+      "distanceMeters": 17.251909208,
       "rank": 37,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1833,7 +1834,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 16.67535878093429,
+      "distanceMeters": 16.675358781,
       "rank": 38,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1866,7 +1867,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 15.910276124315354,
+      "distanceMeters": 15.910276124,
       "rank": 39,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1899,7 +1900,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 14.244947189810283,
+      "distanceMeters": 14.24494719,
       "rank": 40,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1932,7 +1933,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 14.03205272025975,
+      "distanceMeters": 14.03205272,
       "rank": 41,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1965,7 +1966,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 13.640445458425747,
+      "distanceMeters": 13.640445458,
       "rank": 42,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -1998,7 +1999,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 12.012109743283448,
+      "distanceMeters": 12.012109743,
       "rank": 43,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2031,7 +2032,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 11.589661348758524,
+      "distanceMeters": 11.589661349,
       "rank": 44,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2064,7 +2065,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 10.751902342815356,
+      "distanceMeters": 10.751902343,
       "rank": 45,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2097,7 +2098,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 10.670747828620609,
+      "distanceMeters": 10.670747829,
       "rank": 46,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2130,7 +2131,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 10.02205203736063,
+      "distanceMeters": 10.022052037,
       "rank": 47,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2163,7 +2164,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 9.963611132875483,
+      "distanceMeters": 9.963611133,
       "rank": 48,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2196,7 +2197,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 9.947191412913348,
+      "distanceMeters": 9.947191413,
       "rank": 49,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2229,7 +2230,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 9.450776076806712,
+      "distanceMeters": 9.450776077,
       "rank": 50,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2262,7 +2263,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 9.30182820477823,
+      "distanceMeters": 9.301828205,
       "rank": 51,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2295,7 +2296,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 8.569338038568691,
+      "distanceMeters": 8.569338039,
       "rank": 52,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2328,7 +2329,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 8.04582129458162,
+      "distanceMeters": 8.045821295,
       "rank": 53,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2361,7 +2362,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 7.894771283085731,
+      "distanceMeters": 7.894771283,
       "rank": 54,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2394,7 +2395,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 7.799068892830893,
+      "distanceMeters": 7.799068893,
       "rank": 55,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2427,7 +2428,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 7.454806098164045,
+      "distanceMeters": 7.454806098,
       "rank": 56,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2460,7 +2461,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 6.618443577621793,
+      "distanceMeters": 6.618443578,
       "rank": 57,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2493,7 +2494,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 6.3802502379256225,
+      "distanceMeters": 6.380250238,
       "rank": 58,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2526,7 +2527,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 5.935373408790171,
+      "distanceMeters": 5.935373409,
       "rank": 59,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2559,7 +2560,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 5.743590845373204,
+      "distanceMeters": 5.743590845,
       "rank": 60,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2592,7 +2593,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 5.7111737580307045,
+      "distanceMeters": 5.711173758,
       "rank": 61,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2625,7 +2626,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 5.65464283555669,
+      "distanceMeters": 5.654642836,
       "rank": 62,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2658,7 +2659,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 5.292503344124959,
+      "distanceMeters": 5.292503344,
       "rank": 63,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2691,7 +2692,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 5.0401487598722134,
+      "distanceMeters": 5.04014876,
       "rank": 64,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2724,7 +2725,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 4.569032609015449,
+      "distanceMeters": 4.569032609,
       "rank": 65,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2757,7 +2758,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 4.373274029265257,
+      "distanceMeters": 4.373274029,
       "rank": 66,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2790,7 +2791,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 3.9017668287171072,
+      "distanceMeters": 3.901766829,
       "rank": 67,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2823,7 +2824,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 2.995966499254345,
+      "distanceMeters": 2.995966499,
       "rank": 68,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2856,7 +2857,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 2.445134539767101,
+      "distanceMeters": 2.44513454,
       "rank": 69,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2889,7 +2890,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 0.5505579303501958,
+      "distanceMeters": 0.55055793,
       "rank": 70,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2922,7 +2923,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 0.004029786700982874,
+      "distanceMeters": 0.004029787,
       "rank": 71,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2955,7 +2956,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 0.002014893556486416,
+      "distanceMeters": 0.002014894,
       "rank": 72,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -2988,7 +2989,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 0.0010074478436558952,
+      "distanceMeters": 0.001007448,
       "rank": 73,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -3021,7 +3022,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 0.0010074464478007717,
+      "distanceMeters": 0.001007446,
       "rank": 74,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"
@@ -3054,7 +3055,7 @@
         "plottable": true,
         "quality": "通過座標粗篩，尚未逐點核實"
       },
-      "distanceMeters": 0.00010074444278484661,
+      "distanceMeters": 0.000100744,
       "rank": 75,
       "quality": "both_pass_coarse",
       "qualityNote": "兩側均通過既有台北粗篩；這不代表座標精度或實體位置已核實。"

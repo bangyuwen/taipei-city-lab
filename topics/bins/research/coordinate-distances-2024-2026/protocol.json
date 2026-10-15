@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "frozenBeforeCalculation": true,
   "comparisonFile": "dist/data/comparison-2024-2026.json",
   "comparisonSHA256": "8416e21c2b360d19c88e98a8579f71e17add5d0b6aeb17cc271b919c85a777ea",
@@ -7,11 +7,66 @@
   "selectedCategory": "same_address_changed",
   "expectedPairs": 75,
   "unit": "one original unique-address source-row pair; not a confirmed facility identity",
-  "method": {"name":"Haversine","radiusMeters":6371000,"referenceURL":"https://www.movable-type.co.uk/scripts/latlong.html","description":"Spherical shortest surface distance in meters. Coordinates interpreted as decimal longitude and latitude; no route, elevation or ellipsoid correction."},
+  "method": {
+    "name": "Haversine",
+    "radiusMeters": 6371000,
+    "referenceURL": "https://www.movable-type.co.uk/scripts/latlong.html",
+    "description": "Spherical shortest surface distance in meters. Coordinates interpreted as decimal longitude and latitude; no route, elevation or ellipsoid correction."
+  },
   "validity": "Both coordinate pairs must be finite numbers within longitude [-180,180] and latitude [-90,90]. Null or invalid coordinates yield null distance, not zero. Preserve all 75 pairs. A coordinate failing the existing Taipei coarse check remains calculable if globally valid, but carries a quality flag.",
   "ranking": "Sort calculated distances descending using unrounded meters, then comparison ID ascending for ties. Unavailable distances last with null rank. Rank is ordinal and does not assert that tied values differ.",
   "summary": "Median is the middle value for odd n, mean of two middle values for even n; use only calculated pairs. Empty subsets have null min/median/max, never zero.",
-  "buckets": [{"key":"lt1","label":"小於 1 公尺","lower":0,"upper":1},{"key":"1to10","label":"1 至未滿 10 公尺","lower":1,"upper":10},{"key":"10to50","label":"10 至未滿 50 公尺","lower":10,"upper":50},{"key":"50to100","label":"50 至未滿 100 公尺","lower":50,"upper":100},{"key":"100to500","label":"100 至未滿 500 公尺","lower":100,"upper":500},{"key":"ge500","label":"500 公尺以上","lower":500,"upper":null}],
-  "display": "Store unrounded numeric meters. Display below 0.1 m as <0.1 m; otherwise one decimal meter. Never rank or bucket rounded display text. The displayed decimals do not establish coordinate accuracy.",
-  "limits": ["Same address does not establish the same physical bin. Distances do not confirm relocation, removal or installation.","Coordinate changes can reflect precision, correction, geocoding or data-entry differences; causes require separate evidence.","Spherical distance is an approximation, not walking distance or surveyed movement. No datum transformation or field verification is performed.","The 2024 archive capture is Taipei 2024-10-19 (UTC 2024-10-18), not an original survey/update date. The 2026 source update is 2026-09-30; download 2026-10-15.","Both snapshots have unverified physical citywide completeness. Preserve source IDs, physical start lines, raw coordinates, dates, and original 75-pair membership."]
+  "buckets": [
+    {
+      "key": "lt1",
+      "label": "小於 1 公尺",
+      "lower": 0,
+      "upper": 1
+    },
+    {
+      "key": "1to10",
+      "label": "1 至未滿 10 公尺",
+      "lower": 1,
+      "upper": 10
+    },
+    {
+      "key": "10to50",
+      "label": "10 至未滿 50 公尺",
+      "lower": 10,
+      "upper": 50
+    },
+    {
+      "key": "50to100",
+      "label": "50 至未滿 100 公尺",
+      "lower": 50,
+      "upper": 100
+    },
+    {
+      "key": "100to500",
+      "label": "100 至未滿 500 公尺",
+      "lower": 100,
+      "upper": 500
+    },
+    {
+      "key": "ge500",
+      "label": "500 公尺以上",
+      "lower": 500,
+      "upper": null
+    }
+  ],
+  "display": "Store derived numeric meters rounded to 9 decimal places after raw-value ranking, buckets and summaries. Use the preserved rank to order distances that serialize to the same number. Display below 0.1 m as <0.1 m; otherwise one decimal meter. Never rank or bucket rounded display text. Stored and displayed decimals do not establish coordinate accuracy.",
+  "limits": [
+    "Same address does not establish the same physical bin. Distances do not confirm relocation, removal or installation.",
+    "Coordinate changes can reflect precision, correction, geocoding or data-entry differences; causes require separate evidence.",
+    "Spherical distance is an approximation, not walking distance or surveyed movement. No datum transformation or field verification is performed.",
+    "The 2024 archive capture is Taipei 2024-10-19 (UTC 2024-10-18), not an original survey/update date. The 2026 source update is 2026-09-30; download 2026-10-15.",
+    "Both snapshots have unverified physical citywide completeness. Preserve source IDs, physical start lines, raw coordinates, dates, and original 75-pair membership."
+  ],
+  "frozenScope": "Source hashes, original pair membership, formula, ranking, buckets and summary method were frozen under 1.0.0. The serialization amendment below was recorded after calculation.",
+  "serializationAmendment": {
+    "date": "2026-10-15",
+    "previousProtocol": "protocol-v1.0.0.json",
+    "recordedAfterCalculation": true,
+    "reason": "macOS and Linux produced 20.494598292178487 and 20.494598292178484 meters for the same source pair. Round only derived output distances and statistics to 9 decimal places after raw-value ranking, bucketing and summary calculation. Preserve source coordinates unchanged. This is storage precision, not measurement accuracy."
+  }
 }

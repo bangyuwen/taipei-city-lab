@@ -84,7 +84,7 @@ export async function initializeComparisonExperience(){
     const comparisonSHA256=[...new Uint8Array(digest)].map(byte=>byte.toString(16).padStart(2,'0')).join('');
     if(analysis.meta?.comparisonSHA256!==comparisonSHA256)throw Error('Coordinate comparison digest mismatch');
     const byID=new Map(selected.map(e=>[e.id,e]));
-    if(analysis.meta?.analysisVersion!=='1.0.0'||analysis.meta.comparisonProtocolVersion!==data.meta.protocolVersion||!Array.isArray(analysis.pairs)||analysis.pairs.length!==selected.length||new Set(analysis.pairs.map(p=>p.comparisonId)).size!==selected.length)throw Error('Coordinate distance version mismatch');
+    if(analysis.meta?.analysisVersion!=='1.0.1'||analysis.meta.comparisonProtocolVersion!==data.meta.protocolVersion||!Array.isArray(analysis.pairs)||analysis.pairs.length!==selected.length||new Set(analysis.pairs.map(p=>p.comparisonId)).size!==selected.length)throw Error('Coordinate distance version mismatch');
     for(const side of ['before','after'])if(analysis.meta.sources?.[side]?.sha256!==data.meta[side].sha256)throw Error('Coordinate source mismatch');
     for(const pair of analysis.pairs){
       const entry=byID.get(pair.comparisonId);
@@ -97,7 +97,7 @@ export async function initializeComparisonExperience(){
     $('coordinate-distance-summary').textContent=`共 ${num(s.pairCount)} 對；${num(s.calculatedPairs)} 對可計算、${num(s.unavailablePairs)} 對無法計算。可計算者的座標差距中位數為 ${gap(s.medianMeters)}，最小 ${gap(s.minMeters)}，最大 ${gap(s.maxMeters)}。有 ${num(s.coarseFlaggedPairs)} 對至少一版未通過台北座標粗篩，需另行核對；通過粗篩也不代表位置已確認。`;
     $('coordinate-distance-buckets').innerHTML=s.buckets.map(b=>`<li><span>${esc(b.label)}</span><strong>${num(b.count)} 對</strong></li>`).join('');
     $('coordinate-distance-top').innerHTML=analysis.pairs.filter(p=>p.distanceMeters!==null).slice(0,10).map(p=>`<tr><th scope="row">${num(p.rank)}</th><td><span>${esc(p.district)}</span><strong>${esc(p.address)}</strong><small>${esc(p.comparisonId)}・${esc(p.qualityNote)}</small></td><td>${esc(gap(p.distanceMeters))}</td><td><span>2024：${esc(p.before.rawX)}，${esc(p.before.rawY)}</span><span>2026：${esc(p.after.rawX)}，${esc(p.after.rawY)}</span><details><summary>查看來源列與地圖</summary>${sourceRows([p.before],'2024 封存版',data.meta.before.key)}${sourceRows([p.after],'2026 官方主檔',data.meta.after.key)}</details></td></tr>`).join('')||'<tr><td colspan="4">這批配對沒有可計算的距離，請在下方清單查看原始座標。</td></tr>';
-    $('comparison-distance-sort').disabled=false;$('comparison-distance-sort-note').textContent='排序使用未四捨五入距離；無法計算者置於最後。排名不代表遷移。';
+    $('comparison-distance-sort').disabled=false;$('comparison-distance-sort-note').textContent='排序沿用未四捨五入計算值的排名；無法計算者置於最後。排名不代表遷移。';
     $('coordinate-distance-status').hidden=true;$('coordinate-distance-content').hidden=false;
     render();
   }
