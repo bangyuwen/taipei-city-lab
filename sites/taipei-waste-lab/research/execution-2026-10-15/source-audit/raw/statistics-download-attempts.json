@@ -1,0 +1,87 @@
+[
+  {
+    "attempt_number": 1,
+    "attempted_at_utc": "2026-10-15T06:19:16.771084+00:00",
+    "url_from_existing_receipt": "https://tsis.dbas.gov.taipei/statis/webMain.aspx?compmode=0&cycle=4&deflst=2&funid=A05034201&kind=21&nzo=1&outkind=1&outmode=12&sys=220&type=0&ymf=8500",
+    "method": "GET",
+    "user_agent": "Taipei-waste-lab bounded source audit (Python urllib)",
+    "http_status": null,
+    "response_headers": {},
+    "response_bytes": 0,
+    "response_sha256": null,
+    "raw_file": null,
+    "connection_error": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>",
+    "decode": null,
+    "finished_at_utc": "2026-10-15T06:19:16.777769+00:00",
+    "omitted_response_headers": [
+      "Set-Cookie"
+    ]
+  },
+  {
+    "attempt_number": 2,
+    "attempted_at_utc": "2026-10-15T06:19:29.087233+00:00",
+    "url_from_existing_receipt": "https://tsis.dbas.gov.taipei/statis/webMain.aspx?compmode=0&cycle=4&deflst=2&funid=A05034201&kind=21&nzo=1&outkind=1&outmode=12&sys=220&type=0&ymf=8500",
+    "method": "GET",
+    "user_agent": "Taipei-waste-lab bounded source audit (Python urllib)",
+    "http_status": 200,
+    "response_headers": {
+      "Cache-Control": "private,private",
+      "Content-Type": "application/octet-stream",
+      "Content-Location": "www.gov.taipei",
+      "Content-disposition": "attachment; filename=\"A05034201_21193111233.csv\"",
+      "X-Content-Type-Options": "nosniff",
+      "Strict-Transport-Security": "max-age=31536000;includeSubDomains",
+      "Content-Security-Policy": "img-src *.gov.taipei; font-src * 'self' data:; default-src 'self' 'unsafe-inline' 'unsafe-eval' ;  script-src 'self' 'unsafe-inline' 'unsafe-eval'; script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://ajax.googleapis.com https://www.googletagmanager.com;  script-src-attr 'self' 'unsafe-inline' 'unsafe-eval'; frame-ancestors 'self';connect-src *;",
+      "Referrer-Policy": "origin",
+      "X-Frame-Options": "SAMEORIGIN",
+      "Date": "Thu, 15 Oct 2026 06:19:31 GMT",
+      "Connection": "close",
+      "Content-Length": "2773"
+    },
+    "response_bytes": 2773,
+    "response_sha256": "108c98c465361bdc643a83cae696581862ec3e2408729be0e3f8542285195569",
+    "raw_file": "raw/environment-statistics-response.raw",
+    "connection_error": null,
+    "decode": {
+      "decode_attempts": [
+        {
+          "encoding": "utf-8-sig",
+          "decoded": true
+        }
+      ],
+      "text_decoded": true,
+      "encoding_used": "utf-8-sig",
+      "text_characters": 2308,
+      "line_count": 32,
+      "csv_row_count": 32,
+      "csv_max_columns": 14,
+      "target_found": true,
+      "matching_text_lines": [
+        "\"統計期\",\"風景名勝遊樂區市場及鐵公路客運車站環境衛生督導處數[處]\",\"風景名勝遊樂區市場及鐵公路客運車站環境衛生輔導改善處數[處]\",\"風景名勝遊樂區市場及鐵公路客運車站環境衛生抽查次數[次]\",\"風景名勝遊樂區市場及鐵公路客運車站環境衛生告發取締次數[次]\",\"現有建檔管理公廁數[座]\",\"公廁檢驗抽查次數[次]\",\"公廁檢驗抽查座數[座次]\",\"現有流動廁所數[座]\",\"髒亂死角清除處數[處]\",\"髒亂死角告發取締件數[件]\",\"清潔排水溝幹支線長度[公尺]\",\"排水溝幹支線清除淤泥量[公噸]\",\"行人專用清潔箱[個]\""
+      ],
+      "matching_csv_rows": [
+        [
+          "統計期",
+          "風景名勝遊樂區市場及鐵公路客運車站環境衛生督導處數[處]",
+          "風景名勝遊樂區市場及鐵公路客運車站環境衛生輔導改善處數[處]",
+          "風景名勝遊樂區市場及鐵公路客運車站環境衛生抽查次數[次]",
+          "風景名勝遊樂區市場及鐵公路客運車站環境衛生告發取締次數[次]",
+          "現有建檔管理公廁數[座]",
+          "公廁檢驗抽查次數[次]",
+          "公廁檢驗抽查座數[座次]",
+          "現有流動廁所數[座]",
+          "髒亂死角清除處數[處]",
+          "髒亂死角告發取締件數[件]",
+          "清潔排水溝幹支線長度[公尺]",
+          "排水溝幹支線清除淤泥量[公噸]",
+          "行人專用清潔箱[個]"
+        ]
+      ],
+      "format_hint": "delimited/text content"
+    },
+    "finished_at_utc": "2026-10-15T06:19:29.579445+00:00",
+    "omitted_response_headers": [
+      "Set-Cookie"
+    ]
+  }
+]

@@ -1,0 +1,7 @@
+segment_id,stratum_slot,record_status,site_name,start_anchor,end_anchor,side_of_street,planned_reference_length_m,actual_length_m,measurement_route_id,measurement_route_version,fixed_observation_area_m2,footfall_cross_section_id,footfall_count_direction,route_description,route_photo_reference,land_use_context,selection_rationale,boundary_version,verified_date,verified_by,notes
+SEG-01,commercial_tourism_1,planned_placeholder,,,,,100,,,,,,,,,,,,,,
+SEG-02,commercial_tourism_2,planned_placeholder,,,,,100,,,,,,,,,,,,,,
+SEG-03,transit_1,planned_placeholder,,,,,100,,,,,,,,,,,,,,
+SEG-04,transit_2,planned_placeholder,,,,,100,,,,,,,,,,,,,,
+SEG-05,residential_mixed_1,planned_placeholder,,,,,100,,,,,,,,,,,,,,
+SEG-06,residential_mixed_2,planned_placeholder,,,,,100,,,,,,,,,,,,,,

@@ -1,6 +1,4 @@
 """Interaction checks against the local static site with the installed browser."""
-import csv
-import io
 import json
 from pathlib import Path
 from playwright.sync_api import sync_playwright
@@ -17,6 +15,11 @@ def ready(page):
     page.goto(URL)
     page.wait_for_selector('#load-status[hidden]', state='attached')
     page.wait_for_selector('.leaflet-container')
+
+def navigate(page, panel):
+    if panel in ('map', 'comparison', 'history') and not page.locator('#history-navigation').is_visible():
+        page.locator('[data-section="history"]').click()
+    page.locator(f'[data-page="{panel}"]').click()
 
 def main():
     with sync_playwright() as p:
@@ -38,30 +41,32 @@ def main():
         assert count>0
         page.locator('.point-row button').first.click()
         assert page.locator('.leaflet-popup-content').is_visible()
-        with page.expect_download() as info:
-            page.click('#export-csv')
-        download=info.value
-        text=Path(download.path()).read_text(encoding='utf-8-sig')
-        records=list(csv.DictReader(io.StringIO(text)))
-        assert len(records)==count
-        assert all(r['行政區']=='中正區' for r in records)
+        assert page.locator('[download], #export-csv, #comparison-export, #comparison-district-export').count() == 0
         page.click('#reset-filters')
         assert page.locator('#result-count').inner_text()=='2,517'
-        page.click('[data-year="2024"]')
+        page.click('[data-year="2024-archive"]')
+        assert page.locator('#result-count').inner_text()=='1,971'
+        assert '1,969' in page.locator('#result-map-count').inner_text()
+        assert '2024-10-19' in page.locator('#dataset-date').inner_text()
+        page.select_option('#dataset-version','2024')
         assert page.locator('#result-count').inner_text()=='1,000'
         assert '991' in page.locator('#dataset-note').inner_text()
         page.select_option('#district','信義區')
         assert page.locator('#result-count').inner_text()=='0'
         assert '不能視為' in page.locator('#point-list').inner_text()
-        assert page.locator('#export-csv').is_disabled()
+        assert page.locator('[download], #export-csv, #comparison-export, #comparison-district-export').count() == 0
         page.reload()
         page.wait_for_selector('#load-status[hidden]', state='attached')
         assert page.locator('#district').input_value()=='信義區'
-        assert page.locator('[data-year="2024"]').get_attribute('aria-pressed')=='true'
+        assert page.locator('[data-year="2024-archive"]').get_attribute('aria-pressed')=='true'
+        assert page.locator('#dataset-version').input_value()=='2024'
         page.click('#reset-filters')
         page.click('[data-year="2022"]')
         assert page.locator('#result-count').inner_text()=='1,799'
-        page.click('[data-year="2026"]')
+        page.click('[data-year="2026-main"]')
+        assert page.locator('#result-count').inner_text()=='681'
+        assert '680' in page.locator('#result-map-count').inner_text()
+        page.select_option('#dataset-version','2026')
         assert page.locator('#result-count').inner_text()=='294'
         page.click('[data-year="2015"]')
         page.fill('#search','武昌街4號')
@@ -69,7 +74,7 @@ def main():
         assert '0 筆可繪製' in page.locator('#result-map-count').inner_text()
         assert page.locator('.point-row button').is_disabled()
         page.click('#reset-filters')
-        page.click('[data-page="history"]')
+        navigate(page, 'history')
         assert page.locator('#panel-history').is_visible()
         assert page.locator('.timeline-event').count()==11
         page.click('[data-event-filter="removal"]')
@@ -77,10 +82,11 @@ def main():
         assert page.locator('.case-step').count()==4
         page.click('[data-event-filter="all"]')
         page.click('[data-page="sources"]')
-        assert page.locator('.source-card').count()==4
+        assert page.locator('.source-card').count()==6
+        assert page.evaluate("Array.from(document.querySelectorAll('a[href]')).every(a => /^(https?:|#)/i.test(a.getAttribute('href')))"), 'Local attachment anchor remains'
         check_no_overflow(page)
         page.screenshot(path=str(QA/'desktop-sources.png'),full_page=True)
-        page.click('[data-page="map"]')
+        navigate(page, 'map')
         # Returning from a hidden panel must restore the visible map bounds.
         page.wait_for_function('''() => {
           const c=document.querySelector('.leaflet-overlay-pane canvas');
@@ -99,12 +105,14 @@ def main():
         phone.route('https://tile.openstreetmap.org/**',lambda route:route.abort())
         ready(phone)
         for panel in ['map','history','sources']:
-            phone.click(f'[data-page="{panel}"]')
+            navigate(phone, panel)
             assert phone.locator(f'#panel-{panel}').is_visible()
             check_no_overflow(phone)
-        phone.click('[data-page="map"]')
-        phone.click('[data-year="2024"]')
+        navigate(phone, 'map')
+        phone.click('[data-year="2024-archive"]')
         phone.select_option('#district','大安區')
+        assert phone.locator('#result-count').inner_text()=='229'
+        phone.select_option('#dataset-version','2024')
         assert phone.locator('#result-count').inner_text()=='235'
         phone.screenshot(path=str(QA/'mobile-map.png'),full_page=True)
         assert not phone_errors, phone_errors
@@ -116,8 +124,8 @@ def main():
         failure.goto(URL)
         failure.wait_for_selector('.load-status.error')
         assert failure.locator('#district').is_disabled()
-        assert failure.locator('#export-csv').is_disabled()
-        failure.click('[data-page="history"]')
+        assert failure.locator('[download], #export-csv, #comparison-export, #comparison-district-export').count() == 0
+        navigate(failure, 'history')
         assert failure.locator('#panel-history').is_visible()
         assert failure.locator('.timeline-event').count()==11
         failure.click('[data-event-filter="removal"]')
@@ -126,7 +134,7 @@ def main():
         assert failure.locator('#panel-sources').is_visible()
         assert not failure_errors, failure_errors
         browser.close()
-    print(json.dumps({'desktop':'passed','mobile':'passed','exports':'passed',
+    print(json.dumps({'desktop':'passed','mobile':'passed','download_controls':'absent',
                       'checks':'versions, coordinate flags, partial coverage, deep links, history filters, unavailable-data navigation',
                       'external_tiles':'intentionally blocked for interaction regression'},ensure_ascii=False))
 

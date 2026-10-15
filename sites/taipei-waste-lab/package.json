@@ -6,7 +6,7 @@
   "scripts": {
     "prepare-data": "python scripts/prepare-data.py",
     "test": "node --test tests/*.test.mjs",
-    "check": "node scripts/check.mjs",
-    "preview": "python -m http.server 4174 --bind 0.0.0.0 --directory dist"
+    "check": "python scripts/prepare-public.py && node scripts/check.mjs",
+    "preview": "python -m http.server 4174 --bind 0.0.0.0 --directory out"
   }
 }
