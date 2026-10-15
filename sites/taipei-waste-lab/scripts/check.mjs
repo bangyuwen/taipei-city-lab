@@ -43,6 +43,15 @@ for(const [file,entry] of Object.entries(three.files)){
   const bytes=await readFile(resolve(root,'vendor/three',file));
   if(createHash('sha256').update(bytes).digest('hex')!==entry.sha256)throw Error(`Three.js asset hash mismatch: ${file}`);
 }
+const photos=JSON.parse(await readFile(resolve(root,'images/countries/sources.json'),'utf8')).photos;
+const photoPaths=[...html.matchAll(/<img src="(images\/countries\/[^"]+)"/g)].map(match=>match[1]);
+if(photos.length!==6||new Set(photoPaths).size!==6)throw Error('Six unique country photos required');
+for(const photo of photos){
+  const file='images/countries/'+photo.file;
+  if(!photoPaths.includes(file)||!html.includes(photo.source_page.replaceAll('&','&amp;')))throw Error(`Missing photo or attribution: ${photo.id}`);
+  const bytes=await readFile(resolve(root,file));
+  if(createHash('sha256').update(bytes).digest('hex')!==photo.sha256)throw Error(`Photo source hash mismatch: ${photo.id}`);
+}
 const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
 if(new Set(ids).size!==ids.length)throw Error('Duplicate HTML IDs');
 const css=await readFile(resolve(root,'styles.css'),'utf8');
