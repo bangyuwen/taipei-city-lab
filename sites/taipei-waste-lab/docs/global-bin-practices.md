@@ -170,4 +170,3 @@ Belfast五日稽核中的約85%，分母是兩槽找到的塑膠瓶；43.8%則�
 - [S23 法國內政部國會答覆，1997-08-25](https://questions.assemblee-nationale.fr/q11/11-1036QE.htm)
 
 - [S24 阿姆斯特丹市府局部調整，2025-09-17](https://www.amsterdam.nl/bestuur-organisatie/pers/persberichten/persberichten-nieuws-hester-buren/prullenbakkenoffensief-afvaloverlast/)
-
