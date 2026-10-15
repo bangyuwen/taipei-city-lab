@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { traffic, simulateQueue, syntheticArrivals, shiftArrivals } from '../dist/modules/traffic.js';
+import { traffic, simulateQueue, syntheticArrivals, shiftArrivals } from '../sites/taipei-city-lab/dist/modules/traffic.js';
 
 const sum = (values) => values.reduce((a, b) => a + b, 0);
 const close = (actual, expected) => assert.ok(Math.abs(actual - expected) < 1e-7, `${actual} != ${expected}`);

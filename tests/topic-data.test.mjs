@@ -5,11 +5,11 @@ import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
-import {modules} from '../dist/registry.js';
+import {modules} from '../sites/taipei-city-lab/dist/registry.js';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
 const read=file=>JSON.parse(fs.readFileSync(path.join(root,file),'utf8'));
-const legacy=read('dist/data/snapshot.json');
+const legacy=read('sites/taipei-city-lab/dist/data/snapshot.json');
 const ids=['shade','bins','rat','traffic','bus','buildings','audit'];
 const work=fs.mkdtempSync(path.join(os.tmpdir(),'taipei-topic-data-test-'));
 after(()=>fs.rmSync(work,{recursive:true,force:true}));
@@ -62,7 +62,7 @@ test('canonical observations and quality preserve every reviewed value and sourc
 
 test('offline assembly reproduces both legacy deployment files byte for byte without refreshing dates',()=>{
   for(const filename of ['snapshot.json','source-catalog.json']){
-    assert.deepEqual(fs.readFileSync(path.join(work,'aggregate',filename)),fs.readFileSync(path.join(root,'dist/data',filename)));
+    assert.deepEqual(fs.readFileSync(path.join(work,'aggregate',filename)),fs.readFileSync(path.join(root,'sites/taipei-city-lab/dist/data',filename)));
   }
   const checked=spawnSync('python',['scripts/build-topic-data.py','--check'],{cwd:root,encoding:'utf8'});
   assert.equal(checked.status,0,checked.stderr);

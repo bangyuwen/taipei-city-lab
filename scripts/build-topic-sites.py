@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Build six self-contained topic sites from canonical models and the shared UI.
 
-This is an offline, standard-library-only build. Root dist/ is the current
-shared web template; generated site files must not become parallel sources.
+This is an offline, standard-library-only build. shared/web/template/ is the
+shared web source; generated site files must not become parallel sources.
 The existing taipei-waste-lab is deliberately outside this builder's scope.
 """
 from __future__ import annotations
@@ -19,6 +19,7 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "shared/web/topic-sites.json"
+TEMPLATE = ROOT / "shared/web/template"
 TOPIC_IDS = ("shade", "rat", "traffic", "bus", "buildings", "audit")
 WEB_FILES = (
     "styles.css", "workspace.css", "mark.svg", "viz.js", "geo.js", "contracts.js",
@@ -127,8 +128,6 @@ def select_members(text: str, name: str, keep: set[str]) -> str:
 
 def canonical_model(topic_id: str) -> str:
     source = ROOT / "topics" / topic_id / "model.js"
-    if not source.is_file():
-        source = ROOT / "dist/modules" / f"{topic_id}.js"
     text = read(source)
     # Canonical imports become local within each independently served dist/.
     return (text.replace("../../shared/lib/spatial.js", "./spatial.js")
@@ -136,9 +135,7 @@ def canonical_model(topic_id: str) -> str:
 
 
 def shared_library(name: str) -> str:
-    canonical = ROOT / "shared/lib" / name
-    fallback = ROOT / "dist" / (f"modules/{name}" if name == "spatial.js" else name)
-    return read(canonical if canonical.is_file() else fallback)
+    return read(ROOT / "shared/lib" / name)
 
 
 def topic_html(template: str, topic_id: str, config: dict) -> str:
@@ -239,7 +236,7 @@ def research_document(topic_id: str, config: dict, snapshot: dict) -> str:
         lines.append('')
     lines.extend(['## 維護方式', '',
                   f"模型來源：`topics/{topic_id}/model.js`；資料來源：`topics/{topic_id}/data/`。",
-                  '共用網頁目前取自根目錄 `dist/`；本站 `dist/` 為生成輸出，不直接維護分叉版本。',
+                  '共用網頁來源為 `shared/web/template/`；本站 `dist/` 為生成輸出，不直接維護分叉版本。',
                   f"重建：`python scripts/build-topic-sites.py --topic {topic_id}`。", ''])
     return '\n'.join(lines)
 
@@ -265,7 +262,7 @@ python -m http.server 8000 --directory dist
 - 題目模型：`topics/{topic_id}/model.js`。
 - 題目資料與證據：`topics/{topic_id}/data/`。
 - 共用模型工具：`shared/lib/`。
-- 共用網頁模板：目前為根目錄 `dist/`；本站入口與品牌配置在 `shared/web/topic-sites.json`。
+- 共用網頁模板：`shared/web/template/`；本站入口與品牌配置在 `shared/web/topic-sites.json`。
 - 生成器：`scripts/build-topic-sites.py`。本站 `dist/` 是生成輸出，請修改來源後重建。
 
 從 repository 根目錄執行：
@@ -284,7 +281,7 @@ python scripts/build-topic-sites.py --check --topic {topic_id}
 def generate(destination: Path, topic_id: str, config: dict, data_builder) -> None:
     target = destination / 'dist'
     target.mkdir(parents=True, exist_ok=True)
-    template = ROOT / 'dist'
+    template = TEMPLATE
     for filename in WEB_FILES:
         text = shared_library(filename) if filename in {'geo.js', 'contracts.js'} else read(template / filename)
         write(target / filename, text)

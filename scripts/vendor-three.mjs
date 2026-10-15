@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 const root=path.resolve(import.meta.dirname,'..');
-const source=path.join(root,'node_modules/three'),target=path.join(root,'dist/vendor/three');
+const source=path.join(root,'node_modules/three'),target=path.join(root,'shared/web/template/vendor/three');
 const version=JSON.parse(fs.readFileSync(path.join(source,'package.json'),'utf8')).version;
 if(version!=='0.180.0')throw new Error('Expected pinned three@0.180.0');
 fs.mkdirSync(target,{recursive:true});

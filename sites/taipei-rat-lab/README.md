@@ -18,7 +18,7 @@ python -m http.server 8000 --directory dist
 - 題目模型：`topics/rat/model.js`。
 - 題目資料與證據：`topics/rat/data/`。
 - 共用模型工具：`shared/lib/`。
-- 共用網頁模板：目前為根目錄 `dist/`；本站入口與品牌配置在 `shared/web/topic-sites.json`。
+- 共用網頁模板：`shared/web/template/`；本站入口與品牌配置在 `shared/web/topic-sites.json`。
 - 生成器：`scripts/build-topic-sites.py`。本站 `dist/` 是生成輸出，請修改來源後重建。
 
 從 repository 根目錄執行：

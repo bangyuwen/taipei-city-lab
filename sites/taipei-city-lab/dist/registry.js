@@ -1,0 +1,10 @@
+import {shade} from './modules/shade.js';
+import {bins} from './modules/bins.js';
+import {rat} from './modules/rat.js';
+import {traffic} from './modules/traffic.js';
+import {bus} from './modules/bus.js';
+import {buildings} from './modules/buildings.js';
+import {audit} from './modules/audit.js';
+export const modules = [shade,bins,rat,traffic,bus,buildings,audit];
+export const tones = ['#39835f','#a57524','#a05d51','#527f9a','#70668c','#a36537','#447d79'];
+export const topics = ['樹蔭公平','清潔箱配置','鼠患源頭治理','內湖錯峰通勤','公車接駁與休息','社區健檢排序','市政資料健檢'];

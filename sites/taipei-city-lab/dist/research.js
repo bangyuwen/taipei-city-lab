@@ -1,0 +1,23 @@
+export const research = {
+  shade: {title:'American Forests · Tree Equity Score',url:'https://www.americanforests.org/tools-research-reports-and-guides/tree-equity-score/',
+    finding:'其方法結合樹冠覆蓋、地表溫度與人口社經條件。樹點數量或距離無法直接替代這些資訊。',
+    next:'正式版先建立樹冠與熱暴露圖層，再疊合步行需求、弱勢人口及可施工候選位置；本版仍是局部樹點代理。'},
+  bins: {title:'NYC DSNY · Litter Baskets',url:'https://www.nyc.gov/site/dsny/what-we-do/cleaning/litter-baskets.page',
+    finding:'公共清潔箱配置與商業／混合使用區、交通節點及既有清運路線有關。設置與維運需要一起評估。',
+    next:'加入人行路網、候選位置限制與每次收運成本，比較新增／搬移／調整清運頻率；本版尚未接入這些觀測。'},
+  rat: {title:'NYC Health · Rat complaints and inspections',url:'https://a816-dohbesp.nyc.gov/IndicatorPublic/data-stories/rat-complaints/',
+    finding:'通報後會先檢查最近的現勘紀錄，確認鼠跡與棲地條件，再安排改善與複查。通報件數不能直接當鼠患強度。',
+    next:'建立通報→查核→源頭改善→複查的案件流程，用現勘結果與未覆查比例評估，而不是只看通報熱點。'},
+  traffic: {title:'FHWA · Analytical assessment of bottlenecks',url:'https://ops.fhwa.dot.gov/publications/fhwahop18013/chap5.htm',
+    finding:'瓶頸分析需看延誤、旅行時間與排隊，也要檢查上下游影響及不同日期的可靠度。',
+    next:'累積歷史 VD 與旅行時間，先校準容量和到達需求，再做錯峰試辦；本版單瓶頸仍未含道路回堵。'},
+  bus: {title:'GTFS · Frequency-based services',url:'https://gtfs.org/documentation/schedule/examples/frequencies/',
+    finding:'班距型服務需要服務時段與各站相對行車時間。班表資料描述供給，不能代替刷卡 OD 或逐站需求。',
+    next:'接入實際班表、旅行時間及轉乘需求，並加入替班／全日勤務限制；本版每圈休息不是法規合規認證。'},
+  buildings: {title:'NCREE · TEASPA 技術文件與輸入樣板',url:'https://teaspa.ncree.org.tw/Home/Download',
+    finding:'專業耐震評估有結構技術文件、輸入資料與評估報告流程。屋齡和地盤潛勢無法單獨證實建築安全。',
+    next:'把優先名單接到文件補齊、現勘與專業評估，記錄完成率及資料缺口；本版分數僅安排查勘。'},
+  audit: {title:'W3C · PROV Data Model',url:'https://www.w3.org/TR/prov-dm/',
+    finding:'追溯資訊描述資料實體、產生／使用活動及相關責任，讓品質判斷有可查的依據。',
+    next:'保存來源版本、篩選、轉換、問題、時間與參數。這次已補齊 CSV 健檢請求條件；未宣稱完整 PROV 相容。'}
+};

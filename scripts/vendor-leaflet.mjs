@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
-const root=path.resolve(import.meta.dirname,'..'),source=path.join(root,'node_modules/leaflet'),target=path.join(root,'dist/vendor/leaflet');
+const root=path.resolve(import.meta.dirname,'..'),source=path.join(root,'node_modules/leaflet'),target=path.join(root,'shared/web/template/vendor/leaflet');
 const version=JSON.parse(fs.readFileSync(path.join(source,'package.json'),'utf8')).version;
 if(version!=='1.9.4')throw new Error('Expected pinned leaflet@1.9.4');
 fs.mkdirSync(target,{recursive:true});

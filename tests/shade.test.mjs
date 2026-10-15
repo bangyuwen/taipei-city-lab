@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { shade } from '../dist/modules/shade.js';
-import { greedyCoverage } from '../dist/modules/spatial.js';
+import { shade } from '../sites/taipei-city-lab/dist/modules/shade.js';
+import { greedyCoverage } from '../sites/taipei-city-lab/dist/modules/spatial.js';
 
 const metric = (result, label) => result.metrics.find((item) => item.label === label).value;
 
@@ -77,7 +77,7 @@ test('極端輸入與缺漏資料仍有限、可重現，地圖經緯度不交�
 });
 
 test('正式樹木快照預設有可改善缺口，20 個假設樹點帶來正增益', () => {
-  const data = JSON.parse(readFileSync(new URL('../dist/data/snapshot.json', import.meta.url), 'utf8'));
+  const data = JSON.parse(readFileSync(new URL('../sites/taipei-city-lab/dist/data/snapshot.json', import.meta.url), 'utf8'));
   const result = shade.evaluate(shade.defaults, data);
   assert.ok(metric(result, '快照內已知樹點') > 0);
   assert.ok(metric(result, '已知樹點基準可及率') < 100);

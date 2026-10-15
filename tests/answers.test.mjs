@@ -1,12 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {binSnapshotFacts,binBenchmark,researchAnswer,answerSources} from '../dist/answers.js';
-import {bins} from '../dist/modules/bins.js';
-import {modules} from '../dist/registry.js';
+import {binSnapshotFacts,binBenchmark,researchAnswer,answerSources} from '../sites/taipei-city-lab/dist/answers.js';
+import {bins} from '../sites/taipei-city-lab/dist/modules/bins.js';
+import {modules} from '../sites/taipei-city-lab/dist/registry.js';
 import {boot} from './helpers/app-harness.mjs';
-import {inspectCSV} from '../dist/modules/audit.js';
-const data=JSON.parse(fs.readFileSync(new URL('../dist/data/snapshot.json',import.meta.url)));
+import {inspectCSV} from '../sites/taipei-city-lab/dist/modules/audit.js';
+const data=JSON.parse(fs.readFileSync(new URL('../sites/taipei-city-lab/dist/data/snapshot.json',import.meta.url)));
 
 test('observed district counts reconcile to the actual snapshot without adding synthetic sites',()=>{
   const facts=binSnapshotFacts(data);
