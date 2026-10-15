@@ -32,7 +32,7 @@ async function ensureDesign(){
     designExperience.setActive(currentPage==='design');
   }).catch(()=>{
     designLoading=null;
-    $('design-status').textContent='桶型體驗暫時無法載入，請重新整理再試。';
+    $('design-status').textContent='用途設計暫時無法載入，請重新整理再試。';
     $('design-fallback').hidden=false;
   });
   return designLoading;
