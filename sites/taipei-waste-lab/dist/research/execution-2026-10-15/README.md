@@ -52,6 +52,6 @@
 
 在專案根目錄執行 `python3 scripts/prepare-research-execution.py`，由固定比較 JSON、座標距離 JSON 與選樣設定重建三份 CSV 及 `desk-results.json`。程式先驗證來源雜湊與 75 對集合，不下載或改寫原清冊；**不會填入人工核驗結果**。實際核驗應在另存的工作副本登錄，避免重建覆蓋紀錄。
 
-`python3 scripts/package-research.py` 將研究、文獻與計畫同步至網站，並產生含原始輸入與重建程式的離線 ZIP。網站以「研究與實作」呈現已完成的桌面成果、18 個可篩選候選、13 篇文獻與下載入口。
+`python3 scripts/package-research.py` 同步私人研究副本，並產生含原始輸入、必要文件與重建程式的私人離線 ZIP。解壓後可執行 `python3 scripts/estimate-budget.py` 及 `python3 scripts/package-research.py`。網站保留已完成的桌面成果、18 個可篩選候選與 13 篇文獻；公開輸出不含研究附件或下載入口。
 
 階段 A 的桌面交付已完成；B 的排程與模板、C 的診斷表、D 的試辦登記已備妥。B 的實地量測、C 的實證診斷與 D 的介入成效仍待現場及管理資源。資料詢問草稿尚未寄出，沒有機關合作或回覆的暗示。

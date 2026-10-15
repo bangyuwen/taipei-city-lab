@@ -111,7 +111,7 @@
 
 這不是全市年度總預算。未含新購車輛、土地與人行道土建、智慧壓縮／感測設備、監視器、大型軟體、整條街清掃、家戶收受點擴充、商業垃圾新清運契約或新建末端處理設施；15% 預備金也不能取代這些新增範圍的估價。若合法收受資訊仍不能解決已確認的可及性障礙，應另編家戶服務費，不能宣稱本案已解決。實際採購需以選定規格、點位固定條件、路線與承接人力詢價。
 
-本估算不要求先完成另一個研究才可討論經費；它提供可以直接檢討的數量、單價與班次。服務判斷見[配置、清運與家戶分流文件](../service-strategy-2026-10-15/README.md)。可下載 [計算明細 CSV](estimate.csv) 與 [估算參數 JSON](inputs.json)；在專案根目錄執行 `python3 scripts/estimate-budget.py` 重算，再執行 `python3 scripts/package-research.py` 更新網站下載包。
+本估算不要求先完成另一個研究才可討論經費；它提供可以直接檢討的數量、單價與班次。服務判斷見[配置、清運與家戶分流文件](../service-strategy-2026-10-15/README.md)。可下載 [計算明細 CSV](estimate.csv) 與 [估算參數 JSON](inputs.json)；在專案根目錄執行 `python3 scripts/estimate-budget.py` 重算，再執行 `python3 scripts/package-research.py` 更新私人離線研究包。
 
 智慧設備的功能、海外成本範圍與五年成本框架另見[六國進階垃圾桶比較](../smart-bin-comparison-2026-10-15/README.md)。該比較不將海外歷史單價當台北現行報價，也不變更本案一般桶預算。
 

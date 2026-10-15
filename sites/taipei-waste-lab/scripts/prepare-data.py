@@ -3,7 +3,6 @@ import collections
 import csv
 import hashlib
 import json
-import re
 import shutil
 import subprocess
 import sys
@@ -32,7 +31,7 @@ DISTRICTS = ['中正區', '大同區', '中山區', '松山區', '大安區', '�
 OFFICIAL = 'https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c'
 
 def prepare_sources():
-    """Package canonical inputs, then recreate the site's existing download URLs.
+    """Package canonical inputs for the site and private offline research bundle.
 
     In this monorepo only topics/bins is edited by hand. data/history and
     data/research are generated source packages for a standalone site checkout;
@@ -40,28 +39,26 @@ def prepare_sources():
     """
     topic = ROOT.parent.parent / 'topics/bins'
     packaged = ROOT / 'data'
-    if topic.is_dir():
-        shutil.copytree(CANONICAL_RESEARCH, ROOT / 'research', dirs_exist_ok=True,
-                        ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
     source = topic / 'data/history' if topic.is_dir() else packaged / 'history'
     research = topic / 'docs' if topic.is_dir() else packaged / 'research'
 
     # Validate every required input before replacing any generated files.
     history_bytes = {name: (source / name).read_bytes() for name in HISTORY_FILES}
     research_bytes = {name: (research / name).read_bytes() for name in RESEARCH_FILES}
+    if topic.is_dir():
+        # This is a generated standalone copy; the canonical tree is untouched.
+        if (ROOT / 'research').exists():
+            shutil.rmtree(ROOT / 'research')
+        shutil.copytree(CANONICAL_RESEARCH, ROOT / 'research',
+                        ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
     for directory in (packaged / 'history', packaged / 'research',
-                      DEST, ROOT / 'dist/research'):
+                      DEST):
         directory.mkdir(parents=True, exist_ok=True)
     for name, content in history_bytes.items():
         (packaged / 'history' / name).write_bytes(content)
         (DEST / name).write_bytes(content)
     for name, content in research_bytes.items():
         (packaged / 'research' / name).write_bytes(content)
-        # Sibling research links keep working. Only source download destinations
-        # change between topics/bins/docs and the deployed dist/research folder.
-        deployed = re.sub(r'(?<=\]\()\.\./data/history/', '../data/',
-                          content.decode('utf-8'))
-        (ROOT / 'dist/research' / name).write_bytes(deployed.encode('utf-8'))
 
 def source_rows(path):
     with path.open(encoding='utf-8-sig', newline='') as f:
@@ -92,7 +89,6 @@ def main():
         if hashlib.sha256(payload).hexdigest() != manifest['files'][name]['sha256']:
             raise ValueError(f'Recovery input hash mismatch: {name}')
         (DEST / name).write_bytes(payload)
-    shutil.copytree(RECOVERY, ROOT / 'dist/research/source-recovery-2026-10-15', dirs_exist_ok=True)
     for snapshot in manifest['snapshots'][:2]:
         provenance = {**snapshot, 'observedDate': manifest['observed_date'],
                       'sha256': manifest['files'][snapshot['file']]['sha256'],
@@ -172,14 +168,7 @@ def main():
     assert datasets[0]['plottableRows'] == 2505
     print(json.dumps([{'key': d['key'], 'rows': d['rows'], 'mapRows': d['plottableRows']} for d in datasets]))
     subprocess.run([sys.executable, str(ROOT / 'scripts/compare-snapshots.py')], check=True)
-    shutil.copytree(ROOT / 'research/comparison-2024-2026', ROOT / 'dist/research/comparison-2024-2026', dirs_exist_ok=True)
-    comparison_notes = ROOT / 'dist/research/comparison-2024-2026/README.md'
-    comparison_notes.write_text(comparison_notes.read_text().replace('../../dist/data/', '../../data/'))
     subprocess.run([sys.executable, str(ROOT / 'scripts/analyze-coordinate-distances.py')], check=True)
-    research_source = CANONICAL_RESEARCH if CANONICAL_RESEARCH.is_dir() else ROOT / 'research'
-    shutil.copytree(research_source / 'coordinate-distances-2024-2026', ROOT / 'dist/research/coordinate-distances-2024-2026', dirs_exist_ok=True)
-    distance_notes = ROOT / 'dist/research/coordinate-distances-2024-2026/README.md'
-    distance_notes.write_text(distance_notes.read_text().replace('../../dist/data/', '../../data/'))
     for script in ['prepare-research-execution.py', 'estimate-budget.py', 'package-research.py']:
         subprocess.run([sys.executable, str(ROOT / 'scripts' / script)], check=True)
 

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {cp, mkdtemp, mkdir, readFile, readdir, rm, writeFile} from 'node:fs/promises';
+import {access, cp, mkdtemp, mkdir, readFile, readdir, rm, writeFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {spawnSync} from 'node:child_process';
@@ -39,8 +39,12 @@ for (const monorepo of [true, false]) {
       await mkdir(join(output, 'research/budget-2026-10-15'), {recursive: true});
       await writeFile(join(output, 'research/budget-2026-10-15/inputs.json'), 'stale research');
     }
+    const stalePaths=['dist/research/retired-study/old.md', 'dist/research/source-recovery-2026-10-15/retired.txt'];
+    if(monorepo)stalePaths.push('research/retired-study/old.md', 'research/budget-2026-10-15/retired.txt');
+    for(const name of stalePaths){await mkdir(join(output,name,'..'),{recursive:true});await writeFile(join(output,name),'retired generated copy');}
     const result = spawnSync(process.env.PYTHON_BIN || 'python3', [join(output, 'scripts/prepare-data.py')], {encoding: 'utf8'});
     assert.equal(result.status, 0, result.stderr || result.stdout);
+    for(const name of stalePaths)await assert.rejects(access(join(output,name)),{code:'ENOENT'});
     for (const name of ['README.md', 'inputs.json', 'estimate.csv']) {
       const expected = await readFile(new URL('research/budget-2026-10-15/'+name, site));
       assert.deepEqual(await readFile(join(output, 'research/budget-2026-10-15', name)), expected);
