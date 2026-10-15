@@ -57,11 +57,10 @@ export function createBinScene(container, { onStatus = () => {} } = {}) {
   let design = null;
   let params = null;
   let mouth = new THREE.Vector3(0, 1.1, 0);
+  let mouths = { general: mouth };
   let isFrontOpening = false;
   let doorParts = [];
   let linerParts = [];
-  let lidParts = [];
-  let canopyParts = [];
   let serviceOpen = false;
   let serviceProgress = 0;
   let currentView = 'overview';
@@ -97,11 +96,6 @@ export function createBinScene(container, { onStatus = () => {} } = {}) {
   function cylinder(radius, height, color, parent, position, options = {}) {
     return mesh(new THREE.CylinderGeometry(radius, radius, height, 40, 1, !!options.openEnded),
       material(color, { side: options.openEnded ? THREE.DoubleSide : THREE.FrontSide, ...options.material }), parent, position);
-  }
-  function ring(outerRadius, innerRadius, color, parent, position) {
-    const result = mesh(new THREE.RingGeometry(innerRadius, outerRadius, 48), material(color, { side: THREE.DoubleSide }), parent, position);
-    result.rotation.x = -Math.PI / 2;
-    return result;
   }
   function disposeTree(tree) {
     const geometries = new Set();
@@ -243,66 +237,6 @@ export function createBinScene(container, { onStatus = () => {} } = {}) {
     }
   }
 
-  function roundBin(x, radius, openingY, bodyHeight, openingWidth, color, text, width, linerMode = false) {
-    const base = new THREE.Group();
-    modelGroup.add(base);
-    // A double-sided shell and recessed liner keep the opening visibly hollow.
-    cylinder(radius, bodyHeight - .045, color, base, [x, (bodyHeight - .045) / 2 + .025, 0], { openEnded: true });
-    cylinder(radius * .94, .04, 0x35413b, base, [x, .04, 0]);
-    const aperture = Math.min(openingWidth / 2, radius - .025);
-    const lid = new THREE.Group();
-    lid.position.set(x, openingY, -radius);
-    base.add(lid);
-    lidParts.push(lid);
-    ring(radius + .008, aperture, color, lid, [0, 0, radius]);
-    const lip = mesh(new THREE.TorusGeometry(aperture, .012, 8, 48), material(0xe2e4d9, { metalness: .55, roughness: .3 }), lid, [0, .006, radius]);
-    lip.rotation.x = Math.PI / 2;
-    cylinder(aperture, .08, 0x34473b, lid, [0, -.045, radius], { openEnded: true });
-    const lowerBand = cylinder(radius + .004, .045, 0x384a40, base, [x, .085, 0]);
-    lowerBand.castShadow = false;
-    frontLabel(text, x, bodyHeight * .57, radius + .008, Math.min(width * .7, .3), .11, base);
-    const labelEn = text === '回收' ? 'RECYCLE' : 'GENERAL';
-    const en = frontLabel(labelEn, x, bodyHeight * .57 - .08, radius + .012, Math.min(width * .68, .3), .055, base);
-    en.material.opacity = .75;
-    addFill(base, x, aperture, openingY, bodyHeight, params.fillPercent);
-    const liner = new THREE.Group();
-    modelGroup.add(liner);
-    liner.position.set(x, 0, 0);
-    cylinder(radius * .78, bodyHeight * .76, 0xadb4a8, liner, [0, bodyHeight * .38 + .04, 0], { openEnded: true });
-    ring(radius * .8, radius * .73, 0xd9dcd0, liner, [0, bodyHeight * .76 + .045, 0]);
-    liner.visible = false;
-    linerParts.push({ object: liner, startZ: 0, lift: bodyHeight + .075, distance: radius * 2 + .28, reveal: true, topExtract: true });
-    if (linerMode) base.userData.liner = liner;
-  }
-
-  function buildRoundBins(width, depth, height, opening, colors, withHood) {
-    const gap = .055;
-    const radius = Math.min((width - gap) / 4, depth / 2) - .008;
-    const centers = [-width / 2 + radius + .008, width / 2 - radius - .008];
-    const openingY = height * (design.openingRatio || (withHood ? .88 : 1));
-    const bodyHeight = openingY;
-    centers.forEach((x, i) => roundBin(x, radius, openingY, bodyHeight, opening, i ? colors.recycle : colors.body, i ? '回收' : '一般', radius * 2));
-    if (withHood) {
-      // Prominent shared rain canopy, open on the pedestrian side.
-      for (const x of [-width / 2 + .045, width / 2 - .045]) {
-        box(.035, height - .12, .035, 0x3a5146, modelGroup, [x, height / 2 - .02, -depth / 2 + .04]);
-      }
-      // A rear visor leaves the front of the mouth clear for a narrow-end-first approach.
-      const canopyDepth = depth * .45;
-      const canopyZ = -depth * .30;
-      const canopyHinge = new THREE.Group();
-      canopyHinge.position.set(0, height - .035, canopyZ - canopyDepth / 2);
-      modelGroup.add(canopyHinge);
-      canopyParts.push(canopyHinge);
-      const canopy = box(width, .045, canopyDepth, colors.recycle, canopyHinge, [0, 0, canopyDepth / 2], { roughness: .56 });
-      canopy.rotation.x = -.065;
-      box(width, .065, .035, 0x345f4b, canopyHinge, [0, -.017, canopyDepth]);
-      box(width, .08, .025, colors.body, modelGroup, [0, height - .09, -depth / 2 + .0125]);
-    }
-    mouth.set(centers[0], openingY, 0);
-    isFrontOpening = false;
-  }
-
   function frontCabinet({ x, width, depth, height, opening, openingY, openingAspect, color, label, service = false }) {
     const wall = .022;
     const front = depth / 2;
@@ -317,10 +251,9 @@ export function createBinScene(container, { onStatus = () => {} } = {}) {
     box(width, height, wall, color, base, [x, height / 2, -front + wall / 2]);
     box(width, wall, depth, color, base, [x, height - wall / 2, 0]);
     box(width, .05, depth, 0x3c4e43, base, [x, .04, 0]);
-    // Separate front panels leave a real geometric aperture rather than a dark decal.
     const doorHeight = Math.max(.25, bottomOpening - .035);
     let doorX = x;
-    if (service || design.id === 'slot') {
+    if (service) {
       const hinge = new THREE.Group();
       hinge.position.set(x - width / 2 + .012, .065, front - .01);
       modelGroup.add(hinge);
@@ -338,53 +271,268 @@ export function createBinScene(container, { onStatus = () => {} } = {}) {
     box(width, Math.max(.015, height - topOpening), wall, color, base, [x, (height + topOpening) / 2, front - wall / 2]);
     const sideWidth = (width - apertureWidth) / 2;
     for (const sign of [-1, 1]) {
-      box(sideWidth, apertureHeight, wall, color, base, [x + sign * (apertureWidth / 2 + sideWidth / 2), openingY, front - wall / 2]);
+      box(sideWidth, apertureHeight, wall, color, base,
+        [x + sign * (apertureWidth / 2 + sideWidth / 2), openingY, front - wall / 2]);
     }
-    // Metal sill and a dark internal chute make the opening legible at a glance.
-    box(apertureWidth + .012, .018, .065, 0xaebcb0, base, [x, bottomOpening - .008, front - .012], { metalness: .65 });
+    box(apertureWidth + .012, .018, .065, 0xaebcb0, base,
+      [x, bottomOpening - .008, front - .012], { metalness: .65 });
     box(apertureWidth, apertureHeight, .006, 0x263a30, base, [x, openingY, front - .13]);
-    box(width - .04, .035, depth - .02, 0xd1d5c9, base, [x, height - .0175, 0], { metalness: .4, roughness: .4 });
+    box(width - .04, .035, depth - .02, 0xd1d5c9, base,
+      [x, height - .0175, 0], { metalness: .4, roughness: .4 });
     const liner = new THREE.Group();
     modelGroup.add(liner);
     liner.position.set(x, 0, 0);
     const linerHeight = Math.min(bottomOpening - .09, height * .65);
     box(width - .085, linerHeight, depth - .09, 0xa6b0a2, liner, [0, linerHeight / 2 + .07, 0]);
     box(width - .11, .014, depth - .115, 0x334438, liner, [0, linerHeight + .078, 0]);
-    box((width - .085) * .5, .035, .018, 0xd5dbcf, liner, [0, linerHeight - .02, (depth - .09) / 2 + .012]);
+    box((width - .085) * .5, .035, .018, 0xd5dbcf, liner,
+      [0, linerHeight - .02, (depth - .09) / 2 + .012]);
     linerParts.push({ object: liner, startZ: 0, lift: 0, distance: depth + .19, reveal: false });
     addFill(base, x, (width - .06) / 2, openingY, height, params.fillPercent, 'rect', depth - .05);
     if (params.fillPercent >= 80) {
-      box(apertureWidth * .5, .025, .06, 0xd0c6ac, base, [x, openingY - apertureHeight * .22, front - .065]);
+      box(apertureWidth * .5, .025, .06, 0xd0c6ac, base,
+        [x, openingY - apertureHeight * .22, front - .065]);
     }
     return new THREE.Vector3(x, openingY, front + .005);
   }
 
-  function buildCabinets(width, depth, height, opening, colors, service) {
-    const openingY = height * (design.openingRatio || .8);
-    const aspect = design.openingAspectRatio || (service ? .75 : .6);
-    if (service) {
-      const gap = .016;
-      const eachWidth = (width - gap) / 2;
-      [-1, 1].forEach((sign, i) => {
-        const center = sign * (eachWidth + gap) / 2;
-        const point = frontCabinet({ x: center, width: eachWidth, depth, height, opening, openingY,
-          openingAspect: aspect, color: i ? colors.recycle : colors.body, label: i ? '回收' : '一般', service: true });
-        if (!i) mouth.copy(point);
-      });
-      box(width, .035, depth, 0xd4d8cb, modelGroup, [0, height - .0175, 0]);
-    } else {
-      mouth.copy(frontCabinet({ x: 0, width, depth, height, opening, openingY, openingAspect: aspect, color: colors.body, label: '一般垃圾' }));
-      box(.055, height - .07, .012, colors.recycle, modelGroup, [-width / 2 + .055, height / 2, depth / 2 + .008]);
-      frontLabel('街頭小型廢棄物', 0, height * .36, depth / 2 + .006, width * .7, .06);
-    }
+  function buildStreetBin(width, depth, height, opening, colors) {
+    const openingY = height * (design.openingRatio ?? .75);
+    const point = frontCabinet({
+      x: 0, width, depth, height, opening, openingY,
+      openingAspect: design.openingAspectRatio ?? .65,
+      color: colors.body, label: '街頭', service: true,
+    });
+    mouths = { general: point };
+    mouth.copy(point);
     isFrontOpening = true;
+
+    // A narrow, low canopy slopes toward the pedestrian side to shield the intake.
+    const canopy = new THREE.Group();
+    canopy.position.set(0, height * .88, depth / 2 - .045);
+    modelGroup.add(canopy);
+    const canopyDepth = depth * .34;
+    const roof = box(width * .94, .04, canopyDepth, colors.body, canopy, [0, 0, 0], { roughness: .54 });
+    roof.rotation.x = .12;
+    box(width * .9, .045, .025, colors.accent, canopy, [0, -.02, canopyDepth * .45], { metalness: .32 });
+    for (const side of [-1, 1]) {
+      box(.018, .11, .025, 0x42584c, modelGroup,
+        [side * width * .37, height * .82, depth * .34]);
+    }
+    frontLabel('街頭一般', 0, height * .31, depth / 2 + .01, width * .76, .075);
+  }
+
+  function buildSortingBins(width, depth, height, opening, colors) {
+    const gap = .026;
+    const eachWidth = (width - gap) / 2;
+    const openingY = height * (design.openingRatio ?? .82);
+    const aspect = design.openingAspectRatio ?? .75;
+    const generalX = -(eachWidth + gap) / 2;
+    const recycleX = (eachWidth + gap) / 2;
+    const general = frontCabinet({
+      x: generalX, width: eachWidth, depth, height, opening, openingY,
+      openingAspect: aspect, color: colors.body, label: '一般', service: true,
+    });
+    const recycle = frontCabinet({
+      x: recycleX, width: eachWidth, depth, height, opening, openingY,
+      openingAspect: aspect, color: colors.recycle, label: '回收', service: true,
+    });
+    mouths = { general, recycle };
+    mouth.copy(general);
+    isFrontOpening = true;
+    box(.026, height * .94, .026, 0x40564a, modelGroup, [0, height * .49, depth / 2 + .012]);
+    for (const [x, color] of [[generalX, colors.body], [recycleX, colors.recycle]]) {
+      box(eachWidth * .9, .04, .024, color, modelGroup, [x, height - .085, depth / 2 + .014]);
+    }
+  }
+
+  function buildHotspotCabinet(width, depth, height, opening, colors) {
+    const wall = .026;
+    const front = depth / 2;
+    const openingY = height * (design.openingRatio ?? .72);
+    const openingAspect = design.openingAspectRatio ?? .65;
+    const openingWidth = Math.min(opening, width * .42);
+    const openingHeight = Math.min(openingWidth * openingAspect, height * .24);
+    const intakeX = width * .23;
+    const intakeZ = front + .012;
+
+    // The cabinet shell leaves a glazed front cutaway so the press and hopper remain visible.
+    box(wall, height, depth, colors.body, modelGroup, [-width / 2 + wall / 2, height / 2, 0]);
+    box(wall, height, depth, colors.body, modelGroup, [width / 2 - wall / 2, height / 2, 0]);
+    box(width - wall * 2, height, wall, colors.body, modelGroup, [0, height / 2, -depth / 2 + wall / 2]);
+    box(width, wall, depth, 0x34483e, modelGroup, [0, wall / 2, 0]);
+    box(width, wall, depth, colors.body, modelGroup, [0, height - wall / 2, 0]);
+
+    const windowX = -width * .16;
+    const windowWidth = width * .46;
+    const windowHeight = height * .5;
+    const windowY = height * .39;
+    const windowZ = front + .012;
+    const cavityZ = -depth / 2 + wall + .035;
+    box(windowWidth, windowHeight, .018, 0x26382f, modelGroup, [windowX, windowY, cavityZ]);
+    const windowFrame = 0x9ba99c;
+    const windowFrameWidth = windowWidth + .05;
+    const serviceWindow = new THREE.Group();
+    serviceWindow.position.set(windowX - windowFrameWidth / 2, windowY, front - .002);
+    modelGroup.add(serviceWindow);
+    doorParts.push({ object: serviceWindow, direction: -1 });
+    box(windowFrameWidth, .028, .035, windowFrame, serviceWindow,
+      [windowFrameWidth / 2, -windowHeight / 2 - .014, 0]);
+    box(windowFrameWidth, .028, .035, windowFrame, serviceWindow,
+      [windowFrameWidth / 2, windowHeight / 2 + .014, 0]);
+    box(.028, windowHeight, .035, windowFrame, serviceWindow, [.011, 0, 0]);
+    box(.028, windowHeight, .035, windowFrame, serviceWindow, [windowWidth + .039, 0, 0]);
+    box(windowWidth, windowHeight, .012, 0x91b8ad, serviceWindow,
+      [windowFrameWidth / 2, 0, .014],
+      { transparent: true, opacity: .2, depthWrite: false, roughness: .2 });
+    // Visible guides and a static press position make this a concept model, not a capacity claim.
+    const guideZ = front - .15;
+    for (const side of [-1, 1]) {
+      cylinder(.012, windowHeight * .76, 0xbcc6ba, modelGroup,
+        [windowX + side * windowWidth * .34, windowY, guideZ], { material: { metalness: .62, roughness: .32 } });
+    }
+    cylinder(.025, .15, 0x8d9d91, modelGroup,
+      [windowX, windowY + windowHeight * .34, guideZ], { material: { metalness: .58 } });
+    const pressY = params.compactionShown ? windowY - .015 : windowY + .16;
+    box(windowWidth * .78, .035, depth * .29, colors.accent, modelGroup,
+      [windowX, pressY, front - .11], { metalness: .28, roughness: .46 });
+    box(windowWidth * .65, .12, depth * .28, 0x76857a, modelGroup,
+      [windowX, .21, guideZ], { roughness: .82 });
+
+    const fillGroup = new THREE.Group();
+    fillGroup.position.z = front - .027;
+    modelGroup.add(fillGroup);
+    addFill(fillGroup, windowX, windowWidth * .38, windowY - .01, windowHeight * .78,
+      clamp(Number(params.fillPercent) || 0, 0, 100), 'rect', .04);
+
+    const hopper = new THREE.Group();
+    hopper.position.set(windowX, .105, front - wall - .11);
+    modelGroup.add(hopper);
+    box(windowWidth * .68, .16, depth * .28, 0x9da99d, hopper, [0, 0, 0]);
+    box(windowWidth * .64, .012, depth * .25, 0x3b4a40, hopper, [0, .085, 0]);
+    linerParts.push({
+      object: hopper, startZ: hopper.position.z, lift: 0, distance: depth + .18, reveal: false,
+    });
+
+    // The high front slot is the actual deposit target; the dark recess reads as an intake.
+    box(openingWidth, openingHeight, .012, 0x263a30, modelGroup, [intakeX, openingY, intakeZ]);
+    box(openingWidth + .035, .025, .035, colors.accent, modelGroup,
+      [intakeX, openingY - openingHeight / 2 - .016, front + .006], { metalness: .38 });
+    box(.022, openingHeight, .035, 0xaebbb0, modelGroup,
+      [intakeX - openingWidth / 2 - .011, openingY, front + .006], { metalness: .5 });
+    box(.022, openingHeight, .035, 0xaebbb0, modelGroup,
+      [intakeX + openingWidth / 2 + .011, openingY, front + .006], { metalness: .5 });
+    mouths = { general: new THREE.Vector3(intakeX, openingY, front + .018) };
+    mouth.copy(mouths.general);
+    isFrontOpening = true;
+
+    const online = params.sensorOnline === true;
+    const requested = params.serviceRequested === true;
+    const fillPercent = Number(params.fillPercent) || 0;
+    const full = fillPercent >= 100;
+    const nearFull = fillPercent >= 80;
+    const statusText = params.serviceOpen ? '清運・暫停'
+      : !online ? '離線・狀態未知'
+      : full ? '已滿・暫停'
+      : requested ? '收運已安排'
+      : nearFull ? '接近滿載'
+      : '感測在線';
+    const statusColor = params.serviceOpen ? 0x83a2a0
+      : !online ? 0x56625c
+      : full ? 0xc9534b
+      : requested || nearFull ? 0xe1a44d
+      : 0x49ad78;
+    const panelX = width * .23;
+    const panelY = height * .48;
+    box(width * .43, .22, .035, 0x33473d, modelGroup, [panelX, panelY, front + .008]);
+    frontLabel('狀態示意', panelX + .018, panelY + .065, front + .03, width * .35, .052);
+    frontLabel(statusText, panelX + .018, panelY - .025, front + .03, width * .35, .065);
+    mesh(new THREE.SphereGeometry(.027, 16, 12),
+      material(statusColor, { emissive: statusColor, emissiveIntensity: .28, roughness: .3 }),
+      modelGroup, [panelX - width * .15, panelY + .035, front + .038]);
+    frontLabel('一般垃圾', 0, .105, front + .012, width * .56, .06);
+
+    const solar = new THREE.Group();
+    solar.position.set(0, height + .016, -depth * .08);
+    solar.rotation.x = .16;
+    modelGroup.add(solar);
+    const panelWidth = width * .72;
+    const panelDepth = depth * .43;
+    box(panelWidth, .025, panelDepth, 0x253c50, solar, [0, 0, 0],
+      { metalness: .48, roughness: .34 });
+    for (let index = 1; index < 4; index++) {
+      const x = (index / 4 - .5) * panelWidth;
+      box(.006, .006, panelDepth * .92, 0x9fb4b7, solar, [x, .014, 0]);
+    }
+    for (let index = 1; index < 3; index++) {
+      const z = (index / 3 - .5) * panelDepth;
+      box(panelWidth * .92, .006, .006, 0x9fb4b7, solar, [0, .014, z]);
+    }
+  }
+
+  function buildHouseholdCabinet(width, depth, height, opening, colors) {
+    const openingY = height * (design.openingRatio ?? .72);
+    const point = frontCabinet({
+      x: 0, width, depth, height, opening, openingY,
+      openingAspect: design.openingAspectRatio ?? .9,
+      color: colors.body, label: '', service: true,
+    });
+    mouths = { general: point };
+    mouth.copy(point);
+    isFrontOpening = true;
+
+    const front = depth / 2;
+    const door = doorParts[doorParts.length - 1].object;
+    const hingeX = width / 2 - .012;
+    const hingeY = .065;
+    const panelX = width * .23;
+    const panelY = height * .35;
+    const panelZ = .022;
+    box(width * .46, .22, .035, 0x33483e, door,
+      [hingeX + panelX, panelY - hingeY, panelZ]);
+    const panelStatus = params.serviceOpen ? '清運門開啟'
+      : Number(params.fillPercent) >= 100 ? '已滿・暫停'
+      : params.staged === true ? '投放艙待確認'
+      : params.authenticated === true ? '可放入示意袋'
+      : '等待住戶確認';
+    frontLabel('身分示意', hingeX + panelX + .025, panelY + .055 - hingeY,
+      .044, width * .36, .052, door);
+    frontLabel(panelStatus, hingeX + panelX + .025, panelY - .035 - hingeY,
+      .044, width * .36, .06, door);
+    const identityColor = params.staged === true ? 0xe1a44d
+      : params.authenticated === true ? 0x50b57c
+      : params.serviceOpen ? 0x83a2a0
+      : 0x9a9f87;
+    mesh(new THREE.SphereGeometry(.025, 14, 10),
+      material(identityColor, { emissive: identityColor, emissiveIntensity: .2 }),
+      door, [hingeX + panelX - width * .16, panelY + .025 - hingeY, .031]);
+    frontLabel('家戶專用', hingeX - width * .23, height * .36 - hingeY, .025, width * .39, .07, door);
+    box(width * .48, .025, .055, colors.accent, modelGroup,
+      [0, openingY + Math.min(opening, width - .075) * (design.openingAspectRatio ?? .9) / 2 + .012,
+        front + .012], { metalness: .24 });
+
+    // A hinged intake flap opens only after the demonstration confirmation.
+    const intakeWidth = Math.min(opening, width - .075);
+    const intakeHeight = intakeWidth * (design.openingAspectRatio ?? .9);
+    const intakeReady = params.authenticated && !params.staged && !params.serviceOpen && params.fillPercent < 100;
+    const intakeFlap = new THREE.Group();
+    intakeFlap.position.set(0, openingY + intakeHeight / 2, front + .025);
+    intakeFlap.rotation.x = intakeReady ? -Math.PI * .52 : 0;
+    modelGroup.add(intakeFlap);
+    box(intakeWidth, intakeHeight, .018, 0x9daca1, intakeFlap,
+      [0, -intakeHeight / 2, 0], { transparent: true, opacity: params.staged ? .16 : .95, roughness: .4 });
+    if (!params.staged && !intakeReady) frontLabel('封閉投放艙', 0, -intakeHeight / 2, .013,
+      intakeWidth * .86, intakeHeight * .2, intakeFlap);
+
+    if (params.staged === true && !params.serviceOpen) {
+      const stagedBag = makeItem({ id: 'bag', widthCm: 12, heightCm: 26 });
+      stagedBag.position.set(0, openingY - .03, front - .15);
+      modelGroup.add(stagedBag);
+    }
   }
 
   function applyService(progress) {
     serviceProgress = progress;
-    const lidProgress = clamp(progress / .3, 0, 1);
-    for (const lid of lidParts) lid.rotation.x = -lidProgress * Math.PI * .58;
-    for (const canopy of canopyParts) canopy.rotation.x = -clamp(progress / .23, 0, 1) * Math.PI * .57;
     for (const part of doorParts) part.object.rotation.y = part.direction * clamp(progress / .42, 0, 1) * Math.PI * .56;
     const linerProgress = clamp((progress - .3) / .7, 0, 1);
     for (const part of linerParts) {
@@ -405,15 +553,18 @@ export function createBinScene(container, { onStatus = () => {} } = {}) {
   function update(nextDesign, nextParams) {
     if (disposed) return;
     design = nextDesign;
-    params = { heightCm: 110, openingCm: 22, sidewalkCm: 200, fillPercent: 30, ...nextParams };
+    params = {
+      heightCm: 110, openingCm: 22, sidewalkCm: 200, fillPercent: 30,
+      sensorOnline: false, serviceRequested: false, authenticated: false,
+      compactionShown: false, serviceOpen: false, ...nextParams,
+    };
     runningAction = null;
     removeThrown();
     disposeTree(modelGroup);
     disposeTree(environment);
     doorParts = [];
     linerParts = [];
-    lidParts = [];
-    canopyParts = [];
+    mouths = { general: mouth };
     const width = metres(design.widthCm, 100);
     const depth = metres(design.depthCm, 48);
     const height = metres(params.heightCm, 110);
@@ -421,10 +572,13 @@ export function createBinScene(container, { onStatus = () => {} } = {}) {
     const sidewalk = metres(params.sidewalkCm, 200);
     const colors = colorsOf(design.colors);
     buildEnvironment(width, depth, sidewalk, height);
-    if (design.id === 'pair' || design.id === 'hood') buildRoundBins(width, depth, height, opening, colors, design.id === 'hood');
-    else buildCabinets(width, depth, height, opening, colors, design.id === 'service');
-    serviceOpen = false;
-    applyService(0);
+    if (design.id === 'street') buildStreetBin(width, depth, height, opening, colors);
+    else if (design.id === 'sorting') buildSortingBins(width, depth, height, opening, colors);
+    else if (design.id === 'hotspot') buildHotspotCabinet(width, depth, height, opening, colors);
+    else if (design.id === 'household') buildHouseholdCabinet(width, depth, height, opening, colors);
+    else throw new Error('不支援的垃圾桶設計。');
+    serviceOpen = params.serviceOpen === true;
+    applyService(serviceOpen ? 1 : 0);
     if (!camera.position.length()) setView(currentView, true);
     requestRender();
   }
@@ -473,6 +627,11 @@ export function createBinScene(container, { onStatus = () => {} } = {}) {
       mesh(new THREE.ConeGeometry(width * .13, height * .15, 10), material(0x3c483f), group, [0, height * .45, 0]);
       const knot = mesh(new THREE.TorusGeometry(width * .075, width * .025, 6, 12), material(0x465449), group, [0, height * .52, 0]);
       knot.rotation.y = .5;
+    } else if (item.id === 'wrapper' || item.id === 'litter') {
+      const paper = box(width, height * .045, width * .78, 0xe7dcc5, group, [0, 0, 0], { roughness: .96 });
+      paper.rotation.z = -.11;
+      const fold = box(width * .72, .006, .012, 0xb6a17d, group, [0, height * .018, 0]);
+      fold.rotation.z = -.11;
     } else {
       mesh(new THREE.CylinderGeometry(width * .47, width * .33, height * .82, 24), material(0xeee8d7), group, [0, 0, 0]);
       cylinder(width * .5, height * .06, 0x9b7051, group, [0, height * .44, 0]);
@@ -481,33 +640,32 @@ export function createBinScene(container, { onStatus = () => {} } = {}) {
     return group;
   }
 
-  function throwItem(item, allowed) {
-    if (disposed || !design) return;
+  function throwItem(item, allowed, channel = 'general') {
+    if (disposed || !design || serviceOpen || serviceProgress > 0) return;
     runningAction = null;
     removeThrown();
-    if (serviceProgress > 0) { serviceOpen = false; applyService(0); }
     thrownObject = makeItem(item);
     scene.add(thrownObject);
     const object = thrownObject;
-    // Front openings accept the narrow end first, matching the model's simplified clearance test.
+    const targetMouth = mouths[channel] || mouths.general || mouth;
     const itemHeight = metres(item.heightCm, item.id === 'bottle' ? 23 : item.id === 'bag' ? 32 : 14);
-    const isHood = design.id === 'hood';
     if (isFrontOpening) object.rotation.x = Math.PI / 2;
-    else if (isHood) object.rotation.x = Math.PI * .34;
-    const start = mouth.clone().add(new THREE.Vector3(-.38, isHood ? .015 : .5, 1.0));
-    const hoodOffset = clamp(metres(params.openingCm, 22) / 2 - metres(item.widthCm, 9) / 2 - .005, 0, .06);
-    const hit = mouth.clone().add(new THREE.Vector3(0, isFrontOpening ? 0 : isHood ? .015 : .09,
-      isFrontOpening ? itemHeight / 2 : isHood ? hoodOffset : 0));
+    const start = targetMouth.clone().add(new THREE.Vector3(-.38, .5, 1.0));
+    const hit = targetMouth.clone().add(new THREE.Vector3(0, 0, itemHeight / 2));
     const end = allowed
-      ? mouth.clone().add(new THREE.Vector3(0, isFrontOpening ? -.08 : -.33, isFrontOpening ? -.3 : 0))
-      : mouth.clone().add(new THREE.Vector3(.23, -mouth.y + itemHeight * .47 + .025, .62));
+      ? targetMouth.clone().add(new THREE.Vector3(0, -.08, -.3))
+      : start.clone();
     object.position.copy(start);
     const duration = reducedMotion ? 0 : 1150;
     const stamp = ++actionStamp;
     const finish = () => {
       if (allowed) removeThrown();
-      else if (thrownObject === object) { object.position.copy(end); object.rotation.set(.45, .25, -.4); }
-      onStatus(allowed ? '已完成簡化投放示意。' : '已完成開口受限示意。');
+      else if (thrownObject === object) {
+        object.position.copy(end);
+        object.rotation.set(isFrontOpening ? Math.PI / 2 : 0, 0, 0);
+        object.scale.setScalar(1);
+      }
+      onStatus(allowed ? '已完成簡化投放示意。' : '開口受限，物品已退回使用者一側。');
     };
     if (!duration) { finish(); requestRender(); return; }
     runningAction = {
@@ -521,9 +679,10 @@ export function createBinScene(container, { onStatus = () => {} } = {}) {
         } else {
           const progress = (t - .55) / .45;
           object.position.lerpVectors(hit, end, progress);
-          if (!allowed) { object.position.y += Math.sin(progress * Math.PI) * .25; object.rotation.z = progress * -.4; }
-          else {
-            if (isHood) object.rotation.x = Math.PI * .34 * (1 - progress);
+          if (!allowed) {
+            object.position.y += Math.sin(progress * Math.PI) * .25;
+            object.rotation.z = progress * -.4;
+          } else {
             object.scale.setScalar(1 - Math.max(0, progress - .75) * 1.8);
           }
         }
@@ -538,12 +697,13 @@ export function createBinScene(container, { onStatus = () => {} } = {}) {
     runningAction = null;
     removeThrown();
     serviceOpen = !serviceOpen;
+    params.serviceOpen = serviceOpen;
     const from = serviceProgress;
     const to = serviceOpen ? 1 : 0;
     const finish = () => { applyService(to); onStatus(serviceOpen ? '清運示意：內桶已拉出。' : '清運示意：內桶已收回。'); };
     if (reducedMotion) { finish(); requestRender(); return serviceOpen; }
-    runningAction = { start: performance.now(), duration: lidParts.length ? 1600 : 1050,
-      step: t => applyService(THREE.MathUtils.lerp(from, to, lidParts.length ? t : ease(t))), finish };
+    runningAction = { start: performance.now(), duration: 1050,
+      step: t => applyService(THREE.MathUtils.lerp(from, to, ease(t))), finish };
     requestRender();
     return serviceOpen;
   }

@@ -21,7 +21,7 @@
     <nav aria-label="主要導覽">
       <a href="#map" data-section="history" aria-current="page">垃圾桶歷史</a>
       <a href="#countries" data-page="countries">各國垃圾桶</a>
-      <a href="#design" data-page="design">桶型體驗</a>
+      <a href="#design" data-page="design">用途設計</a>
       <a href="#research" data-page="research">研究判斷</a>
       <a href="#sources" data-page="sources">資料與來源</a>
     </nav>
@@ -117,33 +117,46 @@
     </section>
 
     <section id="panel-design" class="page-panel design-panel" aria-labelledby="design-heading" hidden>
-      <div class="design-heading"><div><p class="eyebrow"><span class="status-dot"></span> 03 / DESIGN EXPERIENCE</p><h2 id="design-heading">換一個桶，<span>感受街道的不同。</span></h2><p>從投放、步行到清運。親手調整四種概念設計，看看每個選擇帶來的取捨。</p></div><span class="outline-tag">3D 概念體驗</span></div>
-      <div id="design-options" class="design-options" role="group" aria-label="選擇垃圾箱概念設計"></div>
+      <div class="design-heading"><h2 id="design-heading">不同的垃圾，<span>需要不同的服務。</span></h2><p>選一種用途，試著投放或清運。從入口、機構到收運安排，一起看設計的理由。</p><p class="design-concept-note">本站概念體驗 · 尺寸與狀態為示意，非現役設備規格</p></div>
+      <div id="design-options" class="design-options" role="group" aria-label="選擇垃圾桶的服務用途"></div>
+      <div class="design-purpose-summary"><h3 id="design-name">街角隨手投</h3><p id="design-description"></p></div>
       <div class="design-workspace">
         <div class="design-stage-column">
-          <div class="design-stage-bar"><span><i aria-hidden="true"></i> 台北街角・概念場景</span><button id="design-reset-view" type="button">重設視角 ↺</button></div>
-          <div id="design-viewport" class="design-viewport" aria-label="垃圾箱3D模型，可拖曳旋轉及縮放">
-            <div id="design-fallback" class="design-fallback"><span aria-hidden="true">↻</span><strong>正在準備街角場景</strong><p>你也可以先切換桶型、調整尺寸，閱讀設計比較。</p><button id="design-retry" type="button" hidden>重新開啟 3D</button></div>
-            <div class="design-stage-caption"><span id="design-scene-label">圓桶雙分類</span><span>拖曳或方向鍵旋轉・滾輪或雙指縮放</span></div>
+          <div class="design-stage-bar"><span>用途與機構・概念場景</span><button id="design-reset-view" type="button">重設視角</button></div>
+          <div id="design-viewport" class="design-viewport" aria-label="垃圾桶概念模型，可拖曳旋轉及縮放">
+            <div id="design-fallback" class="design-fallback"><strong>正在準備 3D 場景</strong><p>投放與清運操作已可使用，文字結果不依賴 3D。</p><button id="design-retry" type="button" hidden>重新開啟 3D</button></div>
+            <div class="design-stage-caption"><span id="design-scene-label">街角隨手投</span><span>拖曳或方向鍵旋轉 · 滾輪或雙指縮放</span></div>
           </div>
-          <div class="design-view-controls" role="group" aria-label="選擇觀看視角"><button type="button" data-design-view="overview" aria-pressed="true">全景</button><button type="button" data-design-view="pedestrian" aria-pressed="false">行人視角</button><button type="button" data-design-view="wheelchair" aria-pressed="false">坐姿視角</button><button type="button" data-design-view="worker" aria-pressed="false">清運視角</button></div>
-          <div class="design-readouts" aria-live="polite"><div><span>投入口中心離地</span><strong id="design-opening-height">—</strong><small>cm</small></div><div><span>桶前剩餘空間</span><strong id="design-clearance">—</strong><small>cm</small></div><div><span>容器填滿程度</span><strong id="design-fill-readout">30</strong><small>%</small></div></div>
-          <p class="design-dimension-note">假設桶背貼路緣；剩餘空間為人行道寬減桶深，未計退縮、門片與其他障礙。</p>
+          <div class="design-view-controls" role="group" aria-label="觀看視角"><button type="button" data-design-view="overview" aria-pressed="true">全景</button><button type="button" data-design-view="pedestrian" aria-pressed="false">行人</button><button type="button" data-design-view="wheelchair" aria-pressed="false">坐姿</button><button type="button" data-design-view="worker" aria-pressed="false">清運</button></div>
+          <details class="design-dimensions"><summary>查看尺寸與通行空間</summary>
+            <div class="design-slider"><label for="design-height">桶身高度 <output id="design-height-value" for="design-height">110 cm</output></label><input id="design-height" type="range" min="85" max="130" step="5" value="110"></div>
+            <div class="design-slider"><label for="design-opening">投入口寬度 <output id="design-opening-value" for="design-opening">22 cm</output></label><input id="design-opening" type="range" min="8" max="26" step="1" value="22"></div>
+            <div class="design-slider"><label for="design-sidewalk">人行道總寬 <output id="design-sidewalk-value" for="design-sidewalk">200 cm</output></label><input id="design-sidewalk" type="range" min="120" max="320" step="10" value="200"></div>
+            <dl class="design-readouts"><div><dt>投入口中心離地</dt><dd><span id="design-opening-height">—</span> cm</dd></div><div><dt>桶前剩餘空間</dt><dd><span id="design-clearance">—</span> cm</dd></div></dl>
+            <p class="design-dimension-note">假設桶背貼路緣；未計門片、退縮、作業與其他障礙。坐姿視角不代表已通過無障礙驗證。</p>
+          </details>
         </div>
-        <aside class="design-controls" aria-label="調整概念垃圾箱">
-          <div class="design-detail-heading"><span id="design-index" class="eyebrow">01 / 04</span><h3 id="design-name">圓桶雙分類</h3><p id="design-description"></p></div>
-          <div class="design-slider"><label for="design-height">桶身高度 <output id="design-height-value" for="design-height">110 cm</output></label><input id="design-height" type="range" min="85" max="130" step="5" value="110"><div><span>85 cm</span><span>130 cm</span></div></div>
-          <div class="design-slider"><label for="design-opening">投入口寬度 <output id="design-opening-value" for="design-opening">22 cm</output></label><input id="design-opening" type="range" min="8" max="36" step="1" value="22"><div><span>8 cm</span><span id="design-opening-max">36 cm</span></div></div>
-          <div class="design-slider"><label for="design-sidewalk">人行道總寬 <output id="design-sidewalk-value" for="design-sidewalk">200 cm</output></label><input id="design-sidewalk" type="range" min="120" max="320" step="10" value="200"><div><span>120 cm</span><span>320 cm</span></div></div>
-          <div class="design-slider"><label for="design-fill">容器填滿程度 <output id="design-fill-value" for="design-fill">30%</output></label><input id="design-fill" type="range" min="0" max="100" step="10" value="30"><div><span>空桶</span><span>已滿</span></div></div>
-          <button id="design-service" class="design-service-button" type="button" aria-pressed="false">打開清運門／取出內桶 <span aria-hidden="true">↗</span></button>
-          <div class="design-tradeoff"><span>這個設計的取捨</span><p id="design-tradeoff"></p></div>
-          <button id="design-reset" class="quiet-button" type="button">恢復這個桶型的預設尺寸</button>
-        </aside>
+        <div class="design-controls" aria-label="用途與操作體驗">
+          <div class="design-role-controls" role="group" aria-label="選擇操作角色"><button data-design-role="visitor" aria-pressed="true" type="button">投放者</button><button data-design-role="worker" aria-pressed="false" type="button">清運人員</button></div>
+          <fieldset class="design-scenarios"><legend>設定情境</legend><div><button type="button" data-scenario="space" aria-pressed="true">尚有空間</button><button type="button" data-scenario="near" aria-pressed="false" hidden>接近滿載</button><button type="button" data-scenario="full" aria-pressed="false">已滿</button><button type="button" data-scenario="offline" aria-pressed="false" hidden>感測離線</button></div></fieldset>
+          <div class="design-service-state"><strong id="design-service-state"></strong><p id="design-service-detail"></p><small id="design-fill-readout"></small></div>
+          <div id="design-visitor-actions">
+            <fieldset class="design-item-field"><legend>選擇物件</legend><div id="design-item-buttons" class="design-item-buttons"></div></fieldset>
+            <div id="design-channel-controls" class="design-channel-controls" role="group" aria-label="選擇投入口" hidden><button type="button" data-design-channel="general" aria-pressed="true">一般垃圾</button><button type="button" data-design-channel="recycle" aria-pressed="false">資源回收</button></div>
+            <div id="design-household-intro" hidden><p class="design-flow">住戶確認 → 放入垃圾袋 → 確認示意投放</p><button id="design-authenticate" class="design-secondary" type="button">模擬住戶確認</button></div>
+            <button id="design-throw" class="design-primary" type="button">確認投放</button>
+            <button id="design-confirm" class="design-secondary" type="button" hidden>確認示意投放</button>
+          </div>
+          <div id="design-worker-actions" hidden><p id="design-collection"></p>
+            <div id="design-smart-actions" hidden><button id="design-request" class="design-secondary" type="button">安排收運示意</button><button id="design-compress" class="design-secondary" type="button">切換壓縮機構示意</button></div>
+            <button id="design-service" class="design-secondary" type="button" aria-pressed="false">開啟清運門</button><button id="design-empty" class="design-primary" type="button">清空內桶示意</button>
+          </div>
+          <div class="design-result"><span>這次操作</span><p id="design-status" role="status" aria-live="polite">先選一個物件，再試試這站的投放流程。</p></div>
+          <button id="design-reset" class="design-reset" type="button">重新開始這個用途</button>
+        </div>
       </div>
-      <div class="design-actions"><div><p class="eyebrow">TRY IT / 換你投一次</p><h3>這個開口，放得下嗎？</h3><p>用固定尺寸的物件試投。調小開口，再試一次。</p></div><div id="design-item-buttons" class="design-item-buttons" role="group" aria-label="選擇物件試投"></div><button id="design-throw" class="design-throw-button" type="button" disabled>試投看看 <span aria-hidden="true">↗</span></button></div>
-      <p id="design-status" class="design-status" role="status" aria-live="polite">正在載入 3D 體驗…</p>
-      <div class="design-bottom-note"><div><span class="outline-tag">讀懂設計，才能比較</span><p id="design-notes">四種桶型都是本站概念設計，尺寸可調；並非台北現役產品規格。</p></div><p>物件只作尺寸比較，並非分類指引。試投未模擬垃圾變形、真實容量或使用行為；尺寸體驗不代表防止違規、無障礙或清運效率已經驗證。</p></div>
+      <div class="design-bottom-note"><div><h3>這個設計的取捨</h3><p id="design-tradeoff"></p></div><div><h3>把體驗接回實際服務</h3><p>滿度、外形與物件大小都不能判定垃圾來源。家戶收受需要可用的服務與清運安排；示意操作沒有證明防濫倒、節省人力或實際回收成效。</p><p><a href="#research">閱讀設置、清運與家戶分流方案</a> · <a href="#countries">比較實際設備與價格</a></p></div></div>
+      <p class="design-evidence-note">投放規則只涵蓋本頁選定示例，不是完整分類指引。物件截面、感測門檻與機構動作皆為概念設定；沒有實際感測、住戶辨識或付款。</p>
     </section>
 
     <section id="panel-history" class="page-panel" aria-labelledby="history-heading" hidden>
