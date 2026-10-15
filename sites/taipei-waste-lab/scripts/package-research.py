@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / 'dist'
-FOLDERS = ['execution-2026-10-15', 'research-plan-2026-10-15', 'literature-2026-10-15', 'service-strategy-2026-10-15', 'budget-2026-10-15']
+FOLDERS = ['execution-2026-10-15', 'research-plan-2026-10-15', 'literature-2026-10-15', 'service-strategy-2026-10-15', 'budget-2026-10-15', 'smart-bin-comparison-2026-10-15']
 
 
 def inline_markdown(text):

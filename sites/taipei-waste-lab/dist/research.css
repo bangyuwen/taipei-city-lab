@@ -60,3 +60,5 @@
 @media(max-width:760px){.service-decision{grid-template-columns:1fr;gap:6px;padding:25px 0}.service-decision h3{font-size:24px}.service-decision>div>p{font-size:16px}.service-evidence-note{font-size:14px}.research-archive>summary{font-size:16px}}
 
 .service-budget .research-stage-table{min-width:760px}.service-budget caption{text-align:left;font-size:13px;color:var(--muted);padding:0 0 12px}.service-budget td{font-variant-numeric:tabular-nums}
+
+.smart-bin-comparison .research-stage-table{min-width:940px;table-layout:fixed;font-size:14px}.smart-bin-comparison caption{text-align:left;font-size:13px;color:var(--muted);padding:0 0 12px}.smart-bin-comparison th:first-child{width:19%}.smart-bin-comparison td{line-height:1.8}.smart-bin-comparison td a,.smart-bin-comparison th a{color:var(--green)}
