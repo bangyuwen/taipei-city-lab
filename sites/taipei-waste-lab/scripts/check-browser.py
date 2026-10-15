@@ -119,7 +119,7 @@ def main():
         failure.goto(URL)
         failure.wait_for_selector('.load-status.error')
         assert failure.locator('#district').is_disabled()
-        assert failure.locator('#export-csv').is_disabled()
+        assert failure.locator('[download], #export-csv, #comparison-export, #comparison-district-export').count() == 0
         failure.click('[data-page="history"]')
         assert failure.locator('#panel-history').is_visible()
         assert failure.locator('.timeline-event').count()==11
