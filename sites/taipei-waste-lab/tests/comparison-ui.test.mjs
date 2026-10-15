@@ -101,3 +101,9 @@ test('production distance records preserve the original 75 pairs, lineage, unrou
   assert.equal(analysis.districts.reduce((sum,d)=>sum+d.pairCount,0),75);
   assert.equal(analysis.districts.length,12);
 });
+
+test('distance sorting preserves raw-value rank when serialized distances tie',()=>{
+  const entries=['a','b','c'].map(id=>({id}));
+  const pairs=[{comparisonId:'a',distanceMeters:1,rank:2},{comparisonId:'b',distanceMeters:1,rank:1},{comparisonId:'c',distanceMeters:null,rank:null}];
+  assert.deepEqual(sortByCoordinateDistance(entries,pairs).map(e=>e.id),['b','a','c']);
+});

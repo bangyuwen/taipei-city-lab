@@ -207,7 +207,7 @@ test('CLI calculates odd and even medians and keeps empty summaries null', t => 
   output = loadOutput(state.root);
   values = output.pairs.map(pair => pair.distanceMeters).filter(value => value !== null).sort((a, b) => a - b);
   assert.equal(values.length, 74);
-  assert.equal(output.summary.medianMeters, (values[36] + values[37]) / 2);
+  assert.ok(Math.abs(output.summary.medianMeters - (values[36] + values[37]) / 2) < 1e-9);
 
   for (const entry of state.comparison.entries) entry.after[0].x = null;
   refreshFixture(state);
@@ -251,4 +251,32 @@ test('CLI rejects comparison hash, selected count, multiplicity, and source hash
   result = run(sourceState.root);
   assert.notEqual(result.status, 0);
   assert.match(result.stderr, /before source SHA-256/);
+});
+
+// The two literal results below came from macOS and GitHub's Linux runner.
+test('serialization removes observed platform drift without changing raw-value ranks or buckets', t => {
+  const state = fixture(t);
+  const code = `import importlib.util,json,sys
+from pathlib import Path
+spec=importlib.util.spec_from_file_location('analysis',sys.argv[1])
+m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+root=Path(sys.argv[2])
+m.haversine=lambda *args: 20.494598292178487
+first=m.analyze(root)
+m.haversine=lambda *args: 20.494598292178484
+second=m.analyze(root)
+assert first==second
+assert first[0]['pairs'][0]['distanceMeters']==20.494598292
+m.haversine=lambda lon1,lat1,lon2,lat2,radius: (1-1e-10 if lon2==0.01 else 1+1e-10 if lon2==0.0101 else 2)
+output=m.analyze(root)[0]
+a=next(p for p in output['pairs'] if p['comparisonId']=='comparison-001')
+b=next(p for p in output['pairs'] if p['comparisonId']=='comparison-002')
+assert a['distanceMeters']==b['distanceMeters']==1
+assert b['rank']<a['rank']
+assert output['summary']['buckets'][0]['count']==1
+assert output['summary']['buckets'][1]['count']==74
+assert output['meta']['storageDecimalPlaces']==9
+print('platform output stable; raw rank and bucket boundary preserved')`;
+  const result = spawnSync('python3', ['-c', code, SCRIPT, state.root], {encoding:'utf8'});
+  assert.equal(result.status, 0, result.stderr);
 });

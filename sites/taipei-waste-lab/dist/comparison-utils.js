@@ -55,6 +55,8 @@ export function sortByCoordinateDistance(entries,pairs){
     const x=distance(a),y=distance(b);
     if(valid(x)!==valid(y))return valid(x)?-1:1;
     if(valid(x)&&x!==y)return y-x;
+    const rankA=byID.get(a.id)?.rank,rankB=byID.get(b.id)?.rank;
+    if(valid(x)&&Number.isInteger(rankA)&&rankA>0&&Number.isInteger(rankB)&&rankB>0&&rankA!==rankB)return rankA-rankB;
     return a.id<b.id?-1:a.id>b.id?1:0;
   });
 }

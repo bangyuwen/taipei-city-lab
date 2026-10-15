@@ -14,8 +14,9 @@ from typing import Any, Iterable, Mapping
 PROTOCOL_PATH = Path("research/coordinate-distances-2024-2026/protocol.json")
 SOURCE_DIR = Path("research/source-recovery-2026-10-15")
 RADIUS_METERS = 6_371_000
+STORAGE_DECIMAL_PLACES = 9
 CSV_HEADERS = [
-    "排名", "比較ID（本站比對列號；非官方箱號）", "行政區", "地址", "距離公尺未四捨五入", "品質說明",
+    "排名", "比較ID（本站比對列號；非官方箱號）", "行政區", "地址", "距離公尺（儲存至小數9位）", "品質說明",
     "距離方法", "球面半徑公尺", "分析協定版本", "比較資料SHA256",
     "2024原始經度", "2024原始緯度", "2024來源ID（本站來源列號；非官方箱號）", "2024來源實體起始行號",
     "2024來源檔名", "2024來源SHA256", "2024來源日期",
@@ -227,6 +228,7 @@ def build_readme(
         f"- 2026 來源：`{sources['after']['file']}`，{sources['after']['date']}，SHA-256 `{sources['after']['sha256']}`。",
         f"- 方法：球面 Haversine，半徑 {radius:,.0f} 公尺；座標以十進位經緯度解讀，使用最短球面路徑，不校正路線、高程或橢球體。",
         f"- 參考：[Haversine formula](https://www.movable-type.co.uk/scripts/latlong.html)。",
+        "- 儲存修正：1.0.1 在計算後訂定小數 9 位公尺輸出，消除已觀察到的跨平台浮點末位差異；原始 [1.0.0 協定](protocol-v1.0.0.json) 保留。先以未四捨五入值排名、分組與計算統計，再統一輸出精度；儲存位數不代表測量精度。",
         "- 原始 `x` 為經度、`y` 為緯度；保留兩側完整原始列、原始座標、來源列 ID 與實體起始行號。",
         "",
         "## 整體結果",
@@ -358,6 +360,15 @@ def analyze(root: Path) -> tuple[dict[str, Any], str, str, str]:
     for district in district_order:
         subset = [pair for pair in pairs if pair["district"] == district]
         by_district.append({"district": district, **summary(subset, buckets)})
+    # Keep the frozen raw-value ranking, buckets and statistics. Normalize only
+    # derived output numbers; do not round source coordinates or source rows.
+    for pair in pairs:
+        if pair["distanceMeters"] is not None:
+            pair["distanceMeters"] = round(pair["distanceMeters"], STORAGE_DECIMAL_PLACES)
+    for stats in [overall, *by_district]:
+        for key in ("minMeters", "medianMeters", "maxMeters"):
+            if stats[key] is not None:
+                stats[key] = round(stats[key], STORAGE_DECIMAL_PLACES)
     comparison_meta = comparison["meta"]
     output = {
         "meta": {
@@ -367,6 +378,7 @@ def analyze(root: Path) -> tuple[dict[str, Any], str, str, str]:
             "sources": {"before": comparison_meta["before"], "after": comparison_meta["after"]},
             "method": method, "selection": protocol["selectedCategory"], "unit": protocol["unit"],
             "limitations": protocol["limits"],
+            "storageDecimalPlaces": STORAGE_DECIMAL_PLACES,
         },
         "summary": overall, "districts": by_district, "pairs": pairs,
     }
