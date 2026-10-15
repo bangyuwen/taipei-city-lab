@@ -5,8 +5,10 @@ in process memory and passed to Git through its process environment. No token is
 written to disk or embedded in a remote URL.
 """
 import gzip
+import io
 import json
 import os
+import runpy
 import subprocess
 import sys
 import tarfile
@@ -25,6 +27,10 @@ credential = request['credential']
 manifest = json.loads((ROOT / '.openai/hosting.json').read_text())
 if request['project_id'] != manifest['project_id']:
     raise ValueError('Project identity mismatch')
+if manifest.get('static', {}).get('directory') != 'out':
+    raise ValueError('Expected public output directory out')
+public = runpy.run_path(str(ROOT / 'scripts/prepare-public.py'))
+public['prepare']()
 if credential['auth_mode'] != 'http_extra_header':
     raise ValueError('Unsupported Git authentication mode')
 env = os.environ.copy()
@@ -66,18 +72,35 @@ remote_sha = git('ls-remote', 'origin', 'refs/heads/' + credential['branch']).st
 if remote_sha != commit:
     raise ValueError('Remote source does not match local HEAD')
 archive = Path('/tmp/taipei-waste-lab-deployment.tar.gz')
-archive_result = subprocess.run(['git', 'archive', '--format=tar', commit,
-                                 '.openai/hosting.json', 'dist'],
+# Archive committed bytes only, renaming the approved runtime files into out/.
+source_names = {'.openai/hosting.json', *(f'dist/{name}' for name in public['ASSETS'])}
+archive_result = subprocess.run(['git', 'archive', '--format=tar', commit, *sorted(source_names)],
                                 cwd=ROOT, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 if archive_result.returncode:
     raise RuntimeError('Static archive generation failed')
-with archive.open('wb') as f:
-    f.write(gzip.compress(archive_result.stdout, mtime=0))
+packed = io.BytesIO()
+seen = set()
+with tarfile.open(fileobj=io.BytesIO(archive_result.stdout), mode='r:') as source_tar:
+    with tarfile.open(fileobj=packed, mode='w') as target_tar:
+        for entry in source_tar:
+            if entry.isdir():
+                continue
+            if entry.name not in source_names or not entry.isfile():
+                raise ValueError('Unexpected public archive entry')
+            seen.add(entry.name)
+            content = source_tar.extractfile(entry)
+            if entry.name.startswith('dist/'):
+                entry.name = 'out/' + entry.name.removeprefix('dist/')
+            target_tar.addfile(entry, content)
+if seen != source_names:
+    raise ValueError('Public archive is incomplete')
+archive.write_bytes(gzip.compress(packed.getvalue(), mtime=0))
 with tarfile.open(archive) as tar:
     package_manifest = json.load(tar.extractfile('.openai/hosting.json'))
     if package_manifest != manifest:
         raise ValueError('Archived hosting manifest mismatch')
-    if 'dist/index.html' not in tar.getnames():
-        raise ValueError('Static entrypoint missing')
+    expected = {'.openai/hosting.json', *(f'out/{name}' for name in public['ASSETS'])}
+    if set(tar.getnames()) != expected or 'out/index.html' not in tar.getnames():
+        raise ValueError('Public archive allowlist mismatch')
 print(json.dumps({'project_id':manifest['project_id'], 'commit_sha':commit,
                   'archive':str(archive), 'remote_verified':True}), flush=True)
