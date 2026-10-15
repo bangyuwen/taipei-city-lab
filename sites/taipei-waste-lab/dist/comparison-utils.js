@@ -16,6 +16,12 @@ export function filterComparison(entries,{district='',category='not_reappeared',
 export function comparisonCounts(entries){
   return {groups:entries.length,beforeRows:entries.reduce((n,e)=>n+e.before.length,0),afterRows:entries.reduce((n,e)=>n+e.after.length,0)};
 }
+export function getComparisonScope(entries,{district='',search=''}={}){
+  const scopedEntries=filterComparison(entries,{district,search,category:''});
+  const categoryCounts=Object.fromEntries(Object.keys(categories).map(category=>[category,0]));
+  for(const entry of scopedEntries)if(Object.hasOwn(categoryCounts,entry.category))categoryCounts[entry.category]++;
+  return {entries:scopedEntries,counts:comparisonCounts(scopedEntries),categoryCounts};
+}
 export function mapURL(record,version){
   const query=new URLSearchParams({year:version,district:record.district,q:record.address});
   return `?${query}#map`;
@@ -46,6 +52,50 @@ export function formatCoordinateDistance(meters){
   if(typeof meters!=='number'||!Number.isFinite(meters)||meters<0)return '無法計算';
   if(meters<0.1)return '<0.1 公尺';
   return new Intl.NumberFormat('zh-TW',{minimumFractionDigits:1,maximumFractionDigits:1}).format(meters)+' 公尺';
+}
+const coordinateDistanceBuckets=[
+  {key:'lt1',label:'小於 1 公尺',upper:1},
+  {key:'1to10',label:'1 至未滿 10 公尺',upper:10},
+  {key:'10to50',label:'10 至未滿 50 公尺',upper:50},
+  {key:'50to100',label:'50 至未滿 100 公尺',upper:100},
+  {key:'100to500',label:'100 至未滿 500 公尺',upper:500},
+  {key:'ge500',label:'500 公尺以上',upper:null}
+];
+export function summarizeCoordinateDistances(entries,pairs){
+  const selectedEntries=entries.filter(entry=>entry.category==='same_address_changed');
+  const selectedIDs=new Set(selectedEntries.map(entry=>entry.id));
+  const pairsByID=new Map();
+  for(const pair of pairs??[])if(selectedIDs.has(pair?.comparisonId))pairsByID.set(pair.comparisonId,pair);
+
+  const distances=[];
+  let coarseFlaggedPairs=0;
+  for(const entry of selectedEntries){
+    const pair=pairsByID.get(entry.id);
+    if(pair?.before?.plottable!==true||pair?.after?.plottable!==true)coarseFlaggedPairs++;
+    const distance=pair?.distanceMeters;
+    if(typeof distance==='number'&&Number.isFinite(distance)&&distance>=0)distances.push(distance);
+  }
+
+  const orderedDistances=[...distances].sort((a,b)=>a-b);
+  const middle=Math.floor(orderedDistances.length/2);
+  const medianMeters=orderedDistances.length===0?null:orderedDistances.length%2
+    ?orderedDistances[middle]:(orderedDistances[middle-1]+orderedDistances[middle])/2;
+  const bucketCounts=new Map(coordinateDistanceBuckets.map(({key})=>[key,0]));
+  for(const distance of distances){
+    const bucket=coordinateDistanceBuckets.find(({upper})=>upper===null||distance<upper);
+    bucketCounts.set(bucket.key,bucketCounts.get(bucket.key)+1);
+  }
+
+  return {
+    pairCount:selectedEntries.length,
+    calculatedPairs:distances.length,
+    unavailablePairs:selectedEntries.length-distances.length,
+    coarseFlaggedPairs,
+    minMeters:orderedDistances[0]??null,
+    medianMeters,
+    maxMeters:orderedDistances.at(-1)??null,
+    buckets:coordinateDistanceBuckets.map(({key,label})=>({key,label,count:bucketCounts.get(key)}))
+  };
 }
 export function sortByCoordinateDistance(entries,pairs){
   const byID=new Map(pairs.map(p=>[p.comparisonId,p]));
