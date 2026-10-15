@@ -285,19 +285,13 @@ components:
 
 ## Overview
 
+共用呈現程式與靜態資產維護於 `shared/web/template/`，純模型工具在 `shared/lib/`。本文件保留現行介面規則與限制，不作為已完成畫面或現場驗收的證明。
+
 **Creative North Star: "城市專刊"**
 
 使用者於 2026-10-14 選定城市專刊，授權取代原有綠色工作台。深藍提供穩定導覽與文字，暖白承載閱讀，朱橘標出操作與選取。中文宋體標題配無襯線操作；繁體中文及「台北城市實驗室」名稱延續。
 
 介面以平面分隔、留白與灰藍輔助面建立層次。較大的無襯線研究正文直接置於暖白閱讀面，標題、結論、正文及補述用不同字級區隔；細線分出相鄰閱讀區段。圓角用於原生控制、提示及視覺容器，原生折疊保留次要內容；來源分類和推估限制持續可見。
-
-本文件從完成品原始碼擷取：Leaflet 樣式先載入，其後為 shared/web/template/styles.css、shared/web/template/workspace.css；動態內容來自 shared/web/template/app.js、dist/answers.js、shared/web/template/viz.js 與 dist/map-ui.js。歷史 code-led Operate（seed 0f3e9d23）沒有 approved comp、decision comp 或 QUALITY BAR boards。該次本機 PR build 取得桌機 1440、平板 850、手機 390／320px Chromium captures；獨立 reviewer 先完成初輪五節審查，再檢視 23 張有效 captures，對手機圖表及來源圖示兩項修正做 Verdict Pass：均 resolved、remaining clear、disposition ship。此歷史 ship 僅涵蓋兩項修正及該批次回歸，不是新的全表面審查。Headless Chromium 154、SwiftShader 軟體 WebGL 與模擬觸控仍不涵蓋實體手機、Safari／Firefox、硬體 FPS 或正式站台完整流程；詳見 docs/acceptance.md、docs/citizen-finish-review.md。
-
-2026-10-14 的連續城市地圖是既定世界的延伸：dist/basemap3d.js、dist/geo.js、dist/scene-data.js、dist/scene-builder.js 與 dist/scene-ui.js 讓地理 3D 使用相機可見的 OpenStreetMap 街道，清潔箱採固定螢幕尺寸的資料圓點，四個地理題共用持續選取環；模型範圍獨立揭露。記錄依目前原始碼，不改寫前次審查。archive/development-tools/impeccable/review/city-map/finish-review.md 保留初輪完整審查；verdict.md 的 Verdict Pass 檢視 1440／390／320px 共 36 張最新 captures，PNG 與七個 runtime 雜湊均符合目前 results.json，點位層次／選取與手機範圍呈現兩項均 resolved、remaining clear、disposition ship。此 ship 僅涵蓋這兩項補修與該批受測回歸，不是新的全表面審查；沒有第二次 detector 或外部 QUALITY BAR 比較。驗證範圍仍是本機 Chromium 154／SwiftShader 與模擬觸控；補修及證據見 docs/city-map-acceptance.md。
-
-同日獲准的 code-led Read 延伸保留世界與 seed，只擴充完成品反覆使用的閱讀字級、無框正文、雙欄細線及原生 details。短篇入口與題目仍為 City Serif；答案標題、結論、依據和缺口改用較大的無襯線角色，舊研究控制、地圖與相機語彙延續。本次沒有新增 comp、QUALITY BAR 或 shipping raster。新增入口字形沿用 Noto Serif TC 700 與 OFL，來源由 shared/web/template/fonts/provenance.json 記錄。
-
-本次文件對照 shared/web/template/index.html、shared/web/template/app.js、dist/answers.js、兩份樣式與字體 provenance，抽看 archive/development-tools/impeccable/review/answers/ 下的 desktop-bins.png、narrow-home.png、mobile-bins-comparison.png。results.json 的 28 張 PNG 與六個 runtime／font／provenance 雜湊均符合現有檔案；manifest 記錄 23 項答案流程 checks、零 pageErrors。初輪 finish-review.md 為 fix；最新 verdict.md 的 ship 僅清除 CSV 輸入變更後主結論失效化這一項評分修正及該批回歸，不是全站設計認證或實際研究資料足夠的證明。126 Node tests、靜態檢查及 legacy browser regression 為已報告的驗證，本文件回合未重跑。畫面仍限本機 Chromium／SwiftShader、模擬觸控；外部圖磚被阻擋，workbench captures 呈現 2D 比較圖，不建立其他瀏覽器、實體裝置、效能或實際選址答案的認證。頁面閱讀策略以當前 surface brief 為準。
 
 **Key Characteristics:**
 
@@ -353,7 +347,7 @@ components:
 - **Action／Field／Label:** 桌機操作與欄位為 13px，輔助標籤為 12px；分類和部分補述行高為 1.7，其餘按來源角色維持。760px 以下 select、地圖／場景 select、健檢文字欄位與分享欄位採 mobile-field；入口說明、探索提示、題目補述、控制介紹、本機提示、地圖回報、場景 caption、指標標籤／補述、圖例／圖說及方法假設採 mobile-support，保留各自行高。
 - **Metric:** 28px、650、1.5、-.02em；1200px 以下為 26px，480px 以下為 25px。單位是較小的正常字重次要文字。
 - **CSV:** 桌機 13px、1.8、等寬；760px 以下 CSV／JSON textarea 採 mobile-csv，保留多行和可調整高度。
-- **Chart Label:** 比較圖軸值與分區／時間標籤採 chart-label，按實際容器寬度重排；CSS 的 14px 不等同實際螢幕字級。最終量測桌機 14px、390px 約 13.91px、850px 約 13.95px、320px 約 13.89px，與 captures 的可讀標籤一致。
+- **Chart Label:** 比較圖軸值與分區／時間標籤採 chart-label，按實際容器寬度重排；CSS 的 14px 不等同實際螢幕字級。應依實際容器寬度與字形確認可讀性。
 - **Answer Headline／Conclusion:** answer-headline 為無襯線（28px、700、1.55、-.02em），760px 以下採 mobile-answer-headline（23px）；結論採 answer-conclusion（18px、400、1.9），手機採既有 mobile-body（16px、400、1.9）。
 - **Answer Section／Body／Support:** 依據、缺口與比較區標題採 answer-section-title（18px、700、1.6）；依據與模型正文採 answer-body（16px、400、1.9），補述及來源日期採 answer-support（14px、400、1.8）。answer-status 為朱橘、14px、600，來源未另宣告行高。
 - **Answer Summary／Workbench Summary:** 來源與條件式答案的原生 summary 採 answer-summary（13px、600、1.6）；研究工具入口採 workbench-summary（20px、600、1.6），760px 以下為 mobile-workbench-summary（18px）。
@@ -380,8 +374,6 @@ components:
 間距沿用前置 scale 與元件 padding。shared/web/template/workspace.css 最後的 760px media 層在 480px 規則之後，覆寫早期的 13px 入口說明與 15px 生活提問；延伸手機表面時維持這個 cascade。圖層 label 至少 44px 高，Leaflet zoom 為 44×44px；topbar-title 持續保有至少 44px 高的操作區。
 
 地理視窗是街道的取景框，不是有邊緣的地理板塊。3D 依相機可見地面更新完整 OSM 圖磚，平移、縮放及容器改變不改變研究範圍的固定 Web Mercator 投影、點位或公尺半徑。模型計算範圍為預設關閉的獨立圖層；在 3D 啟用時依視窗長寬比立即切到可容納全範圍的俯視，「全域」在該圖層啟用時也採此視角。周邊街道只供定位，不擴大計算資料。
-
-歷史 citizen 批次曾由 archive/development-tools/impeccable/review/ 的 1440／850／390／320px 畫面驗證重排，final-results.json 記錄四個寬度的受測頁面沒有整頁水平溢出；來源對話框與 320px 柱狀／時間圖另有補充 captures。該批九組真實 Chromium 操作、14 個 Node 測試檔與 npm run check 通過，runtime errors、failed requests、HTTP errors 為零；scripts/check-browser.py 通過表格鍵盤、dialog 焦點、SVG 圖示、窄螢幕實際圖表字級／時間標籤邊界及地圖／3D 生命週期檢查。Leaflet 卸載後的 redraw callback 防護是行為修正，不是新視覺 token。該批 aXe 僅涵蓋桌機根頁及手機清潔箱頁，零 violations 但仍有 incomplete；不是全站人工鍵盤巡覽或完整 WCAG 認證。該次圖磚驗收透過 QA-only HTTPS relay 保留實際 browser User-Agent、localhost Referer 與 Accept，維持 OS CA／TLS 檢查且未改持久信任；最初漏 Referer 的 HTTP 200 拒絕圖片已剔除並重拍，最終真實街道底圖經目視確認。本次答案批次的 scope 以 Overview 與 answers/results.json 為準，不沿用歷史圖磚成功來宣稱本次驗證。
 
 **The Cascade Rule.** 按 Leaflet、基底、workspace 的實際載入順序延伸樣式，維持主要畫面先於參數的 DOM 閱讀順序。
 
@@ -445,7 +437,7 @@ Select 與文字欄位是白底、中性描邊、control 圓角、至少 44px �
 
 條件式答案為原生 details，頂部細線、28px 上距、8px 上 padding；summary 至少 44px 高、10px 0 padding、answer-summary 字級。正文用 answer-body，鄰接模型限制用 answer-support。數量比較沿用原生 table、sticky 灰藍表頭、tabular-nums 與可聚焦的局部捲動 region；寬螢幕呈現完整欄位，窄螢幕保留可左右捲動說明，不壓縮成較小正文。
 
-完整研究工具也是原生 details，上下細線、12px 0 padding、下距 32px。入口採 workbench-summary，展開時 summary 下距 8px，補述最長 76ch、下距 24px；內部保留既有控制、地圖、圖表與明細元件。預設狀態與本頁先後順序屬 surface brief，不提升成所有未來表面的固定布局。原生 marker 與文字指出展開狀態，focus-visible 延用 3px outline、4px offset，未另加裝飾 hover 或動畫。
+完整研究工具也是原生 details，上下細線、12px 0 padding、下距 32px。入口採 workbench-summary，展開時 summary 下距 8px，補述最長 76ch、下距 24px；內部保留既有控制、地圖、圖表與明細元件。預設狀態與研究閱讀順序依目前產品範圍，不提升成所有未來表面的固定布局。原生 marker 與文字指出展開狀態，focus-visible 延用 3px outline、4px offset，未另加裝飾 hover 或動畫。
 
 ### Geographic Maps
 
@@ -461,7 +453,7 @@ Select 與文字欄位是白底、中性描邊、control 圓角、至少 44px �
 
 ### Research Condition Callout
 
-灰藍提示與一鍵條件按鈕保留既有樣式，現在位於折疊研究工具內；提示正文在 760px 以下為 14px，題目生活提問仍為 16px。套用條件後同步重繪控制、指標及視角，重設沿用 Text button。既有 sidecar 的提示 snippet 保留視覺原型與歷史文案；當前研究文案由 shared/web/template/app.js 提供。路由、閱讀次序與模型功能界線留在 surface brief。
+灰藍提示與一鍵條件按鈕保留既有樣式，現在位於折疊研究工具內；提示正文在 760px 以下為 14px，題目生活提問仍為 16px。套用條件後同步重繪控制、指標及視角，重設沿用 Text button。研究文案由 shared/web/template/app.js 維護，路由與模型界線依各題程式及產品規範。
 
 ## Do's and Don'ts
 
@@ -481,16 +473,5 @@ Select 與文字欄位是白底、中性描邊、control 圓角、至少 44px �
 - Don't 把互動朱橘或舊題目 accent 當成所有點位和模型系列的共同配色。
 - Don't 把每個指標、方法與明細再包成重複的大卡片。
 - Don't 以文字字形作新操作圖示；新圖示沿用 inline SVG。
-- Don't 把 sidecar 合成 tonal ramps 當成已部署配色或已驗證的對比組合。
 - Don't 把原始碼、Node DOM stub、宣告色彩及資產檢查當成 rendered visual、響應式、觸控或 WebGL 驗收。
 - Don't 把周邊街道背景當成新增研究資料，或把地理範圍的可選邊界變成預設地理底座。
-
-未納入可繼承規則：方法／來源／底圖回報的 Unicode 外連箭頭已移除，站內來源按鈕也不再誤示外連；座標圖仍保留方向字形，未在此次局部 Verdict Pass 評分，不作為新增操作圖示標準。單次 detector 完整輸出被截斷且未保存，不能宣稱所有機械發現均已解決；暖白是使用者指定方向的保留，不代表完整機械清單或跨瀏覽器驗收。
-
-本次地圖延伸另保留 /workspace/scratch/taipei-qa/map-detect.json 的原有 16 項 advisory-only 色彩／字級偏離；未重跑 detector、未修正或提升為可繼承 token。這份原有清單不代表最新補修的 rendered visual 驗收。
-
-答案審查另提及既有 detector.json 的 20 項 advisories 與一項指定暖白底警告；本次 documenter 未重跑 detector、未修復這些既有 advisory drift，也未把它們正規化為新規則。暖白保留是已批准的世界選擇；這些清單與唯一 audit invalidation 修正的 ship 判定分開。
-
-### 合併前標題語意修正（歷史）
-
-入口可見時，歡迎標題是唯一可見 H1、題目標題是 H2；按「先看看垃圾桶怎麼放」或開啟題目深連結後，題目改為 H1，鍵盤焦點仍回到題目區。題目字體以 .topic-title 固定，語意層級不改變桌機 34px／手機 30px 的外觀。 這是 GitHub P2 審查意見的補修，通過獨立瀏覽器回歸與桌機／模擬手機 22 項路徑狀態檢查；最新證據在 archive/development-tools/impeccable/review/heading-results.json，不擴大先前 Impeccable 兩項修正的 ship 判定。

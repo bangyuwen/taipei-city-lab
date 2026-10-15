@@ -17,10 +17,11 @@ python -m http.server 8000 --directory dist
 - `shared/lib/`：共用地理、資料契約與空間模型工具。
 - `topics/<id>/model.js` 與 `topics/<id>/data/`：各題模型與資料的 canonical 來源。
 - `shared/data/`：共用快照中繼資料與來源。
+- `shared/docs/`：研究總覽、模型方法、資料界線及地圖／3D 設計說明。
 - 本站 `dist/`：部署產物，不作為單題站的建置輸入。
 - 本站 `.openai/hosting.json`：從舊位置原樣搬入的 Site 設定；建置不會修改它。
 
-模板內既有的 Markdown 研究下載檔保留歷史版本內容，讓既有下載網址及內容維持一致；研究文件的維護來源以 `shared/docs/` 與各題 `topics/<id>/docs/` 為準。
+網站的研究下載及資料查核依賴由 `shared/docs/` 的單一維護來源生成，既有下載網址保留。生成時會改寫文件間的相對連結，未對應的本機 Markdown 連結會使建置失敗。`shared/web/template/` 不另存文件副本；已移除沒有持續用途的舊視覺驗收日誌。
 
 從 repository 根目錄執行：
 

@@ -29,13 +29,13 @@ web
 
 ## Brand Commitments
 
-名稱「台北城市實驗室」與繁體中文保留。使用者確認沒有須保留的視覺特色或排除風格，並要求使用 Impeccable 重新設計。
+名稱「台北城市實驗室」與繁體中文保留。各站維持繁體中文與可辨識的題目識別，介面規則見[設計文件](design.md)。
 
 ## Topic Organization
 
 2026-10-15起依使用者要求分成七個獨立網站。每題的資料、模型與研究集中在topics/<id>，共用工具與規範在shared，各站入口與部署產物在sites/<站名>。原整合站保留相容入口；獨立站使用各自的題目、資料、儲存與匯出。垃圾箱站延續既有地圖、歷程與桶型體驗。
 
-共用呈現程式與靜態資產維護於 `shared/web/template/`，原整合站的可重建輸出位於 `sites/taipei-city-lab/dist/`。本次目錄整理不更改既有題目、模型意義或歷史驗收範圍。
+共用呈現程式與靜態資產維護於 `shared/web/template/`，原整合站的可重建輸出位於 `sites/taipei-city-lab/dist/`。既有題目與模型意義依各題來源及限制說明。
 
 ## Evidence on Hand
 
