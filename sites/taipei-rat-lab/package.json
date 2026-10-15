@@ -1,0 +1,10 @@
+{
+  "name": "taipei-rat-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "python ../../scripts/build-topic-sites.py --topic rat",
+    "serve": "python -m http.server 8000 --directory dist"
+  }
+}

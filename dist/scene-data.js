@@ -51,11 +51,12 @@ function busScene(params){
     note:'站址、路線與車形是示意。往返 30 分鐘在動畫分成去回各 15 分鐘，沒有增加模型需求。每個人形代表一批留站者；精確人數另列。'};
 }
 function auditScene(data,report){
+  const catalogOnly=data?.meta?.observationStatus==='catalog-only';
   const profiled=Array.isArray(report?.profiles)&&report.profiles.length>0;
   const all=profiled?report.profiles.map(p=>({id:p.name,label:p.name,value:100*p.missingRate,
     detail:`${p.name}：空白 ${p.missingCount}／${report.rowCount} 列（${(100*p.missingRate).toFixed(2)}%）；推定類型 ${p.type}`}))
-    :Object.entries(data?.sources||{}).map(([id,s])=>({id,label:s.title,value:s.integrationStatus==='loaded'?1:0,
-      detail:`${s.title}：${s.integrationStatus==='loaded'?'已載入觀測快照':'未載入觀測；僅來源資訊'}；${s.grain}`}));
+    :Object.entries(data?.sources||{}).map(([id,s])=>({id,label:s.title,value:!catalogOnly&&s.integrationStatus==='loaded'?1:0,
+      detail:`${s.title}：${s.integrationStatus==='loaded'?(catalogOnly?'原題已載入觀測；本站僅保存目錄':'已載入觀測快照'):'未載入觀測；僅來源資訊'}；${s.grain}`}));
   return {kind:'audit',profiled,columns:all.slice(0,20),focus:all.slice(0,20),extent:130,
     note:profiled?`顯示前 ${Math.min(all.length,20)}／${all.length} 欄的空白比例，完整欄位見健檢表。空值代碼由資料契約另行檢查，未合併到空白比例；沒有上傳 CSV。`
       :'資料目錄的載入狀態：等高卡片以顏色區分，未當作資料品質分數。執行 CSV 健檢後切換為欄位空白比例。'};

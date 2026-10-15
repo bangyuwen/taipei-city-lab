@@ -3,12 +3,57 @@ import collections
 import csv
 import hashlib
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DEST = ROOT / 'dist/data'
+HISTORY_FILES = (
+    'taipei-bins-2015-districts.csv',
+    'taipei-bins-2015.csv',
+    'taipei-bins-2015.geojson',
+    'taipei-bins-2015.provenance.json',
+    'taipei-bins-2022.csv',
+    'taipei-bins-2024-05-14-partial.csv',
+    'taipei-bins-2024-05-14-partial.provenance.json',
+    'taipei-bins-2026-study-area.csv',
+    'taipei-bins-2026-study-area.provenance.json',
+)
+RESEARCH_FILES = (
+    'bin-reduction.md', 'bin-removal-history.md',
+    'global-bin-practices.md', 'bin-design.md',
+)
 DISTRICTS = ['中正區', '大同區', '中山區', '松山區', '大安區', '萬華區', '信義區', '士林區', '北投區', '內湖區', '南港區', '文山區']
 OFFICIAL = 'https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c'
+
+def prepare_sources():
+    """Package canonical inputs, then recreate the site's existing download URLs.
+
+    In this monorepo only topics/bins is edited by hand. data/history and
+    data/research are generated source packages for a standalone site checkout;
+    neither dist nor the documentation navigation stubs are build inputs.
+    """
+    topic = ROOT.parent.parent / 'topics/bins'
+    packaged = ROOT / 'data'
+    source = topic / 'data/history' if topic.is_dir() else packaged / 'history'
+    research = topic / 'docs' if topic.is_dir() else packaged / 'research'
+
+    # Validate every required input before replacing any generated files.
+    history_bytes = {name: (source / name).read_bytes() for name in HISTORY_FILES}
+    research_bytes = {name: (research / name).read_bytes() for name in RESEARCH_FILES}
+    for directory in (packaged / 'history', packaged / 'research',
+                      DEST, ROOT / 'dist/research'):
+        directory.mkdir(parents=True, exist_ok=True)
+    for name, content in history_bytes.items():
+        (packaged / 'history' / name).write_bytes(content)
+        (DEST / name).write_bytes(content)
+    for name, content in research_bytes.items():
+        (packaged / 'research' / name).write_bytes(content)
+        # Sibling research links keep working. Only source download destinations
+        # change between topics/bins/docs and the deployed dist/research folder.
+        deployed = re.sub(r'(?<=\]\()\.\./data/history/', '../data/',
+                          content.decode('utf-8'))
+        (ROOT / 'dist/research' / name).write_bytes(deployed.encode('utf-8'))
 
 def source_rows(path):
     with path.open(encoding='utf-8-sig', newline='') as f:
@@ -28,8 +73,8 @@ def point(row, index, key):
             'quality': '通過座標粗篩，尚未逐點核實' if plottable else '座標待核對，保留原始紀錄'}
 
 def main():
-    # All four preserved CSVs and their source information belong to this site.
-    # Rebuilding never imports another project's datasets or generates demand.
+    prepare_sources()
+    # Rebuilding never imports another topic's datasets or generates demand.
     source2026 = json.loads((DEST / 'taipei-bins-2026-study-area.provenance.json').read_text())
 
     definitions = [

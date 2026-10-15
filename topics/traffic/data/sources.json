@@ -1,0 +1,39 @@
+{
+  "vd": {
+    "title": "臺北市車輛偵測器(VD)靜態資料",
+    "url": "https://data.taipei/dataset/detail?id=47cb9090-e1c9-4b1d-b299-b11c375c5ee2",
+    "classification": "官方資料目錄",
+    "grain": "逐偵測器靜態位置、道路及車道屬性",
+    "limitations": "本版只查核靜態資料目錄，未累積尖峰歷史流量；錯峰曲線是模擬，沒有因果效果估計。",
+    "fields": [
+      "VDID",
+      "BiDirectional",
+      "LinkID",
+      "Bearing",
+      "RoadDirection",
+      "LaneNum",
+      "ActualLaneNum",
+      "VDType",
+      "LocationType",
+      "DetectionType",
+      "PositionLon",
+      "PositionLat",
+      "RoadID",
+      "RoadName",
+      "RoadClass",
+      "Start",
+      "End",
+      "LocationMile",
+      "LayoutMapURL"
+    ],
+    "retrievedAt": "2026-10-13T12:18:34Z",
+    "integrationStatus": "metadata-only",
+    "license": "依政府資料開放授權條款-第1版",
+    "publisher": "交通局",
+    "catalogUpdatedAt": "2025-09-10 10:45:42",
+    "publishedAt": "2020-12-29",
+    "resourceUpdatedAt": "2025-09-09 15:59:23",
+    "catalogRecordCount": "",
+    "resourceUrl": "https://tcgbusfs.blob.core.windows.net/blobtisv/VD.xml"
+  }
+}

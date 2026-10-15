@@ -3,8 +3,10 @@ import {resolve} from 'node:path';
 import {createHash} from 'node:crypto';
 const root=resolve(import.meta.dirname,'../dist');
 const html=await readFile(resolve(root,'index.html'),'utf8');
-const hosting=JSON.parse(await readFile(resolve(root,'../.openai/hosting.json')));
-if(!hosting.project_id||hosting.static?.directory!=='dist')throw Error('Hosting manifest incomplete');
+let hosting;
+try{hosting=JSON.parse(await readFile(resolve(root,'../.openai/hosting.json')));}
+catch(error){if(error.code!=='ENOENT'||process.argv.includes('--require-hosting'))throw error;}
+if(hosting&&(!hosting.project_id||hosting.static?.directory!=='dist'))throw Error('Hosting manifest incomplete');
 const files=['app.js','history.js','data-utils.js','styles.css','mark.svg','data/datasets.json','data/taipei-bins-2026-study-area.provenance.json',
   'design-ui.js','design-model.js','bin-scene.js','design.css','research/bin-design.md',
   'vendor/three/three.module.js','vendor/three/three.core.js','vendor/three/OrbitControls.js','vendor/three/LICENSE','vendor/three/manifest.json'];
@@ -23,4 +25,4 @@ const css=await readFile(resolve(root,'styles.css'),'utf8');
 for(const match of css.matchAll(/url\(['"]?([^)'"\s]+)['"]?\)/g))await access(resolve(root,match[1]));
 const notes=await readFile(resolve(root,'research/bin-removal-history.md'),'utf8');
 for(const match of notes.matchAll(/\]\(\.\.\/data\/([^\)]+)\)/g))await access(resolve(root,'data',match[1]));
-console.log(`Static assets, research downloads, hosting identity and ${ids.length} unique HTML IDs verified.`);
+console.log(`Static assets, research downloads${hosting?', hosting identity':''} and ${ids.length} unique HTML IDs verified.`);
