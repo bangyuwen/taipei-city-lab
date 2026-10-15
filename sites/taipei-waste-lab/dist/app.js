@@ -19,10 +19,14 @@ function ensureResearch(){
 }
 
 function ensureComparison(){
-  if(!comparisonLoading)comparisonLoading=import('./comparison-ui.js').then(module=>module.initializeComparisonExperience()).catch(()=>{
+  if(!comparisonLoading){
+    $('comparison-status').hidden=false;$('comparison-status').textContent='正在載入版本比較…';$('comparison-retry').hidden=true;
+    comparisonLoading=import('./comparison-ui.js').then(module=>module.initializeComparisonExperience()).catch(()=>{
     comparisonLoading=null;
-    $('comparison-status').textContent='版本比較暫時無法載入，請重新整理再試。';
-  });
+    $('comparison-status').textContent='版本比較暫時無法載入，請重試。來源日期與限制仍可閱讀。';
+    $('comparison-retry').hidden=false;
+  });}
+
   return comparisonLoading;
 }
 
@@ -32,7 +36,7 @@ async function ensureDesign(){
     designExperience.setActive(currentPage==='design');
   }).catch(()=>{
     designLoading=null;
-    $('design-status').textContent='桶型體驗暫時無法載入，請重新整理再試。';
+    $('design-status').textContent='用途設計暫時無法載入，請重新整理再試。';
     $('design-fallback').hidden=false;
   });
   return designLoading;
@@ -66,6 +70,8 @@ function panel(){
   if(inHistory)historyLink.setAttribute('aria-current','page');else historyLink.removeAttribute('aria-current');
   for(const p of allowedPages)$(`panel-${p}`).hidden=p!==currentPage;
   document.body.classList.toggle('design-mode',currentPage==='design');
+  document.body.classList.toggle('comparison-mode',currentPage==='comparison');
+  document.body.classList.toggle('research-mode',currentPage==='research');
   if(currentPage==='design')ensureDesign();
   if(currentPage==='comparison')ensureComparison();
   if(currentPage==='research')ensureResearch();
@@ -187,6 +193,22 @@ async function start(){
     img.addEventListener('error',showPhotoError,{once:true});
     if(img.complete&&!img.naturalWidth)showPhotoError();
   }
+  $('panel-countries').addEventListener('click',event=>{
+    const button=event.target.closest('[data-country-target]');
+    if(!button)return;
+    const target=$(button.dataset.countryTarget);
+    if(!target)return;
+    target.focus({preventScroll:true});target.scrollIntoView({block:'start',behavior:'instant'});
+  });
+  $('panel-research').addEventListener('click',event=>{
+    const button=event.target.closest('[data-research-target]');
+    if(!button)return;
+    const target=$(button.dataset.researchTarget);
+    if(!target)return;
+    for(let parent=target.parentElement;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;
+    target.focus({preventScroll:true});target.scrollIntoView({block:'start',behavior:'instant'});
+  });
+  $('comparison-retry').addEventListener('click',ensureComparison);
   window.addEventListener('hashchange',panel);
   window.addEventListener('popstate',()=>{
     if(catalog){

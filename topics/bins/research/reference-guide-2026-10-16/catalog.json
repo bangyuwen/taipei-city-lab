@@ -1,0 +1,286 @@
+{
+  "title": "論文與實務：臺北市公共垃圾桶研究證據精選",
+  "language": "zh-Hant",
+  "asOf": "2026-10-16",
+  "scopeNote": "精選 6 篇學術研究與 4 個實際政策／服務案例。條目分清隨機現場試驗、觀察關聯、問卷偏好、GIS 情境模型與官方制度說明；不得把外地效果量直接套用臺北。",
+  "retentionNote": "本檔只提供頁面精選 10 筆；既有 13 筆書目仍完整保留於可展開的完整參考區，不以本清單取代或刪除。",
+  "synthesis": [
+    {
+      "title": "位置看順路與可用，不靠桶數下結論",
+      "takeaway": "路徑、辨識與桶的可用狀態都值得比較；特定廣場的撤桶試驗，不能變成台北全市的增撤通則。",
+      "action": "用現有公開資料整理可走路線、轉乘或活動情境及服務條件，列出增設、重配與維持的選項；未有資料的需求與阻礙保留未知。",
+      "check": "若後續進行現場驗證，同時看找桶耗時、實際投放、街面垃圾及鄰街變化，避免只看場內或桶內。",
+      "references": [
+        "L02",
+        "L03",
+        "L04",
+        "L05",
+        "L11"
+      ]
+    },
+    {
+      "title": "先確認誰收，再決定是否智慧化",
+      "takeaway": "感測器能提供訊號，能否改善營運仍取決於接單、清運與維護。哥本哈根的回顧提醒我們，設備規格不等於節省工時。",
+      "action": "先整理管理者、既有班次、接單與故障備援；有調班能力的情境才比較感測或壓縮方案，把清洗、維修與通訊納入成本。",
+      "check": "若未來試辦，比較實際出車、倒桶、總工時、滿溢及桶旁垃圾；事先約定何時調整或停止額外設備。",
+      "references": [
+        "P01",
+        "P02"
+      ]
+    },
+    {
+      "title": "家戶合法去處與行人服務分開設計",
+      "takeaway": "家戶按量計費需要專屬收受、辨識與維護；行人箱仍要能處理正常小量垃圾。政策接受度、制度規則與實際垃圾行為各是不同證據。",
+      "action": "先把垃圾車、專用袋及既有合法投放資訊連到服務說明；有時段缺口再比較家戶付費站，不把收費或縮口當作防混入的唯一方法。",
+      "check": "日後同時觀察合法投放便利、桶外及鄰街堆置、付款與停機問題；垃圾袋外觀或交易量都不能單獨證明家戶違規增減。",
+      "references": [
+        "L01",
+        "P01",
+        "P03",
+        "P04"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "L01",
+      "kind": "academic",
+      "theme": "household",
+      "title": "政策說明能改變態度，但不等於街道變乾淨",
+      "attribution": "2020｜林美滿｜臺北市",
+      "method": "深度訪談政策利害關係人，並以 100 名受試者進行政策情境問卷；對起初反對撤桶者提供兩輪政策說明。",
+      "finding": "摘要顯示，提供政策情境說明後，部分受試者由反對改為支持撤桶，多數也認為應在景點或人潮處保留。這是問卷態度的改變，沒有測得街面垃圾是否改善。",
+      "lesson": "居民接受度值得與服務成效分開量。若要重整住宅區站點，應把說明內容、替代收運方式與居民態度一併記錄，不能把受試者被說服後的回答當成行為改變。",
+      "limitation": "單一碩士論文的 100 人問卷與訪談；問卷刺激不是實地政策介入，也沒有測量街面垃圾、鄰近街道轉移或長期使用。",
+      "readingScope": "已核對國立政治大學 Academic Hub 的書目與摘要；未核讀全文。",
+      "sourceLabel": "國立政治大學 Academic Hub｜論文紀錄與摘要",
+      "url": "https://ah.lib.nccu.edu.tw/item?item_id=147756&locale=en",
+      "citation": "林美滿（2020）。《撤除臺北市行人專用清潔箱之可行性分析》[碩士論文，國立政治大學]。",
+      "sources": [
+        {
+          "label": "國立政治大學 Academic Hub 論文紀錄",
+          "url": "https://ah.lib.nccu.edu.tw/item?item_id=147756&locale=en"
+        }
+      ],
+      "originalTitle": "撤除臺北市行人專用清潔箱之可行性分析"
+    },
+    {
+      "id": "L02",
+      "kind": "academic",
+      "theme": "collection",
+      "title": "撤桶後，廣場真的比較乾淨嗎？",
+      "attribution": "2025｜Piñeiro-Rodríguez、Rosenblatt、Tealde、Valenzuela-Levi｜蒙特維多，烏拉圭",
+      "method": "將 36 座原有垃圾桶的中小型廣場配對、隨機分組。試驗組撤桶、對照組保留；介入前後各踏查三次，用照片編碼比較每平方公尺的垃圾量。",
+      "finding": "作者估計撤桶使試驗廣場內可見垃圾項目減少 43.5%；廣場清潔感受沒有顯著變化，設施品質感受略降且僅達較弱統計證據。這是有隨機分派的真實場域試驗結果。",
+      "lesson": "撤桶在特定廣場有可能減少桶邊垃圾，但不能據此推論人行道或全市撤桶也會變乾淨。若臺北試點，需保留對照點並同時觀察鄰接路段，以檢查垃圾是否移位。",
+      "limitation": "研究只納入 36 座廣場，沒有測量周邊街道轉移或長期效果；場域、清運與垃圾拾取情境不同，43.5% 不可外推為臺北預期效果。讀取的是作者接受稿，未逐字比對出版定稿。",
+      "readingScope": "已讀曼徹斯特大學典藏的作者接受稿全文；頁面標示為 accepted author manuscript。",
+      "sourceLabel": "University of Manchester Research Explorer｜作者接受稿；Cities DOI",
+      "url": "https://doi.org/10.1016/j.cities.2025.105913",
+      "citation": "Piñeiro-Rodríguez, R., Rosenblatt, F., Tealde, E., & Valenzuela-Levi, N. (2025). Intervening public spaces by subtraction: a randomised controlled trial in Montevideo, Uruguay. Cities, 161, 105913. https://doi.org/10.1016/j.cities.2025.105913",
+      "sources": [
+        {
+          "label": "作者接受稿全文（曼徹斯特大學典藏）",
+          "url": "https://pure.manchester.ac.uk/ws/portalfiles/portal/361973089/Intervening_public_spaces_by_subtraction.pdf"
+        },
+        {
+          "label": "Cities 論文 DOI",
+          "url": "https://doi.org/10.1016/j.cities.2025.105913"
+        }
+      ],
+      "originalTitle": "Intervening public spaces by subtraction: a randomised controlled trial in Montevideo, Uruguay"
+    },
+    {
+      "id": "L03",
+      "kind": "academic",
+      "theme": "placement",
+      "title": "桶體設計如何影響實際使用？",
+      "attribution": "2026｜Högberg、Sörqvist｜跨地區系統性回顧",
+      "method": "系統性回顧以 440 篇候選研究進行篩選，納入 44 篇觀察垃圾桶行為的研究，整理設計與位置因素。",
+      "finding": "回顧指出，醒目度、清楚圖示與文字、投入口形狀和位置都可能影響使用；把桶放在常走路徑上，似乎比單看直線距離更重要。研究情境差異大，許多研究把因素分開測試。",
+      "lesson": "站點檢查應沿實際步行路徑看可見度、阻隔與指示，而非只用地圖上的最近距離；把設計因素當作本地可測假設，不當成已驗證的臺北答案。",
+      "limitation": "納入研究跨室內、戶外、居家與公共空間，方法與情境異質；回顧本身不估算臺北街道的效果量，也指出因素交互作用仍待研究。",
+      "readingScope": "已讀出版者提供的全文頁面與摘要。",
+      "sourceLabel": "Environmental Psychology Research｜出版者全文頁面",
+      "url": "https://bpspsychub.onlinelibrary.wiley.com/doi/full/10.1002/epr2.70002",
+      "citation": "Högberg, A., & Sörqvist, P. (2026). The effect of waste bin design on observable recycling behaviour: A systematic review and research agenda. Environmental Psychology Research, 1(1), e70002. https://doi.org/10.1002/epr2.70002",
+      "sources": [
+        {
+          "label": "Wiley 出版者全文頁面",
+          "url": "https://bpspsychub.onlinelibrary.wiley.com/doi/full/10.1002/epr2.70002"
+        }
+      ],
+      "originalTitle": "The effect of waste bin design on observable recycling behaviour: A systematic review and research agenda"
+    },
+    {
+      "id": "L04",
+      "kind": "academic",
+      "theme": "placement",
+      "title": "沿步行路徑，還是偏離動線？",
+      "attribution": "2019｜Leeabai 等｜設置條件實驗；可讀摘要未交代場址",
+      "method": "比較可燃垃圾、寶特瓶、罐與玻璃瓶桶的設置條件，監測收集量、分類效率與錯投，並以統計檢定比較沿步行路徑、偏離路徑及分開設置的差異。",
+      "finding": "摘要報告：沿步行路徑增加距離未見顯著效果；桶偏離步行路徑時，距離增加會降低可燃垃圾收集量。把可燃垃圾桶與寶特瓶桶移到原點對側，分類效率下降。",
+      "lesson": "位置應按行人實際路徑與垃圾分類任務檢查；分桶可能增加繞行或降低分類率，需在本地用使用與錯投資料驗證。研究中的距離不構成臺北通用間距標準。",
+      "limitation": "目前可讀的是索引所載摘要，未讀出版全文；摘要未交代場址細節，亦未提供適用臺北的固定距離閾值。",
+      "readingScope": "已核對 DOI 與 CiNii Research 所載摘要；出版全文未能讀取。",
+      "sourceLabel": "Waste Management DOI｜CiNii Research 摘要紀錄",
+      "url": "https://doi.org/10.1016/j.wasman.2019.05.039",
+      "citation": "Leeabai, N., Suzuki, S., Jiang, Q., Dilixiati, D., & Takahashi, F. (2019). The effects of setting conditions of trash bins on waste collection performance and waste separation behaviors; distance from walking path, separated setting, and arrangements. Waste Management, 94, 58–67. https://doi.org/10.1016/j.wasman.2019.05.039",
+      "sources": [
+        {
+          "label": "CiNii Research 摘要與 DOI 紀錄",
+          "url": "https://cir.nii.ac.jp/crid/1362825894014309248"
+        },
+        {
+          "label": "Waste Management 論文 DOI",
+          "url": "https://doi.org/10.1016/j.wasman.2019.05.039"
+        }
+      ],
+      "originalTitle": "The effects of setting conditions of trash bins on waste collection performance and waste separation behaviors; distance from walking path, separated setting, and arrangements"
+    },
+    {
+      "id": "L05",
+      "kind": "academic",
+      "theme": "placement",
+      "title": "用路網比較增設、重配與減少",
+      "attribution": "2015｜Nirodha Neupane｜雪梨，澳洲",
+      "method": "訪問 200 名使用者，詢問願意步行到公共垃圾桶的距離；將偏好轉成 GIS 路網分析，建立 56 種增設、重配或減少桶數的情境。",
+      "finding": "論文摘要報告，多數受訪者表示願意步行 38–80 公尺；因人口分布不均，作者認為最大化服務人數與目標市場涵蓋率的網路分析方法較合適。這是問卷偏好加模型情境，不是實際改點後的效果。",
+      "lesson": "用可走路網和人口／活動分布評估服務可達性，並比較重配與增減情境；38–80 公尺是雪梨樣本的自陳偏好，不能當臺北設置規範。",
+      "limitation": "碩士論文的問卷與 GIS 情境分析，沒有實際部署或因果成效測試；自陳步行意願不等於真實使用行為。",
+      "readingScope": "已核對 Macquarie University 機構典藏的論文摘要與書目；未逐章讀全文。",
+      "sourceLabel": "Macquarie University Figshare｜碩士論文典藏摘要",
+      "url": "https://figshare.mq.edu.au/articles/thesis/Optimizing_the_number_and_location_of_public_litter_bins_using_Geographic_Information_Systems/19432835",
+      "citation": "Neupane, N. (2015). Optimizing the number and location of public litter bins using Geographic Information Systems [MRes thesis, Macquarie University].",
+      "sources": [
+        {
+          "label": "Macquarie University 機構典藏",
+          "url": "https://figshare.mq.edu.au/articles/thesis/Optimizing_the_number_and_location_of_public_litter_bins_using_Geographic_Information_Systems/19432835"
+        }
+      ],
+      "originalTitle": "Optimizing the number and location of public litter bins using Geographic Information Systems"
+    },
+    {
+      "id": "L11",
+      "kind": "academic",
+      "theme": "collection",
+      "title": "垃圾桶可用性與亂丟行為有何關係？",
+      "attribution": "2013｜P. Wesley Schultz 等｜美國 130 個戶外公共場所",
+      "method": "研究人員在 130 個戶外公共場所編碼觀察 9,757 人的丟棄行為，並以多層次模型分析個人與場址特徵。",
+      "finding": "既有地面垃圾越多，與亂丟行為呈正向關聯；垃圾桶可用性較高，與亂丟呈負向關聯。在有丟棄行為的人之中，離桶較遠也與亂丟有關。研究沒有隨機改變桶的位置。",
+      "lesson": "把地面垃圾、桶的可用狀態與實際步行距離一起記錄，才能解讀站點問題；這些觀察關聯可以提示測量項目，不能代替臺北的介入試驗。",
+      "limitation": "觀察與多層次模型顯示關聯，並未隨機改變桶的數量或位置；出版者目前只提供摘要，不能把關聯解讀成增桶的因果效果。",
+      "readingScope": "已讀 SAGE 出版者摘要頁；全文需授權取得。",
+      "sourceLabel": "Environment and Behavior｜SAGE 出版者摘要",
+      "url": "https://journals.sagepub.com/doi/abs/10.1177/0013916511412179",
+      "citation": "Schultz, P. W., Bator, R. J., Large, L. B., Bruni, C. M., & Tabanico, J. J. (2013). Littering in Context: Personal and Environmental Predictors of Littering Behavior. Environment and Behavior, 45(1), 35–59. https://doi.org/10.1177/0013916511412179",
+      "sources": [
+        {
+          "label": "SAGE 出版者摘要",
+          "url": "https://journals.sagepub.com/doi/abs/10.1177/0013916511412179"
+        }
+      ],
+      "originalTitle": "Littering in Context: Personal and Environmental Predictors of Littering Behavior"
+    },
+    {
+      "id": "P01",
+      "kind": "practice",
+      "theme": "placement",
+      "title": "紐約：先劃清行人箱的服務範圍",
+      "attribution": "紐約市 DSNY｜行人垃圾桶服務說明｜查閱 2026-10-16",
+      "method": "公共行人垃圾桶設於商業街角及交通樞紐附近，沿標準清運路線服務。桶只收行人少量垃圾，不收家戶或商業廢棄物。",
+      "finding": "服務同時定義位置、收運路線與可收物。市府接受新增或替換站點的提報；官方頁面說明了實際服務機制，沒有提供對亂丟量或總成本的成效估計。",
+      "lesson": "站點可優先檢視商業活動與轉乘路徑，同時清楚分開行人少量垃圾、商家營業廢棄物與家戶垃圾的責任及收運方式。",
+      "limitation": "這是服務配置規則，不是需求或清潔成效評估；紐約的街道、活動與清運條件和台北不同。",
+      "readingScope": "已核對紐約市 DSNY 的 Litter Baskets 官方服務說明。",
+      "sourceLabel": "NYC DSNY｜Litter Baskets",
+      "url": "https://www.nyc.gov/site/dsny/what-we-do/cleaning/litter-baskets.page",
+      "citation": "New York City Department of Sanitation. Litter Baskets. 查閱日期：2026-10-16。",
+      "sources": [
+        {
+          "label": "NYC DSNY：Litter Baskets",
+          "url": "https://www.nyc.gov/site/dsny/what-we-do/cleaning/litter-baskets.page"
+        }
+      ],
+      "originalTitle": "紐約市商業街角與交通節點的行人垃圾桶服務"
+    },
+    {
+      "id": "P02",
+      "kind": "practice",
+      "theme": "collection",
+      "title": "哥本哈根：智慧桶也需要驗證與退場條件",
+      "attribution": "哥本哈根市府｜2018–2023 舊案回顧、2025 年新試驗文件",
+      "method": "舊案用感測器監看約 750 個公共桶。新案規劃 16 個壓縮感測桶，先留基準，再比較倒桶、出車、工時、里程與桶旁垃圾，並納入使用者與清潔人員回饋。",
+      "finding": "市府記載舊案預期的效率改善未實現。2025 年文件另提出 16 桶、16 個月的新試驗，以及無效時裝回原桶的安排；本次查閱的文件未提供新試驗結案成效。",
+      "lesson": "智慧桶先當待驗證的作業方案。記錄安裝前基準、實際空桶與出車、人力時間、桶邊垃圾、使用者和員工體驗，並預先訂出保留、擴大或復原條件。",
+      "limitation": "舊案結論是行政回顧，非獨立因果評估；新案是試驗安排，不是已證實的節省。不能由規劃時程推定目前執行情形或結果。",
+      "readingScope": "已讀哥本哈根市府 2025 年技術試驗計畫與 2025-12-04 試驗說明文件。",
+      "sourceLabel": "Københavns Kommune｜智慧壓縮桶試驗計畫與市政說明",
+      "url": "https://www.kk.dk/sites/default/files/agenda/83c5755d-bc0a-49e1-b04f-869a658fcdf6/48a7f707-43e3-4d42-a322-3581c4926820-bilag-2.pdf",
+      "citation": "Københavns Kommune, Teknik- og Miljøforvaltningen. (2025, September). Orientering om Pilotprojekt: Komprimerende affaldskurve; and (2025, December 4). Orienteringsnotat om test af maskinelt tømte mini-tårnkurve og kompressionskurve.",
+      "sources": [
+        {
+          "label": "哥本哈根市府 2025 年 9 月試驗計畫（含舊案回顧、評估設計及退場條件）",
+          "url": "https://www.kk.dk/sites/default/files/agenda/83c5755d-bc0a-49e1-b04f-869a658fcdf6/48a7f707-43e3-4d42-a322-3581c4926820-bilag-2.pdf"
+        },
+        {
+          "label": "哥本哈根市府 2025-12-04 試驗說明（16 桶、16 個月）",
+          "url": "https://www.kk.dk/sites/default/files/2025-12/04.12.25%20-%20Orienteringsnotat%20om%20test%20af%20maskinelt%20t%C3%B8mte%20mini-t%C3%A5rnkurve%20og%20kompressionskurve.pdf"
+        }
+      ],
+      "originalTitle": "哥本哈根智慧壓縮桶：舊案未達預期，新案設退出條件"
+    },
+    {
+      "id": "P03",
+      "kind": "practice",
+      "theme": "household",
+      "title": "韓國：RFID 把家戶辨識、秤重與計費接起來",
+      "attribution": "韓國環境公團、首爾市｜共同住宅廚餘服務｜來源更新 2025–2026",
+      "method": "共同住宅住戶用 RFID 識別後秤量廚餘，將使用者、重量與時間傳入管理系統，再依投放量計費；設備與收運須有承接者。",
+      "finding": "系統把家戶識別、投放重量、計費與管理資料串在一起，提供一套具體的按量收費做法。這說明的是服務如何運作，不能視為匿名街頭行人箱的減量成效。",
+      "lesson": "按量計費需要可識別的家戶來源、專屬廚餘設備、秤量、收費與維護流程。可借鏡家戶收運制度如何設計，不能把 RFID 機制或廚餘減量率套到匿名街頭垃圾桶。",
+      "limitation": "服務對象是可識別的共同住宅住戶，收受物是廚餘。與一般行人箱的可收物、責任和使用方式不同，不能直接套用或宣稱能防止家戶垃圾混入。",
+      "readingScope": "已核對韓國環境公團系統運作說明（2025-11-27 更新）及首爾市安裝補助說明（2026-03-03 更新）。本頁不以部署量推論成效。",
+      "sourceLabel": "韓國環境公團｜RFID 系統運作說明",
+      "url": "https://www.keco.or.kr/web/lay1/S1T184C1061/contents.do",
+      "citation": "Korea Environment Corporation. RFID-based food waste management system (2025-11-27); Seoul Metropolitan Government. RFID food waste scale installation support (2026-03-03).",
+      "sources": [
+        {
+          "label": "韓國環境公團：RFID 廚餘系統流程、計費方式與部署統計",
+          "url": "https://www.keco.or.kr/web/lay1/S1T184C1061/contents.do"
+        },
+        {
+          "label": "首爾市：RFID 廚餘計量器安裝補助與每台服務戶數",
+          "url": "https://news.seoul.go.kr/env/archives/74584"
+        }
+      ],
+      "originalTitle": "首爾／韓國 RFID 家戶廚餘按量收費與計量服務"
+    },
+    {
+      "id": "P04",
+      "kind": "practice",
+      "theme": "household",
+      "title": "台北：家戶垃圾已有另一條收運路徑",
+      "attribution": "隨袋徵收自 2000-07-01 實施；專用袋可收運品項 FAQ 更新於 2026-09-24｜臺北市",
+      "method": "臺北市一般垃圾使用環保局專用袋交由清潔隊收運；資源回收另行分類；官方並明確提醒不可把垃圾包丟進果皮箱。2026 年 FAQ 列出可交垃圾車收運的專用袋規格。",
+      "finding": "這是既有家戶垃圾的付費收運路徑，不是新試辦：一般垃圾用指定袋，回收物分類，並由垃圾車／清潔隊收運。官方文件描述制度，不提供其對街道垃圾桶使用或亂丟量的成效估計。",
+      "lesson": "重新設計公共垃圾桶資訊時，應把家戶垃圾車與專用袋路徑和行人小量垃圾分開說清楚；對疑似家戶棄置應查來源與收運情境，不能只憑袋子外觀推定來源。",
+      "limitation": "政策頁證明制度規則，不證明各區使用便利性、遵循程度或對清潔箱負荷的因果影響；政策簡介頁內容較舊，現行可收袋規格另以 2026-09-24 FAQ 核對。",
+      "readingScope": "已核對臺北市環保局隨袋徵收政策簡介及 2026-09-24 更新的專用袋 FAQ。",
+      "sourceLabel": "臺北市環保局｜垃圾費隨袋徵收政策簡介與現行 FAQ",
+      "url": "https://www.dep.gov.taipei/News_Content.aspx?n=9D5081C3BFCC977A&s=FB47A528846715AA&sms=6B5660C29DA370A7",
+      "citation": "臺北市政府環境保護局。《垃圾費隨袋徵收政策簡介》；《可以交由垃圾車收運的專用垃圾袋有哪些？》（更新日期：2026-09-24）。",
+      "sources": [
+        {
+          "label": "臺北市環保局：隨袋徵收政策簡介",
+          "url": "https://www.dep.gov.taipei/News_Content.aspx?n=9D5081C3BFCC977A&s=FB47A528846715AA&sms=6B5660C29DA370A7"
+        },
+        {
+          "label": "臺北市環保局：可交垃圾車收運的專用垃圾袋 FAQ（2026-09-24 更新）",
+          "url": "https://www.dep.gov.taipei/News_Content.aspx?n=ACEFA960B5A4ACD7&s=62B8AA652559E99F"
+        }
+      ],
+      "originalTitle": "臺北市專用垃圾袋與垃圾車收運的家戶垃圾制度"
+    }
+  ]
+}

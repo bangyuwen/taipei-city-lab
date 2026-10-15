@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {filterComparison,comparisonCounts,comparisonCSV,districtCSV,mapURL,formatCoordinateDistance,sortByCoordinateDistance} from '../dist/comparison-utils.js';
+import {categories,filterComparison,comparisonCounts,getComparisonScope,summarizeCoordinateDistances,comparisonCSV,districtCSV,mapURL,formatCoordinateDistance,sortByCoordinateDistance} from '../dist/comparison-utils.js';
 import {pageFromHash} from '../dist/data-utils.js';
 
 const record={id:'2024-archive-row-1',sourceRow:2,district:'中正區',address:'臺北路 1 號',rawX:'?121.595369',rawY:'24.968972',quality:'座標待核對'};
@@ -16,6 +16,78 @@ test('comparison filters do not discard unplottable or co-located source records
   assert.equal(filterComparison(entries,{category:'ambiguous'}).length,1);
   assert.equal(filterComparison(entries,{category:''}).length,2);
   assert.equal(filterComparison(entries,{district:'北投區'}).length,0);
+});
+test('comparison scope keeps group counts independent of category and preserves every source row',()=>{
+  const all=getComparisonScope(entries);
+  assert.deepEqual(all.entries,entries);
+  assert.deepEqual(all.counts,{groups:2,beforeRows:2,afterRows:1});
+  assert.deepEqual(all.categoryCounts,{not_reappeared:1,only_2026:0,same_address_changed:0,ambiguous:1,same_fields:0});
+  assert.deepEqual(Object.keys(all.categoryCounts),Object.keys(categories));
+
+  const scoped=getComparisonScope(entries,{district:'中正區',search:'台北路1號'});
+  assert.deepEqual(scoped.entries,entries);
+  assert.deepEqual(scoped.counts,{groups:2,beforeRows:2,afterRows:1});
+  assert.equal(scoped.categoryCounts.not_reappeared,1);
+  assert.equal(scoped.categoryCounts.ambiguous,1);
+
+  assert.deepEqual(getComparisonScope(entries,{search:'其他路'}).entries,[entries[1]]);
+  const empty=getComparisonScope(entries,{district:'北投區'});
+  assert.deepEqual(empty.entries,[]);
+  assert.deepEqual(empty.counts,{groups:0,beforeRows:0,afterRows:0});
+  assert.deepEqual(empty.categoryCounts,Object.fromEntries(Object.keys(categories).map(category=>[category,0])));
+});
+test('scoped coordinate summaries preserve boundaries, unavailable values and unknown quality flags',()=>{
+  const values=[0,0.999,1,9.999,10,49.999,50,99.999,100,499.999,500,null,undefined,NaN,Infinity,-1,'0'];
+  const scopedEntries=values.map((_,index)=>({id:'pair-'+index,category:'same_address_changed'}));
+  scopedEntries.push({id:'missing-pair',category:'same_address_changed'});
+  const pairs=values.map((value,index)=>{
+    const pair={
+      comparisonId:'pair-'+index,
+      before:{plottable:index===1?false:true},
+      after:index===2?{}:{plottable:true}
+    };
+    if(value!==undefined)pair.distanceMeters=value;
+    return pair;
+  });
+  const originalEntries=structuredClone(scopedEntries);
+  const originalPairs=structuredClone(pairs);
+
+  const summary=summarizeCoordinateDistances(scopedEntries,pairs);
+  assert.deepEqual(summary,{
+    pairCount:18,calculatedPairs:11,unavailablePairs:7,coarseFlaggedPairs:3,
+    minMeters:0,medianMeters:49.999,maxMeters:500,
+    buckets:[
+      {key:'lt1',label:'小於 1 公尺',count:2},
+      {key:'1to10',label:'1 至未滿 10 公尺',count:2},
+      {key:'10to50',label:'10 至未滿 50 公尺',count:2},
+      {key:'50to100',label:'50 至未滿 100 公尺',count:2},
+      {key:'100to500',label:'100 至未滿 500 公尺',count:2},
+      {key:'ge500',label:'500 公尺以上',count:1}
+    ]
+  });
+  assert.deepEqual(scopedEntries,originalEntries);
+  assert.deepEqual(pairs,originalPairs);
+
+  const empty=summarizeCoordinateDistances([],pairs);
+  assert.equal(empty.pairCount,0);
+  assert.equal(empty.calculatedPairs,0);
+  assert.equal(empty.unavailablePairs,0);
+  assert.equal(empty.coarseFlaggedPairs,0);
+  assert.equal(empty.minMeters,null);
+  assert.equal(empty.medianMeters,null);
+  assert.equal(empty.maxMeters,null);
+  assert.ok(empty.buckets.every(bucket=>bucket.count===0));
+});
+test('scoped coordinate summaries match the saved whole-scope and district analysis',async()=>{
+  const comparison=JSON.parse(await readFile(new URL('../dist/data/comparison-2024-2026.json',import.meta.url)));
+  const analysis=JSON.parse(await readFile(new URL('../dist/data/comparison-coordinate-distances.json',import.meta.url)));
+  const wholeScope=getComparisonScope(comparison.entries);
+  assert.deepEqual(summarizeCoordinateDistances(wholeScope.entries,analysis.pairs),analysis.summary);
+
+  const districtScope=getComparisonScope(comparison.entries,{district:'中正區'});
+  const {district,...districtSummary}=analysis.districts.find(item=>item.district==='中正區');
+  assert.equal(district,'中正區');
+  assert.deepEqual(summarizeCoordinateDistances(districtScope.entries,analysis.pairs),districtSummary);
 });
 test('comparison export retains every raw source row, dates, lineage and cautious classification',()=>{
   const csv=comparisonCSV(entries,meta);

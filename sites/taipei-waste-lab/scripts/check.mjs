@@ -45,12 +45,15 @@ for(const [file,entry] of Object.entries(three.files)){
 }
 const photos=JSON.parse(await readFile(resolve(root,'images/countries/sources.json'),'utf8')).photos;
 const photoPaths=[...html.matchAll(/<img src="(images\/countries\/[^"]+)"/g)].map(match=>match[1]);
-if(photos.length!==6||new Set(photoPaths).size!==6)throw Error('Six unique country photos required');
+if(photos.length<6||new Set(photoPaths).size!==photos.length||photoPaths.length!==photos.length)throw Error('Country photo manifest must match unique displayed photos');
 for(const photo of photos){
   const file='images/countries/'+photo.file;
   if(!photoPaths.includes(file)||!html.includes(photo.source_page.replaceAll('&','&amp;')))throw Error(`Missing photo or attribution: ${photo.id}`);
   const bytes=await readFile(resolve(root,file));
   if(createHash('sha256').update(bytes).digest('hex')!==photo.sha256)throw Error(`Photo source hash mismatch: ${photo.id}`);
+}
+for(const [,target] of html.matchAll(/data-country-target="([^"]+)"/g)){
+  if(!html.includes(`id="${target}" tabindex="-1"`))throw Error(`Country navigation target missing: ${target}`);
 }
 const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
 if(new Set(ids).size!==ids.length)throw Error('Duplicate HTML IDs');
