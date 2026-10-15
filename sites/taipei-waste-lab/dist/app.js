@@ -6,6 +6,25 @@ const colors={'2015':'#986838','2022':'#30694e','2024':'#396e88','2026':'#244d43
 let catalog,map,L,layers,markers=new Map(),filtered=[],shown=40,currentPage='map';
 let state={year:'2015',district:'',search:''},mapStarting=false,eventFilter='all';
 let designExperience,designLoading;
+let comparisonLoading;
+let researchLoading;
+
+function ensureResearch(){
+  if(!researchLoading)researchLoading=import('./research-ui.js').then(module=>module.initializeResearch()).catch(()=>{
+    researchLoading=null;
+    $('research-status').hidden=false;
+    $('research-status').textContent='候選清單暫時無法載入，請重新整理；本頁的完整研究包仍可下載。';
+  });
+  return researchLoading;
+}
+
+function ensureComparison(){
+  if(!comparisonLoading)comparisonLoading=import('./comparison-ui.js').then(module=>module.initializeComparisonExperience()).catch(()=>{
+    comparisonLoading=null;
+    $('comparison-status').textContent='版本比較暫時無法載入，請重新整理再試；仍可下載完整比較 CSV。';
+  });
+  return comparisonLoading;
+}
 
 async function ensureDesign(){
   if(!designLoading)designLoading=import('./design-ui.js').then(module=>{
@@ -46,9 +65,11 @@ function panel(){
   for(const a of document.querySelectorAll('[data-page]')){
     if(a.dataset.page===currentPage)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
   }
-  for(const p of ['map','history','design','sources'])$(`panel-${p}`).hidden=p!==currentPage;
+  for(const p of ['map','comparison','history','design','research','sources'])$(`panel-${p}`).hidden=p!==currentPage;
   document.body.classList.toggle('design-mode',currentPage==='design');
   if(currentPage==='design')ensureDesign();
+  if(currentPage==='comparison')ensureComparison();
+  if(currentPage==='research')ensureResearch();
   designExperience?.setActive(currentPage==='design');
   if(currentPage==='map'&&catalog)ensureMap().then(()=>requestAnimationFrame(()=>{
     if(!map)return;
@@ -57,15 +78,26 @@ function panel(){
   }));
 }
 function renderVersions(){
-  $('dataset-buttons').innerHTML=catalog.datasets.map(d=>`<button type="button" data-year="${d.key}" aria-pressed="${d.key===state.year}" aria-label="${esc(d.label)}"><span><strong>${d.year}</strong><small>${esc(d.short)}</small></span><span class="switch-count">${num(d.rows)} 筆</span></button>`).join('');
+  $('dataset-buttons').innerHTML=catalog.datasets.filter(d=>d.preferred).map(d=>`<button type="button" data-year="${d.key}" aria-pressed="false" aria-label="${esc(d.label)}"><span><strong>${d.year}</strong><small>${esc(d.short)}</small></span><span class="switch-count">${num(d.rows)} 筆</span></button>`).join('');
   for(const button of $('dataset-buttons').querySelectorAll('button'))button.addEventListener('click',()=>{
     state.year=button.dataset.year;syncURL();renderDataset();
   });
 }
 function renderDataset(){
   const d=dataset();shown=40;
-  document.documentElement.style.setProperty('--point-color',colors[d.key]);
-  for(const b of document.querySelectorAll('[data-year]'))b.setAttribute('aria-pressed',String(b.dataset.year===d.key));
+  document.documentElement.style.setProperty('--point-color',colors[d.year]);
+  for(const b of document.querySelectorAll('[data-year]')){
+    const preferred=catalog.datasets.find(item=>item.key===b.dataset.year);
+    const active=preferred.year===d.year,display=active?d:preferred;
+    b.setAttribute('aria-pressed',String(active));b.setAttribute('aria-label',display.label);
+    b.querySelector('small').textContent=display.short;
+    b.querySelector('.switch-count').textContent=num(display.rows)+' 筆';
+  }
+  const versions=catalog.datasets.filter(item=>item.year===d.year);
+  $('dataset-version-field').hidden=versions.length<2;
+  $('dataset-version').innerHTML=versions.map(item=>`<option value="${esc(item.key)}">${esc(item.label)}・${num(item.rows)} 筆</option>`).join('');
+  $('dataset-version').value=d.key;
+  $('dataset-completeness').textContent=d.coverageLabel+'；保存列數不等於已核實的全市存量。';
   $('dataset-date').textContent=d.dateLabel;$('dataset-note').textContent=d.note;
   $('dataset-source').href=d.source;$('dataset-source').textContent=d.sourceLabel+' ↗';
   $('map-legend').textContent=d.label+'的位置';
@@ -119,7 +151,7 @@ function popup(p){
 function renderMap(){
   layers.clearLayers();markers=new Map();
   for(const p of filtered.filter(p=>p.plottable)){
-    const marker=L.circleMarker([p.y,p.x],{radius:4,weight:1,color:colors[state.year],fillColor:colors[state.year],fillOpacity:.7}).bindPopup(()=>popup(p)).addTo(layers);
+    const marker=L.circleMarker([p.y,p.x],{radius:4,weight:1,color:colors[dataset().year],fillColor:colors[dataset().year],fillOpacity:.7}).bindPopup(()=>popup(p)).addTo(layers);
     markers.set(p.id,marker);
   }
   fitMap();
@@ -139,7 +171,7 @@ async function focusPoint(id){
   if(map&&p?.plottable){map.setView([p.y,p.x],16,{animate:false});marker?.openPopup()}
 }
 function renderSources(){
-  $('source-cards').innerHTML=catalog.datasets.map(d=>`<article class="source-card"><div class="source-label"><span class="source-year">${d.year}</span><span class="outline-tag">${esc(d.short)}</span></div><span class="source-date">${esc(d.dateLabel)}</span><dl><div><dt>保存資料列</dt><dd>${num(d.rows)}</dd></div><div><dt>不同座標</dt><dd>${num(d.distinctCoordinates)}</dd></div><div><dt>可繪製紀錄</dt><dd>${num(d.plottableRows)}</dd></div></dl><p>${esc(d.note)}</p><div class="source-actions"><a href="${esc(d.source)}" target="_blank" rel="noopener noreferrer">原始來源 ↗</a><a href="data/${esc(d.file)}" download>保存 CSV ↓</a></div></article>`).join('');
+  $('source-cards').innerHTML=catalog.datasets.map(d=>`<article class="source-card"><div class="source-label"><span class="source-year">${d.year}</span><span class="outline-tag">${esc(d.short)}</span></div><h3>${esc(d.label)}</h3><span class="source-date">${esc(d.dateLabel)}</span><p class="source-coverage">${esc(d.coverageLabel)}</p><dl><div><dt>保存資料列</dt><dd>${num(d.rows)}</dd></div><div><dt>不同座標</dt><dd>${num(d.distinctCoordinates)}</dd></div><div><dt>可繪製紀錄</dt><dd>${num(d.plottableRows)}</dd></div></dl><p>${esc(d.note)}</p><div class="source-actions"><a href="${esc(d.source)}" target="_blank" rel="noopener noreferrer">原始來源 ↗</a><a href="data/${esc(d.file)}" download>保存 CSV ↓</a>${d.provenanceFile?`<a href="data/${esc(d.provenanceFile)}" download>來源紀錄 ↓</a>`:''}</div></article>`).join('');
 }
 function renderHistory(){
   $('annual-counts').innerHTML=annualCounts.map(a=>`<div class="annual-row"><span title="${a.year===2025?'2025 年底':a.year}">${a.year}</span><div class="bar" aria-hidden="true"><span style="width:${100*a.count/2000}%"></span></div><strong>${num(a.count)} 組</strong></div>`).join('');
@@ -172,6 +204,7 @@ async function start(){
     catalog=await response.json();
     for(const district of catalog.districtOrder){const o=document.createElement('option');o.value=district;o.textContent=district;$('district').append(o)}
     readURL();renderVersions();renderSources();renderDataset();
+    $('dataset-version').addEventListener('change',e=>{state.year=e.target.value;syncURL();renderDataset()});
     for(const id of ['district','search','reset-filters','fit-map'])$(id).disabled=false;
     $('load-status').hidden=true;panel();
     $('district').addEventListener('change',e=>{state.district=e.target.value;shown=40;syncURL();renderResults()});
@@ -179,7 +212,7 @@ async function start(){
     $('reset-filters').addEventListener('click',()=>{state.district='';state.search='';$('district').value='';$('search').value='';shown=40;syncURL();renderResults()});
     $('load-more').addEventListener('click',()=>{shown+=40;renderList()});
     $('fit-map').addEventListener('click',()=>fitMap(true));
-    $('export-csv').addEventListener('click',()=>download(csvForPoints(filtered),'text/csv;charset=utf-8',`taipei-bins-${state.year}-filtered.csv`));
+    $('export-csv').addEventListener('click',()=>download(csvForPoints(filtered,dataset()),'text/csv;charset=utf-8',`taipei-bins-${state.year}-filtered.csv`));
   }catch(error){
     $('load-status').textContent='位置資料暫時無法載入。請重新整理，或由資料來源下載保存檔案。';
     $('load-status').classList.add('error');

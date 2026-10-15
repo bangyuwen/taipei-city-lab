@@ -47,7 +47,11 @@ def main():
         assert all(r['行政區']=='中正區' for r in records)
         page.click('#reset-filters')
         assert page.locator('#result-count').inner_text()=='2,517'
-        page.click('[data-year="2024"]')
+        page.click('[data-year="2024-archive"]')
+        assert page.locator('#result-count').inner_text()=='1,971'
+        assert '1,969' in page.locator('#result-map-count').inner_text()
+        assert '2024-10-19' in page.locator('#dataset-date').inner_text()
+        page.select_option('#dataset-version','2024')
         assert page.locator('#result-count').inner_text()=='1,000'
         assert '991' in page.locator('#dataset-note').inner_text()
         page.select_option('#district','信義區')
@@ -57,11 +61,15 @@ def main():
         page.reload()
         page.wait_for_selector('#load-status[hidden]', state='attached')
         assert page.locator('#district').input_value()=='信義區'
-        assert page.locator('[data-year="2024"]').get_attribute('aria-pressed')=='true'
+        assert page.locator('[data-year="2024-archive"]').get_attribute('aria-pressed')=='true'
+        assert page.locator('#dataset-version').input_value()=='2024'
         page.click('#reset-filters')
         page.click('[data-year="2022"]')
         assert page.locator('#result-count').inner_text()=='1,799'
-        page.click('[data-year="2026"]')
+        page.click('[data-year="2026-main"]')
+        assert page.locator('#result-count').inner_text()=='681'
+        assert '680' in page.locator('#result-map-count').inner_text()
+        page.select_option('#dataset-version','2026')
         assert page.locator('#result-count').inner_text()=='294'
         page.click('[data-year="2015"]')
         page.fill('#search','武昌街4號')
@@ -77,7 +85,7 @@ def main():
         assert page.locator('.case-step').count()==4
         page.click('[data-event-filter="all"]')
         page.click('[data-page="sources"]')
-        assert page.locator('.source-card').count()==4
+        assert page.locator('.source-card').count()==6
         check_no_overflow(page)
         page.screenshot(path=str(QA/'desktop-sources.png'),full_page=True)
         page.click('[data-page="map"]')
@@ -103,8 +111,10 @@ def main():
             assert phone.locator(f'#panel-{panel}').is_visible()
             check_no_overflow(phone)
         phone.click('[data-page="map"]')
-        phone.click('[data-year="2024"]')
+        phone.click('[data-year="2024-archive"]')
         phone.select_option('#district','大安區')
+        assert phone.locator('#result-count').inner_text()=='229'
+        phone.select_option('#dataset-version','2024')
         assert phone.locator('#result-count').inner_text()=='235'
         phone.screenshot(path=str(QA/'mobile-map.png'),full_page=True)
         assert not phone_errors, phone_errors

@@ -10,16 +10,18 @@ export function recordStats(points) {
   return {rows:points.length,mapRows:points.filter(p=>p.plottable).length,
     coordinates:new Set(points.filter(p=>p.x!==null&&p.y!==null).map(p=>`${p.x},${p.y}`)).size};
 }
-export function csvForPoints(points) {
+export function csvForPoints(points, dataset) {
   const safe=value=>{
     let s=String(value??'');
     if(/^[=+@-]/.test(s))s="'"+s;
     return '"'+s.replaceAll('"','""')+'"';
   };
-  return '\uFEFF'+[['本站列號（非官方箱號）','行政區','地址','經度','緯度','座標初篩'],
-    ...points.map(p=>[p.id,p.district,p.address,p.x,p.y,p.quality])].map(r=>r.map(safe).join(',')).join('\r\n')+'\r\n';
+  const headers=dataset?['資料版本','資料日期','完整性限制']:[];
+  const context=dataset?[dataset.label,dataset.dateLabel,dataset.note]:[];
+  return '\uFEFF'+[[...headers,'本站列號（非官方箱號）','行政區','地址','經度','緯度','座標初篩'],
+    ...points.map(p=>[...context,p.id,p.district,p.address,p.rawX??p.x,p.rawY??p.y,p.quality])].map(r=>r.map(safe).join(',')).join('\r\n')+'\r\n';
 }
-export const allowedPages=['map','history','design','sources'];
+export const allowedPages=['map','comparison','history','design','research','sources'];
 export function pageFromHash(hash) {
   const page=hash.replace(/^#/,'');
   return allowedPages.includes(page)?page:'map';

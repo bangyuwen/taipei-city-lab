@@ -1,0 +1,16 @@
+{
+  "file": "taipei-bins-2024-10-18-archive-utc.csv",
+  "raw_file": "../research/source-recovery-2026-10-15/raw/2024-10-18-official-archive.csv",
+  "capture_utc": "2024-10-18T21:17:32Z",
+  "capture_taipei": "2024-10-19T05:17:32+08:00",
+  "survey_date": null,
+  "source_updated_at": null,
+  "complete_archived_response": true,
+  "citywide_inventory_complete": null,
+  "archive_cdx": "../research/source-recovery-2026-10-15/raw/archive-cdx-download.json",
+  "note": "A separate October 2024 archived response, not a completion of the May 2024 API snapshot.",
+  "observedDate": "2026-10-15",
+  "sha256": "bb34f092da73d663b49eb0a55d98fe8864377a3dfcc1b103f04affdca4ca6cdb",
+  "limitations": "完整取得公開檔案，不代表已核實全市現場清冊完整性。",
+  "sourceManifest": "../research/source-recovery-2026-10-15/manifest.json"
+}
