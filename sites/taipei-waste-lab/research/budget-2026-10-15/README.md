@@ -114,3 +114,5 @@
 本估算不要求先完成另一個研究才可討論經費；它提供可以直接檢討的數量、單價與班次。服務判斷見[配置、清運與家戶分流文件](../service-strategy-2026-10-15/README.md)。可下載 [計算明細 CSV](estimate.csv) 與 [估算參數 JSON](inputs.json)；在專案根目錄執行 `python3 scripts/estimate-budget.py` 重算，再執行 `python3 scripts/package-research.py` 更新網站下載包。
 
 智慧設備的功能、海外成本範圍與五年成本框架另見[六國進階垃圾桶比較](../smart-bin-comparison-2026-10-15/README.md)。該比較不將海外歷史單價當台北現行報價，也不變更本案一般桶預算。
+
+付費收受站與支付系統、補助尚未列入本案，也未預扣投放費收入。業者收入與市府可收收入須分開；費率、使用者支出及單站毛收入情境見[付費模式與收支分析](../paid-disposal-2026-10-15/README.md)。
