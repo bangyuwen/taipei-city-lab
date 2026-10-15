@@ -10,3 +10,4 @@ sites/taipei-waste-lab/data/history/*.csv -text whitespace=cr-at-eol
 sites/**/dist/vendor/** -text whitespace=cr-at-eol,-space-before-tab linguist-vendored
 sites/**/dist/data/*.json linguist-generated
 shared/web/template/vendor/** -text whitespace=cr-at-eol,-space-before-tab linguist-vendored
+shared/skills/impeccable/** -text whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol linguist-vendored

@@ -6,6 +6,8 @@
 
 - [產品範圍](product.md)
 - [介面與設計規則](design.md)
+- [設計工具 sidecar](design.json)：Impeccable 讀取的現行設計擴充資料，保存色彩／字體補充資訊、動效、斷點及元件範例；與 `design.md` 配合使用，不是畫面驗收紀錄。
+- [共用介面契約](surfaces/shared-web-template-index-html.md)：Read 模式、答案優先閱讀順序及條件式比較；供技能按共用模板目標載入。
 - [模型與資料契約](contract.md)
 - [答案品質標準](answer-standards.md)
 

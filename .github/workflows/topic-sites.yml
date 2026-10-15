@@ -21,6 +21,8 @@ jobs:
           python-version: '3.12'
       - name: Verify all topic models and sites
         run: |
+          npm run setup-skills
+          python scripts/setup-skills.py --check
           npm test
           npm run check
           npm --prefix sites/taipei-waste-lab test
