@@ -315,4 +315,3 @@ A 階段完成的標準是每項結論都有來源或明確假設，每個待解
 - [13 篇研究文獻](../literature-2026-10-15/README.md)
 - [政策與撤除研究脈絡](../../docs/bin-reduction.md)
 - [歷史分布與具日期個案](../../docs/bin-removal-history.md)
-
