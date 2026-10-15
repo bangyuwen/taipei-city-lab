@@ -1,112 +1,89 @@
-# 台北城市實驗室
+# 台北城市研究專案
 
-以資料與分析找出七個城市問題的答案，供一般市民閱讀與查核。先交付研究結論、依據與尚缺的證據，再提供地圖和可重現模型。參數調整是研究工具，不要求市民先操作選址才得到答案。這是獨立試作；使用者參賽時另行重寫。本版沒有提交報名、作品或任何市政派工。
+七個題目各自管理資料、模型與研究筆記，並由同一個 repo 維護七個可獨立部署的靜態網站。共用工具集中管理，各站的部署目錄只載入本題資料與必要元件。
 
-既有參賽主線為第二題「垃圾桶／清潔箱配置」。預設計算與品牌連結仍進入此題，七題的原有深連結全部保留。新增 `#explore` 提供市民入口，首頁沒有題目 hash 時也顯示生活問題導引。清潔箱題比較既有設施快照、合成需求缺口、設置上限、每日清運工時、公平權重、推薦位置及同條件基準。清運工時目前是同質工時假設，不代表已完成真實清運路線最佳化。
+## 題目與網站
 
-## 使用
+| 題目 | 資料 模型 研究 | 網站原始碼 | 網址 |
+| --- | --- | --- | --- |
+| 樹蔭公平 | [shade](topics/shade/README.md) | [taipei-shade-lab](sites/taipei-shade-lab/README.md) | [開啟](https://taipei-shade-lab.bangyuwen.chatgpt.site) |
+| 垃圾箱分布 撤除與設計 | [bins](topics/bins/README.md) | [taipei-waste-lab](sites/taipei-waste-lab/README.md) | [開啟](https://taipei-waste-lab.bangyuwen.chatgpt.site) |
+| 鼠患源頭治理 | [rat](topics/rat/README.md) | [taipei-rat-lab](sites/taipei-rat-lab/README.md) | [開啟](https://taipei-rat-lab.bangyuwen.chatgpt.site) |
+| 內湖錯峰通勤 | [traffic](topics/traffic/README.md) | [taipei-traffic-lab](sites/taipei-traffic-lab/README.md) | [開啟](https://taipei-traffic-lab.bangyuwen.chatgpt.site) |
+| 公車接駁與休息 | [bus](topics/bus/README.md) | [taipei-bus-lab](sites/taipei-bus-lab/README.md) | [開啟](https://taipei-bus-lab.bangyuwen.chatgpt.site) |
+| 社區健檢準備 | [buildings](topics/buildings/README.md) | [taipei-building-lab](sites/taipei-building-lab/README.md) | [開啟](https://taipei-building-lab.bangyuwen.chatgpt.site) |
+| 市政資料健檢 | [audit](topics/audit/README.md) | [taipei-data-lab](sites/taipei-data-lab/README.md) | [開啟](https://taipei-data-lab.bangyuwen.chatgpt.site) |
 
-各題先顯示研究結論、證據與實際方案的缺口；可匯出此題結論、來源、參數及模型明細。清潔箱增加範圍內真實快照的行政區筆數，以及相同條件下不同新增上限的比較。模型結果另列於「查看目前模型的條件式答案」，完整互動工具收在「查核模型、地圖與參數」，預設關閉；開啟後可使用原有功能。品質標準與研究界線見 [答案研究](docs/answer-research.md) 及 [答案品質評估](docs/answer-standards.md)。
+各站維持自己的託管身分與網址。新站以私人存取發布；既有垃圾箱站沿用原本存取範圍。
 
-網站左側切換七題，手機透過「選擇城市問題」展開題目。各題探索提示可直接套用一種情境；「回到起點」恢復該題預設值。前四項指標先顯示，其餘可展開；前三個參數先呈現，其他設置、清運等假設在「更多條件與假設」中。空間題預設 OpenStreetMap 街道地圖，交通／接駁預設 Three.js 動態情境，資料健檢預設圖表；同一區可切換地圖、3D 或比較圖表，每題在本次頁面生命週期記住視角。地圖上的既有快照、候選、推薦與假設服務圓可切換；點選地圖可聚焦 3D。3D 地面以相同座標對齊底圖。交通／接駁只提供內湖參考地圖，不把合成車流套到真實道路。3D 可拖曳旋轉、縮放、俯視、切換圖層、選取位置並聚焦。交通與接駁可拖動時間軸或播放逐分鐘情境。調整參數會同步重算模型、主要視角、基準比較與方案明細。裝置無法啟用 WebGL 2 時使用圖表，街道地圖仍可選取。可重設、儲存最多六組瀏覽器本機方案、匯出目前明細 CSV，或從「研究工具」一次下載七題 JSON 研究包。資料來源按鈕顯示每個來源的粒度、載入狀態與限制。
+## 資料與程式放置方式
 
-第七題可上傳或貼上 CSV，檢查欄位、缺漏、完全重複列、候選鍵、經緯度、日期與問題適用性。自訂 JSON 資料契約可檢查必要欄位、組合主鍵、數值範圍及空值代碼。可選台北時間／UTC，匯出報告保留問題及檢查條件。所有 CSV 處理在瀏覽器本機進行，不會送到伺服器；健檢使用規則，沒有串接大型語言模型。
+- `topics/<題目>/data/`：該題保存的觀測、品質資訊或來源定義。垃圾箱歷史 CSV、GeoJSON 與 provenance 在 `topics/bins/data/history/`。
+- `topics/<題目>/model.js`：該題模型的唯一維護來源。
+- `topics/<題目>/docs/`：該題研究筆記；垃圾箱的撤除背景、歷史、全球案例與桶型研究集中在此。
+- [shared](shared/README.md)：共用純函式、跨題來源定義及研究／品質規範。跨題歷史驗收紀錄集中在 [shared/docs](shared/docs/README.md)。
+- `sites/<站名>/dist/`：可單獨部署的網站，包含自己的入口、資料、字型與必要程式；不跨站讀檔。
+- 根目錄 `dist/`：共用呈現模板及原整合站的相容產物。資料與模型副本由分題來源重建。
 
-## 七題模型
+各題的來源、模型、資料及文件只有一份人工維護來源。網站內的資料與研究下載是建置副本；重建會同步更新，避免分叉編輯。舊研究文件路徑保留導覽至新位置。
 
-地理題的街道圖與 3D 現在以連續城市底圖呈現，不再使用方形厚底座或四區格線。「模型計算範圍」可主動開啟；背景延伸不改變研究範圍、模擬分區或推薦數值。相機圖磚與桌機／手機驗收證據見 [連續城市地圖驗收](docs/city-map-acceptance.md)。
+## 真實觀測與模型界線
 
-| 題目 | 核心功能 | 證據分類 |
-|---|---|---|
-| 補樹位置 | 成長年數、分散需求、候選限制與公平配置 | 真實樹點＋合成需求與候選；可及代理不等於樹蔭 |
-| 清潔箱配置 | 候選限制、繞行敏感度與每日清運工時上限 | 真實清潔箱位置＋合成需求；使用近似直線距離 |
-| 鼠患治理 | 源頭查核優先排序、改善與複查追蹤 | 固定種子的合成街廓，沒有真實鼠患評級 |
-| 錯峰通勤 | 逐分鐘排隊、錯峰、車輛小時與排隊持續時間 | 合成車流；兩方案都計算到最後排隊清空 |
-| 公車接駁 | 休息約束、同需求基準、搭載與留站者累積等待 | 合成單站需求；不推論真實站點 OD |
-| 社區健檢 | 健檢準備、文件補查、專業轉介與追蹤 | 合成社區；非耐震能力或倒塌機率 |
-| 資料健檢 | 來源用途對照、本機 CSV 剖析、資料契約與可匯出報告 | 官方來源目錄＋使用者自行輸入的資料 |
+目前保存的已載入觀測為中心示範範圍的39,451筆樹木與294筆清潔箱。垃圾箱另保存2015、2022、2024、2026四份歷史位置資料，日期、完整度與範圍各不相同；缺列不能直接解讀為撤除。
 
-方案可產生僅含此題參數的重現連結，不含 CSV、健檢內容或追蹤紀錄；網站既有存取權限仍適用。鼠患與社區追蹤均為本機合成個案流程，沒有實際派工。
+其餘題目保留各自的官方來源目錄或未載入狀態，模型以明確標示的合成情境比較。沒有補造實際鼠患、車流、公車需求或建物風險資料。資料健檢站帶來源目錄及本機CSV工具，不帶其他題目的觀測陣列，也不保存使用者上傳內容。
 
-各題保留相同條件下的基準。不同權重情境的分數不可直接比較；模型結果不代表政策的因果成效。
+單站資料只含本題需要的來源及觀測。共用捷運與原市政題目等來源定義集中管理，各站建置時帶入需要的部分。所有來源的原始日期、欄位限制、品質及保存值均保留。
 
-## 真實資料與品質
+## 修改與重建
 
-資料取得於 2026-10-13，示範框為經度 121.51–121.57、緯度 25.02–25.08。完整保留框內 39,451 筆樹木與 294 筆清潔箱；未對輸入觀測抽樣。模型依座標去重得到 39,448 個樹點，原始三組重疊座標仍保留在快照。地圖為顯示效能只畫部分既有點位，計算使用所有範圍內有效設施。
-
-樹木調查日、系統更新日與下載時間分別保存。極端尺寸、空白／1900 年日期均保留並揭露；模型不使用未確認的樹高或胸徑單位估算遮蔭。清潔箱下載表有 681 列，680 列座標有效；資料目錄的 2,009 筆不能代替下載內容的筆數。
-
-完整來源、SHA、轉換與限制見 `docs/data-review.md`、`dist/data/source-catalog.json`。其餘來源僅核對目錄，未載入觀測資料，不會被包裝成模型已使用的實測值。
-
-## 本機執行與驗證
-
-已內附固定版本的 Three.js 與 OrbitControls，同站提供、不依賴遠端 CDN；執行網站及測試不需另行安裝前端套件。Node.js 22 以上可執行測試：
+使用Python 3.11以上及Node.js 22以上。一般重建與測試不需下載資料或安裝前端依賴：
 
 ```sh
+npm run build
 npm test
 npm run check
+npm --prefix sites/taipei-waste-lab test
+npm --prefix sites/taipei-waste-lab run check
 ```
 
-自行在本機預覽：
+`npm run build`依序重建模型副本、整合站資料、六個單題站及垃圾箱站的資料與研究下載。每個單題站使用自己的題目入口、資料快照、瀏覽器儲存鍵與匯出研究包。
+
+若只改某題，可從repo根目錄執行：
 
 ```sh
-python -m http.server 4173 --directory dist
+python scripts/build-topic-sites.py --topic shade
+python scripts/build-topic-sites.py --check --topic shade
 ```
 
-開啟 `http://localhost:4173`，不要直接用 `file://`，以便瀏覽器讀取模組與資料快照。
-
-選用真實瀏覽器回歸檢查（另需 Python Playwright 與 Chromium）：
+垃圾箱站的地圖、撤除歷程及Three.js桶型體驗沿用既有獨立實作，使用：
 
 ```sh
-python -m pip install playwright
-python -m playwright install chromium
-python scripts/check-browser.py
+npm --prefix sites/taipei-waste-lab run prepare-data
 ```
 
-也可透過 `--chromium /path/to/chromium` 使用已安裝的瀏覽器；腳本自啟本機伺服器，檢查鍵盤、響應式圖表及繪圖生命週期，刻意阻擋外部圖磚。完整畫面驗收需另確認網路及真實底圖內容。
+原始下載快取未隨repo保存。重新下載官方來源是獨立操作，需要網路與pyproj；`python scripts/prepare-data.py --refresh`會在取得及驗證全部來源後更新分題保存資料。一般離線建置不刷新來源日期，不冒充重新取得原始下載。
 
-若要重新產生 Three.js 內附檔案：
+## 單獨預覽與部署
+
+各站的`dist/`均可由一般靜態主機提供。例如：
 
 ```sh
-npm ci
-npm run vendor
+python -m http.server 8000 --directory sites/taipei-traffic-lab/dist
 ```
 
-資料重建需要 Python 與 pyproj：
+開啟`http://localhost:8000/`，不要使用`file://`。模型、圖表、資料與固定版本套件由本站提供；街道底圖需要網路。各站自己的`.openai/hosting.json`保留部署身分，不能複製其他站的project_id。
 
-```sh
-python -m pip install pyproj
-python scripts/prepare-data.py --refresh
-```
+GitHub Actions會檢查模型、單站資料隔離、靜態依賴及離線重建一致性。實際瀏覽器操作可執行`python scripts/check-topic-sites-browser.py`；垃圾箱站另有原本的地圖及設計回歸腳本。
 
-查核腳本不會假造無法下載的資料；新的來源內容可能改變筆數與雜湊。
+## 研究與歷史紀錄
 
-## 結構
+各題研究入口見[題目索引](topics/README.md)。[拆分前的整合站說明](shared/docs/integrated-site.md)保留原有功能與驗證背景；歷史驗收範圍以各文件日期及方法為準。
 
-測試與驗證範圍見 `docs/validation.md`。
+`scripts/package-source.py`會將分題來源、共用工具、網站及測試封裝成可攜原始碼下載包，排除託管身分、Git狀態與本機執行資料。
 
-`scene-data.js` 將模型結果轉成場景資料，`scene-builder.js` 建立可在 Node 中驗證的 Three.js 幾何，`scene-ui.js` 管理 WebGL、相機與時間播放。`dist/modules/` 是七個純計算模組，`registry.js` 註冊題目；`app.js` 管理參數、儲存與匯出，`viz.js` 產生 SVG 地圖／圖表與明細。模型可在 Node.js 中直接呼叫，沒有 DOM 或外部服務依賴。程式套件與觀測快照同站提供；街道圖磚依目前畫面向 OpenStreetMap 載入，需要網路。
-
-## 方法對照與審查
-
-清潔箱題的政策背景與討論邏輯見[台北市垃圾箱減少的研究脈絡](docs/research/taipei-bin-reduction.md)，包含歷史來源、推論、待驗證假設及對現有配置模型的影響。
-
-三輪審查與官方案例對照見 `docs/research-review.md`；網站各題的「實務案例與下一步」可開啟原始來源。十輪深化、採用技能與可用性界線見 `docs/deepening-review.md`。Three.js 設計與驗證界線見 `docs/three-review.md`。地圖對齊與來源界線見 `docs/map-review.md`。先前的 Impeccable 操作介面整理見 `docs/impeccable-review.md`，本次市民重新設計見 `docs/redesign-review.md`。新版的 14 個 Node 測試檔、靜態模型檢查及 9 組 Chromium 操作驗收通過；桌機與模擬手機畫面、結果及測試界線見 `docs/acceptance.md`，獨立 Impeccable 初輪審查提出的兩項修正，在 Verdict Pass 均評為 resolved／ship，紀錄見 `docs/citizen-finish-review.md`。
-
-## 設計技能
-
-專案內附官方 Impeccable 4.5.2，位於 `.agents/skills/impeccable/`，採專案層級 Codex 安裝。使用技能時可輸入 `$impeccable`；新 checkout 的 launcher 會依平台取得 engine。若要按固定版本重新安裝：
-
-```sh
-npx --yes impeccable@4.5.2 install -y --providers=codex --scope=project --no-hooks
-```
-
-此安裝不配置自動 hook，本版使用手動 detector。設計脈絡、視角分工及驗證限制保存在 `.impeccable/surfaces/dist-index-html.md` 與 `DESIGN.md`。Impeccable 保留 Apache-2.0 授權；平台 engine 是可重建檔案，未放入 Git 或原始碼下載包。
-
-## 後續實際試辦
-
-先用現勘／需求調查校準候選位置、權重及工時；交通與接駁需累積歷史觀測、OD 與營運約束；健檢需逐棟文件與專業評估。可使用匯出研究包留存參數與假設，再比較試辦前後觀測。本版不含即時 IoT 感測、正式車隊派遣或專業建物安全評級。
+下載包不會把`source.zip`包在自己裡面。解壓後先執行`python scripts/package-source.py`，產生整合站使用的原始碼下載檔，再執行`npm run check`。靜態檢查不需要託管身分；部署時另驗證各站自己的設定。
 
 ## 授權
 
-本專案自寫程式採 MIT；內附 Three.js 與 Leaflet 保留各自授權檔。OpenStreetMap 底圖保留來源標示並依其使用政策載入。政府資料依來源授權條款使用，來源資料不因程式採 MIT 而變更授權；活動意見資料未匯入。
+自寫程式採MIT。Three.js、Leaflet與字型保留各自授權；政府資料及歷史副本依原來源條款使用。OpenStreetMap底圖保留來源標示。程式授權不改變來源資料授權。

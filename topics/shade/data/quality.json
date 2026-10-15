@@ -1,0 +1,47 @@
+{
+  "trees": {
+    "sourceCount": 90441,
+    "filteredCount": 39451,
+    "invalidCoordinateCount": 0,
+    "invalidCoordinateSourceRows": [],
+    "excludedOutsideScopeCount": 50990,
+    "nullCounts": {
+      "id": 0,
+      "x": 0,
+      "y": 0,
+      "height": 0,
+      "diameter": 0,
+      "species": 0,
+      "district": 0,
+      "surveyDate": 1,
+      "updatedAt": 0
+    },
+    "duplicateIdCount": 0,
+    "duplicateCoordinateCount": 3,
+    "districtCounts": {
+      "中山區": 7414,
+      "中正區": 5279,
+      "信義區": 4292,
+      "內湖區": 227,
+      "士林區": 297,
+      "大同區": 2642,
+      "大安區": 11603,
+      "松山區": 7637,
+      "萬華區": 60
+    },
+    "surveyDateRange": [
+      "1900-01-01",
+      "2026-10-08"
+    ],
+    "sampled": false,
+    "sha256": "cce57bfd18cd444810ff287c8369e0dcddd4660d72ba57454937e1779df7c93b",
+    "coordinateTransform": "EPSG:3826 (TWD97 / TM2 zone 121) → EPSG:4326; always_xy=True",
+    "pyprojVersion": "3.8.0",
+    "outlierCounts": {
+      "heightAbove50": 6,
+      "heightZero": 14,
+      "diameterZero": 4,
+      "surveyDate1900": 1
+    }
+  }
+}

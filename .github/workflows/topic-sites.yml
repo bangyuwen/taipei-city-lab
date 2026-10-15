@@ -1,0 +1,31 @@
+name: Topic sites
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12'
+      - name: Verify all topic models and sites
+        run: |
+          npm test
+          npm run check
+          npm --prefix sites/taipei-waste-lab test
+          npm --prefix sites/taipei-waste-lab run check -- --require-hosting
+      - name: Verify reproducible deployed copies
+        run: |
+          npm run build
+          git diff --exit-code -- dist sites

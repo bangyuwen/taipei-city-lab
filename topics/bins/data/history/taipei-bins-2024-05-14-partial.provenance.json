@@ -1,0 +1,34 @@
+{
+  "retrieved_date": "2026-10-14",
+  "source_repository": "https://github.com/wer53077n/Cleaning-Box",
+  "source_file_url": "https://github.com/wer53077n/Cleaning-Box/blob/82475ba3659e1c2320efc87dcdfb5685aff015a0/TPcleaningBox.json",
+  "source_commit": "82475ba3659e1c2320efc87dcdfb5685aff015a0",
+  "source_commit_time": "2024-06-18T22:24:36+08:00",
+  "upstream_dataset_url": "https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c",
+  "stored_rows": 1000,
+  "reported_total_rows": 1991,
+  "stored_offset": 0,
+  "stored_limit": 1000,
+  "complete": false,
+  "district_counts": {
+    "士林區": 233,
+    "大同區": 199,
+    "大安區": 235,
+    "中山區": 202,
+    "中正區": 131
+  },
+  "source_import_date": "2024-05-14",
+  "source_import_date_is_survey_date": false,
+  "duplicate_coordinate_records": 5,
+  "limitations": [
+    "This is a third-party preserved copy of an official API response, not a verified full-city inventory.",
+    "Only offset 0, limit 1000 is stored; 991 reported records are absent.",
+    "The import timestamp is a source-system import time, not a facility survey or removal date.",
+    "Repeated coordinates are preserved; no facility-level uniqueness or stable cross-version ID is inferred."
+  ],
+  "files_sha256": {
+    "taipei-bins-2024-05-14-partial.csv": "62e6948615cb744ba12b6e869d835ff9ca5439a05befb093a1cbaff58a7fc334",
+    "taipei-bins-2024-05-14-partial.geojson": "5965e87b8812e21ef147ace03b530288a0329b197273eb7940606f3b676e3eed",
+    "taipei-bins-2024-05-14-partial.raw.json": "43ac03adcd09ecac7e9981a7bb107ca819794d0d9f3e7fd8aa05912866046811"
+  }
+}

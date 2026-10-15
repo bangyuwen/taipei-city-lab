@@ -1,0 +1,38 @@
+{
+  "bus": {
+    "title": "臺北市聯營公共汽車客運業務",
+    "url": "https://data.taipei/dataset/detail?id=90dd063e-2aca-49aa-a7fb-73130610313c",
+    "classification": "官方資料目錄",
+    "grain": "全市公車客運業務按統計期彙總；非逐站刷卡資料",
+    "limitations": "不能由全市年度／統計期總量推回各站需求；缺逐站上下車 OD 與駕駛實際勤務。",
+    "fields": [
+      "統計期",
+      "路線數/聯營[線]",
+      "路線數/對開[線]",
+      "路線數/小型[線]",
+      "營業公里[公里]",
+      "行駛車輛數[平均行駛延日車數]",
+      "行駛次數[段次]",
+      "平均每車每日行駛次數[段次]",
+      "行駛車公里[公里]",
+      "平均每車每日行駛車公里[公里]",
+      "平均每車每次行駛車公里[公里]",
+      "客運人次[人次]",
+      "平均每日客運人次[人次]",
+      "平均每車每日客運人次[人次]",
+      "平均每車每次客運人次[人次]",
+      "客運收入[元]",
+      "智慧型公車站牌數[座]",
+      "身心障礙者小型冷氣車輛數[輛]"
+    ],
+    "retrievedAt": "2026-10-13T12:18:35Z",
+    "integrationStatus": "metadata-only",
+    "license": "依政府資料開放授權條款-第1版",
+    "publisher": "主計處",
+    "catalogUpdatedAt": "2026-04-28 23:21:31",
+    "publishedAt": "2022-02-24",
+    "resourceUpdatedAt": "2026-03-30 10:49:23",
+    "catalogRecordCount": 54,
+    "resourceUrl": "https://tsis.dbas.gov.taipei/statis/webMain.aspx?sys=220&ymf=5700&kind=21&type=0&funid=a05023701&cycle=4&outmode=12&compmode=0&outkind=1&deflst=2&nzo=1"
+  }
+}

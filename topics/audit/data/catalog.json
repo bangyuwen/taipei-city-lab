@@ -1,0 +1,19 @@
+{
+  "sourceIds": [
+    "trees",
+    "rat",
+    "puma",
+    "bins",
+    "sidewalks",
+    "complaints",
+    "metro",
+    "vd",
+    "bus",
+    "buildings",
+    "population",
+    "soil",
+    "fire"
+  ],
+  "observationStatus": "user-input-only",
+  "limitations": "這裡只引用各題來源目錄，不複製其他題的觀測值；使用者 CSV 僅在瀏覽器本機處理，不存入 repository。"
+}

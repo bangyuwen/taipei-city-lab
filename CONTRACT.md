@@ -15,6 +15,8 @@ Each delegated module exports an object with:
 
 Data contract: snapshot has trees:[{id,x,y,height,diameter,species,district,surveyDate,updatedAt}], bins:[{id,x,y,address,district}], sources:object, meta:{retrievedAt,buildStatus,scope,bbox}. Optional missing tables: disclose and use intentionally synthetic scenarios, not fake observations.
 
+Canonical module sources live in topics/<id>/model.js. The following dist paths are generated compatibility copies; rebuild with npm run build-models.
+
 Module paths and exports:
 dist/modules/shade.js -> shade (id shade, number 1)
 dist/modules/bins.js -> bins (id bins, number 2)
@@ -25,3 +27,7 @@ dist/modules/buildings.js -> buildings (id buildings, number 6)
 dist/modules/audit.js -> audit (id audit, number 7), plus parseCSV(text) and inspectCSV(text, options)
 
 #7 custom UI owned by root: local CSV upload/text, question & reference-date selection, profile audit report. Module evaluate can return official source suitability demo; inspectCSV handles uploaded datasets. All CSV processing remains local; no LLM integration implied.
+
+## Topic site boundaries
+
+Each of the seven topics owns its canonical data, model and research under topics/<id>/. Cross-topic source definitions and pure helpers live under shared/. Each sites/<site>/dist is a self-contained deployment with its own topic registration, browser storage key, data and export. Only the shade site carries tree observations; the waste site carries bin positions. The audit site may carry the cross-topic source catalogue, never other topics' observation arrays or user uploads. Root dist remains the shared rendering template and integrated compatibility output.

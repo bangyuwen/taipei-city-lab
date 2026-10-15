@@ -1,0 +1,106 @@
+{
+  "trees": {
+    "title": "臺北市行道樹及公園樹木分布圖",
+    "url": "https://data.gov.tw/dataset/128274",
+    "resourceUrl": "https://tppkl.blob.core.windows.net/blobfs/TaipeiTree.json",
+    "classification": "官方觀測",
+    "integrationStatus": "loaded",
+    "grain": "一列一棵樹；逐樹調查日期與系統更新時間分開保存",
+    "limitations": "沒有樹冠輪廓、遮蔭量、移除履歷或可施工樹穴。樹高有極端值，調查日有缺漏與 1900 年值；更新時間不代表重新量測。",
+    "fields": [
+      "TreeID",
+      "Dist",
+      "Region",
+      "RegionRemark",
+      "TreeType",
+      "Diameter",
+      "TreeHeight",
+      "SurveyDate",
+      "TWD97X",
+      "TWD97Y",
+      "UpdDate"
+    ],
+    "retrievedAt": "2026-10-13T12:16:50Z",
+    "license": "政府資料開放授權條款-第1版",
+    "timestampPolicy": "surveyDate 與 updatedAt 保留來源原字串；來源時間未標示時區",
+    "counts": {
+      "sourceCount": 90441,
+      "filteredCount": 39451,
+      "invalidCoordinateCount": 0,
+      "invalidCoordinateSourceRows": [],
+      "excludedOutsideScopeCount": 50990,
+      "nullCounts": {
+        "id": 0,
+        "x": 0,
+        "y": 0,
+        "height": 0,
+        "diameter": 0,
+        "species": 0,
+        "district": 0,
+        "surveyDate": 1,
+        "updatedAt": 0
+      },
+      "duplicateIdCount": 0,
+      "duplicateCoordinateCount": 3,
+      "districtCounts": {
+        "中山區": 7414,
+        "中正區": 5279,
+        "信義區": 4292,
+        "內湖區": 227,
+        "士林區": 297,
+        "大同區": 2642,
+        "大安區": 11603,
+        "松山區": 7637,
+        "萬華區": 60
+      },
+      "surveyDateRange": [
+        "1900-01-01",
+        "2026-10-08"
+      ],
+      "sampled": false,
+      "sha256": "cce57bfd18cd444810ff287c8369e0dcddd4660d72ba57454937e1779df7c93b",
+      "coordinateTransform": "EPSG:3826 (TWD97 / TM2 zone 121) → EPSG:4326; always_xy=True",
+      "pyprojVersion": "3.8.0",
+      "outlierCounts": {
+        "heightAbove50": 6,
+        "heightZero": 14,
+        "diameterZero": 4,
+        "surveyDate1900": 1
+      }
+    }
+  },
+  "sidewalks": {
+    "title": "臺北市人行道固定設施物_人行道範圍圖",
+    "url": "https://data.taipei/dataset/detail?id=715d3a83-8445-4496-b6bf-b0900538b7e7",
+    "classification": "官方資料目錄",
+    "grain": "人行道範圍幾何及其寬度、淨寬屬性",
+    "limitations": "僅查核資料目錄與欄位，尚未整合幾何；不得據此宣稱候選點可施工或已符合淨寬。",
+    "fields": [
+      "type",
+      "properties",
+      "ID",
+      "Town_N",
+      "NAME_Road",
+      "PSTART",
+      "PEND",
+      "SW_DIRECT",
+      "SW_LENG_ItemValue",
+      "SW_WTH_ItemValue",
+      "Shape_AR_ItemValue",
+      "SWW_WTH",
+      "code",
+      "geometry",
+      "type",
+      "coordinates"
+    ],
+    "retrievedAt": "2026-10-13T12:18:34Z",
+    "integrationStatus": "metadata-only",
+    "license": "依政府資料開放授權條款-第1版",
+    "publisher": "工務局",
+    "catalogUpdatedAt": "2026-09-22 19:17:45",
+    "publishedAt": "2020-10-26",
+    "resourceUpdatedAt": "2026-01-14 16:02:36",
+    "catalogRecordCount": "",
+    "resourceUrl": "https://data.taipei/api/dataset/715d3a83-8445-4496-b6bf-b0900538b7e7/resource/b11d6142-1d71-41d5-a843-7b7cfcea61ef/download"
+  }
+}

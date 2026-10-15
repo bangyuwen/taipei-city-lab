@@ -31,9 +31,13 @@ web
 
 名稱「台北城市實驗室」與繁體中文保留。使用者確認沒有須保留的視覺特色或排除風格，並要求使用 Impeccable 重新設計。
 
+## Topic Organization
+
+2026-10-15起依使用者要求分成七個獨立網站。每題的資料、模型與研究集中在topics/<id>，共用工具與規範在shared，各站入口與部署產物在sites/<站名>。原整合站保留相容入口；獨立站使用各自的題目、資料、儲存與匯出。垃圾箱站延續既有地圖、歷程與桶型體驗。
+
 ## Evidence on Hand
 
-`dist/data/snapshot.json`、`dist/data/source-catalog.json`、七題計算模組及研究說明。資料取得時間為 2026-10-13；快照不是即時資料。完整筆數、資料範圍及來源界線以 README 與資料審查文件為準。
+`topics/*/data/`、`topics/*/model.js`、各題研究筆記與`shared/data/`為維護來源；`dist/data/snapshot.json`與`source-catalog.json`為可重建的整合相容產物。資料取得時間為 2026-10-13；快照不是即時資料。完整筆數、資料範圍及來源界線以 README 與資料審查文件為準。
 
 ## Product Principles
 

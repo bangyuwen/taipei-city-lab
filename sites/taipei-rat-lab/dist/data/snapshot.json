@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "retrievedAt": "2026-10-13T12:18:35Z",
+    "builtAt": "2026-10-13T12:25:27Z",
+    "buildStatus": "complete",
+    "bbox": [
+      121.51,
+      25.02,
+      121.57,
+      25.08
+    ],
+    "scope": "僅載入本題已查核的來源目錄，尚未整合觀測資料；互動情境不得視為真實通報、車流、需求或逐棟紀錄。",
+    "coordinateSystem": "EPSG:4326; x=longitude, y=latitude",
+    "sampled": false,
+    "topicId": "rat",
+    "observationStatus": "not-loaded"
+  },
+  "sources": {
+    "complaints": {
+      "title": "臺北市陳情系統類別資料",
+      "url": "https://data.taipei/dataset/detail?id=cb423c17-88eb-4231-a725-f1b93247d1bf",
+      "classification": "官方資料目錄",
+      "grain": "逐案分類、受理與結案日期；無地址或經緯度",
+      "limitations": "欄位沒有地址或座標，無法直接製作通報熱點；通報量也不等於實際事件發生率。",
+      "fields": [
+        "案件編號",
+        "案件主類別",
+        "案件次類別",
+        "受理機關",
+        "受理科室",
+        "受理日期",
+        "送達日期",
+        "結案日期"
+      ],
+      "retrievedAt": "2026-10-13T12:18:35Z",
+      "integrationStatus": "metadata-only",
+      "license": "依政府資料開放授權條款-第1版",
+      "publisher": "研考會",
+      "catalogUpdatedAt": "2026-10-08 17:04:49",
+      "publishedAt": "2017-11-06",
+      "resourceUpdatedAt": "2026-10-08 15:47:05",
+      "catalogRecordCount": "",
+      "resourceUrl": "https://data.taipei/api/dataset/cb423c17-88eb-4231-a725-f1b93247d1bf/resource/b57a0fa8-9507-438b-b2e1-676829a72aff/download"
+    },
+    "rat": {
+      "title": "見鼠地圖 Rat Radar（題目列出的民間來源）",
+      "url": "https://ratdar.taipei/reports",
+      "classification": "民間通報",
+      "integrationStatus": "not-loaded",
+      "grain": "民眾自行通報；本版未下載",
+      "limitations": "未驗證來源、授權、座標及去重；不得將模擬鼠患點說成民間或官方實際通報。",
+      "fields": [],
+      "retrievedAt": null,
+      "referencedFrom": "puma"
+    },
+    "puma": {
+      "title": "市政 debug松官方題目與規則",
+      "url": "https://puma.taipei/hackathon",
+      "classification": "活動題目",
+      "integrationStatus": "metadata-only",
+      "grain": "7 項議題、資料入口與模擬資料規則",
+      "limitations": "題目敘述不是觀測資料；活動列出的資料入口仍需逐項確認欄位、粒度與授權。",
+      "fields": [
+        "議題",
+        "資料入口",
+        "資料缺口",
+        "作品規則"
+      ],
+      "retrievedAt": "2026-10-13T12:05:29Z",
+      "sha256": "bd9b5f2c46fa45a180ef67c2aa4697f73dc1926d0e060c57b8096ac8ffb032ba"
+    }
+  }
+}
