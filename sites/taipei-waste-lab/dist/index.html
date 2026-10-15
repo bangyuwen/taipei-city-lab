@@ -4,12 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#244d43">
-  <meta name="description" content="查台北垃圾箱的分布與撤除歷程，體驗不同桶型的3D概念設計，探索投放、雨遮與清運的取捨。">
-  <title>台北垃圾箱研究｜分布、撤除與桶型體驗</title>
+  <meta name="description" content="依資料比較台北垃圾箱設置、清運與家戶垃圾分流，保留歷史清冊、版本差異與證據限制。">
+  <title>台北垃圾箱研究｜設置、清運與家戶分流</title>
   <link rel="icon" href="mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="design.css">
+  <link rel="stylesheet" href="comparison.css">
+  <link rel="stylesheet" href="research.css">
   <script type="module" src="app.js"></script>
 </head>
 <body>
@@ -17,9 +19,10 @@
   <header class="site-header">
     <a class="brand" href="#map" aria-label="台北垃圾箱研究首頁"><img src="mark.svg" alt="" width="34" height="34"><span>台北垃圾箱研究<small>TAIPEI WASTE LAB</small></span></a>
     <nav aria-label="主要導覽">
-      <a href="#map" data-page="map" aria-current="page">點位地圖</a>
-      <a href="#history" data-page="history">撤除歷程</a>
+      <a href="#map" data-section="history" aria-current="page">垃圾桶歷史</a>
+      <a href="#countries" data-page="countries">各國垃圾桶</a>
       <a href="#design" data-page="design">桶型體驗</a>
+      <a href="#research" data-page="research">研究判斷</a>
       <a href="#sources" data-page="sources">資料與來源</a>
     </nav>
     <span class="header-note">一個可查核的城市議題</span>
@@ -27,24 +30,34 @@
 
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-copy"><p class="eyebrow"><span class="status-dot"></span> 台北・行人專用清潔箱</p>
-        <h1 id="hero-title">垃圾箱去哪了？<br><span>從分布追查撤除過程。</span></h1>
-        <p class="hero-description">以前在哪裡、哪些點先撤、為什麼撤。把保存資料、政策紀錄與現有證據放在一起，讓每個說法都有地方可查。</p>
-        <a class="text-link" href="#history">閱讀撤除歷程 <span aria-hidden="true">↗</span></a>
+      <div class="hero-copy">
+        <h1 id="hero-title">街頭垃圾，怎麼處理？<br><span>從設置、清運到家戶分流。</span></h1>
+        <p class="hero-description">用保存清冊、官方紀錄與研究找答案：行人在哪裡投放，清潔隊怎麼收，以及家戶與商家垃圾如何各有去處。</p>
+        <a class="text-link" href="#research">閱讀我們的判斷</a>
       </div>
-      <aside class="research-note" aria-label="研究現況">
-        <span class="note-number" aria-hidden="true">01 / RESEARCH</span>
-        <h2>最不重要的，會先被移除嗎？</h2>
-        <p>有低使用率優先撤除的紀錄，也有因溢滿、家戶垃圾及清運負擔而調整的案例。完整的逐箱排序，仍待查證。</p>
-        <div class="note-bottom"><span>已找到早期分布與撤除個案</span><span class="outline-tag">研究進行中</span></div>
+      <aside class="research-note service-hero-note" aria-label="研究判斷與限制">
+        <h2>每個設置方案，<br>都要有收運安排。</h2>
+        <p>先改善有證據的服務問題，再比較增設、增容或重配。入口設計只是防混入的一環，還要配合合法投放管道與管理責任。</p>
+        <div class="note-bottom"><span>依現有資料提出建議</span><span class="outline-tag">效果尚待驗證</span></div>
       </aside>
     </section>
+
+    <div id="history-navigation" class="history-navigation">
+      <h2>垃圾桶歷史</h2>
+      <nav class="history-subnav" aria-label="垃圾桶歷史導覽">
+        <a href="#map" data-page="map" aria-current="page">點位地圖</a>
+        <a href="#comparison" data-page="comparison">版本比較</a>
+        <a href="#history" data-page="history">撤除歷程</a>
+      </nav>
+    </div>
 
     <div id="load-status" class="load-status" role="status">正在載入保存的位置資料…</div>
 
     <section id="panel-map" class="page-panel" aria-labelledby="map-heading">
       <div class="section-heading"><div><p class="eyebrow">01 / DISTRIBUTION</p><h2 id="map-heading">先看當時，垃圾箱在哪裡。</h2></div><p>切換資料版本，查看有保存紀錄的位置。</p></div>
       <div id="dataset-buttons" class="dataset-switch" role="group" aria-label="選擇位置資料版本"></div>
+      <div id="dataset-version-field" class="dataset-version-field" hidden><label for="dataset-version">同年度資料版本</label><select id="dataset-version"></select></div>
+      <p id="dataset-completeness" class="dataset-completeness" role="status"></p>
       <div class="dataset-meta"><div><span id="dataset-date"></span><a id="dataset-source" target="_blank" rel="noopener noreferrer">查看原始來源 ↗</a></div><p id="dataset-note"></p></div>
       <div class="map-layout">
         <div class="map-column"><div class="map-topline"><span id="map-legend">保存位置</span><button id="fit-map" type="button">顯示搜尋範圍 <span aria-hidden="true">⌖</span></button></div>
@@ -59,11 +72,48 @@
           <div class="result-summary" aria-live="polite"><strong id="result-count">—</strong><span>筆保存紀錄</span><small id="result-map-count"></small></div>
           <div id="point-list" class="point-list" aria-label="搜尋結果"></div>
           <button id="load-more" class="load-more" type="button" hidden>顯示更多位置</button>
-          <button id="export-csv" class="download-button" type="button">下載目前篩選 CSV <span aria-hidden="true">↓</span></button>
         </aside>
       </div>
       <details class="district-details"><summary><span>查看這份資料的行政區分布</span><span aria-hidden="true">＋</span></summary><div class="district-explanation">這裡統計保存資料列，不是已核實的全市垃圾箱存量。沒有保存紀錄的行政區，不代表當地沒有垃圾箱。</div><div id="district-table"></div></details>
       <p class="context-note"><strong>如何判讀：</strong>地圖預設聚焦台北市區，可按「顯示搜尋範圍」查看所有可繪製位置。各年資料的日期、範圍與完整性不同。某個位置未出現在另一份資料中，還可能是搬移、漏列或更新差異，需要異動紀錄才能確認撤除。</p>
+    </section>
+
+    <section id="panel-comparison" class="page-panel" aria-labelledby="comparison-heading" hidden>
+      <div class="section-heading"><div><p class="eyebrow">SNAPSHOT COMPARISON / 2024 → 2026</p><h2 id="comparison-heading">哪些地址，未再出現在清冊？</h2></div><p>比較公開資料列，逐項保留待查線索。</p></div>
+      <p class="comparison-caution"><strong>未再出現，不等於已撤除。</strong>兩份清冊的全市現場完整性都未核實，也沒有可跨年辨識的官方箱號。缺列、改寫地址與搬移，都可能影響結果。</p>
+      <div class="comparison-dates"><p><strong>2024 年 10 月封存版</strong><span>台北時間 2024-10-19 封存（UTC 10-18）；原調查／更新日期未知。</span></p><p><strong>2026 官方公開主檔</strong><span>2026-09-30 來源更新；2026-10-15 下載。目錄列數與主檔不同，北投區為 0 筆。</span></p></div>
+      <p id="comparison-status" role="status">正在載入版本比較…</p>
+      <div id="comparison-content" hidden>
+        <div id="comparison-totals" class="comparison-totals" aria-label="兩版資料列概況"></div>
+        <p id="comparison-findings" class="comparison-findings"></p>
+        <div class="comparison-section-title"><h3>各行政區的資料列變化</h3></div>
+        <p id="comparison-table-note" class="comparison-help">單位為資料列；差額是主檔列數的差，不是撤除數。「同欄位」只表示地址與座標欄位相同。同址多筆未配對欄依序列出 2024／2026 筆數。窄螢幕可左右捲動表格。</p>
+        <div class="comparison-table-wrap" role="region" aria-label="各行政區版本差異，可左右捲動" tabindex="0"><table class="comparison-table" aria-describedby="comparison-table-note"><caption>2024 封存版與 2026 官方主檔；點行政區可篩選下方清單</caption><thead><tr><th scope="col">行政區</th><th scope="col">2024</th><th scope="col">2026</th><th scope="col">列數差額</th><th scope="col">同欄位</th><th scope="col">同址座標不同</th><th scope="col">同址多筆未配對<br>2024／2026</th><th scope="col">2024 地址<br>未再出現</th><th scope="col">只在 2026<br>出現的地址</th></tr></thead><tbody id="comparison-districts"></tbody></table></div>
+        <section id="coordinate-distance-section" class="coordinate-distance-section" aria-labelledby="coordinate-distance-heading">
+          <div class="comparison-section-title"><h3 id="coordinate-distance-heading">同址座標差距，有多大？</h3></div>
+          <p class="comparison-help">這 75 對在兩版的同一行政區、完整地址都各只有一筆，但座標欄位不同。下列距離只衡量原始座標差距，<strong>不能據此判定垃圾箱遷移</strong>。座標修正、精度或登錄差異，也可能造成差距。</p>
+          <p id="coordinate-distance-status" role="status">正在載入同址座標差距…</p>
+          <div id="coordinate-distance-content" hidden>
+            <p id="coordinate-distance-summary" class="comparison-findings"></p>
+            <ul id="coordinate-distance-buckets" class="coordinate-distance-buckets" aria-label="75 對座標差距的距離分組"></ul>
+            <h4>座標差距最大的 10 對</h4>
+            <p id="coordinate-distance-table-note" class="comparison-help">按未四捨五入的距離排序；以下顯示約至 0.1 公尺，不代表來源有相同定位精度。球面近似距離不是步行距離，也不是已確認的移動路徑。窄螢幕可左右捲動表格。</p>
+            <div class="comparison-table-wrap" role="region" tabindex="0" aria-label="座標差距前十名，可左右捲動"><table class="comparison-table coordinate-distance-table" aria-describedby="coordinate-distance-table-note"><caption>僅列可計算距離的配對；品質待核對者仍保留並標示</caption><thead><tr><th scope="col">排序</th><th scope="col">行政區與地址</th><th scope="col">座標差距</th><th scope="col">兩版原始經緯度</th></tr></thead><tbody id="coordinate-distance-top"></tbody></table></div>
+            <button id="coordinate-show-all" class="download-button" type="button">查看全部 75 對，按座標差距排序</button>
+          </div>
+          <details class="coordinate-distance-method"><summary><span>距離怎麼算，以及不能推論的事</span><span aria-hidden="true">＋</span></summary><p>使用 Haversine 公式，以半徑 6,371,000 公尺的球面計算兩組經緯度之間的最短表面距離。未計入道路、地形、橢球修正或座標基準轉換；兩版的實際定位精度未核實。</p><p>有效的全球經緯度都參與計算；超出台北粗篩範圍者標示待核對。任一座標無法解析或超出全球經緯度範圍時，保留該對並標為無法計算，不填成 0，也不列入距離統計。小於 0.1 公尺的差距以「&lt;0.1 公尺」顯示。</p><p>同址不保證是同一個實體箱。距離大不等於遷移，距離小也不能直接認定只是精度修正；仍需異動紀錄、座標作業說明或現場證據。</p><div class="comparison-downloads"><a href="https://www.movable-type.co.uk/scripts/latlong.html" target="_blank" rel="noopener noreferrer">Haversine 計算方法 ↗</a></div></details>
+        </section>
+        <div class="comparison-section-title"><h3 id="comparison-list-heading">逐項查看比對結果</h3><button id="comparison-reset" class="quiet-button" type="button">恢復預設篩選</button></div>
+        <div class="comparison-filters"><div><label for="comparison-district">行政區</label><select id="comparison-district"><option value="">全部行政區</option></select></div><div><label for="comparison-category">比對分類</label><select id="comparison-category"><option value="not_reappeared">2024 地址未再出現</option><option value="only_2026">只在 2026 出現的地址</option><option value="same_address_changed">同址座標不同，待核對</option><option value="ambiguous">同址多筆，未能配對</option><option value="same_fields">地址及座標欄位相同</option><option value="">全部分類</option></select></div><div><label for="comparison-search">地址或路名</label><input id="comparison-search" type="search" placeholder="例如：中山北路" maxlength="100" autocomplete="off"></div></div>
+        <p id="comparison-category-note" class="comparison-help"></p>
+        <div id="comparison-distance-sort-field" class="comparison-distance-sort" hidden><label for="comparison-distance-sort">同址座標不同的排序</label><select id="comparison-distance-sort" disabled><option value="distance-desc">座標差距由大到小</option><option value="source-order">原資料順序</option></select><span id="comparison-distance-sort-note">距離載入前依原資料順序顯示。</span></div>
+        <div class="comparison-results-bar"><p id="comparison-result-count" role="status"></p></div>
+        <div id="comparison-list" class="comparison-list" aria-labelledby="comparison-list-heading"></div>
+        <button id="comparison-more" class="load-more" type="button" hidden>顯示更多比對結果</button>
+        <p class="comparison-help">清單以地址群組／配對列呈現；同址多筆不合併為一個實體箱。展開各項可看原始地址、座標與來源列號。地圖連結會以該版地址搜尋，可能顯示多筆。</p>
+      </div>
+      <details class="comparison-method"><summary><span>配對規則、分類與判讀限制</span><span aria-hidden="true">＋</span></summary><ol><li>用「行政區＋完整地址」比對。僅統一全半形、空白與「臺／台」，保留門牌、方向與標點，不用鄰近座標猜同一桶。</li><li>先按地址和座標欄位作逐列配對；數值格式如小數尾零視為相同。相同欄位也不能證明是同一個實體垃圾箱；原本無效的座標仍保留。</li><li>只有原始地址群組兩版都各一筆時，才列為「同址座標不同」。同址多筆的剩餘列都標為未能配對，不強行連接，也不把它們列成未再出現的地址。</li><li>某個完整地址在另一版完全找不到，才列為「未再出現」或「只在 2026 出現」。地址改寫仍可能漏配；這兩類不能當成撤除或新設。</li></ol><p>本次僅比較 1,971 筆封存版與 681 筆官方主檔。舊有 2024 年 5 月缺頁版、2026 示範區均保留在地圖，不參與這次比較。需有箱號、異動日期或現場證據，才能確認撤除、遷移或新設。</p></details>
+      <div class="comparison-downloads"><a class="text-link" href="#sources">查看各版本來源 ↗</a></div>
     </section>
 
     <section id="panel-design" class="page-panel design-panel" aria-labelledby="design-heading" hidden>
@@ -93,7 +143,7 @@
       </div>
       <div class="design-actions"><div><p class="eyebrow">TRY IT / 換你投一次</p><h3>這個開口，放得下嗎？</h3><p>用固定尺寸的物件試投。調小開口，再試一次。</p></div><div id="design-item-buttons" class="design-item-buttons" role="group" aria-label="選擇物件試投"></div><button id="design-throw" class="design-throw-button" type="button" disabled>試投看看 <span aria-hidden="true">↗</span></button></div>
       <p id="design-status" class="design-status" role="status" aria-live="polite">正在載入 3D 體驗…</p>
-      <div class="design-bottom-note"><div><span class="outline-tag">讀懂設計，才能比較</span><p id="design-notes">四種桶型都是本站概念設計，尺寸可調；並非台北現役產品規格。</p></div><p>物件只作尺寸比較，並非分類指引。試投未模擬垃圾變形、真實容量或使用行為；尺寸體驗不代表防止違規、無障礙或清運效率已經驗證。</p><a class="text-link" href="research/bin-design.md" download>查看設計假設 ↓</a></div>
+      <div class="design-bottom-note"><div><span class="outline-tag">讀懂設計，才能比較</span><p id="design-notes">四種桶型都是本站概念設計，尺寸可調；並非台北現役產品規格。</p></div><p>物件只作尺寸比較，並非分類指引。試投未模擬垃圾變形、真實容量或使用行為；尺寸體驗不代表防止違規、無障礙或清運效率已經驗證。</p></div>
     </section>
 
     <section id="panel-history" class="page-panel" aria-labelledby="history-heading" hidden>
@@ -101,17 +151,246 @@
       <div class="history-intro"><div><span class="outline-tag">早期年份線索</span><h3>2012 年，議會質詢引用 3,171 個。</h3><p>這能定位三千左右的年代，但還沒有對應的逐點清冊。「個、座、組、資料列」也需要分開核對。</p><a class="text-link" href="https://www.cna.com.tw/news/aloc/202006090276.aspx" target="_blank" rel="noopener noreferrer">查看議會報導 ↗</a></div><div class="history-numbers"><span>近年官方受訪提供的組數</span><div id="annual-counts"></div><small>年度存量的差額，不能直接當作撤除次數。</small><a href="https://www.cna.com.tw/news/aloc/202605110096.aspx" target="_blank" rel="noopener noreferrer">來源：中央社，2026-05-11 ↗</a></div></div>
       <div class="timeline-heading"><h3>沿時間，追查發生了什麼</h3><div class="timeline-filters" role="group" aria-label="篩選歷程"><button type="button" data-event-filter="all" aria-pressed="true">全部</button><button type="button" data-event-filter="removal" aria-pressed="false">撤除紀錄</button><button type="button" data-event-filter="policy" aria-pressed="false">政策與復設</button></div></div>
       <div id="timeline" class="timeline"></div>
-      <div class="evidence-gap"><div><p class="eyebrow">下一段需要的證據</p><h3>從「數量減少」走到「逐箱撤除順序」。</h3><p>需要官方箱號清冊、各箱新設／撤除／遷移／復設日期，以及對應的會勘與評估理由。再把行人需求、家戶垃圾、溢滿與清運負擔放在一起比較。</p></div><a class="download-button" href="research/bin-removal-history.md" download>下載完整研究筆記 ↓</a></div>
+      <div class="evidence-gap"><div><p class="eyebrow">下一段需要的證據</p><h3>從「數量減少」走到「逐箱撤除順序」。</h3><p>需要官方箱號清冊、各箱新設／撤除／遷移／復設日期，以及對應的會勘與評估理由。再把行人需求、家戶垃圾、溢滿與清運負擔放在一起比較。</p></div></div>
+    </section>
+
+    <section id="panel-countries" class="page-panel" aria-labelledby="countries-heading" hidden>
+      <div class="section-heading"><div><h2 id="countries-heading">各國垃圾桶</h2></div><p>實物照片、功能與公開價格，一起比較。</p></div>
+      <section class="research-section smart-bin-comparison" aria-labelledby="smart-bin-heading">
+        <h3 id="smart-bin-heading">六國進階垃圾桶，解決的是哪些問題？</h3>
+        <p><strong>我們建議：一般桶先做到易投、易清、易維修；垃圾量波動大才比較滿度感測，容量不足才比較壓縮。</strong>地下集中收集及住戶 RFID 屬不同服務。以下對照功能、營運證據與公開成本，整理於 2026-10-15。</p>
+        <p class="country-comparison-note">照片用來比較外觀，功能與價格另依文字來源核對。保留原幣別及年度；歷史單價、計畫預算與完整營運成本不能直接排名。照片不按設備實際尺寸等比例呈現。</p>
+        <ol class="country-cases">
+          <li><article class="country-case" aria-labelledby="country-japan">
+            <h4 id="country-japan">日本・大阪<span>SmaGO</span></h4>
+            <div class="country-case-grid">
+              <figure class="country-photo">
+                <div class="country-photo-frame"><img src="images/countries/osaka-smago.jpg" alt="黃色 SmaGO 分類箱，一般垃圾與瓶罐有不同投入口" width="1500" height="1384" loading="eager" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
+                <figcaption>大阪道頓堀計畫共同新聞稿的 SmaGO 照片；2023-11-16 發布，拍攝日期未列。<span class="country-photo-credit">照片摘自 JTB 共同新聞稿；© JTB Corp.。</span><a class="country-source" href="https://www.jtbcorp.jp/jp/newsroom/2023/11/16_01_dotonbori-clean%EF%BD%B0activities.html" target="_blank" rel="noopener noreferrer">照片來源 ↗</a></figcaption>
+              </figure>
+              <dl class="country-facts"><div><dt>外觀</dt><dd>黃色箱身，分開的一般垃圾與瓶罐投入口；正面設有清運門。</dd></div><div><dt>功能</dt><dd>SmaGO 壓縮與滿度通知</dd></div><div><dt>已有證據</dt><dd>2023 年 1 月單桶試驗：周邊散落垃圾重量減 39%、件數減 14%；同年 11 月另於 10 處設置。無對照組。<a class="country-source" href="https://www.ntt.com/about-us/csr/solution/solution04/solution03.html" target="_blank" rel="noopener noreferrer">功能與營運來源 ↗</a></dd></div></dl>
+              <dl class="country-facts country-cost"><div><dt>公開成本 · 未公開單價</dt><dd><p class="country-price">來源未列單價與完整維護費。</p><a class="country-source" href="https://www.ntt.com/about-us/csr/solution/solution04/solution03.html" target="_blank" rel="noopener noreferrer">成本來源 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>適合比較觀光熱點容量與清運；效果不能只歸因壓縮。</dd></div></dl>
+            </div>
+          </article></li>
+          <li><article class="country-case" aria-labelledby="country-uk">
+            <h4 id="country-uk">英國・倫敦金融城<span>Bigbelly</span></h4>
+            <div class="country-case-grid">
+              <figure class="country-photo">
+                <div class="country-photo-frame"><img src="images/countries/london-bigbelly.jpg" alt="西敏市黑色 BigBelly 桶，弧形頂蓋與正面把手式投入口" width="960" height="1280" loading="lazy" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
+                <figcaption>倫敦西敏市 Belgrave Square，2015-09-20。同系列設備，非金融城 Bishopsgate 試辦現場。<span class="country-photo-credit">攝影：Philafrenzy／Wikimedia Commons。原圖未改作。</span><a class="country-source" href="https://commons.wikimedia.org/wiki/File:BigBelly_solar_compactor_in_Belgrave_Square_02.JPG" target="_blank" rel="noopener noreferrer">照片來源 ↗</a><a class="country-photo-license" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></figcaption>
+              </figure>
+              <dl class="country-facts"><div><dt>外觀</dt><dd>黑色直立箱，頂部弧面，正面有帶把手的投入口與下方維修門。</dd></div><div><dt>功能</dt><dd>Bigbelly 太陽能壓縮與滿度回報</dd></div><div><dt>已有證據</dt><dd>2015 年試 9 桶、2016 年報告；清潔分級改善，未證實省人力或車次。<a class="country-source" href="https://democracy.cityoflondon.gov.uk/documents/s61842/Bishopsgate%20Bin%20Trial%202016%20PHES%20-%20Final.pdf" target="_blank" rel="noopener noreferrer">功能與營運來源 ↗</a></dd></div></dl>
+              <dl class="country-facts country-cost"><div><dt>公開成本 · 2016 歷史採購價</dt><dd><p class="country-price">歷史 £4,300／桶含啟用與軟體；整批年維護約 £1,500。</p><a class="country-source" href="https://democracy.cityoflondon.gov.uk/documents/s61842/Bishopsgate%20Bin%20Trial%202016%20PHES%20-%20Final.pdf" target="_blank" rel="noopener noreferrer">成本來源 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>需與普通有蓋增容桶及調班比較，不能把壓縮倍率當節省率。</dd></div></dl>
+            </div>
+          </article></li>
+          <li><article class="country-case" aria-labelledby="country-denmark">
+            <h4 id="country-denmark">丹麥・哥本哈根<span>CitySolar · 240 L</span></h4>
+            <div class="country-case-grid">
+              <figure class="country-photo">
+                <div class="country-photo-frame"><img src="images/countries/copenhagen-citysolar.jpg" alt="CitySolar 黑色垃圾桶，頂部面板、正面投入口及底部腳踏" width="1392" height="1044" loading="lazy" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
+                <figcaption>市府介紹的 CitySolar 桶型照片，非已確認的哥本哈根試辦現場；拍攝日期未列。<span class="country-photo-credit">照片摘自哥本哈根 Indre By 地方委員會；攝影者未列。</span><a class="country-source" href="https://indrebylokaludvalg.kk.dk/nyheder/forsoeg-med-komprimerende-affaldskurve-i-indre-by" target="_blank" rel="noopener noreferrer">照片來源 ↗</a></figcaption>
+              </figure>
+              <dl class="country-facts"><div><dt>外觀</dt><dd>黑色箱身，頂部面板、正面投入口與下方腳踏；亮色標示操作位置。</dd></div><div><dt>功能</dt><dd>240 L 壓縮桶與滿度通知</dd></div><div><dt>已有證據</dt><dd>2025 方案試 16 桶；早期 2018–2023 智慧桶預期效率未實現。未找到新版完成評估。<a class="country-source" href="https://www.kk.dk/sites/default/files/agenda/83c5755d-bc0a-49e1-b04f-869a658fcdf6/48a7f707-43e3-4d42-a322-3581c4926820-bilag-2.pdf" target="_blank" rel="noopener noreferrer">功能與營運來源 ↗</a></dd></div></dl>
+              <dl class="country-facts country-cost"><div><dt>公開成本 · 年度計畫額度</dt><dd><p class="country-price">市府列 2025 起每年 DKK 550,000 計畫額度；非單桶價或完整成本。 <a href="https://indrebylokaludvalg.kk.dk/nyheder/forsoeg-med-komprimerende-affaldskurve-i-indre-by" target="_blank" rel="noopener noreferrer">額度來源</a></p></dd></div><div><dt>台北怎麼參考</dt><dd>保留基本巡收、員工操作評估及恢復舊桶的條件。</dd></div></dl>
+            </div>
+          </article></li>
+          <li><article class="country-case" aria-labelledby="country-us">
+            <h4 id="country-us">美國・舊金山<span>Slim Silhouette</span></h4>
+            <div class="country-case-grid">
+              <figure class="country-photo">
+                <div class="country-photo-frame"><img src="images/countries/san-francisco-slim-silhouette.jpg" alt="清潔人員擦拭 Slim Silhouette 原型桶的金屬上蓋，桶身由垂直金屬條組成" width="768" height="1024" loading="lazy" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
+                <figcaption>舊金山市公共工程局，2022-12-21 拍攝的 Slim Silhouette 原型清潔照片；非 2026 採購版實拍。<span class="country-photo-credit">照片：San Francisco Public Works／Flickr；保留原圖與署名。</span><a class="country-source" href="https://www.flickr.com/photos/sfdpw/52580460593/" target="_blank" rel="noopener noreferrer">照片來源 ↗</a></figcaption>
+              </figure>
+              <dl class="country-facts"><div><dt>外觀</dt><dd>直條金屬外殼與弧形上蓋。照片可見清潔人員擦拭桶身；投入口位於另一側。</dd></div><div><dt>功能</dt><dd>Slim Silhouette 易維修桶、滾動內桶</dd></div><div><dt>已有證據</dt><dd>2026-03 簡報：首 10 桶測試；可裝感測器，不等於已裝滿度偵測。<a class="country-source" href="https://media.api.sf.gov/documents/Public_Works_Refuse_Rate_Board_presentation_3.13.26_final.pdf" target="_blank" rel="noopener noreferrer">功能與營運來源 ↗</a></dd></div></dl>
+              <dl class="country-facts country-cost"><div><dt>公開成本 · 2026 大量採購單價</dt><dd><p class="country-price">3,000 桶以上 US$1,591／桶含內桶；另列關稅 US$158，可能變動。</p><p class="country-price-note">桶體 US$1,495＋內桶 US$96。來源未列運送、安裝及感測服務完整費用；照片原型與 2026 採購價分開閱讀。</p><a class="country-source" href="https://media.api.sf.gov/documents/Public_Works_Refuse_Rate_Board_presentation_3.13.26_final.pdf" target="_blank" rel="noopener noreferrer">成本來源 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>先比較省力、耐用與車輛相容；不是壓縮桶的同規格報價。</dd></div></dl>
+            </div>
+          </article></li>
+          <li><article class="country-case" aria-labelledby="country-finland">
+            <h4 id="country-finland">芬蘭・赫爾辛基<span>Molok 深埋式收集桶</span></h4>
+            <div class="country-case-grid">
+              <figure class="country-photo">
+                <div class="country-photo-frame"><img src="images/countries/finland-molok.jpg" alt="Oulu 多座木紋圓筒 Molok 收集桶，黑色頂蓋與分類標示" width="960" height="720" loading="lazy" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
+                <figcaption>芬蘭 Oulu，2009-09-26。同系列 Molok 桶，非赫爾辛基 2024 感測試驗；照片不證明裝有感測器。<span class="country-photo-credit">攝影：SeppVei／Wikimedia Commons；作者釋出至公有領域。</span><a class="country-source" href="https://commons.wikimedia.org/wiki/File:Molok_waste_cans.JPG" target="_blank" rel="noopener noreferrer">照片來源 ↗</a></figcaption>
+              </figure>
+              <dl class="country-facts"><div><dt>外觀</dt><dd>大型圓筒、木紋外殼與掀蓋投入口；地上部分比一般行人箱寬。</dd></div><div><dt>功能</dt><dd>Molok 深埋式桶＋Futuren 感測＋Wastebook</dd></div><div><dt>已有證據</dt><dd>2024-09 公告：26 處市有物業、117 桶；未找到公開最終節省結果。<a class="country-source" href="https://testbed.hel.fi/rakennettu-ymparisto/alykasta-jatehuoltoa-kokeillaan-ympari-helsinkia-kokeilu-on-tassa-mittakaavassa-ainutlaatuinen/" target="_blank" rel="noopener noreferrer">功能與營運來源 ↗</a></dd></div></dl>
+              <dl class="country-facts country-cost"><div><dt>公開成本 · 未公開完整費用</dt><dd><p class="country-price">來源未列感測、平台、維護或土建完整費用。</p><a class="country-source" href="https://testbed.hel.fi/rakennettu-ymparisto/alykasta-jatehuoltoa-kokeillaan-ympari-helsinkia-kokeilu-on-tassa-mittakaavassa-ainutlaatuinen/" target="_blank" rel="noopener noreferrer">成本來源 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>適合物業集中收集；要有吊運空間，不能直接套用一般人行道。</dd></div></dl>
+            </div>
+          </article></li>
+          <li><article class="country-case" aria-labelledby="country-korea">
+            <h4 id="country-korea">韓國<span>RFID 家戶廚餘秤重站</span></h4>
+            <div class="country-case-grid">
+              <figure class="country-photo">
+                <div class="country-photo-frame"><img src="images/countries/korea-rfid.jpg" alt="九里市四台橘灰色廚餘秤重設備，帶上掀投入口與側邊操作面板" width="1440" height="648" loading="lazy" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
+                <figcaption>韓國九里市住宅廚餘設備，2022-04-22 新聞稿；拍攝日期未確認。屬同類 RFID 秤重系統，非全國統一機型。<span class="country-photo-credit">照片：九里市（Guri City）；攝影者未列。</span><a class="country-source" href="https://www.guri.go.kr/www/selectBbsNttView.do?bbsNo=42&amp;integrDeptCode=&amp;key=393&amp;nttNo=1538&amp;pageIndex=562&amp;searchCnd=all&amp;searchCtgry=&amp;searchKrwd=" target="_blank" rel="noopener noreferrer">照片來源 ↗</a><a class="country-photo-license" href="https://www.kogl.or.kr/info/licenseType4.do" target="_blank" rel="noopener noreferrer">公共著作物第 4 類：署名、非商用、禁止改作</a></figcaption>
+              </figure>
+              <dl class="country-facts"><div><dt>外觀</dt><dd>橘色上蓋、灰色箱身，投入口旁有操作面板，正面貼有使用說明。</dd></div><div><dt>功能</dt><dd>RFID 住戶辨識、廚餘秤重計費</dd></div><div><dt>已有證據</dt><dd>官方列 2025 年 186 自治體、約 861 萬公寓住戶；用途是家戶廚餘。<a class="country-source" href="https://www.keco.or.kr/web/lay1/S1T184C1061/contents.do" target="_blank" rel="noopener noreferrer">功能與營運來源 ↗</a></dd></div></dl>
+              <dl class="country-facts country-cost"><div><dt>公開成本 · 未取得可比報價</dt><dd><p class="country-price">本輪未取得現行同規格設備與維護報價。</p><a class="country-source" href="https://www.keco.or.kr/web/lay1/S1T184C1061/contents.do" target="_blank" rel="noopener noreferrer">成本來源 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>可參考社區廚餘分流；不是匿名行人箱的防家戶垃圾裝置。</dd></div></dl>
+            </div>
+          </article></li>
+        </ol>
+        <p class="service-outcomes"><strong>滿度偵測不能判斷家戶來源。</strong>它回答「何時可能要收」，仍須配合清運人力、合法收受管道及已確認熱點的管理。縮口或鎖桶也要留意垃圾是否改堆桶外。</p>
+        <details class="service-evidence"><summary>從感測到清運：有讀值，還需要有人處理。</summary><p>讀值與時間戳 → 檢查異常或失聯 → 依滿度、等待時間與衛生需求排班 → 清運回報 → 維修與績效記錄。失聯或讀值不可靠時回到人工巡查；高溫、殘液與異味可能要求未滿先收。</p><p>瑞士 98 桶研究使用實際資料加模擬，提醒感測需校正、節省須連同成本檢驗。其模擬沒有完整計入設備與安裝，不能拿來承諾台北回本年限。<a href="https://doi.org/10.1016/j.dajour.2023.100347" target="_blank" rel="noopener noreferrer">Barth 等人，2023</a></p></details>
+        <details class="service-evidence"><summary>智慧化預算：要比五年總成本，不能只看桶價。</summary><p>現有 30 處、半年約 250 萬元規劃未含智慧桶、平台、土建或新車。新增方案須另計設備、安裝、通訊、電池、校準、維修、清運、清洗、替換及故障備援；只有已證實省下的支出才可扣除。</p><p>五年是比較期間，不是保固承諾。若取代原案設備，扣除不再購買的基準設備以免重算。未取得台北同規格報價，暫不填造追加金額或回本年限；完整文件列出詢價項目。壓縮倍率、倒桶次數、人車支出是三種不同指標。</p></details>
+      </section>
+      <p class="related-reading">付費投放、家戶分流及台北的實作建議，見<a href="#research">研究判斷</a>。</p>
+    </section>
+
+    <section id="panel-research" class="page-panel" aria-labelledby="research-heading" hidden>
+      <div class="section-heading"><div><h2 id="research-heading">位置、清運、家戶分流，一起判斷。</h2></div><p>資料判讀更新：2026-10-15</p></div>
+      <p class="research-lead">我們建議：每個設桶方案都要交代誰來收、何時收，以及家戶與商家垃圾的合法去處。先處理有證據的服務問題，再決定增設、增容、重配或撤除。</p>
+      <p class="service-evidence-note"><strong>這是依現有資料提出的建議。</strong>官方紀錄、海外案例與研究支持以下判斷方向；本站尚無台北試辦的成效估計，也未認定任何候選點必須增設或撤除。</p>
+
+      <p class="related-reading">想比較海外桶型、滿度偵測與清運條件，請看<a href="#countries">各國垃圾桶</a>。</p>
+
+      <section class="research-section implementation-plan" aria-labelledby="implementation-heading">
+        <h3 id="implementation-heading">目前先做公開資料研究，保留落地路徑。</h3>
+        <p>目前以公開清冊、官方紀錄、論文與海外案例，整理位置差異、桶型、清運、家戶分流及預算。現勘列為後續選項，不是本輪研究的前置要求；未取得的現場狀態與營運資料維持未知。</p>
+        <div class="implementation-scope"><p><strong>後續營運情境：30 處、180 個服務日，規劃約 250 萬元。</strong>準備期另估 4–6 週；180 天從服務開始計算。感測器與付費站另行報價、編列經費。</p></div>
+        <p><strong>目前交付：</strong>可追溯的資料比較、服務與設備判斷、預算假設及待確認事項。以下時程僅供日後決定試辦並取得合作時使用；尚未選定 30 處、詢價或啟動現勘與營運。</p>
+        <ol class="implementation-timeline" aria-label="取得合作後才適用的準備與營運順序">
+          <li><p class="implementation-time">準備期<br><strong>另估 4–6 週</strong></p><div><h4>先定服務範圍與承接者</h4><p>從現有資料找同一車組可服務的候選點，確認現場、通行與收運條件。逐點寫明管理者、班次、垃圾去處及故障聯絡；場地與收運安排確定後才設置。</p></div></li>
+          <li><p class="implementation-time">服務第 1–30 天</p><div><h4>把基本清運與紀錄做好</h4><p>開始前盡量保留原有紀錄，營運後記錄滿溢、桶外垃圾與工時；急迫清潔問題立即處理。落實巡收、清洗與合法投放導引，先調整反覆滿溢的班次。</p></div></li>
+          <li><p class="implementation-time">服務第 31–90 天</p><div><h4>按缺口加入設備或付費服務</h4><p>有調度空間的點才加滿度感測；調班後仍容量不足，再比較增容或壓縮。另比較 1–2 處家戶付費站的合作方案，完成經費與營運條件才啟用；數量是提案，並非採購承諾。</p></div></li>
+          <li><p class="implementation-time">服務第 91–180 天</p><div><h4>看整區結果，決定是否擴大</h4><p>比較相近星期、時段與鄰近街段，記錄天氣、活動及各項調整日期。檢查便利、清潔、故障與總成本，再決定保留、調整或停止額外服務；基本合法投放管道持續保留。</p></div></li>
+        </ol>
+        <p class="service-outcomes"><strong>誰來承接：</strong>主管機關與場地管理者確認設置及服務條件；清潔隊或受託業者負責收運、清洗與維修；研究團隊整理選點依據、成本與成果。這是未來試辦的建議分工；目前只做公開資料研究，尚無合作承諾。</p>
+        <details class="service-evidence"><summary>開辦前，要備妥哪四份材料？</summary><ol>
+          <li><strong>點位與服務清單：</strong>位置現況、可收物、服務時間、通行條件、垃圾去處與替代管道。10 處更換、20 處沿用小修只是原預算假設；清冊缺列不作為增設或撤除依據。</li>
+          <li><strong>責任與異常處理表：</strong>每項工作有承接者；約定滿溢、失聯、卡袋及故障的接單、處理時限、備援和完成證據。時限須在營運前確認，本站不把任意數字當既定標準。</li>
+          <li><strong>同規格報價與預算：</strong>比較設備租買、場地、安裝、清運、清洗、耗材、維修、通訊、支付、退款、保險及除役；寫清楚低使用量風險及收入歸屬。</li>
+          <li><strong>簡單營運紀錄：</strong>固定點位編號，記錄巡收、清洗、異常與完成時間。網站先公開彙整資料及更新日期；接到可靠回報後才提供即時滿度，未回報就顯示未回報。</li>
+        </ol></details>
+        <details class="service-evidence"><summary>感測器與付費站，分別在什麼條件下加入？</summary>
+          <p><strong>滿度感測：</strong>讀值 → 通知 → 接單 → 清運 → 完成紀錄。承接者必須能調整班次；失聯回到人工巡查，衛生所需的固定清運仍保留。滿度不能辨識家戶來源。</p>
+          <p><strong>付費家戶站：</strong>先對照垃圾車與限時收受點，確認距離或時段缺口，再比較既有業者合作、租用與自購的全部費用。保留免費行人箱及可用的合法替代管道，約定收費、交易失敗、退款、滿載與停機處理；商家垃圾另訂清運責任。</p>
+          <p><strong>預算界線：</strong>基本方案基準為 232.9 萬元，原估已含 15% 預備金，建議編列約 250 萬元；未含感測、付費站、支付、土建與補助。若全路線每日由一輪增至兩輪，原模型約為 380.2 萬元；一輪只是估價假設，不代表足夠。業者收取的費用不直接抵減市府預算。</p>
+        </details>
+        <details class="service-evidence"><summary>怎樣驗收，什麼情況應調整或停止擴大？</summary>
+          <ul><li><strong>清潔：</strong>用相同範圍及時段，記錄滿溢觀察次數／有效觀察次數、桶外垃圾與鄰街變化；缺測另列，不當成零事件。</li><li><strong>服務：</strong>追蹤按約完成的巡收與異常處理比例、停機時間、付款失敗及替代管道可用性。</li><li><strong>成本：</strong>計入設備、工時、維護、支付與額外清掃；分開呈現服務總成本、業者收支和市府現金支出。</li></ul>
+          <p>合作方在營運前約定可接受門檻與比較方式。清潔改善、便利可接受且成本可持續，才考慮擴大；桶外或鄰街堆置增加、支付排除使用者、處理反覆逾時，則先修正服務、費率或設備，再評估停止額外方案。</p>
+          <p>付費站使用量與收入增加，不能直接當作家戶違規減少；分期紀錄有助判讀，但不等於已證明因果效果。較慢啟用的設備也不能成為延後必要清潔的理由。</p>
+        </details>
+      </section>
+
+      <section class="service-decisions" aria-label="三項相互配合的服務建議">
+        <article class="service-decision">
+          <div><h3>設置位置</h3><p class="service-decision-brief">行人順路，也要方便維護。</p></div>
+          <div><p><strong>我們的建議：</strong>把轉乘、商圈與觀光動線列為優先評估情境。每個點同時考慮步行繞行、通行空間、清運可達性與管理責任；不以行政區桶數少直接推定服務不足。</p>
+            <details class="service-evidence"><summary>依據與限制：選址需要連同收運考慮</summary><p>Rossit 與 Nesmachnow（2022）回顧指出，同時處理選址、收運及參數不確定性的研究仍少。這支持整合問題的方向，沒有提供台北適用的固定間距或最佳點位；研究範圍包含家戶集中收集，查閱範圍為摘要與可見片段。</p><a href="https://arxiv.org/abs/2202.13754" target="_blank" rel="noopener noreferrer">閱讀選址與收運研究</a></details>
+          </div>
+        </article>
+        <article class="service-decision">
+          <div><h3>清運方式</h3><p class="service-decision-brief">收得及時，操作也要省力。</p></div>
+          <div><p><strong>我們的建議：</strong>保留基本巡收，依尖峰與滿溢紀錄調整時段、頻率及路線。分開安排倒桶、周邊清掃、清洗與維修；桶體優先考慮容易換袋、取出內桶，以及與清運車相容。</p><p>商圈共用點須明訂管理者、經費、營業與打烊後服務、滿溢處理責任。清運時間可改善時，先比較排班；容量仍不足時，再比較增容或設備。</p>
+            <details class="service-evidence"><summary>依據與限制：台北巡收紀錄與海外操作經驗</summary><p>萬華區 2025-06-30 會議記載，康定派出所旁清潔箱加強巡收後，清潔隊回報滿溢改善。這是單一行政回報，後續仍有相關撤除紀錄，不能當長期效果或全市因果證明。</p><p>舊金山 2022 年設計評選納入可滾動內桶、車輛相容與維護人員回饋。哥本哈根 2025 年文件則記載，2018–2023 智慧桶計畫預期的效率改善未實現。少倒幾次不等於總工時或總成本按比例下降。</p><ul><li><a href="https://www-ws.gov.taipei/Download.ashx?icon=..pdf&amp;n=MTE05bm0NuaciOaTtOWkp%2BWNgOWLmeacg%2BitsOe0gOmMhC5wZGY%3D&amp;u=LzAwMS9VcGxvYWQvMzE5L3JlbGZpbGUvNDE0ODUvOTM1MTE1NS9kZTY3ZWM0OS1jYWM2LTQ2OWItYjc3Yi03OGVmODhmZGUwOWIucGRm" target="_blank" rel="noopener noreferrer">萬華區 2025 年 6 月會議</a></li><li><a href="https://sfpublicworks.org/sites/default/files/12.22.22%20PRESS%20RELEASE%20Public%20Works%20moves%20forward%20with%20trash%20can%20design.pdf" target="_blank" rel="noopener noreferrer">舊金山 2022 年設計報告</a></li><li><a href="https://www.kk.dk/sites/default/files/agenda/83c5755d-bc0a-49e1-b04f-869a658fcdf6/48a7f707-43e3-4d42-a322-3581c4926820-bilag-2.pdf" target="_blank" rel="noopener noreferrer">哥本哈根 2025 年營運檢討與試辦方案</a></li></ul></details>
+          </div>
+        </article>
+        <article class="service-decision">
+          <div><h3>減少家戶垃圾混入</h3><p class="service-decision-brief">合法去處、入口設計、熱點管理。</p></div>
+          <div><p><strong>我們的建議：</strong>先把附近垃圾車與限時收受點的時段、規則說清楚。對已有違規證據的熱點，配合告示、巡查與依法處理；商家營業垃圾另訂清運責任，不轉嫁給行人箱。</p><p>投入口只作輔助：兼顧一般杯盒與大袋阻擋，避免垃圾轉堆桶外。<strong>不主張一律縮口，也不把垃圾袋外觀直接判為家戶來源。</strong>店家回收杯子的服務，不等於收受一般家戶垃圾。</p>
+            <details class="service-evidence"><summary>依據與限制：合法投放與防混入不能互相替代</summary><p>台北環保局 2026-09-29 更新的說明列有定時定點垃圾車與限時收受點，仍須使用專用袋；服務存在不代表每戶都方便使用。2026-08-10 新聞稿記錄加重處罰後仍有違規，不能用查獲數當家戶垃圾混入率。</p><p>首爾市 2024 年新桶試辦指出舊入口過小會妨礙投放。這是設計與試辦紀錄，並未證實放大或縮小入口能減少台北家戶垃圾。</p><ul><li><a href="https://www.dep.gov.taipei/News_Content.aspx?n=ACEFA960B5A4ACD7&amp;s=7D7997AA6B02FA0D" target="_blank" rel="noopener noreferrer">台北家戶垃圾合法收受管道</a></li><li><a href="https://www.tldep.gov.taipei/Public/News/TpeDep_Detail.aspx?SN=9686320" target="_blank" rel="noopener noreferrer">台北 2026 年清潔箱管理說明</a></li><li><a href="https://news.seoul.go.kr/culture/archives/523438" target="_blank" rel="noopener noreferrer">首爾 2024 年新桶試辦</a></li></ul></details>
+          </div>
+        </article>
+      </section>
+
+      <section class="research-section service-response" aria-labelledby="service-response-heading">
+        <h3 id="service-response-heading">不同問題，採取不同處理。</h3>
+        <p>以下是依問題選方案的判斷表，不是對目前地圖點位的診斷。只有清冊地址，還不能知道各點的垃圾來源、滿溢時段或收運負荷。</p>
+        <div class="comparison-table-wrap" role="region" tabindex="0" aria-label="問題與建議對照，可左右捲動"><table class="research-stage-table"><caption>方案建議與不能省略的條件</caption><thead><tr><th scope="col">已有的問題證據</th><th scope="col">優先比較的處理</th><th scope="col">需要同時顧到</th></tr></thead><tbody>
+          <tr><th scope="row">正常行人垃圾反覆滿溢</th><td>調整尖峰收運、路線與可用容量。</td><td>維持投放服務；滿溢本身不是家戶違規證據。</td></tr>
+          <tr><th scope="row">已確認家戶或商家垃圾混入</th><td>合法投放資訊、來源責任與熱點管理；入口作輔助。</td><td>一般垃圾仍投得進，並留意桶外及鄰街轉移。</td></tr>
+          <tr><th scope="row">已確認步行服務缺口</th><td>比較順路增設、重配或有明確開放條件的合作點。</td><td>配置清運責任、服務時段與經費。</td></tr>
+          <tr><th scope="row">只有清冊缺列或座標差異</th><td>保留資料差異與待查線索。</td><td>不直接判定撤除、遷移或現場沒有服務。</td></tr>
+        </tbody></table></div>
+        <p class="service-outcomes"><strong>衡量成果：</strong>投放是否方便、滿溢與街面垃圾是否減少、非目標垃圾是否轉往合法管道，以及清潔總工時與成本是否合理。清空桶內卻增加桶外堆置，不能算改善。</p>
+      </section>
+
+      <section class="research-section paid-disposal service-response" aria-labelledby="paid-disposal-heading">
+        <h3 id="paid-disposal-heading">付費垃圾桶：優先補足家戶投放時段。</h3>
+        <p><strong>我們建議保留免費行人基本服務，另比較按量付費的家戶收受站。</strong>付費、感測與清運是三件要配合的事；收費可以分攤成本，但不能直接證明家戶違規減少。</p>
+        <div class="comparison-table-wrap" role="region" tabindex="0" aria-label="四種付費模式比較，可左右捲動"><table class="research-stage-table"><caption>表格可左右捲動。以下為本案方案比較，非已實施的新收費制度。</caption><thead><tr><th scope="col">誰付費</th><th scope="col">服務用途</th><th scope="col">我們的判斷</th></tr></thead><tbody>
+          <tr><th scope="row">行人逐次付費</th><td>杯盒等小件垃圾每次或按量付費。</td><td>支付增加門檻，須留意桶外及鄰街轉移；暫不建議全市行人箱採用。</td></tr>
+          <tr><th scope="row">家戶按量投放</th><td>額外的收受站，補足不便配合垃圾車的時段。</td><td>值得納入比較；同時檢查可負擔費率、可達性、停機替代及清運責任。</td></tr>
+          <tr><th scope="row">社區住戶計費</th><td>廚餘或其他指定垃圾按量／管理費收運。</td><td>適合明確住戶與管理責任；刷卡門禁不一定等於逐次收費。</td></tr>
+          <tr><th scope="row">商家契約清運</th><td>商家／商圈按約定垃圾量、班次及服務付費。</td><td>承接營業垃圾及打烊後清運，與向路人收費分開。</td></tr>
+        </tbody></table></div>
+        <p><strong>台北案例 iTrash：</strong>市府記錄已有秤重計費、滿量通知與業者自營服務。業者公告 2026-01-01 起一般垃圾每 0.5 公斤 11 元；FAQ 另有小量級距。這是投放費，不是設備報價；維修與清運時仍會暫停服務。<a href="https://smartcity.taipei/News_Content.aspx?n=6986545C4A2C217F&amp;s=96C8E43B36409CB7&amp;sms=A5A97EC540EAA0BA" target="_blank" rel="noopener noreferrer">市府專案紀錄</a> · <a href="https://www.itrash.com.tw/blogs/notice/20251224" target="_blank" rel="noopener noreferrer">2026 費率公告</a> · <a href="https://www.itrash.com.tw/pages/%E5%B8%B8%E8%A6%8B%E5%95%8F%E9%A1%8Cfaq" target="_blank" rel="noopener noreferrer">費率級距與交易限制</a></p>
+        <details class="service-evidence"><summary>海外經驗：取消按次收費後，也有兩面結果。</summary><p>荷蘭阿納姆曾按家戶地下容器開啟次數計費，2021-06-01 停止。市府記錄居民與稽查員回報桶旁垃圾袋變少，同時觀察到收集的殘餘垃圾增加。這不是完整因果評估，不能據此認定所有付費模式都有效或都失敗。<a href="https://arnhem.bestuurlijkeinformatie.nl/Document/View/c5c9079e-e482-49e9-bb33-57bf78446b96" target="_blank" rel="noopener noreferrer">市府政策說明</a></p><p>韓國 RFID 是住戶廚餘計費，與一般行人箱不同。評估要一起看分流、桶外垃圾、投放便利與全部成本。</p></details>
+        <details class="service-evidence"><summary>使用者花多少？收費能不能補貼營運？</summary><p>以每次 0.5 公斤、11 元計，每月投放 30 次為 330 元。假設單站每日 10／30／60 筆、每月 30 日，月毛收入分別為 3,300／9,900／19,800 元。這些是計算情境，不是需求預測或淨利；完整文件另列小量費率及進位未明處。</p><p>原約 250 萬元方案未含付費站、支付系統及補助，也未預扣收入。另估場地、設備、清運、交易、維修、退款與停機備援。業者收取的投放費不等於市府收入，更不能直接抵掉原本巡收費。</p></details>
+      </section>
+
+      <section class="research-section service-budget" aria-labelledby="budget-heading">
+        <h3 id="budget-heading">預算：先以 30 處、半年 250 萬元規劃。</h3>
+        <p>經費要同時支應設備、持續清運與家戶分流。以下是 2026-10-15 的<strong>規劃概估，全部單價與工時仍是假設</strong>，不是報價或市府核定預算；250 萬元接近基準，不是最高成本保證。</p>
+        <div class="comparison-table-wrap" role="region" tabindex="0" aria-label="預算規模比較，可左右捲動"><table class="research-stage-table"><caption>新臺幣；低、高為成本情境，非信賴區間</caption><thead><tr><th scope="col">服務規模</th><th scope="col">一次性<br>基準</th><th scope="col">該期營運<br>基準</th><th scope="col">15% 預備金<br>基準</th><th scope="col">基準合計</th><th scope="col">低至高合計<br>均含預備金</th></tr></thead><tbody>
+<!-- budget-rows-start -->
+<tr><th scope="row">30 處／180 日</th><td>46.5 萬</td><td>156.0 萬</td><td>30.4 萬</td><td><strong>232.9 萬</strong></td><td>126.9–413.7 萬</td></tr>
+<tr><th scope="row">100 處／365 日</th><td>129.0 萬</td><td>1,057.9 萬</td><td>178.0 萬</td><td><strong>1,365.0 萬</strong></td><td>747.3–2,434.4 萬</td></tr>
+<!-- budget-rows-end -->
+        </tbody></table></div>
+        <p>30 處案含 10 組新購／更換、20 處沿用小修；100 處案含 30 組新購／更換、70 處沿用小修。每處每日配置 1 輪本案巡收，另編清洗、維修、合法投放資訊和熱點勸導巡查。<strong>兩案是不同規模比較，不相加，也不是把清冊列數當全市桶數。</strong></p>
+        <details class="service-evidence"><summary>怎麼算、哪些費用尚未包含？</summary><p>每日車組工時＝（處數 × 每處 6／8／12 分鐘 ÷ 60 ＋ 路線數 × 每路線 1／1.5／2 小時）× 輪數。30 處為 1 路線、100 處為 4 路線；每車組 2 人含駕駛，再分別計人力與既有車輛使用成本。</p><p>完整文件列出全部單價、公式、每日 2 輪敏感度及續年度營運費。這是資源成本；現有人車若可承接，追加現金可能較少，但須確認不排擠原服務。沒有預扣罰款、回收收入或尚未證實的節省。</p><p>未含新車、土建、智慧桶、監視器、整條街掃街、家戶收受點擴充或新建末端設施。各項若有需要須另估，15% 預備金不涵蓋新增範圍。每日 1 輪是估價假設，不代表各點已足夠。</p><p>參考來源：<a href="https://ssl.metro.taipei/metroepmgt/inquiry-detail.aspx?CaseNo=C09A06879" target="_blank" rel="noopener noreferrer">2020 台北捷運桶組預算</a>、<a href="https://www.dep.gov.taipei/News_Content.aspx?n=CB6D5C560DE4D2DD&amp;s=FDC07E2872A7FD42" target="_blank" rel="noopener noreferrer">2026 短期清潔津貼公告</a>。兩者均非本案戶外設備或完整車組服務報價；費率是本案另設的規劃預留。</p></details>
+      </section>
+
+      <section class="research-section" aria-labelledby="research-audit-heading">
+        <h3 id="research-audit-heading">先解開清冊的計數與範圍。</h3>
+        <p>2024 封存版有 1,971 列，2026 主檔有 681 列，目錄卻列 2,009 筆。北投在新主檔為 0 列、南港為 4 列；這些差異仍不能當作撤除數。日期分為封存、來源更新、下載與現場事件，互不替代。</p>
+        <div class="research-state"><strong>新取得：1996–2025 官方年度統計，共 30 年。</strong><p>統計欄位單位為「個」：2017 年為 2,009，2024 年為 1,956，2025 年為 1,682。2017 的數字恰與目錄相同，是可追查的線索，仍沒有官方證據證明目錄沿用該年數值。此序列與公開位置列分開保存。</p><a href="https://data.taipei/dataset/detail?id=a6838eac-4f04-48d8-bf17-9d0fd9886f57" target="_blank" rel="noopener noreferrer">官方統計目錄 ↗</a></div>
+        <ul class="research-checklist"><li><strong>單位：</strong>一筆來源列、一個箱體、一組容器、一個場所與一條街段分開記錄。130 個場所不直接加成箱數。</li><li><strong>身分：</strong>公開主檔沒有穩定箱號及逐列異動日；75 對座標差距均保留為待核驗線索。</li><li><strong>新線索：</strong>歷史規範曾記載箱號、列管清冊、會勘及定位流程；該版於 2022 年停止適用，現行制度及檔案可取得性仍待確認。</li></ul>
+        <p>核驗表含原始來源列、既有分類及空白證據欄。2,033 是比較群組數，並非設施數；欄位相同也不能確認為同一實體。<a href="https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c" target="_blank" rel="noopener noreferrer">官方資料集 ↗</a> · <a href="https://laws.gov.taipei/Law/LawSearch/LawArticleContent/FL076512" target="_blank" rel="noopener noreferrer">歷史規範與停止適用紀錄 ↗</a></p>
+      </section>
+      <details id="research-field-tools" class="research-archive">
+        <summary>選用的延伸驗證工具：候選地點、現勘表與試辦計畫</summary>
+        <p>本次直接依既有資料提出判斷，不把現勘當作閱讀建議的前提。原規劃的六條街段、48 個訪次與 30 個任務保留備用，尚未執行；不是本次承諾的新調查。</p>
+      <div class="research-flow" aria-label="研究階段與進度">
+        <article><span class="research-stage">A · 桌面交付完成</span><h3>釐清來源</h3><p>保存矛盾與限制，建立候選街段、查核表和資料詢問清單。</p></article>
+        <article><span class="research-stage">B · 材料備妥，待現場</span><h3>量測現況</h3><p>踏查後選定六段，完成校準、48 次到訪及 30 次找桶任務。</p></article>
+        <article><span class="research-stage">C · 診斷表備妥，待基線</span><h3>辨識問題</h3><p>比對需求、位置、介面與清運，保留反例，選出可測的調整。</p></article>
+        <article><span class="research-stage">D · 協定備妥，待合作</span><h3>試辦與評估</h3><p>分派前固定對照與門檻，觀察主要結果、維護負擔及鄰街影響。</p></article>
+      </div>
+      <section class="research-section" aria-labelledby="research-candidates-heading">
+        <h3 id="research-candidates-heading">18 個桌面候選：保留供後續驗證。</h3>
+        <p>三種情境各六個候選，以 2026 主檔地址作錨點。情境分類、約 100 公尺的單側範圍、實際可用設施及管理者都待現場確認。這是刻意選樣，不代表全市，也不是改善優先排名。</p>
+        <div class="research-filters"><div><label for="research-context">候選情境</label><select id="research-context" disabled><option value="">全部情境</option></select></div><div><label for="research-district">行政區</label><select id="research-district" disabled><option value="">全部候選行政區</option></select></div><button id="research-reset" type="button" disabled>清除篩選</button></div>
+        <p id="research-status" role="status">正在載入桌面候選…</p><p id="research-count" class="research-count" aria-live="polite"></p><div id="research-candidates" class="research-candidates"></div><ul id="research-exclusions" class="research-note-list" aria-label="選樣限制"></ul>
+      </section>
+      <section class="research-section" aria-labelledby="research-field-heading">
+        <h3 id="research-field-heading">選用的量測規則與空白表單。</h3>
+        <div class="comparison-table-wrap" role="region" tabindex="0" aria-label="量測方法與限制，可左右捲動"><table class="research-stage-table"><caption>三個成果面向，同時記錄鄰街影響</caption><thead><tr><th scope="col">面向</th><th scope="col">記錄內容</th><th scope="col">避免誤判</th></tr></thead><tbody><tr><th scope="row">街道整潔</th><td>固定範圍散落物、煙蒂、堆置與每 100 公尺件數。</td><td>是採樣時點存量；保留清掃時間、天候與實際面積。</td></tr><tr><th scope="row">投放便利</th><td>所有已開始任務的成功率、耗時、受阻與中止原因。</td><td>失敗留在分母；預排 30 槽不是 30 次已完成測試。</td></tr><tr><th scope="row">維護投入</th><td>清運、清掃、維修與可歸屬交通工時。</td><td>缺值不填零；觀察到的部分工時不當總成本。</td></tr></tbody></table></div>
+        <p>六條街段各安排兩個不同平日與兩個不同假日，每日尖峰、離峰各一次，共 48 次到訪。這是六條街段的重複量測；試辦需要的獨立群集數，必須另依基線波動及有意義的改善量決定。</p>
+        <p>私人專案保留排程、任務、清運、事件核驗、診斷卡及試辦登記表。正式結果與決策門檻先留白；在基線後、分派前凍結，不以模擬數字補填。階段 B＋C 預估 110–138 人時，是規劃假設，未包含正式介入成本。</p>
+      </section>
+      </details>
+      <section class="research-section" aria-labelledby="research-literature-heading">
+        <h3 id="research-literature-heading">文獻用來改進方法，也限定推論。</h3>
+        <p>先讀台北政策、實際成效與設計研究，再按問題補充選址及定位方法。海外效果量、校園距離與地址定位誤差，都不直接當台北的撤桶效果或設桶標準。每篇保留查閱範圍。</p>
+        <div class="research-literature">
+          <!-- research-literature-start -->
+<details><summary>L01 林美滿 2020 台北撤除清潔箱的政策可行性</summary><p><strong>書目</strong>：林美滿（2020）。〈撤除臺北市行人專用清潔箱之可行性分析〉。國立政治大學行政管理碩士學程碩士論文。DOI：<a href="https://doi.org/10.6814/NCCU202000308" target="_blank" rel="noopener noreferrer">10.6814/NCCU202000308 ↗</a>。<a href="https://thesis.lib.nccu.edu.tw/thesis/detail/5995792f6b8d4a006aa040c945df17cc/" target="_blank" rel="noopener noreferrer">政大論文紀錄 ↗</a>。</p><p><strong>研究與結果</strong>：比較城市政策、訪談利害關係人，並以 100 人的實驗性問卷探討受訪者接受撤除清潔箱的態度及資訊提供的影響。</p><p><strong>本專案用途</strong>：補充台北政策論述、民眾疑慮與替代投放安排。可協助設計訪談或問卷，不能替代現場成效評估。</p><p><strong>限制與查閱範圍</strong>：已核對大學典藏書目與摘要，未核讀論文全文。小樣本的態度變化不等於全市民意，也不表示撤桶後的散落垃圾確實增加或減少。</p></details>
+<details><summary>L02 Piñeiro-Rodriguez 等 2025 蒙特維多撤桶隨機試驗</summary><p><strong>書目</strong>：Piñeiro-Rodriguez, R., Rosenblatt, F., Tealde, E., &amp; Valenzuela-Levi, N. (2025). <em>Intervening public spaces by subtraction: A randomised controlled trial in Montevideo, Uruguay</em>. Cities, 161, 105913. DOI：<a href="https://doi.org/10.1016/j.cities.2025.105913" target="_blank" rel="noopener noreferrer">10.1016/j.cities.2025.105913 ↗</a>。<a href="https://pure.manchester.ac.uk/ws/portalfiles/portal/361973089/Intervening_public_spaces_by_subtraction.pdf" target="_blank" rel="noopener noreferrer">作者機構全文 ↗</a>。</p><p><strong>研究與結果</strong>：在蒙特維多選定的中小型廣場進行垃圾桶撤除隨機試驗，結合配對、隨機分派及差異中的差異估計。研究估計場內地面垃圾減少 43.5%；民眾對清潔的感受未顯著改變，對基礎設施品質的感受則變差。</p><p><strong>本專案用途</strong>：提供「撤除效果必須實測」的研究設計範例。若台北試辦，可同時追蹤地面垃圾、使用者感受、清運與周邊區域。</p><p><strong>限制與查閱範圍</strong>：查閱作者版全文，核對方法與結果。43.5% 是特定城市與廣場的估計值，不能當成台北的預測值；場內改善也不足以排除垃圾轉移到鄰近地區。</p></details>
+<details><summary>L03 Högberg 與 Sörqvist 2026 垃圾桶設計與實際回收行為</summary><p><strong>書目</strong>：Högberg, A., &amp; Sörqvist, P. (2026). <em>The effect of waste bin design on observable recycling behaviour: A systematic review and research agenda</em>. Environmental Psychology Research, 1(1), e70002. 首次線上發表：2026-02-22。DOI：<a href="https://doi.org/10.1002/epr2.70002" target="_blank" rel="noopener noreferrer">10.1002/epr2.70002 ↗</a>。<a href="https://bpspsychub.onlinelibrary.wiley.com/doi/full/10.1002/epr2.70002" target="_blank" rel="noopener noreferrer">出版者全文 ↗</a>。</p><p><strong>研究與結果</strong>：篩選 440 筆文獻，納入 44 篇觀察實際行為的研究，整理可見度、圖示與文字、桶蓋與投入口，以及位置與可及性的影響。沿使用者行進路線的配置值得關注，不能只看直線距離。</p><p><strong>本專案用途</strong>：為網站的桶型與 Three.js 概念提供可測試的假設，例如入口辨識、必要文字、分類標示及走近桶的便利性。</p><p><strong>限制與查閱範圍</strong>：查閱開放全文。納入研究的室內外情境與方法不同，許多只處理單一因素；不能據此宣稱網站中的概念桶已證實有效。</p></details>
+<details><summary>L04 Leeabai 等 2019 步行路徑與桶組配置</summary><p><strong>書目</strong>：Leeabai, N., Suzuki, S., Jiang, Q., Dilixiati, D., &amp; Takahashi, F. (2019). <em>The effects of setting conditions of trash bins on waste collection performance and waste separation behaviors; distance from walking path, separated setting, and arrangements</em>. Waste Management, 94, 58–67. DOI：<a href="https://doi.org/10.1016/j.wasman.2019.05.039" target="_blank" rel="noopener noreferrer">10.1016/j.wasman.2019.05.039 ↗</a>。<a href="https://www.sciencedirect.com/science/article/pii/S0956053X19303472" target="_blank" rel="noopener noreferrer">出版者紀錄 ↗</a>；<a href="https://cir.nii.ac.jp/crid/1362825894014309248" target="_blank" rel="noopener noreferrer">CiNii 摘要紀錄 ↗</a>。</p><p><strong>研究與結果</strong>：測試可燃垃圾、PET 瓶、罐與玻璃的配置，分析距步行路徑的距離、分類桶分開設置及排列方式。沿路徑與偏離路徑的距離呈現不同影響，分類配置也影響收集與分類行為。</p><p><strong>本專案用途</strong>：之後評估可及性時，加入行進路線與繞行成本，並把不同類別桶之間的關係列為現場觀察項目。</p><p><strong>限制與查閱範圍</strong>：核對期刊書目與摘要，包括 CiNii 收錄的原文摘要，未核讀全文。研究場景中的距離效果不能直接轉成台北統一設桶間距；不同垃圾類別的結果也不能混為一談。</p></details>
+<details><summary>L05 Neupane 2015 用 GIS 評估公共垃圾桶選址</summary><p><strong>書目</strong>：Neupane, N. (2015). <em>Optimizing the number and location of public litter bins using Geographic Information Systems</em>. Macquarie University, Department of Environmental Sciences, MRes thesis。<a href="https://figshare.mq.edu.au/articles/thesis/Optimizing_the_number_and_location_of_public_litter_bins_using_Geographic_Information_Systems/19432835" target="_blank" rel="noopener noreferrer">大學典藏紀錄 ↗</a>。學位年度為 2015；典藏上架日期為 2022-03-28。</p><p><strong>研究與結果</strong>：以校園為範圍，結合 200 份面訪與 GIS 路網分析，比較 56 個新增、重配及減少垃圾桶的情境。</p><p><strong>本專案用途</strong>：提供路網服務範圍與多情境比較的操作方向。若延伸台北配置分析，需要先建立可行走路網與在地需求假設。</p><p><strong>限制與查閱範圍</strong>：查閱大學典藏書目與摘要，未核讀全文。校園受訪者陳述的步行意願不等於實際行為，不能作為台北市設桶間距標準；情境最佳化也不等於已證明減少散落垃圾。</p></details>
+<details><summary>L06 Zandbergen 2008 地址定位方法的品質比較</summary><p><strong>書目</strong>：Zandbergen, P. A. (2008). <em>A comparison of address point, parcel and street geocoding techniques</em>. Computers, Environment and Urban Systems, 32(3), 214–232. DOI：<a href="https://doi.org/10.1016/j.compenvurbsys.2007.11.006" target="_blank" rel="noopener noreferrer">10.1016/j.compenvurbsys.2007.11.006 ↗</a>。<a href="https://www.sciencedirect.com/science/article/abs/pii/S0198971507000890" target="_blank" rel="noopener noreferrer">出版者摘要 ↗</a>。</p><p><strong>研究與結果</strong>：以美國佛羅里達州三個郡的資料，比較地址點、地籍與道路地理編碼，分別檢查配對完整性、位置準確度與可重複性。參考資料、地址特徵及地理環境會影響結果。</p><p><strong>本專案用途</strong>：解釋同一地址在不同資料處理流程中可能得到不同座標。75 對配對應保留兩版原始座標、來源與品質旗標，將座標差距列為待查事項。</p><p><strong>限制與查閱範圍</strong>：查閱出版者摘要與可見預覽段落，未核讀全文。論文的「完整性」主要指地址定位的成功配對程度，不能等同於垃圾桶清冊是否涵蓋全市，也不能推導台北座標的誤差範圍。</p></details>
+<details><summary>L07 Cao 等 2024 多來源地理資料的分層配對</summary><p><strong>書目</strong>：Cao, Y., Yang, J.-A., Nara, A., &amp; Jankowska, M. M. (2024). <em>Designing and Evaluating a Hierarchical Framework for Matching Food Outlets across Multi-sourced Geospatial Datasets: a Case Study of San Diego County</em>. Journal of Urban Health, 101, 155–169. 發表日期：2024-01-02。DOI：<a href="https://doi.org/10.1007/s11524-023-00817-9" target="_blank" rel="noopener noreferrer">10.1007/s11524-023-00817-9 ↗</a>。<a href="https://link.springer.com/article/10.1007/s11524-023-00817-9" target="_blank" rel="noopener noreferrer">出版者文章 ↗</a>。</p><p><strong>研究與結果</strong>：結合地表距離、名稱相似度與語音編碼，先以嚴格條件配對，再以較寬條件產生候選，並透過人工驗證及門檻敏感度分析檢查結果。</p><p><strong>本專案用途</strong>：若未來擴充跨版配對，可先產生候選，保留配對依據及信心層級，再人工核驗。這是後續方法參考，本筆記不改動網站現有配對規則或分類。</p><p><strong>限制與查閱範圍</strong>：查閱出版者摘要，未核讀全文。原研究對象是餐飲場所；其名稱特徵、距離門檻與表現不能直接沿用至垃圾桶。同址或鄰近只支持候選關係，不能證明同一實體或遷移。</p></details>
+<details><summary>L08 余欣盈 2016 台北花博公園垃圾桶設計與環境</summary><p><strong>書目</strong>：余欣盈（2016）。〈公共垃圾桶的種類形式與設置環境之探討——以臺北市花博公園為例〉。大同大學工業設計學系碩士論文。<a href="https://ndltd.ncl.edu.tw/cgi-bin/gs32/gsweb.cgi?o=dnclcdr&amp;s=id%3D%22104TTU05038018%22.&amp;searchmode=basic" target="_blank" rel="noopener noreferrer">國家圖書館論文紀錄 ↗</a>。</p><p><strong>研究與結果</strong>：透過公共場域觀察、使用者訪談及詮釋結構模式，討論垃圾桶形式、周邊設施、使用者與環境資訊的關係。</p><p><strong>本專案用途</strong>：為桶型概念、清潔維護、辨識與設置環境提供台北在地研究脈絡，也可作為現場觀察表的參考。</p><p><strong>限制與查閱範圍</strong>：核對論文典藏書目與摘要，未核讀全文。公園研究不能直接代表所有街道，也未提供街頭撤桶的因果效果。</p></details>
+<details><summary>L09 賴奎元 2014 夜市環境管理</summary><p><strong>書目</strong>：賴奎元（2014）。〈夜市環境公害管理策略探討〉。國立成功大學工程管理碩士在職專班碩士論文。<a href="https://thesis.lib.ncku.edu.tw/thesis/detail/8ec3fe48b54861c3b65229b493f4713b/" target="_blank" rel="noopener noreferrer">成大論文紀錄 ↗</a>。</p><p><strong>研究與結果</strong>：以個案及深入訪談蒐集行政、經營者與攤商觀點，提出垃圾桶服務範圍、清運人力、減少包裝及自主環境管理等建議。</p><p><strong>本專案用途</strong>：補足夜市、商圈需要共同安排投放、清運與管理責任的觀點，避免只以桶數評估服務。</p><p><strong>限制與查閱範圍</strong>：查閱大學典藏書目與摘要，未核讀全文。這是質性管理研究；夜市營業垃圾與一般行人垃圾的產生條件不同，不能當成全市設桶間距或撤桶效果的量化依據。</p></details>
+<details><summary>L10 Faure 等 2017 兩種地理編碼方法的定位誤差</summary><p><strong>書目</strong>：Faure, E., Danjou, A. M. N., Clavel-Chapelon, F., Boutron-Ruault, M.-C., Dossus, L., &amp; Fervers, B. (2017). <em>Accuracy of two geocoding methods for geographic information system-based exposure assessment in epidemiological studies</em>. Environmental Health, 16, 15. DOI：<a href="https://doi.org/10.1186/s12940-017-0217-5" target="_blank" rel="noopener noreferrer">10.1186/s12940-017-0217-5 ↗</a>。<a href="https://link.springer.com/article/10.1186/s12940-017-0217-5" target="_blank" rel="noopener noreferrer">出版者文章 ↗</a>。</p><p><strong>研究與結果</strong>：以 4,247 筆法國住宅地址，比較兩種自動地理編碼方法與人工重定位參考位置，顯示方法不同會產生不同的定位誤差。</p><p><strong>本專案用途</strong>：支持對定位流程、參考位置及人工核驗分開記錄。若日後取得垃圾桶現勘位置，可依相同思路建立本地誤差評估。</p><p><strong>限制與查閱範圍</strong>：查閱出版者摘要，未核讀全文。住宅地址的誤差分布不是台北垃圾桶的誤差上限，也不能提供判定「遷移」的公尺門檻。</p></details>
+<details><summary>L11 Schultz 等 2013 公共場域亂丟垃圾的情境因素</summary><p><strong>書目</strong>：Schultz, P. W., Bator, R. J., Large, L. B., Bruni, C. M., &amp; Tabanico, J. J. (2013). <em>Littering in Context: Personal and Environmental Predictors of Littering Behavior</em>. Environment and Behavior, 45(1), 35–59. DOI：<a href="https://doi.org/10.1177/0013916511412179" target="_blank" rel="noopener noreferrer">10.1177/0013916511412179 ↗</a>。<a href="https://journals.sagepub.com/doi/abs/10.1177/0013916511412179" target="_blank" rel="noopener noreferrer">出版者文章 ↗</a>。卷期年度為 2013；首次線上發表於 2011。</p><p><strong>研究與結果</strong>：在美國 130 個戶外公共場域編碼觀察 9,757 人，使用多層次模型分析個人與環境因素。現有散落垃圾與亂丟行為呈正向關聯，垃圾桶可用性與亂丟行為呈負向關聯；在觀察到丟棄行為的人群中，距離也與亂丟行為有關。</p><p><strong>本專案用途</strong>：評估服務時，同時記錄地面既有垃圾、垃圾桶是否可用、距離及環境情境，避免只比較行政區桶數。</p><p><strong>限制與查閱範圍</strong>：查閱出版者摘要，未核讀全文。這是觀察研究，相關性不能直接當成增設或撤除垃圾桶的因果效果，也不能直接外推台北。</p></details>
+<details><summary>L12 Hartl 與 Hofmann 2024 公共空間的分類行為</summary><p><strong>書目</strong>：Hartl, B., &amp; Hofmann, E. (2024). <em>To sort or not to sort? – Consumers’ waste behavior in public</em>. Journal of Cleaner Production, 475, 143677. DOI：<a href="https://doi.org/10.1016/j.jclepro.2024.143677" target="_blank" rel="noopener noreferrer">10.1016/j.jclepro.2024.143677 ↗</a>。<a href="https://www.sciencedirect.com/science/article/pii/S0959652624031263" target="_blank" rel="noopener noreferrer">出版者文章 ↗</a>；<a href="https://irihs.ihs.ac.at/id/eprint/7051/1/hartl-hofmann-2024-to-sort-or-not-to-sort-consumers-waste-behavior-in-public.pdf" target="_blank" rel="noopener noreferrer">作者機構全文 ↗</a>。</p><p><strong>研究與結果</strong>：結合 21 位消費者與兩位清潔人員訪談、六次觀察、桶體照片及利害關係人資料。研究討論人們如何依認知地圖找桶、投入口設計的取捨，以及公共分類的責任安排。</p><p><strong>本專案用途</strong>：把「找得到、看得懂、投得進、有人維護」一起納入設計情境，並在概念驗證時加入清潔人員觀點。</p><p><strong>限制與查閱範圍</strong>：查閱機構典藏全文中的方法與結果。樣本小，研究情境以奧地利為主；質性結果可用於提出假設，不能直接提供設計改善的因果效果量。</p></details>
+<details><summary>L13 Rossit 與 Nesmachnow 2022 垃圾桶選址研究回顧</summary><p><strong>書目</strong>：Rossit, D. G., &amp; Nesmachnow, S. (2022). <em>Waste bins location problem: A review of recent advances in the storage stage of the Municipal Solid Waste reverse logistic chain</em>. Journal of Cleaner Production, 342, 130793. DOI：<a href="https://doi.org/10.1016/j.jclepro.2022.130793" target="_blank" rel="noopener noreferrer">10.1016/j.jclepro.2022.130793 ↗</a>。<a href="https://www.sciencedirect.com/science/article/abs/pii/S0959652622004310" target="_blank" rel="noopener noreferrer">出版者文章 ↗</a>；<a href="https://arxiv.org/abs/2202.13754" target="_blank" rel="noopener noreferrer">作者預印本 ↗</a>。</p><p><strong>研究與結果</strong>：回顧 1998–2021 年間 76 篇研究，整理設施選址、成本、使用者可及性、容量及清運之間的取捨，並指出聯合最佳化與參數不確定性仍有研究空間。</p><p><strong>本專案用途</strong>：作為配置情境的問題架構，提醒後續模型同時考慮需求、桶容量、清運與不確定性。</p><p><strong>限制與查閱範圍</strong>：查閱出版者摘要與可見全文片段，未核讀完整文章。市政固體廢棄物的儲存與收運問題包含家戶或集中收集情境，不能直接套用到行人專用清潔箱；本篇也不能驗證清冊的歷史完整性。</p></details>
+<!-- research-literature-end -->
+        </div>
+      </section>
     </section>
 
     <section id="panel-sources" class="page-panel" aria-labelledby="sources-heading" hidden>
-      <div class="section-heading"><div><p class="eyebrow">04 / EVIDENCE & DATA</p><h2 id="sources-heading">每一份資料，都保留它的邊界。</h2></div><p>查看日期、範圍、缺漏與可下載內容。</p></div>
+      <div class="section-heading"><div><p class="eyebrow">04 / EVIDENCE & DATA</p><h2 id="sources-heading">每一份資料，都保留它的邊界。</h2></div><p>查看日期、範圍、來源與資料限制。</p></div>
       <div id="source-cards" class="source-cards"></div>
       <div class="source-method"><h3>這個站如何使用資料</h3><div class="method-grid"><div><span>01</span><h4>保存版本</h4><p>歷史資料固定到保存版本，保留原始地址、相同座標與來源線索。</p></div><div><span>02</span><h4>分開計數</h4><p>資料列、不同座標與可繪製紀錄分開計算，避免自行換算垃圾箱組數。</p></div><div><span>03</span><h4>不補寫撤除</h4><p>用官方異動或會議紀錄確認日期，跨年缺列只當作待查線索。</p></div></div><p>地圖座標採粗篩；範圍內仍可能存在地址與座標不一致。本站列號僅用於操作，不是官方箱號。</p></div>
-      <div class="research-downloads"><a class="text-link" href="research/bin-removal-history.md" download>早期分布與撤除歷程筆記 ↓</a><a class="text-link" href="research/bin-reduction.md" download>垃圾箱減少的研究脈絡 ↓</a><a class="text-link" href="data/datasets.json" download>下載全部本站資料 JSON ↓</a></div>
     </section>
-    <noscript><p>互動地圖需要 JavaScript。你仍可<a href="research/bin-removal-history.md">閱讀研究筆記</a>及<a href="data/taipei-bins-2015.csv">下載 2015 年保存資料</a>。</p></noscript>
+    <noscript><p>互動地圖需要 JavaScript，請啟用後查看地圖與篩選結果。</p></noscript>
   </main>
-  <footer><div><strong>台北垃圾箱研究</strong><span>聚焦街頭清潔箱的分布與撤除歷程。</span></div><p>獨立研究站・資料整理 2026-10-15<br>位置資料依各來源日期判讀。</p></footer>
+  <footer><div><strong>台北垃圾箱研究</strong><span>研究設置、清運與家戶垃圾分流。</span></div><p>獨立研究站・資料整理 2026-10-15<br>位置資料依各來源日期判讀。</p></footer>
 </body>
 </html>

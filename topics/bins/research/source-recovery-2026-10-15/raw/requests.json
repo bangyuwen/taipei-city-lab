@@ -1,0 +1,344 @@
+[
+  {
+    "file": "2024-10-18-official-archive.csv",
+    "url": "https://web.archive.org/web/20241018211732id_/https://data.taipei/api/dataset/a835f3ba-7f50-4b0d-91a6-9df128632d1c/resource/267d550f-c6ec-46e0-b8af-fd5a464eb098/download",
+    "requested_at": "2026-10-15T00:55:07.895400+00:00",
+    "status": 200,
+    "bytes": 184116,
+    "sha256": "fa9b8f5d6f1805ee7f58b081178b9967ccae3a7d7b71f4e62c8ecd2adc19147d",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:55:09 GMT",
+      "Content-Type": "text/csv;charset=BIG-5",
+      "Content-Length": "184116"
+    },
+    "preserved_file": "raw/2024-10-18-official-archive.csv"
+  },
+  {
+    "file": "2024-08-05-techtarian.html",
+    "url": "https://web.archive.org/web/20240805125937id_/https://techtarian.com/tools/tpe-trash-can-location/",
+    "requested_at": "2026-10-15T00:55:07.895856+00:00",
+    "status": 200,
+    "bytes": 225836,
+    "sha256": "7da18f8eef2f0233f97e40bee9d094590c898ebdca0d2066535030da99902381",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:55:09 GMT",
+      "Content-Type": "text/html; charset=UTF-8",
+      "Content-Length": "225836"
+    },
+    "preserved_file": "raw/2024-08-05-techtarian.html"
+  },
+  {
+    "file": "archive-cdx-catalog.json",
+    "url": "https://web.archive.org/cdx/search/cdx?url=data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c&from=2024&to=2024&output=json&filter=statuscode:200&collapse=digest",
+    "requested_at": "2026-10-15T00:55:07.896035+00:00",
+    "status": 200,
+    "bytes": 3,
+    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:55:13 GMT",
+      "Content-Type": "application/json"
+    },
+    "preserved_file": "raw/archive-cdx-catalog.json"
+  },
+  {
+    "file": "github-wlmaplab-tree.json",
+    "url": "https://api.github.com/repos/wlmaplab/TpcTrashMap/git/trees/HEAD?recursive=1",
+    "requested_at": "2026-10-15T00:55:07.896195+00:00",
+    "status": 200,
+    "bytes": 17113,
+    "sha256": "a0cb35b5512ca93a5dce1ffdcc61fd485a0af5c359c741e09c12f43d5036bbf2",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:55:08 GMT",
+      "Content-Type": "application/json; charset=utf-8",
+      "Content-Length": "17113",
+      "Last-Modified": "Thu, 13 Nov 2025 15:37:14 GMT",
+      "ETag": "W/\"a0cb35b5512ca93a5dce1ffdcc61fd485a0af5c359c741e09c12f43d5036bbf2\""
+    },
+    "preserved_file": "raw/github-wlmaplab-tree.json"
+  },
+  {
+    "file": "archive-cdx-techtarian-data.json",
+    "url": "https://web.archive.org/cdx/search/cdx?url=techtarian.com/js/18787.js&from=2024&to=2024&output=json&filter=statuscode:200&collapse=digest",
+    "requested_at": "2026-10-15T00:55:49.712937+00:00",
+    "final_url": "https://web.archive.org/cdx/search/cdx?url=techtarian.com/js/18787.js&from=2024&to=2024&output=json&filter=statuscode:200&collapse=digest",
+    "status": 200,
+    "bytes": 3,
+    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:56:01 GMT",
+      "Content-Type": "application/json"
+    },
+    "preserved_file": "raw/archive-cdx-techtarian-data.json"
+  },
+  {
+    "file": "2024-08-05-techtarian-data.js",
+    "url": "https://web.archive.org/web/20240805125937id_/https://techtarian.com/js/18787.js",
+    "requested_at": "2026-10-15T00:55:49.713410+00:00",
+    "status": 404,
+    "error": "HTTP Error 404: NOT FOUND",
+    "bytes": 4590,
+    "headers": {},
+    "body_preserved": false
+  },
+  {
+    "file": "current-techtarian-data.js",
+    "url": "https://techtarian.com/js/18787.js",
+    "requested_at": "2026-10-15T00:55:49.713590+00:00",
+    "final_url": "https://techtarian.com/",
+    "status": 200,
+    "bytes": 444951,
+    "sha256": "60cee83a99dccdc18dfdf472c9a130e8c4c5e4f6e7d77381fc2fbdb9fed66bff",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:55:51 GMT",
+      "Content-Type": "text/html; charset=UTF-8",
+      "Last-Modified": "Wed, 14 Oct 2026 05:24:04 GMT"
+    },
+    "body_preserved": false
+  },
+  {
+    "file": "api-offset-0.json",
+    "url": "https://data.taipei/api/v1/dataset/267d550f-c6ec-46e0-b8af-fd5a464eb098?scope=resourceAquire&limit=1000&offset=0",
+    "requested_at": "2026-10-15T00:53:25.859213+00:00",
+    "status": 200,
+    "bytes": 196408,
+    "sha256": "8eaea29e277be00073bc7b3805eb0ef463ea6f130b45e01769b5066aa515d3c1",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:53:45 GMT",
+      "Content-Type": "application/json"
+    },
+    "preserved_file": "raw/api-offset-0.json"
+  },
+  {
+    "file": "api-offset-1000.json",
+    "url": "https://data.taipei/api/v1/dataset/267d550f-c6ec-46e0-b8af-fd5a464eb098?scope=resourceAquire&limit=1000&offset=1000",
+    "requested_at": "2026-10-15T00:53:25.859636+00:00",
+    "status": 200,
+    "bytes": 74,
+    "sha256": "0c5948ce4363aed883c20b3c86e89dd40acb1513ff72cdcbc0c0cc0a53e31583",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:53:45 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "74"
+    },
+    "preserved_file": "raw/api-offset-1000.json"
+  },
+  {
+    "file": "api-offset-2000.json",
+    "url": "https://data.taipei/api/v1/dataset/267d550f-c6ec-46e0-b8af-fd5a464eb098?scope=resourceAquire&limit=1000&offset=2000",
+    "requested_at": "2026-10-15T00:53:25.859807+00:00",
+    "status": 200,
+    "bytes": 74,
+    "sha256": "9030b6ebca30c9de11ccf7f4acbe7cd1aac1e3fff70dbc1c4b8bc6d0b7cb7a5d",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:53:45 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "74"
+    },
+    "preserved_file": "raw/api-offset-2000.json"
+  },
+  {
+    "file": "official-tourist.csv",
+    "url": "https://data.taipei/api/dataset/a835f3ba-7f50-4b0d-91a6-9df128632d1c/resource/2030d728-9597-437d-81a4-cf2a44c7f114/download",
+    "requested_at": "2026-10-15T00:53:25.859960+00:00",
+    "status": 200,
+    "bytes": 5396,
+    "sha256": "47b1ddfb4f0ab4d5e57afab538f71da3d41d22e59c984bdd9c10b4248223b066",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:53:45 GMT",
+      "Content-Type": "text/csv;charset=BIG-5",
+      "Content-Length": "5396"
+    },
+    "preserved_file": "raw/official-tourist.csv"
+  },
+  {
+    "file": "archive-cdx.json",
+    "url": "https://web.archive.org/cdx/search/cdx?url=data.taipei/api/v1/dataset/267d550f-c6ec-46e0-b8af-fd5a464eb098*&from=2024&to=2024&output=json&filter=statuscode:200&collapse=digest",
+    "requested_at": "2026-10-15T00:53:46.056292+00:00",
+    "status": 200,
+    "bytes": 3,
+    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:53:54 GMT",
+      "Content-Type": "application/json"
+    },
+    "preserved_file": "raw/archive-cdx.json"
+  },
+  {
+    "file": "archive-available.json",
+    "url": "https://archive.org/wayback/available?url=https%3A%2F%2Fdata.taipei%2Fapi%2Fv1%2Fdataset%2F267d550f-c6ec-46e0-b8af-fd5a464eb098%3Fscope%3DresourceAquire%26limit%3D1000%26offset%3D1000&timestamp=20240514",
+    "requested_at": "2026-10-15T00:53:46.062603+00:00",
+    "status": 200,
+    "bytes": 177,
+    "sha256": "58f8d6816f43d5ef3dd0a0eb1f9ee1c5eca7c1ac16eee22f56286f06f81cfca2",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:53:47 GMT",
+      "Content-Type": "application/json",
+      "Content-Length": "177"
+    },
+    "preserved_file": "raw/archive-available.json"
+  },
+  {
+    "file": "github-search.json",
+    "url": "https://api.github.com/search/repositories?q=taipei+trash+can&per_page=50",
+    "requested_at": "2026-10-15T00:53:46.104775+00:00",
+    "status": 200,
+    "bytes": 15695,
+    "sha256": "ca8ea37869d772a9e47359bfd33eefda06fbf7979fe1642948d9083f1a49231c",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:53:46 GMT",
+      "Content-Type": "application/json; charset=utf-8",
+      "Content-Length": "15695"
+    },
+    "preserved_file": "raw/github-search.json"
+  },
+  {
+    "file": "github-original-tree.json",
+    "url": "https://api.github.com/repos/wer53077n/Cleaning-Box/git/trees/82475ba3659e1c2320efc87dcdfb5685aff015a0?recursive=1",
+    "requested_at": "2026-10-15T00:53:46.112937+00:00",
+    "status": 200,
+    "bytes": 5116,
+    "sha256": "2a025e0da972f797c968f4359adf603729011949ae4d1450edb83cba223751f0",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:53:46 GMT",
+      "Content-Type": "application/json; charset=utf-8",
+      "Content-Length": "5116",
+      "Last-Modified": "Thu, 20 Jun 2024 07:52:39 GMT",
+      "ETag": "W/\"2a025e0da972f797c968f4359adf603729011949ae4d1450edb83cba223751f0\""
+    },
+    "preserved_file": "raw/github-original-tree.json"
+  },
+  {
+    "file": "github-jojoclt-tree.json",
+    "url": "https://api.github.com/repos/jojoclt/TaipeiTrash/git/trees/HEAD?recursive=1",
+    "requested_at": "2026-10-15T00:54:32.881890+00:00",
+    "status": 200,
+    "bytes": 47088,
+    "sha256": "a3c9989745aa0bd10397c825f0b592854dc8ecad8094bab8a2d2b792368a9203",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:54:33 GMT",
+      "Content-Type": "application/json; charset=utf-8",
+      "Last-Modified": "Wed, 09 Sep 2026 13:31:02 GMT",
+      "ETag": "W/\"a3c9989745aa0bd10397c825f0b592854dc8ecad8094bab8a2d2b792368a9203\""
+    },
+    "preserved_file": "raw/github-jojoclt-tree.json"
+  },
+  {
+    "file": "github-riddleling-tree.json",
+    "url": "https://api.github.com/repos/riddleling/TpcTrashCanMap/git/trees/HEAD?recursive=1",
+    "requested_at": "2026-10-15T00:54:32.882394+00:00",
+    "status": 200,
+    "bytes": 26820,
+    "sha256": "064468b1793a6e62bfd57986110e9873d167360124501f2027b28c3e434eb208",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:54:33 GMT",
+      "Content-Type": "application/json; charset=utf-8",
+      "Last-Modified": "Sat, 13 Sep 2025 13:07:36 GMT",
+      "ETag": "W/\"064468b1793a6e62bfd57986110e9873d167360124501f2027b28c3e434eb208\""
+    },
+    "preserved_file": "raw/github-riddleling-tree.json"
+  },
+  {
+    "file": "github-search-chinese.json",
+    "url": "https://api.github.com/search/repositories?q=%E5%9E%83%E5%9C%BE%E6%A1%B6+%E5%8F%B0%E5%8C%97&per_page=50",
+    "requested_at": "2026-10-15T00:54:32.882569+00:00",
+    "status": 200,
+    "bytes": 10736,
+    "sha256": "9ff45d22d83e57b3f2db6bc5283ae381add67725fbaf6fef91b8575ba0b0d766",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:54:33 GMT",
+      "Content-Type": "application/json; charset=utf-8",
+      "Content-Length": "10736"
+    },
+    "preserved_file": "raw/github-search-chinese.json"
+  },
+  {
+    "file": "archive-cdx-download.json",
+    "url": "https://web.archive.org/cdx/search/cdx?url=data.taipei/api/dataset/a835f3ba-7f50-4b0d-91a6-9df128632d1c/resource/267d550f-c6ec-46e0-b8af-fd5a464eb098/*&from=2024&to=2024&output=json&filter=statuscode:200&collapse=digest",
+    "requested_at": "2026-10-15T00:54:32.882739+00:00",
+    "status": 200,
+    "bytes": 403,
+    "sha256": "f0abec59e25c7b219a4ee9566ddf7081a3b952b345627961fee318a487efd4a9",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:54:37 GMT",
+      "Content-Type": "application/json"
+    },
+    "preserved_file": "raw/archive-cdx-download.json"
+  },
+  {
+    "file": "archive-cdx-techtarian.json",
+    "url": "https://web.archive.org/cdx/search/cdx?url=techtarian.com/tools/tpe-trash-can-location/*&from=2024&to=2024&output=json&filter=statuscode:200&collapse=digest",
+    "requested_at": "2026-10-15T00:54:33.413804+00:00",
+    "status": 200,
+    "bytes": 444,
+    "sha256": "43c1d17c55e2624c36875db37013c09786bbc6411101be8946352e5bd9dd9ad6",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:54:38 GMT",
+      "Content-Type": "application/json"
+    },
+    "preserved_file": "raw/archive-cdx-techtarian.json"
+  },
+  {
+    "file": "archive-cdx-opendata.json",
+    "url": "https://web.archive.org/cdx/search/cdx?url=opendata.taipei/api/v1/dataset/267d550f-c6ec-46e0-b8af-fd5a464eb098*&from=2024&to=2024&output=json&filter=statuscode:200&collapse=digest",
+    "requested_at": "2026-10-15T00:54:33.472933+00:00",
+    "status": 200,
+    "bytes": 3,
+    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:54:41 GMT",
+      "Content-Type": "application/json"
+    },
+    "preserved_file": "raw/archive-cdx-opendata.json"
+  },
+  {
+    "file": "catalog.html",
+    "url": "https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c",
+    "status": 200,
+    "bytes": 87258,
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:52:32 GMT",
+      "content-type": "text/html;charset=utf-8",
+      "Content-Length": "87258"
+    },
+    "preserved_file": "raw/catalog.html"
+  },
+  {
+    "file": "official-download.csv",
+    "url": "https://data.taipei/api/dataset/a835f3ba-7f50-4b0d-91a6-9df128632d1c/resource/267d550f-c6ec-46e0-b8af-fd5a464eb098/download",
+    "status": 200,
+    "bytes": 63540,
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:52:32 GMT",
+      "Content-Length": "63540",
+      "Content-Type": "text/csv;charset=BIG-5"
+    },
+    "preserved_file": "raw/official-download.csv"
+  },
+  {
+    "file": "2024-original.json",
+    "url": "https://raw.githubusercontent.com/wer53077n/Cleaning-Box/82475ba3659e1c2320efc87dcdfb5685aff015a0/TPcleaningBox.json",
+    "status": 200,
+    "bytes": 290046,
+    "headers": {
+      "Content-Length": "290046",
+      "Content-Type": "text/plain; charset=utf-8",
+      "ETag": "\"8fd6b57c6f4a6708b38aa5987e79af889eedf1b442f38914d9d76a115d0c45e5\"",
+      "Date": "Thu, 15 Oct 2026 00:51:57 GMT"
+    },
+    "preserved_file": "raw/2024-original.json"
+  },
+  {
+    "file": "github-commits.json",
+    "url": "https://api.github.com/repos/wer53077n/Cleaning-Box/commits?path=TPcleaningBox.json&per_page=100",
+    "status": 200,
+    "bytes": 3001,
+    "headers": {
+      "Date": "Thu, 15 Oct 2026 00:51:57 GMT",
+      "Content-Type": "application/json; charset=utf-8",
+      "ETag": "W/\"6fcee6114e3cc6757873d8bfdec39aae9263d04dfae31690a7f0e831a46e94cf\"",
+      "Last-Modified": "Tue, 18 Jun 2024 14:24:36 GMT",
+      "Content-Length": "3001"
+    },
+    "preserved_file": "raw/github-commits.json"
+  }
+]

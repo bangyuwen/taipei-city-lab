@@ -1,0 +1,1 @@
+service_event_id,segment_id,service_point_id,event_type,event_start,event_end,event_status,source_type,source_reference,waste_removed_count_or_volume,unit,crew_minutes,observed_by,notes

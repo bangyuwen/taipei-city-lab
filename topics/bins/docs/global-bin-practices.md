@@ -29,7 +29,7 @@
 | 地區／案例 | 已實施或公開的做法 | 證據與重要限制 | 台北可借鏡 |
 |---|---|---|---|
 | 韓國首爾，2024 | 15處30個新桶試點；加大入口、雨雪上蓋、回收識別，納入清潔員操作。[S01](https://news.seoul.go.kr/culture/archives/523438) | 可確認設計與試點，尚缺完成後清潔、混入及工時評估。 | 同時測合法垃圾通過與大袋混入；納入工友試用。 |
-| 日本大阪道頓堀，2023 | 商店會管理、專業清運、感測壓縮箱與滿箱通知，公告擴至10處。[S08](https://www.ntt.com/about-us/press-releases/news/article/2023/1116.html) | 約40%周邊散亂減少為營運方前後比較，基線與試辦跨季，無同期對照。 | 商圈出資與清運責任先成立，再比較設備。 |
+| 日本大阪道頓堀，2023 | 商店會管理、專業清運、感測壓縮箱與滿箱通知，公告擴至10處。[S08](https://www.ntt.com/about-us/press-releases/news/article/2023/1116.html) | 2023年1月單桶試驗的周邊垃圾重量減39%、件數減14%；為營運方前後比較，無同期對照，非後續10處的成果。[指標與規模](https://www.ntt.com/about-us/csr/solution/solution04/solution03.html) | 商圈出資與清運責任先成立，再比較設備。 |
 | 日本澀谷，2026 | 指定商圈外帶店須管理自售商品衍生垃圾的容器；按需求訂容量與可清洗構造。[S09](https://www.city.shibuya.tokyo.jp/kankyo/machi-seiso/seiso/shibuyaku_gomibako_rule.html) | 10月1日速報設置率91%，是執行指標；不能當街道垃圾減少率。 | 外帶餐飲源頭責任、共用站與打烊後服務。 |
 | 香港，2016及2022 | 曾保持130L容量並縮入口；另因低量、污染撤約800套路邊回收桶，轉向社區服務。[S10](https://www.districtcouncils.gov.hk/wc/doc/2016_2019/sc/committee_meetings_minutes/fehc/5th_fehc_minutes_4_c_r.pdf)[S11](https://www.wastereduction.gov.hk/en-hk/waste-reduction-programme/kerbside-recycling-bin) | 縮口缺因果評估；800套是回收桶，不能視為一般行人箱撤除。 | 同容量比較入口；撤除分類設施須提供可用替代。 |
 | 新加坡，2023–2025 | 按人流、現場回饋及清運資源增移行人箱；熱點加強多種管理。[S12](https://www.nea.gov.sg/media/news/news/index/cleaner-neighbourhoods-with-stepped-up-efforts-in-the-year-of-public-hygiene)[S21](https://www.nea.gov.sg/media/readers-letters/index/there-are-more-than-10-000-trash-cans-across-the-island) | 官方報熱點垃圾約降36%，是治理組合的前後觀測，無法拆成桶型效果。 | 把清潔服務、回報及現場量測接起來。 |
@@ -92,6 +92,8 @@ Belfast五日稽核中的約85%，分母是兩槽找到的塑膠瓶；43.8%則�
 現有3D可以先深化五種情境：**餐盒與杯蓋卡口、撐傘單手與坐姿投放、滿載內桶與車輛操作、回收錯投／殘液、防雨防動物及設備離線。** 工程圖未取得的實際桶型應標示原理示意；只知道系列產品規格，不能宣稱重建了某城市現場設備。
 
 ## 成本與證據如何判讀
+
+2026-10-15 補充：六國設備、營運證據與成本逐項比較見[進階垃圾桶比較](../research/smart-bin-comparison-2026-10-15/README.md)。其中舊金山 2026-03 官方簡報列 US$1,591／桶含內桶，限 3,000 桶以上，另列可變動關稅 US$158；這是後續價格資訊，並非下列 2022 目標或壓縮桶報價。[2026 官方簡報](https://media.api.sf.gov/documents/Public_Works_Refuse_Rate_Board_presentation_3.13.26_final.pdf)
 
 本輪未取得可在各城同口徑比較的現行全生命週期成本，因此不產生最便宜城市／最佳設備排名。
 
