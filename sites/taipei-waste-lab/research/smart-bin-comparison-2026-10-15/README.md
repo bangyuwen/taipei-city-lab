@@ -14,7 +14,7 @@
 
 | 國家／案例 | 設備功能 | 觀測或計畫狀態 | 公開成本與範圍 | 對台北的用途與限制 |
 |---|---|---|---|---|
-| [日本・大阪](https://www.ntt.com/about-us/press-releases/news/article/2023/1116.html) | SmaGO 壓縮與滿度通知 | 2023-11-16，10 處；營運方前後觀察回報周邊散落垃圾約減 40%，無對照組。 | 來源未列單價與完整維護費。 | 適合比較觀光熱點容量與清運；效果不能只歸因壓縮。 |
+| [日本・大阪](https://www.ntt.com/about-us/press-releases/news/article/2023/1116.html) | SmaGO 壓縮與滿度通知 | 2023 年 1 月單桶試驗：周邊散落垃圾重量減 39%、件數減 14%；同年 11 月另增設 10 桶。無對照組。 | 來源未列單價與完整維護費。 | 適合比較觀光熱點容量與清運；效果不能只歸因壓縮。 |
 | [英國・倫敦金融城](https://democracy.cityoflondon.gov.uk/documents/s61842/Bishopsgate%20Bin%20Trial%202016%20PHES%20-%20Final.pdf) | Bigbelly 太陽能壓縮與滿度回報 | 2015 年試 9 桶、2016 年報告；清潔分級改善，未證實省人力或車次。 | 歷史 £4,300／桶含啟用與軟體；整批年維護約 £1,500。 | 需與普通有蓋增容桶及調班比較，不能把壓縮倍率當節省率。 |
 | [丹麥・哥本哈根](https://www.kk.dk/sites/default/files/agenda/83c5755d-bc0a-49e1-b04f-869a658fcdf6/48a7f707-43e3-4d42-a322-3581c4926820-bilag-2.pdf) | 240 L 壓縮桶與滿度通知 | 2025 方案試 16 桶；早期 2018–2023 智慧桶預期效率未實現。未找到新版完成評估。 | 市府列 2025 起每年 DKK 550,000 計畫額度；非單桶價或完整成本。 | 保留基本巡收、員工操作評估及恢復舊桶的條件。 |
 | [美國・舊金山](https://media.api.sf.gov/documents/Public_Works_Refuse_Rate_Board_presentation_3.13.26_final.pdf) | Slim Silhouette 易維修桶、滾動內桶 | 2026-03 簡報：首 10 桶測試；可裝感測器，不等於已裝滿度偵測。 | 3,000 桶以上 US$1,591／桶含內桶；另列關稅 US$158，可能變動。 | 先比較省力、耐用與車輛相容；不是壓縮桶的同規格報價。 |
@@ -23,7 +23,7 @@
 
 ## 案例補充與證據強度
 
-- **大阪（業者聯合公告，2023-11-16）：** 自動壓縮、雲端監測與滿溢前通知配合商店會及清運業者。約 40% 是營運方的前後觀察，新增投放點與服務也可能影響結果；不能外推為台北改善率。來源未提供全生命週期成本。[原始公告](https://www.ntt.com/about-us/press-releases/news/article/2023/1116.html)
+- **大阪（業者聯合公告，2023-11-16）：** 自動壓縮、雲端監測與滿溢前通知配合商店會及清運業者。2023 年 1 月在一個商店據點設一桶，營運方前後觀察回報周邊散落垃圾重量減 39%、件數減 14%；同年 11 月 16 日另設 10 桶。兩個階段分開，新增投放點與服務也可能影響結果；不能外推為台北改善率。來源未提供全生命週期成本。[原始公告](https://www.ntt.com/about-us/press-releases/news/article/2023/1116.html)
 - **倫敦金融城（市政評估，2016-03-08）：** 2015 年 5–11 月試辦，基線僅 5 月兩週。平均每日清空略多於一次，工作由現有契約資源承接；未證實人車支出下降。£1,500 是整批年維護估計，不能誤當每桶。當時估計壽命 5–6 年，不能保證台北同樣壽命。[報告，正文第 2–3 頁](https://democracy.cityoflondon.gov.uk/documents/s61842/Bishopsgate%20Bin%20Trial%202016%20PHES%20-%20Final.pdf)
 - **哥本哈根（市府方案，2025-09；地方委員會試辦說明）：** 240 L 容器容納最高相當於 1,200 L 未壓縮垃圾是規格宣稱，不能算成清運少 80%。2026 年 10 月評估是規劃時程；本輪未找到完成報告。年度 DKK 550,000 是計畫額度，未提供每桶與各費目拆分。[方案](https://www.kk.dk/sites/default/files/agenda/83c5755d-bc0a-49e1-b04f-869a658fcdf6/48a7f707-43e3-4d42-a322-3581c4926820-bilag-2.pdf)、[計畫額度](https://indrebylokaludvalg.kk.dk/nyheder/forsoeg-med-komprimerende-affaldskurve-i-indre-by)
 - **舊金山（Public Works 簡報，2026-03-13，第 9–12 頁）：** 供應商 Tiger Supplies；桶體 US$1,495 加內桶 US$96，合計 US$1,591，適用 3,000 桶以上數量。關稅 US$158 另列且可能變動；不自行推定運輸、安裝、感測與服務費已含。首 10 桶測試及其後部署屬該簡報狀態，不能當作 3,500 桶已完成部署。2022 的 US$2,000–3,000 是早期量產目標，兩者年份及階段不同。[官方簡報](https://media.api.sf.gov/documents/Public_Works_Refuse_Rate_Board_presentation_3.13.26_final.pdf)
