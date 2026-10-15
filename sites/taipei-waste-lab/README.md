@@ -87,6 +87,8 @@ npm run preview
 
 距離分析由 `scripts/analyze-coordinate-distances.py` 重建，亦整合於 `prepare-data.py`。它先核對固定比較 JSON 與兩份來源 CSV 雜湊，只分析原有的 75 對分類；新結果另存，不改寫原配對或缺列分類。距離採 Haversine 球面近似，半徑 6,371,000 公尺，保留未通過台北粗篩的有效經緯度並標示品質；無法計算時保留空值，排序用未四捨五入數值。
 
+`npm run check` 會先由固定清單重建公開 `out/`，再驗證私有來源及公開檔案，支援未建立輸出目錄的全新 checkout。
+
 `npm run prepare-data` 依序重建清冊比較、距離、研究執行材料、預算表、私人離線 ZIP 及公開 `out/`；在 monorepo 中，研究寫入 `topics/bins/research/` 後同步本站副本，獨立 Sites checkout 則使用站內 `research/`。人工核驗請另存工作副本，避免重建覆寫。
 
 ## 結構
