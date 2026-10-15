@@ -26,7 +26,7 @@
 
 ## 研究筆記
 
-研究正文集中於[本題文件目錄](../../topics/bins/docs/README.md)，本站 `docs/` 舊路徑只留導覽。修改正文後，執行 `npm run prepare-data` 會更新 `data/research/` 的獨立原始碼副本及 `dist/research/` 的網站下載，請勿直接修改這兩份衍生副本。
+研究正文集中於[本題文件目錄](../../topics/bins/docs/README.md)。修改正文後，執行 `npm run prepare-data` 會更新 `data/research/` 的獨立原始碼副本及 `dist/research/` 的網站下載，請勿直接修改這兩份衍生副本。
 
 - [垃圾箱減少的研究脈絡](../../topics/bins/docs/bin-reduction.md)：歷史背景、政策理由與待驗證問題。
 - [歷史分布與撤除紀錄](../../topics/bins/docs/bin-removal-history.md)：各版資料、撤除時間線與來源限制。
@@ -56,7 +56,7 @@ npm run preview
 - `dist/`：可獨立部署的網站、固定資料、Leaflet 與字型。
 - `dist/history.js`：有來源的政策與撤除歷程。
 - `dist/bin-scene.js`：Three.js 概念街角；`design-model.js`：尺寸與試投規則；`design-ui.js`：操作介面。
-- `../../topics/bins/docs/`：研究正文；本站 `docs/`：舊路徑導覽與本站歷史驗證。
+- `../../topics/bins/docs/`：研究正文與資料限制。
 - `dist/research/`：由研究正文生成、維持原下載網址的網站產物。
 - `.openai/hosting.json`：本站部署身分與靜態目錄。
 

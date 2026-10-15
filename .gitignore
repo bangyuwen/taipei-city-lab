@@ -1,5 +1,8 @@
 
 node_modules/
-.agents/skills/impeccable/scripts/bin/
 __pycache__/
-.impeccable/questions/
+shared/skills/impeccable/scripts/bin/
+.impeccable/*
+!.impeccable/config.json
+!.impeccable/design.json
+!.impeccable/surfaces/

@@ -3,6 +3,7 @@ import argparse
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+INTEGRATED_DIST = Path('sites/taipei-city-lab/dist')
 TOPICS = ('shade', 'bins', 'rat', 'traffic', 'bus', 'buildings', 'audit')
 
 
@@ -12,10 +13,10 @@ def outputs(root=ROOT):
         text = (root / 'topics' / topic / 'model.js').read_text()
         text = text.replace("from '../../shared/lib/spatial.js'", "from './spatial.js'")
         text = text.replace("from '../../shared/lib/contracts.js'", "from '../contracts.js'")
-        result[root / 'dist/modules' / f'{topic}.js'] = text.encode()
-    for name, target in [('spatial.js', 'dist/modules/spatial.js'),
-                         ('geo.js', 'dist/geo.js'), ('contracts.js', 'dist/contracts.js')]:
-        result[root / target] = (root / 'shared/lib' / name).read_bytes()
+        result[root / INTEGRATED_DIST / 'modules' / f'{topic}.js'] = text.encode()
+    for name, target in [('spatial.js', 'modules/spatial.js'),
+                         ('geo.js', 'geo.js'), ('contracts.js', 'contracts.js')]:
+        result[root / INTEGRATED_DIST / target] = (root / 'shared/lib' / name).read_bytes()
     return result
 
 

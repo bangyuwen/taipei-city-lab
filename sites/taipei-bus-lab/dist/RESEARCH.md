@@ -57,5 +57,5 @@
 ## 維護方式
 
 模型來源：`topics/bus/model.js`；資料來源：`topics/bus/data/`。
-共用網頁目前取自根目錄 `dist/`；本站 `dist/` 為生成輸出，不直接維護分叉版本。
+共用網頁來源為 `shared/web/template/`；本站 `dist/` 為生成輸出，不直接維護分叉版本。
 重建：`python scripts/build-topic-sites.py --topic bus`。

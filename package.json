@@ -4,13 +4,16 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "setup-skills": "python scripts/setup-skills.py",
     "build": "python scripts/build-all.py",
     "build-models": "python scripts/build-topic-models.py",
     "build-data": "python scripts/build-topic-data.py",
+    "build-integrated": "python scripts/build-integrated-site.py",
     "build-sites": "python scripts/build-topic-sites.py",
     "prepare-data": "python scripts/prepare-data.py",
     "test": "node --test tests/*.test.mjs",
     "check": "node scripts/check.mjs",
+    "package-source": "python scripts/package-source.py",
     "vendor": "node scripts/vendor-assets.mjs"
   },
   "dependencies": {

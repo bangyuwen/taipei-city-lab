@@ -252,7 +252,7 @@ def write_json(path: Path, value: dict, pretty: bool = False) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--cache-dir", type=Path, default=Path("/tmp/taipei-city-lab-source-cache"))
-    parser.add_argument("--output-dir", type=Path, default=ROOT / "dist/data")
+    parser.add_argument("--output-dir", type=Path, default=ROOT / "sites/taipei-city-lab/dist/data")
     parser.add_argument("--canonical-root", type=Path, default=ROOT,
                         help="Repository root owning topics/ and shared/ canonical data")
     modes = parser.add_mutually_exclusive_group()

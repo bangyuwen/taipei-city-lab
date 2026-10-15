@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildings } from '../dist/modules/buildings.js';
+import { buildings } from '../sites/taipei-city-lab/dist/modules/buildings.js';
 
 const rows = result => result.table.rows;
 const assigned = result => rows(result).filter(row => row.allocation === '已安排');

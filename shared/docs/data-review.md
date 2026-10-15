@@ -1,6 +1,6 @@
 # Taipei City Lab 資料查核
 
-查核日期：2026-10-13（Asia/Taipei）。本版只有樹木與行人專用清潔箱匯入真正的觀測資料；其餘資料來源僅查核官方目錄、資源連結與欄位。來源目錄與實際載入狀態均可由 `dist/data/source-catalog.json` 查閱。
+查核日期：2026-10-13（Asia/Taipei）。本版只有樹木與行人專用清潔箱匯入真正的觀測資料；其餘資料來源僅查核官方目錄、資源連結與欄位。來源目錄與實際載入狀態均可由 `sites/taipei-city-lab/dist/data/source-catalog.json` 查閱。
 
 ## 真實資料範圍
 
@@ -73,15 +73,15 @@ CSV 第 655 行的原始經度為 `?121.595369`，無法解析為數字，未擅
 
 以上的官方資料頁均於 2026-10-13 下載查核。Rat Radar 只有題目列為參考，`retrievedAt=null` 與 `integrationStatus=not-loaded`，沒有假裝已閱讀通報內容。官方目錄欄位出現在 source catalogue 的 `fields`，實際載入狀態出現在 `integrationStatus`。
 
-## 重建與驗證
+## 重建與品質規則
 
 ```sh
 python -m pip install pyproj
 python scripts/prepare-data.py --refresh
 ```
 
-命令下載來源、嚴格解析 CSV、轉換座標，產生 `dist/data/snapshot.json` 與 `dist/data/source-catalog.json`。若要從既有來源快取重建，使用 `--offline --cache-dir <既有快取路徑>`。預設快取為 `/tmp/taipei-city-lab-source-cache`；快取不在公開網站內。來源每日可能更新，因此 `--refresh` 的筆數與 SHA 不一定與本次相同。
+命令下載來源、嚴格解析 CSV、轉換座標，產生 `sites/taipei-city-lab/dist/data/snapshot.json` 與 `sites/taipei-city-lab/dist/data/source-catalog.json`。若要從既有來源快取重建，使用 `--offline --cache-dir <既有快取路徑>`。預設快取為 `/tmp/taipei-city-lab-source-cache`；快取不在公開網站內。來源每日可能更新，因此 `--refresh` 的筆數與 SHA 不一定與本次相同。
 
-本次驗證通過：所有輸出座標有限且位於 bbox；樹與桶唯一 ID；來源列數守恆（範圍內＋範圍外＋無效座標＝原檔案列數）；來源欄位與空值保留；13 個來源 ID 齊全。JSON 使用 `allow_nan=False`，拒絕輸出 NaN 或 Infinity。Snapshot 約 7.39 MB。
+重建須檢查：所有輸出座標有限且位於 bbox；樹與桶 ID 唯一；來源列數守恆（範圍內＋範圍外＋無效座標＝原檔案列數）；來源欄位與空值保留；13個來源 ID 齊全。JSON使用 `allow_nan=False`，拒絕輸出NaN或Infinity。
 
-Meta 的 `retrievedAt` 為所載來源最後下載時間；`builtAt` 為本次轉換建置時間。離線重建不會把舊來源日期偽裝為重新下載日期。資料準備階段使用 `buildStatus=creating`；網站整合完成後已更新為 `complete`。
+Meta 的 `retrievedAt` 為所載來源最後下載時間；`builtAt` 為本次轉換建置時間。離線重建不會把舊來源日期偽裝為重新下載日期。完成轉換後以 `buildStatus=complete` 標記；這不代表完成現地驗證。

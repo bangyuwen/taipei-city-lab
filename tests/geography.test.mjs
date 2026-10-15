@@ -3,14 +3,14 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import {createHash} from 'node:crypto';
-import * as THREE from '../dist/vendor/three/three.module.min.js';
-import {mercator,unproject,projection,worldPoint,tilePlan,tileURL,TILE_PROVIDER} from '../dist/geo.js';
-import {mapSpec,mapPointIndex} from '../dist/map-data.js';
-import {createBasemap,visibleTilePlan} from '../dist/basemap3d.js';
-import {modules} from '../dist/registry.js';
-import {sceneSpec} from '../dist/scene-data.js';
+import * as THREE from '../sites/taipei-city-lab/dist/vendor/three/three.module.min.js';
+import {mercator,unproject,projection,worldPoint,tilePlan,tileURL,TILE_PROVIDER} from '../sites/taipei-city-lab/dist/geo.js';
+import {mapSpec,mapPointIndex} from '../sites/taipei-city-lab/dist/map-data.js';
+import {createBasemap,visibleTilePlan} from '../sites/taipei-city-lab/dist/basemap3d.js';
+import {modules} from '../sites/taipei-city-lab/dist/registry.js';
+import {sceneSpec} from '../sites/taipei-city-lab/dist/scene-data.js';
 import {boot} from './helpers/app-harness.mjs';
-const data=JSON.parse(fs.readFileSync(new URL('../dist/data/snapshot.json',import.meta.url)));
+const data=JSON.parse(fs.readFileSync(new URL('../sites/taipei-city-lab/dist/data/snapshot.json',import.meta.url)));
 const payload=id=>{const m=modules.find(m=>m.id===id);return {id,title:m.title,params:m.defaults,result:m.evaluate(m.defaults,data),data};};
 class FakeLoader{
   requests=[];
@@ -19,7 +19,7 @@ class FakeLoader{
 }
 
 test('Leaflet fixed module, CSS, image and source-map bytes match the provenance manifest',()=>{
-  const root=new URL('../dist/vendor/leaflet/',import.meta.url),manifest=JSON.parse(fs.readFileSync(new URL('manifest.json',root)));
+  const root=new URL('../sites/taipei-city-lab/dist/vendor/leaflet/',import.meta.url),manifest=JSON.parse(fs.readFileSync(new URL('manifest.json',root)));
   assert.equal(manifest.version,'1.9.4');for(const [file,hash] of Object.entries(manifest.files))assert.equal(createHash('sha256').update(fs.readFileSync(new URL(file,root))).digest('hex'),hash);
 });
 test('Web Mercator matches the standard axis values and roundtrips the entire demo boundary',()=>{
