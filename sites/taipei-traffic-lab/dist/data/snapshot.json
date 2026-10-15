@@ -1,0 +1,96 @@
+{
+  "meta": {
+    "retrievedAt": "2026-10-13T12:18:35Z",
+    "builtAt": "2026-10-13T12:25:27Z",
+    "buildStatus": "complete",
+    "bbox": [
+      121.51,
+      25.02,
+      121.57,
+      25.08
+    ],
+    "scope": "僅載入本題已查核的來源目錄，尚未整合觀測資料；互動情境不得視為真實通報、車流、需求或逐棟紀錄。",
+    "coordinateSystem": "EPSG:4326; x=longitude, y=latitude",
+    "sampled": false,
+    "topicId": "traffic",
+    "observationStatus": "not-loaded"
+  },
+  "sources": {
+    "vd": {
+      "title": "臺北市車輛偵測器(VD)靜態資料",
+      "url": "https://data.taipei/dataset/detail?id=47cb9090-e1c9-4b1d-b299-b11c375c5ee2",
+      "classification": "官方資料目錄",
+      "grain": "逐偵測器靜態位置、道路及車道屬性",
+      "limitations": "本版只查核靜態資料目錄，未累積尖峰歷史流量；錯峰曲線是模擬，沒有因果效果估計。",
+      "fields": [
+        "VDID",
+        "BiDirectional",
+        "LinkID",
+        "Bearing",
+        "RoadDirection",
+        "LaneNum",
+        "ActualLaneNum",
+        "VDType",
+        "LocationType",
+        "DetectionType",
+        "PositionLon",
+        "PositionLat",
+        "RoadID",
+        "RoadName",
+        "RoadClass",
+        "Start",
+        "End",
+        "LocationMile",
+        "LayoutMapURL"
+      ],
+      "retrievedAt": "2026-10-13T12:18:34Z",
+      "integrationStatus": "metadata-only",
+      "license": "依政府資料開放授權條款-第1版",
+      "publisher": "交通局",
+      "catalogUpdatedAt": "2025-09-10 10:45:42",
+      "publishedAt": "2020-12-29",
+      "resourceUpdatedAt": "2025-09-09 15:59:23",
+      "catalogRecordCount": "",
+      "resourceUrl": "https://tcgbusfs.blob.core.windows.net/blobtisv/VD.xml"
+    },
+    "metro": {
+      "title": "臺北捷運各站分時進出量統計",
+      "url": "https://data.taipei/dataset/detail?id=63f31c7e-7fc3-418b-bd82-b95158755b4d",
+      "classification": "官方資料目錄",
+      "grain": "此下載資源為每月資料連結清單；另連結每日分時各站 OD 統計",
+      "limitations": "尚未下載 OD 觀測檔；捷運進出量亦不能直接代表街道人流或公車站需求。",
+      "fields": [
+        "SeqNo",
+        "西元年",
+        "月",
+        "URL",
+        "說明/備註"
+      ],
+      "retrievedAt": "2026-10-13T12:18:34Z",
+      "integrationStatus": "metadata-only",
+      "license": "依政府資料開放授權條款-第1版",
+      "publisher": "捷運公司",
+      "catalogUpdatedAt": "2026-09-16 07:38:49",
+      "publishedAt": "2017-02-24",
+      "resourceUpdatedAt": "2026-09-15 11:10:49",
+      "catalogRecordCount": "",
+      "resourceUrl": "https://data.taipei/api/dataset/63f31c7e-7fc3-418b-bd82-b95158755b4d/resource/eb481f58-1238-4cff-8caa-fa7bb20cb4f4/download"
+    },
+    "puma": {
+      "title": "市政 debug松官方題目與規則",
+      "url": "https://puma.taipei/hackathon",
+      "classification": "活動題目",
+      "integrationStatus": "metadata-only",
+      "grain": "7 項議題、資料入口與模擬資料規則",
+      "limitations": "題目敘述不是觀測資料；活動列出的資料入口仍需逐項確認欄位、粒度與授權。",
+      "fields": [
+        "議題",
+        "資料入口",
+        "資料缺口",
+        "作品規則"
+      ],
+      "retrievedAt": "2026-10-13T12:05:29Z",
+      "sha256": "bd9b5f2c46fa45a180ef67c2aa4697f73dc1926d0e060c57b8096ac8ffb032ba"
+    }
+  }
+}

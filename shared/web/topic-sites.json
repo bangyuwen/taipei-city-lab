@@ -1,0 +1,32 @@
+{
+  "shade": {
+    "directory": "taipei-shade-lab", "brand": "台北樹蔭研究", "title": "樹蔭公平",
+    "description": "從行道樹快照、熱暴露與步行需求的證據缺口，研究補樹順序與公平取捨。",
+    "badge": "真實樹木點位 × 假設植栽情境", "accent": "#39835f"
+  },
+  "rat": {
+    "directory": "taipei-rat-lab", "brand": "台北鼠患源頭研究", "title": "鼠患源頭治理",
+    "description": "區分通報、現勘與合成街廓，研究源頭查核、改善及複查的安排。",
+    "badge": "模擬街廓 × 治理優先排序", "accent": "#a05d51"
+  },
+  "traffic": {
+    "directory": "taipei-traffic-lab", "brand": "台北錯峰通勤研究", "title": "內湖錯峰通勤",
+    "description": "比較同一批合成車流的累積延誤與排隊，查核錯峰通勤假設及實際資料缺口。",
+    "badge": "模擬車流 × 錯峰情境", "accent": "#527f9a"
+  },
+  "bus": {
+    "directory": "taipei-bus-lab", "brand": "台北公車接駁研究", "title": "公車接駁與休息",
+    "description": "從旅客等待、留站需求與休息約束，研究接駁班距、車數及資料限制。",
+    "badge": "模擬需求 × 休息約束", "accent": "#70668c"
+  },
+  "buildings": {
+    "directory": "taipei-building-lab", "brand": "台北社區健檢研究", "title": "社區健檢排序",
+    "description": "研究社區文件補查、專業轉介與追蹤順序；模型排序不代表建物安全評級。",
+    "badge": "模擬社區 × 查勘排序", "accent": "#a36537"
+  },
+  "audit": {
+    "directory": "taipei-data-lab", "brand": "台北資料健檢研究", "title": "市政資料健檢",
+    "description": "先確認資料用途、粒度與日期，再於瀏覽器本機檢查 CSV 缺漏、重複及資料契約。",
+    "badge": "官方資料適用性 × 本機 CSV 健檢", "accent": "#447d79"
+  }
+}

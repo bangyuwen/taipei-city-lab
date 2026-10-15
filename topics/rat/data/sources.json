@@ -1,0 +1,39 @@
+{
+  "complaints": {
+    "title": "臺北市陳情系統類別資料",
+    "url": "https://data.taipei/dataset/detail?id=cb423c17-88eb-4231-a725-f1b93247d1bf",
+    "classification": "官方資料目錄",
+    "grain": "逐案分類、受理與結案日期；無地址或經緯度",
+    "limitations": "欄位沒有地址或座標，無法直接製作通報熱點；通報量也不等於實際事件發生率。",
+    "fields": [
+      "案件編號",
+      "案件主類別",
+      "案件次類別",
+      "受理機關",
+      "受理科室",
+      "受理日期",
+      "送達日期",
+      "結案日期"
+    ],
+    "retrievedAt": "2026-10-13T12:18:35Z",
+    "integrationStatus": "metadata-only",
+    "license": "依政府資料開放授權條款-第1版",
+    "publisher": "研考會",
+    "catalogUpdatedAt": "2026-10-08 17:04:49",
+    "publishedAt": "2017-11-06",
+    "resourceUpdatedAt": "2026-10-08 15:47:05",
+    "catalogRecordCount": "",
+    "resourceUrl": "https://data.taipei/api/dataset/cb423c17-88eb-4231-a725-f1b93247d1bf/resource/b57a0fa8-9507-438b-b2e1-676829a72aff/download"
+  },
+  "rat": {
+    "title": "見鼠地圖 Rat Radar（題目列出的民間來源）",
+    "url": "https://ratdar.taipei/reports",
+    "classification": "民間通報",
+    "integrationStatus": "not-loaded",
+    "grain": "民眾自行通報；本版未下載",
+    "limitations": "未驗證來源、授權、座標及去重；不得將模擬鼠患點說成民間或官方實際通報。",
+    "fields": [],
+    "retrievedAt": null,
+    "referencedFrom": "puma"
+  }
+}

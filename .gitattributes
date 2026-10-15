@@ -5,3 +5,7 @@ sites/taipei-waste-lab/dist/vendor/** -text whitespace=cr-at-eol linguist-vendor
 sites/taipei-waste-lab/dist/vendor/three/** -text whitespace=cr-at-eol,-space-before-tab linguist-vendored
 sites/taipei-waste-lab/dist/data/datasets.json linguist-generated
 sites/taipei-waste-lab/dist/data/*.geojson linguist-generated
+topics/bins/data/history/*.csv -text whitespace=cr-at-eol
+sites/taipei-waste-lab/data/history/*.csv -text whitespace=cr-at-eol
+sites/**/dist/vendor/** -text whitespace=cr-at-eol,-space-before-tab linguist-vendored
+sites/**/dist/data/*.json linguist-generated

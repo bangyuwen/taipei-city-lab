@@ -1,16 +1,23 @@
 #!/usr/bin/env python3
-"""Build an auditable official tree/bin snapshot; no simulated observations.
+"""Refresh topic-owned canonical data from official tree/bin source downloads.
 
 Requires Python 3.11+ and pyproj. Run from the repository root:
   python -m pip install pyproj
-  python scripts/prepare-data.py
-  python scripts/prepare-data.py --offline  # reproduce cached source bytes
+  python scripts/prepare-data.py --refresh
+  python scripts/prepare-data.py --offline --cache-dir <existing-raw-cache>
+
+To rebuild the saved reviewed inputs without downloads or pyproj, use:
+  python scripts/build-topic-data.py
+
+The canonical files preserve transformed observations. They do not replace the
+original raw download cache required by this script's --offline option.
 """
 from __future__ import annotations
 
 import argparse
 import csv
 import hashlib
+import importlib.util
 import io
 import json
 import math
@@ -20,8 +27,6 @@ import urllib.request
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
-
-import pyproj
 
 ROOT = Path(__file__).resolve().parents[1]
 BBOX = [121.51, 25.02, 121.57, 25.08]
@@ -123,6 +128,10 @@ def valid_position(x, y) -> bool:
 
 
 def build_trees(payload: bytes) -> tuple[list[dict], dict]:
+    # Projection is needed only when importing raw observations. Metadata/help,
+    # a missing-cache failure, and the separate canonical builder need no pyproj.
+    import pyproj
+
     rows = json.loads(payload.decode("utf-8-sig"))
     transformer = pyproj.Transformer.from_crs(3826, 4326, always_xy=True)
     output, invalid = [], []
@@ -244,6 +253,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--cache-dir", type=Path, default=Path("/tmp/taipei-city-lab-source-cache"))
     parser.add_argument("--output-dir", type=Path, default=ROOT / "dist/data")
+    parser.add_argument("--canonical-root", type=Path, default=ROOT,
+                        help="Repository root owning topics/ and shared/ canonical data")
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--refresh", action="store_true")
     modes.add_argument("--offline", action="store_true")
@@ -271,13 +282,19 @@ def main() -> None:
     sources["puma"]["retrievedAt"] = puma_retrieved
     sources["puma"]["sha256"] = hashlib.sha256(puma_bytes).hexdigest()
     latest_retrieval = max(source["retrievedAt"] for source in sources.values() if source["retrievedAt"])
-    snapshot = {"meta": {"retrievedAt": latest_retrieval, "builtAt": timestamp(), "buildStatus": "creating", "bbox": BBOX,
+    snapshot = {"meta": {"retrievedAt": latest_retrieval, "builtAt": timestamp(), "buildStatus": "complete", "bbox": BBOX,
                          "scope": "臺北市中心示範範圍；保留框內所有有效樹木與清潔箱，並非全市分析",
                          "coordinateSystem": "EPSG:4326; x=longitude, y=latitude", "sampled": False},
                 "trees": trees, "bins": bins, "sources": sources,
                 "quality": {"trees": tree_quality, "bins": bin_quality}}
-    write_json(options.output_dir / "snapshot.json", snapshot)
-    write_json(options.output_dir / "source-catalog.json", {"meta": snapshot["meta"], "sources": sources}, True)
+    # Do not touch canonical/deployment data until every download and transform
+    # has succeeded. The topic builder validates row accounting and ownership
+    # before persisting any refreshed, transformed observations.
+    spec = importlib.util.spec_from_file_location("topic_data", ROOT / "scripts/build-topic-data.py")
+    builder = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(builder)
+    builder.write_canonical(snapshot, options.canonical_root)
+    builder.build_deployment_data(options.canonical_root, options.output_dir)
     print(json.dumps({"trees": len(trees), "bins": len(bins), "bbox": BBOX,
                       "output": str(options.output_dir)}, ensure_ascii=False))
 

@@ -2,7 +2,7 @@
 
 聚焦台北行人專用清潔箱的早期分布與撤除歷程。這是獨立的靜態站，資料與程式都由本站提供。
 
-網站：[台北垃圾箱研究](https://taipei-waste-lab.bangyuwen.chatgpt.site)。GitHub 原始碼集中於 `sites/taipei-waste-lab/`；Sites 部署使用本站自己的 Git 與 `.openai/hosting.json`。
+網站：[台北垃圾箱研究](https://taipei-waste-lab.bangyuwen.chatgpt.site)。網站程式與部署產物位於 `sites/taipei-waste-lab/`；本題資料、模型與研究入口見[垃圾箱題目目錄](../../topics/bins/README.md)。Sites 部署使用本站自己的 Git 與 `.openai/hosting.json`。
 
 目前保留：
 
@@ -20,15 +20,18 @@
 | 2024 | 1,000 | 1,000 | 原 API 回報 1,991 筆，僅保存第一頁 |
 | 2026 | 294 | 294 | 既有中心示範框，並非全市 |
 
-保存日期不等於設置／撤除日期，本站列號不是官方箱號。不同版本缺列不直接視為撤除。完整來源與限制見 `docs/bin-removal-history.md`、`dist/data/datasets.json` 及各版來源說明。
+保存日期不等於設置／撤除日期，本站列號不是官方箱號。不同版本缺列不直接視為撤除。完整來源與限制見[歷史分布與撤除紀錄](../../topics/bins/docs/bin-removal-history.md)、`dist/data/datasets.json` 及各版來源說明。
 
 2026 中心示範框為經度 121.51–121.57、緯度 25.02–25.08；原始下載表有 681 列，680 列座標有效。位置地圖保留原始重疊紀錄，來源與品質紀錄保存在 `dist/data/taipei-bins-2026-study-area.provenance.json`。
 
 ## 研究筆記
 
-- [垃圾箱減少的研究脈絡](docs/bin-reduction.md)：歷史背景、政策理由與待驗證問題。
-- [歷史分布與撤除紀錄](docs/bin-removal-history.md)：各版資料、撤除時間線與來源限制。
-- [全球公共垃圾箱設計與治理比較及台北應用](docs/global-bin-practices.md)：五大洲16個案例，涵蓋桶型、配置、清運、撤除、回收與台北可借鏡的條件。
+研究正文集中於[本題文件目錄](../../topics/bins/docs/README.md)，本站 `docs/` 舊路徑只留導覽。修改正文後，執行 `npm run prepare-data` 會更新 `data/research/` 的獨立原始碼副本及 `dist/research/` 的網站下載，請勿直接修改這兩份衍生副本。
+
+- [垃圾箱減少的研究脈絡](../../topics/bins/docs/bin-reduction.md)：歷史背景、政策理由與待驗證問題。
+- [歷史分布與撤除紀錄](../../topics/bins/docs/bin-removal-history.md)：各版資料、撤除時間線與來源限制。
+- [桶型體驗的設計假設](../../topics/bins/docs/bin-design.md)：四款概念的尺寸、試投與清運示意界線。
+- [全球公共垃圾箱設計與治理比較及台北應用](../../topics/bins/docs/global-bin-practices.md)：五大洲16個案例，涵蓋桶型、配置、清運、撤除、回收與台北可借鏡的條件。
 
 ## 開發與驗證
 
@@ -46,14 +49,15 @@ npm run preview
 
 `python scripts/check-design-browser.py` 驗證桶型操作、桌機／手機、減少動態效果、位置資料失敗及 WebGL 不可用時的文字比較。Three.js 0.180.0 與 OrbitControls 自行託管，按需載入，版本與檔案雜湊見 `dist/vendor/three/manifest.json`。3D 體驗不依賴位置資料請求成功。
 
-桶型入口為 `#design`。四款為本站概念，並非台北現役產品規格；試投只比較固定物件的簡化剛性截面，不預測違規、清運效率或無障礙符合性。尺寸與模型假設見 `docs/bin-design.md`。
+桶型入口為 `#design`。四款為本站概念，並非台北現役產品規格；試投只比較固定物件的簡化剛性截面，不預測違規、清運效率或無障礙符合性。尺寸與模型假設見[桶型體驗的設計假設](../../topics/bins/docs/bin-design.md)。
 
 ## 結構
 
 - `dist/`：可獨立部署的網站、固定資料、Leaflet 與字型。
 - `dist/history.js`：有來源的政策與撤除歷程。
 - `dist/bin-scene.js`：Three.js 概念街角；`design-model.js`：尺寸與試投規則；`design-ui.js`：操作介面。
-- `docs/`：討論脈絡、證據與研究限制。
+- `../../topics/bins/docs/`：研究正文；本站 `docs/`：舊路徑導覽與本站歷史驗證。
+- `dist/research/`：由研究正文生成、維持原下載網址的網站產物。
 - `.openai/hosting.json`：本站部署身分與靜態目錄。
 
 ## 授權

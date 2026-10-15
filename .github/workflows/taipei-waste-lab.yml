@@ -4,11 +4,13 @@ on:
   pull_request:
     paths:
       - 'sites/taipei-waste-lab/**'
+      - 'topics/bins/**'
       - '.github/workflows/taipei-waste-lab.yml'
   push:
     branches: [main]
     paths:
       - 'sites/taipei-waste-lab/**'
+      - 'topics/bins/**'
       - '.github/workflows/taipei-waste-lab.yml'
 
 permissions:
@@ -31,9 +33,9 @@ jobs:
       - name: Verify preserved data rebuild
         run: |
           npm run prepare-data
-          git diff --exit-code -- dist/data/datasets.json
+          git diff --exit-code -- data dist/data dist/research
       - name: Verify data and static assets
         run: |
           npm test
-          npm run check
+          npm run check -- --require-hosting
           for file in dist/*.js; do node --check "$file"; done

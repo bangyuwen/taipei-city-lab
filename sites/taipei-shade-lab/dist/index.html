@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#202c45">
+  <meta name="description" content="從行道樹快照、熱暴露與步行需求的證據缺口，研究補樹順序與公平取捨。">
+  <title>台北樹蔭研究｜樹蔭公平</title>
+  <link rel="icon" type="image/svg+xml" href="./mark.svg">
+  <link rel="stylesheet" href="./vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./workspace.css">
+</head>
+<body>
+  <a class="skip" href="#research-answer">跳至研究結論</a>
+  <div class="layout">
+    <aside id="sidebar" class="sidebar" data-menu-open="false">
+      <a class="brand" href="#shade" aria-label="台北樹蔭研究首頁"><img src="./mark.svg" width="42" height="42" alt=""><span>台北<strong>樹蔭研究</strong></span></a>
+      <button id="topic-menu-toggle" class="topic-menu-toggle" aria-controls="navigation" aria-expanded="false">本站研究導覽<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+      <p class="sidebar-caption">本題研究</p>
+      <nav id="navigation" aria-label="本站研究"></nav>
+      <div class="sidebar-bottom"><p>先找答案。<br>每項建議，都留下依據。</p><span>研究結論 · 真實資料與模型界線</span><a href="https://puma.taipei/hackathon" target="_blank" rel="noopener noreferrer">了解原始市政題目<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5h5v5M19 5l-9 9M19 14v5H5V5h5"/></svg></a></div>
+    </aside>
+    <main id="workspace" tabindex="-1">
+      <header class="topbar"><a href="#shade" class="topbar-title">樹蔭公平，從證據開始</a><div><button id="sources-button" class="outline-button">資料來源</button><details class="research-tools"><summary>研究工具</summary><div><button id="all-export" class="text-button">匯出本題結論與研究包</button><a href="./RESEARCH.md" download>下載研究說明</a></div></details></div></header>
+      <section id="city-intro" hidden><button id="begin-exploring" hidden>閱讀本題結論</button></section>
+      <div id="loading" role="status">正在載入本題資料與情境…<span class="loading-line"></span><span class="loading-line"></span></div>
+      <section id="module-head" tabindex="-1"></section>
+      <nav id="task-route" class="task-route" aria-label="研究閱讀路徑"><button data-jump="research-answer">研究結論</button><button data-jump="answer-evidence">依據與缺口</button><button data-jump="results">查核模型明細</button></nav>
+      <section id="research-answer" class="research-answer" tabindex="-1" aria-labelledby="answer-title"></section>
+      <section id="audit-input" hidden></section><div id="audit-report"></div>
+      <details id="research-workbench" class="research-workbench"><summary>查核模型、地圖與參數</summary><p class="workbench-note">以下是可重現的研究工具。合成需求下的推薦點及服務率，不能直接當作實際設置位置或政策成效。</p>
+      <section id="exploration-guide" class="exploration-guide" aria-label="模型比較條件"></section>
+      <section id="metrics" class="metrics" aria-label="目前方案的模擬指標"></section>
+      <section class="work-grid">
+        <div id="analysis" class="scene-and-data" tabindex="-1"><div class="view-switch"><div role="group" aria-label="情境視角"><button id="viewmode-map" aria-pressed="false">街道地圖</button><button id="viewmode-3d" aria-pressed="true">3D 情境</button><button id="viewmode-2d" aria-pressed="false">比較圖表</button></div><p id="scene-status" role="status">正在準備場景…</p></div><section id="geographic-panel" class="geography-card" hidden aria-label="實際街道地圖與模型點位"></section><section id="scene-panel" class="scene-card" aria-label="Three.js 互動情境"></section><div id="visualization" class="visual-card" hidden></div></div>
+        <aside id="control-panel" class="control-card" tabindex="-1"><div class="panel-heading"><h2>研究條件與假設</h2><button id="reset" class="text-button">回到起點</button></div><p class="control-intro">參數供查核與敏感度分析使用；結果同步更新。</p><div id="controls"></div><div class="control-actions"><button id="save-scenario" class="primary-button">儲存研究方案</button><button id="export-csv" class="outline-button">匯出明細 CSV</button></div><details class="scenario-tools"><summary>分享與已存方案</summary><button id="share-scenario" class="text-button">產生此題參數連結</button><div id="share-link"></div><p class="local-note">方案儲存於這個瀏覽器。</p><div id="saved-scenarios"></div></details></aside>
+      </section>
+      <section id="chart-secondary"></section><section id="workflow"></section>
+      <div class="evidence-grid"><section id="results" class="results-card" tabindex="-1"></section><section id="method" class="method-card"></section></div>
+      </details>
+      <footer><div class="footer-note"><strong>城市的答案，需要一起驗證。</strong><p>台北樹蔭研究是研究試作。模擬結果未代表政策成效或現勘結論。</p></div><details class="research-downloads"><summary>本題研究文件與資料</summary><div><a href="./RESEARCH.md" download>本題研究說明</a><a href="./data/snapshot.json" download>本題資料快照</a><a href="./modules/shade.js" download>本題模型程式</a></div></details></footer>
+    </main>
+  </div>
+  <dialog id="source-dialog"><div class="dialog-header"><h2>資料來源與適用範圍</h2><button id="close-sources" class="outline-button">關閉</button></div><div id="source-body"></div></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
