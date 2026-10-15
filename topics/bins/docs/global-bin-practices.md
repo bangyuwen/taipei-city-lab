@@ -93,6 +93,8 @@ Belfast五日稽核中的約85%，分母是兩槽找到的塑膠瓶；43.8%則�
 
 ## 成本與證據如何判讀
 
+2026-10-15 補充：六國設備、營運證據與成本逐項比較見[進階垃圾桶比較](../research/smart-bin-comparison-2026-10-15/README.md)。其中舊金山 2026-03 官方簡報列 US$1,591／桶含內桶，限 3,000 桶以上，另列可變動關稅 US$158；這是後續價格資訊，並非下列 2022 目標或壓縮桶報價。[2026 官方簡報](https://media.api.sf.gov/documents/Public_Works_Refuse_Rate_Board_presentation_3.13.26_final.pdf)
+
 本輪未取得可在各城同口徑比較的現行全生命週期成本，因此不產生最便宜城市／最佳設備排名。
 
 - City of London的£4,300／箱及整批年維護約£1,500是2016評估的歷史名目英鎊，並非今日報價。[S16](https://democracy.cityoflondon.gov.uk/documents/s61842/Bishopsgate%20Bin%20Trial%202016%20PHES%20-%20Final.pdf)
