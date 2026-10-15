@@ -11,11 +11,11 @@
 - 2015、2022、2024、2026 四個年份、六份位置資料切換；2024、2026 預設採新主版本，原缺頁版與示範區版仍可選取。
 - 有來源的撤除時間線，區分政策理由、官方存量與具日期的撤除個案。
 - Three.js 桶型體驗：四種概念設計、尺寸與填滿程度、四個觀看視角、物件試投及清運門／內桶操作。
-- 各版本日期、完整性、原始來源與研究筆記下載。
-- 「版本比較」：2024 封存版與 2026 官方主檔的各區列數、比對分類、未再出現地址、原始列與座標，以及分類／各區 CSV 下載。
-- 75 對同址座標不同的距離分析：球面座標差距、前十名、全部排序、原始座標與 CSV；不直接判定遷移。
+- 各版本日期、完整性、原始來源與頁面研究說明。
+- 「版本比較」：2024 封存版與 2026 官方主檔的各區列數、比對分類、未再出現地址、原始列與座標，以及分類與各區統計。
+- 75 對同址座標不同的距離分析：球面座標差距、前十名、全部排序與原始座標；不直接判定遷移。
 
-- 「研究與實作」：18 個桌面候選、75 對及全部比較群組核驗表、13 篇文獻與完整現勘試辦下載包；新增 1996–2025 官方年統計，分開保留計數口徑。現場量測與成效仍待取得。
+- 「研究與實作」：18 個桌面候選、75 對及全部比較群組核驗表、13 篇文獻；現勘試辦材料保留在私人專案，新增 1996–2025 官方年統計，分開保留計數口徑。現場量測與成效仍待取得。
 
 ## 資料範圍
 
@@ -32,17 +32,17 @@
 
 2024 封存版與 5 月版為不同快照，不拼接成同日期清冊。2026 主檔保留全部 681 列，CSV 與 API 筆數一致，並非分頁漏抓；取得完整下載檔不代表已核實全市設施都列入。130 筆景點商圈場所資料僅保存於補查紀錄，不與垃圾箱逐列相加。
 
-2026 舊版中心示範框為經度 121.51–121.57、緯度 25.02–25.08。原始重疊及異常座標全數保留，粗篩未通過者不繪製；原 CSV、各版 provenance 與補查原始檔均可下載。篩選 CSV 另包含版本、日期、完整性限制及原始座標字串。
+2026 舊版中心示範框為經度 121.51–121.57、緯度 25.02–25.08。原始重疊及異常座標全數保留，粗篩未通過者不繪製；原 CSV、各版 provenance、補查原始檔及離線匯出工具保留在私人專案，不隨公開站發布。
 
 分享連結的 `year=2024`、`year=2026` 保留原舊版意義；新主版本為 `year=2024-archive`、`year=2026-main`。四個年份按鈕選取各年的主版本，同年版本選單可切換舊版；網站初始仍顯示 2015。
 
 ## 研究筆記
 
-- [服務預算概估](research/budget-2026-10-15/README.md)：30 處／180 日及 100 處／365 日的設備、清運與家戶分流費用；保留假設、公式、來源與 CSV。由 `python3 scripts/estimate-budget.py` 重算，再以 `python3 scripts/package-research.py` 更新下載。
+- [服務預算概估](research/budget-2026-10-15/README.md)：30 處／180 日及 100 處／365 日的設備、清運與家戶分流費用；保留假設、公式、來源與 CSV。由 `python3 scripts/estimate-budget.py` 重算，再以 `python3 scripts/package-research.py` 更新私人離線研究包；發布前須執行完整 `npm run prepare-data`。
 
 - [配置、清運與家戶垃圾分流的資料判斷](research/service-strategy-2026-10-15/README.md)：本次決策文件，分開事實、建議與未知效果。入口 `#research`。
 
-研究正文集中於[本題文件目錄](../../topics/bins/docs/README.md)，新版研究包的唯一編輯來源為 `topics/bins/research/`（[來源維護說明](../../topics/bins/research-source.md)）；本站 `research/` 是獨立網站副本。修改正文後，執行 `npm run prepare-data` 會更新 `data/research/` 的獨立原始碼副本及 `dist/research/` 的網站下載，請勿直接修改這兩份衍生副本。
+研究正文集中於[本題文件目錄](../../topics/bins/docs/README.md)，新版研究包的唯一編輯來源為 `topics/bins/research/`（[來源維護說明](../../topics/bins/research-source.md)）；本站 `research/` 是獨立網站副本。修改正文後，執行 `npm run prepare-data` 會更新 `data/research/` 的獨立原始碼副本及 `dist/research/` 的私人離線產物，請勿直接修改這兩份衍生副本。
 
 - [垃圾箱減少的研究脈絡](../../topics/bins/docs/bin-reduction.md)：歷史背景、政策理由與待驗證問題。
 - [歷史分布與撤除紀錄](../../topics/bins/docs/bin-removal-history.md)：各版資料、撤除時間線與來源限制。
@@ -58,11 +58,18 @@
 - [公共垃圾箱研究與試辦計畫](research/research-plan-2026-10-15/README.md)：資料查核、街段診斷、量測協定、試辦設計、人力估算及階段完成條件。
 - [研究執行成果與現場包](research/execution-2026-10-15/README.md)：桌面查核成果、18 個候選錨點、48 個預排訪次及 30 個任務槽、診斷卡與試辦協定。入口 `#research`。
 
+## 公開瀏覽與附件範圍
+
+網站保持公開，移除資料下載按鈕、CSV 匯出與本站附件連結。公開輸出採固定資產清單，只包含網頁、樣式、字型、必要函式庫及四份顯示用 JSON；原始 CSV／GeoJSON、來源紀錄、研究 Markdown、計算協定及 ZIP 不在公開目錄。原網址不再提供這些檔案；不得把 `dist/` 或專案根目錄當公開服務目錄。
+
+這是取消直接下載與公開附件，不是禁止擷取已顯示的資料。地圖和比較頁需要的地址、座標與分析 JSON 仍送到訪客瀏覽器；來源引用的外部網站由原發布者管理。原始證據保留在私人專案，不做刪除或公開權限變更。
+
 ## 開發與驗證
 
 無需安裝前端依賴。Node.js 22 以上：
 
 ```sh
+npm run prepare-data
 npm test
 npm run check
 npm run preview
@@ -72,7 +79,7 @@ npm run preview
 
 此命令也會呼叫 `scripts/compare-snapshots.py`，依 `research/comparison-2024-2026/protocol.json` 重建比較 JSON／CSV。比較只用行政區、完整地址與座標欄位，不使用模糊地址或最近距離推定實體身分；同址多筆的剩餘列保留為未配對。分類結果及各區列數遵守逐列守恆。原檔實體起始行與本站資料筆序分開記錄，以保留含換行地址的追溯資訊。
 
-`python scripts/check-browser.py` 使用環境既有的 Playwright 與 Chromium 檢查桌機／手機、版本切換、篩選、下載與撤除歷程操作。畫面證據寫入忽略的 `qa/`。
+`python scripts/check-browser.py` 使用環境既有的 Playwright 與 Chromium 檢查桌機／手機、版本切換、篩選、無下載入口與撤除歷程操作。畫面證據寫入忽略的 `qa/`。
 
 `python scripts/check-design-browser.py` 驗證桶型操作、桌機／手機、減少動態效果、位置資料失敗及 WebGL 不可用時的文字比較。Three.js 0.180.0 與 OrbitControls 自行託管，按需載入，版本與檔案雜湊見 `dist/vendor/three/manifest.json`。3D 體驗不依賴位置資料請求成功。
 
@@ -80,15 +87,16 @@ npm run preview
 
 距離分析由 `scripts/analyze-coordinate-distances.py` 重建，亦整合於 `prepare-data.py`。它先核對固定比較 JSON 與兩份來源 CSV 雜湊，只分析原有的 75 對分類；新結果另存，不改寫原配對或缺列分類。距離採 Haversine 球面近似，半徑 6,371,000 公尺，保留未通過台北粗篩的有效經緯度並標示品質；無法計算時保留空值，排序用未四捨五入數值。
 
-`npm run prepare-data` 依序重建清冊比較、距離、研究執行材料、預算表及離線 ZIP；在 monorepo 中，研究寫入 `topics/bins/research/` 後同步本站副本，獨立 Sites checkout 則使用站內 `research/`。人工核驗請另存工作副本，避免重建覆寫。
+`npm run prepare-data` 依序重建清冊比較、距離、研究執行材料、預算表、私人離線 ZIP 及公開 `out/`；在 monorepo 中，研究寫入 `topics/bins/research/` 後同步本站副本，獨立 Sites checkout 則使用站內 `research/`。人工核驗請另存工作副本，避免重建覆寫。
 
 ## 結構
 
-- `dist/`：可獨立部署的網站、固定資料、Leaflet 與字型。
+- `dist/`：網頁來源與完整私人衍生產物，含原始附件；不可直接對外提供此目錄。
+- `out/`：由 `scripts/prepare-public.py` 依固定清單產生的公開網站；不納入版本控制。預覽與 Sites 部署均只使用此目錄。
 - `dist/history.js`：有來源的政策與撤除歷程。
 - `dist/bin-scene.js`：Three.js 概念街角；`design-model.js`：尺寸與試投規則；`design-ui.js`：操作介面。
 - `../../topics/bins/docs/` 與 `../../topics/bins/research/`：研究正文、固定來源與分析協定；本站 `research/` 為獨立部署副本。
-- `dist/research/`：由研究正文生成、維持原下載網址的網站產物。
+- `dist/research/`：私人研究文件與離線 ZIP；公開輸出只保留候選清單顯示所需的 `desk-results.json`。
 - `.openai/hosting.json`：本站部署身分與靜態目錄。
 
 ## 授權
