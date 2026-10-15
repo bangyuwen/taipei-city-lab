@@ -8,7 +8,6 @@ import io
 import hashlib
 import json
 from collections import Counter
-from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -103,7 +102,6 @@ def main() -> None:
     annual_by_year = {value["gregorian_year"]: value["count"] for value in annual_values}
 
     report = {
-        "verified_at_utc": datetime.now(timezone.utc).isoformat(),
         "inputs": {
             "manifest": str(MANIFEST_PATH.relative_to(ROOT)),
             "receipt_01": str(excerpt_path.relative_to(ROOT)),
@@ -203,6 +201,8 @@ def main() -> None:
         "catalog_number_of_data": report["catalog"]["number_of_data"],
         "all_required_observations_pass": report["all_required_observations_pass"],
     }, ensure_ascii=False, indent=2))
+    if not report["all_manifest_files_match"] or not report["all_required_observations_pass"]:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

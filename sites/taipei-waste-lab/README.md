@@ -93,6 +93,8 @@ npm run preview
 
 `npm run check` 會先由固定清單重建公開 `out/`，再驗證私有來源及公開檔案，支援未建立輸出目錄的全新 checkout。
 
+私人離線 ZIP 包含預算重算與重新封裝所需的文件、網頁輸入和腳本；解壓後可在包根目錄執行 `python3 scripts/estimate-budget.py` 與 `python3 scripts/package-research.py`。研究副本由來源完整替換，避免保留已撤回或重新命名的檔案；實際填報結果仍須另存工作副本。
+
 `npm run prepare-data` 依序重建清冊比較、距離、研究執行材料、預算表、私人離線 ZIP 及公開 `out/`；在 monorepo 中，研究寫入 `topics/bins/research/` 後同步本站副本，獨立 Sites checkout 則使用站內 `research/`。人工核驗請另存工作副本，避免重建覆寫。
 
 ## 結構

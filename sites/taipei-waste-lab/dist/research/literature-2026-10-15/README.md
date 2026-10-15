@@ -177,4 +177,4 @@
 - [清冊補查與來源限制](../source-recovery-2026-10-15/README.md)
 - [2024／2026 固定版本比較](../comparison-2024-2026/README.md)
 - [75 對同址座標差距分析](../coordinate-distances-2024-2026/README.md)
-- [全球公共垃圾箱設計與治理比較及台北應用](../../docs/global-bin-practices.md)
+- [全球公共垃圾箱設計與治理比較及台北應用](../global-bin-practices.md)

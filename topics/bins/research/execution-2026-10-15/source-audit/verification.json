@@ -1,5 +1,4 @@
 {
-  "verified_at_utc": "2026-10-15T06:21:59.705102+00:00",
   "inputs": {
     "manifest": "research/source-recovery-2026-10-15/manifest.json",
     "receipt_01": "research/execution-2026-10-15/source-audit/receipts/01-official-excerpts.json",

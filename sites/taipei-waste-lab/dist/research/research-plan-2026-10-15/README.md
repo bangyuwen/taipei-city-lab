@@ -313,5 +313,5 @@ A 階段完成的標準是每項結論都有來源或明確假設，每個待解
 - [版本比較與配對協定](../comparison-2024-2026/README.md)
 - [75 對座標距離分析](../coordinate-distances-2024-2026/README.md)
 - [13 篇研究文獻](../literature-2026-10-15/README.md)
-- [政策與撤除研究脈絡](../../docs/bin-reduction.md)
-- [歷史分布與具日期個案](../../docs/bin-removal-history.md)
+- [政策與撤除研究脈絡](../bin-reduction.md)
+- [歷史分布與具日期個案](../bin-removal-history.md)
