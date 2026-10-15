@@ -20,6 +20,7 @@
 
 - [topics](topics/README.md)：各題 `data/`、`model.js` 與 `docs/` 的維護來源。
 - [shared](shared/README.md)：共用純函式、來源定義、`web/template/` 呈現模板及[研究與規範](shared/docs/README.md)。
+- [共用技能](shared/skills/README.md)：Impeccable技能與有效設計脈絡；標準代理入口以相對連結載入。
 - `sites/<站名>/`：各站設定與 `dist/` 部署產物；網站不跨站讀檔。
 - `scripts/`、`tests/`：離線建置、檢查及測試。
 
@@ -30,6 +31,7 @@
 使用 Python 3.11以上、Node.js 22以上；一般建置不需下載資料或安裝前端依賴。
 
 ```sh
+npm run setup-skills
 npm run build
 npm test
 npm run check
@@ -39,7 +41,7 @@ npm --prefix sites/taipei-waste-lab run check
 
 預覽單站，例如 `python -m http.server 8000 --directory sites/taipei-traffic-lab/dist`。開啟 `http://localhost:8000/`；街道底圖需要網路。各站的部署設定留在自己的 `.openai/hosting.json`，不共用 project_id。
 
-可攜原始碼包保存可重建網站的來源，不包含託管身分或Git狀態。下載包不包含自身的 `source.zip`；解壓後先執行 `python scripts/package-source.py` 生成下載資產，再執行 `npm run check`。
+可攜原始碼包保存可重建網站及共用技能的來源，不包含託管身分、Git狀態或工具二進位。解壓後先執行 `npm run setup-skills` 建立技能入口，再執行 `python scripts/package-source.py` 生成下載包自身未包含的 `source.zip`，即可執行 `npm run check`。
 
 ## 證據與範圍
 

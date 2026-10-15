@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "setup-skills": "python scripts/setup-skills.py",
     "build": "python scripts/build-all.py",
     "build-models": "python scripts/build-topic-models.py",
     "build-data": "python scripts/build-topic-data.py",
