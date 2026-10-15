@@ -3,11 +3,15 @@ from pathlib import Path
 from zipfile import ZIP_DEFLATED, ZipFile
 
 root = Path(__file__).resolve().parents[1]
-target = root / "dist/source.zip"
-inputs = [root / name for name in ("README.md", "LICENSE", "CONTRACT.md", "package.json", "package-lock.json")]
-inputs.extend(root / name for name in ("DESIGN.md", "PRODUCT.md", ".impeccable/design.json") if (root / name).exists())
-for folder in ("dist", "tests", "scripts", "docs", ".agents", "topics", "shared", "sites"):
+target = root / "sites/taipei-city-lab/dist/source.zip"
+inputs = [root / name for name in ("README.md", "LICENSE", "package.json", "package-lock.json")]
+for folder in ("tests", "scripts", "topics", "shared", "sites", "archive/development-tools/agents"):
     inputs.extend((root / folder).rglob("*"))
+inputs.extend(root / name for name in (
+    "archive/README.md", "archive/git-history/README.md",
+    "archive/development-tools/README.md", "archive/development-tools/impeccable/design.json",
+) if (root / name).exists())
+target.parent.mkdir(parents=True, exist_ok=True)
 with ZipFile(target, "w", ZIP_DEFLATED, compresslevel=9) as archive:
     for path in sorted(inputs):
         if not path.is_file() or path == target:
@@ -16,9 +20,7 @@ with ZipFile(target, "w", ZIP_DEFLATED, compresslevel=9) as archive:
             continue
         if any(part in {'.git', '.openai', 'node_modules', 'qa'} for part in path.relative_to(root).parts):
             continue
-        if path.is_relative_to(root / ".agents/skills/impeccable/scripts/bin"):
-            continue
-        if path == root / "docs/citizen-finish-review.md":
+        if path.is_relative_to(root / "archive/development-tools/agents/skills/impeccable/scripts/bin"):
             continue
         if path == root / "shared/docs/citizen-finish-review.md":
             continue

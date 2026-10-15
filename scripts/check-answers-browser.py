@@ -1,13 +1,17 @@
-import argparse,functools,hashlib,json,threading
+import argparse,functools,hashlib,json,tempfile,threading
 from http.server import ThreadingHTTPServer,SimpleHTTPRequestHandler
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
-parser=argparse.ArgumentParser();parser.add_argument('--root',type=Path,required=True);args=parser.parse_args()
-root=args.root.resolve();out=root/'.impeccable/review/answers';out.mkdir(parents=True,exist_ok=True)
+parser=argparse.ArgumentParser();parser.add_argument('--root',type=Path,required=True)
+parser.add_argument('--output-dir',type=Path,help='QA screenshots/results; defaults to a new temporary directory')
+args=parser.parse_args()
+root=args.root.resolve();dist=root/'sites/taipei-city-lab/dist'
+out=args.output_dir.resolve() if args.output_dir else Path(tempfile.mkdtemp(prefix='taipei-city-lab-answers-qa-'))
+out.mkdir(parents=True,exist_ok=True)
 class Quiet(SimpleHTTPRequestHandler):
     def log_message(self,*_):pass
-server=ThreadingHTTPServer(('127.0.0.1',0),functools.partial(Quiet,directory=str(root/'dist')))
+server=ThreadingHTTPServer(('127.0.0.1',0),functools.partial(Quiet,directory=str(dist)))
 thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
 origin=f'http://127.0.0.1:{server.server_port}/';errors=[];checks=[];captures={}
 def capture(page,name):
@@ -70,9 +74,9 @@ try:
       context.close()
     browser.close()
   assert not errors,errors
-  sources=['dist/index.html','dist/app.js','dist/answers.js','dist/styles.css','dist/fonts/city-serif.woff','dist/fonts/provenance.json']
+  sources=[str((dist/name).relative_to(root)) for name in ['index.html','app.js','answers.js','styles.css','fonts/city-serif.woff','fonts/provenance.json']]
   manifest={'scope':'Answer-first research presentation; local Chromium, emulated touch; external tiles blocked.','checks':checks,'pageErrors':errors,'captures':captures,'sourceSHA256':{s:hashlib.sha256((root/s).read_bytes()).hexdigest() for s in sources}}
   (out/'results.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
-  print(json.dumps({'checks':len(checks),'captures':len(captures),'pageErrors':errors}))
+  print(json.dumps({'checks':len(checks),'captures':len(captures),'pageErrors':errors,'output':str(out)}))
 finally:
   server.shutdown();server.server_close();thread.join()

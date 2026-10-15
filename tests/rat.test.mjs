@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { rat } from '../dist/modules/rat.js';
+import { rat } from '../sites/taipei-city-lab/dist/modules/rat.js';
 
 const rows = result => result.table.rows;
 const assigned = result => rows(result).filter(row => row.allocation === '已安排');

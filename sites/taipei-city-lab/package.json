@@ -1,0 +1,10 @@
+{
+  "name": "taipei-city-lab-integrated-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "python ../../scripts/build-integrated-site.py",
+    "serve": "python -m http.server 8000 --directory dist"
+  }
+}

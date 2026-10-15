@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { audit, parseCSV, inspectCSV } from '../dist/modules/audit.js';
+import { audit, parseCSV, inspectCSV } from '../sites/taipei-city-lab/dist/modules/audit.js';
 
 test('CSV preserves escaped quotes, commas, quoted CRLF, BOM, and trailing empty fields', () => {
   const result = parseCSV('\uFEFFid,note,optional\r\n1,"街道,右側",\r\n\r\n2,"說""你好""\r\n下一行",ok\r\n');

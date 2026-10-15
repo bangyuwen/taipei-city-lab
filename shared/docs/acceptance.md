@@ -32,7 +32,7 @@ Headless Chromium 154.0.8037.57 上，下列九組檢查通過，沒有 page err
 
 桌機 1440×1000、平板 850×1000、手機 390×844、窄螢幕 320×800 的受測頁面沒有整頁水平溢出；標題字體已載入。桌機根入口及手機清潔箱頁以 axe-core 4.10.3 檢查 WCAG 2 A/AA 與 2.1 AA tags，皆為零已判定 violations，但仍有 color-contrast 等 incomplete 項目；這不是完整 WCAG 認證或全站人工鍵盤巡覽。
 
-最終原始操作結果在 [final-results.json](../../.impeccable/review/final-results.json)，來源與 23 張截圖的 SHA-256 見 [capture-manifest.json](../../.impeccable/review/capture-manifest.json)。畫面包括 [桌機入口](../../.impeccable/review/desktop-first.png)、[手機入口](../../.impeccable/review/mobile-first.png)、[桌機全頁](../../.impeccable/review/desktop.png)、[手機全頁](../../.impeccable/review/mobile.png)，以及同目錄中的清潔箱、3D、交通、健檢、選單、平板、320px、來源對話框及圖表局部 captures。驗收證據留在 GitHub 分支，原始碼下載 ZIP 不包含內部 review captures。
+最終原始操作結果在 [final-results.json](../../archive/development-tools/impeccable/review/final-results.json)，來源與 23 張截圖的 SHA-256 見 [capture-manifest.json](../../archive/development-tools/impeccable/review/capture-manifest.json)。畫面包括 [桌機入口](../../archive/development-tools/impeccable/review/desktop-first.png)、[手機入口](../../archive/development-tools/impeccable/review/mobile-first.png)、[桌機全頁](../../archive/development-tools/impeccable/review/desktop.png)、[手機全頁](../../archive/development-tools/impeccable/review/mobile.png)，以及同目錄中的清潔箱、3D、交通、健檢、選單、平板、320px、來源對話框及圖表局部 captures。驗收證據留在 GitHub 分支，原始碼下載 ZIP 不包含內部 review captures。
 
 ## 測試環境界線
 
@@ -44,4 +44,4 @@ Headless Chromium 154.0.8037.57 上，下列九組檢查通過，沒有 page err
 
 入口可見時，歡迎標題是唯一可見 H1、題目標題是 H2；按「先看看垃圾桶怎麼放」或開啟題目深連結後，題目改為 H1，鍵盤焦點仍回到題目區。題目字體以 .topic-title 固定，語意層級不改變桌機 34px／手機 30px 的外觀。
 
-最新瀏覽器回歸增加根頁、#explore、鍵盤 Enter 進入探索及題目深連結的唯一可見 H1／第一標題檢查。另在 1440px 與 390px 上完成 22 項狀態檢查，沒有執行錯誤或整頁水平溢出；14 個 Node 測試檔及靜態模型檢查通過。來源 SHA-256 與四張補修畫面見 [heading-results.json](../../.impeccable/review/heading-results.json)。前述 23 張完整驗收畫面與 Impeccable Verdict Pass 是上一輪證據，本補修沒有宣稱新的全面視覺核准。
+最新瀏覽器回歸增加根頁、#explore、鍵盤 Enter 進入探索及題目深連結的唯一可見 H1／第一標題檢查。另在 1440px 與 390px 上完成 22 項狀態檢查，沒有執行錯誤或整頁水平溢出；14 個 Node 測試檔及靜態模型檢查通過。來源 SHA-256 與四張補修畫面見 [heading-results.json](../../archive/development-tools/impeccable/review/heading-results.json)。前述 23 張完整驗收畫面與 Impeccable Verdict Pass 是上一輪證據，本補修沒有宣稱新的全面視覺核准。

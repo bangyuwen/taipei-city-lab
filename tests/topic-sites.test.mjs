@@ -64,7 +64,7 @@ for (const site of sites) {
     const canonicalModule = await import(pathToFileURL(path.join(root, 'topics', site.id, 'model.js')));
     assert.equal(registry.modules[0].title, canonicalModule[site.id].title);
     const snapshot = json(path.join(dist, 'data/snapshot.json'));
-    const catalogue = json(path.join(root, 'dist/data/source-catalog.json'));
+    const catalogue = json(path.join(root, 'sites/taipei-city-lab/dist/data/source-catalog.json'));
     assert.equal(snapshot.meta.topicId, site.id);
     assert.deepEqual(sorted(Object.keys(snapshot.sources)), sorted(site.sources));
     for (const source of site.sources) assert.deepEqual(snapshot.sources[source], catalogue.sources[source], `preserve source ${source}`);

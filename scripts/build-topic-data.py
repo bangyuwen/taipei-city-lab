@@ -185,7 +185,7 @@ def per_topic_snapshot(topic_id: str, root: Path = ROOT) -> dict:
 def build_deployment_data(root: Path = ROOT, output_dir: Path | None = None, check: bool = False) -> dict:
     """Write/check the two legacy deployment JSONs, without updating dates."""
     root = Path(root)
-    output_dir = Path(output_dir) if output_dir else root / "dist/data"
+    output_dir = Path(output_dir) if output_dir else root / "sites/taipei-city-lab/dist/data"
     snapshot = assemble_snapshot(root)
     outputs = {"snapshot.json": json_bytes(snapshot),
                "source-catalog.json": json_bytes({"meta": snapshot["meta"], "sources": snapshot["sources"]}, True)}

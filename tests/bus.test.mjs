@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { bus, planShuttle, simulateShuttle } from '../dist/modules/bus.js';
+import { bus, planShuttle, simulateShuttle } from '../sites/taipei-city-lab/dist/modules/bus.js';
 
 test('each vehicle and its driver receive the full rest interval', () => {
   const result = planShuttle({ fleet: 2, headway: 3, breakMinutes: 30 });
