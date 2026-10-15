@@ -1,11 +1,11 @@
 import {escapeHTML as esc} from './data-utils.js';
-import {categories,filterComparison,comparisonCounts,mapURL,formatCoordinateDistance as gap,sortByCoordinateDistance} from './comparison-utils.js';
+import {categories,filterComparison,comparisonCounts,mapURL,formatCoordinateDistance as gap,sortByCoordinateDistance,getComparisonScope,summarizeCoordinateDistances} from './comparison-utils.js';
 
 const $=id=>document.getElementById(id),num=n=>new Intl.NumberFormat('zh-TW').format(n);
 const signed=n=>(n>0?'+':'')+num(n);
 function sourceRows(records,label,version){
-  if(!records.length)return `<p class="comparison-no-row">${label}：此比對組無資料列；不代表現場不存在。</p>`;
-  return `<div class="comparison-source-rows"><h4>${label}・${num(records.length)} 筆來源列</h4>${records.map(r=>`<div class="comparison-source-row"><p>${esc(r.district)} ${esc(r.address)}</p><p>原始經緯度：${esc(r.rawX)}，${esc(r.rawY)}</p><small>${esc(r.quality)}<br>原檔實體起始行 ${num(r.sourceRow)}（含標頭）・本站 ${esc(r.id)}，非官方箱號</small><a href="${esc(mapURL(r,version))}">${r.plottable?'在此版本地圖搜尋地址 ↗':'在此版本清單查詢（座標待核對） ↗'}</a></div>`).join('')}</div>`;
+  if(!records.length)return `<div class="comparison-no-row"><h4>${label}</h4><p>此比對組無資料列；不代表現場不存在。</p></div>`;
+  return `<div class="comparison-source-rows"><h4>${label}・${num(records.length)} 筆來源列</h4>${records.map(r=>`<div class="comparison-source-row"><p>${esc(r.district)} ${esc(r.address)}</p><p>原始經緯度：${esc(r.rawX)}，${esc(r.rawY)}</p><small>${esc(r.quality)}<br>原檔實體起始行 ${num(r.sourceRow)}（含標頭）・本站 ${esc(r.id)}，非官方箱號</small><a data-source-key="${esc(r.id)}" href="${esc(mapURL(r,version))}">${r.plottable?'在此版本地圖搜尋地址':'在此版本清單查詢（座標待核對）'}</a></div>`).join('')}</div>`;
 }
 export async function initializeComparisonExperience(){
   const response=await fetch('data/comparison-2024-2026.json');
@@ -13,61 +13,102 @@ export async function initializeComparisonExperience(){
   const comparisonBytes=await response.arrayBuffer();
   const data=JSON.parse(new TextDecoder().decode(comparisonBytes));
   if(data.meta?.protocolVersion!=='1.0.0'||!Array.isArray(data.entries)||data.districts?.length!==12)throw Error('Comparison format unavailable');
-  const state={district:'',category:'not_reappeared',search:''};
-  let filtered=[],shown=20,distanceAnalysis=null,distanceByID=new Map();
-  const total=data.totals;
-  $('comparison-totals').innerHTML=`<div><span>2024 封存版</span><strong>${num(total.beforeRows)}</strong><small>筆來源資料列</small></div><div><span>2026 官方主檔</span><strong>${num(total.afterRows)}</strong><small>筆來源資料列</small></div><div><span>主檔列數差額</span><strong>${signed(total.deltaRows)}</strong><small>筆資料列；不是撤除數</small></div>`;
-  $('comparison-findings').textContent=`${num(total.notReappearedAddresses)} 個舊版地址群組（${num(total.notReappearedRows)} 筆資料列）未再出現在 2026 主檔。另有 ${num(total.exactPairs)} 對地址及座標欄位相同、${num(total.sameAddressPairs)} 對同址座標不同；同址多筆未配對保留 2024／2026 各 ${num(total.ambiguousBeforeRows)}／${num(total.ambiguousAfterRows)} 筆。只在 2026 出現的 ${num(total.only2026Addresses)} 個地址群組共 ${num(total.only2026Rows)} 筆。以上均為資料比對分類，不能據此確認撤除、新設或遷移。`;
+  const state={district:'',category:'',search:'',sort:'source-order'};
+  let filtered=[],scope,shown=20,distanceAnalysis=null,distanceByID=new Map(),distanceFailed=false,returnPosition=null;
   $('comparison-districts').innerHTML=data.districts.map(d=>`<tr><th scope="row"><button type="button" data-comparison-district="${esc(d.district)}">${esc(d.district)}</button></th><td>${num(d.beforeRows)}</td><td>${num(d.afterRows)}</td><td>${signed(d.deltaRows)}</td><td>${num(d.exactPairs)}</td><td>${num(d.sameAddressPairs)}</td><td>${num(d.ambiguousBeforeRows)}／${num(d.ambiguousAfterRows)}</td><td>${num(d.notReappearedRows)} <small>筆／${num(d.notReappearedAddresses)} 址</small></td><td>${num(d.only2026Rows)} <small>筆／${num(d.only2026Addresses)} 址</small></td></tr>`).join('');
   for(const d of data.districts){const option=document.createElement('option');option.value=d.district;option.textContent=d.district;$('comparison-district').append(option)}
-  function renderList(){
+  $('comparison-categories').innerHTML=[['','全部分類'],...Object.entries(categories).map(([key,value])=>[key,value.label])].map(([key,label])=>`<button type="button" data-comparison-category="${key}" aria-pressed="${key===''}"><span>${esc(label)}</span><strong data-category-count>—</strong><small>組</small></button>`).join('');
+  function distanceText(entry){
+    if(entry.category!=='same_address_changed')return '';
+    const pair=distanceByID.get(entry.id);
+    return pair?`座標差距 ${esc(gap(pair.distanceMeters))}${pair.rank!==null?` · 全市 75 對排名 ${num(pair.rank)}`:''}`:distanceFailed?'座標距離暫時無法載入':'座標距離載入中…';
+  }
+  function entryHTML(entry,open=false){
+    const pair=distanceByID.get(entry.id);
+    return `<details class="comparison-entry" data-comparison-id="${esc(entry.id)}"${open?' open':''}><summary><span class="comparison-entry-main"><span class="comparison-entry-district">${esc(entry.district)} · ${esc(categories[entry.category].label)}</span><strong>${esc(entry.address||'地址未記錄')}</strong><span class="coordinate-entry-gap">${distanceText(entry)}</span></span><span class="comparison-entry-count">2024 ${num(entry.before.length)} 筆<br>2026 ${num(entry.after.length)} 筆</span><span class="comparison-entry-toggle"><span class="when-closed">查看兩版證據</span><span class="when-open">收合證據</span></span></summary><div class="comparison-entry-evidence"><p class="comparison-help">${esc(categories[entry.category].note)}${pair?` ${esc(pair.qualityNote)}`:''}</p><div class="comparison-entry-sources">${sourceRows(entry.before,'2024 封存版',data.meta.before.key)}${sourceRows(entry.after,'2026 官方主檔',data.meta.after.key)}</div></div></details>`;
+  }
+  function renderList(append=false){
+    const list=$('comparison-list');
+    if(append){
+      list.insertAdjacentHTML('beforeend',filtered.slice(list.children.length,shown).map(e=>entryHTML(e)).join(''));
+    }else{
+      const opened=new Set([...list.querySelectorAll('details[open]')].map(el=>el.dataset.comparisonId));
+      const active=document.activeElement,entry=active?.closest('[data-comparison-id]');
+      const focus=entry&&list.contains(active)?{id:entry.dataset.comparisonId,key:active.dataset.sourceKey,top:active.getBoundingClientRect().top}:null;
+      list.innerHTML=filtered.slice(0,shown).map(e=>entryHTML(e,opened.has(e.id))).join('');
+      if(focus){
+        const replacement=list.querySelector(`[data-comparison-id="${CSS.escape(focus.id)}"] ${focus.key?`[data-source-key="${CSS.escape(focus.key)}"]`:'summary'}`);
+        if(replacement){replacement.focus({preventScroll:true});window.scrollBy({top:replacement.getBoundingClientRect().top-focus.top,behavior:'instant'});}
+      }
+    }
     const count=comparisonCounts(filtered);
-    $('comparison-result-count').textContent=`${num(count.groups)} 組比對結果・2024 ${num(count.beforeRows)} 筆／2026 ${num(count.afterRows)} 筆來源列`;
-    $('comparison-category-note').textContent=state.category?categories[state.category].note:'全部分類都只是來源資料的比對結果。請依每項分類判讀，不能換算為撤除、新設或現場存量。';
-    $('comparison-distance-sort-field').hidden=state.category!=='same_address_changed';
-    $('comparison-list').innerHTML=filtered.length?filtered.slice(0,shown).map(e=>{
-      const pair=distanceByID.get(e.id);
-      const distance=pair?`<p class="coordinate-entry-gap">座標差距 ${esc(gap(pair.distanceMeters))}${pair.rank!==null?`・全 75 對排序 ${num(pair.rank)}`:''}<small>${esc(pair.qualityNote)}；尚未確認遷移。</small></p>`:'';
-      return `<article class="comparison-entry" data-comparison-id="${esc(e.id)}"><div class="comparison-entry-heading"><div><span class="comparison-entry-district">${esc(e.district)}・${esc(categories[e.category].label)}</span><h4>${esc(e.address||'地址未記錄')}</h4>${distance}</div><p>2024 ${num(e.before.length)} 筆<br>2026 ${num(e.after.length)} 筆</p></div><details><summary><span>查看原始列與座標</span><span aria-hidden="true">＋</span></summary><div class="comparison-entry-sources">${sourceRows(e.before,'2024 封存版',data.meta.before.key)}${sourceRows(e.after,'2026 官方主檔',data.meta.after.key)}</div></details></article>`;
-    }).join(''):'<p class="empty-state">沒有符合條件的比對結果。可改選行政區、分類或清除地址搜尋；沒有結果不代表當地沒有垃圾箱。</p>';
+    $('comparison-result-count').textContent=`${num(count.groups)} 組 · 2024 ${num(count.beforeRows)} 筆／2026 ${num(count.afterRows)} 筆來源列 · 已顯示 ${num(Math.min(shown,filtered.length))} 組`;
+    $('comparison-empty').hidden=filtered.length>0;
+    $('comparison-clear-search').hidden=!state.search;
+    $('comparison-all-categories').hidden=!state.category;
     $('comparison-more').hidden=filtered.length<=shown;
+    $('comparison-more').textContent=`再顯示 ${num(Math.max(0,Math.min(20,filtered.length-shown)))} 組比對結果`;
   }
-  function render(){
-    shown=20;filtered=filterComparison(data.entries,state);
-    if(state.category==='same_address_changed'&&distanceAnalysis&&$('comparison-distance-sort').value==='distance-desc')filtered=sortByCoordinateDistance(filtered,distanceAnalysis.pairs);
-    renderList();
+  function renderDistances(){
+    $('coordinate-distance-section').hidden=state.category!=='same_address_changed';
+    $('comparison-distance-sort').value=state.sort;
+    if(!distanceAnalysis)return;
+    const summary=summarizeCoordinateDistances(scope.entries,distanceAnalysis.pairs);
+    const range=state.district||'全市';
+    $('coordinate-distance-summary').textContent=`目前範圍（${range}${state.search?'・含地址搜尋':''}）${num(summary.pairCount)} 對：${num(summary.calculatedPairs)} 對可計算，${num(summary.unavailablePairs)} 對無法計算。${summary.calculatedPairs?`差距中位數 ${gap(summary.medianMeters)}，最小 ${gap(summary.minMeters)}，最大 ${gap(summary.maxMeters)}。`:''}${num(summary.coarseFlaggedPairs)} 對至少一側未通過台北座標粗篩；通過粗篩也不代表已核實。`;
+    $('coordinate-distance-buckets').innerHTML=summary.buckets.map(b=>`<li><span>${esc(b.label)}</span><strong>${num(b.count)} 對</strong></li>`).join('');
   }
-  $('comparison-district').addEventListener('change',e=>{state.district=e.target.value;render()});
-  $('comparison-category').addEventListener('change',e=>{state.category=e.target.value;render()});
-  $('comparison-search').addEventListener('input',e=>{state.search=e.target.value;render()});
-  $('comparison-reset').addEventListener('click',()=>{
-    Object.assign(state,{district:'',category:'not_reappeared',search:''});
-    $('comparison-district').value='';$('comparison-category').value='not_reappeared';$('comparison-search').value='';render();
-  });
-  for(const button of $('comparison-districts').querySelectorAll('button'))button.addEventListener('click',()=>{
-    state.district=button.dataset.comparisonDistrict;$('comparison-district').value=state.district;render();
-    $('comparison-district').focus({preventScroll:true});$('comparison-list-heading').scrollIntoView({block:'start'});
-  });
-  $('comparison-more').addEventListener('click',()=>{shown+=20;renderList()});
-  $('comparison-distance-sort').addEventListener('change',render);
-  $('coordinate-show-all').addEventListener('click',()=>{
-    Object.assign(state,{district:'',category:'same_address_changed',search:''});
-    $('comparison-district').value='';$('comparison-category').value=state.category;$('comparison-search').value='';$('comparison-distance-sort').value='distance-desc';
-    render();$('comparison-category').focus({preventScroll:true});$('comparison-list-heading').scrollIntoView({block:'start'});
-  });
-  function navigateSourceMap(event){
-    const link=event.target.closest('a[href]');
-    if(!link||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
-    event.preventDefault();history.pushState(null,'',link.href);window.dispatchEvent(new PopStateEvent('popstate'));
-    $('panel-map').scrollIntoView({block:'start'});
+  function render({reset=true}={}){
+    if(reset)shown=20;
+    scope=getComparisonScope(data.entries,state);
+    filtered=filterComparison(scope.entries,{category:state.category});
+    if(state.category==='same_address_changed'&&distanceAnalysis&&state.sort==='distance-desc')filtered=sortByCoordinateDistance(filtered,distanceAnalysis.pairs);
+    $('comparison-scope-heading').textContent=`目前範圍：${state.district||'全市'}${state.search?` · 地址含「${state.search}」`:''}`;
+    const c=scope.counts;
+    $('comparison-scope-totals').innerHTML=`2024 <strong>${num(c.beforeRows)}</strong> 筆 <span aria-hidden="true">→</span> 2026 <strong>${num(c.afterRows)}</strong> 筆 <span class="comparison-scope-delta">來源列差額 ${signed(c.afterRows-c.beforeRows)} 筆</span>`;
+    for(const button of $('comparison-categories').querySelectorAll('button')){
+      const category=button.dataset.comparisonCategory;
+      button.setAttribute('aria-pressed',String(category===state.category));
+      button.querySelector('[data-category-count]').textContent=num(category?scope.categoryCounts[category]:c.groups);
+    }
+    $('comparison-list-heading').textContent=state.category?categories[state.category].label:'全部比對結果';
+    $('comparison-category-note').textContent=state.category?categories[state.category].note:'先選分類縮小範圍，再展開地址查看兩版證據。相同欄位、缺列與座標差異，都不能直接換算為現場異動。';
+    renderDistances();renderList();
   }
-  for(const id of ['comparison-list','coordinate-distance-top'])$(id).addEventListener('click',navigateSourceMap);
+  function chooseCategory(value){state.category=value;if(value==='same_address_changed'&&distanceAnalysis)state.sort='distance-desc';render();}
+  $('comparison-district').addEventListener('change',event=>{state.district=event.target.value;render();});
+  $('comparison-search').addEventListener('input',event=>{state.search=event.target.value;render();});
+  $('comparison-categories').addEventListener('click',event=>{const button=event.target.closest('[data-comparison-category]');if(button)chooseCategory(button.dataset.comparisonCategory);});
+  $('comparison-reset').addEventListener('click',()=>{Object.assign(state,{district:'',category:'',search:'',sort:'source-order'});$('comparison-district').value='';$('comparison-search').value='';render();});
+  $('comparison-clear-search').addEventListener('click',()=>{state.search='';$('comparison-search').value='';render();$('comparison-search').focus({preventScroll:true});});
+  $('comparison-all-categories').addEventListener('click',()=>{chooseCategory('');$('comparison-categories').querySelector('button').focus({preventScroll:true});});
+  $('comparison-districts').addEventListener('click',event=>{
+    const button=event.target.closest('[data-comparison-district]');if(!button)return;
+    state.district=button.dataset.comparisonDistrict;$('comparison-district').value=state.district;$('comparison-district-overview').open=false;render();
+    $('comparison-district').focus({preventScroll:true});$('comparison-scope-heading').scrollIntoView({block:'center',behavior:'instant'});
+  });
+  $('comparison-more').addEventListener('click',()=>{shown+=20;renderList(true);});
+  $('comparison-distance-sort').addEventListener('change',event=>{state.sort=event.target.value;render();});
+  $('comparison-list').addEventListener('click',event=>{
+    const link=event.target.closest('a[href]');if(!link||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+    returnPosition={y:window.scrollY,key:link.dataset.sourceKey};
+    event.preventDefault();history.pushState(null,'',link.href);window.dispatchEvent(new PopStateEvent('popstate'));$('panel-map').scrollIntoView({block:'start',behavior:'instant'});
+  });
+  window.addEventListener('popstate',()=>{
+    if(location.hash!=='#comparison'||!returnPosition)return;
+    const saved=returnPosition;returnPosition=null;
+    requestAnimationFrame(()=>{$('comparison-list').querySelector(`[data-source-key="${CSS.escape(saved.key)}"]`)?.focus({preventScroll:true});window.scrollTo({top:saved.y,behavior:'instant'});});
+  });
+  $('coordinate-distance-retry').addEventListener('click',requestDistances);
   render();$('comparison-status').hidden=true;$('comparison-content').hidden=false;
-  // The additive distance analysis must not block the existing comparison.
-  loadDistances().catch(()=>{
-    $('coordinate-distance-status').textContent='座標距離暫時無法載入，請重新整理再試；原比對清單仍可查看。';
-    $('comparison-distance-sort-note').textContent='距離未載入，依原資料順序顯示。';
-  });
+  requestDistances();
+  async function requestDistances(){
+    distanceFailed=false;$('coordinate-distance-status').hidden=false;$('coordinate-distance-status').textContent='正在載入座標差距…';$('coordinate-distance-retry').hidden=true;
+    try{await loadDistances();}catch{
+      distanceFailed=true;$('coordinate-distance-status').textContent='座標距離暫時無法載入；來源比較仍可使用，清單保留原資料順序。';
+      $('coordinate-distance-retry').hidden=false;$('comparison-distance-sort-note').textContent='距離未載入，依原資料順序顯示。';renderList();
+    }
+  }
   async function loadDistances(){
     const response=await fetch('data/comparison-coordinate-distances.json');
     if(!response.ok)throw Error('Coordinate distance unavailable');
@@ -84,13 +125,10 @@ export async function initializeComparisonExperience(){
       for(const side of ['before','after'])for(const key of ['id','rawX','rawY','sourceRow'])if(pair[side]?.[key]!==entry[side][0][key])throw Error('Coordinate lineage mismatch');
       if(pair.distanceMeters!==null&&(typeof pair.distanceMeters!=='number'||!Number.isFinite(pair.distanceMeters)||pair.distanceMeters<0))throw Error('Invalid coordinate distance');
     }
-    distanceAnalysis=analysis;distanceByID=new Map(analysis.pairs.map(p=>[p.comparisonId,p]));
-    const s=analysis.summary;
-    $('coordinate-distance-summary').textContent=`共 ${num(s.pairCount)} 對；${num(s.calculatedPairs)} 對可計算、${num(s.unavailablePairs)} 對無法計算。可計算者的座標差距中位數為 ${gap(s.medianMeters)}，最小 ${gap(s.minMeters)}，最大 ${gap(s.maxMeters)}。有 ${num(s.coarseFlaggedPairs)} 對至少一版未通過台北座標粗篩，需另行核對；通過粗篩也不代表位置已確認。`;
-    $('coordinate-distance-buckets').innerHTML=s.buckets.map(b=>`<li><span>${esc(b.label)}</span><strong>${num(b.count)} 對</strong></li>`).join('');
-    $('coordinate-distance-top').innerHTML=analysis.pairs.filter(p=>p.distanceMeters!==null).slice(0,10).map(p=>`<tr><th scope="row">${num(p.rank)}</th><td><span>${esc(p.district)}</span><strong>${esc(p.address)}</strong><small>${esc(p.comparisonId)}・${esc(p.qualityNote)}</small></td><td>${esc(gap(p.distanceMeters))}</td><td><span>2024：${esc(p.before.rawX)}，${esc(p.before.rawY)}</span><span>2026：${esc(p.after.rawX)}，${esc(p.after.rawY)}</span><details><summary>查看來源列與地圖</summary>${sourceRows([p.before],'2024 封存版',data.meta.before.key)}${sourceRows([p.after],'2026 官方主檔',data.meta.after.key)}</details></td></tr>`).join('')||'<tr><td colspan="4">這批配對沒有可計算的距離，請在下方清單查看原始座標。</td></tr>';
-    $('comparison-distance-sort').disabled=false;$('comparison-distance-sort-note').textContent='排序沿用未四捨五入計算值的排名；無法計算者置於最後。排名不代表遷移。';
+
+    distanceAnalysis=analysis;distanceByID=new Map(analysis.pairs.map(pair=>[pair.comparisonId,pair]));
+    $('comparison-distance-sort').disabled=false;$('comparison-distance-sort-note').textContent='選擇座標差距排序時，以未四捨五入值比較，無法計算者置後。距離約至 0.1 公尺，不代表定位精度，也不是步行或遷移距離。';
     $('coordinate-distance-status').hidden=true;$('coordinate-distance-content').hidden=false;
-    render();
+    render({reset:false});
   }
 }

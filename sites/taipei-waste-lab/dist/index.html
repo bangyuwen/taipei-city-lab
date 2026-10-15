@@ -78,42 +78,33 @@
       <p class="context-note"><strong>如何判讀：</strong>地圖預設聚焦台北市區，可按「顯示搜尋範圍」查看所有可繪製位置。各年資料的日期、範圍與完整性不同。某個位置未出現在另一份資料中，還可能是搬移、漏列或更新差異，需要異動紀錄才能確認撤除。</p>
     </section>
 
-    <section id="panel-comparison" class="page-panel" aria-labelledby="comparison-heading" hidden>
-      <div class="section-heading"><div><p class="eyebrow">SNAPSHOT COMPARISON / 2024 → 2026</p><h2 id="comparison-heading">哪些地址，未再出現在清冊？</h2></div><p>比較公開資料列，逐項保留待查線索。</p></div>
-      <p class="comparison-caution"><strong>未再出現，不等於已撤除。</strong>兩份清冊的全市現場完整性都未核實，也沒有可跨年辨識的官方箱號。缺列、改寫地址與搬移，都可能影響結果。</p>
-      <div class="comparison-dates"><p><strong>2024 年 10 月封存版</strong><span>台北時間 2024-10-19 封存（UTC 10-18）；原調查／更新日期未知。</span></p><p><strong>2026 官方公開主檔</strong><span>2026-09-30 來源更新；2026-10-15 下載。目錄列數與主檔不同，北投區為 0 筆。</span></p></div>
-      <p id="comparison-status" role="status">正在載入版本比較…</p>
+    <section id="panel-comparison" class="page-panel comparison-panel" aria-labelledby="comparison-heading" hidden>
+      <header class="comparison-heading"><h2 id="comparison-heading">兩版清冊，差異在哪裡？</h2><p>選一個行政區或搜尋地址，再從同一份清單追查兩版證據。</p></header>
+      <div class="comparison-versions" aria-label="本次固定比較的兩份來源"><div><h3>2024 年 10 月封存版 <span>1,971 筆</span></h3><p>台北時間 2024-10-19 封存（UTC 10-18）。<br>原調查／更新日期未知。</p></div><div><h3>2026 官方公開主檔 <span>681 筆</span></h3><p>2026-09-30 來源更新；2026-10-15 下載。<br>目錄列數與主檔不同，北投區為 0 筆。</p></div></div>
+      <p class="comparison-caution"><strong>未再出現不等於撤除；座標不同不等於遷移。</strong>兩份清冊的全市現場完整性都未核實，也沒有跨年官方箱號。以下比較的是來源資料列。</p>
+      <p id="comparison-status" role="status">正在載入版本比較…</p><button id="comparison-retry" type="button" class="comparison-secondary" hidden>重新載入版本比較</button>
       <div id="comparison-content" hidden>
-        <div id="comparison-totals" class="comparison-totals" aria-label="兩版資料列概況"></div>
-        <p id="comparison-findings" class="comparison-findings"></p>
-        <div class="comparison-section-title"><h3>各行政區的資料列變化</h3></div>
-        <p id="comparison-table-note" class="comparison-help">單位為資料列；差額是主檔列數的差，不是撤除數。「同欄位」只表示地址與座標欄位相同。同址多筆未配對欄依序列出 2024／2026 筆數。窄螢幕可左右捲動表格。</p>
-        <div class="comparison-table-wrap" role="region" aria-label="各行政區版本差異，可左右捲動" tabindex="0"><table class="comparison-table" aria-describedby="comparison-table-note"><caption>2024 封存版與 2026 官方主檔；點行政區可篩選下方清單</caption><thead><tr><th scope="col">行政區</th><th scope="col">2024</th><th scope="col">2026</th><th scope="col">列數差額</th><th scope="col">同欄位</th><th scope="col">同址座標不同</th><th scope="col">同址多筆未配對<br>2024／2026</th><th scope="col">2024 地址<br>未再出現</th><th scope="col">只在 2026<br>出現的地址</th></tr></thead><tbody id="comparison-districts"></tbody></table></div>
-        <section id="coordinate-distance-section" class="coordinate-distance-section" aria-labelledby="coordinate-distance-heading">
-          <div class="comparison-section-title"><h3 id="coordinate-distance-heading">同址座標差距，有多大？</h3></div>
-          <p class="comparison-help">這 75 對在兩版的同一行政區、完整地址都各只有一筆，但座標欄位不同。下列距離只衡量原始座標差距，<strong>不能據此判定垃圾箱遷移</strong>。座標修正、精度或登錄差異，也可能造成差距。</p>
-          <p id="coordinate-distance-status" role="status">正在載入同址座標差距…</p>
-          <div id="coordinate-distance-content" hidden>
-            <p id="coordinate-distance-summary" class="comparison-findings"></p>
-            <ul id="coordinate-distance-buckets" class="coordinate-distance-buckets" aria-label="75 對座標差距的距離分組"></ul>
-            <h4>座標差距最大的 10 對</h4>
-            <p id="coordinate-distance-table-note" class="comparison-help">按未四捨五入的距離排序；以下顯示約至 0.1 公尺，不代表來源有相同定位精度。球面近似距離不是步行距離，也不是已確認的移動路徑。窄螢幕可左右捲動表格。</p>
-            <div class="comparison-table-wrap" role="region" tabindex="0" aria-label="座標差距前十名，可左右捲動"><table class="comparison-table coordinate-distance-table" aria-describedby="coordinate-distance-table-note"><caption>僅列可計算距離的配對；品質待核對者仍保留並標示</caption><thead><tr><th scope="col">排序</th><th scope="col">行政區與地址</th><th scope="col">座標差距</th><th scope="col">兩版原始經緯度</th></tr></thead><tbody id="coordinate-distance-top"></tbody></table></div>
-            <button id="coordinate-show-all" class="download-button" type="button">查看全部 75 對，按座標差距排序</button>
-          </div>
-          <details class="coordinate-distance-method"><summary><span>距離怎麼算，以及不能推論的事</span><span aria-hidden="true">＋</span></summary><p>使用 Haversine 公式，以半徑 6,371,000 公尺的球面計算兩組經緯度之間的最短表面距離。未計入道路、地形、橢球修正或座標基準轉換；兩版的實際定位精度未核實。</p><p>有效的全球經緯度都參與計算；超出台北粗篩範圍者標示待核對。任一座標無法解析或超出全球經緯度範圍時，保留該對並標為無法計算，不填成 0，也不列入距離統計。小於 0.1 公尺的差距以「&lt;0.1 公尺」顯示。</p><p>同址不保證是同一個實體箱。距離大不等於遷移，距離小也不能直接認定只是精度修正；仍需異動紀錄、座標作業說明或現場證據。</p><div class="comparison-downloads"><a href="https://www.movable-type.co.uk/scripts/latlong.html" target="_blank" rel="noopener noreferrer">Haversine 計算方法 ↗</a></div></details>
-        </section>
-        <div class="comparison-section-title"><h3 id="comparison-list-heading">逐項查看比對結果</h3><button id="comparison-reset" class="quiet-button" type="button">恢復預設篩選</button></div>
-        <div class="comparison-filters"><div><label for="comparison-district">行政區</label><select id="comparison-district"><option value="">全部行政區</option></select></div><div><label for="comparison-category">比對分類</label><select id="comparison-category"><option value="not_reappeared">2024 地址未再出現</option><option value="only_2026">只在 2026 出現的地址</option><option value="same_address_changed">同址座標不同，待核對</option><option value="ambiguous">同址多筆，未能配對</option><option value="same_fields">地址及座標欄位相同</option><option value="">全部分類</option></select></div><div><label for="comparison-search">地址或路名</label><input id="comparison-search" type="search" placeholder="例如：中山北路" maxlength="100" autocomplete="off"></div></div>
+        <div class="comparison-scope-controls"><div><label for="comparison-district">行政區</label><select id="comparison-district"><option value="">全部行政區</option></select></div><div><label for="comparison-search">地址或路名</label><input id="comparison-search" type="search" placeholder="例如：中山北路" maxlength="100" autocomplete="off"></div><button id="comparison-reset" type="button" class="comparison-secondary">重設全部條件</button></div>
+        <div class="comparison-scope-summary"><h3 id="comparison-scope-heading" tabindex="-1">目前範圍：全市</h3><p id="comparison-scope-totals"></p><small>以下分類數與清單都依此範圍更新。列數差額不是撤除數。</small></div>
+        <details id="comparison-district-overview" class="comparison-disclosure"><summary>比較全市 12 個行政區</summary><p id="comparison-table-note" class="comparison-help">這張全市對照表不受篩選影響；點行政區可套用到下方清單，並保留地址搜尋與分類。單位為來源列，差額不是撤除數。同址多筆未配對依序列出 2024／2026 筆數。</p><div class="comparison-table-wrap" role="region" tabindex="0" aria-label="全市各行政區版本差異，可左右捲動"><table class="comparison-table" aria-describedby="comparison-table-note"><caption>2024 封存版與 2026 官方主檔；完整原始分類對照</caption><thead><tr><th scope="col">行政區</th><th scope="col">2024</th><th scope="col">2026</th><th scope="col">列數差額</th><th scope="col">同欄位</th><th scope="col">同址座標不同</th><th scope="col">同址多筆未配對<br>2024／2026</th><th scope="col">2024 地址<br>未再出現</th><th scope="col">只在 2026<br>出現的地址</th></tr></thead><tbody id="comparison-districts"></tbody></table></div></details>
+        <div class="comparison-category-heading"><h3>選擇想追查的差異</h3><p>數字為比對組數；一組可能含多筆來源列，並非實體垃圾桶數。</p></div>
+        <div id="comparison-categories" class="comparison-categories" role="group" aria-label="比對分類"></div>
+        <div class="comparison-results-heading"><h3 id="comparison-list-heading">全部比對結果</h3><p id="comparison-result-count" role="status" aria-live="polite"></p></div>
         <p id="comparison-category-note" class="comparison-help"></p>
-        <div id="comparison-distance-sort-field" class="comparison-distance-sort" hidden><label for="comparison-distance-sort">同址座標不同的排序</label><select id="comparison-distance-sort" disabled><option value="distance-desc">座標差距由大到小</option><option value="source-order">原資料順序</option></select><span id="comparison-distance-sort-note">距離載入前依原資料順序顯示。</span></div>
-        <div class="comparison-results-bar"><p id="comparison-result-count" role="status"></p></div>
+        <section id="coordinate-distance-section" class="comparison-distance-tools" aria-label="目前範圍的座標差距" hidden>
+          <p><strong>同一份清單，按座標差距追查。</strong>距離只衡量兩版原始座標差異，不能據此判定遷移。</p>
+          <p id="coordinate-distance-status" role="status">正在載入座標差距…</p><button id="coordinate-distance-retry" class="comparison-secondary" type="button" hidden>重試座標距離</button>
+          <div id="coordinate-distance-content" hidden><p id="coordinate-distance-summary"></p><details class="comparison-distance-distribution"><summary>查看此範圍的距離分布</summary><ul id="coordinate-distance-buckets" aria-label="目前範圍的座標距離分組"></ul></details></div>
+          <div class="comparison-distance-sort"><label for="comparison-distance-sort">清單排序</label><select id="comparison-distance-sort" disabled><option value="source-order">原資料順序</option><option value="distance-desc">座標差距由大到小</option></select><small id="comparison-distance-sort-note">距離載入前依原資料順序顯示。</small></div>
+        </section>
         <div id="comparison-list" class="comparison-list" aria-labelledby="comparison-list-heading"></div>
-        <button id="comparison-more" class="load-more" type="button" hidden>顯示更多比對結果</button>
-        <p class="comparison-help">清單以地址群組／配對列呈現；同址多筆不合併為一個實體箱。展開各項可看原始地址、座標與來源列號。地圖連結會以該版地址搜尋，可能顯示多筆。</p>
+        <div id="comparison-empty" class="comparison-empty" hidden><p>沒有符合條件的比對結果。這不代表當地沒有垃圾桶。</p><button id="comparison-clear-search" class="comparison-secondary" type="button">清除地址搜尋</button><button id="comparison-all-categories" class="comparison-secondary" type="button">查看全部分類</button></div>
+        <button id="comparison-more" class="comparison-secondary comparison-more" type="button" hidden>顯示更多比對結果</button>
+        <p class="comparison-help">每組可展開兩版原始列、座標與來源列號；同址多筆仍逐列保留。地圖以該版地址搜尋，可能顯示多筆。</p>
       </div>
-      <details class="comparison-method"><summary><span>配對規則、分類與判讀限制</span><span aria-hidden="true">＋</span></summary><ol><li>用「行政區＋完整地址」比對。僅統一全半形、空白與「臺／台」，保留門牌、方向與標點，不用鄰近座標猜同一桶。</li><li>先按地址和座標欄位作逐列配對；數值格式如小數尾零視為相同。相同欄位也不能證明是同一個實體垃圾箱；原本無效的座標仍保留。</li><li>只有原始地址群組兩版都各一筆時，才列為「同址座標不同」。同址多筆的剩餘列都標為未能配對，不強行連接，也不把它們列成未再出現的地址。</li><li>某個完整地址在另一版完全找不到，才列為「未再出現」或「只在 2026 出現」。地址改寫仍可能漏配；這兩類不能當成撤除或新設。</li></ol><p>本次僅比較 1,971 筆封存版與 681 筆官方主檔。舊有 2024 年 5 月缺頁版、2026 示範區均保留在地圖，不參與這次比較。需有箱號、異動日期或現場證據，才能確認撤除、遷移或新設。</p></details>
-      <div class="comparison-downloads"><a class="text-link" href="#sources">查看各版本來源 ↗</a></div>
+      <details class="comparison-method"><summary><span>配對規則、分類與判讀限制</span></summary><ol><li>用「行政區＋完整地址」比對。僅統一全半形、空白與「臺／台」，保留門牌、方向與標點，不用鄰近座標猜同一桶。</li><li>先按地址和座標欄位作逐列配對；數值格式如小數尾零視為相同。相同欄位也不能證明是同一個實體垃圾箱；原本無效的座標仍保留。</li><li>只有原始地址群組兩版都各一筆時，才列為「同址座標不同」。同址多筆的剩餘列都標為未能配對，不強行連接，也不把它們列成未再出現的地址。</li><li>某個完整地址在另一版完全找不到，才列為「未再出現」或「只在 2026 出現」。地址改寫仍可能漏配；這兩類不能當成撤除或新設。</li></ol><p>本次僅比較 1,971 筆封存版與 681 筆官方主檔。舊有 2024 年 5 月缺頁版、2026 示範區均保留在地圖，不參與這次比較。需有箱號、異動日期或現場證據，才能確認撤除、遷移或新設。</p></details>
+      <details class="coordinate-distance-method"><summary><span>距離怎麼算，以及不能推論的事</span></summary><p>使用 Haversine 公式，以半徑 6,371,000 公尺的球面計算兩組經緯度之間的最短表面距離。未計入道路、地形、橢球修正或座標基準轉換；兩版的實際定位精度未核實。</p><p>有效的全球經緯度都參與計算；超出台北粗篩範圍者標示待核對。任一座標無法解析或超出全球經緯度範圍時，保留該對並標為無法計算，不填成 0，也不列入距離統計。小於 0.1 公尺的差距以「&lt;0.1 公尺」顯示。</p><p>同址不保證是同一個實體箱。距離大不等於遷移，距離小也不能直接認定只是精度修正；仍需異動紀錄、座標作業說明或現場證據。</p><div class="comparison-downloads"><a href="https://www.movable-type.co.uk/scripts/latlong.html" target="_blank" rel="noopener noreferrer">Haversine 計算方法 ↗</a></div></details>
+      <p class="comparison-source-link"><a href="#sources">查看各版本來源</a></p>
     </section>
 
     <section id="panel-design" class="page-panel design-panel" aria-labelledby="design-heading" hidden>
