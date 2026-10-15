@@ -21,7 +21,8 @@ export function csvForPoints(points, dataset) {
   return '\uFEFF'+[[...headers,'本站列號（非官方箱號）','行政區','地址','經度','緯度','座標初篩'],
     ...points.map(p=>[...context,p.id,p.district,p.address,p.rawX??p.x,p.rawY??p.y,p.quality])].map(r=>r.map(safe).join(',')).join('\r\n')+'\r\n';
 }
-export const allowedPages=['map','comparison','history','design','research','sources'];
+export const historyPages=['map','comparison','history'];
+export const allowedPages=[...historyPages,'countries','design','research','sources'];
 export function pageFromHash(hash) {
   const page=hash.replace(/^#/,'');
   return allowedPages.includes(page)?page:'map';

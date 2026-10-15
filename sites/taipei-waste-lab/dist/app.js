@@ -1,5 +1,5 @@
 import {annualCounts,events} from './history.js';
-import {filterPoints,recordStats,pageFromHash,escapeHTML as esc} from './data-utils.js';
+import {filterPoints,recordStats,pageFromHash,allowedPages,historyPages,escapeHTML as esc} from './data-utils.js';
 
 const $=id=>document.getElementById(id),num=n=>new Intl.NumberFormat('zh-TW',{maximumFractionDigits:1}).format(n);
 const colors={'2015':'#986838','2022':'#30694e','2024':'#396e88','2026':'#244d43'};
@@ -60,7 +60,11 @@ function panel(){
   for(const a of document.querySelectorAll('[data-page]')){
     if(a.dataset.page===currentPage)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
   }
-  for(const p of ['map','comparison','history','design','research','sources'])$(`panel-${p}`).hidden=p!==currentPage;
+  const inHistory=historyPages.includes(currentPage);
+  $('history-navigation').hidden=!inHistory;
+  const historyLink=document.querySelector('[data-section="history"]');
+  if(inHistory)historyLink.setAttribute('aria-current','page');else historyLink.removeAttribute('aria-current');
+  for(const p of allowedPages)$(`panel-${p}`).hidden=p!==currentPage;
   document.body.classList.toggle('design-mode',currentPage==='design');
   if(currentPage==='design')ensureDesign();
   if(currentPage==='comparison')ensureComparison();
