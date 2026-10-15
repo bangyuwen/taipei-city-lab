@@ -1,12 +1,11 @@
 # 垃圾箱研究文件
 
-這裡是垃圾箱研究與設計假設的正文維護位置。`sites/taipei-waste-lab/docs/` 舊路徑只保留導覽。修改研究後，在垃圾箱站執行 `npm run prepare-data`，會自動同步 `sites/taipei-waste-lab/data/research/` 的獨立原始碼副本及 `dist/research/` 下載產物；請勿直接修改這兩份衍生副本。
+這裡是垃圾箱研究與設計假設的正文維護位置。修改研究後，在垃圾箱站執行 `npm run prepare-data`，會自動同步 `sites/taipei-waste-lab/data/research/` 的獨立原始碼副本及 `dist/research/` 下載產物；請勿直接修改這兩份衍生副本。
 
 - [垃圾箱減少的研究脈絡](bin-reduction.md)：政策理由、歷史來源與待驗證假設。
 - [歷史分布與撤除紀錄](bin-removal-history.md)：早期分布、具日期撤除個案、資料範圍及異動證據缺口。
 - [全球公共垃圾箱設計與治理比較及台北應用](global-bin-practices.md)：16案例、原始來源與外推限制。
 - [桶型體驗的設計假設](bin-design.md)：四款概念、尺寸比較及試投／清運示意的適用範圍。
 - [歷史配置模型脈絡](model-research-context.md)：2026-10-14 七題配置模型的研究限制。
-- [垃圾箱獨立站歷史驗證](../../../sites/taipei-waste-lab/docs/validation.md)：原有地圖、歷程與 Three.js 的驗證環境及範圍。
 
 回到[垃圾箱題入口](../README.md)。

@@ -12,4 +12,4 @@
 | [社區健檢準備與文件查核](buildings/README.md) | `buildings` | `taipei-building-lab` |
 | [市政資料健檢](audit/README.md) | `audit` | `taipei-data-lab` |
 
-跨題資料查核、方法與歷史驗證見[共用文件](../shared/docs/README.md)。站名不表示已完成部署；各站公開網址須以實際部署結果為準。
+跨題資料查核與研究方法見[共用文件](../shared/docs/README.md)。站名不表示已完成部署；各站公開網址須以實際部署結果為準。
