@@ -193,6 +193,13 @@ async function start(){
     img.addEventListener('error',showPhotoError,{once:true});
     if(img.complete&&!img.naturalWidth)showPhotoError();
   }
+  $('panel-countries').addEventListener('click',event=>{
+    const button=event.target.closest('[data-country-target]');
+    if(!button)return;
+    const target=$(button.dataset.countryTarget);
+    if(!target)return;
+    target.focus({preventScroll:true});target.scrollIntoView({block:'start',behavior:'instant'});
+  });
   $('panel-research').addEventListener('click',event=>{
     const button=event.target.closest('[data-research-target]');
     if(!button)return;
