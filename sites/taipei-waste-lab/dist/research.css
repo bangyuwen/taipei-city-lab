@@ -141,3 +141,14 @@
  .research-reference-section>h3{font-size:24px}.research-section-intro{font-size:15px}.research-reference{padding:24px 0}.research-reference h4,.research-synthesis-item h4{font-size:22px}.research-reference-method{font-size:16px}.research-reference-facts dd{font-size:16px}.research-reference-meta{font-size:13px}.research-reference-source a{max-width:100%}
  .research-page .research-material>summary,.research-page .research-archive>summary{font-size:15px}.research-page .research-candidates{grid-template-columns:1fr}
 }
+
+/* Country index keeps different service types visible before the detailed cases. */
+.country-index{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:28px 0;padding:20px 0;border-block:1px solid var(--line)}
+.country-index h4{margin:0 0 10px;font-size:15px;color:var(--green)}
+.country-index ul{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px 18px}
+.country-index button{border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;text-align:left;min-height:44px;padding:6px 0;cursor:pointer;display:flex;gap:8px;align-items:center}
+.country-index button span{font-size:13px;color:var(--muted)}
+.country-index button:hover{border-color:var(--green)}
+.country-index button:focus-visible{outline:2px solid var(--green);outline-offset:4px}
+.country-case h4{scroll-margin-top:120px}
+@media(max-width:639px){.country-index{grid-template-columns:1fr;gap:18px}.country-case h4{scroll-margin-top:160px}}
