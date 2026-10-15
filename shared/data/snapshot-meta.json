@@ -1,0 +1,14 @@
+{
+  "retrievedAt": "2026-10-13T12:18:35Z",
+  "builtAt": "2026-10-13T12:25:27Z",
+  "buildStatus": "complete",
+  "bbox": [
+    121.51,
+    25.02,
+    121.57,
+    25.08
+  ],
+  "scope": "臺北市中心示範範圍；保留框內所有有效樹木與清潔箱，並非全市分析",
+  "coordinateSystem": "EPSG:4326; x=longitude, y=latitude",
+  "sampled": false
+}

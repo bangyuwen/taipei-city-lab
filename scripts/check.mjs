@@ -8,6 +8,10 @@ const root=path.resolve(import.meta.dirname,'..');
 const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const data=JSON.parse(read('dist/data/snapshot.json'));
 const assert=(test,message)=>{if(!test)throw new Error(message);};
+for(const script of ['build-topic-models.py','build-topic-data.py','build-topic-sites.py']){
+  const check=spawnSync('python',[path.join(root,'scripts',script),'--check'],{cwd:root,encoding:'utf8'});
+  assert(check.status===0,check.stdout+check.stderr);
+}
 function files(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?files(path.join(dir,e.name)):[path.join(dir,e.name)]);}
 for(const file of files(path.join(root,'dist')).filter(f=>f.endsWith('.js'))){const c=spawnSync(process.execPath,['--check',file],{encoding:'utf8'});assert(c.status===0,c.stderr);assert(file.includes(path.sep+'vendor'+path.sep)||read(path.relative(root,file)).split('\n').length<=500,'File exceeds 500 LOC: '+file);}
 assert(modules.length===7,'Must have seven modules');

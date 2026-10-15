@@ -1,0 +1,8 @@
+{
+  "name": "Noto Serif TC",
+  "weight": 700,
+  "source": "https://github.com/google/fonts/tree/main/ofl/notoseriftc",
+  "license": "SIL Open Font License 1.1",
+  "conversion": "Static weight 700, incumbent display glyphs plus answer-first homepage heading, WOFF",
+  "sha256": "dcce0ffb65b2c6e672a5e78f445921dbff523d5feb8bfe0acc990a36a448fbfe"
+}

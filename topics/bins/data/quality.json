@@ -1,0 +1,35 @@
+{
+  "bins": {
+    "sourceCount": 681,
+    "filteredCount": 294,
+    "invalidCoordinateCount": 1,
+    "invalidCoordinateSourceRows": [
+      655
+    ],
+    "excludedOutsideScopeCount": 386,
+    "nullCounts": {
+      "id": 0,
+      "x": 0,
+      "y": 0,
+      "address": 0,
+      "district": 0
+    },
+    "duplicateIdCount": 0,
+    "duplicateCoordinateCount": 0,
+    "districtCounts": {
+      "中山區": 50,
+      "中正區": 68,
+      "信義區": 56,
+      "士林區": 1,
+      "大同區": 21,
+      "大安區": 46,
+      "松山區": 52
+    },
+    "surveyDateRange": null,
+    "sampled": false,
+    "sha256": "ff3cf5528c057958f89871aa5300fc633b02d0f7b37131ab29d5ddc2f8e2370d",
+    "encoding": "Big5",
+    "identifierType": "衍生快照列編號；來源沒有官方唯一設施 ID",
+    "catalogCountMismatch": true
+  }
+}
