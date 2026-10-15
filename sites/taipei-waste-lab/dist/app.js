@@ -5,6 +5,19 @@ const $=id=>document.getElementById(id),num=n=>new Intl.NumberFormat('zh-TW',{ma
 const colors={'2015':'#986838','2022':'#30694e','2024':'#396e88','2026':'#244d43'};
 let catalog,map,L,layers,markers=new Map(),filtered=[],shown=40,currentPage='map';
 let state={year:'2015',district:'',search:''},mapStarting=false,eventFilter='all';
+let designExperience,designLoading;
+
+async function ensureDesign(){
+  if(!designLoading)designLoading=import('./design-ui.js').then(module=>{
+    designExperience=module.initializeDesignExperience();
+    designExperience.setActive(currentPage==='design');
+  }).catch(()=>{
+    designLoading=null;
+    $('design-status').textContent='桶型體驗暫時無法載入，請重新整理再試。';
+    $('design-fallback').hidden=false;
+  });
+  return designLoading;
+}
 
 function download(content,type,name){
   const url=URL.createObjectURL(new Blob([content],{type}));
@@ -33,7 +46,10 @@ function panel(){
   for(const a of document.querySelectorAll('[data-page]')){
     if(a.dataset.page===currentPage)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
   }
-  for(const p of ['map','history','sources'])$(`panel-${p}`).hidden=p!==currentPage;
+  for(const p of ['map','history','design','sources'])$(`panel-${p}`).hidden=p!==currentPage;
+  document.body.classList.toggle('design-mode',currentPage==='design');
+  if(currentPage==='design')ensureDesign();
+  designExperience?.setActive(currentPage==='design');
   if(currentPage==='map'&&catalog)ensureMap().then(()=>requestAnimationFrame(()=>{
     if(!map)return;
     map.invalidateSize({pan:false});

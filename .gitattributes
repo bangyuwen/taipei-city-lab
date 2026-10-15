@@ -1,5 +1,7 @@
 # Preserve source CSV and vendored asset bytes, including their CRLF endings.
 sites/taipei-waste-lab/dist/data/*.csv -text whitespace=cr-at-eol
 sites/taipei-waste-lab/dist/vendor/** -text whitespace=cr-at-eol linguist-vendored
+# Upstream Three.js contains mixed indentation; preserve and hash its original bytes.
+sites/taipei-waste-lab/dist/vendor/three/** -text whitespace=cr-at-eol,-space-before-tab linguist-vendored
 sites/taipei-waste-lab/dist/data/datasets.json linguist-generated
 sites/taipei-waste-lab/dist/data/*.geojson linguist-generated

@@ -8,6 +8,7 @@
 
 - 2015、2022、2024、2026 四份位置資料切換，行政區／地址搜尋、位置清單與篩選 CSV 下載。
 - 有來源的撤除時間線，區分政策理由、官方存量與具日期的撤除個案。
+- Three.js 桶型體驗：四種概念設計、尺寸與填滿程度、四個觀看視角、物件試投及清運門／內桶操作。
 - 各版本日期、完整性、原始來源與研究筆記下載。
 
 ## 資料範圍
@@ -43,13 +44,18 @@ npm run preview
 
 `python scripts/check-browser.py` 使用環境既有的 Playwright 與 Chromium 檢查桌機／手機、版本切換、篩選、下載與撤除歷程操作。畫面證據寫入忽略的 `qa/`。
 
+`python scripts/check-design-browser.py` 驗證桶型操作、桌機／手機、減少動態效果、位置資料失敗及 WebGL 不可用時的文字比較。Three.js 0.180.0 與 OrbitControls 自行託管，按需載入，版本與檔案雜湊見 `dist/vendor/three/manifest.json`。3D 體驗不依賴位置資料請求成功。
+
+桶型入口為 `#design`。四款為本站概念，並非台北現役產品規格；試投只比較固定物件的簡化剛性截面，不預測違規、清運效率或無障礙符合性。尺寸與模型假設見 `docs/bin-design.md`。
+
 ## 結構
 
 - `dist/`：可獨立部署的網站、固定資料、Leaflet 與字型。
 - `dist/history.js`：有來源的政策與撤除歷程。
+- `dist/bin-scene.js`：Three.js 概念街角；`design-model.js`：尺寸與試投規則；`design-ui.js`：操作介面。
 - `docs/`：討論脈絡、證據與研究限制。
 - `.openai/hosting.json`：本站部署身分與靜態目錄。
 
 ## 授權
 
-自寫程式採 MIT。Leaflet 保留原授權；字型保留 OFL 授權；政府資料及歷史副本依各來源條款使用。OpenStreetMap 底圖保留出處，按瀏覽範圍載入。
+自寫程式採 MIT。Leaflet 與 Three.js 保留原 MIT 授權；字型保留 OFL 授權；政府資料及歷史副本依各來源條款使用。OpenStreetMap 底圖保留出處，按瀏覽範圍載入。
