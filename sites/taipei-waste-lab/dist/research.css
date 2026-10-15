@@ -64,3 +64,14 @@
 .smart-bin-comparison .research-stage-table{min-width:940px;table-layout:fixed;font-size:14px}.smart-bin-comparison caption{text-align:left;font-size:13px;color:var(--muted);padding:0 0 12px}.smart-bin-comparison th:first-child{width:19%}.smart-bin-comparison td{line-height:1.8}.smart-bin-comparison td a,.smart-bin-comparison th a{color:var(--green)}
 
 .paid-disposal caption{text-align:left;font-size:13px;color:var(--muted);padding:0 0 12px}.paid-disposal>p>a{color:var(--green)}
+
+/* Implementation plan uses the existing research-page typography and palette. */
+.implementation-scope{margin:22px 0;padding:18px 22px;background:var(--light);border:1px solid var(--line)}
+.implementation-scope p{margin:0;max-width:78ch;line-height:1.9}
+.implementation-timeline{list-style:none;padding:0;margin:28px 0}
+.implementation-timeline>li{display:grid;grid-template-columns:170px minmax(0,1fr);gap:28px;padding:22px 0;border-bottom:1px solid var(--line)}
+.implementation-timeline .implementation-time{margin:0;color:var(--green);font-size:14px;line-height:1.9}
+.implementation-timeline h4{font-size:19px;font-weight:600;margin:0 0 8px}
+.implementation-timeline li>div>p{font-size:15px;line-height:1.9;max-width:74ch;margin:0;color:var(--muted)}
+.implementation-plan .service-evidence ol{padding-left:24px}
+@media(max-width:760px){.implementation-scope{padding:16px}.implementation-timeline>li{grid-template-columns:1fr;gap:8px;padding:20px 0}.implementation-time br{display:none}.implementation-timeline h4{font-size:18px}.implementation-timeline li>div>p{font-size:16px}}
