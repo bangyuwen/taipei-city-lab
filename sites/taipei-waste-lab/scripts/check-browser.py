@@ -1,6 +1,4 @@
 """Interaction checks against the local static site with the installed browser."""
-import csv
-import io
 import json
 from pathlib import Path
 from playwright.sync_api import sync_playwright
@@ -38,13 +36,7 @@ def main():
         assert count>0
         page.locator('.point-row button').first.click()
         assert page.locator('.leaflet-popup-content').is_visible()
-        with page.expect_download() as info:
-            page.click('#export-csv')
-        download=info.value
-        text=Path(download.path()).read_text(encoding='utf-8-sig')
-        records=list(csv.DictReader(io.StringIO(text)))
-        assert len(records)==count
-        assert all(r['行政區']=='中正區' for r in records)
+        assert page.locator('[download], #export-csv, #comparison-export, #comparison-district-export').count() == 0
         page.click('#reset-filters')
         assert page.locator('#result-count').inner_text()=='2,517'
         page.click('[data-year="2024-archive"]')
@@ -57,7 +49,7 @@ def main():
         page.select_option('#district','信義區')
         assert page.locator('#result-count').inner_text()=='0'
         assert '不能視為' in page.locator('#point-list').inner_text()
-        assert page.locator('#export-csv').is_disabled()
+        assert page.locator('[download], #export-csv, #comparison-export, #comparison-district-export').count() == 0
         page.reload()
         page.wait_for_selector('#load-status[hidden]', state='attached')
         assert page.locator('#district').input_value()=='信義區'
@@ -86,6 +78,7 @@ def main():
         page.click('[data-event-filter="all"]')
         page.click('[data-page="sources"]')
         assert page.locator('.source-card').count()==6
+        assert page.evaluate("Array.from(document.querySelectorAll('a[href]')).every(a => /^(https?:|#)/i.test(a.getAttribute('href')))"), 'Local attachment anchor remains'
         check_no_overflow(page)
         page.screenshot(path=str(QA/'desktop-sources.png'),full_page=True)
         page.click('[data-page="map"]')
@@ -136,7 +129,7 @@ def main():
         assert failure.locator('#panel-sources').is_visible()
         assert not failure_errors, failure_errors
         browser.close()
-    print(json.dumps({'desktop':'passed','mobile':'passed','exports':'passed',
+    print(json.dumps({'desktop':'passed','mobile':'passed','download_controls':'absent',
                       'checks':'versions, coordinate flags, partial coverage, deep links, history filters, unavailable-data navigation',
                       'external_tiles':'intentionally blocked for interaction regression'},ensure_ascii=False))
 

@@ -18,12 +18,12 @@ for (const monorepo of [true, false]) {
     t.after(() => rm(fixture, {recursive: true, force: true}));
     const output = join(fixture, 'sites/taipei-waste-lab');
     await mkdir(join(output, 'scripts'), {recursive: true});
-    for (const script of ['prepare-data.py', 'compare-snapshots.py', 'analyze-coordinate-distances.py',
+    for (const script of ['prepare-data.py', 'prepare-public.py', 'compare-snapshots.py', 'analyze-coordinate-distances.py',
                           'prepare-research-execution.py', 'estimate-budget.py', 'package-research.py']) {
       await cp(new URL('scripts/'+script, site), join(output, 'scripts', script));
     }
     await mkdir(join(output, 'dist'), {recursive: true});
-    await cp(new URL('dist/index.html', site), join(output, 'dist/index.html'));
+    await cp(new URL('dist/', site), join(output, 'dist'), {recursive: true, filter: source => !/[\\/]dist[\\/](data|research)([\\/]|$)/.test(source)});
     const bundle = monorepo ? join(fixture, 'topics/bins/research') : join(output, 'research');
     await cp(new URL('research/', site), bundle, {recursive: true});
     const inputs = monorepo ? join(fixture, 'topics/bins') : join(output, 'data');

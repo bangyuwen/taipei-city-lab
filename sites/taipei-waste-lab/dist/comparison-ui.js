@@ -1,13 +1,8 @@
 import {escapeHTML as esc} from './data-utils.js';
-import {categories,filterComparison,comparisonCounts,mapURL,comparisonCSV,districtCSV,formatCoordinateDistance as gap,sortByCoordinateDistance} from './comparison-utils.js';
+import {categories,filterComparison,comparisonCounts,mapURL,formatCoordinateDistance as gap,sortByCoordinateDistance} from './comparison-utils.js';
 
 const $=id=>document.getElementById(id),num=n=>new Intl.NumberFormat('zh-TW').format(n);
 const signed=n=>(n>0?'+':'')+num(n);
-function download(text,name){
-  const url=URL.createObjectURL(new Blob([text],{type:'text/csv;charset=utf-8'}));
-  const a=document.createElement('a');a.href=url;a.download=name;a.click();
-  setTimeout(()=>URL.revokeObjectURL(url),1000);
-}
 function sourceRows(records,label,version){
   if(!records.length)return `<p class="comparison-no-row">${label}：此比對組無資料列；不代表現場不存在。</p>`;
   return `<div class="comparison-source-rows"><h4>${label}・${num(records.length)} 筆來源列</h4>${records.map(r=>`<div class="comparison-source-row"><p>${esc(r.district)} ${esc(r.address)}</p><p>原始經緯度：${esc(r.rawX)}，${esc(r.rawY)}</p><small>${esc(r.quality)}<br>原檔實體起始行 ${num(r.sourceRow)}（含標頭）・本站 ${esc(r.id)}，非官方箱號</small><a href="${esc(mapURL(r,version))}">${r.plottable?'在此版本地圖搜尋地址 ↗':'在此版本清單查詢（座標待核對） ↗'}</a></div>`).join('')}</div>`;
@@ -29,7 +24,6 @@ export async function initializeComparisonExperience(){
     const count=comparisonCounts(filtered);
     $('comparison-result-count').textContent=`${num(count.groups)} 組比對結果・2024 ${num(count.beforeRows)} 筆／2026 ${num(count.afterRows)} 筆來源列`;
     $('comparison-category-note').textContent=state.category?categories[state.category].note:'全部分類都只是來源資料的比對結果。請依每項分類判讀，不能換算為撤除、新設或現場存量。';
-    $('comparison-export').disabled=!filtered.length;
     $('comparison-distance-sort-field').hidden=state.category!=='same_address_changed';
     $('comparison-list').innerHTML=filtered.length?filtered.slice(0,shown).map(e=>{
       const pair=distanceByID.get(e.id);
@@ -68,12 +62,10 @@ export async function initializeComparisonExperience(){
     $('panel-map').scrollIntoView({block:'start'});
   }
   for(const id of ['comparison-list','coordinate-distance-top'])$(id).addEventListener('click',navigateSourceMap);
-  $('comparison-export').addEventListener('click',()=>download(comparisonCSV(filtered,data.meta,distanceAnalysis),`taipei-bins-2024-2026-${state.category||'all'}-filtered.csv`));
-  $('comparison-district-export').addEventListener('click',()=>download(districtCSV(data.districts,data.meta),'taipei-bins-2024-2026-districts.csv'));
   render();$('comparison-status').hidden=true;$('comparison-content').hidden=false;
   // The additive distance analysis must not block the existing comparison.
   loadDistances().catch(()=>{
-    $('coordinate-distance-status').textContent='座標距離暫時無法載入，請重新整理再試；原比對清單與完整距離 CSV 仍可使用。';
+    $('coordinate-distance-status').textContent='座標距離暫時無法載入，請重新整理再試；原比對清單仍可查看。';
     $('comparison-distance-sort-note').textContent='距離未載入，依原資料順序顯示。';
   });
   async function loadDistances(){
