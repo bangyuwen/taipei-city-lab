@@ -7,7 +7,7 @@ ASSETS = (
     'index.html', 'app.js', 'history.js', 'data-utils.js', 'styles.css', 'mark.svg',
     'comparison-ui.js', 'comparison-utils.js', 'comparison.css',
     'design-ui.js', 'design-model.js', 'bin-scene.js', 'design.css',
-    'country-ui.js', 'country-comparison.js', 'country-scene.js', 'country-model-data.js', 'country-models.js', 'country.css',
+    'country-ui.js', 'country-comparison.js', 'country-stories.js', 'country-scene.js', 'country-model-data.js', 'country-models.js', 'country.css',
     'research-ui.js', 'research.css', 'fonts/city-serif.woff', 'fonts/OFL.txt',
     'vendor/three/three.module.js', 'vendor/three/three.core.js',
     'vendor/three/OrbitControls.js', 'vendor/three/LICENSE',

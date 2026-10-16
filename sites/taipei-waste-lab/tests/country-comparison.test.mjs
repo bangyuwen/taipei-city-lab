@@ -152,8 +152,10 @@ test("UI starts collapsed and filters results accessibly before invoking case se
   try {
     const container = new FakeElement("div");
     const selectedIds = [];
+    const playedIds = [];
     const root = initializeCountryComparison(container, {
-      onSelect: (id) => selectedIds.push(id)
+      onSelect: (id) => selectedIds.push(id),
+      onPlay: (id, origin) => playedIds.push([id, origin])
     });
     const buttons = findAll(root, (node) => node.className === "country-compare-filter");
     const rows = findAll(root, (node) => node.className === "country-compare-item");
@@ -165,7 +167,7 @@ test("UI starts collapsed and filters results accessibly before invoking case se
 
     assert.equal(container.children[0], root);
     assert.equal(buttons.length, 4);
-    assert.equal(buttons[0].textContent, "All");
+    assert.equal(buttons[0].textContent, "全部");
     assert.equal(buttons[0].getAttribute("aria-pressed"), "true");
     assert.equal(rows.length, 12);
     assert.equal(details.length, 12);
@@ -190,6 +192,11 @@ test("UI starts collapsed and filters results accessibly before invoking case se
       (node) => node.className === "country-compare-select"
     )[0];
     selectButton.click();
+    assert.deepEqual(selectedIds, ["country-us"]);
+    assert.deepEqual(playedIds, []);
+    const playButton = findAll(root, (node) => node.className === "country-compare-play")[0];
+    playButton.click();
+    assert.deepEqual(playedIds, [["country-us", playButton]]);
     assert.deepEqual(selectedIds, ["country-us"]);
   } finally {
     if (previousDocument === undefined) delete globalThis.document;

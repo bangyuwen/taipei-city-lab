@@ -11,7 +11,13 @@ function context(id) {
     material(color, metalness = 0, roughness = metalness > 0 ? 0.42 : 0.7) {
       const key = color + '|' + metalness + '|' + roughness;
       if (!materials.has(key)) {
-        materials.set(key, new THREE.MeshStandardMaterial({ color, metalness, roughness }));
+        materials.set(key, new THREE.MeshStandardMaterial({
+          color,
+          metalness,
+          roughness,
+          // Keep polymer bodies softly lit while existing metal trim catches the studio panels.
+          envMapIntensity: metalness >= 0.55 ? 1.16 : 0.78,
+        }));
       }
       return materials.get(key);
     },

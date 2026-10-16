@@ -122,7 +122,7 @@ export const COUNTRY_COMPARISONS = Object.freeze([
 ].map((comparison) => Object.freeze(comparison)));
 
 const FILTERS = [
-  { id: "all", label: "All" },
+  { id: "all", label: "全部" },
   { id: "daily", label: "日常投放" },
   { id: "collection", label: "滿溢與收運" },
   { id: "household", label: "家戶與集中" }
@@ -135,7 +135,7 @@ const COMPARISON_FIELDS = [
   ["evidence", "已有證據"]
 ];
 
-export function initializeCountryComparison(container, { onSelect } = {}) {
+export function initializeCountryComparison(container, { onSelect, onPlay } = {}) {
   if (!container || typeof container.replaceChildren !== "function") {
     throw new TypeError("A country comparison container is required.");
   }
@@ -201,7 +201,20 @@ export function initializeCountryComparison(container, { onSelect } = {}) {
       if (typeof onSelect === "function") onSelect(comparison.id);
     });
 
-    details.append(summary, fields, select);
+    select.setAttribute("aria-label", comparison.country + "：看案例與來源");
+    const actions = document.createElement("div");
+    actions.className = "country-compare-actions";
+    actions.append(select);
+    if (typeof onPlay === "function") {
+      const play = document.createElement("button");
+      play.type = "button";
+      play.className = "country-compare-play";
+      play.textContent = "試玩 3D 示意";
+      play.setAttribute("aria-label", comparison.country + "：試玩 3D 示意");
+      play.addEventListener("click", () => onPlay(comparison.id, play));
+      actions.append(play);
+    }
+    details.append(summary, fields, actions);
     item.append(details);
     list.append(item);
     return { item, comparison };
