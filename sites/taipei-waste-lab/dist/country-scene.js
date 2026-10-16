@@ -3,6 +3,56 @@ import {OrbitControls} from './vendor/three/OrbitControls.js';
 import {buildCountryModel} from './country-models.js';
 
 // Photo-based shapes and actions are illustrative, never measured equipment behavior.
+export function highlightCountryPart(model, partId) {
+  if (!model || typeof partId !== 'string') return () => {};
+
+  const roots = [];
+  model.traverse((object) => {
+    if (object.userData?.countryPartId === partId) roots.push(object);
+  });
+
+  const meshes = new Set();
+  function collect(node, root) {
+    if (node !== root && node.userData?.countryPartId && node.userData.countryPartId !== partId) return;
+    if (node.isMesh) meshes.add(node);
+    for (const child of node.children) collect(child, root);
+  }
+  for (const root of roots) collect(root, root);
+
+  const originals = new Map();
+  const clones = new Map();
+  const tint = new THREE.Color('#52d5b2');
+  function cloneMaterial(material) {
+    if (!material || typeof material.clone !== 'function') return material;
+    if (!clones.has(material)) {
+      const clone = material.clone();
+      if (clone.color?.lerp) clone.color.lerp(tint, 0.18);
+      if (clone.emissive?.set) {
+        clone.emissive.set('#138d70');
+        clone.emissiveIntensity = Math.max(clone.emissiveIntensity || 0, 0.62);
+      }
+      clones.set(material, clone);
+    }
+    return clones.get(material);
+  }
+
+  for (const mesh of meshes) {
+    const material = mesh.material;
+    originals.set(mesh, material);
+    mesh.material = Array.isArray(material)
+      ? material.map(cloneMaterial)
+      : cloneMaterial(material);
+  }
+
+  let cleared = false;
+  return () => {
+    if (cleared) return;
+    cleared = true;
+    for (const [mesh, material] of originals) mesh.material = material;
+    for (const material of clones.values()) material.dispose();
+  };
+}
+
 export function createCountryScene(container,{onFailure=()=>{},onChange=()=>{},onPlayback=()=>{}}={}){
   const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'low-power'});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.7));
@@ -52,7 +102,7 @@ export function createCountryScene(container,{onFailure=()=>{},onChange=()=>{},o
   const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({color:0x566e78,opacity:.22}));
   floor.rotation.x=-Math.PI/2;floor.position.y=-.012;floor.receiveShadow=true;scene.add(floor);
   let model,active=false,inViewport=false,frame=0,disposed=false,failed=false,lastTime=0;
-  let state='ready',progress=0,rotating=false,pointer=null,selectedPartId=null;
+  let state='ready',progress=0,rotating=false,pointer=null,selectedPartId=null,clearPartHighlight=()=>{};
   const motion=window.matchMedia('(prefers-reduced-motion: reduce)');
   const positions={overview:[3.2,2.5,4.5],front:[0,1.3,5.5],side:[5.5,1.3,0],back:[0,1.3,-5.5]};
   const canRender=()=>active&&inViewport&&!failed&&!disposed&&!document.hidden;
@@ -138,12 +188,15 @@ export function createCountryScene(container,{onFailure=()=>{},onChange=()=>{},o
   function getParts(){
     return model?model.userData.parts.map(({id,label,description})=>({id,label,description})):[];
   }
-  function selectPart(id=null){
+  function selectPart(id=null,{play:playAfterSelection=true}={}){
     if(!model||failed||disposed)return false;
     if(id!==null&&!model.userData.partActions[id])return false;
     resetAllActions();
+    clearPartHighlight();clearPartHighlight=()=>{};
     selectedPartId=id;progress=0;state='ready';rotating=false;lastTime=0;
-    play();
+    if(id!==null)clearPartHighlight=highlightCountryPart(model,id);
+    if(playAfterSelection)play();
+    else{reportPlayback();render()}
     return true;
   }
   function keydown(event){
@@ -205,7 +258,7 @@ export function createCountryScene(container,{onFailure=()=>{},onChange=()=>{},o
       const scale=2/Math.max(size.x,size.y,size.z);
       next.scale.setScalar(scale);next.position.set(-center.x*scale,-bounds.min.y*scale,-center.z*scale);
       next.traverse(child=>{if(child.isMesh){child.castShadow=true;child.receiveShadow=true}});
-      if(model){scene.remove(model);disposeObject(model)}
+      if(model){clearPartHighlight();clearPartHighlight=()=>{};scene.remove(model);disposeObject(model)}
       model=next;selectedPartId=null;scene.add(model);reset();setView();render();
     },
     setView,zoom,play,seek,reset,getParts,selectPart,
@@ -218,7 +271,7 @@ export function createCountryScene(container,{onFailure=()=>{},onChange=()=>{},o
       canvas.removeEventListener('wheel',wheel,true);canvas.removeEventListener('pointerdown',pointerdown);
       canvas.removeEventListener('pointermove',pointermove);canvas.removeEventListener('pointerup',pointerup);canvas.removeEventListener('pointercancel',pointercancel);
       controls.removeEventListener('change',changed);controls.removeEventListener('start',stopRotation);controls.dispose();
-      if(model)disposeObject(model);disposeObject(floor);key.shadow.dispose();environment.dispose();renderer.dispose();renderer.forceContextLoss();canvas.remove();
+      clearPartHighlight();clearPartHighlight=()=>{};if(model)disposeObject(model);disposeObject(floor);key.shadow.dispose();environment.dispose();renderer.dispose();renderer.forceContextLoss();canvas.remove();
     }
   };
 }

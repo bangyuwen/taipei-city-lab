@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import * as THREE from '../dist/vendor/three/three.module.js';
 import { COUNTRY_MODELS } from '../dist/country-model-data.js';
 import { buildCountryModel } from '../dist/country-models.js';
+import { highlightCountryPart } from '../dist/country-scene.js';
 
 const countryIds = [
   'japan',
@@ -199,4 +200,72 @@ test('each country exposes one to three illustrated parts with deterministic res
 test('unknown country ids are rejected', () => {
   assert.throws(() => buildCountryModel('missing'), RangeError);
   assert.throws(() => buildCountryModel(undefined), RangeError);
+});
+
+
+test('selected part highlighting isolates material clones and restores shared originals', () => {
+  const captureMaterials = (model) => {
+    const materials = new Map();
+    model.traverse((object) => {
+      if (object.isMesh) materials.set(object, object.material);
+    });
+    return materials;
+  };
+
+  for (const id of countryIds) {
+    const model = buildCountryModel(id);
+    for (const part of model.userData.parts) {
+      const roots = [];
+      model.traverse((object) => {
+        if (object.userData?.countryPartId === part.id) roots.push(object);
+      });
+      const highlightedMeshes = new Set();
+      const collect = (node, root) => {
+        if (node !== root && node.userData?.countryPartId && node.userData.countryPartId !== part.id) return;
+        if (node.isMesh) highlightedMeshes.add(node);
+        for (const child of node.children) collect(child, root);
+      };
+      for (const root of roots) collect(root, root);
+      assert.ok(highlightedMeshes.size > 0, id + ' ' + part.id + ' should highlight its visible model meshes');
+
+      const originals = captureMaterials(model);
+      const sourceAppearance = new Map();
+      for (const materialValue of originals.values()) {
+        for (const material of Array.isArray(materialValue) ? materialValue : [materialValue]) {
+          if (material && !sourceAppearance.has(material)) {
+            sourceAppearance.set(material, {
+              color: material.color?.toArray(),
+              emissive: material.emissive?.toArray(),
+              emissiveIntensity: material.emissiveIntensity,
+            });
+          }
+        }
+      }
+
+      const clearHighlight = highlightCountryPart(model, part.id);
+      for (const [mesh, originalValue] of originals) {
+        if (!highlightedMeshes.has(mesh)) {
+          assert.strictEqual(mesh.material, originalValue, id + ' ' + part.id + ' must not recolor unrelated meshes');
+          continue;
+        }
+        const original = Array.isArray(originalValue) ? originalValue : [originalValue];
+        const highlighted = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+        assert.equal(highlighted.length, original.length);
+        for (let index = 0; index < original.length; index += 1) {
+          assert.notStrictEqual(highlighted[index], original[index], id + ' ' + part.id + ' should use isolated material clones');
+        }
+      }
+      for (const [material, appearance] of sourceAppearance) {
+        assert.deepEqual(material.color?.toArray(), appearance.color, id + ' ' + part.id + ' must preserve shared source color');
+        assert.deepEqual(material.emissive?.toArray(), appearance.emissive, id + ' ' + part.id + ' must preserve shared source emissive');
+        assert.equal(material.emissiveIntensity, appearance.emissiveIntensity, id + ' ' + part.id + ' must preserve shared source intensity');
+      }
+
+      clearHighlight();
+      for (const [mesh, originalValue] of originals) {
+        assert.strictEqual(mesh.material, originalValue, id + ' ' + part.id + ' should restore material identity');
+      }
+      clearHighlight();
+    }
+  }
 });
