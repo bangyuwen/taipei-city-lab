@@ -73,6 +73,13 @@ export function initializeDesignExperience(){
     const summary=$('t1-specification').querySelector('summary');
     summary.focus({preventScroll:true});summary.scrollIntoView({block:'start',behavior:'instant'});
   });
+  for(const button of document.querySelectorAll('[data-design-jump]'))button.addEventListener('click',()=>{
+    const target=$(button.dataset.designJump);
+    if(!target)return;
+    if(target.tagName==='DETAILS')target.open=true;
+    const focusTarget=target.tagName==='DETAILS'?target.querySelector('summary'):target;
+    focusTarget.focus({preventScroll:true});focusTarget.scrollIntoView({block:'start',behavior:'instant'});
+  });
   $('design-retry').addEventListener('click',()=>{$('design-retry').hidden=true;loadScene();});
   render();return {setActive(value){active=value;scene?.setActive(value);if(value)loadScene();}};
 }
