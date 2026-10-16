@@ -880,7 +880,6 @@ export const TAIPEI_SCENARIOS = deepFreeze([
     question: '手上有一個已喝完的飲料杯，可以把它交回哪些連鎖通路回收？',
     answer: '可交給連鎖飲料店、便利商店、速食店或超級市場，不限品牌。這是台北公告的回收服務；相關國家案例只供比較設備與服務情境，不代表外地規則適用於台北。',
     source: source('臺北市環保局空杯回收說明 · 更新 2026-09-03', 'https://www.dep.gov.taipei/News_Content.aspx?n=D6521D207DE817C2&s=83534F468DAF3FF0&sms=53780C1906F94AB4'),
-    updatedAt: '2026-09-03',
     relatedIds: ['japan', 'singapore'],
   },
   {
@@ -889,7 +888,6 @@ export const TAIPEI_SCENARIOS = deepFreeze([
     question: '紙餐盒、牛奶盒與鋁箔包，和報紙、雜誌屬於同一類嗎？',
     answer: '不是。紙餐盒、牛奶盒與鋁箔包屬立體類；報紙、雜誌屬平面類。這是台北公告的分類資訊；相關國家案例只供比較設備與服務情境，不代表外地分類規則適用於台北。',
     source: source('臺北市環保局資源回收分類說明 · 更新 2026-09-24', 'https://www.dep.gov.taipei/News_Content.aspx?n=ACEFA960B5A4ACD7&s=252B16B10D3CA3F9'),
-    updatedAt: '2026-09-24',
     relatedIds: ['japan', 'singapore'],
   },
 ]);

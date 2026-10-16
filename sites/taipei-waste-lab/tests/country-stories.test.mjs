@@ -146,18 +146,18 @@ test('the country notes preserve the documented identity and photo limits', () =
 test('Taipei scenarios retain the two official facts, dates, and comparison-only links', () => {
   assert.equal(TAIPEI_SCENARIOS.length, 2);
   const [cup, cartons] = TAIPEI_SCENARIOS;
-  assertKeys(cup, ['id', 'title', 'question', 'answer', 'source', 'updatedAt', 'relatedIds'], 'cup scenario');
-  assertKeys(cartons, ['id', 'title', 'question', 'answer', 'source', 'updatedAt', 'relatedIds'], 'carton scenario');
+  assertKeys(cup, ['id', 'title', 'question', 'answer', 'source', 'relatedIds'], 'cup scenario');
+  assertKeys(cartons, ['id', 'title', 'question', 'answer', 'source', 'relatedIds'], 'carton scenario');
 
   assert.equal(cup.id, 'empty-drink-cup');
-  assert.equal(cup.updatedAt, '2026-09-03');
+  assert.match(cup.source.label, /更新 2026-09-03/);
   assert.equal(cup.source.url, 'https://www.dep.gov.taipei/News_Content.aspx?n=D6521D207DE817C2&s=83534F468DAF3FF0&sms=53780C1906F94AB4');
   assert.match(cup.answer, /連鎖飲料店、便利商店、速食店或超級市場/);
   assert.match(cup.answer, /不限品牌/);
   assert.match(cup.answer, /不代表外地規則適用於台北/);
 
   assert.equal(cartons.id, 'paper-container-shape');
-  assert.equal(cartons.updatedAt, '2026-09-24');
+  assert.match(cartons.source.label, /更新 2026-09-24/);
   assert.equal(cartons.source.url, 'https://www.dep.gov.taipei/News_Content.aspx?n=ACEFA960B5A4ACD7&s=252B16B10D3CA3F9');
   assert.match(cartons.answer, /紙餐盒、牛奶盒與鋁箔包屬立體類/);
   assert.match(cartons.answer, /報紙、雜誌屬平面類/);

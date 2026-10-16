@@ -46,7 +46,8 @@ export function initializeCountryExperience(){
   const buttons=new Map(),photos=new Map(),returns=new Map();
   const compact=window.matchMedia('(max-width:760px)');
   // Keep the primary action beside the model, independent of photo-caption height.
-  stage.after(viewer.querySelector('.country-play-actions'));
+  stage.after(guide,viewer.querySelector('.country-play-actions'));
+  modelColumn.append(viewer.querySelector('.country-play-workspace'));
   let scene,sceneLoading,sceneFactory,selected='japan',rendered,active=true,failed=false,showingPhoto=false;
   let parts=[],scrollFrame=0,guideStep=null,readingOrigin=null,playbackSignature='',observedPart;
 
@@ -188,6 +189,7 @@ export function initializeCountryExperience(){
     viewer.querySelector('[data-guide="previous"]').disabled=guideStep===0;
     viewer.querySelector('[data-guide="next"]').textContent=guideStep===2?'完成導覽':'下一個重點';
     notice.textContent=`重點 ${guideStep+1}，${stop.title}`;selectGuideView();
+    if(!failed)stage.scrollIntoView({block:'start',behavior:'instant'});
   }
   function endGuide({focus=false,announce=true}={}){
     guideStep=null;guide.hidden=true;guideToggle.setAttribute('aria-expanded','false');guideToggle.textContent='帶我看 3 個重點';
@@ -263,7 +265,7 @@ export function initializeCountryExperience(){
   guideToggle.addEventListener('click',()=>{
     if(guideStep!==null){endGuide({focus:true});return}
     guideStep=0;guide.hidden=false;guideToggle.setAttribute('aria-expanded','true');guideToggle.textContent='結束導覽';
-    showGuideStep();guideHeading.focus({preventScroll:true});guideHeading.scrollIntoView({block:'nearest',behavior:'instant'});
+    showGuideStep();guideHeading.focus({preventScroll:true});
   });
   viewer.addEventListener('click',event=>{
     const button=event.target.closest('button');if(!button)return;
@@ -276,7 +278,11 @@ export function initializeCountryExperience(){
     if(button.dataset.play==='toggle')scene.play();
     if(button.dataset.play==='rotate')scene.toggleRotation();
     if(button.dataset.play==='reset')scene.reset();
-    if(button.dataset.part!==undefined)scene.selectPart(button.dataset.part||null);
+    if(button.dataset.part!==undefined){
+      if(guideStep!==null)endGuide();
+      scene.selectPart(button.dataset.part||null);
+      stage.scrollIntoView({block:'start',behavior:'instant'});
+    }
   });
   timeline.addEventListener('input',()=>scene?.seek(Number(timeline.value)/100));
   retry.addEventListener('click',()=>{
