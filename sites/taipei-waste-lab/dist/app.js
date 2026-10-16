@@ -8,6 +8,7 @@ let state={year:'2015',district:'',search:''},mapStarting=false,eventFilter='all
 let designExperience,designLoading;
 let comparisonLoading;
 let researchLoading;
+let countryExperience,countryLoading;
 const pageScroll = new Map();
 
 function ensureResearch(){
@@ -41,6 +42,18 @@ async function ensureDesign(){
     $('design-fallback').hidden=false;
   });
   return designLoading;
+}
+
+function ensureCountries(){
+  if(!countryLoading)countryLoading=import('./country-ui.js').then(module=>{
+    countryExperience=module.initializeCountryExperience();
+    countryExperience.setActive(currentPage==='countries');
+    $('country-load-status').hidden=true;
+  }).catch(()=>{
+    countryLoading=null;
+    $('country-load-status').hidden=false;
+  });
+  return countryLoading;
 }
 
 function readURL(){
@@ -89,6 +102,8 @@ function panel(){
   if(currentPage==='design')ensureDesign();
   if(currentPage==='comparison')ensureComparison();
   if(currentPage==='research')ensureResearch();
+  if(currentPage==='countries')ensureCountries();
+  countryExperience?.setActive(currentPage==='countries');
   designExperience?.setActive(currentPage==='design');
   if(currentPage==='map'&&catalog)ensureMap().then(()=>requestAnimationFrame(()=>{
     if(!map)return;
