@@ -249,3 +249,7 @@ The desktop rail is fixed, petrol, and vertically stacked. Links use 16px text a
 - **Don't** separate a claim from the source and coverage limit that bounds it.
 - **Don't** add public downloads or attachments to the research presentation.
 - **Don't** borrow decorative motifs from unrelated visual worlds.
+
+## Country discovery and parts
+
+The country page begins with a still Three.js preview and visitor-triggered play. Keep one shared renderer, direct part selection with labeled button alternatives, deterministic seeking, and reduced-motion/offscreen suspension. Place photo comparison beside the primary action and retain the complete original caption, credit, license, and case limitations. Advanced camera controls live in a native disclosure. Align the case index and article order; track the current reading position without changing focus. Use the existing source-backed country summaries for purpose-filtered comparison; never normalize currencies or turn unknown costs into numbers. Source labels keep date and coverage text intact on narrow layouts.

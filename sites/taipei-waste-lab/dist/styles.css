@@ -171,15 +171,16 @@ summary::-webkit-details-marker { display: none; }
 .source-cards { display: block; }
 .source-card { padding: 28px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 200px minmax(0,1fr); gap: 8px 36px; }
 .source-card>* { grid-column: 2; }
-.source-card .source-label { grid-column: 1; grid-row: 1/5; display: block; }
+.source-card .source-label { grid-column: 1; grid-row: 1/5; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.source-label .outline-tag { white-space: nowrap; font-size: 13px; }
 .source-year { font-size: 32px; font-weight: 650; }
 .source-date { font-size: 13px; color: var(--muted); display: block; }
-.source-card h3 { font-size: 21px; margin: 0; }
-.source-card p { font-size: 15px; color: var(--muted); margin: 0; }
+.source-card h3 { font-size: 20px; margin: 0; }
+.source-card p { font-size: 16px; color: var(--muted); margin: 0; }
 .source-coverage { color: var(--green); font-weight: 650; }
 .source-card dl { display: flex; flex-wrap: wrap; gap: 28px; margin: 16px 0; }
 .source-card dt { color: var(--muted); font-size: 14px; }
-.source-card dd { margin: 0; font-size: 23px; font-variant-numeric: tabular-nums; }
+.source-card dd { margin: 0; font-size: 24px; font-variant-numeric: tabular-nums; }
 .source-actions { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; font-size: 14px; }
 .source-actions a { min-height: 44px; display: inline-flex; align-items: center; }
 .source-method { background: var(--light); padding: 28px; margin-top: 32px; }
