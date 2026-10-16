@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 600" role="img" aria-labelledby="title desc">
+<title id="title">T1 行人垃圾桶正視提案圖</title>
+<desc id="desc">提案外形寬48公分、高110公分，前方內縮投入口22乘14.3公分，中心離地82.5公分。無使用者翻蓋及踏板；下方為附右側齊平鎖把的維修門。尺寸為概念示意，非施工圖。</desc>
+<style>:root{color-scheme:light;--paper:#f2f6f7;--ink:#18333b;--accent:#16566a;--steel:#dbe3e5;--white:#fff;--muted:#536d76;--dim:#6b858d} text{font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;fill:var(--ink);font-size:18px}.body{fill:var(--steel);stroke:var(--accent);stroke-width:2.4}.line{fill:none;stroke:var(--accent);stroke-width:2}.dim{fill:none;stroke:var(--dim);stroke-width:1.3}.small{fill:var(--muted);font-size:18px}.accent{fill:var(--accent)} </style>
+<defs><marker id="arrow" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M8 0 0 4 8 8" fill="none" stroke="var(--dim)" stroke-width="1.1"/></marker></defs>
+<path fill="var(--paper)" d="M0 0h480v600H0z"/>
+<text x="28" y="34" font-size="21" font-weight="700">T1 ／ 正視</text><text x="452" y="34" text-anchor="end" class="small">行人垃圾桶提案</text>
+<!-- Dimension lines use the same conceptual envelope scale. -->
+<path class="dim" d="M152 83V54M328 83V54M152 63H328"/>
+<path class="dim" d="M152 63H328" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text x="240" y="56" text-anchor="middle" class="small">48 cm</text>
+<path class="dim" d="M142 92H77M142 495H77M87 92V495"/>
+<path class="dim" d="M87 92V495" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text x="65" y="296" text-anchor="middle" transform="rotate(-90 65 296)" class="small">110 cm</text>
+<rect x="152" y="92" width="176" height="403" rx="7" class="body"/>
+<path d="M159 106H321" class="line"/>
+<path d="M160 112H320" class="dim"/>
+<text x="240" y="146" text-anchor="middle" class="accent" font-size="25" font-weight="700">T1</text>
+<rect x="199.7" y="166.3" width="80.6" height="52.4" rx="2" fill="var(--accent)"/>
+<path d="M205 172H275V209H205" fill="var(--white)" stroke="var(--accent)" stroke-width="1.5"/>
+<path d="M205 209 217 217H278" fill="none" stroke="var(--dim)" stroke-width="1.4"/>
+<path class="dim" d="M282 192.5H378M367 192.5V495M336 495H378"/>
+<path class="dim" d="M367 192.5V495" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text x="394" y="344" transform="rotate(-90 394 344)" text-anchor="middle" class="small">投入口中心 82.5 cm</text>
+<circle cx="240" cy="192.5" r="3" fill="var(--dim)"/>
+<path class="dim" d="M230 192.5H250M240 182.5V202.5"/>
+<text x="240" y="244" text-anchor="middle" class="small">22 × 14.3 cm</text>
+<rect x="163" y="260" width="154" height="212" rx="3" fill="var(--white)" stroke="var(--accent)" stroke-width="1.8"/>
+<text x="240" y="304" text-anchor="middle" font-size="24" font-weight="650">一般垃圾</text>
+<text x="240" y="333" text-anchor="middle" font-size="19">General waste</text>
+<rect x="294" y="373" width="14" height="43" rx="3" fill="var(--steel)" stroke="var(--accent)" stroke-width="1.6"/>
+<circle cx="301" cy="385" r="2.5" fill="var(--accent)"/>
+<path d="M297 402H305" class="line"/>
+<path d="M153 480H327" class="line"/>
+<path d="M126 495H350" class="line"/>
+<text x="240" y="531" text-anchor="middle" class="small">內縮投入口・無翻蓋／踏板</text>
+<text x="240" y="575" text-anchor="middle" class="small">提案尺寸・非施工圖</text>
+</svg>

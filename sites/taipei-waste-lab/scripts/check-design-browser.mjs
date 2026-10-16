@@ -445,6 +445,27 @@ async function newPage(browser, counters, options = {}) {
   return { context, page, diagnostics };
 }
 
+async function testT1Proposal(page) {
+  await selectDesign(page, 'hotspot');
+  await click(page, '#design-try-cleaning');
+  await waitForAttribute(page, '[data-design="street"]', 'aria-pressed', 'true');
+  await waitForAttribute(page, '[data-design-role="worker"]', 'aria-pressed', 'true');
+  await waitForAttribute(page, '#design-service', 'aria-pressed', 'true');
+  assert.equal(await page.evaluate(() => document.activeElement.id), 'design-service');
+  await click(page, '#design-service');
+  await waitForAttribute(page, '#design-service', 'aria-pressed', 'false');
+  await click(page, '#design-read-proposal');
+  assert.equal(await page.locator('#t1-specification').getAttribute('open'), '');
+  assert.equal(await page.evaluate(() => document.activeElement === document.querySelector('#t1-specification summary')), true);
+  await page.locator('.t1-drawings img').evaluateAll(images => Promise.all(images.map(image => image.decode())));
+  assert.equal(await page.locator('.t1-drawings img').count(), 2);
+  const fixedSpecification = await page.locator('.t1-specs').innerText();
+  await selectDesign(page, 'household');
+  assert.equal(await page.locator('.t1-specs').innerText(), fixedSpecification,
+    'other service concepts must not silently rewrite the fixed T1 proposal');
+  await page.locator('#t1-specification summary').click();
+}
+
 async function runDesktop(browser, counters, result) {
   const { context, page, diagnostics } = await newPage(browser, counters, {
     viewport: { width: 1440, height: 1000 },
@@ -464,6 +485,7 @@ async function runDesktop(browser, counters, result) {
     assert.equal(await page.evaluate(() =>
       window.__designQaCanvas === document.querySelector('#design-viewport canvas')),
     true, 'navigation reuses the original canvas');
+    await testT1Proposal(page);
     result.desktop = 'passed';
     assertHealthy(diagnostics);
   } finally {
@@ -512,6 +534,7 @@ async function runReducedMotion(browser, counters, result) {
     await selectView(page, 'wheelchair');
     await assertNoOverflow(page);
     assertHealthy(diagnostics);
+    await testT1Proposal(page);
     result.reduced_motion = 'passed';
   } finally {
     await context.close();
@@ -568,6 +591,7 @@ async function runWebglFallback(browser, counters, result) {
     }, null, { timeout: PAGE_TIMEOUT });
     assert.equal(await page.locator('#design-viewport canvas').count(), 0);
     assertHealthy(diagnostics, { allowedConsole: [/webgl/i] });
+    await testT1Proposal(page);
     result.webgl_fallback_all_purposes = 'passed';
   } finally {
     await context.close();
