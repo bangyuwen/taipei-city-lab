@@ -17,8 +17,13 @@ def ready(page):
     page.wait_for_selector('.leaflet-container')
 
 def navigate(page, panel):
+    menu = page.locator('#site-menu-toggle')
+    if menu.is_visible() and not page.locator('#site-navigation').is_visible():
+        menu.click()
     if panel in ('map', 'comparison', 'history') and not page.locator('#history-navigation').is_visible():
         page.locator('[data-section="history"]').click()
+    if panel in ('map', 'comparison', 'history') and menu.is_visible() and page.locator('#site-navigation').is_visible():
+        menu.click()
     page.locator(f'[data-page="{panel}"]').click()
 
 def main():

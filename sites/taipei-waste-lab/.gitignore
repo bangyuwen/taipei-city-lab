@@ -5,3 +5,6 @@ qa/
 *.tar.gz
 
 /out/
+
+.impeccable/review/
+.impeccable/mocks/
