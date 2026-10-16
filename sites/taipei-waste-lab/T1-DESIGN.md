@@ -44,17 +44,18 @@ T1 is an initial concept brief, not a completed design selection. Research-to-re
 
 ## Delivery process and current status
 
-The website currently presents a seven-stage delivery sequence. The complete design plan adds the missing synthesis, alternatives and design-development work before this downstream sequence. It does not record user completion, assign real personnel or imply that a passed concept review authorizes physical deployment.
+The website presents five primary stages from needs to a metal prototype, followed by acceptance, an approved pilot and production/operations inside a secondary disclosure. Each stage shows a deliverable and current evidence status while closed. The reading order is the interactive workspace, process, then detailed T1 proposal. It records no completed tasks or assigned personnel and does not imply authorization for physical deployment.
 
-| Stage | Proposed participants | Deliverable and advancement condition | Current evidence |
-| --- | --- | --- | --- |
-| Needs and site confirmation | Site manager, pedestrians and collection crew | Survey and service brief; named operator and feasible access/collection conditions | Use context chosen; field agreement pending |
-| Concept and validation definition | Designer, manager, crew and manufacturer | Versioned concept plus test methods, loads, thresholds, owners and failure disposition agreed before testing | Concept available; quantitative acceptance agreement pending |
-| Full-size operation mock-up | Designer and representative users/crew | Task observations, problems and dimension revisions; required operations feasible under agreed conditions | Not made or tested |
-| Engineering, quotation and metal prototype | Manufacturer and appropriate specialists | Manufacturing drawings, parts/materials, quotation, prototype and fixed test plan; engineering and serviceability review complete | No fabrication drawings, quotation or physical prototype |
-| Physical acceptance and correction | Assigned acceptance owner and manufacturer | Passed/failed/untested results and revision-bound retests; every required item passed | Untested, performance unproven |
-| Approved small pilot | Site manager and collection operator | Baseline, approved siting/operations, comparable observations and continue/revise/stop recommendation | No approval, installation or measured outcomes |
-| Production decision and ongoing service | Manager, procurement, supplier and crew | Supported expansion decision, funded operations, spares/warranty, asset IDs, training, periodic review and retirement route | Depends on pilot evidence and procurement decision |
+| Stage | Deliverable and advancement condition | Current evidence |
+| --- | --- | --- |
+| Needs and evidence | Prioritized requirements, disposal destinations, sources, unknowns and responsible roles; desk design can proceed with explicit conditions | Use context, research and plan available; synthesis and field confirmation pending |
+| Same-need alternatives and selection | Baseline and A/B/C comparison under equivalent service needs; provisional rationale, costs/tradeoffs and reversal conditions | Comparison framework available; no completed comparison or selected design |
+| Complete product and visual design | Four views, section, exploded parts, materials/labels, siting and complete service sequence; coherent version with early manufacturing input | Basic T1 drawings available; full design package pending |
+| Full-size operation mock-up | Real task observations, problems and revised design; necessary operations feasible under agreed conditions | Not made or tested |
+| Engineering, quotation and metal prototype | Manufacturing drawings, parts/materials, itemized quote, numbered prototype and test plan fixed before fabrication | No engineering sign-off, quotation or physical prototype |
+| Later: physical acceptance | Revision-bound passed/failed/untested records; correct and retest before field use | Untested, performance unproven |
+| Later: approved pilot | Approved siting and operations, baseline, comparable observations and continue/revise/stop recommendation | No approval, installation or measured outcomes |
+| Later: production and operations | Supported expansion decision, procurement, funded operations, spares/warranty, training and retirement route | Depends on evidence and procurement decision |
 
 Return failures to the relevant stage and retain their records. Changes in critical parts or operating conditions require reassessment of affected evidence. No promised production date or completion percentage is derived from this sequence. Public stages link to existing T1 specifications and validation details instead of duplicating numerical targets.
 
