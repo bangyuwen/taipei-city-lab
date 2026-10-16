@@ -8,6 +8,7 @@ let state={year:'2015',district:'',search:''},mapStarting=false,eventFilter='all
 let designExperience,designLoading;
 let comparisonLoading;
 let researchLoading;
+const pageScroll = new Map();
 
 function ensureResearch(){
   if(!researchLoading)researchLoading=import('./research-ui.js').then(module=>module.initializeResearch()).catch(()=>{
@@ -60,9 +61,22 @@ function syncURL(){
 function dataset(){return catalog.datasets.find(d=>d.key===state.year)}
 function panel(){
   const previousPage=currentPage;
-  currentPage=pageFromHash(location.hash);
+  const nextPage=pageFromHash(location.hash);
+  if(nextPage!==previousPage)pageScroll.set(previousPage,window.scrollY);
+  currentPage=nextPage;
   for(const a of document.querySelectorAll('[data-page]')){
     if(a.dataset.page===currentPage)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
+  }
+  document.body.dataset.page=currentPage;
+  if(previousPage!==currentPage){
+    document.querySelector('.site-header').classList.remove('menu-open');
+    $('site-menu-toggle').setAttribute('aria-expanded','false');
+    requestAnimationFrame(()=>{
+      const heading=document.querySelector(`#panel-${currentPage} h2`);
+      heading?.setAttribute('tabindex','-1');
+      heading?.focus({preventScroll:true});
+      window.scrollTo({top:pageScroll.get(currentPage)??0,behavior:'instant'});
+    });
   }
   const inHistory=historyPages.includes(currentPage);
   $('history-navigation').hidden=!inHistory;
@@ -187,6 +201,35 @@ function renderTimeline(){
   $('timeline').innerHTML=visible.map(e=>`<article class="timeline-event"><div class="timeline-date">${esc(e.date)}<small>${esc(e.tag)}</small></div><div class="timeline-body"><h4>${esc(e.title)}</h4><p>${esc(e.text)}</p>${e.steps?'<div class="case-steps">'+e.steps.map(([date,text])=>`<div class="case-step"><strong>${esc(date)}</strong><span>${esc(text)}</span></div>`).join('')+'</div>':''}<div class="event-sources">${e.sources.map(([label,url])=>`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>`).join('')}</div><p class="event-limit">${esc(e.limit)}</p></div></article>`).join('');
 }
 async function start(){
+  document.body.classList.add('enhanced');
+  $('site-menu-toggle').hidden=false;
+  $('site-menu-toggle').addEventListener('click',()=>{
+    const open=document.querySelector('.site-header').classList.toggle('menu-open');
+    $('site-menu-toggle').setAttribute('aria-expanded',String(open));
+  });
+  document.querySelector('#site-navigation').addEventListener('click',event=>{
+    const link=event.target.closest('a');
+    if(!link)return;
+    if(pageFromHash(link.hash)===currentPage){
+      const heading=document.querySelector(`#panel-${currentPage} h2`);
+      heading?.setAttribute('tabindex','-1');
+      heading?.focus({preventScroll:true});
+    }
+    document.querySelector('.site-header').classList.remove('menu-open');
+    $('site-menu-toggle').setAttribute('aria-expanded','false');
+  });
+  document.querySelector('.site-header').addEventListener('keydown',event=>{
+    if(event.key==='Escape'&&document.querySelector('.site-header').classList.contains('menu-open')){
+      document.querySelector('.site-header').classList.remove('menu-open');
+      $('site-menu-toggle').setAttribute('aria-expanded','false');
+      $('site-menu-toggle').focus();
+    }
+  });
+  for(const article of document.querySelectorAll('.country-case')){
+    const back=document.createElement('button');
+    back.type='button';back.className='country-return';back.dataset.countryTarget='countries-heading';back.textContent='返回國家索引';
+    article.append(back);
+  }
   renderHistory();
   for(const img of document.querySelectorAll('.country-photo img')){
     const showPhotoError=()=>{img.hidden=true;img.nextElementSibling.hidden=false};
@@ -198,6 +241,9 @@ async function start(){
     if(!button)return;
     const target=$(button.dataset.countryTarget);
     if(!target)return;
+    for(const entry of document.querySelectorAll('.country-index button')){
+      if(entry===button)entry.setAttribute('aria-current','location');else entry.removeAttribute('aria-current');
+    }
     target.focus({preventScroll:true});target.scrollIntoView({block:'start',behavior:'instant'});
   });
   $('panel-research').addEventListener('click',event=>{

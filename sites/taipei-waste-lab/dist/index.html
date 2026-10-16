@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#244d43">
+  <meta name="theme-color" content="#123d49">
   <meta name="description" content="依資料比較台北垃圾箱設置、清運與家戶垃圾分流，保留歷史清冊、版本差異與證據限制。">
   <title>台北垃圾箱研究｜設置、清運與家戶分流</title>
   <link rel="icon" href="mark.svg" type="image/svg+xml">
@@ -18,25 +18,26 @@
   <a class="skip-link" href="#main">跳到主要內容</a>
   <header class="site-header">
     <a class="brand" href="#map" aria-label="台北垃圾箱研究首頁"><img src="mark.svg" alt="" width="34" height="34"><span>台北垃圾箱研究<small>TAIPEI WASTE LAB</small></span></a>
-    <nav aria-label="主要導覽">
+    <button id="site-menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" hidden>導覽</button>
+    <nav id="site-navigation" aria-label="主要導覽">
       <a href="#map" data-section="history" aria-current="page">垃圾桶歷史</a>
       <a href="#countries" data-page="countries">各國垃圾桶</a>
       <a href="#design" data-page="design">用途設計</a>
       <a href="#research" data-page="research">論文與實務</a>
       <a href="#sources" data-page="sources">資料與來源</a>
     </nav>
-    <span class="header-note">一個可查核的城市議題</span>
+    <p class="header-note">從公開資料出發，<br>把問題與證據一起看。</p>
   </header>
 
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <h1 id="hero-title">街頭垃圾，怎麼處理？<br><span>從設置、清運到家戶分流。</span></h1>
+        <h1 id="hero-title">街頭垃圾，怎麼處理？<span>從一個位置，讀懂城市服務。</span></h1>
         <p class="hero-description">用保存清冊、官方紀錄與研究找答案：行人在哪裡投放，清潔隊怎麼收，以及家戶與商家垃圾如何各有去處。</p>
         <a class="text-link" href="#research">閱讀我們的判斷</a>
       </div>
       <aside class="research-note service-hero-note" aria-label="研究判斷與限制">
-        <h2>每個設置方案，<br>都要有收運安排。</h2>
+        <h2>每個設置方案，都要有收運安排。</h2>
         <p>先改善有證據的服務問題，再比較增設、增容或重配。入口設計只是防混入的一環，還要配合合法投放管道與管理責任。</p>
         <div class="note-bottom"><span>依現有資料提出建議</span><span class="outline-tag">效果尚待驗證</span></div>
       </aside>
@@ -54,25 +55,25 @@
     <div id="load-status" class="load-status" role="status">正在載入保存的位置資料…</div>
 
     <section id="panel-map" class="page-panel" aria-labelledby="map-heading">
-      <div class="section-heading"><div><p class="eyebrow">01 / DISTRIBUTION</p><h2 id="map-heading">先看當時，垃圾箱在哪裡。</h2></div><p>切換資料版本，查看有保存紀錄的位置。</p></div>
+      <div class="section-heading"><div><h2 id="map-heading">找當時的垃圾箱位置</h2></div><p>切換資料版本，查看有保存紀錄的位置。</p></div>
       <div id="dataset-buttons" class="dataset-switch" role="group" aria-label="選擇位置資料版本"></div>
       <div id="dataset-version-field" class="dataset-version-field" hidden><label for="dataset-version">同年度資料版本</label><select id="dataset-version"></select></div>
       <p id="dataset-completeness" class="dataset-completeness" role="status"></p>
-      <div class="dataset-meta"><div><span id="dataset-date"></span><a id="dataset-source" target="_blank" rel="noopener noreferrer">查看原始來源 ↗</a></div><p id="dataset-note"></p></div>
+      <div class="dataset-meta"><div><span id="dataset-date"></span><a id="dataset-source" target="_blank" rel="noopener noreferrer">查看原始來源 ↗</a></div><details class="dataset-limit"><summary>查看保存範圍與座標限制</summary><p id="dataset-note"></p></details></div>
       <div class="map-layout">
-        <div class="map-column"><div class="map-topline"><span id="map-legend">保存位置</span><button id="fit-map" type="button">顯示搜尋範圍 <span aria-hidden="true">⌖</span></button></div>
+        <section class="map-filter-fields" aria-label="篩選位置"><div class="filter-heading"><h3>找一個位置</h3><button id="reset-filters" class="quiet-button" type="button">清除篩選</button></div>
+          <label for="district">行政區</label><select id="district"><option value="">全部行政區</option></select>
+          <label for="search">地址或路名</label><div class="search-input"><input id="search" type="search" placeholder="例如：中山北路" maxlength="100" autocomplete="off"></div>
+          </section>
+        <div class="map-column"><div class="map-topline"><span id="map-legend">保存位置</span><button id="fit-map" type="button">顯示搜尋範圍 </button></div>
           <div id="map" role="region" aria-label="垃圾箱位置地圖"></div>
           <p id="map-status" class="map-status" role="status"></p>
           <div class="map-bottomline"><span id="map-caption">地圖只顯示可繪製的保存位置。</span><span>點擊位置查看地址</span></div>
         </div>
-        <aside class="map-sidebar" aria-label="篩選與位置清單">
-          <div class="filter-heading"><h3>找一個位置</h3><button id="reset-filters" class="quiet-button" type="button">清除篩選</button></div>
-          <label for="district">行政區</label><select id="district"><option value="">全部行政區</option></select>
-          <label for="search">地址或路名</label><div class="search-input"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="例如：中山北路" maxlength="100" autocomplete="off"></div>
-          <div class="result-summary" aria-live="polite"><strong id="result-count">—</strong><span>筆保存紀錄</span><small id="result-map-count"></small></div>
+        <section class="map-results" aria-label="位置清單"><div class="result-summary" aria-live="polite"><strong id="result-count">—</strong><span>筆保存紀錄</span><small id="result-map-count"></small></div>
           <div id="point-list" class="point-list" aria-label="搜尋結果"></div>
-          <button id="load-more" class="load-more" type="button" hidden>顯示更多位置</button>
-        </aside>
+          <button id="load-more" class="load-more" type="button" hidden>顯示更多位置</button></section>
+
       </div>
       <details class="district-details"><summary><span>查看這份資料的行政區分布</span><span aria-hidden="true">＋</span></summary><div class="district-explanation">這裡統計保存資料列，不是已核實的全市垃圾箱存量。沒有保存紀錄的行政區，不代表當地沒有垃圾箱。</div><div id="district-table"></div></details>
       <p class="context-note"><strong>如何判讀：</strong>地圖預設聚焦台北市區，可按「顯示搜尋範圍」查看所有可繪製位置。各年資料的日期、範圍與完整性不同。某個位置未出現在另一份資料中，還可能是搬移、漏列或更新差異，需要異動紀錄才能確認撤除。</p>
@@ -151,20 +152,20 @@
     </section>
 
     <section id="panel-history" class="page-panel" aria-labelledby="history-heading" hidden>
-      <div class="section-heading"><div><p class="eyebrow">02 / REMOVAL HISTORY</p><h2 id="history-heading">數量變化，背後有不同的決策。</h2></div><p>區分已確認的紀錄與仍缺的證據。</p></div>
+      <div class="section-heading"><div><h2 id="history-heading">數量變化，背後有不同的決策。</h2></div><p>區分已確認的紀錄與仍缺的證據。</p></div>
       <div class="history-intro"><div><span class="outline-tag">早期年份線索</span><h3>2012 年，議會質詢引用 3,171 個。</h3><p>這能定位三千左右的年代，但還沒有對應的逐點清冊。「個、座、組、資料列」也需要分開核對。</p><a class="text-link" href="https://www.cna.com.tw/news/aloc/202006090276.aspx" target="_blank" rel="noopener noreferrer">查看議會報導 ↗</a></div><div class="history-numbers"><span>近年官方受訪提供的組數</span><div id="annual-counts"></div><small>年度存量的差額，不能直接當作撤除次數。</small><a href="https://www.cna.com.tw/news/aloc/202605110096.aspx" target="_blank" rel="noopener noreferrer">來源：中央社，2026-05-11 ↗</a></div></div>
       <div class="timeline-heading"><h3>沿時間，追查發生了什麼</h3><div class="timeline-filters" role="group" aria-label="篩選歷程"><button type="button" data-event-filter="all" aria-pressed="true">全部</button><button type="button" data-event-filter="removal" aria-pressed="false">撤除紀錄</button><button type="button" data-event-filter="policy" aria-pressed="false">政策與復設</button></div></div>
       <div id="timeline" class="timeline"></div>
-      <div class="evidence-gap"><div><p class="eyebrow">下一段需要的證據</p><h3>從「數量減少」走到「逐箱撤除順序」。</h3><p>需要官方箱號清冊、各箱新設／撤除／遷移／復設日期，以及對應的會勘與評估理由。再把行人需求、家戶垃圾、溢滿與清運負擔放在一起比較。</p></div></div>
+      <div class="evidence-gap"><div><h3>從「數量減少」走到「逐箱撤除順序」。</h3><p>需要官方箱號清冊、各箱新設／撤除／遷移／復設日期，以及對應的會勘與評估理由。再把行人需求、家戶垃圾、溢滿與清運負擔放在一起比較。</p></div></div>
     </section>
 
     <section id="panel-countries" class="page-panel" aria-labelledby="countries-heading" hidden>
-      <div class="section-heading"><div><h2 id="countries-heading">各國垃圾桶</h2></div><p>實物照片、功能與公開價格，一起比較。</p></div>
+      <div class="section-heading"><div><h2 id="countries-heading" tabindex="-1">各國垃圾桶</h2></div><p>實物照片、功能與公開價格，一起比較。</p></div>
       <section class="research-section smart-bin-comparison" aria-labelledby="smart-bin-heading">
         <h3 id="smart-bin-heading">十二國垃圾桶，從投放到收運一起看。</h3>
         <p><strong>我們建議：一般桶先做到易投、易清、易維修；垃圾量波動大才比較滿度感測，容量不足才比較壓縮。</strong>地下集中收集及住戶 RFID 屬不同服務。以下對照使用對象、收運、數位功能、營運證據與公開成本。查核：2026-10-16；各案例的資料年份分開標示。</p>
         <p class="country-comparison-note">照片用來比較外觀，功能與價格另依文字來源核對。保留原幣別及年度；歷史單價、計畫預算與完整營運成本不能直接排名。照片不按設備實際尺寸等比例呈現。</p>
-        <nav class="country-index" aria-label="依用途查看各國案例"><div><h4>日常投放與防散落</h4><ul><li><button type="button" data-country-target="country-us"><strong>美國</strong><span>好維修</span></button></li><li><button type="button" data-country-target="country-france"><strong>法國</strong><span>防鼠與日清</span></button></li><li><button type="button" data-country-target="country-netherlands"><strong>荷蘭</strong><span>防翻找</span></button></li><li><button type="button" data-country-target="country-singapore"><strong>新加坡</strong><span>配置與巡收</span></button></li><li><button type="button" data-country-target="country-south-africa"><strong>南非</strong><span>行人路線</span></button></li></ul></div><div><h4>滿溢與清運負荷</h4><ul><li><button type="button" data-country-target="country-japan"><strong>日本</strong><span>商圈合作</span></button></li><li><button type="button" data-country-target="country-uk"><strong>英國</strong><span>壓縮與巡收</span></button></li><li><button type="button" data-country-target="country-denmark"><strong>丹麥</strong><span>帶輪壓縮</span></button></li><li><button type="button" data-country-target="country-australia"><strong>澳洲</strong><span>巷道共用站</span></button></li></ul></div><div><h4>家戶與集中收運</h4><ul><li><button type="button" data-country-target="country-finland"><strong>芬蘭</strong><span>物業滿度</span></button></li><li><button type="button" data-country-target="country-korea"><strong>韓國</strong><span>秤重付費</span></button></li><li><button type="button" data-country-target="country-india"><strong>印度</strong><span>到戶收運</span></button></li></ul></div></nav>
+        <div class="country-browser"><nav class="country-index" aria-label="依用途查看各國案例"><div><h4>日常投放與防散落</h4><ul><li><button type="button" data-country-target="country-us"><strong>美國</strong><span>好維修</span></button></li><li><button type="button" data-country-target="country-france"><strong>法國</strong><span>防鼠與日清</span></button></li><li><button type="button" data-country-target="country-netherlands"><strong>荷蘭</strong><span>防翻找</span></button></li><li><button type="button" data-country-target="country-singapore"><strong>新加坡</strong><span>配置與巡收</span></button></li><li><button type="button" data-country-target="country-south-africa"><strong>南非</strong><span>行人路線</span></button></li></ul></div><div><h4>滿溢與清運負荷</h4><ul><li><button type="button" data-country-target="country-japan"><strong>日本</strong><span>商圈合作</span></button></li><li><button type="button" data-country-target="country-uk"><strong>英國</strong><span>壓縮與巡收</span></button></li><li><button type="button" data-country-target="country-denmark"><strong>丹麥</strong><span>帶輪壓縮</span></button></li><li><button type="button" data-country-target="country-australia"><strong>澳洲</strong><span>巷道共用站</span></button></li></ul></div><div><h4>家戶與集中收運</h4><ul><li><button type="button" data-country-target="country-finland"><strong>芬蘭</strong><span>物業滿度</span></button></li><li><button type="button" data-country-target="country-korea"><strong>韓國</strong><span>秤重付費</span></button></li><li><button type="button" data-country-target="country-india"><strong>印度</strong><span>到戶收運</span></button></li></ul></div></nav>
         <ol class="country-cases">
           <li><article class="country-case" aria-labelledby="country-japan">
             <h4 id="country-japan" tabindex="-1">日本・大阪<span>SmaGO</span></h4>
@@ -298,7 +299,7 @@
               <dl class="country-facts country-cost"><div><dt>公開成本 · 未公開單桶價格</dt><dd><p class="country-price">設置公告未列單價、採購總額或維護費。</p><p class="country-price-note">每日清運是一項持續支出，不能只以桶體估算服務成本。</p><a class="country-source" href="https://www.capetown.gov.za/media-and-news/ikwezi-park-to-shine-with-new-public-litter-bins/" target="_blank" rel="noopener noreferrer">成本查閱範圍 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>行人需求高的地方仍可設桶，但要寫清可投項目、收運頻率及混倒後的處理責任。</dd></div></dl>
             </div>
           </article></li>
-        </ol>
+        </ol></div>
         <p class="service-outcomes"><strong>滿度偵測不能判斷家戶來源。</strong>它回答「何時可能要收」，仍須配合清運人力、合法收受管道及已確認熱點的管理。縮口或鎖桶也要留意垃圾是否改堆桶外。</p>
         <details class="service-evidence"><summary>從感測到清運：有讀值，還需要有人處理。</summary><p>讀值與時間戳 → 檢查異常或失聯 → 依滿度、等待時間與衛生需求排班 → 清運回報 → 維修與績效記錄。失聯或讀值不可靠時回到人工巡查；高溫、殘液與異味可能要求未滿先收。</p><p>瑞士 98 桶研究使用實際資料加模擬，提醒感測需校正、節省須連同成本檢驗。其模擬沒有完整計入設備與安裝，不能拿來承諾台北回本年限。<a href="https://doi.org/10.1016/j.dajour.2023.100347" target="_blank" rel="noopener noreferrer">Barth 等人，2023</a></p></details>
         <details class="service-evidence"><summary>智慧化預算：要比五年總成本，不能只看桶價。</summary><p>現有 30 處、半年約 250 萬元規劃未含智慧桶、平台、土建或新車。新增方案須另計設備、安裝、通訊、電池、校準、維修、清運、清洗、替換及故障備援；只有已證實省下的支出才可扣除。</p><p>五年是比較期間，不是保固承諾。若取代原案設備，扣除不再購買的基準設備以免重算。未取得台北同規格報價，暫不填造追加金額或回本年限；完整文件列出詢價項目。壓縮倍率、倒桶次數、人車支出是三種不同指標。</p></details>
@@ -308,6 +309,7 @@
 
     <section id="panel-research" class="page-panel research-page" aria-labelledby="research-heading" hidden>
       <header class="research-page-heading"><h2 id="research-heading"><span>論文與實務，</span><span>帶來什麼收穫？</span></h2><p>從研究結果與實際做法，整理設置、清運及家戶分流的判斷依據。</p><p class="research-update">整理更新：2026-10-16 · 以公開資料研究，現勘列為後續選項。</p></header>
+      <div class="research-start"><strong>從證據到台北的判斷</strong><button type="button" data-research-target="research-synthesis-heading">先讀綜合判斷</button><button type="button" data-research-target="research-materials-heading">找預算與執行工具</button></div>
       <p class="research-reading-note">每則參考分開呈現<strong>原研究或案例的結果</strong>與<strong>我們對台北的啟發</strong>。本站尚無台北試辦成效，海外結果與廠商說明不直接當成本地效果。</p>
       <div class="research-reading-layout">
         <nav class="research-contents" aria-label="論文與實務頁內目錄"><p>本頁內容</p><button type="button" data-research-target="research-papers-heading">論文帶來什麼</button><button type="button" data-research-target="research-practices-heading">實際做法帶來什麼</button><button type="button" data-research-target="research-synthesis-heading">綜合到台北</button><button type="button" data-research-target="research-materials-heading">預算與執行材料</button><a href="#countries">看各國桶型與照片</a></nav>
@@ -472,7 +474,7 @@
     </section>
 
     <section id="panel-sources" class="page-panel" aria-labelledby="sources-heading" hidden>
-      <div class="section-heading"><div><p class="eyebrow">04 / EVIDENCE & DATA</p><h2 id="sources-heading">每一份資料，都保留它的邊界。</h2></div><p>查看日期、範圍、來源與資料限制。</p></div>
+      <div class="section-heading"><div><h2 id="sources-heading">每一份資料，都保留它的邊界。</h2></div><p>查看日期、範圍、來源與資料限制。</p></div>
       <div id="source-cards" class="source-cards"></div>
       <div class="source-method"><h3>這個站如何使用資料</h3><div class="method-grid"><div><span>01</span><h4>保存版本</h4><p>歷史資料固定到保存版本，保留原始地址、相同座標與來源線索。</p></div><div><span>02</span><h4>分開計數</h4><p>資料列、不同座標與可繪製紀錄分開計算，避免自行換算垃圾箱組數。</p></div><div><span>03</span><h4>不補寫撤除</h4><p>用官方異動或會議紀錄確認日期，跨年缺列只當作待查線索。</p></div></div><p>地圖座標採粗篩；範圍內仍可能存在地址與座標不一致。本站列號僅用於操作，不是官方箱號。</p></div>
     </section>
