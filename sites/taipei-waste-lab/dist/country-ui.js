@@ -15,16 +15,17 @@ export function initializeCountryExperience(){
   const panel=document.getElementById('panel-countries');
   const launch=document.getElementById('country-playground');
   const reader=document.getElementById('country-reader-select');
+  const exhibit=document.getElementById('country-play-disclosure');
   const articles=[...panel.querySelectorAll('.country-case')];
   const ids=articles.map(article=>article.getAttribute('aria-labelledby').replace('country-',''));
   const viewer=document.createElement('section');
   viewer.id='country-viewer';viewer.className='country-viewer';
   viewer.setAttribute('aria-labelledby','country-model-title');
-  viewer.innerHTML=`<header class="country-viewer-header"><div><p class="country-exhibit-kicker">正在試玩</p><h3 id="country-model-title" tabindex="-1"></h3><p class="country-model-badge">依照片製作的 3D 示意・非實測模型</p></div><label class="country-model-picker">換一國試玩<select id="country-model-select"></select></label></header>
+  viewer.innerHTML=`<header class="country-viewer-header"><div><h3 id="country-model-title" tabindex="-1"></h3><p class="country-model-badge">依照片製作的 3D 示意・非實測模型</p></div></header>
     <p class="country-guide-notice country-screen-reader" role="status" aria-live="polite"></p>
     <div class="country-media-switch" role="group" aria-label="切換模型與照片"><button type="button" data-mode="model" aria-pressed="true">3D 示意</button><button type="button" data-mode="photo" aria-pressed="false">實拍對照</button></div>
     <div class="country-viewer-media"><div class="country-model-visual"><p class="country-media-label">可玩的外觀示意 <span>點部件，看看怎麼動</span></p><div class="country-model-stage"></div><p class="country-model-status" role="status" aria-live="polite"></p><button type="button" class="country-model-retry" hidden>重試 3D</button></div><div class="country-photo-column"><p class="country-media-label country-photo-label">實拍與出處 <span>保留完整照片</span></p><div class="country-inline-photo"></div></div></div>
-    <div class="country-exhibit-shortcuts"><button type="button" class="country-model-evidence">看完整案例與來源</button><button type="button" data-jump="comparison">依用途比較各國</button><button type="button" class="country-reading-return" hidden>回到剛才閱讀位置</button></div>
+    <div class="country-exhibit-shortcuts"><button type="button" class="country-model-evidence">回到案例閱讀</button><button type="button" data-jump="comparison">依用途比較各國</button><button type="button" class="country-reading-return" hidden>回到剛才閱讀位置</button></div>
     <div class="country-viewer-body"><div class="country-play-workspace">
       <div class="country-play-actions"><button type="button" data-play="toggle" class="country-play-primary" hidden></button><button type="button" class="country-guide-toggle" aria-expanded="false" aria-controls="country-guide">帶我看 3 個重點</button></div>
       <section id="country-guide" class="country-guide" aria-labelledby="country-guide-heading" hidden><p class="country-guide-count"></p><h4 id="country-guide-heading" tabindex="-1"></h4><p class="country-guide-text"></p><div class="country-guide-source"></div><div class="country-guide-navigation"><button type="button" data-guide="previous">上一個</button><button type="button" data-guide="next">下一個</button></div><details class="country-question"><summary>先猜一題，再看來源怎麼說</summary><form></form></details></section>
@@ -34,7 +35,7 @@ export function initializeCountryExperience(){
     </div><div class="country-model-copy"><section class="country-observation" aria-labelledby="country-observation-heading"><p class="country-exhibit-kicker">這個部件告訴我們什麼</p><h4 id="country-observation-heading"></h4><p class="country-observation-text"></p><p class="country-observation-limit"></p><p class="country-takeaway" hidden></p></section><details class="country-evidence-details"><summary>照片、文件與推定，分開看</summary><ul class="country-evidence-list"></ul><p class="country-model-limitation"></p><p class="country-model-note">背面、內部、比例與動作為簡化推定；不表示現場尺寸、實際操作方式或設備效能。動畫物件也不是分類指引。</p></details></div></div>`;
   const stage=viewer.querySelector('.country-model-stage'),status=viewer.querySelector('.country-model-status');
   const retry=viewer.querySelector('.country-model-retry'),tools=viewer.querySelector('.country-model-tools');
-  const controls=viewer.querySelector('.country-model-controls'),picker=viewer.querySelector('select');
+  const controls=viewer.querySelector('.country-model-controls');
   const title=viewer.querySelector('h3'),photoRegion=viewer.querySelector('.country-inline-photo');
   const photoColumn=viewer.querySelector('.country-photo-column'),modelColumn=viewer.querySelector('.country-model-visual');
   const playControls=viewer.querySelector('.country-model-play'),playButton=viewer.querySelector('[data-play="toggle"]');
@@ -43,13 +44,13 @@ export function initializeCountryExperience(){
   const guide=viewer.querySelector('#country-guide'),guideToggle=viewer.querySelector('.country-guide-toggle');
   const guideHeading=viewer.querySelector('#country-guide-heading'),notice=viewer.querySelector('.country-guide-notice');
   const readingReturn=viewer.querySelector('.country-reading-return');
-  const buttons=new Map(),photos=new Map(),returns=new Map();
+  const buttons=new Map(),photos=new Map();
   const compact=window.matchMedia('(max-width:760px)');
   // Keep the primary action beside the model, independent of photo-caption height.
   stage.after(guide,viewer.querySelector('.country-play-actions'));
   modelColumn.append(viewer.querySelector('.country-play-workspace'));
   let scene,sceneLoading,sceneFactory,selected='japan',rendered,active=true,failed=false,showingPhoto=false;
-  let parts=[],scrollFrame=0,guideStep=null,readingOrigin=null,playbackSignature='',observedPart;
+  let parts=[],guideStep=null,readingOrigin=null,playbackSignature='',observedPart;
 
   function updateView({view,canZoomIn,canZoomOut}){
     const labels={overview:'全景',front:'正面',side:'側面',back:'背面'};
@@ -94,7 +95,7 @@ export function initializeCountryExperience(){
     stage.hidden=failed;
     const ready=Boolean(scene&&rendered===selected&&!failed&&!photoOnly);
     playControls.hidden=!ready;playButton.hidden=!ready;tools.hidden=!ready;
-    scene?.setActive(active&&!failed&&!photoOnly);
+    scene?.setActive(active&&exhibit.open&&!failed&&!photoOnly);
     viewer.dataset.media=showingPhoto?'photo':'model';
     for(const button of viewer.querySelectorAll('[data-mode]'))button.setAttribute('aria-pressed',String((button.dataset.mode==='photo')===showingPhoto));
   }
@@ -127,13 +128,18 @@ export function initializeCountryExperience(){
   function reveal(element){element.focus({preventScroll:true});element.scrollIntoView({block:'start',behavior:'instant'})}
   function setCurrent(id){
     reader.value=id;
+    for(const article of articles){
+      const current=article.getAttribute('aria-labelledby')==='country-'+id;
+      article.parentElement.hidden=!current;
+      if(current)article.insertBefore(exhibit,article.querySelector('.country-return'));
+    }
     for(const button of panel.querySelectorAll('.country-index [data-country-target]')){
       if(button.dataset.countryTarget==='country-'+id)button.setAttribute('aria-current','location');else button.removeAttribute('aria-current');
     }
   }
   function setPhoto(id){
     const photo=photos.get(id).cloneNode(true);
-    photo.removeAttribute('tabindex');photo.querySelector('.country-model-return')?.remove();
+    photo.removeAttribute('tabindex');
     const img=photo.querySelector('img');
     if(img){
       img.loading='eager';
@@ -196,11 +202,12 @@ export function initializeCountryExperience(){
     if(announce)notice.textContent='導覽結束，可以繼續自由探索。';
     if(focus)guideToggle.focus({preventScroll:true});
   }
-  function open(id,{focus=true,origin=null}={}){
+  function open(id,{focus=true,origin=null,play=true}={}){
     if(!COUNTRY_MODELS[id])return;
     const changed=selected!==id;
-    if(origin&&!viewer.contains(origin)){
-      readingOrigin=origin.closest('.country-case')?.querySelector('h4')||origin.closest('details')?.querySelector('summary')||origin;
+    if(changed||origin){readingOrigin=null;readingReturn.hidden=true}
+    if(origin&&!viewer.contains(origin)&&!origin.closest('.country-case')){
+      readingOrigin=origin.closest('details')?.querySelector('summary')||origin;
       readingReturn.hidden=false;
     }
     if(changed){
@@ -208,33 +215,46 @@ export function initializeCountryExperience(){
       if(guided)notice.textContent='已切換國家並結束上一段導覽。';
       playbackSignature='';observedPart=undefined;
     }
-    for(const [key,button] of buttons){button.setAttribute('aria-expanded',String(key===id));returns.get(key).hidden=key!==id}
-    picker.value=id;title.textContent=COUNTRY_MODELS[id].title;
+    exhibit.open=play;setCurrent(id);
+    for(const [key,button] of buttons)button.setAttribute('aria-expanded',String(key===id&&play));
+    title.textContent=COUNTRY_MODELS[id].title;
     if(changed||!photoRegion.childElementCount){setPhoto(id);renderEvidence();renderQuestion();renderObservation(null)}
-    if(scene&&!failed)showModel();else if(failed)failure();else loadScene();
-    syncVisibility();if(focus)reveal(title);
+    if(scene&&!failed)showModel();else if(failed)failure();else if(play)loadScene();
+    syncVisibility();if(focus)reveal(play?title:document.getElementById('country-'+id));
   }
   function navigate(target){
     if(!target)return;
-    const id=target.id.replace('country-','');if(COUNTRY_MODELS[id])setCurrent(id);
-    if(window.innerWidth<640&&target.id!=='country-index-heading')panel.querySelector('.country-index-disclosure').open=false;
+    const article=target.closest('.country-case');
+    if(article)open(article.getAttribute('aria-labelledby').replace('country-',''),{focus:false,play:false});
+    for(let parent=target.parentElement;parent&&parent!==panel;parent=parent.parentElement){
+      if(parent.tagName==='DETAILS')parent.open=true;
+    }
     reveal(target);
+  }
+  for(const group of panel.querySelectorAll('.country-index>div')){
+    const options=document.createElement('optgroup');options.label=group.querySelector('h4').textContent;
+    for(const entry of group.querySelectorAll('[data-country-target]')){
+      const option=document.createElement('option');option.value=entry.dataset.countryTarget.replace('country-','');
+      option.textContent=document.getElementById(entry.dataset.countryTarget).firstChild.textContent.trim();options.append(option);
+    }
+    reader.append(options);
   }
   for(const id of ids){
     const heading=document.getElementById('country-'+id),article=heading.closest('article');
     const label=heading.firstChild.textContent.trim(),photo=article.querySelector('.country-photo');
-    for(const select of [picker,reader]){const option=document.createElement('option');option.value=id;option.textContent=label;select.append(option)}
     const button=document.createElement('button');button.type='button';button.className='country-model-open';
-    button.textContent=['india','australia'].includes(id)?'試玩這個收運示意':'試玩這個 3D 垃圾桶';
-    button.setAttribute('aria-label',label+'：'+button.textContent);button.setAttribute('aria-expanded','false');button.setAttribute('aria-controls',viewer.id);
+    button.textContent='展開 3D 試玩';
+    button.setAttribute('aria-label',label+'：'+button.textContent);button.setAttribute('aria-expanded','false');button.setAttribute('aria-controls',exhibit.id);
     heading.after(button);buttons.set(id,button);button.addEventListener('click',()=>open(id,{origin:button}));
     photos.set(id,photo);
-    const back=document.createElement('button');back.type='button';back.className='country-model-return';back.textContent='返回 3D 試玩';back.hidden=true;
-    back.addEventListener('click',()=>open(id,{origin:back}));photo.prepend(back);returns.set(id,back);
+    const cost=article.querySelector('.country-cost'),details=document.createElement('details'),summary=document.createElement('summary');
+    details.className='country-cost-details';summary.textContent='公開成本與台北參考';details.append(summary,cost);
+    article.querySelector('.country-case-grid').after(details);
   }
-  const indexLayout=window.matchMedia('(min-width:640px)');
-  const adaptIndex=()=>{panel.querySelector('.country-index-disclosure').open=indexLayout.matches};
-  adaptIndex();indexLayout.addEventListener('change',adaptIndex);
+  exhibit.addEventListener('toggle',()=>{
+    if(exhibit.open&&!scene&&!failed)loadScene();
+    buttons.get(selected).setAttribute('aria-expanded',String(exhibit.open));syncVisibility();
+  });
   launch.replaceChildren(viewer);
   initializeCountryComparison(document.getElementById('country-comparison-list'),{
     onSelect:id=>navigate(document.getElementById(id)),
@@ -253,14 +273,13 @@ export function initializeCountryExperience(){
     }
     details.append(related);scenarios.append(details);
   }
-  picker.addEventListener('change',()=>open(picker.value,{focus:false}));
   reader.addEventListener('change',()=>navigate(document.getElementById('country-'+reader.value)));
   compact.addEventListener('change',syncVisibility);
   viewer.querySelector('.country-model-evidence').addEventListener('click',()=>navigate(document.getElementById('country-'+selected)));
   viewer.querySelector('[data-jump="comparison"]').addEventListener('click',()=>navigate(document.getElementById('country-comparison-heading')));
   readingReturn.addEventListener('click',()=>{
     if(!readingOrigin?.isConnected)return;
-    reveal(readingOrigin.getClientRects().length?readingOrigin:document.getElementById('country-comparison-heading'));
+    navigate(readingOrigin);
   });
   guideToggle.addEventListener('click',()=>{
     if(guideStep!==null){endGuide({focus:true});return}
@@ -294,14 +313,7 @@ export function initializeCountryExperience(){
     if(!sceneFactory){location.reload();return}
     scene?.dispose();scene=null;rendered=null;failed=false;syncVisibility();loadScene();
   });
-  function trackReading(){
-    scrollFrame=0;if(!active)return;
-    const line=window.innerWidth<960?145:80;
-    const article=articles.find(item=>{const rect=item.getBoundingClientRect();return rect.top<=line&&rect.bottom>line});
-    if(article)setCurrent(article.getAttribute('aria-labelledby').replace('country-',''));
-  }
-  function scheduleReading(){if(active&&!scrollFrame)scrollFrame=requestAnimationFrame(trackReading)}
-  window.addEventListener('scroll',scheduleReading,{passive:true});window.addEventListener('resize',scheduleReading);
-  open(selected,{focus:false});
-  return {navigate,setActive(value){active=Boolean(value);syncVisibility();scheduleReading()}};
+  panel.classList.add('country-reading-ready');
+  open(selected,{focus:false,play:false});
+  return {navigate,setActive(value){active=Boolean(value);syncVisibility()}};
 }
