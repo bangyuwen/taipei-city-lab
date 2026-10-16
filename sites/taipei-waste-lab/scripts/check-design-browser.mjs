@@ -173,6 +173,7 @@ async function depositAndExpect(page, message, { animate = false } = {}) {
 async function ready(page, { webgl = true } = {}) {
   await page.goto(TARGET_URL.href, { waitUntil: 'domcontentloaded' });
   await page.locator('#panel-design').waitFor({ state: 'visible', timeout: PAGE_TIMEOUT });
+  await page.locator('[data-design]').first().waitFor({state:'visible',timeout:PAGE_TIMEOUT});
   assert.equal(await page.locator('[data-design]').count(), 4, 'four purpose buttons');
   assert.equal(await page.locator('[data-design-item]').count(), 3, 'three example objects');
   if (webgl) {

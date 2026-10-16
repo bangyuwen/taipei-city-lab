@@ -135,3 +135,11 @@ the four simulation purposes and WebGL fallback.
 ## 授權
 
 自寫程式採 MIT。Leaflet 與 Three.js 保留原 MIT 授權；字型保留 OFL 授權；政府資料及歷史副本依各來源條款使用。OpenStreetMap 底圖保留出處，按瀏覽範圍載入。
+
+## Country 3D viewer
+
+Each country case opens one shared inline viewer. The viewer loads Three.js on the first request, reuses its canvas between countries, and renders only when the view changes. Leaving the country page pauses interaction. Drag or use arrow keys to rotate; pinch, use the zoom buttons or + / - to zoom; Home restores the overview. Photos, attribution, prices and evidence remain available if WebGL or a module fails.
+
+The original primitive meshes are photo-reference illustrations, not measured or manufacturer models. Hidden surfaces and proportions are inferred. Case-specific photo mismatches appear alongside each model. India depicts a collection service; Australia uses a generic receiving-station concept because no redistributable equipment photo is embedded. These models do not establish dimensions, capacity or performance.
+
+The metadata lives in `dist/country-model-data.js`; geometry lives in `dist/country-models.js`. Keep these distinct from the purpose simulator. Add any runtime file to `scripts/prepare-public.py`. Run `npm test`, `npm run check`, and `node scripts/check-country-browser.mjs` against the preview (optional `COUNTRY_QA_URL`, `PLAYWRIGHT_MODULE`, `CHROME_PATH`). Screenshots and browser evidence are generated under ignored `.impeccable/review/`. Rebuild the private research ZIP with `npm run prepare-data` after editing HTML.
