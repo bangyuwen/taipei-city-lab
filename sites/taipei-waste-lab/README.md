@@ -138,7 +138,7 @@ the four simulation purposes and WebGL fallback.
 
 ## Country 3D viewer
 
-Each country case opens one shared inline viewer. The viewer loads Three.js on the first request, reuses its canvas between countries, and renders only when the view changes. Leaving the country page pauses interaction. Drag or use arrow keys to rotate; pinch, use the zoom buttons or + / - to zoom; Home restores the overview. Photos, attribution, prices and evidence remain available if WebGL or a module fails.
+Each country case opens one shared inline viewer. The viewer loads Three.js on the first request, reuses its canvas between countries, and renders only when the view changes. Leaving the country page pauses interaction. Use the case selector to switch countries without searching the long page. Photo and return controls connect each illustration to its original caption and sources, retaining the current view. Drag or use arrow keys to rotate; pinch, Ctrl + wheel, the zoom buttons or + / - zoom; ordinary wheel scrolling continues through the canvas. Home restores the overview. Preset buttons reflect the actual camera direction, and zoom buttons disable at their limits. Photos, attribution, prices and evidence remain available if WebGL or a module fails.
 
 The original primitive meshes are photo-reference illustrations, not measured or manufacturer models. Hidden surfaces and proportions are inferred. Case-specific photo mismatches appear alongside each model. India depicts a collection service; Australia uses a generic receiving-station concept because no redistributable equipment photo is embedded. These models do not establish dimensions, capacity or performance.
 

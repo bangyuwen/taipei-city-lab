@@ -3,7 +3,7 @@ import {OrbitControls} from './vendor/three/OrbitControls.js';
 import {buildCountryModel} from './country-models.js';
 
 // Country shapes are illustrative. Normalize their bounds without implying scale.
-export function createCountryScene(container,{onFailure=()=>{}}={}){
+export function createCountryScene(container,{onFailure=()=>{},onChange=()=>{}}={}){
   const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'low-power'});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.7));
   renderer.outputColorSpace=THREE.SRGBColorSpace;
@@ -16,6 +16,9 @@ export function createCountryScene(container,{onFailure=()=>{}}={}){
   const scene=new THREE.Scene();
   scene.background=new THREE.Color('#eaf0f2');
   const camera=new THREE.PerspectiveCamera(38,1,.05,40);
+  // Ordinary scrolling continues through the model; Ctrl/trackpad pinch opts into zoom.
+  function wheel(event){if(!event.ctrlKey)event.stopImmediatePropagation()}
+  canvas.addEventListener('wheel',wheel,{capture:true,passive:true});
   const controls=new OrbitControls(camera,canvas);
   controls.enableDamping=false;
   controls.enablePan=false;
@@ -33,6 +36,13 @@ export function createCountryScene(container,{onFailure=()=>{}}={}){
   const floor=new THREE.Mesh(new THREE.CircleGeometry(2.25,64),new THREE.MeshStandardMaterial({color:0xdce5e8,roughness:1}));
   floor.rotation.x=-Math.PI/2;floor.position.y=-.008;scene.add(floor);
   let model,active=false,frame=0,disposed=false,failed=false;
+  const positions={overview:[3.5,2.8,4.2],front:[0,1.3,5.5],side:[5.5,1.3,0],back:[0,1.3,-5.5]};
+  function reportView(){
+    const offset=camera.position.clone().sub(controls.target),distance=offset.length(),direction=offset.clone().normalize();
+    const view=Object.entries(positions).find(([,position])=>direction.distanceTo(new THREE.Vector3(...position).sub(controls.target).normalize())<.00001)?.[0]??null;
+    onChange({view,canZoomIn:distance>controls.minDistance+.001,canZoomOut:distance<controls.maxDistance-.001});
+  }
+  function changed(){render();reportView()}
 
   function render(){
     if(!active||failed||disposed||document.hidden||frame)return;
@@ -55,9 +65,8 @@ export function createCountryScene(container,{onFailure=()=>{}}={}){
     });
   }
   function setView(name='overview'){
-    const positions={overview:[3.5,2.8,4.2],front:[0,1.3,5.5],side:[5.5,1.3,0],back:[0,1.3,-5.5]};
     camera.position.set(...(positions[name]||positions.overview));
-    controls.target.set(0,.9,0);controls.update();render();
+    controls.target.set(0,.9,0);controls.update();render();reportView();
   }
   function zoom(direction){
     const offset=camera.position.clone().sub(controls.target);
@@ -83,7 +92,7 @@ export function createCountryScene(container,{onFailure=()=>{}}={}){
     cancelAnimationFrame(frame);frame=0;onFailure();
   }
   function visibility(){if(document.hidden){cancelAnimationFrame(frame);frame=0}else render()}
-  controls.addEventListener('change',render);
+  controls.addEventListener('change',changed);
   canvas.addEventListener('keydown',keydown);
   canvas.addEventListener('webglcontextlost',lost);
   document.addEventListener('visibilitychange',visibility);
@@ -104,7 +113,8 @@ export function createCountryScene(container,{onFailure=()=>{}}={}){
       if(disposed)return;disposed=true;cancelAnimationFrame(frame);observer.disconnect();
       document.removeEventListener('visibilitychange',visibility);
       canvas.removeEventListener('keydown',keydown);canvas.removeEventListener('webglcontextlost',lost);
-      controls.removeEventListener('change',render);controls.dispose();
+      canvas.removeEventListener('wheel',wheel,true);
+      controls.removeEventListener('change',changed);controls.dispose();
       if(model)disposeObject(model);disposeObject(floor);renderer.dispose();renderer.forceContextLoss();canvas.remove();
     }
   };
