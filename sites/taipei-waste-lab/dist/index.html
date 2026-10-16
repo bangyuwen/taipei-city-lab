@@ -161,29 +161,9 @@
     </section>
 
     <section id="panel-countries" class="page-panel" aria-labelledby="countries-heading" hidden>
-      <div class="section-heading"><div><h2 id="countries-heading" tabindex="-1">各國垃圾桶</h2></div><p>轉一轉、試試部件，再用照片與來源看懂差異。</p></div>
-      <section class="country-start" aria-label="挑一國，玩玩垃圾桶">
-        <div id="country-playground"><p>正在準備試玩入口；下方的實拍與來源仍可閱讀。</p></div>
-        <button id="country-reopen" type="button" hidden>展開 3D，繼續玩</button>
-        <p id="country-load-status" role="status" hidden>3D 控制暫時無法載入；重新整理可再試一次。各國照片與來源仍可閱讀。</p>
-      </section>
-      <section id="country-comparison" class="country-comparison" aria-labelledby="country-comparison-heading">
-        <h3 id="country-comparison-heading" tabindex="-1">先看用途，再比較設備。</h3>
-        <p>選一種服務，展開同欄位摘要；各案例保留原幣、年度與未知成本，不以價格直接排名。</p>
-        <div id="country-comparison-list"></div>
-      </section>
-      <section class="country-taipei" aria-labelledby="country-taipei-heading">
-        <h3 id="country-taipei-heading" tabindex="-1">回到台北，遇到這些情況呢？</h3>
-        <p>從國外案例回到日常投放；以下依臺北市環保局說明，來源日期各自標示。</p>
-        <div id="country-taipei-scenarios"></div>
-      </section>
+      <div class="section-heading"><div><h2 id="countries-heading" tabindex="-1">各國垃圾桶</h2></div><p>先選一國，看照片、使用方式與收運；想看動作時，再展開 3D。</p></div>
       <section class="research-section smart-bin-comparison" aria-labelledby="smart-bin-heading">
-        <details class="country-research-context"><summary>比較前：研究建議與資料限制</summary>
-        <h3 id="smart-bin-heading">十二國垃圾桶，從投放到收運一起看。</h3>
-        <p><strong>我們建議：一般桶先做到易投、易清、易維修；垃圾量波動大才比較滿度感測，容量不足才比較壓縮。</strong>地下集中收集及住戶 RFID 屬不同服務。以下對照使用對象、收運、數位功能、營運證據與公開成本。查核：2026-10-16；各案例的資料年份分開標示。</p>
-        <p class="country-comparison-note">照片用來比較外觀，功能與價格另依文字來源核對。保留原幣別及年度；歷史單價、計畫預算與完整營運成本不能直接排名。照片不按設備實際尺寸等比例呈現。</p>
-        </details>
-        <div class="country-browser"><aside class="country-reading-navigation"><h3 id="country-index-heading" tabindex="-1">選一國，看完整案例</h3><label class="country-current">閱讀案例<select id="country-reader-select"></select></label><details class="country-index-disclosure" open><summary>依用途找國家</summary><nav class="country-index" aria-label="依用途查看各國案例"><div><h4>日常投放與防散落</h4><ul><li><button type="button" data-country-target="country-us"><strong>美國</strong><span>好維修</span></button></li><li><button type="button" data-country-target="country-france"><strong>法國</strong><span>防鼠與日清</span></button></li><li><button type="button" data-country-target="country-netherlands"><strong>荷蘭</strong><span>防翻找</span></button></li><li><button type="button" data-country-target="country-singapore"><strong>新加坡</strong><span>配置與巡收</span></button></li><li><button type="button" data-country-target="country-south-africa"><strong>南非</strong><span>行人路線</span></button></li></ul></div><div><h4>滿溢與清運負荷</h4><ul><li><button type="button" data-country-target="country-japan"><strong>日本</strong><span>商圈合作</span></button></li><li><button type="button" data-country-target="country-uk"><strong>英國</strong><span>壓縮與巡收</span></button></li><li><button type="button" data-country-target="country-denmark"><strong>丹麥</strong><span>帶輪壓縮</span></button></li><li><button type="button" data-country-target="country-australia"><strong>澳洲</strong><span>巷道共用站</span></button></li></ul></div><div><h4>家戶與集中收運</h4><ul><li><button type="button" data-country-target="country-finland"><strong>芬蘭</strong><span>物業滿度</span></button></li><li><button type="button" data-country-target="country-korea"><strong>韓國</strong><span>秤重付費</span></button></li><li><button type="button" data-country-target="country-india"><strong>印度</strong><span>到戶收運</span></button></li></ul></div></nav></details></aside>
+        <div class="country-browser"><aside class="country-reading-navigation"><h3 id="country-index-heading" tabindex="-1">選一國</h3><label class="country-current">閱讀案例<select id="country-reader-select"></select></label><details class="country-index-disclosure" open><summary>依用途找國家</summary><nav class="country-index" aria-label="依用途查看各國案例"><div><h4>日常投放與防散落</h4><ul><li><button type="button" data-country-target="country-us"><strong>美國</strong><span>好維修</span></button></li><li><button type="button" data-country-target="country-france"><strong>法國</strong><span>防鼠與日清</span></button></li><li><button type="button" data-country-target="country-netherlands"><strong>荷蘭</strong><span>防翻找</span></button></li><li><button type="button" data-country-target="country-singapore"><strong>新加坡</strong><span>配置與巡收</span></button></li><li><button type="button" data-country-target="country-south-africa"><strong>南非</strong><span>行人路線</span></button></li></ul></div><div><h4>滿溢與清運負荷</h4><ul><li><button type="button" data-country-target="country-japan"><strong>日本</strong><span>商圈合作</span></button></li><li><button type="button" data-country-target="country-uk"><strong>英國</strong><span>壓縮與巡收</span></button></li><li><button type="button" data-country-target="country-denmark"><strong>丹麥</strong><span>帶輪壓縮</span></button></li><li><button type="button" data-country-target="country-australia"><strong>澳洲</strong><span>巷道共用站</span></button></li></ul></div><div><h4>家戶與集中收運</h4><ul><li><button type="button" data-country-target="country-finland"><strong>芬蘭</strong><span>物業滿度</span></button></li><li><button type="button" data-country-target="country-korea"><strong>韓國</strong><span>秤重付費</span></button></li><li><button type="button" data-country-target="country-india"><strong>印度</strong><span>到戶收運</span></button></li></ul></div></nav></details></aside>
         <ol class="country-cases">
           <li><article class="country-case" aria-labelledby="country-us">
             <h4 id="country-us" tabindex="-1">美國・舊金山<span>Slim Silhouette</span></h4>
@@ -318,10 +298,33 @@
             </div>
           </article></li>
         </ol></div>
+      </section>
+      <details id="country-play-disclosure" class="country-start country-play-disclosure"><summary>試玩這個案例的 3D 示意</summary>
+        <div id="country-playground"><p>展開後載入 3D；實拍與來源可直接閱讀。</p></div>
+        <p id="country-load-status" role="status" hidden>3D 控制暫時無法載入；重新整理可再試一次。各國照片與來源仍可閱讀。</p>
+      </details>
+      <details class="country-reading-extra"><summary>依用途比較十二國</summary>
+      <section id="country-comparison" class="country-comparison" aria-labelledby="country-comparison-heading">
+        <h3 id="country-comparison-heading" tabindex="-1">先看用途，再比較設備。</h3>
+        <p>選一種服務，展開同欄位摘要；各案例保留原幣、年度與未知成本，不以價格直接排名。</p>
+        <div id="country-comparison-list"></div>
+      </section>
+      </details>
+      <details class="country-reading-extra"><summary>延伸閱讀：台北的日常投放</summary>
+      <section class="country-taipei" aria-labelledby="country-taipei-heading">
+        <h3 id="country-taipei-heading" tabindex="-1">回到台北，遇到這些情況呢？</h3>
+        <p>從國外案例回到日常投放；以下依臺北市環保局說明，來源日期各自標示。</p>
+        <div id="country-taipei-scenarios"></div>
+      </section>
+      </details>
+        <details class="country-research-context"><summary>比較前：研究建議與資料限制</summary>
+        <h3 id="smart-bin-heading">十二國垃圾桶，從投放到收運一起看。</h3>
+        <p><strong>我們建議：一般桶先做到易投、易清、易維修；垃圾量波動大才比較滿度感測，容量不足才比較壓縮。</strong>地下集中收集及住戶 RFID 屬不同服務。以下對照使用對象、收運、數位功能、營運證據與公開成本。查核：2026-10-16；各案例的資料年份分開標示。</p>
+        <p class="country-comparison-note">照片用來比較外觀，功能與價格另依文字來源核對。保留原幣別及年度；歷史單價、計畫預算與完整營運成本不能直接排名。照片不按設備實際尺寸等比例呈現。</p>
         <p class="service-outcomes"><strong>滿度偵測不能判斷家戶來源。</strong>它回答「何時可能要收」，仍須配合清運人力、合法收受管道及已確認熱點的管理。縮口或鎖桶也要留意垃圾是否改堆桶外。</p>
         <details class="service-evidence"><summary>從感測到清運：有讀值，還需要有人處理。</summary><p>讀值與時間戳 → 檢查異常或失聯 → 依滿度、等待時間與衛生需求排班 → 清運回報 → 維修與績效記錄。失聯或讀值不可靠時回到人工巡查；高溫、殘液與異味可能要求未滿先收。</p><p>瑞士 98 桶研究使用實際資料加模擬，提醒感測需校正、節省須連同成本檢驗。其模擬沒有完整計入設備與安裝，不能拿來承諾台北回本年限。<a href="https://doi.org/10.1016/j.dajour.2023.100347" target="_blank" rel="noopener noreferrer">Barth 等人，2023</a></p></details>
         <details class="service-evidence"><summary>智慧化預算：要比五年總成本，不能只看桶價。</summary><p>現有 30 處、半年約 250 萬元規劃未含智慧桶、平台、土建或新車。新增方案須另計設備、安裝、通訊、電池、校準、維修、清運、清洗、替換及故障備援；只有已證實省下的支出才可扣除。</p><p>五年是比較期間，不是保固承諾。若取代原案設備，扣除不再購買的基準設備以免重算。未取得台北同規格報價，暫不填造追加金額或回本年限；完整文件列出詢價項目。壓縮倍率、倒桶次數、人車支出是三種不同指標。</p></details>
-      </section>
+        </details>
       <p class="related-reading">付費投放、家戶分流及台北的實作建議，見<a href="#research">論文與實務</a>。</p>
     </section>
 
