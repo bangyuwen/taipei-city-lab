@@ -19,7 +19,7 @@
 .country-model-visual{min-width:0;padding:0 24px 16px}
 .country-media-label{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--green);line-height:1.6;margin:0;padding:14px 0}
 .country-media-label span{color:var(--muted)}
-.country-model-stage{height:340px;position:relative;width:100%}
+.country-model-stage{height:340px;position:relative;width:100%;scroll-margin-top:24px}
 .country-model-stage canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
 .country-model-stage canvas:active{cursor:grabbing}
 .country-model-stage canvas:focus-visible{outline:3px solid var(--focus);outline-offset:-4px}
@@ -32,8 +32,8 @@
 .country-inline-photo figcaption{text-align:left;font-size:13px;line-height:1.7}
 .country-exhibit-shortcuts{display:flex;flex-wrap:wrap;gap:4px 16px;padding:8px 24px;border-block:1px solid var(--line);background:var(--white)}
 .country-viewer .country-exhibit-shortcuts button{border:0;padding:8px 0;text-decoration:underline;text-underline-offset:4px}
-.country-viewer-body{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr)}
-.country-play-workspace{min-width:0;padding:24px}
+.country-viewer-body{display:block}
+.country-play-workspace{min-width:0;padding:0}
 .country-play-actions{display:flex;gap:8px;align-items:stretch;margin-top:12px}
 .country-play-actions>button{flex:1}
 .country-viewer .country-play-primary{background:var(--green);color:var(--white);border-color:var(--green);font-weight:600}
@@ -57,7 +57,7 @@
 .country-model-zoom{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .country-model-help{font-size:13px;line-height:1.8;color:var(--muted);margin:12px 0 0}
 .country-keyboard-help{display:block}.country-touch-help{display:none}
-.country-model-copy{min-width:0;padding:24px;border-left:1px solid var(--line);font-size:16px;line-height:1.8}
+.country-model-copy{min-width:0;padding:24px;border-top:1px solid var(--line);font-size:16px;line-height:1.8}.country-observation,.country-evidence-details{max-width:76ch}
 .country-observation h4,.country-guide h4{font:600 18px/1.6 var(--sans);margin:4px 0 10px;color:var(--ink)}
 .country-observation-text{margin:0 0 12px}
 .country-observation-limit,.country-model-limitation,.country-model-note{font-size:13px;color:var(--muted);line-height:1.8;margin:12px 0}
@@ -112,7 +112,7 @@
 .country-scenario-related{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:16px 0 8px}
 .country-scenario-related p{font-size:13px;color:var(--muted);margin:0 8px 0 0}
 @media(pointer:coarse){.country-pointer-help{display:none}.country-touch-help{display:block}}
-@media(max-width:959px){.country-viewer,.country-model-open,.country-photo{scroll-margin-top:100px}.country-viewer h3{scroll-margin-top:116px}.country-reading-navigation{top:104px}.country-reading-navigation h3,.country-comparison h3,.country-taipei h3{scroll-margin-top:110px}}
-@media(max-width:760px){.country-viewer-header{grid-template-columns:minmax(0,1fr);padding:14px 16px;gap:12px}.country-viewer h3{font-size:20px}.country-model-picker select{margin-top:2px}.country-media-switch{display:flex;gap:8px;padding:12px 16px;background:var(--model-surface)}.country-media-switch button{flex:1}.country-viewer-media,.country-viewer-body{grid-template-columns:minmax(0,1fr)}.country-model-stage,.country-inline-photo .country-photo-frame{height:280px}.country-model-visual{padding:0 16px 12px}.country-photo-column{padding:0 16px 12px;border-left:0}.country-media-label{display:none}.country-exhibit-shortcuts{padding:4px 16px;gap:0 16px}.country-viewer .country-exhibit-shortcuts button{font-size:13px}.country-play-workspace{padding:16px}.country-play-actions{flex-direction:column}.country-model-copy{padding:20px 16px;border-top:1px solid var(--line);border-left:0}.country-compare-fields{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:959px){.country-viewer,.country-model-open,.country-photo{scroll-margin-top:100px}.country-viewer h3{scroll-margin-top:116px}.country-model-stage{scroll-margin-top:96px}.country-reading-navigation{top:104px}.country-reading-navigation h3,.country-comparison h3,.country-taipei h3{scroll-margin-top:110px}}
+@media(max-width:760px){.country-viewer-header{grid-template-columns:minmax(0,1fr);padding:14px 16px;gap:12px}.country-viewer h3{font-size:20px}.country-model-picker select{margin-top:2px}.country-media-switch{display:flex;gap:8px;padding:12px 16px;background:var(--model-surface)}.country-media-switch button{flex:1}.country-viewer-media,.country-viewer-body{grid-template-columns:minmax(0,1fr)}.country-model-stage,.country-inline-photo .country-photo-frame{height:280px}.country-model-visual{padding:0 16px 12px}.country-photo-column{padding:0 16px 12px;border-left:0}.country-media-label{display:none}.country-exhibit-shortcuts{padding:4px 16px;gap:0 16px}.country-viewer .country-exhibit-shortcuts button{font-size:13px}.country-play-workspace{padding:0}.country-play-actions{flex-direction:column}.country-model-copy{padding:20px 16px;border-top:1px solid var(--line);border-left:0}.country-compare-fields{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:639px){.country-reading-navigation{top:69px;z-index:4;background:var(--paper);padding:12px 0;border-bottom:1px solid var(--line);margin-bottom:24px}.country-reading-navigation h3{font-size:14px;margin-bottom:6px}.country-current{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center}.country-current select{margin:0}.country-index-disclosure>summary{display:list-item}.country-reading-navigation .country-index{margin:0;padding:8px 0 12px;max-height:45vh;overflow:auto}.country-start{margin-bottom:24px}.country-part-buttons button{flex:1 1 auto}.country-compare-country{display:inline-block;min-width:4em;margin-right:8px}.country-compare-audience{display:block;padding-left:20px;margin-top:4px}.country-compare-fields{padding:18px 16px}.country-compare-actions{margin-left:16px}.country-case h4{scroll-margin-top:230px}.country-scenario-related p{flex-basis:100%}}
 @media(max-width:380px){.country-model-stage,.country-inline-photo .country-photo-frame{height:250px}.country-viewer-header{gap:6px}.country-viewer button{padding-inline:8px}.country-model-visual{padding-inline:12px}}
