@@ -1,6 +1,6 @@
 # Taipei Waste Lab redesign
 
-Scope: this standalone site only. Mode: Operate for map, comparison and design; Read for research.
+Scope: this standalone site only. Mode: Operate for map, comparison and design; Read for research and country evidence; Experience within the inline country 3D viewer.
 Audience: residents and researchers reading Traditional Chinese on phones and desktops.
 User authorizes a coherent redesign and direct implementation; this direction is selected within that authority.
 
@@ -22,3 +22,7 @@ UI/UX Pro Max official revision 56ea9cf174ed86786187daa9de0e6247cb0747e4, retain
 ## Invariants
 
 Keep six datasets, 1971 archived rows and 681 official rows; missing rows are not removal and coordinate differences are not migration. No new public downloads or attachments. Keep real photos, captions, licenses and hashes unchanged. Preserve all model operations and evidence limits; no real payment, identity or sensing.
+
+## Country model motion
+
+Keep the shared inline viewer and evidence hierarchy. Authored Three.js meshes use photo-inspired paint, metal and wood colors as content, outside the interface palette. Beveled edges, hardware, studio reflections and grounded shadows make the objects readable. One visitor-triggered action is the focal sequence: opening, depositing or a collection illustration. Offer play/pause, deterministic scrubbing, reset and an optional turntable. Direct camera manipulation stops the turntable; inactive, hidden and offscreen scenes stop drawing. Reduced motion uses static completion plus manual pose inspection. Keep all twelve photo/source limitations visible and label inferred movement; no sound, measured mechanism or performance claims.
