@@ -42,6 +42,22 @@ Replaceable groups: intake insert; roof; outer panels; door hinges and lock; lin
 
 The design is complete as a concept brief. Production drawings, engineering approval, quotations and physical tests remain required downstream work, not results implied by the website.
 
+## Delivery process and current status
+
+The website presents the complete process as a seven-stage reading sequence. It does not record user completion, assign real personnel or imply that a passed concept review authorizes physical deployment.
+
+| Stage | Proposed participants | Deliverable and advancement condition | Current evidence |
+| --- | --- | --- | --- |
+| Needs and site confirmation | Site manager, pedestrians and collection crew | Survey and service brief; named operator and feasible access/collection conditions | Use context chosen; field agreement pending |
+| Concept and validation definition | Designer, manager, crew and manufacturer | Versioned concept plus test methods, loads, thresholds, owners and failure disposition agreed before testing | Concept available; quantitative acceptance agreement pending |
+| Full-size operation mock-up | Designer and representative users/crew | Task observations, problems and dimension revisions; required operations feasible under agreed conditions | Not made or tested |
+| Engineering, quotation and metal prototype | Manufacturer and appropriate specialists | Manufacturing drawings, parts/materials, quotation, prototype and fixed test plan; engineering and serviceability review complete | No fabrication drawings, quotation or physical prototype |
+| Physical acceptance and correction | Assigned acceptance owner and manufacturer | Passed/failed/untested results and revision-bound retests; every required item passed | Untested, performance unproven |
+| Approved small pilot | Site manager and collection operator | Baseline, approved siting/operations, comparable observations and continue/revise/stop recommendation | No approval, installation or measured outcomes |
+| Production decision and ongoing service | Manager, procurement, supplier and crew | Supported expansion decision, funded operations, spares/warranty, asset IDs, training, periodic review and retirement route | Depends on pilot evidence and procurement decision |
+
+Return failures to the relevant stage and retain their records. Changes in critical parts or operating conditions require reassessment of affected evidence. No promised production date or completion percentage is derived from this sequence. Public stages link to existing T1 specifications and validation details instead of duplicating numerical targets.
+
 ## Evidence and limits
 
 Sources checked 2026-10-16. Proposed numerical dimensions above are authored choices, not statutory bin dimensions.
