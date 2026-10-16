@@ -269,7 +269,12 @@ export function initializeCountryExperience(){
   });
   viewer.addEventListener('click',event=>{
     const button=event.target.closest('button');if(!button)return;
-    if(button.dataset.mode){showingPhoto=button.dataset.mode==='photo';syncVisibility()}
+    if(button.dataset.mode){
+      showingPhoto=button.dataset.mode==='photo';syncVisibility();
+      if(compact.matches&&!showingPhoto&&guideStep!==null){
+        viewer.querySelector('.country-media-switch').scrollIntoView({block:'start',behavior:'instant'});
+      }
+    }
     if(button.dataset.guide==='previous'&&guideStep>0){guideStep--;showGuideStep()}
     if(button.dataset.guide==='next'&&guideStep!==null){if(guideStep===2)endGuide({focus:true});else{guideStep++;showGuideStep()}}
     if(!scene||failed)return;
