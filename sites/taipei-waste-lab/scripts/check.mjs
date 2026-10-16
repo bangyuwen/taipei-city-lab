@@ -10,7 +10,7 @@ const files=['app.js','history.js','data-utils.js','styles.css','mark.svg','data
   'research/comparison-2024-2026/README.md','research/comparison-2024-2026/protocol.json',
   'data/comparison-coordinate-distances.json','data/comparison-coordinate-distances.csv',
   'research/coordinate-distances-2024-2026/README.md','research/coordinate-distances-2024-2026/protocol.json',
-  'country-ui.js','country-scene.js','country-model-data.js','country-models.js','country.css',
+  'country-ui.js', 'country-comparison.js','country-scene.js','country-model-data.js','country-models.js','country.css',
   'design-ui.js','design-model.js','bin-scene.js','design.css','research/bin-design.md',
   'vendor/three/three.module.js','vendor/three/three.core.js','vendor/three/OrbitControls.js','vendor/three/LICENSE','vendor/three/manifest.json'];
 for(const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)){

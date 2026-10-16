@@ -242,7 +242,7 @@ async function start(){
   });
   for(const article of document.querySelectorAll('.country-case')){
     const back=document.createElement('button');
-    back.type='button';back.className='country-return';back.dataset.countryTarget='countries-heading';back.textContent='返回國家索引';
+    back.type='button';back.className='country-return';back.dataset.countryTarget='country-index-heading';back.textContent='返回國家索引';
     article.append(back);
   }
   renderHistory();
@@ -256,6 +256,7 @@ async function start(){
     if(!button)return;
     const target=$(button.dataset.countryTarget);
     if(!target)return;
+    if(countryExperience){countryExperience.navigate(target,button);return}
     for(const entry of document.querySelectorAll('.country-index button')){
       if(entry===button)entry.setAttribute('aria-current','location');else entry.removeAttribute('aria-current');
     }
