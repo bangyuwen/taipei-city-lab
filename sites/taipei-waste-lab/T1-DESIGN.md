@@ -40,11 +40,11 @@ Replaceable groups: intake insert; roof; outer panels; door hinges and lock; lin
 5. Have appropriate specialists establish and verify corrosion, operating-cycle, impact, stability and anchoring criteria. Correct failed items before installation.
 6. After approval, run a small documented pilot with a baseline. Track overflow, missorting, leakage, labor, maintenance and complaints at comparable times, recording weather and pedestrian demand. Treat before/after observations descriptively. Stop use for leaking, failed attachment, dangerous pinch points or blocked access.
 
-The design is complete as a concept brief. Production drawings, engineering approval, quotations and physical tests remain required downstream work, not results implied by the website.
+T1 is an initial concept brief, not a completed design selection. Research-to-requirement synthesis, same-need alternatives, selection rationale and the complete visual design package remain to be developed under the [complete design plan](../../topics/bins/docs/taipei-bin-design-plan.md). Production drawings, engineering approval, quotations and physical tests are separate downstream work, not results implied by the website.
 
 ## Delivery process and current status
 
-The website presents the complete process as a seven-stage reading sequence. It does not record user completion, assign real personnel or imply that a passed concept review authorizes physical deployment.
+The website currently presents a seven-stage delivery sequence. The complete design plan adds the missing synthesis, alternatives and design-development work before this downstream sequence. It does not record user completion, assign real personnel or imply that a passed concept review authorizes physical deployment.
 
 | Stage | Proposed participants | Deliverable and advancement condition | Current evidence |
 | --- | --- | --- | --- |
