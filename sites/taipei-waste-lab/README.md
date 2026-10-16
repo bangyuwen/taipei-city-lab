@@ -111,6 +111,27 @@ npm run preview
 - `dist/research/`：私人研究文件與離線 ZIP；公開輸出只保留候選清單顯示所需的 `desk-results.json`。
 - `.openai/hosting.json`：本站部署身分與靜態目錄。
 
+### Redesign checks
+
+The standalone visual system is recorded in [DESIGN.md](DESIGN.md) and
+`.impeccable/design.json`. Its scope is this site, not the shared topic template.
+
+With `out/` served at `http://127.0.0.1:4174/`, run:
+
+```sh
+node scripts/check-redesign-browser.mjs
+```
+
+Use `REDESIGN_QA_URL` to change the URL, `PLAYWRIGHT_MODULE` for an existing
+Playwright module, and `CHROME_PATH` for an installed browser. The check covers
+seven panels at 320, 390, 720 and 1440 px; both sides of the 640 and 960 px
+breakpoints; menu focus; map keyboard order; route scroll and filter retention;
+comparison retry; image fallback; and the absence of download controls.
+Viewport and full-page evidence is generated in ignored `.impeccable/review/`.
+External map tiles require network access; this check does not certify the
+availability of the tile provider. The separate design browser check covers
+the four simulation purposes and WebGL fallback.
+
 ## 授權
 
 自寫程式採 MIT。Leaflet 與 Three.js 保留原 MIT 授權；字型保留 OFL 授權；政府資料及歷史副本依各來源條款使用。OpenStreetMap 底圖保留出處，按瀏覽範圍載入。
