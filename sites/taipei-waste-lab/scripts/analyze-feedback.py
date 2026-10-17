@@ -359,10 +359,11 @@ def district_comparison(data, district, key):
 
 
 DISTRIBUTION_FOLDER = 'feedback-distribution-2026-10-18'
-DISTRIBUTION_TITLE = '有位置紀錄，仍要分清缺桶、難用與清運管理'
-DISTRIBUTION_CONCLUSION = ('對照後，沒有一區能由這兩份資料直接判定實際缺桶。較可支持的是查核方向：'
+COVERAGE_FOLDER = 'bin-coverage-2026-10-18'
+DISTRIBUTION_TITLE = '先確認能在哪裡投放，再分清缺桶或服務問題'
+DISTRIBUTION_CONCLUSION = ('對照語意回饋、街頭位置與場域清單後，仍沒有一區能直接判定實際缺桶。較可支持的是查核方向：'
     '松山、大安、大同先查投放可達性；萬華先查清掃與巡收；文山先拆開家戶收運與行人桶；'
-    '內湖、士林的配置與制度管理一起查。北投、南港先補清冊，信義、中山、中正保留多種解釋。')
+    '內湖、士林的配置與制度管理一起查。北投先核對撤除與場域可用性，南港先查路徑與場域接收條件；信義、中山、中正保留多種解釋。')
 
 
 def load_distribution(data, research=None):
@@ -411,7 +412,45 @@ def load_distribution(data, research=None):
             raise ValueError('Invalid semantic evidence selection')
         if any(not isinstance(item[k], str) or not item[k].strip() for k in ('reading', 'interpretation', 'next')):
             raise ValueError('Missing conditional district interpretation')
-    return {'source': receipt, 'assessments': assessments, 'bins': bins}
+    coverage, venues = load_coverage(research, rows, assessments)
+    return {'source': receipt, 'assessments': assessments, 'bins': bins, 'coverage': coverage, 'venues': venues}
+
+
+def load_coverage(research, street_rows, assessments):
+    """Keep street locations and venue records separate; verify retained sources."""
+    manifest_bytes = (research / COVERAGE_FOLDER / 'source-check.json').read_bytes()
+    if hashlib.sha256(manifest_bytes).hexdigest() != assessments['coverageSha256']:
+        raise ValueError('Coverage evidence changed; repeat district interpretation')
+    receipt = json.loads(manifest_bytes)
+    sources = {}
+    for source in receipt['sources']:
+        path = research / source['retainedPath']
+        raw = path.read_bytes()
+        if source['status'] != 200 or len(raw) != source['bytes'] or hashlib.sha256(raw).hexdigest() != source['sha256']:
+            raise ValueError('Coverage source no longer matches retained input')
+        sources[path.name] = raw
+    projection = lambda rows: [(r['行政區'], r['地址'], r['經度'], r['緯度']) for r in rows]
+    map_rows = list(csv.reader(json.loads(sources['official-map-data.json'])))
+    if any(len(r) != 6 for r in map_rows) or projection(street_rows) != [(r[0], r[1] + r[2], r[3], r[4]) for r in map_rows]:
+        raise ValueError('Official map and street CSV differ; reassess coverage')
+    api = json.loads(sources['api-offset-0.json'])['result']
+    tail = json.loads(sources['api-offset-1000.json'])['result']
+    if (api['count'] != len(street_rows) or api['offset'] != 0 or api['limit'] != 1000
+            or tail['count'] != api['count'] or tail['offset'] != 1000 or tail['results']
+            or projection(api['results']) != projection(street_rows)):
+        raise ValueError('Official API pagination or row comparison changed')
+    if receipt['addedVerifiedStreetRows'] != 0 or receipt['inventoryComplete'] is not None or receipt['surveyDate'] is not None:
+        raise ValueError('Unsupported new street inventory claim')
+    venue_rows = list(csv.DictReader(io.StringIO(sources['official-tourist.csv'].decode('cp950'))))
+    venues = {district: [] for district in assessments['districts']}
+    for row in venue_rows:
+        district = row['行政區'].removesuffix('區')
+        if district not in venues:
+            raise ValueError('Unmatched venue district')
+        venues[district].append(row['地址'])
+    if len(venue_rows) != 130:
+        raise ValueError('Venue source changed; repeat interpretation')
+    return receipt, venues
 
 
 def distribution_evidence(data, district, keys):
@@ -430,10 +469,24 @@ def distribution_intro(distribution):
                    f'全部 {s["rows"]} 列與保存檔一致。這是位置列，不是已核實的全市桶數；原調查日期與全市完整性未知。')
     boundary = ('僅依行政區標記對照，沒有把留言配到某個垃圾桶。回饋的日期及事件位置未核實，'
                 '因此沒有計算每桶留言數、步行覆蓋率或缺桶排名。不同問題可出現在同一則，比例不能相加。')
+    c = distribution['coverage']
+    focus = []
+    for district, reading in [('北投', '先核對撤除紀錄與場域可用性'), ('南港', '先查步行銜接、開放與接收規則')]:
+        names = distribution['venues'][district]
+        count = distribution['bins'][district]['rows']
+        focus.append(f'<article class="coverage-focus-item"><h5>{district}｜{reading}</h5>'
+                     f'<p><strong>街頭位置 {count} 列</strong>；另有<strong>場域線索 {len(names)} 處</strong><br>兩種單位不同，不相加成桶數。</p>'
+                     f'<details><summary>查看 {len(names)} 處場域名稱</summary><ul>'
+                     + ''.join(f'<li>{html.escape(name)}</li>' for name in names) + '</ul></details></article>')
     return f'''<div class="distribution-overview"><h4>{DISTRIBUTION_TITLE}</h4><p>{DISTRIBUTION_CONCLUSION}</p>
-<p>{description}</p><p><strong>北投 0 列、南港 4 列是公開清單的缺口，不能當成現場桶數。</strong>同樣地，士林列數較多，也不代表位置、可用性與收運已足夠。</p>
-<details class="feedback-codebook"><summary>這次比對能說明什麼？</summary><p>{boundary}「偏向增設／恢復／保留」含保留既有設施的方向，並非每則都在描述桶數不足；它也不能與維護或管理主題當成互斥票數。</p></details>
-<p><a href="{html.escape(s['catalogUrl'])}" target="_blank" rel="noopener noreferrer">官方位置資料與更新時間</a> · <a href="#feedback-method">語意判讀方法與限制</a></p></div>'''
+<p>{description}</p>
+<p><strong>本次沒有補入新的已核實街頭位置。</strong>完整 API、CSV 與官方查詢地圖的 {s["rows"]} 列位置一致；三個介面互相吻合，不等於三次獨立盤點。</p>
+<p>另納入 {c["venueSourceUpdatedAt"][:10]} 更新的官方場域清單，共 130 處。它提供捷運站、景點與商場等查核線索，沒有逐桶位置、現況、開放時段或接收規則，不能直接當成可用投放點。</p>
+<div class="coverage-focus">{''.join(focus)}</div>
+<p><strong>北投零列的原因仍待核實。</strong>2026-08-14 議會答覆提到調整期間可能移除，但沒有確認北投全區撤除。因此修正上一版「清單缺口」的說法：撤除、未收錄與跨機關設施都需分開核對。</p>
+<details class="feedback-codebook"><summary>這次比對能說明什麼？</summary><p>{boundary}「偏向增設／恢復／保留」含保留既有設施的方向，並非每則都在描述桶數不足；它也不能與維護或管理主題當成互斥票數。</p><p>2024 年歷史快照曾列北投 98 列、南港 94 列，日期不同，不能回填現況。狗便袋及公園設施也需確認類型與管理機關，不能直接加算。</p></details>
+<p><a href="{html.escape(s['catalogUrl'])}" target="_blank" rel="noopener noreferrer">官方位置與場域清單</a> · <a href="{c['mapUrl']}" target="_blank" rel="noopener noreferrer">官方查詢地圖</a> · <a href="{c['councilUrl']}" target="_blank" rel="noopener noreferrer">議會逐字稿來源</a> · <a href="#feedback-method">語意判讀方法與限制</a></p></div>'''
+
 
 
 def distribution_report(data, distribution):
@@ -445,15 +498,19 @@ def distribution_report(data, distribution):
           f'- 回饋：{data["records"]:,} 則篩選後訊息，沿用已完成的逐則語意判讀；不重新用關鍵字分類。每區分母包含全部留言。',
           f'- 分布：官方 {s["sourceUpdatedAt"]} 更新的主檔，{s["checkedDateTaipei"]} 重下載仍為 {s["rows"]} 列；原始位元組及各列均與保存檔一致。',
           '- 只按行政區欄位一對一連結彙總；留言標記尚未確認為居住地或事件所在地，不能作逐點距離比對。回饋與設施也未建立同期間關係。',
-          '- 公開清單列數不是完整現場存量；不以零列當零設施，不把同座標列去重成實體桶，也不加入其他年份、294 列中心子集、場所清單或候選街段。',
+          '- 公開清單列數不是完整現場存量；不以零列當零設施，不把同座標列去重成實體桶，也不把其他年份、294 列中心子集、場所清單或候選街段加算為現況街頭位置。',
           '- 「偏向增設／恢復／保留桶」包含維持既有設施，不等於已核實不足；C 維護、G 管理及其他主題各自計數，不相加，也不是互斥選項。',
           '- 不計算留言／桶比、人口密度、步行覆蓋或不足分數。沒有足以支持它們的完整清冊、事件位置、日期、路徑、人流與使用量。',
           '- 下表為 AI 協助提出的有條件研究判讀，並非新的逐則分類、統計檢定、政策效果或設點優先序，仍需人類與現場核對。', '',
-          '## 十二區對照', '', '| 行政區 | 本檔留言 | 公開位置列／可繪製列 | 分開閱讀的語意證據 | 合併判讀與下一步 |', '| --- | ---: | ---: | --- | --- |']
+          '## 本次補充資料', '',
+          '完整 API、CSV 與官方查詢地圖的 681 列位置一致，新增已核實街頭位置為 0。另納入官方 130 處場域線索；名稱不是逐桶位置，時段、接收規則與可用性待核實。兩種紀錄不相加。', '',
+          '北投 0 列不能直接定性為漏資料：2026-08-14 議會答覆提到可能移除，但未確認全區撤除。北投另有 10 處場域，南港另有 5 處；先核實它們與日常路徑的關係。', '',
+          '[完整補查紀錄、十五處場域與來源](../bin-coverage-2026-10-18/README.md)。', '',
+          '## 十二區對照', '', '| 行政區 | 本檔留言 | 公開位置列／可繪製列 | 場域線索（處，另計） | 分開閱讀的語意證據 | 合併判讀與下一步 |', '| --- | ---: | ---: | ---: | --- | --- |']
     for d,n in data['districts'].items():
         a = distribution['assessments']['districts'][d]
         evidence = '；'.join(distribution_evidence(data,d,a['evidence']))
-        md += [f'| {d} | {n} | {bins[d]["rows"]}／{bins[d]["plottable"]} | {evidence} | **{a["reading"]}**。{a["interpretation"]} 下一步：{a["next"]} |']
+        md += [f'| {d} | {n} | {bins[d]["rows"]}／{bins[d]["plottable"]} | {len(distribution["venues"][d])} | {evidence} | **{a["reading"]}**。{a["interpretation"]} 下一步：{a["next"]} |']
     md += ['', f'核對總數：{sum(x["rows"] for x in bins.values())} 位置列、{sum(x["plottable"] for x in bins.values())} 列通過既有座標粗篩、{sum(data["districts"].values())} 則回饋；沒有因缺列或座標異常移除留言。座標粗篩不是現場核實。', '',
            '## 什麼證據能分清原因', '',
            '| 待判斷問題 | 需要補的證據 | 會改變判斷的觀察 |', '| --- | --- | --- |',
@@ -505,7 +562,7 @@ def render_district_diagram(data, distribution=None):
           '| --- | --- | --- | --- |']
     if distribution:
         direction_note = '合併判讀同時讀取公開位置列與語意結果，屬於待驗證的研究解釋，不是缺桶診斷或設點優先序。'
-        md = ['### 十二區問題與改善方向', '', intro, '', direction_note, '', DISTRIBUTION_CONCLUSION, '', '[完整位置與回饋對照及來源](../feedback-distribution-2026-10-18/README.md)', '', '| 行政區（本檔則數） | 公開位置列（非現場桶數） | 區內常談議題 | 相對差異（本區 vs 其餘各區） | 合併判讀 · 待驗證 |', '| --- | ---: | --- | --- | --- |']
+        md = ['### 十二區問題與改善方向', '', intro, '', direction_note, '', DISTRIBUTION_CONCLUSION, '', '[完整位置與回饋對照及來源](../feedback-distribution-2026-10-18/README.md)', '', '| 行政區（本檔則數） | 街頭位置列／場域處數（不相加） | 區內常談議題 | 相對差異（本區 vs 其餘各區） | 合併判讀 · 待驗證 |', '| --- | ---: | --- | --- | --- |']
     page = [distribution_intro(distribution) if distribution else '', f'<p class="feedback-note">{esc(intro)}</p>',
             '' if distribution else '<div class="district-common"><strong>共通方向：投放便利與周邊負擔一起看</strong><p>桶位與便利在各區都有被提到，但談到桶不等於支持增設。先核對實際路徑、桶況與清運條件，再比較位置、指引或服務調整。</p></div>',
             f'<p id="district-directions-note" class="feedback-note">{esc(direction_note)}</p>',
@@ -518,7 +575,7 @@ def render_district_diagram(data, distribution=None):
             group = distribution['bins'][district]
             url = '?' + urlencode({'year':'2026-main','district':district+'區'}) + '#map'
             label = '主檔未列本區' if group['rows'] == 0 else f'公開清單 {group["rows"]} 列'
-            distribution_label = f'<div class="district-bin-count" data-bin-rows="{group["rows"]}"><strong>{label}</strong><span>不等於現場桶數</span><a href="{esc(url)}">查看公開地圖</a></div>'
+            distribution_label = f'<div class="district-bin-count" data-bin-rows="{group["rows"]}"><strong>{label}</strong><span>不等於現場桶數</span><span data-venue-count="{len(distribution["venues"][district])}">另有場域線索 {len(distribution["venues"][district])} 處</span><span>可用條件待核實</span><a href="{esc(url)}">查看公開地圖</a></div>'
         top, contrast = district_profile(data, district)
         issues = '；'.join(f'{THEMES[k][0]} {counts[k]}／{n}（{percent(counts[k],n)}）' for k in top) or '無可歸類議題'
         page += [f'<li class="district-row" data-profile="{esc(district)}"><div class="district-name"><h4>{esc(district)}</h4><span>本檔 {n:,} 則</span>{distribution_label}</div>',
@@ -555,7 +612,7 @@ def render_district_diagram(data, distribution=None):
             page += ['<div class="district-direction"><span class="district-mobile-label">改善方向 · 待驗證</span>']
             page += [f'<p><strong>先查</strong>{esc(check)}</p><p><strong>再試</strong>{esc(trial)}</p>' if contrast else f'<p>{direction}</p>']
         page += ['</div></li>']
-        distribution_cell = f'{distribution["bins"][district]["rows"]} | ' if distribution else ''
+        distribution_cell = f'{distribution["bins"][district]["rows"]}／{len(distribution["venues"][district])} | ' if distribution else ''
         md += [f'| {district}（{n}） | {distribution_cell}{issues} | {comparison} | {direction} |']
     page += ['</ol>']
     md += ['']
