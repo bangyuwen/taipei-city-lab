@@ -224,3 +224,29 @@
  .source-method-list>div{grid-template-columns:1fr;gap:4px}
  .research-related-paths{display:block}.research-related-paths a{display:flex;width:fit-content}
 }
+
+/* The hundred-day plan shares the evidence reader; tables become labeled rows on phones. */
+.plan-entry{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;padding:16px 0 24px;border-bottom:1px solid var(--line);font-size:16px}
+.plan-entry a{font-weight:600;min-height:44px;display:inline-flex;align-items:center;text-underline-offset:4px;color:var(--green)}
+.plan-entry span{color:var(--muted)}
+.plan-reading-layout{display:grid;grid-template-columns:170px minmax(0,1fr);gap:32px;border-top:1px solid var(--line)}
+.plan-contents{position:sticky;top:24px;align-self:start;padding-top:16px}
+.plan-contents a{display:block;min-height:44px;padding:10px 0;color:var(--green);font-size:14px;line-height:1.7;text-underline-offset:4px}
+.plan-body{min-width:0;padding-top:12px;font-size:16px;line-height:1.9}
+.plan-body>p{max-width:75ch;margin:16px 0;overflow-wrap:anywhere}
+.plan-body h3{font:550 25px/1.6 var(--serif);margin:44px 0 18px;padding-top:24px;border-top:1px solid var(--line);scroll-margin-top:28px;text-wrap:pretty}
+.plan-body a,.plan-version-note a{color:var(--green);text-decoration:underline;text-underline-offset:4px}
+.plan-table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.85;margin:24px 0;font-variant-numeric:tabular-nums}
+.plan-table th,.plan-table td{border-bottom:1px solid var(--line);text-align:left;vertical-align:top;padding:14px 12px;overflow-wrap:anywhere}
+.plan-table th{background:var(--light);font-weight:600}
+.plan-table td:first-child{font-weight:600;min-width:7em}
+.plan-cell-label{display:none}
+@media(max-width:1100px){.plan-reading-layout{grid-template-columns:minmax(0,1fr);gap:8px}.plan-contents{position:static;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 20px;border-bottom:1px solid var(--line);padding:12px 0}}
+@media(max-width:760px){
+ .plan-contents{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px}.plan-body h3{font-size:23px;scroll-margin-top:100px}.plan-entry{gap:4px}
+ .plan-table,.plan-table tbody,.plan-table tr,.plan-table td{display:block;width:100%}
+ .plan-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+ .plan-table tr{padding:16px 0;border-bottom:1px solid var(--line)}
+ .plan-table td{padding:8px 0;border:0;font-size:16px}.plan-table td:first-child{background:var(--light);padding:12px;margin-bottom:4px}
+ .plan-cell-label{display:block;font-size:14px;color:var(--muted);font-weight:500;margin-bottom:4px}
+}
