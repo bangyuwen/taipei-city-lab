@@ -3,8 +3,8 @@ import {filterPoints,recordStats,pageFromHash,allowedPages,historyPages,escapeHT
 
 const $=id=>document.getElementById(id),num=n=>new Intl.NumberFormat('zh-TW',{maximumFractionDigits:1}).format(n);
 const colors={'2015':'#986838','2022':'#30694e','2024':'#396e88','2026':'#244d43'};
-let catalog,map,L,layers,markers=new Map(),filtered=[],shown=40,currentPage='map';
-let state={year:'2015',district:'',search:''},mapStarting=false,eventFilter='all';
+let catalog,map,L,layers,markers=new Map(),filtered=[],shown=40,currentPage=null,lastHash;
+let state={year:'2015',district:'',search:''},mapStarting=false;
 let designExperience,designLoading;
 let comparisonLoading;
 let sitingExperience,sitingLoading;
@@ -88,28 +88,39 @@ function syncURL(){
 function dataset(){return catalog.datasets.find(d=>d.key===state.year)}
 function panel(){
   const previousPage=currentPage;
-  const nextPage=pageFromHash(location.hash);
-  if(nextPage!==previousPage)pageScroll.set(previousPage,window.scrollY);
+  const nextPage=pageFromHash(location.hash,currentPage);
+  const moved=nextPage!==previousPage||lastHash!==location.hash;
+  if(previousPage&&nextPage!==previousPage)pageScroll.set(previousPage,window.scrollY);
   currentPage=nextPage;
+  lastHash=location.hash;
   for(const a of document.querySelectorAll('[data-page]')){
     if(a.dataset.page===currentPage)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
   }
   document.body.dataset.page=currentPage;
-  if(previousPage!==currentPage){
+  if(moved){
     document.querySelector('.site-header').classList.remove('menu-open');
     $('site-menu-toggle').setAttribute('aria-expanded','false');
     requestAnimationFrame(()=>{
-      const heading=document.querySelector(`#panel-${currentPage} h2`);
+      const target=document.getElementById(location.hash.slice(1));
+      const anchor=!allowedPages.includes(location.hash.slice(1))&&target?.closest('.page-panel')?.id===`panel-${currentPage}`?target:null;
+      const mainTarget=target?.id==='main'?target:null;
+      const heading=mainTarget||anchor||document.querySelector(`#panel-${currentPage} h2`);
+      for(let parent=heading?.parentElement;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;
       heading?.setAttribute('tabindex','-1');
-      heading?.focus({preventScroll:true});
-      window.scrollTo({top:pageScroll.get(currentPage)??0,behavior:'instant'});
+      if(previousPage||anchor||mainTarget)heading?.focus({preventScroll:true});
+      if(mainTarget||anchor)heading.scrollIntoView({block:'start',behavior:'instant'});
+      else window.scrollTo({top:pageScroll.get(currentPage)??0,behavior:'instant'});
     });
   }
   const inHistory=historyPages.includes(currentPage);
   $('history-navigation').hidden=!inHistory;
   const historyLink=document.querySelector('[data-section="history"]');
-  if(inHistory)historyLink.setAttribute('aria-current','page');else historyLink.removeAttribute('aria-current');
-  for(const p of allowedPages)$(`panel-${p}`).hidden=p!==currentPage;
+  historyLink.toggleAttribute('data-section-active',inHistory);
+  if(currentPage==='history')historyLink.setAttribute('aria-current','page');else historyLink.removeAttribute('aria-current');
+  const researchLink=document.querySelector('#site-navigation [data-page="research"]');
+  researchLink.toggleAttribute('data-section-active',['research','design','materials'].includes(currentPage));
+  for(const p of allowedPages)if($(`panel-${p}`))$(`panel-${p}`).hidden=p!==currentPage;
+  $('load-status').hidden=Boolean(catalog)||currentPage!=='map';
   document.body.classList.toggle('design-mode',currentPage==='design');
   document.body.classList.toggle('comparison-mode',currentPage==='comparison');
   document.body.classList.toggle('research-mode',currentPage==='research');
@@ -117,7 +128,7 @@ function panel(){
   if(currentPage==='siting')ensureSiting();
   sitingExperience?.setActive(currentPage==='siting');
   if(currentPage==='comparison')ensureComparison();
-  if(currentPage==='research')ensureResearch();
+  if(currentPage==='materials')ensureResearch();
   if(currentPage==='countries')ensureCountries();
   countryExperience?.setActive(currentPage==='countries');
   designExperience?.setActive(currentPage==='design');
@@ -128,27 +139,14 @@ function panel(){
   }));
 }
 function renderVersions(){
-  $('dataset-buttons').innerHTML=catalog.datasets.filter(d=>d.preferred).map(d=>`<button type="button" data-year="${d.key}" aria-pressed="false" aria-label="${esc(d.label)}"><span><strong>${d.year}</strong><small>${esc(d.short)}</small></span><span class="switch-count">${num(d.rows)} 筆</span></button>`).join('');
-  for(const button of $('dataset-buttons').querySelectorAll('button'))button.addEventListener('click',()=>{
-    state.year=button.dataset.year;syncURL();renderDataset();
-  });
+  $('dataset-version').innerHTML=catalog.datasets.map(d=>`<option value="${esc(d.key)}">${esc(d.label)} · ${num(d.rows)} 筆</option>`).join('');
 }
 function renderDataset(){
   const d=dataset();shown=40;
   document.documentElement.style.setProperty('--point-color',colors[d.year]);
-  for(const b of document.querySelectorAll('[data-year]')){
-    const preferred=catalog.datasets.find(item=>item.key===b.dataset.year);
-    const active=preferred.year===d.year,display=active?d:preferred;
-    b.setAttribute('aria-pressed',String(active));b.setAttribute('aria-label',display.label);
-    b.querySelector('small').textContent=display.short;
-    b.querySelector('.switch-count').textContent=num(display.rows)+' 筆';
-  }
-  const versions=catalog.datasets.filter(item=>item.year===d.year);
-  $('dataset-version-field').hidden=versions.length<2;
-  $('dataset-version').innerHTML=versions.map(item=>`<option value="${esc(item.key)}">${esc(item.label)}・${num(item.rows)} 筆</option>`).join('');
   $('dataset-version').value=d.key;
   $('dataset-completeness').textContent=d.coverageLabel+'；保存列數不等於已核實的全市存量。';
-  $('dataset-date').textContent=d.dateLabel;$('dataset-note').textContent=d.note;
+  $('dataset-date').textContent=d.dateLabel;
   $('dataset-source').href=d.source;$('dataset-source').textContent=d.sourceLabel+' ↗';
   $('map-legend').textContent=d.label+'的位置';
   renderDistricts(d);renderResults();
@@ -221,18 +219,25 @@ async function focusPoint(id){
   if(map&&p?.plottable){map.setView([p.y,p.x],16,{animate:false});marker?.openPopup()}
 }
 function renderSources(){
-  $('source-cards').innerHTML=catalog.datasets.map(d=>`<article class="source-card"><div class="source-label"><span class="source-year">${d.year}</span><span class="outline-tag">${esc(d.short)}</span></div><h3>${esc(d.label)}</h3><span class="source-date">${esc(d.dateLabel)}</span><p class="source-coverage">${esc(d.coverageLabel)}</p><dl><div><dt>保存資料列</dt><dd>${num(d.rows)}</dd></div><div><dt>不同座標</dt><dd>${num(d.distinctCoordinates)}</dd></div><div><dt>可繪製紀錄</dt><dd>${num(d.plottableRows)}</dd></div></dl><p>${esc(d.note)}</p><div class="source-actions"><a href="${esc(d.source)}" target="_blank" rel="noopener noreferrer">原始來源 ↗</a></div></article>`).join('');
+  $('source-cards').innerHTML='<div class="source-table-wrap" role="region" aria-label="歷史清冊來源，可左右捲動" tabindex="0"><table class="source-table"><caption>六份保存版本；資料列不是已核實的設施存量。</caption><thead><tr><th scope="col">資料版本與日期</th><th scope="col">保存／可繪製</th><th scope="col">範圍與限制</th></tr></thead><tbody>'+catalog.datasets.map(d=>`<tr><th scope="row"><a href="${esc(d.source)}" target="_blank" rel="noopener noreferrer">${esc(d.label)}</a><small>${esc(d.dateLabel)}</small></th><td>${num(d.rows)}／${num(d.plottableRows)} 筆<small>${num(d.distinctCoordinates)} 組不同座標</small></td><td>${esc(d.coverageLabel)}<p>${esc(d.note)}</p></td></tr>`).join('')+'</tbody></table></div>';
 }
 function renderHistory(){
   $('annual-counts').innerHTML=annualCounts.map(a=>`<div class="annual-row"><span title="${a.year===2025?'2025 年底':a.year}">${a.year}</span><div class="bar" aria-hidden="true"><span style="width:${100*a.count/2000}%"></span></div><strong>${num(a.count)} 組</strong></div>`).join('');
   renderTimeline();
 }
 function renderTimeline(){
-  const visible=events.filter(e=>eventFilter==='all'||e.kind===eventFilter);
+  const visible=events;
   $('timeline').innerHTML=visible.map(e=>`<article class="timeline-event"><div class="timeline-date">${esc(e.date)}<small>${esc(e.tag)}</small></div><div class="timeline-body"><h4>${esc(e.title)}</h4><p>${esc(e.text)}</p>${e.steps?'<div class="case-steps">'+e.steps.map(([date,text])=>`<div class="case-step"><strong>${esc(date)}</strong><span>${esc(text)}</span></div>`).join('')+'</div>':''}<div class="event-sources">${e.sources.map(([label,url])=>`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>`).join('')}</div><p class="event-limit">${esc(e.limit)}</p></div></article>`).join('');
 }
 async function start(){
   document.body.classList.add('enhanced');
+  document.querySelector('.skip-link').addEventListener('click',event=>{
+    event.preventDefault();
+    const main=$('main');
+    main.setAttribute('tabindex','-1');
+    main.focus({preventScroll:true});
+    main.scrollIntoView({block:'start',behavior:'instant'});
+  });
   $('site-menu-toggle').hidden=false;
   $('site-menu-toggle').addEventListener('click',()=>{
     const open=document.querySelector('.site-header').classList.toggle('menu-open');
@@ -245,6 +250,7 @@ async function start(){
       const heading=document.querySelector(`#panel-${currentPage} h2`);
       heading?.setAttribute('tabindex','-1');
       heading?.focus({preventScroll:true});
+      window.scrollTo({top:0,behavior:'instant'});
     }
     document.querySelector('.site-header').classList.remove('menu-open');
     $('site-menu-toggle').setAttribute('aria-expanded','false');
@@ -256,33 +262,19 @@ async function start(){
       $('site-menu-toggle').focus();
     }
   });
-  for(const article of document.querySelectorAll('.country-case')){
-    const back=document.createElement('button');
-    back.type='button';back.className='country-return';back.dataset.countryTarget='country-index-heading';back.textContent='返回國家索引';
-    article.append(back);
-  }
   renderHistory();
   for(const img of document.querySelectorAll('.country-photo img')){
     const showPhotoError=()=>{img.hidden=true;img.nextElementSibling.hidden=false};
     img.addEventListener('error',showPhotoError,{once:true});
     if(img.complete&&!img.naturalWidth)showPhotoError();
   }
-  $('panel-countries').addEventListener('click',event=>{
-    const button=event.target.closest('[data-country-target]');
-    if(!button)return;
-    const target=$(button.dataset.countryTarget);
-    if(!target)return;
-    if(countryExperience){countryExperience.navigate(target,button);return}
-    for(const entry of document.querySelectorAll('.country-index button')){
-      if(entry===button)entry.setAttribute('aria-current','location');else entry.removeAttribute('aria-current');
-    }
-    target.focus({preventScroll:true});target.scrollIntoView({block:'start',behavior:'instant'});
-  });
-  $('panel-research').addEventListener('click',event=>{
+  document.querySelector('main').addEventListener('click',event=>{
     const button=event.target.closest('[data-research-target]');
     if(!button)return;
     const target=$(button.dataset.researchTarget);
     if(!target)return;
+    event.preventDefault();
+    if(location.hash!==`#${target.id}`){location.hash=target.id;return}
     for(let parent=target.parentElement;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;
     target.focus({preventScroll:true});target.scrollIntoView({block:'start',behavior:'instant'});
   });
@@ -296,12 +288,8 @@ async function start(){
     }
     panel();
   });
-  for(const b of document.querySelectorAll('[data-event-filter]'))b.addEventListener('click',()=>{
-    eventFilter=b.dataset.eventFilter;
-    for(const other of document.querySelectorAll('[data-event-filter]'))other.setAttribute('aria-pressed',String(other===b));
-    renderTimeline();
-  });
-  for(const id of ['district','search','reset-filters','fit-map'])$(id).disabled=true;
+  for(const id of ['dataset-version','district','search','reset-filters','fit-map'])$(id).disabled=true;
+  $('source-cards').innerHTML='<p role="status">正在載入六份保存版本的來源與範圍…</p>';
   panel();
   try{
     const response=await fetch('data/datasets.json');
@@ -310,8 +298,10 @@ async function start(){
     for(const district of catalog.districtOrder){const o=document.createElement('option');o.value=district;o.textContent=district;$('district').append(o)}
     readURL();renderVersions();renderSources();renderDataset();
     $('dataset-version').addEventListener('change',e=>{state.year=e.target.value;syncURL();renderDataset()});
-    for(const id of ['district','search','reset-filters','fit-map'])$(id).disabled=false;
+    for(const id of ['dataset-version','district','search','reset-filters','fit-map'])$(id).disabled=false;
     $('load-status').hidden=true;panel();
+    const anchor=document.getElementById(location.hash.slice(1));
+    if(!allowedPages.includes(location.hash.slice(1))&&anchor?.closest('.page-panel')?.id===`panel-${currentPage}`)anchor.scrollIntoView({block:'start',behavior:'instant'});
     $('district').addEventListener('change',e=>{state.district=e.target.value;shown=40;syncURL();renderResults()});
     $('search').addEventListener('input',e=>{state.search=e.target.value;shown=40;syncURL();renderResults()});
     $('reset-filters').addEventListener('click',()=>{state.district='';state.search='';$('district').value='';$('search').value='';shown=40;syncURL();renderResults()});
@@ -320,6 +310,7 @@ async function start(){
   }catch(error){
     $('load-status').textContent='位置資料暫時無法載入，請重新整理再試。';
     $('load-status').classList.add('error');
+    $('source-cards').innerHTML='<p role="status">資料版本表暫時無法載入，請重新整理再試。下方研究文獻、實務紀錄與方法仍可閱讀。</p>';
     console.error('Site initialization failed:',error.message);
   }
 }

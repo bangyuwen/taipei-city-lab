@@ -134,6 +134,8 @@ components:
 
 ## Overview
 
+The 2026-10-17 information architecture puts three reader journeys in the primary rail: 研究結論 (the default page), 台北的變化, and 各地做法. Sources/methods and execution materials are secondary links. Recommendations, dated observations and authored concepts have distinct content homes and direct evidence links. The country reader displays one case at a time; photo and 3D share a media area. Guided design demonstrations replace the parameter workbench. These changes retain the petrol/paper identity and the existing type and interaction tokens.
+
 **Creative North Star: "The Open-Shelf Research Index"**
 
 The site borrows the clarity of a public library index: a deep petrol rail anchors cool paper pages, and pale blue marks the selected entry. Short rows, aligned counts, quiet rules, and familiar web controls carry dense public information without turning research into promotional cards.

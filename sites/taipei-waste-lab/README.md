@@ -4,12 +4,24 @@
 
 網站：[台北垃圾箱研究](https://taipei-waste-lab.bangyuwen.chatgpt.site)。網站程式與部署產物位於 `sites/taipei-waste-lab/`；本題資料、模型與研究入口見[垃圾箱題目目錄](../../topics/bins/README.md)。Sites 部署使用本站自己的 Git 與 `.openai/hosting.json`。
 
+## 閱讀入口與資訊歸屬
+
+2026-10-17 起主導覽為「研究結論／台北的變化／各地做法」。根網址先讀三項研究判斷；地圖、清冊比較、數量與政策歷程、候選街段留在台北證據的二級導覽。既有 `#map`、`#comparison`、`#history`、`#siting` 深連結與資料版本 query 保持有效。
+
+- `#research`：三項建議、成立條件、未知及直接引用，不重複收錄完整文獻。
+- `#countries`：單一國家案例選單、預設實拍，在同一影像區切換 3D 示意。照片、署名、地點對應限制、證據及成本直接呈現；`?country=japan#countries` 與 `#country-japan` 可直接指定案例。
+- `#design`：從研究建議進入的 T1 概念與四種用途引導示範。固定尺寸和示例，以投放／清運流程取代自訂參數。
+- `#sources`：六份清冊來源、13 篇文獻、4 則實務與比較方法。每則完整紀錄只維護一份，`#reference-L01` 等引用可直接定位。
+- `#materials`：次要的預算、費率、桌面候選及尚未執行的現勘協定。來源與執行材料由頁尾進入。
+
+模型資料、照片原檔、T1 提案、候選疊圖與公開附件界線保留。以下為各題內容與原資料脈絡。
+
 目前保留：
 
 - 「研究判斷」：位置、清運方式、家戶與商家垃圾分流的建議、來源與限制；先閱讀判斷，再選用現勘工具。
 
 - 2015、2022、2024、2026 四個年份、六份位置資料切換；2024、2026 預設採新主版本，原缺頁版與示範區版仍可選取。
-- 「垃圾桶歷史」主分頁整合點位地圖、版本比較與撤除歷程，以子選單切換；原有 `#map`、`#comparison`、`#history` 深連結保持有效。
+- 「台北的變化」整合歷程、分布、清冊差異與候選街段，以二級導覽切換；原有 `#map`、`#comparison`、`#history` 深連結保持有效。
 - 「各國垃圾桶」以 `#countries` 獨立呈現十二國實物照片、桶型、滿度感測、清運與成本案例；圖說標示拍攝地點、日期及與案例的對應限制，照片、功能與價格各自附來源；付費服務與台北方案仍在「研究判斷」，兩頁互相連結。
 - 有來源的撤除時間線，區分政策理由、官方存量與具日期的撤除個案。
 - 用途設計體驗：街角隨手投、回收分流、高使用量管理與家戶收受；角色、投放規則、滿載／離線與清運流程各有操作回饋，3D 反映設備狀態。
@@ -36,7 +48,7 @@
 
 2026 舊版中心示範框為經度 121.51–121.57、緯度 25.02–25.08。原始重疊及異常座標全數保留，粗篩未通過者不繪製；原 CSV、各版 provenance、補查原始檔及離線匯出工具保留在私人專案，不隨公開站發布。
 
-分享連結的 `year=2024`、`year=2026` 保留原舊版意義；新主版本為 `year=2024-archive`、`year=2026-main`。四個年份按鈕選取各年的主版本，同年版本選單可切換舊版；網站初始仍顯示 2015。
+分享連結的 `year=2024`、`year=2026` 保留原舊版意義；新主版本為 `year=2024-archive`、`year=2026-main`。六份版本合併為一個選單；地圖初始選取 2015，網站首頁為研究結論。
 
 ## 研究筆記
 
@@ -85,13 +97,13 @@ npm run preview
 
 `python scripts/check-browser.py` 使用環境既有的 Playwright 與 Chromium 檢查桌機／手機、版本切換、篩選、無下載入口與撤除歷程操作。畫面證據寫入忽略的 `qa/`。
 
-`python scripts/check-design-browser.py` 使用 Node.js Playwright 驗證四種用途的訪客與清運流程、分流與家戶確認、滿載／感測離線／清運操作、尺寸與鍵盤視角、1440／720／390／320 px 版面、減少動態效果、位置資料 503 與 WebGL 失效時的文字流程。執行前請將已建置網站提供在 `http://127.0.0.1:4177/#design`；可用 `DESIGN_QA_URL` 覆寫網址、`PLAYWRIGHT_MODULE` 指定 Playwright 模組、`CHROME_PATH` 指定 Chrome。OpenStreetMap 圖磚由本機測試回傳 1×1 PNG；桌機四種用途、手機高使用量及 WebGL 備援截圖與 `design-browser-results.json` 寫入忽略的 `qa/`。Three.js 0.180.0 與 OrbitControls 自行託管，按需載入，版本與檔案雜湊見 `dist/vendor/three/manifest.json`。3D 體驗不依賴位置資料請求成功。
+`python scripts/check-design-browser.py` 使用 Node.js Playwright 驗證四種用途的訪客與清運流程、分流與家戶確認、滿載／感測離線／清運操作、固定規格與鍵盤操作、1440／720／390／320 px 版面、減少動態效果、位置資料 503 與 WebGL 失效時的文字流程。執行前請將已建置網站提供在 `http://127.0.0.1:4177/#design`；可用 `DESIGN_QA_URL` 覆寫網址、`PLAYWRIGHT_MODULE` 指定 Playwright 模組、`CHROME_PATH` 指定 Chrome。OpenStreetMap 圖磚由本機測試回傳 1×1 PNG；桌機四種用途、手機高使用量及 WebGL 備援截圖與 `design-browser-results.json` 寫入忽略的 `qa/`。Three.js 0.180.0 與 OrbitControls 自行託管，按需載入，版本與檔案雜湊見 `dist/vendor/three/manifest.json`。3D 體驗不依賴位置資料請求成功。
 
-用途設計入口為 `#design`。四款為本站概念；訪客可切換投放者與清運人員，操作分流、滿載、感測離線、壓縮與家戶確認。WebGL 失效時文字流程仍可完整操作。沒有實際感測、身分辨識、付款或成效預測；假設見[用途體驗文件](../../topics/bins/docs/bin-design.md)。
+概念設計入口為 `#design`，從研究建議進入。四款均為本站概念；選用途後，依固定投放／清運步驟查看分流、滿載、感測離線與家戶確認的示意，尺寸與物件不另提供自訂。WebGL 失效時文字流程仍可完整操作。沒有實際感測、身分辨識、付款或成效預測；假設見[用途體驗文件](../../topics/bins/docs/bin-design.md)。
 
-研究入口 `#research` 為「論文與實務」獨立閱讀頁，依序呈現精選論文、實務紀錄、綜合到台北及原有預算／執行材料。每筆分開呈現方法、來源結果、本站解讀及限制；綜合建議可跳回其依據。內容由 `topics/bins/research/reference-guide-2026-10-16/catalog.json` 經 `package-research.py` 產生，公開頁直接含有正文，不依賴候選 JSON 載入。原有 13 篇完整書目、18 個候選、費率、估算及未執行的現勘協定均保留，可展開追查；沒有新增下載入口或公開附件。
+研究入口 `#research` 為首頁「研究結論」，依序呈現三項判斷、成立條件、未知與直接引用；完整文獻／實務移至 `#sources`，預算／執行材料移至 `#materials`。每筆分開呈現方法、來源結果、本站解讀及限制；綜合建議可跳回其依據。內容由 `topics/bins/research/reference-guide-2026-10-16/catalog.json` 經 `package-research.py` 產生，公開頁直接含有正文，不依賴候選 JSON 載入。原有 13 篇完整書目、18 個候選、費率、估算及未執行的現勘協定均保留，可展開追查；沒有新增下載入口或公開附件。
 
-版本比較 `#comparison` 共用行政區與地址範圍，範圍摘要、五類組數及距離分布隨之連動。分類選擇只縮小結果清單，不改寫範圍分母。預設顯示全部分類；同址座標差距納入同一清單排序，不另重複前十名。完整全市行政區表與方法以展開方式保留，表格明示不受篩選影響。追加結果、距離延遲載入及從來源地圖返回會保留已展開證據；主資料與距離資料各有重試入口。
+版本比較 `#comparison` 共用行政區與地址範圍，範圍摘要、五類組數及距離分布隨之連動。分類選擇只縮小結果清單，不改寫範圍分母。預設顯示全部分類；同址座標差距納入同一清單排序，不另重複前十名。完整全市行政區表放在清單之後直接閱讀，明示不受篩選影響；完整配對及距離方法歸來源頁。追加結果、距離延遲載入及從來源地圖返回會保留已展開證據；主資料與距離資料各有重試入口。
 
 距離分析由 `scripts/analyze-coordinate-distances.py` 重建，亦整合於 `prepare-data.py`。它先核對固定比較 JSON 與兩份來源 CSV 雜湊，只分析原有的 75 對分類；新結果另存，不改寫原配對或缺列分類。距離採 Haversine 球面近似，半徑 6,371,000 公尺，保留未通過台北粗篩的有效經緯度並標示品質；無法計算時保留空值，排序用未四捨五入數值。
 
@@ -124,7 +136,7 @@ node scripts/check-redesign-browser.mjs
 
 Use `REDESIGN_QA_URL` to change the URL, `PLAYWRIGHT_MODULE` for an existing
 Playwright module, and `CHROME_PATH` for an installed browser. The check covers
-seven panels at 320, 390, 720 and 1440 px; both sides of the 640 and 960 px
+nine routes at 320, 390, 720 and 1440 px; both sides of the 640 and 960 px
 breakpoints; menu focus; map keyboard order; route scroll and filter retention;
 comparison retry; image fallback; and the absence of download controls.
 Viewport and full-page evidence is generated in ignored `.impeccable/review/`.
@@ -138,11 +150,11 @@ the four simulation purposes and WebGL fallback.
 
 ## Country 3D viewer
 
-Each country case opens one shared inline viewer. The viewer loads Three.js on the first request, reuses its canvas between countries, and renders on demand while resting. Studio reflections and soft shadows make paint, metal, wood slats and articulated parts readable. Tap a model or use its primary action to play/pause an illustrative sequence; Enter and Space do the same when the canvas has focus. The timeline supports deterministic inspection of each pose, and reset restores the original state. Optional turntable rotation stops when the visitor manipulates the camera. Leaving the viewport, hiding the tab, closing the viewer or changing routes suspends rendering without advancing the action. Reduced-motion mode shows the completed state immediately and keeps manual pose inspection available. Use the case selector to switch countries without searching the long page. Photo and return controls connect each illustration to its original caption and sources, retaining the current view. Drag or use arrow keys to rotate; pinch, Ctrl + wheel, the zoom buttons or + / - zoom; ordinary wheel scrolling continues through the canvas. Home restores the overview. Preset buttons reflect the actual camera direction, and zoom buttons disable at their limits. Photos, attribution, prices and evidence remain available if WebGL or a module fails.
+The country reader shows one selected case, using a single native selector grouped by service purpose. Real photos are the default; photo and 3D share one media area. All captions, attribution, licenses, identity limitations, operational evidence and costs remain readable. Australia explicitly has no embedded redistributable photo. Three.js loads only on the first model request and reuses its canvas. The viewer offers play/pause/replay, reset and zoom, with drag and keyboard camera controls. Switching to the photo, leaving the viewport, hiding the tab or changing routes suspends rendering. Reduced motion displays the completed action without animation. Timeline, turntable, preset-view menus, quizzes and layered disclosures are removed. Taipei's two official recycling notes have one readable home in Sources and Methods.
 
 The authored Three.js meshes and their actions are photo-reference illustrations, not measured or manufacturer models. Hidden surfaces, proportions and movement paths are inferred; animated flaps, lids, items and collection steps do not establish the real equipment's operating mechanism. Case-specific photo mismatches appear alongside each model. India depicts a collection service; Australia uses a generic receiving-station concept because no redistributable equipment photo is embedded. These models do not establish dimensions, capacity or performance.
 
-The metadata lives in `dist/country-model-data.js`; geometry lives in `dist/country-models.js`. Keep these distinct from the purpose simulator. Add any runtime file to `scripts/prepare-public.py`. Run `npm test`, `npm run check`, `node scripts/check-country-browser.mjs`, and `node scripts/check-country-play-browser.mjs` against the preview (optional `COUNTRY_QA_URL`, `PLAYWRIGHT_MODULE`, `CHROME_PATH`). The play check covers all twelve action sequences, pause/seek/reset, tap versus drag, turntable controls, reduced motion and suspended rendering on desktop and mobile. Screenshots and browser evidence are generated under ignored `.impeccable/review/`. Rebuild the private research ZIP with `npm run prepare-data` after editing HTML.
+The metadata lives in `dist/country-model-data.js`; geometry lives in `dist/country-models.js`. Keep these distinct from the purpose simulator. Add any runtime file to `scripts/prepare-public.py`. Run `npm test`, `npm run check`, `node scripts/check-country-browser.mjs`, and `node scripts/check-country-play-browser.mjs` against the preview (optional `COUNTRY_QA_URL`, `PLAYWRIGHT_MODULE`, `CHROME_PATH`). The browser checks cover all twelve cases and their photo/source preservation; representative opening, deposit and collection sequences cover play/pause/replay/reset, tap versus drag, reduced motion and suspended rendering on desktop and mobile. All twelve model action poses also have deterministic unit coverage. Screenshots and browser evidence are generated under ignored `.impeccable/review/`. Rebuild the private research ZIP with `npm run prepare-data` after editing HTML.
 
 ## 設點與歷史疊圖
 
@@ -153,3 +165,5 @@ The metadata lives in `dist/country-model-data.js`; geometry lives in `dist/coun
 `python scripts/prepare-siting-overlay.py` 由保存快照、`templates/siting-overlay.html` 與既有 Leaflet 重建互動頁，不重新下載或推論資料。這個步驟已接入 `npm run prepare-data` 與 `npm run check`。疊圖頁首次進入才載入；回到此頁保留篩選，嵌入頁高度跟隨內容，亦可另開完整頁面。底圖仍需 OpenStreetMap 連線，失敗時顯示提示並保留資料操作。
 
 預覽 `out/` 後，以 `SITING_QA_URL` 指定網址，執行 `node scripts/check-siting-browser.mjs`。可沿用 `PLAYWRIGHT_MODULE` 與 `CHROME_PATH`；檢查延後載入、頁籤與設計入口、返回時篩選保留、桌機／手機尺寸、點選定位、載入重試與私人輸入路徑，畫面證據留在忽略的 `.impeccable/review/siting/`。
+
+Use `--functional-only` with `check-redesign-browser.mjs` or `check-browser.py` to rerun behavior and responsive bounds without writing screenshots.
