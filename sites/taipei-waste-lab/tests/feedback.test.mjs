@@ -118,17 +118,17 @@ with tempfile.TemporaryDirectory() as directory:
   w=csv.writer(f,delimiter='\t');w.writerow(m['FIELDS'])
   w.writerows([[str(i),'中正','環境','在意',text] for i,text in enumerate(texts)])
  data=m['analyze'](p)
- md,page=m['render_depth'](data)
+ md,page=m['render_overlap'](data)
  md='\n'.join(md);page='\n'.join(page)
  assert '| 有桶詞 | 1 | 2 |' in md
  assert '| 無桶詞 | 1 | 1 |' in md
  assert '兩者皆未命中' in page and '不是需求分群' in page
  for valid in (0,2):
   adjacent=copy.deepcopy(data);adjacent['binAndTruck']=valid
-  m['render_depth'](adjacent)
+  m['render_overlap'](adjacent)
  for broken in (3,-1):
   invalid=copy.deepcopy(data);invalid['binAndTruck']=broken
-  try:m['render_depth'](invalid)
+  try:m['render_overlap'](invalid)
   except ValueError:pass
   else:raise AssertionError('Impossible overlap accepted')
 `));
