@@ -1,642 +1,199 @@
 import assert from 'node:assert/strict';
-import { mkdir, writeFile } from 'node:fs/promises';
-import { resolve, isAbsolute } from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {resolve,isAbsolute} from 'node:path';
+import {fileURLToPath,pathToFileURL} from 'node:url';
 
-const SCRIPT_DIR = fileURLToPath(new URL('.', import.meta.url));
-const SITE_ROOT = resolve(SCRIPT_DIR, '..');
-const QA_DIR = resolve(SITE_ROOT, 'qa');
-const DEFAULT_URL = 'http://127.0.0.1:4177/#design';
-const TARGET_URL = new URL(process.env.DESIGN_QA_URL || DEFAULT_URL);
-if (!TARGET_URL.hash || TARGET_URL.hash === '#') TARGET_URL.hash = 'design';
-const PAGE_TIMEOUT = 20_000;
-const SHORT_TIMEOUT = 8_000;
-const DESIGN_NAMES = {
-  street: '街角隨手投',
-  sorting: '回收分流站',
-  hotspot: '高使用量管理',
-  household: '家戶收受站',
-};
-const DESIGN_DEPTH_CM = { street: 42, sorting: 50, hotspot: 72, household: 80 };
-const VIEWS = ['overview', 'pedestrian', 'wheelchair', 'worker'];
-const SCREENS = [
-  'desktop-street.png',
-  'desktop-sorting.png',
-  'desktop-hotspot.png',
-  'desktop-household.png',
-  'mobile-hotspot.png',
-  'mobile-webgl-fallback.png',
-];
-const ONE_PIXEL_PNG = Buffer.from(
-  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=',
-  'base64',
-);
-
-function showHelp() {
-  console.log(`Usage: python3 scripts/check-design-browser.py [--help]\n\n` +
-    'Serve the built site at http://127.0.0.1:4177/#design, then run this check.\n' +
-    'Set PLAYWRIGHT_MODULE to a Playwright module path, CHROME_PATH to Chrome, and\n' +
-    'DESIGN_QA_URL to override the page URL. Screenshots and JSON go to ignored qa/.');
-}
-
-if (process.argv.includes('--help')) {
-  showHelp();
+const SITE_ROOT=resolve(fileURLToPath(new URL('.',import.meta.url)),'..');
+const QA_DIR=resolve(SITE_ROOT,'qa');
+const TARGET_URL=new URL(process.env.DESIGN_QA_URL||'http://127.0.0.1:4177/#design');
+if(!TARGET_URL.hash||TARGET_URL.hash==='#')TARGET_URL.hash='design';
+const TIMEOUT=20_000;
+const NAMES={street:'街角隨手投',sorting:'回收分流站',hotspot:'高使用量管理',household:'家戶收受站'};
+const ONE_PIXEL_PNG=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=','base64');
+if(process.argv.includes('--help')){
+  console.log('Serve the built site, then run node scripts/check-design-browser.mjs.\nSet DESIGN_QA_URL, PLAYWRIGHT_MODULE and CHROME_PATH as needed. Results go to ignored qa/.');
   process.exit(0);
 }
-
-function importSpecifier() {
-  const value = process.env.PLAYWRIGHT_MODULE?.trim();
-  if (!value) return 'playwright';
-  if (value.startsWith('file:')) return value;
-  return isAbsolute(value) ? pathToFileURL(value).href : value;
+function playwrightModule(){
+  const value=process.env.PLAYWRIGHT_MODULE?.trim();
+  return !value?'playwright':value.startsWith('file:')?value:isAbsolute(value)?pathToFileURL(value).href:value;
 }
-
-async function loadPlaywright() {
-  try {
-    return await import(importSpecifier());
-  } catch (cause) {
-    throw new Error(
-      'Could not load Playwright. Set PLAYWRIGHT_MODULE to the Playwright module file or make playwright importable.',
-      { cause },
-    );
-  }
+async function textContains(page,selector,value){
+  await page.waitForFunction(({selector,value})=>document.querySelector(selector)?.textContent.includes(value),{selector,value},{timeout:TIMEOUT});
 }
-
-function observe(page, counters) {
-  const diagnostics = { pageErrors: [], consoleErrors: [], failedRequests: [] };
-  page.on('pageerror', error => diagnostics.pageErrors.push(error.message));
-  page.on('console', message => {
-    if (message.type() === 'error') diagnostics.consoleErrors.push(message.text());
+async function status(page,value){await textContains(page,'#design-status',value);}
+async function newPage(browser,{width=1440,reducedMotion='no-preference',webglFailure=false,datasetFailure=false}={}){
+  const context=await browser.newContext({viewport:{width,height:width<600?844:1000},isMobile:width<600,hasTouch:width<600,reducedMotion});
+  if(webglFailure)await context.addInitScript(()=>{
+    const native=HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext=function(type,...args){return String(type).toLowerCase().startsWith('webgl')?null:native.call(this,type,...args);};
   });
-  page.on('requestfailed', request => {
-    diagnostics.failedRequests.push({ url: request.url(), failure: request.failure()?.errorText || 'unknown' });
-  });
-  page.route('**/tile.openstreetmap.org/**', async route => {
-    counters.mapTiles += 1;
-    await route.fulfill({ status: 200, contentType: 'image/png', body: ONE_PIXEL_PNG });
-  });
-  return diagnostics;
+  const page=await context.newPage(),diagnostics={pageErrors:[],consoleErrors:[],failedRequests:[]};
+  page.on('pageerror',error=>diagnostics.pageErrors.push(error.message));
+  page.on('console',message=>{if(message.type()==='error')diagnostics.consoleErrors.push(message.text());});
+  page.on('requestfailed',request=>diagnostics.failedRequests.push(request.url()));
+  await page.route('**/tile.openstreetmap.org/**',route=>route.fulfill({status:200,contentType:'image/png',body:ONE_PIXEL_PNG}));
+  if(datasetFailure)await page.route('**/data/datasets.json',route=>route.fulfill({status:503,contentType:'text/plain',body:'unavailable'}));
+  await page.goto(TARGET_URL.href,{waitUntil:'domcontentloaded'});
+  await page.locator('#panel-design').waitFor({state:'visible',timeout:TIMEOUT});
+  await page.locator('#design-options option').nth(3).waitFor({state:'attached',timeout:TIMEOUT});
+  if(webglFailure){
+    await page.locator('#design-retry').waitFor({state:'visible',timeout:TIMEOUT});
+    await textContains(page,'#design-fallback strong','無法顯示 3D');
+    assert.equal(await page.locator('#design-viewport canvas').count(),0);
+  }else await page.waitForFunction(()=>document.querySelector('#design-viewport')?.dataset.ready==='true',null,{timeout:TIMEOUT});
+  return {page,context,diagnostics};
 }
-
-function assertHealthy(diagnostics, { allowedConsole = [] } = {}) {
-  assert.deepEqual(diagnostics.pageErrors, [], `Uncaught page errors: ${JSON.stringify(diagnostics.pageErrors)}`);
-  assert.deepEqual(diagnostics.failedRequests, [], `Failed requests: ${JSON.stringify(diagnostics.failedRequests)}`);
-  const unexpected = diagnostics.consoleErrors.filter(message =>
-    !allowedConsole.some(pattern => pattern.test(message)));
-  assert.deepEqual(unexpected, [], `Unexpected console errors: ${JSON.stringify(unexpected)}`);
+function healthy(diagnostics,{webglFailure=false,datasetFailure=false}={}){
+  assert.deepEqual(diagnostics.pageErrors,[],'no uncaught errors');
+  assert.deepEqual(diagnostics.failedRequests,[],'no failed requests');
+  const allowed=[...(webglFailure?[/webgl/i]:[]),...(datasetFailure?[/503/,/Site initialization failed:.*Data response unavailable/]:[])];
+  assert.deepEqual(diagnostics.consoleErrors.filter(text=>!allowed.some(pattern=>pattern.test(text))),[],'no unexpected console errors');
 }
-
-async function waitForText(page, selector, expected, { contains = false, timeout = SHORT_TIMEOUT } = {}) {
-  await page.waitForFunction(({ selector: target, expected: wanted, contains: partial }) => {
-    const element = document.querySelector(target);
-    const actual = (element?.innerText ?? element?.textContent ?? '').replace(/\s+/g, ' ').trim();
-    return element && (partial ? actual.includes(wanted) : actual === wanted);
-  }, { selector, expected, contains }, { timeout });
+async function select(page,id,mode='deposit'){
+  await page.selectOption('#design-options',id);
+  await page.locator(`[data-design-demo="${mode}"]`).click();
+  await textContains(page,'#design-name',NAMES[id]);
+  assert.equal(await page.locator('#design-options').inputValue(),id);
+  assert.equal(await page.locator('[data-design-demo][aria-pressed="true"]').count(),1);
+  assert.equal(await page.locator('#design-workspace').getAttribute('data-mode'),mode);
+  assert.equal(await page.locator('#design-workspace').getAttribute('data-complete'),'false');
 }
-
-async function waitForAttribute(page, selector, attribute, value, timeout = SHORT_TIMEOUT) {
-  await page.waitForFunction(({ selector: target, attribute: name, value: wanted }) =>
-    document.querySelector(target)?.getAttribute(name) === wanted,
-  { selector, attribute, value }, { timeout });
+async function next(page,message){await page.locator('#design-next').click();await status(page,message);}
+async function complete(page){
+  assert.equal(await page.locator('#design-workspace').getAttribute('data-complete'),'true');
+  assert.equal(await page.locator('#design-next').innerText(),'重新示範');
+  assert.equal(await page.locator('#design-demo-steps [aria-current]').count(),0);
 }
-
-async function assertVisible(page, selector, expected = true) {
-  assert.equal(await page.locator(selector).isVisible(), expected, `${selector} visibility`);
+async function deposit(page,id){
+  await select(page,id);
+  if(id==='street'){
+    await next(page,'完成概念投放');
+    await next(page,'這站不收家戶垃圾');
+  }else if(id==='sorting'){
+    await next(page,'進入回收槽');await next(page,'進入一般垃圾槽');
+  }else if(id==='hotspot'){
+    await next(page,'完成概念投放');await next(page,'容器已滿');
+    await textContains(page,'#design-service-state','已滿');
+  }else{
+    await next(page,'住戶確認示意完成');
+    await next(page,'示意袋已放入封閉投放艙');
+    await next(page,'示意投放已確認');
+  }
+  await complete(page);
+  await page.locator('#design-next').click();
+  assert.equal(await page.locator('#design-workspace').getAttribute('data-complete'),'false','replay returns to first step');
+  assert.equal(await page.locator('#design-demo-steps [aria-current="step"]').count(),1);
 }
-
-async function assertValue(page, selector, expected) {
-  assert.equal(await page.locator(selector).inputValue(), String(expected), `${selector} value`);
+async function collection(page,id){
+  await select(page,id,'collection');
+  if(id==='hotspot'){
+    await textContains(page,'#design-service-state','接近滿載');
+    await next(page,'已安排收運示意，容器還沒有清空');
+    await textContains(page,'#design-service-state','已安排收運');
+  }
+  await next(page,'清運門已開');
+  await textContains(page,'#design-service-state','清運中・暫停投放');
+  await next(page,'已完成清空示意');
+  await textContains(page,'#design-fill-readout','0%');
+  await next(page,'清運門已關');
+  if(id==='hotspot'){
+    await next(page,'感測離線，無法依讀值派收');
+    await textContains(page,'#design-service-state','容量未知・需現場確認');
+    await textContains(page,'#design-fill-readout','容量未知');
+  }
+  await complete(page);
 }
-
-async function assertPressed(page, selector, expected = true) {
-  await waitForAttribute(page, selector, 'aria-pressed', String(expected));
+async function allFlows(page){for(const id of Object.keys(NAMES)){await deposit(page,id);await collection(page,id);}}
+async function noOverflow(page){
+  const metrics=await page.evaluate(()=>({width:innerWidth,document:document.documentElement.scrollWidth,body:document.body.scrollWidth,panel:document.querySelector('#panel-design').scrollWidth,panelWidth:document.querySelector('#panel-design').clientWidth}));
+  assert.ok(metrics.document<=metrics.width+1&&metrics.body<=metrics.width+1&&metrics.panel<=metrics.panelWidth+1,JSON.stringify(metrics));
 }
-
-async function assertSinglePressed(page, selector) {
-  assert.equal(await page.locator(`${selector}[aria-pressed="true"]`).count(), 1,
-    `Expected one selected control in ${selector}`);
+async function cleanInterface(page){
+  assert.equal(await page.locator('#design-options').evaluate(element=>element.tagName),'SELECT','one native purpose selector');
+  assert.equal(await page.locator('#design-options option').count(),4);
+  assert.equal(await page.locator('[data-design-demo]').count(),2);
+  assert.equal(await page.locator('#panel-design input[type="range"],#panel-design [data-scenario],#panel-design [data-design-role],#panel-design [data-design-item],#panel-design [data-design-view]').count(),0,'no parameter/role/object/scenario menus');
+  assert.equal(await page.locator('#panel-design details').count(),0,'fixed proposal and process are directly readable');
+  assert.equal(await page.locator('#panel-design .design-primary:visible').count(),1,'one next action');
 }
-
-async function click(page, selector) {
-  await page.locator(selector).click();
+async function proposal(page){
+  await page.locator('[data-design-jump="t1-specification"]').first().click();
+  assert.equal(await page.evaluate(()=>document.activeElement.id),'t1-specification');
+  await page.locator('.t1-drawings img').evaluateAll(images=>Promise.all(images.map(image=>image.decode())));
+  assert.equal(await page.locator('.t1-drawings img').count(),2);
+  const fixed=await page.locator('.t1-specs').innerText();
+  await select(page,'household');
+  assert.equal(await page.locator('.t1-specs').innerText(),fixed,'service concepts do not rewrite fixed T1 proposal');
+  await page.locator('[data-design-jump="t1-process-heading"]').click();
+  assert.equal(await page.evaluate(()=>document.activeElement.id),'t1-process-heading');
+  await textContains(page,'.t1-process-status','尚未定案');
 }
-
-async function selectDesign(page, id) {
-  await click(page, `[data-design="${id}"]`);
-  await waitForText(page, '#design-name', DESIGN_NAMES[id]);
-  await assertPressed(page, `[data-design="${id}"]`);
-  await assertSinglePressed(page, '[data-design]');
-}
-
-async function selectRole(page, role) {
-  await click(page, `[data-design-role="${role}"]`);
-  await assertPressed(page, `[data-design-role="${role}"]`);
-  await assertSinglePressed(page, '[data-design-role]');
-}
-
-async function selectItem(page, item) {
-  await click(page, `[data-design-item="${item}"]`);
-  await assertPressed(page, `[data-design-item="${item}"]`);
-  await assertSinglePressed(page, '[data-design-item]');
-}
-
-async function selectChannel(page, channel) {
-  await click(page, `[data-design-channel="${channel}"]`);
-  await assertPressed(page, `[data-design-channel="${channel}"]`);
-  await assertSinglePressed(page, '[data-design-channel]');
-}
-
-async function selectScenario(page, scenario) {
-  await click(page, `[data-scenario="${scenario}"]`);
-  await assertPressed(page, `[data-scenario="${scenario}"]`);
-}
-
-async function selectView(page, view) {
-  await click(page, `[data-design-view="${view}"]`);
-  await assertPressed(page, `[data-design-view="${view}"]`);
-  await assertSinglePressed(page, '[data-design-view]');
-}
-
-async function assertStatus(page, message, options = {}) {
-  await waitForText(page, '#design-status', message, { contains: true, ...options });
-}
-
-async function depositAndExpect(page, message, { animate = false } = {}) {
-  await click(page, '#design-throw');
-  await assertStatus(page, message);
-  if (animate) {
-    await page.waitForTimeout(1_100);
-    await assertStatus(page, message);
+async function keyboard(page,{webglFailure=false}={}){
+  await select(page,'household');
+  await page.locator('#design-next').focus();
+  await page.keyboard.press('Enter');await status(page,'住戶確認示意完成');
+  await page.keyboard.press('Space');await status(page,'示意袋已放入封閉投放艙');
+  await page.keyboard.press('Enter');await status(page,'示意投放已確認');
+  if(!webglFailure){
+    const canvas=page.locator('#design-viewport canvas');
+    assert.equal(await canvas.getAttribute('tabindex'),'0');
+    await canvas.focus();
+    for(const key of ['ArrowLeft','ArrowUp','+','-','Home'])await canvas.press(key);
+    assert.equal(await canvas.evaluate(element=>element===document.activeElement),true);
   }
 }
-
-async function ready(page, { webgl = true } = {}) {
-  await page.goto(TARGET_URL.href, { waitUntil: 'domcontentloaded' });
-  await page.locator('#panel-design').waitFor({ state: 'visible', timeout: PAGE_TIMEOUT });
-  await page.locator('[data-design]').first().waitFor({state:'visible',timeout:PAGE_TIMEOUT});
-  assert.equal(await page.locator('[data-design]').count(), 4, 'four purpose buttons');
-  assert.equal(await page.locator('[data-design-item]').count(), 3, 'three example objects');
-  if (webgl) {
-    await page.waitForFunction(() => document.querySelector('#design-viewport')?.dataset.ready === 'true',
-      null, { timeout: PAGE_TIMEOUT });
-    assert.equal(await page.locator('#design-viewport canvas').count(), 1, 'one WebGL canvas');
-    await assertVisible(page, '#design-fallback', false);
-  } else {
-    await page.waitForFunction(() => {
-      const fallback = document.querySelector('#design-fallback');
-      return fallback && !fallback.hidden && fallback.querySelector('strong')?.textContent.includes('無法顯示 3D');
-    }, null, { timeout: PAGE_TIMEOUT });
-    assert.equal(await page.locator('#design-viewport canvas').count(), 0, 'no canvas after WebGL failure');
-    await assertVisible(page, '#design-retry');
-    await waitForText(page, '#design-fallback p', '投放、清運與情境切換仍可完整操作。你也可以重新開啟場景。');
+async function navigation(page){
+  await select(page,'street');
+  const canvas=await page.locator('#design-viewport canvas').elementHandle();
+  await page.evaluate(element=>{window.__designQaCanvas=element;},canvas);
+  for(const name of ['countries','research','sources','map','design']){
+    await page.evaluate(value=>{location.hash=value;},name);
+    await page.locator(`#panel-${name}`).waitFor({state:'visible',timeout:TIMEOUT});
   }
-  assert.equal(await page.locator('#design-throw').isEnabled(), true, 'visitor controls remain enabled');
+  assert.equal(await page.locator('#design-viewport canvas').count(),1);
+  assert.equal(await page.evaluate(()=>window.__designQaCanvas===document.querySelector('#design-viewport canvas')),true,'navigation reuses canvas');
 }
-
-async function assertNoOverflow(page) {
-  const metrics = await page.evaluate(() => {
-    const panel = document.querySelector('#panel-design');
-    const visible = element => {
-      const style = getComputedStyle(element);
-      return style.display !== 'none' && style.visibility !== 'hidden';
-    };
-    const offenders = [...document.querySelectorAll('body *')]
-      .filter(element => visible(element))
-      .map(element => ({
-        element,
-        rect: element.getBoundingClientRect(),
-      }))
-      .filter(({ rect }) => rect.width > 0 && (rect.left < -1 || rect.right > innerWidth + 1))
-      .slice(0, 8)
-      .map(({ element, rect }) => ({
-        name: element.id || element.className?.baseVal || element.className || element.tagName,
-        left: Math.round(rect.left),
-        right: Math.round(rect.right),
-      }));
-    return {
-      viewport: innerWidth,
-      document: document.documentElement.scrollWidth,
-      body: document.body.scrollWidth,
-      panel: panel?.scrollWidth || 0,
-      panelClient: panel?.clientWidth || 0,
-      offenders,
-    };
-  });
-  assert.ok(metrics.document <= metrics.viewport + 1 && metrics.body <= metrics.viewport + 1 &&
-    metrics.panel <= metrics.panelClient + 1,
-  `Horizontal overflow: ${JSON.stringify(metrics)}`);
-}
-
-async function openDimensions(page) {
-  const details = page.locator('#panel-design .design-dimensions');
-  if (!(await details.evaluate(element => element.open))) await click(page, '#panel-design .design-dimensions summary');
-  assert.equal(await page.locator('#panel-design input[type="range"]').count(), 3, 'three native range controls');
-  for (const [id, label] of [
-    ['design-height', '桶身高度'],
-    ['design-opening', '投入口寬度'],
-    ['design-sidewalk', '人行道總寬'],
-  ]) {
-    const labelText = await page.locator(`#${id}`).evaluate(input =>
-      [...input.labels].map(node => node.textContent).join(' '));
-    assert.ok(labelText.includes(label), `${id} has its visible native label`);
-  }
-}
-
-async function setRange(page, id, value) {
-  await page.locator(`#${id}`).evaluate((input, nextValue) => {
-    input.value = String(nextValue);
-    input.dispatchEvent(new Event('input', { bubbles: true }));
-  }, value);
-}
-
-async function testDimensionsAndKeyboard(page) {
-  await selectDesign(page, 'street');
-  await openDimensions(page);
-  const height = page.locator('#design-height');
-  await height.focus();
-  await height.press('ArrowRight');
-  await assertValue(page, '#design-height', 115);
-  await waitForText(page, '#design-height-value', '115 cm');
-  await waitForText(page, '#design-opening-height', '86.3');
-  await height.press('Home');
-  await assertValue(page, '#design-height', 85);
-  await height.press('End');
-  await assertValue(page, '#design-height', 130);
-
-  await selectDesign(page, 'household');
-  await assertValue(page, '#design-opening', 38);
-  assert.equal(await page.locator('#design-opening').getAttribute('max'), '44');
-  await setRange(page, 'design-opening', 44);
-  await assertValue(page, '#design-opening', 44);
-  await selectDesign(page, 'street');
-  assert.equal(await page.locator('#design-opening').getAttribute('max'), '26');
-  await assertValue(page, '#design-opening', 22);
-
-  for (const [id, depth] of Object.entries(DESIGN_DEPTH_CM)) {
-    await selectDesign(page, id);
-    await setRange(page, 'design-sidewalk', 240);
-    await waitForText(page, '#design-clearance', String(240 - depth));
-  }
-  await click(page, '#design-reset');
-}
-
-async function testPurposeRules(page, { animate = false } = {}) {
-  await selectDesign(page, 'street');
-  await selectItem(page, 'bottle');
-  await depositAndExpect(page, '一般垃圾服務');
-  await selectItem(page, 'bag');
-  await depositAndExpect(page, '不收家戶垃圾');
-  await selectItem(page, 'litter');
-  await depositAndExpect(page, '完成概念投放', { animate });
-
-  await selectDesign(page, 'sorting');
-  await assertVisible(page, '#design-channel-controls');
-  await selectItem(page, 'bottle');
-  await depositAndExpect(page, '選「資源回收」入口');
-  await selectChannel(page, 'recycle');
-  await depositAndExpect(page, '進入回收槽', { animate });
-  await selectItem(page, 'litter');
-  await depositAndExpect(page, '選「一般垃圾」入口');
-  await selectChannel(page, 'general');
-  await depositAndExpect(page, '進入一般垃圾槽');
-  await selectItem(page, 'bag');
-  await depositAndExpect(page, '不收家戶垃圾');
-
-  await selectDesign(page, 'hotspot');
-  await assertVisible(page, '[data-scenario="near"]');
-  await assertVisible(page, '[data-scenario="offline"]');
-  await selectItem(page, 'bottle');
-  await depositAndExpect(page, '一般垃圾服務');
-  await selectItem(page, 'bag');
-  await depositAndExpect(page, '不收家戶垃圾');
-  await selectItem(page, 'litter');
-  await depositAndExpect(page, '完成概念投放');
-
-  await selectDesign(page, 'household');
-  await assertVisible(page, '#design-household-intro');
-  await selectItem(page, 'bottle');
-  await depositAndExpect(page, '家戶垃圾袋收受');
-  await selectItem(page, 'litter');
-  await depositAndExpect(page, '家戶垃圾袋收受');
-  await selectItem(page, 'bag');
-  await click(page, '#design-confirm');
-  await assertStatus(page, '請先完成模擬住戶確認並放入示意垃圾袋');
-  await depositAndExpect(page, '模擬住戶確認');
-  await click(page, '#design-authenticate');
-  await assertStatus(page, '住戶確認示意完成');
-  await click(page, '#design-confirm');
-  await assertStatus(page, '請先完成模擬住戶確認並放入示意垃圾袋');
-  await depositAndExpect(page, '示意袋已放入封閉投放艙');
-  await click(page, '#design-confirm');
-  await assertStatus(page, '示意投放已確認');
-}
-
-async function testFullScenarios(page) {
-  for (const id of Object.keys(DESIGN_NAMES)) {
-    await selectDesign(page, id);
-    await selectScenario(page, 'full');
-    await waitForText(page, '#design-service-state', '已滿', { contains: true });
-    if (id === 'household') {
-      await click(page, '#design-authenticate');
-      await assertStatus(page, '目前暫停受理');
-    } else {
-      await selectItem(page, 'litter');
-      await depositAndExpect(page, '容器已滿');
-    }
-  }
-}
-
-async function testHotspotScenarios(page) {
-  await selectDesign(page, 'hotspot');
-  await selectScenario(page, 'near');
-  await waitForText(page, '#design-service-state', '接近滿載', { contains: true });
-  await selectRole(page, 'worker');
-  await click(page, '#design-request');
-  await assertStatus(page, '已安排收運示意，容器還沒有清空');
-  await waitForText(page, '#design-service-state', '已安排收運', { contains: true });
-  await click(page, '#design-compress');
-  await assertStatus(page, '已切換壓縮機構示意');
-
-  await selectDesign(page, 'hotspot');
-  await selectScenario(page, 'offline');
-  await waitForText(page, '#design-service-state', '容量未知・需現場確認');
-  await selectItem(page, 'litter');
-  await depositAndExpect(page, '感測離線，容量未知');
-  await selectRole(page, 'worker');
-  await click(page, '#design-request');
-  await assertStatus(page, '感測離線，無法依讀值派收');
-  await click(page, '#design-compress');
-  await assertStatus(page, '感測離線，無法依讀值派收');
-}
-
-async function testMaintenance(page, id) {
-  await selectDesign(page, id);
-  await selectRole(page, 'worker');
-  await click(page, '#design-service');
-  await assertPressed(page, '#design-service');
-  await waitForText(page, '#design-service-state', '清運中・暫停投放');
-  await assertStatus(page, '清運門已開');
-  if (id === 'hotspot') {
-    await click(page, '#design-compress');
-    await assertStatus(page, '開門時禁止壓縮');
-  }
-  await selectRole(page, 'visitor');
-  await selectItem(page, id === 'household' ? 'bag' : 'litter');
-  await depositAndExpect(page, '清運門開啟中，暫停投放');
-  await selectRole(page, 'worker');
-  await click(page, '#design-empty');
-  await assertStatus(page, '已完成清空示意');
-  await click(page, '#design-service');
-  await assertPressed(page, '#design-service', false);
-  await assertStatus(page, '清運門已關');
-}
-
-async function testCameras(page, { screenshots = false } = {}) {
-  for (const id of Object.keys(DESIGN_NAMES)) {
-    await selectDesign(page, id);
-    for (const view of VIEWS) await selectView(page, view);
-    await click(page, '#design-reset-view');
-    await assertPressed(page, '[data-design-view="overview"]');
-    await assertSinglePressed(page, '[data-design-view]');
-    await assertNoOverflow(page);
-    if (screenshots) {
-      await click(page, '#design-reset');
-      await page.waitForTimeout(350);
-      await page.screenshot({ path: resolve(QA_DIR, `desktop-${id}.png`), fullPage: true });
-    }
-  }
-}
-
-async function exerciseAllPurposes(page, { animate = false } = {}) {
-  await testPurposeRules(page, { animate });
-  await testFullScenarios(page);
-  await testHotspotScenarios(page);
-  for (const id of Object.keys(DESIGN_NAMES)) await testMaintenance(page, id);
-}
-
-async function navigate(page, name) {
-  const historyPages = ['map', 'comparison', 'history'];
-  if (historyPages.includes(name) && !(await page.locator('#history-navigation').isVisible())) {
-    await click(page, '[data-section="history"]');
-    if (name === 'map') {
-      await page.locator('#panel-map').waitFor({ state: 'visible', timeout: SHORT_TIMEOUT });
-      return;
-    }
-  }
-  if (name === 'map' && await page.locator('#panel-map').isVisible()) return;
-  await page.locator(`[data-page="${name}"]:visible`).first().click();
-  await page.locator(`#panel-${name}`).waitFor({ state: 'visible', timeout: SHORT_TIMEOUT });
-}
-
-async function newPage(browser, counters, options = {}) {
-  const { webglFailure = false, ...contextOptions } = options;
-  const context = await browser.newContext(contextOptions);
-  if (webglFailure) {
-    await context.addInitScript(() => {
-      const nativeGetContext = HTMLCanvasElement.prototype.getContext;
-      HTMLCanvasElement.prototype.getContext = function (type, ...args) {
-        if (String(type).toLowerCase().startsWith('webgl')) return null;
-        return nativeGetContext.call(this, type, ...args);
-      };
-    });
-  }
-  const page = await context.newPage();
-  const diagnostics = observe(page, counters);
-  return { context, page, diagnostics };
-}
-
-async function testT1Proposal(page) {
-  await selectDesign(page, 'hotspot');
-  await click(page, '#design-try-cleaning');
-  await waitForAttribute(page, '[data-design="street"]', 'aria-pressed', 'true');
-  await waitForAttribute(page, '[data-design-role="worker"]', 'aria-pressed', 'true');
-  await waitForAttribute(page, '#design-service', 'aria-pressed', 'true');
-  assert.equal(await page.evaluate(() => document.activeElement.id), 'design-service');
-  await click(page, '#design-service');
-  await waitForAttribute(page, '#design-service', 'aria-pressed', 'false');
-  await click(page, '#design-read-proposal');
-  assert.equal(await page.locator('#t1-specification').getAttribute('open'), '');
-  assert.equal(await page.evaluate(() => document.activeElement === document.querySelector('#t1-specification summary')), true);
-  await page.locator('.t1-drawings img').evaluateAll(images => Promise.all(images.map(image => image.decode())));
-  assert.equal(await page.locator('.t1-drawings img').count(), 2);
-  const fixedSpecification = await page.locator('.t1-specs').innerText();
-  await selectDesign(page, 'household');
-  assert.equal(await page.locator('.t1-specs').innerText(), fixedSpecification,
-    'other service concepts must not silently rewrite the fixed T1 proposal');
-  await page.locator('#t1-specification summary').click();
-}
-
-async function runDesktop(browser, counters, result) {
-  const { context, page, diagnostics } = await newPage(browser, counters, {
-    viewport: { width: 1440, height: 1000 },
-  });
-  try {
-    await ready(page);
-    await testDimensionsAndKeyboard(page);
-    await exerciseAllPurposes(page, { animate: true });
-    await testCameras(page, { screenshots: true });
-    await assertNoOverflow(page);
-
-    const canvas = await page.locator('#design-viewport canvas').elementHandle();
-    assert.ok(canvas, 'canvas exists before navigation');
-    await page.evaluate(element => { window.__designQaCanvas = element; }, canvas);
-    for (const name of ['countries', 'research', 'sources', 'map', 'design']) await navigate(page, name);
-    assert.equal(await page.locator('#design-viewport canvas').count(), 1, 'one canvas after navigation');
-    assert.equal(await page.evaluate(() =>
-      window.__designQaCanvas === document.querySelector('#design-viewport canvas')),
-    true, 'navigation reuses the original canvas');
-    await testT1Proposal(page);
-    result.desktop = 'passed';
-    assertHealthy(diagnostics);
-  } finally {
-    await context.close();
-  }
-}
-
-async function runResponsive(browser, counters, result) {
-  for (const width of [720, 390, 320]) {
-    const isMobile = width <= 390;
-    const { context, page, diagnostics } = await newPage(browser, counters, {
-      viewport: { width, height: isMobile ? 844 : 900 },
-      isMobile,
-      hasTouch: isMobile,
-    });
-    try {
-      await ready(page);
-      for (const id of Object.keys(DESIGN_NAMES)) {
-        await selectDesign(page, id);
-        await assertNoOverflow(page);
-      }
-      await selectDesign(page, 'hotspot');
-      await selectView(page, 'wheelchair');
-      await assertNoOverflow(page);
-      if (width === 390) {
-        await click(page, '#design-reset-view');
-        await page.screenshot({ path: resolve(QA_DIR, 'mobile-hotspot.png'), fullPage: true });
-      }
-      assertHealthy(diagnostics);
-      result[`width_${width}`] = 'passed';
-    } finally {
-      await context.close();
-    }
-  }
-}
-
-async function runReducedMotion(browser, counters, result) {
-  const { context, page, diagnostics } = await newPage(browser, counters, {
-    viewport: { width: 1440, height: 1000 },
-    reducedMotion: 'reduce',
-  });
-  try {
-    await ready(page);
-    assert.equal(await page.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches), true);
-    await testPurposeRules(page, { animate: false });
-    await selectView(page, 'wheelchair');
-    await assertNoOverflow(page);
-    assertHealthy(diagnostics);
-    await testT1Proposal(page);
-    result.reduced_motion = 'passed';
-  } finally {
-    await context.close();
-  }
-}
-
-async function runDatasetFailure(browser, counters, result) {
-  const { context, page, diagnostics } = await newPage(browser, counters, {
-    viewport: { width: 1440, height: 1000 },
-  });
-  try {
-    await page.route('**/data/datasets.json', route =>
-      route.fulfill({ status: 503, contentType: 'text/plain', body: 'unavailable' }));
-    await ready(page);
-    await waitForText(page, '#load-status', '位置資料暫時無法載入', { contains: true });
-    assert.ok((await page.locator('#load-status').getAttribute('class')).includes('error'));
-    await exerciseAllPurposes(page);
-
-    const canvas = await page.locator('#design-viewport canvas').elementHandle();
-    await page.evaluate(element => { window.__designQaCanvas = element; }, canvas);
-    for (const name of ['countries', 'research', 'map', 'design']) await navigate(page, name);
-    assert.equal(await page.locator('#design-viewport canvas').count(), 1);
-    assert.equal(await page.evaluate(() =>
-      window.__designQaCanvas === document.querySelector('#design-viewport canvas')), true);
-    assertHealthy(diagnostics, { allowedConsole: [/503/, /Site initialization failed:.*Data response unavailable/] });
-    result.dataset_503_independence = 'passed';
-  } finally {
-    await context.close();
-  }
-}
-
-async function runWebglFallback(browser, counters, result) {
-  const { context, page, diagnostics } = await newPage(browser, counters, {
-    viewport: { width: 390, height: 844 },
-    isMobile: true,
-    hasTouch: true,
-    webglFailure: true,
-  });
-  try {
-    await ready(page, { webgl: false });
-    await exerciseAllPurposes(page);
-    await testDimensionsAndKeyboard(page);
-    await testCameras(page);
-    assert.equal(await page.locator('#design-viewport canvas').count(), 0,
-      'purpose workflows do not need a WebGL canvas');
-    await selectDesign(page, 'hotspot');
-    await click(page, '#design-reset-view');
-    await assertNoOverflow(page);
-    await page.screenshot({ path: resolve(QA_DIR, 'mobile-webgl-fallback.png'), fullPage: true });
-    await click(page, '#design-retry');
-    await page.waitForFunction(() => {
-      const fallback = document.querySelector('#design-fallback');
-      return fallback && !fallback.hidden && fallback.querySelector('strong')?.textContent.includes('無法顯示 3D');
-    }, null, { timeout: PAGE_TIMEOUT });
-    assert.equal(await page.locator('#design-viewport canvas').count(), 0);
-    assertHealthy(diagnostics, { allowedConsole: [/webgl/i] });
-    await testT1Proposal(page);
-    result.webgl_fallback_all_purposes = 'passed';
-  } finally {
-    await context.close();
-  }
-}
-
-async function main() {
-  await mkdir(QA_DIR, { recursive: true });
-  const result = {
-    status: 'running',
-    url: TARGET_URL.href,
-    screenshots: SCREENS,
-    checks: {},
-    map_tile_responses: 0,
-  };
+async function main(){
+  await mkdir(QA_DIR,{recursive:true});
+  const result={status:'running',url:TARGET_URL.href,checks:{},screenshots:[]};
   let browser;
-  try {
-    const { chromium } = await loadPlaywright();
-    const executablePath = process.env.CHROME_PATH?.trim();
-    browser = await chromium.launch({
-      headless: true,
-      ...(executablePath ? { executablePath: resolve(executablePath) } : {}),
-    });
-    const counters = { mapTiles: 0 };
-    result.browser_version = browser.version();
-
-    await runDesktop(browser, counters, result.checks);
-    await runResponsive(browser, counters, result.checks);
-    await runReducedMotion(browser, counters, result.checks);
-    await runDatasetFailure(browser, counters, result.checks);
-    await runWebglFallback(browser, counters, result.checks);
-
-    result.map_tile_responses = counters.mapTiles;
-    result.map_tile_fixture = 'OpenStreetMap tile requests are fulfilled with an in-memory 1x1 PNG';
-    result.status = 'passed';
-  } catch (error) {
-    result.status = 'failed';
-    result.error = error?.stack || String(error);
-    process.exitCode = 1;
-  } finally {
-    await browser?.close();
-    await writeFile(resolve(QA_DIR, 'design-browser-results.json'),
-      `${JSON.stringify(result, null, 2)}\n`, 'utf8');
-  }
-  console.log(JSON.stringify(result, null, 2));
+  try{
+    const {chromium}=await import(playwrightModule());
+    browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:resolve(process.env.CHROME_PATH)}:{})});
+    result.browser_version=browser.version();
+    const desktop=await newPage(browser);
+    try{
+      await cleanInterface(desktop.page);await allFlows(desktop.page);await keyboard(desktop.page);await proposal(desktop.page);await navigation(desktop.page);await noOverflow(desktop.page);
+      await select(desktop.page,'street');await desktop.page.locator('#design-workspace').scrollIntoViewIfNeeded();
+      await desktop.page.screenshot({path:resolve(QA_DIR,'desktop-design-guided.png')});
+      result.screenshots.push('desktop-design-guided.png');healthy(desktop.diagnostics);result.checks.desktop_all_flows='passed';
+    }finally{await desktop.context.close();}
+    for(const width of [720,390,320]){
+      const sample=await newPage(browser,{width});
+      try{
+        for(const id of Object.keys(NAMES)){await select(sample.page,id);await noOverflow(sample.page);}
+        await keyboard(sample.page);await collection(sample.page,'hotspot');await noOverflow(sample.page);
+        if(width===390){await sample.page.locator('#design-workspace').scrollIntoViewIfNeeded();await sample.page.screenshot({path:resolve(QA_DIR,'mobile-design-guided.png')});result.screenshots.push('mobile-design-guided.png');}
+        healthy(sample.diagnostics);result.checks[`width_${width}`]='passed';
+      }finally{await sample.context.close();}
+    }
+    for(const options of [{reducedMotion:'reduce'},{datasetFailure:true},{webglFailure:true,width:390}]){
+      const sample=await newPage(browser,options);
+      try{
+        await allFlows(sample.page);await keyboard(sample.page,options);await noOverflow(sample.page);
+        if(options.webglFailure){
+          await sample.page.locator('#design-retry').click();await sample.page.locator('#design-retry').waitFor({state:'visible',timeout:TIMEOUT});
+          assert.equal(await sample.page.locator('#design-viewport canvas').count(),0);
+          await textContains(sample.page,'#design-fallback p','文字會說明每次操作結果');
+        }
+        healthy(sample.diagnostics,options);
+        result.checks[options.webglFailure?'webgl_failure_all_flows':options.datasetFailure?'dataset_failure_independence':'reduced_motion_all_flows']='passed';
+      }finally{await sample.context.close();}
+    }
+    result.status='passed';
+  }catch(error){result.status='failed';result.error=error.stack||String(error);process.exitCode=1;}
+  finally{await browser?.close();await writeFile(resolve(QA_DIR,'design-browser-results.json'),JSON.stringify(result,null,2)+'\n');}
+  console.log(JSON.stringify(result,null,2));
 }
-
 await main();

@@ -68,10 +68,27 @@ test('search accepts spacing and preserves repeated coordinate records',()=>{
 test('export safely quotes text and labels row IDs as local identifiers',()=>{
   const csv=csvForPoints([{id:'row-1',district:'中正區',address:'=1+1,"測試"',x:121.5,y:25.05,quality:'待核對'}]);
   assert.match(csv,/非官方箱號/);assert.match(csv,/"'=1\+1,""測試"""/);
-  assert.equal(pageFromHash('#sources'),'sources');assert.equal(pageFromHash('#unknown'),'map');
+  assert.equal(pageFromHash('#sources'),'sources');assert.equal(pageFromHash('#unknown'),'research');
 });
 
 test('history deep links and the independent country page remain addressable',()=>{
   for(const page of ['map','comparison','history','siting','countries'])assert.equal(pageFromHash('#'+page),page);
-  assert.equal(pageFromHash('#unknown'),'map');
+  assert.equal(pageFromHash('#unknown'),'research');
+});
+
+test('reader entry and evidence links resolve to their owning pages',()=>{
+  for(const hash of ['', '#', '#research', '#unknown'])assert.equal(pageFromHash(hash),'research');
+  for(const hash of ['#reference-L01','#reference-L13','#reference-P04','#research-literature-heading','#source-comparison-method','#research-audit-heading','#research-papers-heading'])assert.equal(pageFromHash(hash),'sources');
+  for(const hash of ['#materials','#research-materials-heading','#research-candidates-heading'])assert.equal(pageFromHash(hash),'materials');
+  assert.equal(pageFromHash('#t1-process-heading'),'design');
+  assert.equal(pageFromHash('#country-japan'),'countries');
+});
+
+test('the main landmark fragment keeps the active route',()=>{
+  for(const page of ['map','comparison','history','siting','countries','design','research','sources','materials']){
+    assert.equal(pageFromHash('#main',page),page);
+    assert.equal(pageFromHash('#unknown',page),'research');
+  }
+  assert.equal(pageFromHash('#main'),'research');
+  assert.equal(pageFromHash('#main',null),'research');
 });
