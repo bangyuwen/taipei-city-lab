@@ -5,26 +5,32 @@ import hashlib
 import html
 import json
 import re
-import unicodedata
 from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 FOLDER = 'feedback-2026-10-17'
 FIELDS = ['匿名編號', '行政區', '原議題', '心情', '去識別內容']
-# Frozen literal indicators, not semantic labels or policy positions.
-CODEBOOK = [
-    ('bins', '垃圾桶／清潔箱', ['垃圾桶', '垃圾筒', '清潔箱']),
-    ('truck', '垃圾車', ['垃圾車']),
-    ('household', '家戶垃圾', ['家庭垃圾', '家戶垃圾', '居家垃圾', '家用垃圾']),
-    ('dropoff', '定點／彈性投放', ['定點', '固定地點', '24小時', '二十四小時', '隨時丟', '隨時倒']),
-    ('litter', '亂丟／隨地丟棄', ['亂丟', '亂扔', '隨地', '隨手丟', '隨手扔']),
-    ('pests', '鼠蟲／異味', ['老鼠', '鼠患', '蟑螂', '蚊蟲', '惡臭', '臭味', '異味']),
-    ('cigarettes', '菸蒂／菸頭', ['菸蒂', '煙蒂', '菸頭', '煙頭']),
-    ('recycling', '回收／廚餘', ['回收', '廚餘']),
-]
+# Themes are authored semantic judgments, never automatic word matches.
+THEMES = {
+    'A': ('桶位與投放便利', '桶的數量、撤除、位置、距離、入口與使用便利；家戶收運站另歸家戶服務。'),
+    'B': ('家戶收運與投放管道', '垃圾車時間、路線、等待、作息衝突、定點或社區代收；僅描述家戶混投不算此類。'),
+    'C': ('清掃、清運與設備維護', '滿溢、清掃或清運不足、設備損壞、髒亂未處理；不因提到桶或亂丟就自動納入。'),
+    'D': ('亂丟、混投與垃圾來源', '亂丟、非法棄置、家戶或商業垃圾混投、菸蒂狗便等來源行為；明示的風險仍是訴求而非核實事件。'),
+    'E': ('分類、回收與廚餘處理', '分類與接收規則、拒收、指引差異、回收或廚餘處理；只提物品名稱不算。'),
+    'F': ('異味、鼠蟲與鄰近負擔', '明示的臭味、鼠蟲、收運噪音、阻礙通行或鄰近負擔；不從髒亂自行推定鼠蟲。'),
+    'G': ('制度、執法與管理回應', '費率與袋規則、執法、責任、政策溝通、陳情回應與治理公平；一般增桶請求不自動納入。'),
+}
+STANCES = {
+    'more': '偏向增設／恢復／保留',
+    'less': '偏向減少／撤除／反對設置',
+    'conditional': '有條件增設或保留',
+    'mixed': '方向混合或明示權衡',
+    'unspecified': '談到公共桶但方向不明',
+    'none': '未表達公共桶立場／以其他議題為主',
+}
 SCOPE = '這份資料是台北市意見回饋中篩出的垃圾相關訊息。分析單位是一則留言；比例只描述這批留言，不代表全體意見回饋或台北市民意。'
-METHOD = '文字線索採固定詞表比對：先做 Unicode NFKC 正規化、移除空白，再檢查是否包含任一詞。每則留言在同組最多計一次，可跨組重複；比例不能相加。這不是逐則語意分類，不辨識否定、支持或反對，也可能漏掉同義詞。'
+METHOD = '三個子代理逐則閱讀檔案內文字，依實際意思標註問題、訴求與公共桶立場，不使用關鍵字規則分類。每則可涉及多個問題，同類最多計一次；比例不能相加。原文中的否定、條件與服務情境需要分開理解。AI 判讀仍可能有誤，現場與因果均未驗證。'
 LIMITS = [
     '收集期間、招募方式、完整回饋總數、垃圾相關訊息的篩選規則均未提供；2026-10-17 是分析整理日。',
     '行政區與心情沿用原檔欄位。行政區是留言標記，未確認為居住地或事件所在地；心情標籤的填寫或標註方式未知。',
@@ -69,7 +75,7 @@ MECHANISMS = [
      '用同一組物品比對當期書面規則與現場接收，記錄日期、拒收理由及替代管道，再向承接單位確認後端流程。',
      '若規則與現場不一致，先同步指引與人員說明；若接收時段或場所受限，則回到服務安排比較，不能只增加宣導。'),
     ('burden', '移走一個點，還要看負擔去了哪裡',
-     '希望恢復垃圾桶與反對住宅旁設桶的意見並存。這批資料沒有逐則立場編碼，不能宣稱任何一方是多數。',
+     '希望恢復垃圾桶與反對住宅旁設桶的意見並存。本次另做逐則立場判讀，但這批留言不具代表性，不能宣稱任何一方代表市民多數。',
      '使用者得到的便利與鄰近住戶、店家、清潔人員承擔的工作和環境負擔，可能落在不同人身上。',
      '撤點後當地變乾淨，仍可能只是垃圾轉往鄰街；反過來，撤點後變髒也可能伴隨活動、商家或巡收變化。',
      '同時觀察原點與鄰近替代點，記錄街面垃圾、投放成功、異味與清潔工時；向使用者、鄰近住戶與清潔人員分別確認。',
@@ -103,7 +109,7 @@ REPORT_JUDGMENT = '投放方便與環境負擔，需要一起判斷'
 REPORT_INTRO = [
     '這批回饋提示了三種需要分開查核的困擾：外出時找不到可用的投放處、家戶作息難以配合收運，以及投放點周邊的滿溢與清潔負擔。我們的研究判斷是，先把投放到清運的完整過程看清楚，再決定要調整位置、時段、接收規則或維護。',
     '希望增加或恢復垃圾桶，與反對住宅附近設桶，可以同時出現在這份資料中。前者可能關注沿途的方便，後者可能承擔堆積、異味與清掃負擔。因此，改善是否有用，需要同時看「使用者能否完成投放」與「周邊負擔是否減少」，也要查看問題有沒有轉往鄰近地點。',
-    '本文先區分三種情境，再追問原因與反例，最後把假說收斂成可執行的查核順序。留言是人工歸納與改寫摘述，本次未量化各立場人數，也未驗證現場；像「撤桶導致髒亂」這樣的描述，仍需核對時間順序與其他變化。',
+    '本文先區分三種情境，再追問原因與反例，最後把假說收斂成可執行的查核順序。本次已逐則做 AI 語意判讀，並分開統計問題與設桶立場；現場尚未核實，像「撤桶導致髒亂」這樣的描述，仍需核對時間順序與其他變化。',
 ]
 SCENARIO_BRIDGE = '分開情境，是為了確認服務在哪一段難以使用。接下來要追問：路徑太遠、時段不合，還是到了現場仍不能投放？同樣的「不好丟」，可能需要不同的改善。'
 SHARED_BRIDGE = '位置、時段與維護之外，還有兩件事要與每種改善一起檢查：依照指引分類後，現場是否能接收；投放更方便之後，住戶、店家與清潔人員是否承擔更多負擔。'
@@ -111,12 +117,6 @@ LOOP_BRIDGE = '前面的問題也可能相互影響。合法投放不易使用�
 VALIDATION_BRIDGE = '要判斷圖中的關係是否存在，先把留言連到可核對的時間、地點與服務，再建立現場基準。接著才比較一項調整，並同時檢查使用者、鄰近地點與清潔人員的結果。以下順序是建議，尚未執行。'
 METHOD_BRIDGE = '目前最重要的資料缺口，是逐則事件時間與核實位置、實際服務時間、投放負荷、巡收及成本。缺少這些資料，仍無法區分位置、時間、容量與維護等解釋，也不能提出設點排名或成效估計。'
 
-
-def home_summary():
-    return ('<p>本批回饋提示：行人沿途的投放、家戶作息與收運的配合，以及投放點的持續維護，需要分開查核。分類接收與鄰近環境負擔，則要和每一種改善一起評估。</p>'
-            '<p>完整分析把這些情境串成「可能原因與反例 → 所需證據 → 驗證與決策」。目前仍是待查假說，尚未證明增桶、撤桶或調整收運的成效。</p>'
-            '<p>行政區交叉分析進一步指出可查核的差異：北投的投放時段、內湖的家戶與分類接收、萬華的街面維護。這是本檔文字結構的對照，尚不能排成各區改善優先序。</p>'
-            '<p class="feedback-report-entry"><a href="#feedback-findings">閱讀完整分析與圖解</a> · <a href="#feedback-cross">看行政區交叉分析</a></p>')
 
 
 def render_depth():
@@ -127,12 +127,12 @@ def render_depth():
     for _, label, scene, gap, check in PROBLEM_PATHS:
         md += [f'| {label}：{scene} | {gap} | {check} |']
     md += ['', SCENARIO_BRIDGE, '', '## 從情境追問原因與反例', '',
-           '以下以可達性、住宅負擔、時段、維護、垃圾來源及分類衝突為線索做目的抽樣閱讀，並保留反例；不是隨機抽樣，也未逐則語意編碼全部留言。可能機制與其他解釋均待驗證，未計算各問題的人數或發生率。', '']
+           '前述統計描述留言中的問題與訴求；以下將情境串成可查核的假說，保留其他解釋與反例。類別的留言數不等於受影響人數或發生率，機制仍待現場驗證。', '']
     page = ['<section class="feedback-section" aria-labelledby="feedback-problems"><h3 id="feedback-problems" tabindex="-1">先辨認三種服務情境</h3>',
             '<p>行人投放與家戶收運是兩種不同使用情境；現場維護則決定投放點能否持續可用。下面把留言線索整理成查核問題，箭頭表示查核順序。</p>',
             problem_map(), f'<p>{esc(SCENARIO_BRIDGE)}</p></section>',
             '<section class="feedback-section" aria-labelledby="feedback-mechanisms"><h3 id="feedback-mechanisms" tabindex="-1">從情境追問原因與反例</h3>',
-            '<p class="feedback-note">以下以問題線索做目的抽樣閱讀並保留反例，未逐則語意編碼全部留言。「留言線索」是人工改寫摘述；可能機制與其他解釋都是待查假說，未計算各問題的人數或發生率。</p>']
+            '<p class="feedback-note">前述統計來自逐則語意判讀；以下「留言線索」是歸納改寫，可能機制與反例仍是待查假說。不能以類別留言數當成受影響人數、發生率或因果證據。</p>']
     groups = [
         ('core', '三個主要問題：位置、時段與維護', '先沿著使用情境查核服務是否可用，逐一區分會導向不同措施的原因。', MECHANISMS[:3]),
         ('shared', '兩個共同問題：接收是否一致，負擔由誰承擔', SHARED_BRIDGE, MECHANISMS[3:]),
@@ -172,43 +172,7 @@ def render_depth():
     return md, page
 
 
-def render_overlap(data):
-    esc = html.escape
-    counts = {item['id']: item['count'] for item in data['indicators']}
-    both = data['binAndTruck']
-    cells = [both, counts['bins'] - both, counts['truck'] - both,
-             data['records'] - counts['bins'] - counts['truck'] + both]
-    if min(cells) < 0 or sum(cells) != data['records']:
-        raise ValueError('Invalid bin/truck overlap aggregates')
-    note = ('四格互斥、合計涵蓋本檔全部留言；「未命中」只指這兩組詞，不是沒有垃圾問題。'
-            '格子面積相同，不表示數量相同。這是詞語交集，不是需求分群、政策立場或因果關係。')
-    interpretation = '即使兩類用詞只在部分留言重疊，也不能說兩類需求彼此獨立。一個人可遇到多種困擾，留言也可能省略服務名稱。方案判斷仍要回到具體情境。'
-    md = ['### 桶詞與垃圾車的文字交集', '', METHOD, '', note, '',
-          '| 文字命中 | 有垃圾車 | 無垃圾車 |', '| --- | ---: | ---: |',
-          f'| 有桶詞 | {cells[0]:,} | {cells[1]:,} |', f'| 無桶詞 | {cells[2]:,} | {cells[3]:,} |', '',
-          f'分母：本檔 {data["records"]:,} 則；桶詞為「垃圾桶、垃圾筒、清潔箱」。', '', interpretation, '']
-    page = ['<section class="feedback-section" aria-labelledby="feedback-overlap"><h4 id="feedback-overlap" tabindex="-1">桶詞與垃圾車的文字交集</h4>',
-            f'<p>依原有固定詞表重看兩種用詞。分母是本檔 {data["records"]:,} 則；桶詞為「垃圾桶、垃圾筒、清潔箱」，仍不辨識支持、反對或否定。</p>',
-            '<figure class="feedback-overlap"><figcaption>桶詞 × 垃圾車：每則留言恰落在一格</figcaption>',
-            '<table><thead><tr><th scope="col">文字命中</th><th scope="col">有垃圾車</th><th scope="col">無垃圾車</th></tr></thead><tbody>',
-            f'<tr><th scope="row">有桶詞</th><td class="overlap-both"><strong>{cells[0]:,}</strong><span>兩者都有</span></td><td><strong>{cells[1]:,}</strong><span>只有桶詞</span></td></tr>',
-            f'<tr><th scope="row">無桶詞</th><td><strong>{cells[2]:,}</strong><span>只有垃圾車</span></td><td><strong>{cells[3]:,}</strong><span>兩者皆未命中</span></td></tr>',
-            f'</tbody></table><p class="feedback-note">{esc(note)}</p></figure><p>{esc(interpretation)}</p></section>']
-    return md, page
-
-
-
-def normalized(text):
-    return re.sub(r'\s+', '', unicodedata.normalize('NFKC', text)).lower()
-
-
-def indicators(text):
-    value = normalized(text)
-    return {key for key, _, terms in CODEBOOK
-            if any(normalized(term) in value for term in terms)}
-
-
-def analyze(path):
+def read_feedback(path):
     payload = path.read_bytes()
     with path.open(encoding='utf-8-sig', newline='') as stream:
         parsed = list(csv.reader(stream, delimiter='\t', strict=True))
@@ -219,157 +183,163 @@ def analyze(path):
         raise ValueError('Empty input or malformed record width')
     if any(not cell.strip() for row in rows for cell in row):
         raise ValueError('Missing fields require an explicit analysis decision')
-    ids = Counter(row[0] for row in rows)
-    if max(ids.values()) > 1:
+    if len({row[0] for row in rows}) != len(rows):
         raise ValueError('Duplicate anonymous IDs require an explicit analysis decision')
+    return payload, rows
+
+
+def read_annotations(path, total, require_all=True):
+    """Validate already-authored judgments; never infer labels from text."""
+    rows = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+    by_row = {}
+    for row in rows:
+        if set(row) != {'r', 'themes', 'stance', 'clarity', 'meaning'}:
+            raise ValueError('Unexpected semantic annotation fields')
+        rid = row['r']
+        if type(rid) is not int or not 1 <= rid <= total or rid in by_row:
+            raise ValueError('Invalid or duplicate annotated row')
+        themes = row['themes']
+        if not isinstance(themes, list) or any(not isinstance(key, str) for key in themes):
+            raise ValueError('Invalid semantic theme list')
+        if themes != sorted(set(themes)) or not set(themes) <= set(THEMES):
+            raise ValueError('Unknown or repeated semantic theme')
+        if row['stance'] not in STANCES or row['clarity'] not in ('clear', 'unclear'):
+            raise ValueError('Unknown stance or clarity')
+        if not isinstance(row['meaning'], str) or not row['meaning'].strip():
+            raise ValueError('Each message requires an authored meaning')
+        by_row[rid] = row
+    if require_all and set(by_row) != set(range(1, total + 1)):
+        raise ValueError('Semantic annotations do not cover every original message')
+    return by_row
+
+
+def blind_sample(rows, source_hash):
+    sample = []
+    for district in dict.fromkeys(row[1] for row in rows):
+        candidates = [i for i, row in enumerate(rows, 1) if row[1] == district]
+        sample += sorted(candidates, key=lambda i: hashlib.sha256(
+            f'{source_hash}:{i}'.encode()).hexdigest())[:12]
+    return set(sample)
+
+
+def audit_annotations(rows, source_hash, initial, secondary, final, resolutions):
+    expected = blind_sample(rows, source_hash)
+    if set(secondary) != expected:
+        raise ValueError('Double-coded sample differs from the frozen selection')
+    fields = ('themes', 'stance', 'clarity')
+    disagreements = {rid for rid in expected if any(initial[rid][key] != secondary[rid][key] for key in fields)}
+    if resolutions['reviewedRows'] != list(range(1, len(rows) + 1)):
+        raise ValueError('Consistency reread does not cover every message')
+    decisions = {}
+    for item in resolutions['decisions']:
+        if set(item) != {'r', 'reason'} or type(item['r']) is not int or item['r'] in decisions or not isinstance(item['reason'], str) or not item['reason'].strip():
+            raise ValueError('Invalid semantic adjudication record')
+        decisions[item['r']] = item['reason']
+    changed = {rid for rid in final if any(initial[rid][key] != final[rid][key] for key in fields)}
+    if set(decisions) != disagreements | changed:
+        raise ValueError('Every sampled disagreement and changed judgment needs a recorded reason')
+    agreement = {key: sum(initial[rid][key] == secondary[rid][key] for rid in expected) for key in fields}
+    return {'sampleSize': len(expected), 'selection': '每區依來源雜湊與原始列序排序取 12 則；獨立判讀不提供初判標籤',
+            'initialAgreement': agreement, 'disagreementRows': len(disagreements),
+            'adjudicatedRows': len(disagreements),
+            'changedRows': len(changed), 'consistencyReviewedRows': len(rows), 'decisionRecords': len(decisions),
+            'scope': '一致數是抽樣的初判一致性，不是分類正確率；分歧經回讀裁決，未獨立複核全部留言。'}
+
+
+def analyze(path, annotations, initial_path, secondary_path, resolutions_path, protocol_path, manifest_path):
+    payload, rows = read_feedback(path)
+    n = len(rows)
+    source_hash = hashlib.sha256(payload).hexdigest()
+    manifest = json.loads(manifest_path.read_text())
+    if manifest['source_sha256'] != source_hash or manifest['records'] != n or manifest['protocol_sha256'] != hashlib.sha256(protocol_path.read_bytes()).hexdigest():
+        raise ValueError('Semantic assignment manifest does not match source or protocol')
+    final = read_annotations(annotations, n)
+    initial = read_annotations(initial_path, n)
+    secondary = read_annotations(secondary_path, n, require_all=False)
+    resolutions = json.loads(resolutions_path.read_text())
+    audit = audit_annotations(rows, source_hash, initial, secondary, final, resolutions)
+    groups = {}
+    for rid, row in enumerate(rows, 1):
+        group = groups.setdefault(row[1], {'themes': {key: 0 for key in THEMES},
+                                          'stances': {key: 0 for key in STANCES}, 'unclear': 0, 'unclassified': 0})
+        label = final[rid]
+        for key in label['themes']:
+            group['themes'][key] += 1
+        group['stances'][label['stance']] += 1
+        group['unclear'] += label['clarity'] == 'unclear'
+        group['unclassified'] += not label['themes']
     texts = Counter(row[4] for row in rows)
-    matches = [indicators(row[4]) for row in rows]
-    district_matches = {}
-    for row, group in zip(rows, matches):
-        district = district_matches.setdefault(row[1], {
-            'counts': {key: 0 for key, _, _ in CODEBOOK}, 'noIndicatorMatch': 0})
-        for key in group:
-            district['counts'][key] += 1
-        district['noIndicatorMatch'] += not group
-    return {
-        'schemaVersion': 2,
-        'districtIndicators': district_matches,
-        'analysisDate': '2026-10-17',
-        'source': {'name': 'Pasted text.txt', 'sha256': hashlib.sha256(payload).hexdigest(),
-                   'frame': SCOPE, 'collectionPeriod': None, 'recruitment': None,
-                   'selectionRules': None, 'allFeedbackCount': None},
-        'records': len(rows),
-        'quality': {'uniqueIds': len(ids), 'missingCells': 0,
-                    'multilineRecords': sum('\n' in row[4] or '\r' in row[4] for row in rows),
-                    'duplicateTextGroups': sum(count > 1 for count in texts.values()),
-                    'duplicateTextExtraRows': sum(count - 1 for count in texts.values())},
-        'districts': dict(Counter(row[1] for row in rows)),
-        'moods': dict(Counter(row[3] for row in rows)),
-        'originalTopics': dict(Counter(row[2] for row in rows)),
-        'indicators': [{'id': key, 'label': label, 'terms': list(dict.fromkeys(terms)),
-                        'count': sum(key in group for group in matches)}
-                       for key, label, terms in CODEBOOK],
-        'noIndicatorMatch': sum(not group for group in matches),
-        'binAndTruck': sum({'bins', 'truck'} <= group for group in matches),
-    }
+    data = {'schemaVersion': 3, 'analysisDate': '2026-10-17',
+            'source': {'name': 'Pasted text.txt', 'sha256': source_hash, 'frame': SCOPE,
+                       'collectionPeriod': None, 'recruitment': None, 'selectionRules': None, 'allFeedbackCount': None},
+            'records': n,
+            'quality': {'uniqueIds': n, 'missingCells': 0,
+                        'multilineRecords': sum('\n' in row[4] or '\r' in row[4] for row in rows),
+                        'duplicateTextGroups': sum(count > 1 for count in texts.values()),
+                        'duplicateTextExtraRows': sum(count - 1 for count in texts.values())},
+            'districts': dict(Counter(row[1] for row in rows)),
+            'moods': dict(Counter(row[3] for row in rows)), 'originalTopics': dict(Counter(row[2] for row in rows)),
+            'themes': [{'id': key, 'label': label, 'definition': definition,
+                        'count': sum(group['themes'][key] for group in groups.values())}
+                       for key, (label, definition) in THEMES.items()],
+            'stances': {key: sum(group['stances'][key] for group in groups.values()) for key in STANCES},
+            'unclear': sum(group['unclear'] for group in groups.values()),
+            'unclassified': sum(group['unclassified'] for group in groups.values()), 'districtAnalysis': groups,
+            'semantic': {'method': METHOD, 'primaryCoders': 3, 'codingProtocol': 'semantic-protocol-v1',
+                         'protocolSha256': hashlib.sha256(protocol_path.read_bytes()).hexdigest(),
+                         'annotationSha256': hashlib.sha256(annotations.read_bytes()).hexdigest(),
+                         'initialAnnotationSha256': hashlib.sha256(initial_path.read_bytes()).hexdigest(),
+                         'doubleCodingSha256': hashlib.sha256(secondary_path.read_bytes()).hexdigest(),
+                         'adjudicationSha256': hashlib.sha256(resolutions_path.read_bytes()).hexdigest(),
+                         'reviewNotesSha256': resolutions['notesSha256'], 'audit': audit}}
+    validate(data)
+    return data
+
+
+def validate(data):
+    if data.get('schemaVersion') != 3:
+        raise ValueError('Semantic summary required; legacy word counts cannot reconstruct meaning')
+    n = data['records']
+    if type(n) is not int or n <= 0:
+        raise ValueError('Invalid feedback denominator')
+    for field in ('districts', 'moods', 'originalTopics'):
+        if any(type(v) is not int or v <= 0 for v in data[field].values()) or sum(data[field].values()) != n:
+            raise ValueError('Aggregate denominator mismatch')
+    expected = [(key, label, definition) for key, (label, definition) in THEMES.items()]
+    if [(x['id'], x['label'], x['definition']) for x in data['themes']] != expected or data['semantic']['method'] != METHOD:
+        raise ValueError('Semantic protocol changed; repeat interpretation before rebuilding')
+    groups = data['districtAnalysis']
+    if set(groups) != set(data['districts']) or set(data['stances']) != set(STANCES):
+        raise ValueError('Missing district or stance aggregates')
+    for district, total in data['districts'].items():
+        group = groups[district]
+        if set(group['themes']) != set(THEMES) or set(group['stances']) != set(STANCES):
+            raise ValueError('Unknown theme or stance in district')
+        values = [*group['themes'].values(), *group['stances'].values(), group['unclear'], group['unclassified']]
+        if any(type(v) is not int or not 0 <= v <= total for v in values):
+            raise ValueError('District counts outside denominator')
+        if sum(group['stances'].values()) != total or not max(group['themes'].values()) <= total - group['unclassified'] <= sum(group['themes'].values()):
+            raise ValueError('Inconsistent district stance or classification coverage')
+    for item in data['themes']:
+        if sum(group['themes'][item['id']] for group in groups.values()) != item['count']:
+            raise ValueError('Theme columns do not reconcile')
+    for key in STANCES:
+        if sum(group['stances'][key] for group in groups.values()) != data['stances'][key]:
+            raise ValueError('Stance columns do not reconcile')
+    for key in ('unclear', 'unclassified'):
+        if sum(group[key] for group in groups.values()) != data[key]:
+            raise ValueError('Classification quality totals do not reconcile')
+    audit = data['semantic']['audit']
+    if not 0 < audit['sampleSize'] <= n or not 0 <= audit['disagreementRows'] <= audit['sampleSize'] or audit['adjudicatedRows'] != audit['disagreementRows']:
+        raise ValueError('Incomplete semantic double-coding audit')
+    if audit['consistencyReviewedRows'] != n or type(audit['changedRows']) is not int or not 0 <= audit['changedRows'] <= n:
+        raise ValueError('Invalid consistency reread evidence')
+    if set(audit['initialAgreement']) != {'themes', 'stance', 'clarity'} or any(type(v) is not int or not 0 <= v <= audit['sampleSize'] for v in audit['initialAgreement'].values()):
+        raise ValueError('Invalid agreement counts')
 
 
 def percent(value, total):
     return f'{value / total * 100:.1f}%'
-
-
-
-def validate_districts(data):
-    """Cross-tabs require retained input; marginals cannot reconstruct them."""
-    groups = data.get('districtIndicators')
-    if data.get('schemaVersion') != 2 or not isinstance(groups, dict):
-        raise ValueError('District cross-tab missing: rerun with the retained private input using --input')
-    totals = data['districts']
-    keys = {item['id'] for item in data['indicators']}
-    if set(groups) != set(totals) or sum(totals.values()) != data['records']:
-        raise ValueError('District denominator mismatch')
-    for district, n in totals.items():
-        row = groups[district]
-        counts = row['counts']
-        unmatched = row['noIndicatorMatch']
-        if type(n) is not int or n <= 0 or set(counts) != keys:
-            raise ValueError('Invalid district denominator or indicator keys')
-        if any(type(value) is not int or not 0 <= value <= n
-               for value in [*counts.values(), unmatched]):
-            raise ValueError('District counts must be integers within the denominator')
-        if not max(counts.values()) <= n - unmatched <= sum(counts.values()):
-            raise ValueError('District unmatched count is inconsistent')
-    for item in data['indicators']:
-        if sum(row['counts'][item['id']] for row in groups.values()) != item['count']:
-            raise ValueError('District indicator columns do not reconcile')
-    if sum(row['noIndicatorMatch'] for row in groups.values()) != data['noIndicatorMatch']:
-        raise ValueError('District unmatched total does not reconcile')
-
-
-def district_comparison(data, district, key):
-    count = data['districtIndicators'][district]['counts'][key]
-    n = data['districts'][district]
-    total = next(item['count'] for item in data['indicators'] if item['id'] == key)
-    rest_count, rest_n = total - count, data['records'] - n
-    difference = 100 * (count / n - rest_count / rest_n) if rest_n else None
-    return count, n, rest_count, rest_n, difference
-
-
-def render_districts(data):
-    validate_districts(data)
-    esc = html.escape
-    indicators = data['indicators']
-    title = '行政區與問題線索：差異在哪裡，接下來查什麼'
-    framing = ('各區樣本量不同，先看區內比例，再保留筆數核對。分母是該行政區標記在本檔的全部留言，'
-               '包含未命中詞表的留言；不是人口、各區完整回饋數或已核實事件數。'
-               '行政區標記尚未確認為居住地或事件所在地，以下不能用來排名問題嚴重度。')
-    method = ('沿用上方八組固定詞表，一則留言可命中多組，橫列比例不能相加。'
-              '含否定句仍會命中；零表示沒有命中這組詞，不表示該區沒有問題。'
-              '各格細條皆以 0–100% 為同一尺度；數字為命中則數及占該區留言比例。')
-    md = [f'### {title}', '', framing, '', method, '',
-          '| 行政區（本檔則數） | ' + ' | '.join(item['label'] for item in indicators) + ' |',
-          '| --- | ' + ' | '.join(['---:'] * len(indicators)) + ' |']
-    page = [f'<section class="feedback-section feedback-cross" aria-labelledby="feedback-cross"><h4 id="feedback-cross" tabindex="-1">{title}</h4>',
-            f'<p>{esc(framing)}</p><p id="feedback-cross-method" class="feedback-note">{esc(method)}</p>',
-            '<p class="feedback-scroll-hint">窄螢幕可左右捲動表格；行政區欄固定在左側。鍵盤可聚焦表格區域後使用方向鍵。</p>',
-            '<div class="feedback-matrix-scroll" role="region" aria-label="行政區與八組文字線索交叉表，可左右捲動" tabindex="0" aria-describedby="feedback-cross-method">',
-            '<table class="feedback-matrix"><caption>行政區 × 文字線索 · 每格為則數／區內比例</caption><thead><tr><th scope="col">行政區<br>本檔則數</th>']
-    page += [f'<th scope="col">{esc(item["label"])}</th>' for item in indicators]
-    page += ['</tr></thead><tbody>']
-    for district, n in data['districts'].items():
-        counts = data['districtIndicators'][district]['counts']
-        cells = [f'{counts[item["id"]]}（{percent(counts[item["id"]], n)}）' for item in indicators]
-        md += [f'| {district}（{n}） | ' + ' | '.join(cells) + ' |']
-        page += [f'<tr><th scope="row">{esc(district)}<small>{n:,} 則</small></th>']
-        for item in indicators:
-            count = counts[item['id']]
-            pct = percent(count, n)
-            page += [f'<td data-district="{esc(district)}" data-indicator="{esc(item["id"])}"><strong>{count} 則</strong><span>{pct}</span><i aria-hidden="true" style="width:{pct}"></i></td>']
-        page += ['</tr>']
-    page += ['</tbody></table></div>']
-    coverage = '各區未命中任何一組詞的則數（仍計入分母）：' + '、'.join(
-        f'{district} {row["noIndicatorMatch"]}' for district, row in data['districtIndicators'].items()) + '。'
-    md += ['', coverage, '']
-    page += [f'<p class="feedback-note">{esc(coverage)}</p>']
-
-    # These descriptive contrasts follow the report's service questions, not a significance ranking.
-    selected = [('北投', 'dropoff'), ('北投', 'truck'), ('內湖', 'household'),
-                ('內湖', 'recycling'), ('萬華', 'litter'), ('萬華', 'bins')]
-    if {'北投', '內湖', '萬華', '大安'} <= set(data['districts']):
-        comparison_note = ('下表依投放時段、家戶分流與街面維護選取六個對照，並非差異排名或顯著性檢定。'
-                           '「其餘各區」排除該區，合併其餘留言作分母；差值＝區內比例−其餘各區比例，'
-                           '單位為百分點，以未四捨五入的比例計算後取一位小數。')
-        md += ['#### 把地區差異轉成查核問題', '', comparison_note, '',
-               '| 行政區／文字線索 | 本區：則數／分母（比例） | 其餘各區：則數／分母（比例） | 差值（百分點） |',
-               '| --- | ---: | ---: | ---: |']
-        page += ['<h5 class="feedback-cross-heading">把地區差異轉成查核問題</h5>', f'<p>{esc(comparison_note)}</p>',
-                 '<div class="feedback-comparison-scroll" role="region" aria-label="六個情境對照，可左右捲動" tabindex="0"><table class="feedback-table feedback-comparison"><caption>比較基準僅為本檔其餘各區的留言</caption><thead><tr><th scope="col">行政區／線索</th><th scope="col">本區</th><th scope="col">其餘各區</th><th scope="col">差值<br>百分點</th></tr></thead><tbody>']
-        labels = {item['id']: item['label'] for item in indicators}
-        for district, key in selected:
-            count, n, rest_count, rest_n, difference = district_comparison(data, district, key)
-            local = f'{count}／{n}（{percent(count, n)}）'
-            other = f'{rest_count}／{rest_n}（{percent(rest_count, rest_n)}）'
-            delta = f'{difference:+.1f}'
-            label = f'{district}／{labels[key]}'
-            md += [f'| {label} | {local} | {other} | {delta} |']
-            page += [f'<tr><th scope="row">{esc(label)}</th><td>{local}</td><td>{other}</td><td>{delta}</td></tr>']
-        page += ['</tbody></table></div>']
-        daan = data['districtIndicators']['大安']['counts']['truck']
-        beitou = data['districtIndicators']['北投']['counts']['truck']
-        volume = (f'筆數與比例回答不同問題。例如垃圾車詞在大安有 {daan} 則、北投有 {beitou} 則，'
-                  f'但分別占兩區留言的 {percent(daan, data["districts"]["大安"])} 與 {percent(beitou, data["districts"]["北投"])}。'
-                  '直接比較筆數會受到收集量影響；改用區內比例仍不能排除招募與篩選差異。')
-        notes = [volume,
-                 '北投可先查投放時段與替代管道：定點／彈性投放和垃圾車詞的區內比例較其餘各區高。應逐則核對是在描述可用時段、距離、噪音，還是其他情況；兩組比例不能當成同一批人的共同需求。',
-                 '內湖可先查家戶垃圾與分類接收：家戶垃圾、回收／廚餘詞的區內比例較高。這兩組詞沒有區分支持、反對、混投或接收困難，需回讀語意並核對現場，才能判斷應查分流、指引還是收運。',
-                 '萬華可先查街面垃圾的來源與維護：亂丟詞比例較高，但垃圾桶詞比例較低。這個組合不能證明缺桶或撤桶造成亂丟，也不能推定兩者出現在同一留言；需核對垃圾類別、事件位置、時間與實際巡收。',
-                 '下一步先做各區同一套語意複核：區分描述的事件、支持或反對、實際地點與服務情境，再以相同標準抽查未命中留言，確認詞表漏抓。定點／彈性投放等低筆數線索尤其需要回讀，不因比例較高就優先部署。取得各區完整回饋數、招募與篩選規則後，才能判斷差異是否主要來自資料收集；現場比較仍需另外建立基準。']
-        for note in notes:
-            md += ['', note]
-            page += [f'<p>{esc(note)}</p>']
-    md += ['']
-    page += ['<p><a href="#feedback-method">核對資料缺口與限制</a> · <a href="#feedback-validation">接回現場驗證順序</a></p></section>']
-    return md, page
 
 
 def table_markdown(values, total):
@@ -377,125 +347,194 @@ def table_markdown(values, total):
                      [f'| {key} | {value:,} | {percent(value, total)} |' for key, value in values])
 
 
-def render(data):
-    total = data['records']
+def district_comparison(data, district, key):
+    count = data['districtAnalysis'][district]['themes'][key]
+    n = data['districts'][district]
+    total = next(item['count'] for item in data['themes'] if item['id'] == key)
+    rest_count, rest_n = total - count, data['records'] - n
+    difference = 100 * (count / n - rest_count / rest_n) if rest_n else None
+    return count, n, rest_count, rest_n, difference
+
+
+def render_districts(data):
+    validate(data)
     esc = html.escape
+    title = '行政區 × 語意問題：比較留言談了什麼'
+    framing = ('每格來自逐則語意判讀，並非詞語命中。分母是該行政區標記在本檔的全部留言，'
+               '包含資訊不足與其他內容；行政區尚未確認為事件所在地或居住地。'
+               '一則可以談多個問題或訴求，橫列比例不能相加；描述、預期風險與改善訴求都可能被納入，並非核實事件數。')
+    md = [f'### {title}', '', framing, '', '| 行政區（則數） | ' + ' | '.join(x['label'] for x in data['themes']) + ' |',
+          '| --- | ' + ' | '.join(['---:'] * len(THEMES)) + ' |']
+    page = [f'<section class="feedback-section feedback-cross" aria-labelledby="feedback-cross"><h4 id="feedback-cross" tabindex="-1">{title}</h4><p>{esc(framing)}</p>',
+            '<p id="feedback-cross-method" class="feedback-note">數字為則數與區內比例；細條皆以 0–100% 為同一尺度。窄螢幕可左右捲動，行政區欄固定；鍵盤聚焦後可用方向鍵。</p>',
+            '<div class="feedback-matrix-scroll" role="region" aria-label="十二區語意問題交叉表，可左右捲動" tabindex="0" aria-describedby="feedback-cross-method"><table class="feedback-matrix"><caption>行政區 × 七類問題與訴求 · AI 語意判讀</caption><thead><tr><th scope="col">行政區<br>本檔則數</th>']
+    page += [f'<th scope="col">{esc(item["label"])}</th>' for item in data['themes']]
+    page += ['</tr></thead><tbody>']
+    for district, n in data['districts'].items():
+        counts = data['districtAnalysis'][district]['themes']
+        md += [f'| {district}（{n}） | ' + ' | '.join(f'{counts[k]}（{percent(counts[k], n)}）' for k in THEMES) + ' |']
+        page += [f'<tr><th scope="row">{esc(district)}<small>{n:,} 則</small></th>']
+        for key in THEMES:
+            count, pct = counts[key], percent(counts[key], n)
+            page += [f'<td data-district="{esc(district)}" data-theme="{key}"><strong>{count} 則</strong><span>{pct}</span><i aria-hidden="true" style="width:{pct}"></i></td>']
+        page += ['</tr>']
+    page += ['</tbody></table></div>']
+    if len(data['districts']) > 1:
+        note = ('為方便逐區閱讀，下表列出每區相對「其餘各區合併留言」比例差最大的正向對照；'
+                '依未四捨五入的百分點差選取，同差時按分類順序。這是探索性摘要，並非顯著性檢定或改善優先序。'
+                '完整交叉表保留其他類別，不能只憑這一格替整區貼標籤。')
+        md += ['', '#### 逐區閱讀差異', '', note, '', '| 行政區／對照類別 | 本區則數／分母（比例） | 其餘各區則數／分母（比例） | 差值（百分點） |', '| --- | ---: | ---: | ---: |']
+        page += ['<h5 class="feedback-cross-heading">逐區閱讀差異</h5>', f'<p>{esc(note)}</p>',
+                 '<div class="feedback-comparison-scroll" role="region" aria-label="逐區比例對照，可左右捲動" tabindex="0"><table class="feedback-table feedback-comparison"><caption>比較的是本檔留言組成，不是人口發生率</caption><thead><tr><th scope="col">行政區／類別</th><th scope="col">本區</th><th scope="col">其餘各區</th><th scope="col">差值<br>百分點</th></tr></thead><tbody>']
+        for district in data['districts']:
+            key = max(THEMES, key=lambda k: district_comparison(data, district, k)[4])
+            count, n, other, rest, delta = district_comparison(data, district, key)
+            if delta <= 0:
+                label, local, comparison, difference = district, '無較高比例的類別', '—', '—'
+            else:
+                label = f'{district}／{THEMES[key][0]}'
+                local, comparison, difference = f'{count}／{n}（{percent(count,n)}）', f'{other}／{rest}（{percent(other,rest)}）', f'{delta:+.1f}'
+            md += [f'| {label} | {local} | {comparison} | {difference} |']
+            page += [f'<tr><th scope="row">{esc(label)}</th><td>{local}</td><td>{comparison}</td><td>{difference}</td></tr>']
+        page += ['</tbody></table></div>']
+    coverage = '各區「判讀不明確／無法歸入七類」則數（兩者可重疊，均保留在分母）：' + '、'.join(
+        f'{d} {g["unclear"]}／{g["unclassified"]}' for d, g in data['districtAnalysis'].items()) + '。'
+    md += ['', coverage, '']
+    page += [f'<p class="feedback-note">{esc(coverage)}</p><p>下一步先依具體情境核對時間、地點、垃圾來源與服務條件，再安排可比的現場觀察。語意比例可以幫助選取訪談題目；仍需補齊各區招募、完整回饋數與篩選方式，才能評估資料收集造成的差異。</p></section>']
+    md += ['下一步先依具體情境核對時間、地點、垃圾來源與服務條件，再安排可比的現場觀察。語意比例可以幫助選取訪談題目；仍需補齊各區招募、完整回饋數與篩選方式，才能評估資料收集造成的差異。', '']
+    return md, page
+
+
+def semantic_findings(data):
+    """Explain observed composition, keeping the full district table as context."""
+    top = max(data['themes'], key=lambda item: item['count'])
+    shared = sum(group['themes'][top['id']] > 0 for group in data['districtAnalysis'].values())
+    common = (f'各區有共通問題，也有不同的回饋組合。全檔最常談及的是「{top["label"]}」，'
+              f'共 {top["count"]:,} 則（{percent(top["count"], data["records"])}），在 {shared} 個區的留言中都有出現。'
+              '同一主題包含困擾、改善訴求或風險顧慮；問題類別相同，不代表支持同一措施。')
+    examples = []
+    for key in ('B', 'C'):
+        district = max(data['districts'], key=lambda d: data['districtAnalysis'][d]['themes'][key] / data['districts'][d])
+        count, n, other, rest, _ = district_comparison(data, district, key)
+        if count and rest:
+            examples.append(f'「{THEMES[key][0]}」在{district}標記留言中的比例最高，'
+                            f'為 {count}／{n}（{percent(count,n)}），其餘各區合併為 {other}／{rest}（{percent(other,rest)}）')
+    contrast = ('為分清家戶服務與現場維護，以下各取一個區內比例最高的例子：' + '；'.join(examples) + '。'
+                '這是從本檔選出的描述性對照，不代表當地實際最嚴重，也不能替整區只指定一種問題。') if examples else ''
+    return [common, contrast] if contrast else [common]
+
+
+def home_summary(data):
+    return (''.join(f'<p>{html.escape(text)}</p>' for text in semantic_findings(data)) +
+            '<p>已由子代理逐則區分問題、訴求與公共桶立場。先前由關鍵字推論北投、內湖與萬華問題的結論已撤回；現在應以語意交叉表重新閱讀，並由研究者複核。現場時間、地點與服務條件仍待確認，不能推出設點或改善優先序。</p>'
+            '<p class="feedback-report-entry"><a href="#feedback-findings">閱讀完整分析與圖解</a> · <a href="#feedback-cross">看語意交叉分析</a></p>')
+
+
+def render(data):
+    validate(data)
+    total, esc, audit = data['records'], html.escape, data['semantic']['audit']
     quality = data['quality']
-    negative = sum(data['moods'].get(key, 0) for key in ('生氣', '無奈', '擔心'))
-    intro = (f'本檔共 {total:,} 則留言，涵蓋 {len(data["districts"])} 個行政區標記。'
-             f'心情標為「生氣、無奈、擔心」的合計 {negative:,} 則（{percent(negative, total)}）；'
-             '這表示本檔集中呈現困擾，不能推算市民不滿意比例。')
     quality_text = (f'{quality["uniqueIds"]:,} 個不重複匿名編號；無空白欄位。'
-                    f'{quality["multilineRecords"]} 則內含換行，已依 TSV 引號規則合併為單一紀錄。'
-                    f'有 {quality["duplicateTextGroups"]} 組完全相同文字，比每組留一則多 {quality["duplicateTextExtraRows"]} 則；全部保留，未按文字去重。')
-    datasets = [
-        ('signals', '留言出現哪些文字線索', [(item['label'], item['count']) for item in sorted(data['indicators'], key=lambda x: -x['count'])], METHOD),
-        ('moods', '原檔的心情標籤', sorted(data['moods'].items(), key=lambda x: -x[1]), '這是原檔提供的心情欄位，未重新做情緒推論；標註方式未知。'),
-        ('districts', '這批留言來自哪些行政區標記', list(data['districts'].items()), '順序沿用原檔首次出現次序。件數反映本檔組成，不是各區垃圾問題嚴重度或人口占比。'),
-        ('topics', '原先被歸在哪些議題', sorted(data['originalTopics'].items(), key=lambda x: -x[1]), '沿用原議題欄位；垃圾相關訊息也可能被歸到交通、觀光等議題。'),
-    ]
-    md = [f'# {REPORT_TITLE}', '', f'分析整理日：{data["analysisDate"]}（非收集日期）', '', SCOPE, '',
-          f'分析基礎：本檔 {total:,} 則留言；五個查核問題未逐則語意編碼，現場與因果尚未驗證。', '',
+                    f'{quality["multilineRecords"]} 則內含換行，已依 TSV 引號規則保留為單則。'
+                    f'{quality["duplicateTextGroups"]} 組完全相同文字，共有 {quality["duplicateTextExtraRows"]} 則額外重複；全部保留。')
+    audit_text = (f'三個子代理分工閱讀全部 {total:,} 則，初判時不提供行政區欄位、心情欄位或另一代理的答案。'
+                  f'另取每區 12 則、共 {audit["sampleSize"]} 則做盲判；初判主題組合完全一致 {audit["initialAgreement"]["themes"]} 則，'
+                  f'設桶立場一致 {audit["initialAgreement"]["stance"]} 則。'
+                  f'共有 {audit["disagreementRows"]} 則在主題、立場或明確度上有分歧，已逐則回讀裁決。'
+                  f'因分類界線出現差異，三位原判讀代理再依補充裁決說明回讀全部 {audit["consistencyReviewedRows"]:,} 則；最終有 {audit["changedRows"]} 則分類、立場或明確度改變。'
+                  '上述一致數仍是修正前的初判一致性，不是分類正確率，也不是全部留言均由兩位獨立代理複核；補充說明在看到分歧後形成，最終仍需人類研究者確認。')
+    correction = '方法修正：原先的關鍵字命中統計已退出本頁問題分析。先前據此解釋北投、內湖、萬華問題的段落已撤回；以下數字只由逐則語意標註加總。'
+    md = [f'# {REPORT_TITLE}', '', f'分析整理日：{data["analysisDate"]}（非收集日期）', '', SCOPE, '', correction, '',
           f'## {REPORT_JUDGMENT}', '']
-    page = [f'<header class="research-page-heading"><h2 id="feedback-heading">{esc(REPORT_TITLE)}</h2>',
-            f'<p>從 {total:,} 則垃圾相關留言，整理服務困擾、可能原因與驗證順序。</p>',
-            f'<p class="research-update">整理於 {data["analysisDate"]}；收集期間未提供，非即時現場盤點。</p></header>',
-            f'<p class="feedback-scope">{esc(SCOPE)}</p>',
-            '<nav class="feedback-contents" aria-label="留言分析章節"><a href="#feedback-findings">研究判斷</a><a href="#feedback-problems">三種情境</a><a href="#feedback-mechanisms">原因與反例</a><a href="#feedback-loop">驗證順序</a><a href="#feedback-method">資料與限制</a><a href="#feedback-cross">行政區交叉分析</a></nav>',
-            f'<section class="feedback-section" aria-labelledby="feedback-findings"><h3 id="feedback-findings" tabindex="-1">{esc(REPORT_JUDGMENT)}</h3>']
-    for paragraph in REPORT_INTRO:
-        md += [paragraph, '']
-        page += [f'<p>{esc(paragraph)}</p>']
+    page = [f'<header class="research-page-heading"><h2 id="feedback-heading">{REPORT_TITLE}</h2><p>逐則理解 {total:,} 則留言，再比較各區問題與訴求。</p><p class="research-update">整理於 {data["analysisDate"]}；收集期間未提供。</p></header>',
+            f'<p class="feedback-scope">{esc(SCOPE)}</p><p class="feedback-note">{esc(correction)}</p>',
+            '<nav class="feedback-contents" aria-label="留言分析章節"><a href="#feedback-findings">研究判斷</a><a href="#feedback-cross">行政區交叉分析</a><a href="#feedback-stances">設桶立場</a><a href="#feedback-mechanisms">原因與反例</a><a href="#feedback-method">方法與限制</a></nav>',
+            f'<section class="feedback-section" aria-labelledby="feedback-findings"><h3 id="feedback-findings" tabindex="-1">{REPORT_JUDGMENT}</h3>']
+    for paragraph in [*semantic_findings(data), *REPORT_INTRO]:
+        md += [paragraph, '']; page += [f'<p>{esc(paragraph)}</p>']
     page += ['</section>']
-    depth_md, depth_page = render_depth()
-    md += depth_md
-    page += depth_page
-    md += ['## 這份資料能說到哪裡', '', METHOD_BRIDGE, '', quality_text, ''] + [f'- {item}' for item in LIMITS]
-    page += ['<section class="feedback-section" aria-labelledby="feedback-method"><h3 id="feedback-method" tabindex="-1">這份資料能說到哪裡</h3>',
-             f'<p>{esc(METHOD_BRIDGE)}</p><p>{esc(quality_text)}</p><ul class="feedback-limits">']
-    page += [f'<li>{esc(item)}</li>' for item in LIMITS]
-    page += ['</ul><p class="feedback-note">來源：研究團隊提供的垃圾相關意見回饋檔。分析以本次保存的檔案為準，未與公開清潔箱清冊逐筆連結。</p>',
-             '<p>到這裡，本文的研究判斷是：先找出能核實的服務情境，對照不同解釋，再用現場基準決定改善。下方附錄保留本檔的文字線索與組成，供核對分析基礎。</p>',
-             '<p><a href="#research">回到首頁研究結論</a> · <a href="#sources">查看公開資料與文獻</a> · <a href="#feedback-appendix">繼續核對資料附錄</a></p></section>',
-             '<section class="feedback-section feedback-appendix" aria-labelledby="feedback-appendix"><h3 id="feedback-appendix" tabindex="-1">資料附錄：文字線索與留言組成</h3>',
-             '<p>以下統計描述這份已篩選檔案的內容，不是前述五個問題的盛行率，也不能用來排序各區需求。</p>', f'<p>{esc(intro)}</p>']
-    md += ['', '## 資料附錄：文字線索與留言組成', '',
-           '以下統計描述這份已篩選檔案的內容，不是前述五個問題的盛行率，也不能用來排序各區需求。', '', intro, '']
-    overlap_md, overlap_page = render_overlap(data)
-    md += overlap_md
-    page += overlap_page
-    for key, title, values, note in datasets:
-        md += [f'### {title}', '', note, '', f'分母：本檔 {total:,} 則留言。', '', table_markdown(values, total), '']
-        page += [f'<section class="feedback-section" aria-labelledby="feedback-{key}"><h4 id="feedback-{key}" tabindex="-1">{title}</h4><p>{esc(note)}</p>']
-        if key in ('signals', 'moods'):
-            page += [f'<figure class="feedback-chart"><figcaption>每條長度以本檔 {total:,} 則為 100%；由零起算。</figcaption><ol>']
-            for label, count in values:
-                pct = percent(count, total)
-                page += [f'<li><div class="feedback-bar-label"><span>{esc(label)}</span><span><strong>{count:,}</strong> 則 · {pct}</span></div><div class="feedback-bar-track" aria-hidden="true"><span style="width:{pct}"></span></div></li>']
-            page += ['</ol></figure>']
-        else:
-            page += [f'<table class="feedback-table"><caption>分母：本檔 {total:,} 則留言</caption><thead><tr><th scope="col">欄位值</th><th scope="col">則數</th><th scope="col">占本檔比例</th></tr></thead><tbody>']
-            for label, count in values:
-                page += [f'<tr><th scope="row">{esc(label)}</th><td>{count:,}</td><td>{percent(count,total)}</td></tr>']
-            page += ['</tbody></table>']
-        if key == 'signals':
-            extra = f'有 {data["noIndicatorMatch"]:,} 則未命中以上詞表；未命中不代表沒有相關困擾。同時命中「垃圾桶／清潔箱」與「垃圾車」的有 {data["binAndTruck"]:,} 則。'
-            md += [extra, '', '#### 詞表', '']
-            page += [f'<p class="feedback-note">{esc(extra)}</p><details class="feedback-codebook"><summary>查看固定詞表與計數方式</summary><p>只計是否出現，不計重複出現次數；含否定的句子也會命中。</p><dl>']
-            for item in data['indicators']:
-                terms = '、'.join(item['terms'])
-                md += [f'- {item["label"]}：{terms}']
-                page += [f'<div><dt>{esc(item["label"])}</dt><dd>{esc(terms)}</dd></div>']
-            md += ['']
-            page += ['</dl></details>']
-        page += ['</section>']
-        if key == 'signals':
-            cross_md, cross_page = render_districts(data)
-            md += cross_md
-            page += cross_page
-    md += ['', '### 重現方式', '', '原始輸入由提供者在本地保存，未納入 Git、網站或離線研究包。請使用保留的原始檔重算；僅有摘要無法重做文字比對。', '',
-           '在 `sites/taipei-waste-lab` 執行（離線包則在解壓根目錄）：', '',
-           '```sh', 'python3 scripts/analyze-feedback.py --input "/absolute/path/to/Pasted text.txt"', 'python3 scripts/package-research.py', '```', '',
-           '不提供 `--input` 時，只從保存的 `summary.json` 重建 Markdown 與網頁。完整資料建置也會執行此步驟，不需要原始留言。', '',
-           f'原始檔 SHA-256：`{data["source"]["sha256"]}`。', '', '彙總檔：[summary.json](summary.json)。每次變更詞表都須重新提供原始輸入；程式拒絕用舊摘要搭配新詞表。', '']
-    page += ['<p class="feedback-appendix-return"><a href="#feedback-findings">回到本文研究判斷</a> · <a href="#research">回到首頁研究結論</a></p></section>']
+    # Preserve earlier anchor destinations while replacing word-hit content.
+    page += ['<section class="feedback-section feedback-appendix" aria-labelledby="feedback-signals"><h3 id="feedback-signals" tabindex="-1">逐則語意判讀：談及的問題與訴求</h3>', f'<p>{esc(METHOD)}</p>']
+    md += ['## 逐則語意判讀：談及的問題與訴求', '', METHOD, '', table_markdown([(x['label'], x['count']) for x in data['themes']], total), '']
+    page += [f'<figure class="feedback-chart"><figcaption>分母為全部 {total:,} 則留言；一則可跨類，比例不能相加。由零起算。</figcaption><ol>']
+    for item in data['themes']:
+        count, pct = item['count'], percent(item['count'], total)
+        page += [f'<li><div class="feedback-bar-label"><span>{esc(item["label"])}</span><span><strong>{count:,}</strong> 則 · {pct}</span></div><div class="feedback-bar-track" aria-hidden="true"><span style="width:{pct}"></span></div></li>']
+    page += ['</ol></figure><details class="feedback-codebook"><summary>查看語意分類界線</summary><dl>']
+    for item in data['themes']:
+        md += [f'- **{item["label"]}：**{item["definition"]}']
+        page += [f'<div><dt>{esc(item["label"])}</dt><dd>{esc(item["definition"])}</dd></div>']
+    page += ['</dl></details>']
+    uncertain = f'判讀不明確 {data["unclear"]} 則；無法歸入七類 {data["unclassified"]} 則。兩者可能重疊，全部保留在分母，沒有強迫分類。'
+    md += ['', uncertain, '']; page += [f'<p class="feedback-note">{esc(uncertain)}</p>']
+    cross_md, cross_page = render_districts(data); md += cross_md; page += cross_page
+    page += ['</section><section class="feedback-section" aria-labelledby="feedback-stances"><h3 id="feedback-stances" tabindex="-1">提到垃圾桶，不等於支持增設</h3>']
+    stance_note = '以下僅判讀公共／街道垃圾桶的方向；家戶定點收運不自動算成增設公共桶。每則恰有一個立場標籤，分母仍為全檔留言，不是市民支持率。'
+    md += ['## 提到垃圾桶，不等於支持增設', '', stance_note, '', table_markdown([(STANCES[k], v) for k,v in data['stances'].items()], total), '']
+    page += [f'<p>{esc(stance_note)}</p><table class="feedback-table"><caption>每則一個立場；分母為全檔留言</caption><thead><tr><th scope="col">語意立場</th><th scope="col">則數</th><th scope="col">比例</th></tr></thead><tbody>']
+    for key, count in data['stances'].items():
+        page += [f'<tr><th scope="row">{esc(STANCES[key])}</th><td>{count:,}</td><td>{percent(count,total)}</td></tr>']
+    page += ['</tbody></table></section>']
+    depth_md, depth_page = render_depth(); md += depth_md; page += depth_page
+    md += ['## 方法與資料缺口', '', audit_text, '', quality_text, '', METHOD_BRIDGE, ''] + [f'- {x}' for x in LIMITS]
+    page += ['<section class="feedback-section" aria-labelledby="feedback-method"><h3 id="feedback-method" tabindex="-1">方法與資料缺口</h3>',
+             f'<p>{esc(audit_text)}</p><p>{esc(quality_text)}</p><p>{esc(METHOD_BRIDGE)}</p><ul class="feedback-limits">']
+    page += [f'<li>{esc(x)}</li>' for x in LIMITS]
+    page += ['</ul><p>來源：研究團隊提供的已篩選垃圾相關回饋。原文與逐則標註留在本地，網站僅呈現彙總。</p></section>',
+             '<section class="feedback-section feedback-appendix" aria-labelledby="feedback-appendix"><h3 id="feedback-appendix" tabindex="-1">資料附錄：原檔組成</h3>',
+             '<h4 id="feedback-overlap" tabindex="-1">一則留言可以談多個問題</h4><p>語意分類可跨類重複，不能以類別總和當作留言人數；舊版詞語交集圖已移除。</p>']
+    md += ['', '## 資料附錄：原檔組成', '', '語意分類可跨類重複，不能以類別總和當作留言人數；舊版詞語交集圖已移除。', '']
+    for key, title, values, note in [
+        ('moods','原檔的心情標籤',sorted(data['moods'].items(),key=lambda x:-x[1]),'沿用原檔，不重新推論情緒；標註方式未知。'),
+        ('districts','行政區標記與留言數',list(data['districts'].items()),'行政區是原檔標記，未確認為居住地或事件所在地。'),
+        ('topics','原始議題欄位',sorted(data['originalTopics'].items(),key=lambda x:-x[1]),'沿用原議題欄位，並非本次語意分類。')]:
+        md += [f'### {title}', '', note, '', table_markdown(values,total), '']
+        page += [f'<section class="feedback-section" aria-labelledby="feedback-{key}"><h4 id="feedback-{key}" tabindex="-1">{title}</h4><p>{note}</p><table class="feedback-table"><caption>分母：本檔 {total:,} 則</caption><thead><tr><th scope="col">欄位值</th><th scope="col">則數</th><th scope="col">比例</th></tr></thead><tbody>']
+        for label, count in values:
+            page += [f'<tr><th scope="row">{esc(label)}</th><td>{count:,}</td><td>{percent(count,total)}</td></tr>']
+        page += ['</tbody></table></section>']
+    md += ['### 重現與稽核', '', '逐則語意標註是保留的研究輸入，不由程式猜測。三份初判、獨立盲判、裁決理由與最終標註均在本地保存；不納入 Git、網站或研究包。只有彙總不能重做語意判讀。', '',
+           '在網站目錄執行：', '', '```sh', 'python3 scripts/analyze-feedback.py --input /private/source.tsv --annotations /private/final.jsonl --initial /private/initial.jsonl --double-coded /private/blind.jsonl --resolutions /private/resolutions.json --protocol /private/protocol.md --manifest /private/manifest.json', 'python3 scripts/package-research.py', '```', '',
+           '省略全部私有輸入參數時，只從保存的 `summary.json` 重建網頁與 Markdown。', '', f'原始來源 SHA-256：`{data["source"]["sha256"]}`。', '',
+           f'最終標註 SHA-256：`{data["semantic"]["annotationSha256"]}`。', '', '[分類規約](semantic-protocol.md)、[事後裁決說明](semantic-adjudication-notes.md)與 [summary.json](summary.json)保留方法、彙總與抽樣一致性；雜湊用於對照本地保留的輸入，不能取代輸入本身。', '']
+    page += ['<p><a href="#feedback-cross">回到行政區語意比較</a> · <a href="#research">回到首頁研究結論</a></p></section>']
     return '\n'.join(md), '\n'.join(page)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--input', type=Path, help='Private original TSV; omitted for aggregate-only rendering')
+    for name in ('input', 'annotations', 'initial', 'double-coded', 'resolutions', 'protocol', 'manifest'):
+        parser.add_argument('--' + name, type=Path)
     args = parser.parse_args()
+    inputs = [args.input, args.annotations, args.initial, args.double_coded, args.resolutions, args.protocol, args.manifest]
+    if any(inputs) and not all(inputs):
+        parser.error('Recalculation requires the original input, complete semantic annotations, initial labels, blind sample, adjudications and protocol')
     canonical = ROOT.parent.parent / 'topics/bins/research'
-    research = canonical if canonical.is_dir() else ROOT / 'research'
-    folder = research / FOLDER
-    folder.mkdir(parents=True, exist_ok=True)
+    folder = (canonical if canonical.is_dir() else ROOT / 'research') / FOLDER
     summary_path = folder / 'summary.json'
-    if args.input:
-        data = analyze(args.input)
-        summary_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    data = json.loads(summary_path.read_text(encoding='utf-8'))
-    expected = [(key, label, list(dict.fromkeys(terms))) for key, label, terms in CODEBOOK]
-    actual = [(item['id'], item['label'], item['terms']) for item in data['indicators']]
-    if expected != actual:
-        raise ValueError('Codebook changed: rerun with the retained private input')
-    if any(sum(data[key].values()) != data['records'] for key in ('districts', 'moods', 'originalTopics')):
-        raise ValueError('Aggregate denominator mismatch')
+    if all(inputs):
+        data = analyze(*inputs)
+        if args.protocol.read_bytes() != (folder / 'semantic-protocol.md').read_bytes():
+            raise ValueError('The retained coding protocol differs from the versioned protocol')
+    else:
+        data = json.loads(summary_path.read_text())
+    validate(data)
+    if hashlib.sha256((folder / 'semantic-protocol.md').read_bytes()).hexdigest() != data['semantic']['protocolSha256']:
+        raise ValueError('Saved summary protocol does not match preserved coding protocol')
+    if hashlib.sha256((folder / 'semantic-adjudication-notes.md').read_bytes()).hexdigest() != data['semantic']['reviewNotesSha256']:
+        raise ValueError('Saved summary does not match the retained adjudication notes')
     markdown, content = render(data)
     index = ROOT / 'dist/index.html'
     page, count = re.subn(r'<!-- feedback-analysis-start -->.*?<!-- feedback-analysis-end -->',
-                          lambda _: '<!-- feedback-analysis-start -->\n' + content + '\n<!-- feedback-analysis-end -->',
-                          index.read_text(encoding='utf-8'), flags=re.S)
-    if count != 1:
-        raise ValueError('Expected one feedback panel marker')
-    (folder / 'README.md').write_text(markdown, encoding='utf-8')
+                         lambda _: '<!-- feedback-analysis-start -->\n' + content + '\n<!-- feedback-analysis-end -->', index.read_text(), flags=re.S)
+    if count != 1: raise ValueError('Expected one feedback panel marker')
     page, count = re.subn(r'<!-- feedback-problem-map-start -->.*?<!-- feedback-problem-map-end -->',
-                          lambda _: '<!-- feedback-problem-map-start -->\n' + home_summary() + '\n<!-- feedback-problem-map-end -->',
-                          page, flags=re.S)
-    if count != 1:
-        raise ValueError('Expected one homepage problem map marker')
-    index.write_text(page, encoding='utf-8')
-    print(f'Rendered {data["records"]} feedback records as aggregate-only analysis')
+                         lambda _: '<!-- feedback-problem-map-start -->\n' + home_summary(data) + '\n<!-- feedback-problem-map-end -->', page, flags=re.S)
+    if count != 1: raise ValueError('Expected one homepage summary marker')
+    if all(inputs): summary_path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
+    (folder / 'README.md').write_text(markdown)
+    index.write_text(page)
+    print(f'Rendered {data["records"]} messages from retained semantic judgments')
 
 
 if __name__ == '__main__':

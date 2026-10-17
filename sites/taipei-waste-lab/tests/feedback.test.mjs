@@ -9,8 +9,42 @@ function python(code) {
   assert.equal(result.status, 0, result.stderr || result.stdout);
 }
 
-test('feedback links and chapter deep links resolve without changing existing destinations', () => {
-  for (const hash of ['#feedback', '#feedback-signals', '#feedback-moods', '#feedback-method', '#feedback-overlap', '#feedback-loop', '#feedback-mechanism-sorting', '#feedback-validation']) {
+const fixture = String.raw`
+import copy,csv,hashlib,json,runpy,tempfile
+from pathlib import Path
+m=runpy.run_path('scripts/analyze-feedback.py')
+def fails(call):
+ try: call()
+ except (ValueError,KeyError,TypeError): pass
+ else: raise AssertionError('Invalid input was accepted')
+def save_lines(path,items):
+ path.write_text(''.join(json.dumps(x,ensure_ascii=False)+'\n' for x in items))
+def make_fixture(root,rows,labels):
+ source=root/'input.tsv'
+ with source.open('w',newline='',encoding='utf-8-sig') as f:
+  w=csv.writer(f,delimiter='\t');w.writerow(m['FIELDS']);w.writerows(rows)
+ initial=root/'initial.jsonl';final=root/'final.jsonl';blind=root/'blind.jsonl'
+ save_lines(initial,labels);save_lines(final,labels)
+ digest=hashlib.sha256(source.read_bytes()).hexdigest()
+ sample=m['blind_sample'](rows,digest)
+ save_lines(blind,[x for x in labels if x['r'] in sample])
+ resolutions=root/'resolutions.json';resolutions.write_text(json.dumps({'decisions':[],'reviewedRows':list(range(1,len(rows)+1)),'notesSha256':'a'*64}))
+ protocol=root/'protocol.md';protocol.write_text('Synthetic manually authored coding protocol')
+ manifest=root/'manifest.json'
+ manifest.write_text(json.dumps({'source_sha256':digest,'records':len(rows),'protocol_sha256':hashlib.sha256(protocol.read_bytes()).hexdigest()}))
+ return source,final,initial,blind,resolutions,protocol,manifest
+rows=[['a','中正','環境','在意','不想在這裡放垃圾桶，會被塞滿家戶垃圾'],
+      ['b','中正','環境','無奈','其他意見'],
+      ['c','大同','環境','在意','下班趕不上收運時段'],
+      ['d','大同','環境','在意','街道投放不方便，希望保留現有設施']]
+labels=[{'r':1,'themes':['A','D'],'stance':'less','clarity':'clear','meaning':'反對此處設置公共桶並擔心家戶混投'},
+        {'r':2,'themes':[],'stance':'none','clarity':'unclear','meaning':'意見過於籠統，無法判定具體困擾'},
+        {'r':3,'themes':['B'],'stance':'none','clarity':'clear','meaning':'工作時間與家戶垃圾收運時段衝突'},
+        {'r':4,'themes':['A'],'stance':'more','clarity':'clear','meaning':'街道投放不便，希望保留既有設施'}]
+`;
+
+test('feedback chapter links resolve without changing other destinations', () => {
+  for (const hash of ['#feedback', '#feedback-signals', '#feedback-cross', '#feedback-stances', '#feedback-moods', '#feedback-method', '#feedback-overlap', '#feedback-loop', '#feedback-mechanism-sorting', '#feedback-validation']) {
     assert.equal(pageFromHash(hash), 'feedback');
   }
   assert.equal(pageFromHash('#main', 'feedback'), 'feedback');
@@ -19,197 +53,164 @@ test('feedback links and chapter deep links resolve without changing existing de
   assert.equal(pageFromHash('#unknown'), 'research');
 });
 
-test('feedback parsing preserves quoted multiline records and identical texts with distinct IDs', () => python(String.raw`
-import csv, runpy, tempfile
-from pathlib import Path
-m=runpy.run_path('scripts/analyze-feedback.py')
+test('strict TSV preserves multiline messages and distinct IDs with identical text', () => python(fixture + String.raw`
 with tempfile.TemporaryDirectory() as directory:
- p=Path(directory)/'input.tsv'
- rows=[['a','中正','環境','在意','垃圾桶\n與垃圾車'],['b','大同','環境','無奈','相同留言'],['c','大同','環境','無奈','相同留言']]
- rows[0][4]=rows[0][4].replace('\\n','\n')
- with p.open('w',newline='',encoding='utf-8-sig') as f:
-  w=csv.writer(f,delimiter='\t');w.writerow(m['FIELDS']);w.writerows(rows)
- result=m['analyze'](p)
- assert result['records']==3
- assert result['quality']=={'uniqueIds':3,'missingCells':0,'multilineRecords':1,'duplicateTextGroups':1,'duplicateTextExtraRows':1},result
- assert result['binAndTruck']==1
- assert result['noIndicatorMatch']==2
- assert sum(result['districts'].values())==3
-`));
-
-test('feedback parser fails closed on missing fields, malformed rows, duplicate IDs and empty data', () => python(String.raw`
-import csv, runpy, tempfile
-from pathlib import Path
-m=runpy.run_path('scripts/analyze-feedback.py')
-valid=['a','中正','環境','在意','垃圾桶']
-with tempfile.TemporaryDirectory() as directory:
- p=Path(directory)/'input.tsv'
- for rows in ([],[valid[:-1]],[valid+['extra']],[valid,valid],[['a','中正','環境','在意',' ']]):
+ root=Path(directory)
+ source_rows=copy.deepcopy(rows);source_rows[0][4]='第一行\n第二行';source_rows[2][4]=source_rows[3][4]
+ args=make_fixture(root,source_rows,labels);data=m['analyze'](*args)
+ assert data['records']==4
+ assert data['quality']=={'uniqueIds':4,'missingCells':0,'multilineRecords':1,'duplicateTextGroups':1,'duplicateTextExtraRows':1}
+ p=args[0]
+ for bad in ([],[rows[0][:-1]],[rows[0]+['extra']],[rows[0],rows[0]],[['a','中正','環境','在意',' ']]):
   with p.open('w',newline='') as f:
-   w=csv.writer(f,delimiter='\t');w.writerow(m['FIELDS']);w.writerows(rows)
-  try: m['analyze'](p)
-  except ValueError: pass
-  else: raise AssertionError(rows)
- p.write_text('wrong\theader\n')
- try: m['analyze'](p)
- except ValueError: pass
- else: raise AssertionError('header accepted')
+   w=csv.writer(f,delimiter='\t');w.writerow(m['FIELDS']);w.writerows(bad)
+  fails(lambda:m['read_feedback'](p))
+ p.write_text('wrong\theader\n');fails(lambda:m['read_feedback'](p))
 `));
 
-test('literal indicators allow overlap and negation without treating hits as support votes', () => python(String.raw`
-import runpy
-m=runpy.run_path('scripts/analyze-feedback.py')
-assert m['indicators']('不需要垃圾桶，垃圾桶會被丟家庭垃圾；垃圾車可否２４ 小時服務？')=={'bins','household','truck','dropoff'}
-assert m['indicators']('公車時段不便')==set()
-assert m['indicators']('煙蒂與菸蒂')=={'cigarettes'}
-assert m['indicators']('垃圾桶垃圾桶垃圾桶')=={'bins'}
+test('only authored semantics determine counts, retaining negation, overlap and all denominators', () => python(fixture + String.raw`
+with tempfile.TemporaryDirectory() as directory:
+ args=make_fixture(Path(directory),rows,labels);d=m['analyze'](*args)
+ assert d['districts']=={'中正':2,'大同':2}
+ assert d['districtAnalysis']['中正']['themes']['A']==1
+ assert d['districtAnalysis']['中正']['themes']['D']==1
+ assert d['districtAnalysis']['中正']['unclassified']==1
+ assert d['districtAnalysis']['中正']['stances']['less']==1
+ assert d['districtAnalysis']['大同']['stances']['more']==1
+ assert d['unclassified']==1 and d['unclear']==1
+ assert m['district_comparison'](d,'中正','A')==(1,2,1,2,0.0)
+ assert m['district_comparison'](d,'中正','D')==(1,2,0,2,50.0)
+ md,page=m['render_districts'](d);md='\n'.join(md);page='\n'.join(page)
+ assert page.count('data-theme=')==14
+ assert '1（50.0%）' in md and '0（0.0%）' in md
+ # Different text must not silently generate different labels.
+ changed=copy.deepcopy(rows)
+ for row in changed: row[4]='垃圾桶 垃圾車 廚餘 鼠蟲'
+ args=make_fixture(Path(directory),changed,labels);other=m['analyze'](*args)
+ assert other['themes']==d['themes'] and other['stances']==d['stances']
 `));
 
-test('saved aggregates, Markdown and generated public page agree without individual records', () => python(String.raw`
-import json,re,runpy,zipfile,shutil,tempfile
+test('annotation import rejects missing rows, duplicates and unrecognized or malformed judgments', () => python(fixture + String.raw`
+with tempfile.TemporaryDirectory() as directory:
+ p=Path(directory)/'annotations.jsonl'
+ for bad in (labels[:-1],labels+[labels[0]]):
+  save_lines(p,bad);fails(lambda:m['read_annotations'](p,4))
+ mutations=[lambda x:x.update(r=0),lambda x:x.update(r=5),lambda x:x.update(r=True),
+  lambda x:x.update(themes=['Z']),lambda x:x.update(themes=['A','A']),lambda x:x.update(themes=['D','A']),
+  lambda x:x.update(stance='support'),lambda x:x.update(clarity='certain'),lambda x:x.update(meaning=' '),
+  lambda x:x.update(extra='raw text')]
+ for mutate in mutations:
+  bad=copy.deepcopy(labels);mutate(bad[0]);save_lines(p,bad);fails(lambda:m['read_annotations'](p,4))
+ save_lines(p,labels);assert len(m['read_annotations'](p,4))==4
+`));
+
+test('blind coding uses a deterministic stratified sample and requires every disagreement to be resolved', () => python(fixture + String.raw`
+sample_rows=[[str(i),'甲' if i<20 else '乙','環境','在意','測試'] for i in range(40)]
+sample=m['blind_sample'](sample_rows,'frozen-source')
+assert sample==m['blind_sample'](sample_rows,'frozen-source') and len(sample)==24
+assert sum(r<=20 for r in sample)==12
+with tempfile.TemporaryDirectory() as directory:
+ args=make_fixture(Path(directory),rows,labels)
+ blind=copy.deepcopy(labels);blind[0]['themes']=['D'];save_lines(args[3],blind)
+ fails(lambda:m['analyze'](*args))
+ args[4].write_text(json.dumps({'decisions':[{'r':1,'reason':'重新閱讀原文，保留對設桶位置的反對與混投顧慮'}],'reviewedRows':[1,2,3,4],'notesSha256':'a'*64}))
+ data=m['analyze'](*args);audit=data['semantic']['audit']
+ assert audit['initialAgreement']=={'themes':3,'stance':4,'clarity':4}
+ assert audit['disagreementRows']==audit['adjudicatedRows']==1 and audit['changedRows']==0
+ save_lines(args[3],blind[:-1]);fails(lambda:m['analyze'](*args))
+`));
+
+test('changes outside original sample disagreements need reasons and reread coverage', () => python(fixture + String.raw`
+with tempfile.TemporaryDirectory() as directory:
+ args=make_fixture(Path(directory),rows,labels)
+ changed=copy.deepcopy(labels);changed[0]['themes']=['D'];save_lines(args[1],changed)
+ fails(lambda:m['analyze'](*args))
+ evidence={'decisions':[{'r':1,'reason':'回讀後修正判斷'}],'reviewedRows':[1,2,3,4],'notesSha256':'a'*64}
+ args[4].write_text(json.dumps(evidence));data=m['analyze'](*args)
+ assert data['semantic']['audit']['disagreementRows']==0
+ assert data['semantic']['audit']['changedRows']==1
+ evidence['reviewedRows']=[1,2,3];args[4].write_text(json.dumps(evidence));fails(lambda:m['analyze'](*args))
+`));
+
+test('source and protocol bindings reject changed input before analysis', () => python(fixture + String.raw`
+with tempfile.TemporaryDirectory() as directory:
+ root=Path(directory);args=make_fixture(root,rows,labels)
+ args[5].write_text('changed protocol');fails(lambda:m['analyze'](*args))
+ args=make_fixture(root,rows,labels)
+ args[0].write_bytes(args[0].read_bytes()+b'\n');fails(lambda:m['analyze'](*args))
+`));
+
+test('aggregate validation rejects impossible district counts and stale word-count schemas', () => python(fixture + String.raw`
+with tempfile.TemporaryDirectory() as directory:
+ args=make_fixture(Path(directory),rows,labels);data=m['analyze'](*args)
+ mutations=[lambda d:d.update(schemaVersion=2),lambda d:d['districtAnalysis'].pop('中正'),
+  lambda d:d['districtAnalysis']['中正']['themes'].pop('A'),
+  lambda d:d['districtAnalysis']['中正']['themes'].update(A=-1),
+  lambda d:d['districtAnalysis']['中正']['themes'].update(A=3),
+  lambda d:d['districtAnalysis']['中正']['themes'].update(A=1.0),
+  lambda d:d['districtAnalysis']['中正']['stances'].update(less=2),
+  lambda d:d['districtAnalysis']['中正'].update(unclassified=2),
+  lambda d:d['semantic']['audit'].update(adjudicatedRows=1),
+  lambda d:d['semantic']['audit'].update(consistencyReviewedRows=3),
+  lambda d:d['semantic']['audit']['initialAgreement'].pop('themes')]
+ for mutate in mutations:
+  broken=copy.deepcopy(data);mutate(broken);fails(lambda:m['validate'](broken))
+ one=make_fixture(Path(directory),[rows[0]],[labels[0]]);single=m['analyze'](*one)
+ assert m['district_comparison'](single,'中正','A')==(1,1,0,0,None)
+ m['render_districts'](single)
+ single['districtAnalysis']['中正']['themes']['A']=2;fails(lambda:m['validate'](single))
+`));
+
+test('saved semantic results, report and public page agree without exposing individual annotations', () => python(String.raw`
+import hashlib,json,re,runpy,shutil,tempfile,zipfile
 from pathlib import Path
 m=runpy.run_path('scripts/analyze-feedback.py')
-data=json.loads(Path('research/feedback-2026-10-17/summary.json').read_text())
-assert data['records']==2663
+folder=Path('research/feedback-2026-10-17');data=json.loads((folder/'summary.json').read_text());m['validate'](data)
+assert data['records']==2663 and data['schemaVersion']==3
 assert data['quality']['multilineRecords']==232
-assert sum(data['moods'][key] for key in ('生氣','無奈','擔心'))==2253
-for key in ('districts','moods','originalTopics'): assert sum(data[key].values())==2663
+assert sum(data['stances'].values())==2663
+assert data['semantic']['audit']['sampleSize']==144
+assert hashlib.sha256((folder/'semantic-protocol.md').read_bytes()).hexdigest()==data['semantic']['protocolSha256']
+for key in ('districts','moods','originalTopics'):assert sum(data[key].values())==2663
 markdown,content=m['render'](data)
-assert markdown==Path('research/feedback-2026-10-17/README.md').read_text()
-assert markdown==Path('dist/research/feedback-2026-10-17/README.md').read_text()
-page=Path('dist/index.html').read_text()
-assert content in page
-# Exercise public staging in a clean fixture; npm test also runs before out/ exists.
-public=runpy.run_path('scripts/prepare-public.py')
+assert markdown==(folder/'README.md').read_text()==Path('dist/research/feedback-2026-10-17/README.md').read_text()
+assert content in Path('dist/index.html').read_text()
+assert content.count('data-theme=')==84
+assert content.count('class="feedback-bar-track"')==7
+assert '不使用關鍵字規則分類' in content and '比例不能相加' in content
+assert '不是分類正確率' in content and '收集期間' in content
+assert '已撤回' in content and '其餘各區' in content
+for body in (json.dumps(data),markdown,content):assert not re.search(r'HK-\d+|"meaning"|"r"\s*:',body)
+public=runpy.run_path('scripts/prepare-public.py');assert len(public['ASSETS'])==57
+assert not any(name.endswith(('summary.json','.tsv','.md','.jsonl')) for name in public['ASSETS'])
 with tempfile.TemporaryDirectory() as directory:
  root=Path(directory).resolve()
  for name in public['ASSETS']:
-  target=root/'dist'/name
-  target.parent.mkdir(parents=True,exist_ok=True)
-  shutil.copyfile(Path('dist')/name,target)
- (root/'dist/private-feedback.tsv').write_text('private input must not be staged')
- public['prepare'].__globals__['ROOT']=root
- public['prepare']()
+  target=root/'dist'/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(Path('dist')/name,target)
+ (root/'dist/private-feedback.jsonl').write_text('private interpretation')
+ public['prepare'].__globals__['ROOT']=root;public['prepare']()
  assert content in (root/'out/index.html').read_text()
- assert not (root/'out/private-feedback.tsv').exists()
-for body in (json.dumps(data),markdown,content):
- assert not re.search(r'HK-\d+|去識別內容|匿名編號\s*行政區',body)
-assert '比例不能相加' in content and '不是逐則語意分類' in content
-assert '未量化各立場人數' in content and '收集期間' in content
-assert len(re.findall('class="feedback-bar-track"',content))==14
-for item in data['indicators']:
- assert f"{item['count']:,}" in markdown
- assert 0<=item['count']<=2663
-assets=runpy.run_path('scripts/prepare-public.py')['ASSETS']
-assert not any(name.endswith(('summary.json','.tsv','.md')) for name in assets)
+ assert not (root/'out/private-feedback.jsonl').exists()
 with zipfile.ZipFile('dist/research/research-execution-2026-10-15.zip') as bundle:
  assert 'scripts/analyze-feedback.py' in bundle.namelist()
- assert not any('private' in name or name.endswith('.tsv') for name in bundle.namelist())
+ assert any(name.endswith('feedback-2026-10-17/semantic-protocol.md') for name in bundle.namelist())
+ assert not any('private' in name or name.endswith(('.tsv','.jsonl')) for name in bundle.namelist())
 `));
 
-test('overlap diagram partitions messages and rejects inconsistent aggregates', () => python(String.raw`
-import csv,runpy,tempfile,copy
+test('aggregate-only portable regeneration is stable and partial private input fails closed', () => python(String.raw`
+import runpy,shutil,subprocess,sys,tempfile
 from pathlib import Path
-m=runpy.run_path('scripts/analyze-feedback.py')
 with tempfile.TemporaryDirectory() as directory:
- p=Path(directory)/'input.tsv'
- texts=['垃圾桶與垃圾車','垃圾筒','清潔箱','垃圾車','無相關詞']
- with p.open('w',newline='') as f:
-  w=csv.writer(f,delimiter='\t');w.writerow(m['FIELDS'])
-  w.writerows([[str(i),'中正','環境','在意',text] for i,text in enumerate(texts)])
- data=m['analyze'](p)
- md,page=m['render_overlap'](data)
- md='\n'.join(md);page='\n'.join(page)
- assert '| 有桶詞 | 1 | 2 |' in md
- assert '| 無桶詞 | 1 | 1 |' in md
- assert '兩者皆未命中' in page and '不是需求分群' in page
- for valid in (0,2):
-  adjacent=copy.deepcopy(data);adjacent['binAndTruck']=valid
-  m['render_overlap'](adjacent)
- for broken in (3,-1):
-  invalid=copy.deepcopy(data);invalid['binAndTruck']=broken
-  try:m['render_overlap'](invalid)
-  except ValueError:pass
-  else:raise AssertionError('Impossible overlap accepted')
-`));
-
-test('district cross-tabs count each message once per signal and retain unmatched denominators', () => python(String.raw`
-import csv,runpy,tempfile
-from pathlib import Path
-m=runpy.run_path('scripts/analyze-feedback.py')
-with tempfile.TemporaryDirectory() as directory:
- p=Path(directory)/'input.tsv'
- rows=[['a','中正','環境','在意','垃圾桶垃圾桶與垃圾車'],['b','中正','環境','在意','無詞表文字'],['c','大同','環境','在意','垃圾車'],['d','大同','環境','在意','不要家庭垃圾']]
- with p.open('w',newline='',encoding='utf-8') as f:
-  w=csv.writer(f,delimiter='\t');w.writerow(m['FIELDS']);w.writerows(rows)
- data=m['analyze'](p);m['validate_districts'](data)
- assert data['districts']=={'中正':2,'大同':2}
- assert data['districtIndicators']['中正']['counts']['bins']==1
- assert data['districtIndicators']['中正']['noIndicatorMatch']==1
- assert data['districtIndicators']['大同']['counts']['household']==1
- assert m['district_comparison'](data,'中正','bins')==(1,2,0,2,50.0)
- assert m['district_comparison'](data,'中正','truck')==(1,2,1,2,0.0)
- md,page=m['render_districts'](data)
- assert '1（50.0%）' in '\n'.join(md)
- assert '0（0.0%）' in '\n'.join(md)
- assert '\n'.join(page).count('data-indicator=')==16
- single=m['analyze'](p)
- single['districts']={'中正':4}
- single['districtIndicators']={'中正':{'counts':{i['id']:i['count'] for i in single['indicators']},'noIndicatorMatch':1}}
- m['validate_districts'](single)
- assert m['district_comparison'](single,'中正','bins')==(1,4,0,0,None)
-`));
-
-test('district rendering rejects missing or inconsistent cross-tabs instead of inventing cells', () => python(String.raw`
-import copy,json,runpy
-from pathlib import Path
-m=runpy.run_path('scripts/analyze-feedback.py')
-data=json.loads(Path('research/feedback-2026-10-17/summary.json').read_text())
-mutations=[
- lambda d:d.pop('districtIndicators'),
- lambda d:d.update(schemaVersion=1),
- lambda d:d['districtIndicators'].pop('北投'),
- lambda d:d['districtIndicators']['北投']['counts'].pop('bins'),
- lambda d:d['districtIndicators']['北投']['counts'].update(bins=-1),
- lambda d:d['districtIndicators']['北投']['counts'].update(bins=140),
- lambda d:d['districtIndicators']['北投']['counts'].update(bins=78),
- lambda d:d['districtIndicators']['北投']['counts'].update(bins=79.0),
- lambda d:d['districtIndicators']['北投'].update(noIndicatorMatch=139),
- lambda d:d['districts'].update(北投=0),
-]
-for mutate in mutations:
- broken=copy.deepcopy(data);mutate(broken)
- try:m['render_districts'](broken)
- except ValueError:pass
- else:raise AssertionError('Invalid cross-tab accepted')
-# At the denominator is allowed; denominator+1 was rejected above.
-single=copy.deepcopy(data)
-single['records']=1;single['districts']={'中正':1};single['noIndicatorMatch']=0
-single['indicators']=[dict(item,count=int(item['id']=='bins')) for item in data['indicators']]
-single['districtIndicators']={'中正':{'counts':{i['id']:i['count'] for i in single['indicators']},'noIndicatorMatch':0}}
-m['validate_districts'](single)
-single['districtIndicators']['中正']['counts']['bins']=2
-try:m['validate_districts'](single)
-except ValueError:pass
-else:raise AssertionError('n+1 accepted')
-`));
-
-test('district report preserves known cross-cells and excluded-district baselines in both formats', () => python(String.raw`
-import json,runpy
-from pathlib import Path
-m=runpy.run_path('scripts/analyze-feedback.py')
-d=json.loads(Path('research/feedback-2026-10-17/summary.json').read_text())
-m['validate_districts'](d)
-assert len(d['districtIndicators'])==12
-assert d['districtIndicators']['北投']['counts']['cigarettes']==0
-assert d['districtIndicators']['大安']['counts']['bins']==379
-count,n,rest,rn,delta=m['district_comparison'](d,'北投','dropoff')
-assert (count,n,rest,rn)==(11,139,41,2524)
-assert round(delta,1)==6.3
-md,page=m['render_districts'](d);md='\n'.join(md);page='\n'.join(page)
-assert page.count('data-indicator=')==96
-assert '11／139（7.9%）' in md and '41／2524（1.6%）' in page
-assert '其餘各區' in page and '百分點' in md
-assert '行政區標記尚未確認為居住地或事件所在地' in page
-assert '橫列比例不能相加' in md
+ root=Path(directory)
+ (root/'scripts').mkdir();(root/'dist').mkdir()
+ shutil.copy('scripts/analyze-feedback.py',root/'scripts/analyze-feedback.py')
+ shutil.copytree('research/feedback-2026-10-17',root/'research/feedback-2026-10-17')
+ shutil.copy('dist/index.html',root/'dist/index.html')
+ result=subprocess.run([sys.executable,'scripts/analyze-feedback.py'],cwd=root,capture_output=True,text=True)
+ assert result.returncode==0,result.stderr
+ assert (root/'dist/index.html').read_bytes()==Path('dist/index.html').read_bytes()
+ before=(root/'dist/index.html').read_bytes()
+ result=subprocess.run([sys.executable,'scripts/analyze-feedback.py','--input','missing.tsv'],cwd=root,capture_output=True,text=True)
+ assert result.returncode!=0 and 'Recalculation requires' in result.stderr
+ assert (root/'dist/index.html').read_bytes()==before
 `));
