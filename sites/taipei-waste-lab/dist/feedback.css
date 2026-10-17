@@ -1,0 +1,37 @@
+/* Feedback reading stays within the existing research design. */
+.feedback-page{max-width:920px;margin:0 auto}
+.feedback-scope{font-size:16px;line-height:1.9;max-width:74ch;margin:0 0 24px}
+.feedback-contents{display:flex;gap:4px 24px;flex-wrap:wrap;border-block:1px solid var(--line);padding:10px 0}
+.feedback-page a{color:var(--green);text-underline-offset:4px}
+.feedback-contents a{display:inline-flex;align-items:center;min-height:44px}
+.feedback-section{padding:36px 0;border-bottom:1px solid var(--line);scroll-margin-top:24px}
+.feedback-section h3{font-family:var(--serif);font-size:26px;font-weight:550;line-height:1.5;margin:0 0 16px;scroll-margin-top:24px}
+.feedback-section p{max-width:76ch;font-size:16px;line-height:1.9;margin:0 0 16px}
+.feedback-finding{margin:28px 0}
+.feedback-finding h4{font-size:19px;line-height:1.6;margin:0 0 8px}
+.feedback-section .feedback-next,.feedback-section .feedback-note{color:var(--muted)}
+.feedback-section .feedback-note,.feedback-chart figcaption{font-size:14px;line-height:1.8}
+.feedback-chart{margin:24px 0}
+.feedback-chart figcaption{color:var(--muted);margin-bottom:20px}
+.feedback-chart ol{list-style:none;padding:0;margin:0}
+.feedback-chart li+li{margin-top:20px}
+.feedback-bar-label{display:flex;justify-content:space-between;gap:12px;line-height:1.6;margin-bottom:6px;font-variant-numeric:tabular-nums}
+.feedback-bar-label>span:last-child{white-space:nowrap;color:var(--muted)}
+.feedback-bar-label strong{color:var(--ink);font-weight:600}
+.feedback-bar-track{height:8px;background:var(--line)}
+.feedback-bar-track span{height:100%;display:block;background:var(--green)}
+.feedback-codebook{border-top:1px solid var(--line);margin-top:20px}
+.feedback-codebook summary{cursor:pointer;min-height:48px;padding:12px 0;list-style:revert;display:list-item;color:var(--green)}
+.feedback-codebook summary::-webkit-details-marker{display:revert}
+.feedback-codebook dl{font-size:15px;line-height:1.8;margin:12px 0}
+.feedback-codebook dl>div{display:grid;grid-template-columns:170px 1fr;gap:16px;padding:10px 0;border-top:1px solid var(--line)}
+.feedback-codebook dt{font-weight:600}.feedback-codebook dd{margin:0;overflow-wrap:anywhere}
+.feedback-table{border-collapse:collapse;width:100%;max-width:660px;margin-top:24px;font-size:16px;font-variant-numeric:tabular-nums}
+.feedback-table caption{text-align:left;color:var(--muted);font-size:14px;padding-bottom:12px}
+.feedback-table th,.feedback-table td{padding:12px 8px;border-bottom:1px solid var(--line);text-align:right}
+.feedback-table th:first-child{text-align:left}.feedback-table tbody th{font-weight:400}
+.feedback-limits{padding-left:24px;font-size:16px;line-height:1.9;max-width:76ch}
+.feedback-limits li+li{margin-top:12px}
+@media(max-width:639px){.feedback-section{padding:28px 0}.feedback-section h3{font-size:23px}.feedback-bar-label{font-size:15px;gap:8px}.feedback-codebook dl>div{grid-template-columns:1fr;gap:2px}.feedback-contents{gap:0 20px}.feedback-table th,.feedback-table td{padding:12px 4px}.feedback-chart li+li{margin-top:18px}}
+
+@media(max-width:959px){.feedback-section h3{scroll-margin-top:96px}}

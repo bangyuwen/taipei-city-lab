@@ -3,6 +3,8 @@ import html
 import json
 import re
 import shutil
+import subprocess
+import sys
 import zipfile
 from pathlib import Path
 
@@ -208,6 +210,7 @@ def render_hundred_day_plan(index_text, markdown):
 
 
 def main():
+    subprocess.run([sys.executable, str(ROOT / 'scripts/analyze-feedback.py')], check=True)
     canonical = ROOT.parent.parent / 'topics/bins/research'
     docs = {name: (ROOT / 'data/research' / name).read_text() for name in DOCS}
     if canonical.is_dir():
@@ -247,7 +250,7 @@ def main():
     paths += [DIST / 'index.html', ROOT / 'scripts/package-research.py',
               ROOT / 'scripts/prepare-research-execution.py',
               ROOT / 'scripts/compare-snapshots.py', ROOT / 'scripts/analyze-coordinate-distances.py',
-              ROOT / 'scripts/estimate-budget.py']
+              ROOT / 'scripts/estimate-budget.py', ROOT / 'scripts/analyze-feedback.py']
     destination = DIST / 'research/research-execution-2026-10-15.zip'
     with zipfile.ZipFile(destination, 'w', zipfile.ZIP_DEFLATED) as archive:
         for path in sorted(set(paths)):
