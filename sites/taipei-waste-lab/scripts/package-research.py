@@ -9,6 +9,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / 'dist'
 DOCS = ('bin-reduction.md', 'bin-removal-history.md', 'global-bin-practices.md', 'bin-design.md')
+MARKER_OWNERS = {
+    'research-synthesis': 'panel-research',
+    'research-paper-records': 'panel-sources',
+    'research-literature': 'panel-sources',
+    'research-practice-records': 'panel-sources',
+}
 
 
 def inline_markdown(text):
@@ -34,10 +40,33 @@ def reference_record(item):
             f'<div><dt>得到什麼</dt><dd>{esc(item["finding"])}</dd></div>'
             f'<div><dt>對台北的啟發 · 本站解讀</dt><dd>{esc(item["lesson"])}</dd></div></dl>'
             f'<p class="research-reference-limit"><strong>判讀界線：</strong>{esc(item["limitation"])}</p>'
-            f'<details class="research-reference-source"><summary>來源與查閱範圍</summary><p>{esc(item["readingScope"])}</p><p>{esc(item["citation"])}</p>{links}</details></article>')
+            f'<div class="research-reference-source"><p><strong>查閱範圍：</strong>{esc(item["readingScope"])}</p><p>{esc(item["citation"])}</p>{links}</div></article>')
 
 
-def render_references(index_text, catalog):
+def literature_records(literature, catalog):
+    """Keep one detailed record per paper, preferring the reviewed guide where present."""
+    papers = re.findall(r'^### (L\d{2}) ([^\n]+)\n(.*?)(?=^### |^## |\Z)',
+                        literature, re.M | re.S)
+    assert len(papers) == 13
+    reviewed = {item['id']: item for item in catalog['items'] if item['kind'] == 'academic'}
+    records = []
+    directory = []
+    for key, title, body in papers:
+        label = reviewed[key]['title'] if key in reviewed else title
+        directory.append(f'<li><a href="#reference-{key}" data-research-target="reference-{key}">{key} · {html.escape(label)}</a></li>')
+        if key in reviewed:
+            records.append(reference_record(reviewed[key]))
+        else:
+            paragraphs = [p for p in body.strip().split('\n\n') if p.startswith('**')]
+            assert len(paragraphs) == 4, f'Incomplete literature record: {key}'
+            records.append(f'<article class="research-reference" aria-labelledby="reference-{key}">'
+                           f'<h4 id="reference-{key}" tabindex="-1">{key} · {html.escape(title)}</h4>' +
+                           ''.join('<p>' + inline_markdown(p) + '</p>' for p in paragraphs) + '</article>')
+    assert set(reviewed) <= {key for key, _, _ in papers}
+    return '\n'.join(directory), '\n'.join(records)
+
+
+def render_references(index_text, catalog, literature):
     items = catalog['items']
     by_id = {item['id']: item for item in items}
     assert len(items) == len(by_id), 'Duplicate reference ID'
@@ -46,22 +75,48 @@ def render_references(index_text, catalog):
         assert item['kind'] in ('academic', 'practice'), 'Invalid reference kind'
         for source in (item.get('sources') or [{'label': item['sourceLabel'], 'url': item['url']}]):
             assert source['url'].startswith('https://'), 'Reference source must use HTTPS'
+    directory, records = literature_records(literature, catalog)
     sections = {
-        'research-paper-records': '\n'.join(reference_record(item) for item in items if item['kind'] == 'academic'),
+        'research-paper-records': directory,
+        'research-literature': records,
         'research-practice-records': '\n'.join(reference_record(item) for item in items if item['kind'] == 'practice')
     }
+    contexts = [
+        ('siting', '配置與服務缺口',
+         '需確認實際步行路徑、通行空間、服務時段與清運責任；清冊少列不能當作服務不足。',
+         '尚無各點需求、現場阻礙與投放便利的完整資料，也不能由座標差異判定撤除或遷移。',
+         [('siting', '看台北的分布與差異'), ('countries', '比較各地設置做法')]),
+        ('collection', '清運與維護',
+         '基本巡收、接單與故障備援須有人承接；感測方案需要實際調班能力。',
+         '尚無台北試辦成效與完整營運工時；海外設備規格不構成本地節省的證據。',
+         [('history', '看台北的歷程與紀錄'), ('countries', '比較各地清運做法')]),
+        ('household', '家戶垃圾分流',
+         '先確認合法投放管道的時段與可達性，再比較費率、清運、維修及停機替代；保留免費行人基本服務。',
+         '尚未證實付費或改入口能減少台北家戶垃圾混入；袋子外觀與交易量不能單獨判定來源或成效。',
+         [('countries', '比較家戶收運案例'), ('design', '看方案的概念示意')])
+    ]
+    assert len(catalog['synthesis']) == len(contexts)
     synthesis = []
-    for item in catalog['synthesis']:
+    for item, (slug, topic, condition, unknown, paths) in zip(catalog['synthesis'], contexts):
         links = []
         for key in item['references']:
             assert key in by_id, f'Unknown synthesis reference: {key}'
-            links.append(f'<button type="button" data-research-target="reference-{html.escape(key)}">{html.escape(key)} · {html.escape(by_id[key]["title"])}</button>')
-        synthesis.append('<article class="research-synthesis-item"><h4>' + html.escape(item['title']) + '</h4><p>' +
+            label = html.escape(f'{key} · {by_id[key]["title"]}', quote=True)
+            links.append(f'<a href="#reference-{key}" data-research-target="reference-{key}" aria-label="{label}" title="{label}">{key}</a>')
+        path_links = ''.join(f'<a href="#{target}">{html.escape(label)}</a>' for target, label in paths)
+        synthesis.append(f'<article class="research-synthesis-item" aria-labelledby="conclusion-{slug}"><h3 id="conclusion-{slug}" tabindex="-1">' +
+                         html.escape(topic) + '：' + html.escape(item['title']) + '</h3><p>' +
                          html.escape(item['takeaway']) + '</p><p><strong>可以先做：</strong>' + html.escape(item['action']) +
+                         '</p><p><strong>成立條件：</strong>' + html.escape(condition) +
+                         '</p><p class="research-unknown"><strong>仍未知：</strong>' + html.escape(unknown) +
                          '</p><p><strong>如何確認有用：</strong>' + html.escape(item['check']) +
-                         '</p><div class="research-synthesis-sources"><span>回看依據</span>' + ''.join(links) + '</div></article>')
+                         '</p><div class="research-synthesis-sources"><span>依據</span>' + ''.join(links) +
+                         '</div><div class="research-related-paths">' + path_links + '</div></article>')
     sections['research-synthesis'] = '\n'.join(synthesis)
     for marker, body in sections.items():
+        before = index_text.split(f'<!-- {marker}-start -->')[0]
+        panels = re.findall(r'<section\b[^>]*\bid="(panel-[^"]+)"', before)
+        assert panels and panels[-1] == MARKER_OWNERS[marker], f'Incorrect panel owner for {marker}'
         index_text, count = re.subn(f'<!-- {marker}-start -->.*?<!-- {marker}-end -->',
                                    lambda match: f'<!-- {marker}-start -->\n{body}\n<!-- {marker}-end -->',
                                    index_text, flags=re.S)
@@ -93,22 +148,10 @@ def main():
     for name, text in docs.items():
         (destination / name).write_text(re.sub(r'(?<=\]\()\.\./data/history/', '../data/', text))
     literature = (ROOT / 'research/literature-2026-10-15/README.md').read_text()
-    papers = re.findall(r'^### (L\d{2} [^\n]+)\n(.*?)(?=^### |^## |\Z)',
-                        literature, re.M | re.S)
-    assert len(papers) == 13
-    cards = []
-    for title, body in papers:
-        paragraphs = [p for p in body.strip().split('\n\n') if p.startswith('**')]
-        cards.append('<details><summary>' + html.escape(title) + '</summary>' +
-                     ''.join('<p>' + inline_markdown(p) + '</p>' for p in paragraphs) + '</details>')
     index = DIST / 'index.html'
     text = index.read_text()
-    text, count = re.subn(r'<!-- research-literature-start -->.*?<!-- research-literature-end -->',
-                         '<!-- research-literature-start -->\n' + '\n'.join(cards) +
-                         '\n<!-- research-literature-end -->', text, flags=re.S)
-    assert count == 1
     catalog = json.loads((ROOT / 'research/reference-guide-2026-10-16/catalog.json').read_text())
-    text = render_references(text, catalog)
+    text = render_references(text, catalog, literature)
     index.write_text(text)
 
     # Preserve the original relative paths so lineage checks work after extraction.
@@ -132,7 +175,7 @@ def main():
                 payload = re.sub(r'(?<=\]\()\.\./research/', '../../research/',
                                  payload.decode('utf-8')).encode('utf-8')
             archive.writestr(info, payload)
-    print(f'Packaged {len(set(paths))} files and {len(papers)} literature cards: {destination.name}')
+    print(f'Packaged {len(set(paths))} files and 13 unique literature records: {destination.name}')
 
 
 if __name__ == '__main__':

@@ -40,13 +40,65 @@ with tempfile.TemporaryDirectory() as directory:
   for key in synthesis['references']:
    assert 'data-research-target="reference-'+key+'"' in page
  literature=re.search(r'<!-- research-literature-start -->(.*?)<!-- research-literature-end -->',page,re.S).group(1)
- assert len(re.findall(r'<summary>L\d{2} ',literature))==13
+ assert len(re.findall(r'<article class="research-reference"',literature))==13
+ assert not '<details' in literature
+ for number in range(1,14):
+  assert page.count(f'id="reference-L{number:02}"')==1
+ for marker,owner in [('research-synthesis','panel-research'),('research-paper-records','panel-sources'),('research-literature','panel-sources'),('research-practice-records','panel-sources')]:
+  assert page.count(f'<!-- {marker}-start -->')==1
+  before=page.split(f'<!-- {marker}-start -->')[0]
+  assert re.findall(r'<section\b[^>]*\bid="(panel-[^"]+)"',before)[-1]==owner
  for name in ('README.md','inputs.json','estimate.csv'):
   assert (root/'research/budget-2026-10-15'/name).read_bytes()==(site/'research/budget-2026-10-15'/name).read_bytes()
  rebuilt=root/'dist/research/research-execution-2026-10-15.zip'
  first=rebuilt.read_bytes()
  subprocess.run([sys.executable,str(root/'scripts/package-research.py')],cwd=root,check=True,capture_output=True)
  assert rebuilt.read_bytes()==first,'Repeated offline package changed bytes'
+`],{cwd:new URL('../',import.meta.url),encoding:'utf8'});
+  assert.equal(result.status,0,result.stderr||result.stdout);
+});
+
+test('conclusions, evidence and unexecuted planning have separate readable destinations', () => {
+  const result=spawnSync(process.env.PYTHON_BIN||'python3',['-c',String.raw`
+from html.parser import HTMLParser
+from pathlib import Path
+
+class Layout(HTMLParser):
+ def __init__(self):
+  super().__init__(); self.stack=[]; self.panel=None; self.panels={}; self.references={}
+ def handle_starttag(self,tag,attrs):
+  attrs=dict(attrs)
+  if tag=='section':
+   self.stack.append(self.panel)
+   if attrs.get('id','').startswith('panel-'):
+    self.panel=attrs['id']; self.panels[self.panel]={'details':0,'articles':0,'ids':set(),'links':set(),'text':[]}
+  if self.panel:
+   view=self.panels[self.panel]
+   if tag=='details': view['details']+=1
+   if tag=='article': view['articles']+=1
+   if 'id' in attrs:
+    view['ids'].add(attrs['id'])
+    if attrs['id'].startswith('reference-'):
+     assert attrs['id'] not in self.references
+     self.references[attrs['id']]=self.panel
+   if tag=='a': view['links'].add(attrs.get('href'))
+ def handle_endtag(self,tag):
+  if tag=='section': self.panel=self.stack.pop()
+ def handle_data(self,data):
+  if self.panel: self.panels[self.panel]['text'].append(data)
+
+layout=Layout(); layout.feed(Path('dist/index.html').read_text())
+home=layout.panels['panel-research']; materials=layout.panels['panel-materials']
+assert home['details']==0 and home['articles']==3
+assert all(key in home['ids'] for key in ['conclusion-siting','conclusion-collection','conclusion-household'])
+assert {'#siting','#history','#countries','#design','#sources','#materials'}<=home['links']
+assert len(layout.references)==17 and set(layout.references.values())=={'panel-sources'}
+assert layout.panels['panel-sources']['details']==0
+for key in ['budget-heading','paid-disposal-heading','implementation-heading','research-field-tools','research-candidates','research-context','research-district','research-exclusions']:
+ assert key in materials['ids']
+text=''.join(materials['text'])
+for limitation in ['尚未選點、詢價或啟動試辦','全部單價與工時仍是假設','不是報價或市府核定預算','尚未執行','48','30']:
+ assert limitation in text,limitation
 `],{cwd:new URL('../',import.meta.url),encoding:'utf8'});
   assert.equal(result.status,0,result.stderr||result.stdout);
 });

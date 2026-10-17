@@ -17,7 +17,8 @@ export async function initializeComparisonExperience(){
   let filtered=[],scope,shown=20,distanceAnalysis=null,distanceByID=new Map(),distanceFailed=false,returnPosition=null;
   $('comparison-districts').innerHTML=data.districts.map(d=>`<tr><th scope="row"><button type="button" data-comparison-district="${esc(d.district)}">${esc(d.district)}</button></th><td>${num(d.beforeRows)}</td><td>${num(d.afterRows)}</td><td>${signed(d.deltaRows)}</td><td>${num(d.exactPairs)}</td><td>${num(d.sameAddressPairs)}</td><td>${num(d.ambiguousBeforeRows)}／${num(d.ambiguousAfterRows)}</td><td>${num(d.notReappearedRows)} <small>筆／${num(d.notReappearedAddresses)} 址</small></td><td>${num(d.only2026Rows)} <small>筆／${num(d.only2026Addresses)} 址</small></td></tr>`).join('');
   for(const d of data.districts){const option=document.createElement('option');option.value=d.district;option.textContent=d.district;$('comparison-district').append(option)}
-  $('comparison-categories').innerHTML=[['','全部分類'],...Object.entries(categories).map(([key,value])=>[key,value.label])].map(([key,label])=>`<button type="button" data-comparison-category="${key}" aria-pressed="${key===''}"><span>${esc(label)}</span><strong data-category-count>—</strong><small>組</small></button>`).join('');
+  const categoryOptions=[['','全部分類'],...Object.entries(categories).map(([key,value])=>[key,value.label])];
+  $('comparison-categories').innerHTML=categoryOptions.map(([key])=>`<option value="${key}"></option>`).join('');
   function distanceText(entry){
     if(entry.category!=='same_address_changed')return '';
     const pair=distanceByID.get(entry.id);
@@ -25,7 +26,7 @@ export async function initializeComparisonExperience(){
   }
   function entryHTML(entry,open=false){
     const pair=distanceByID.get(entry.id);
-    return `<details class="comparison-entry" data-comparison-id="${esc(entry.id)}"${open?' open':''}><summary><span class="comparison-entry-main"><span class="comparison-entry-district">${esc(entry.district)} · ${esc(categories[entry.category].label)}</span><strong>${esc(entry.address||'地址未記錄')}</strong><span class="coordinate-entry-gap">${distanceText(entry)}</span></span><span class="comparison-entry-count">2024 ${num(entry.before.length)} 筆<br>2026 ${num(entry.after.length)} 筆</span><span class="comparison-entry-toggle"><span class="when-closed">查看兩版證據</span><span class="when-open">收合證據</span></span></summary><div class="comparison-entry-evidence"><p class="comparison-help">${esc(categories[entry.category].note)}${pair?` ${esc(pair.qualityNote)}`:''}</p><div class="comparison-entry-sources">${sourceRows(entry.before,'2024 封存版',data.meta.before.key)}${sourceRows(entry.after,'2026 官方主檔',data.meta.after.key)}</div></div></details>`;
+    return `<details class="comparison-entry" name="comparison-evidence" data-comparison-id="${esc(entry.id)}"${open?' open':''}><summary><span class="comparison-entry-main"><span class="comparison-entry-district">${esc(entry.district)} · ${esc(categories[entry.category].label)}</span><strong>${esc(entry.address||'地址未記錄')}</strong><span class="coordinate-entry-gap">${distanceText(entry)}</span></span><span class="comparison-entry-count">2024 ${num(entry.before.length)} 筆<br>2026 ${num(entry.after.length)} 筆</span><span class="comparison-entry-toggle"><span class="when-closed">查看兩版證據</span><span class="when-open">收合證據</span></span></summary><div class="comparison-entry-evidence"><p class="comparison-help">${esc(categories[entry.category].note)}${pair?` ${esc(pair.qualityNote)}`:''}</p><div class="comparison-entry-sources">${sourceRows(entry.before,'2024 封存版',data.meta.before.key)}${sourceRows(entry.after,'2026 官方主檔',data.meta.after.key)}</div></div></details>`;
   }
   function renderList(append=false){
     const list=$('comparison-list');
@@ -56,7 +57,7 @@ export async function initializeComparisonExperience(){
     const summary=summarizeCoordinateDistances(scope.entries,distanceAnalysis.pairs);
     const range=state.district||'全市';
     $('coordinate-distance-summary').textContent=`目前範圍（${range}${state.search?'・含地址搜尋':''}）${num(summary.pairCount)} 對：${num(summary.calculatedPairs)} 對可計算，${num(summary.unavailablePairs)} 對無法計算。${summary.calculatedPairs?`差距中位數 ${gap(summary.medianMeters)}，最小 ${gap(summary.minMeters)}，最大 ${gap(summary.maxMeters)}。`:''}${num(summary.coarseFlaggedPairs)} 對至少一側未通過台北座標粗篩；通過粗篩也不代表已核實。`;
-    $('coordinate-distance-buckets').innerHTML=summary.buckets.map(b=>`<li><span>${esc(b.label)}</span><strong>${num(b.count)} 對</strong></li>`).join('');
+    $('coordinate-distance-buckets').textContent=`距離分布：${summary.buckets.map(b=>`${b.label} ${num(b.count)} 對`).join('；')}。`;
   }
   function render({reset=true}={}){
     if(reset)shown=20;
@@ -66,25 +67,22 @@ export async function initializeComparisonExperience(){
     $('comparison-scope-heading').textContent=`目前範圍：${state.district||'全市'}${state.search?` · 地址含「${state.search}」`:''}`;
     const c=scope.counts;
     $('comparison-scope-totals').innerHTML=`2024 <strong>${num(c.beforeRows)}</strong> 筆 <span aria-hidden="true">→</span> 2026 <strong>${num(c.afterRows)}</strong> 筆 <span class="comparison-scope-delta">來源列差額 ${signed(c.afterRows-c.beforeRows)} 筆</span>`;
-    for(const button of $('comparison-categories').querySelectorAll('button')){
-      const category=button.dataset.comparisonCategory;
-      button.setAttribute('aria-pressed',String(category===state.category));
-      button.querySelector('[data-category-count]').textContent=num(category?scope.categoryCounts[category]:c.groups);
-    }
+    for(const [index,[category,label]] of categoryOptions.entries())$('comparison-categories').options[index].textContent=`${label}（${num(category?scope.categoryCounts[category]:c.groups)} 組）`;
+    $('comparison-categories').value=state.category;
     $('comparison-list-heading').textContent=state.category?categories[state.category].label:'全部比對結果';
-    $('comparison-category-note').textContent=state.category?categories[state.category].note:'先選分類縮小範圍，再展開地址查看兩版證據。相同欄位、缺列與座標差異，都不能直接換算為現場異動。';
+    $('comparison-category-note').textContent=state.category?categories[state.category].note:'點選地址查看兩版原始列與座標。每組可能含多筆來源列，組數並非實體垃圾桶數。';
     renderDistances();renderList();
   }
   function chooseCategory(value){state.category=value;if(value==='same_address_changed'&&distanceAnalysis)state.sort='distance-desc';render();}
   $('comparison-district').addEventListener('change',event=>{state.district=event.target.value;render();});
   $('comparison-search').addEventListener('input',event=>{state.search=event.target.value;render();});
-  $('comparison-categories').addEventListener('click',event=>{const button=event.target.closest('[data-comparison-category]');if(button)chooseCategory(button.dataset.comparisonCategory);});
+  $('comparison-categories').addEventListener('change',event=>chooseCategory(event.target.value));
   $('comparison-reset').addEventListener('click',()=>{Object.assign(state,{district:'',category:'',search:'',sort:'source-order'});$('comparison-district').value='';$('comparison-search').value='';render();});
   $('comparison-clear-search').addEventListener('click',()=>{state.search='';$('comparison-search').value='';render();$('comparison-search').focus({preventScroll:true});});
-  $('comparison-all-categories').addEventListener('click',()=>{chooseCategory('');$('comparison-categories').querySelector('button').focus({preventScroll:true});});
+  $('comparison-all-categories').addEventListener('click',()=>{chooseCategory('');$('comparison-categories').focus({preventScroll:true});});
   $('comparison-districts').addEventListener('click',event=>{
     const button=event.target.closest('[data-comparison-district]');if(!button)return;
-    state.district=button.dataset.comparisonDistrict;$('comparison-district').value=state.district;$('comparison-district-overview').open=false;render();
+    state.district=button.dataset.comparisonDistrict;$('comparison-district').value=state.district;render();
     $('comparison-district').focus({preventScroll:true});$('comparison-scope-heading').scrollIntoView({block:'center',behavior:'instant'});
   });
   $('comparison-more').addEventListener('click',()=>{shown+=20;renderList(true);});
