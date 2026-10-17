@@ -6,9 +6,9 @@
 
 ## 閱讀入口與資訊歸屬
 
-2026-10-17 起主導覽為「研究結論／台北的變化／各地做法」。根網址先讀三項研究判斷；地圖、清冊比較、數量與政策歷程、候選街段留在台北證據的二級導覽。既有 `#map`、`#comparison`、`#history`、`#siting` 深連結與資料版本 query 保持有效。
+2026-10-17 起主導覽為「研究結論／台北的變化／各地做法」。根網址先讀現況摘要，再讀三項研究判斷；地圖、清冊比較、數量與政策歷程、候選街段留在台北證據的二級導覽。既有 `#map`、`#comparison`、`#history`、`#siting` 深連結與資料版本 query 保持有效。
 
-- `#research`：三項建議、成立條件、未知及直接引用，不重複收錄完整文獻。
+- `#research`：先呈現有日期的公開紀錄、研究判讀、尚缺的現場確認與未來提案，再列三項建議、成立條件、未知及直接引用。`#current-evidence-heading` 可直達現況摘要。
 - `#countries`：單一國家案例選單、預設實拍，在同一影像區切換 3D 示意。照片、署名、地點對應限制、證據及成本直接呈現；`?country=japan#countries` 與 `#country-japan` 可直接指定案例。
 - `#design`：從研究建議進入的 T1 概念與四種用途引導示範。固定尺寸和示例，以投放／清運流程取代自訂參數。
 - `#sources`：六份清冊來源、13 篇文獻、4 則實務與比較方法。每則完整紀錄只維護一份，`#reference-L01` 等引用可直接定位。
@@ -180,3 +180,7 @@ The existing map priority filter uses the new categories and retains its distric
 ## 百日計畫
 
 `#plan` 提供完整的百日建置與營運交接提案，研究首頁與頁尾皆有入口。`package-research.py` 由 canonical `topics/bins/research/hundred-day-plan-2026-10-17/README.md`（獨立 checkout 使用 `research/` 副本）產生正文、章節連結與表格。第 100 天須完成設備、人員與實際服務驗收；30 處、備援、預算及權責仍待承接單位確認。舊估算與 180 日營運材料保留並註明與百日建置的關係。僅公開 HTML 正文，不公開 Markdown、參數附件或離線 ZIP。
+
+## Current evidence summary
+
+The research homepage presents the dated 2026 public location records and 2025 annual statistics before the existing recommendations. The summary uses the retained 2026-10-15 source recovery and source audit under `topics/bins/research/`; it is not a live inventory. Record counts, statistical units, source dates and unresolved coverage stay together. Field confirmation and the unstarted hundred-day proposal have separate labels. The summary is maintained in `dist/index.html` outside generated research markers, so the existing package rebuild preserves it. No route, runtime asset or public attachment was added.
