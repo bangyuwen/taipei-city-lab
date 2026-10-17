@@ -61,6 +61,25 @@ export function initializeDesignExperience(){
   for(const button of document.querySelectorAll('[data-design-view]'))button.addEventListener('click',()=>selectView(button.dataset.designView));
   $('design-reset-view').addEventListener('click',()=>{selectView('overview');scene?.resetView();});
   $('design-reset').addEventListener('click',()=>{state=createExperience(state.designId);params=normalizeParameters(state.designId);render();});
+  $('design-try-cleaning').addEventListener('click',()=>{
+    state=createExperience('street');params=normalizeParameters('street');
+    state=transitionExperience(state,{type:'role',value:'worker'},params);render();selectView('worker');
+    act({type:'service'});
+    $('design-workspace').scrollIntoView({block:'start',behavior:'instant'});
+    $('design-service').focus({preventScroll:true});
+  });
+  $('design-read-proposal').addEventListener('click',()=>{
+    $('t1-specification').open=true;
+    const summary=$('t1-specification').querySelector('summary');
+    summary.focus({preventScroll:true});summary.scrollIntoView({block:'start',behavior:'instant'});
+  });
+  for(const button of document.querySelectorAll('[data-design-jump]'))button.addEventListener('click',()=>{
+    const target=$(button.dataset.designJump);
+    if(!target)return;
+    if(target.tagName==='DETAILS')target.open=true;
+    const focusTarget=target.tagName==='DETAILS'?target.querySelector('summary'):target;
+    focusTarget.focus({preventScroll:true});focusTarget.scrollIntoView({block:'start',behavior:'instant'});
+  });
   $('design-retry').addEventListener('click',()=>{$('design-retry').hidden=true;loadScene();});
   render();return {setActive(value){active=value;scene?.setActive(value);if(value)loadScene();}};
 }
