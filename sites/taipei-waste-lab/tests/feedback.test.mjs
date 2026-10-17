@@ -66,7 +66,7 @@ assert m['indicators']('垃圾桶垃圾桶垃圾桶')=={'bins'}
 `));
 
 test('saved aggregates, Markdown and generated public page agree without individual records', () => python(String.raw`
-import json,re,runpy,zipfile
+import json,re,runpy,zipfile,shutil,tempfile
 from pathlib import Path
 m=runpy.run_path('scripts/analyze-feedback.py')
 data=json.loads(Path('research/feedback-2026-10-17/summary.json').read_text())
@@ -79,7 +79,19 @@ assert markdown==Path('research/feedback-2026-10-17/README.md').read_text()
 assert markdown==Path('dist/research/feedback-2026-10-17/README.md').read_text()
 page=Path('dist/index.html').read_text()
 assert content in page
-assert content in Path('out/index.html').read_text()
+# Exercise public staging in a clean fixture; npm test also runs before out/ exists.
+public=runpy.run_path('scripts/prepare-public.py')
+with tempfile.TemporaryDirectory() as directory:
+ root=Path(directory).resolve()
+ for name in public['ASSETS']:
+  target=root/'dist'/name
+  target.parent.mkdir(parents=True,exist_ok=True)
+  shutil.copyfile(Path('dist')/name,target)
+ (root/'dist/private-feedback.tsv').write_text('private input must not be staged')
+ public['prepare'].__globals__['ROOT']=root
+ public['prepare']()
+ assert content in (root/'out/index.html').read_text()
+ assert not (root/'out/private-feedback.tsv').exists()
 for body in (json.dumps(data),markdown,content):
  assert not re.search(r'HK-\d+|去識別內容|匿名編號\s*行政區',body)
 assert '比例不能相加' in content and '不是逐則語意分類' in content
