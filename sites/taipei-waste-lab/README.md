@@ -176,3 +176,7 @@ The siting overlay and printable `field-checklist.html` now present desktop-only
 Each map marker, shortlist entry, popup and printable sheet identifies both dimensions. Details explain the priority and confidence reasons, retained evidence, limits and current recommendation. The source snapshot remains dated 2026-10-17; no new observations, demand measurements, weighted score or citywide ranking were created. The 425 polygons and five historical snapshots remain unchanged. Private research inputs and attachments remain excluded from the 56-file public allowlist.
 
 The existing map priority filter uses the new categories and retains its district/search intersections. The printable data-reading table has its own category filter; visible sheets, index, page count and sequential page numbers update together, while source site IDs stay fixed. Printing uses the selected sheets. No field visit tasks, record uploads or stored form data are introduced. Browser checks cover content parity, filters, printing, responsive layout and private attachment exclusions.
+
+## 百日計畫
+
+`#plan` 提供完整的百日建置與營運交接提案，研究首頁與頁尾皆有入口。`package-research.py` 由 canonical `topics/bins/research/hundred-day-plan-2026-10-17/README.md`（獨立 checkout 使用 `research/` 副本）產生正文、章節連結與表格。第 100 天須完成設備、人員與實際服務驗收；30 處、備援、預算及權責仍待承接單位確認。舊估算與 180 日營運材料保留並註明與百日建置的關係。僅公開 HTML 正文，不公開 Markdown、參數附件或離線 ZIP。
