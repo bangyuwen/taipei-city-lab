@@ -119,7 +119,7 @@ function panel(){
   historyLink.toggleAttribute('data-section-active',inHistory);
   if(currentPage==='history')historyLink.setAttribute('aria-current','page');else historyLink.removeAttribute('aria-current');
   const researchLink=document.querySelector('#site-navigation [data-page="research"]');
-  researchLink.toggleAttribute('data-section-active',['research','design','materials','plan'].includes(currentPage));
+  researchLink.toggleAttribute('data-section-active',['research','design','materials','plan','feedback'].includes(currentPage));
   for(const p of allowedPages)if($(`panel-${p}`))$(`panel-${p}`).hidden=p!==currentPage;
   $('load-status').hidden=Boolean(catalog)||currentPage!=='map';
   document.body.classList.toggle('design-mode',currentPage==='design');
