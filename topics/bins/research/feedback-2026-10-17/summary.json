@@ -1,5 +1,163 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
+  "districtIndicators": {
+    "松山": {
+      "counts": {
+        "bins": 177,
+        "truck": 12,
+        "household": 18,
+        "dropoff": 6,
+        "litter": 16,
+        "pests": 22,
+        "cigarettes": 4,
+        "recycling": 12
+      },
+      "noIndicatorMatch": 27
+    },
+    "信義": {
+      "counts": {
+        "bins": 155,
+        "truck": 15,
+        "household": 13,
+        "dropoff": 3,
+        "litter": 11,
+        "pests": 16,
+        "cigarettes": 1,
+        "recycling": 11
+      },
+      "noIndicatorMatch": 33
+    },
+    "大安": {
+      "counts": {
+        "bins": 379,
+        "truck": 34,
+        "household": 43,
+        "dropoff": 6,
+        "litter": 42,
+        "pests": 41,
+        "cigarettes": 14,
+        "recycling": 22
+      },
+      "noIndicatorMatch": 59
+    },
+    "中山": {
+      "counts": {
+        "bins": 267,
+        "truck": 21,
+        "household": 25,
+        "dropoff": 2,
+        "litter": 26,
+        "pests": 32,
+        "cigarettes": 7,
+        "recycling": 20
+      },
+      "noIndicatorMatch": 41
+    },
+    "中正": {
+      "counts": {
+        "bins": 139,
+        "truck": 16,
+        "household": 18,
+        "dropoff": 4,
+        "litter": 14,
+        "pests": 13,
+        "cigarettes": 6,
+        "recycling": 19
+      },
+      "noIndicatorMatch": 31
+    },
+    "大同": {
+      "counts": {
+        "bins": 142,
+        "truck": 14,
+        "household": 7,
+        "dropoff": 1,
+        "litter": 20,
+        "pests": 17,
+        "cigarettes": 4,
+        "recycling": 15
+      },
+      "noIndicatorMatch": 25
+    },
+    "萬華": {
+      "counts": {
+        "bins": 116,
+        "truck": 19,
+        "household": 18,
+        "dropoff": 4,
+        "litter": 31,
+        "pests": 21,
+        "cigarettes": 5,
+        "recycling": 21
+      },
+      "noIndicatorMatch": 53
+    },
+    "文山": {
+      "counts": {
+        "bins": 76,
+        "truck": 16,
+        "household": 7,
+        "dropoff": 5,
+        "litter": 11,
+        "pests": 7,
+        "cigarettes": 4,
+        "recycling": 12
+      },
+      "noIndicatorMatch": 26
+    },
+    "南港": {
+      "counts": {
+        "bins": 55,
+        "truck": 7,
+        "household": 4,
+        "dropoff": 3,
+        "litter": 7,
+        "pests": 7,
+        "cigarettes": 1,
+        "recycling": 6
+      },
+      "noIndicatorMatch": 10
+    },
+    "內湖": {
+      "counts": {
+        "bins": 113,
+        "truck": 11,
+        "household": 21,
+        "dropoff": 2,
+        "litter": 10,
+        "pests": 10,
+        "cigarettes": 1,
+        "recycling": 20
+      },
+      "noIndicatorMatch": 15
+    },
+    "士林": {
+      "counts": {
+        "bins": 133,
+        "truck": 21,
+        "household": 20,
+        "dropoff": 5,
+        "litter": 24,
+        "pests": 15,
+        "cigarettes": 6,
+        "recycling": 19
+      },
+      "noIndicatorMatch": 34
+    },
+    "北投": {
+      "counts": {
+        "bins": 79,
+        "truck": 18,
+        "household": 11,
+        "dropoff": 11,
+        "litter": 18,
+        "pests": 2,
+        "cigarettes": 0,
+        "recycling": 18
+      },
+      "noIndicatorMatch": 23
+    }
+  },
   "analysisDate": "2026-10-17",
   "source": {
     "name": "Pasted text.txt",

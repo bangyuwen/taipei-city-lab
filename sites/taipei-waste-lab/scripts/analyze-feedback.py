@@ -115,7 +115,8 @@ METHOD_BRIDGE = '目前最重要的資料缺口，是逐則事件時間與核實
 def home_summary():
     return ('<p>本批回饋提示：行人沿途的投放、家戶作息與收運的配合，以及投放點的持續維護，需要分開查核。分類接收與鄰近環境負擔，則要和每一種改善一起評估。</p>'
             '<p>完整分析把這些情境串成「可能原因與反例 → 所需證據 → 驗證與決策」。目前仍是待查假說，尚未證明增桶、撤桶或調整收運的成效。</p>'
-            '<p class="feedback-report-entry"><a href="#feedback-findings">閱讀完整分析與圖解</a></p>')
+            '<p>行政區交叉分析進一步指出可查核的差異：北投的投放時段、內湖的家戶與分類接收、萬華的街面維護。這是本檔文字結構的對照，尚不能排成各區改善優先序。</p>'
+            '<p class="feedback-report-entry"><a href="#feedback-findings">閱讀完整分析與圖解</a> · <a href="#feedback-cross">看行政區交叉分析</a></p>')
 
 
 def render_depth():
@@ -223,8 +224,16 @@ def analyze(path):
         raise ValueError('Duplicate anonymous IDs require an explicit analysis decision')
     texts = Counter(row[4] for row in rows)
     matches = [indicators(row[4]) for row in rows]
+    district_matches = {}
+    for row, group in zip(rows, matches):
+        district = district_matches.setdefault(row[1], {
+            'counts': {key: 0 for key, _, _ in CODEBOOK}, 'noIndicatorMatch': 0})
+        for key in group:
+            district['counts'][key] += 1
+        district['noIndicatorMatch'] += not group
     return {
-        'schemaVersion': 1,
+        'schemaVersion': 2,
+        'districtIndicators': district_matches,
         'analysisDate': '2026-10-17',
         'source': {'name': 'Pasted text.txt', 'sha256': hashlib.sha256(payload).hexdigest(),
                    'frame': SCOPE, 'collectionPeriod': None, 'recruitment': None,
@@ -247,6 +256,120 @@ def analyze(path):
 
 def percent(value, total):
     return f'{value / total * 100:.1f}%'
+
+
+
+def validate_districts(data):
+    """Cross-tabs require retained input; marginals cannot reconstruct them."""
+    groups = data.get('districtIndicators')
+    if data.get('schemaVersion') != 2 or not isinstance(groups, dict):
+        raise ValueError('District cross-tab missing: rerun with the retained private input using --input')
+    totals = data['districts']
+    keys = {item['id'] for item in data['indicators']}
+    if set(groups) != set(totals) or sum(totals.values()) != data['records']:
+        raise ValueError('District denominator mismatch')
+    for district, n in totals.items():
+        row = groups[district]
+        counts = row['counts']
+        unmatched = row['noIndicatorMatch']
+        if type(n) is not int or n <= 0 or set(counts) != keys:
+            raise ValueError('Invalid district denominator or indicator keys')
+        if any(type(value) is not int or not 0 <= value <= n
+               for value in [*counts.values(), unmatched]):
+            raise ValueError('District counts must be integers within the denominator')
+        if not max(counts.values()) <= n - unmatched <= sum(counts.values()):
+            raise ValueError('District unmatched count is inconsistent')
+    for item in data['indicators']:
+        if sum(row['counts'][item['id']] for row in groups.values()) != item['count']:
+            raise ValueError('District indicator columns do not reconcile')
+    if sum(row['noIndicatorMatch'] for row in groups.values()) != data['noIndicatorMatch']:
+        raise ValueError('District unmatched total does not reconcile')
+
+
+def district_comparison(data, district, key):
+    count = data['districtIndicators'][district]['counts'][key]
+    n = data['districts'][district]
+    total = next(item['count'] for item in data['indicators'] if item['id'] == key)
+    rest_count, rest_n = total - count, data['records'] - n
+    difference = 100 * (count / n - rest_count / rest_n) if rest_n else None
+    return count, n, rest_count, rest_n, difference
+
+
+def render_districts(data):
+    validate_districts(data)
+    esc = html.escape
+    indicators = data['indicators']
+    title = '行政區與問題線索：差異在哪裡，接下來查什麼'
+    framing = ('各區樣本量不同，先看區內比例，再保留筆數核對。分母是該行政區標記在本檔的全部留言，'
+               '包含未命中詞表的留言；不是人口、各區完整回饋數或已核實事件數。'
+               '行政區標記尚未確認為居住地或事件所在地，以下不能用來排名問題嚴重度。')
+    method = ('沿用上方八組固定詞表，一則留言可命中多組，橫列比例不能相加。'
+              '含否定句仍會命中；零表示沒有命中這組詞，不表示該區沒有問題。'
+              '各格細條皆以 0–100% 為同一尺度；數字為命中則數及占該區留言比例。')
+    md = [f'### {title}', '', framing, '', method, '',
+          '| 行政區（本檔則數） | ' + ' | '.join(item['label'] for item in indicators) + ' |',
+          '| --- | ' + ' | '.join(['---:'] * len(indicators)) + ' |']
+    page = [f'<section class="feedback-section feedback-cross" aria-labelledby="feedback-cross"><h4 id="feedback-cross" tabindex="-1">{title}</h4>',
+            f'<p>{esc(framing)}</p><p id="feedback-cross-method" class="feedback-note">{esc(method)}</p>',
+            '<p class="feedback-scroll-hint">窄螢幕可左右捲動表格；行政區欄固定在左側。鍵盤可聚焦表格區域後使用方向鍵。</p>',
+            '<div class="feedback-matrix-scroll" role="region" aria-label="行政區與八組文字線索交叉表，可左右捲動" tabindex="0" aria-describedby="feedback-cross-method">',
+            '<table class="feedback-matrix"><caption>行政區 × 文字線索 · 每格為則數／區內比例</caption><thead><tr><th scope="col">行政區<br>本檔則數</th>']
+    page += [f'<th scope="col">{esc(item["label"])}</th>' for item in indicators]
+    page += ['</tr></thead><tbody>']
+    for district, n in data['districts'].items():
+        counts = data['districtIndicators'][district]['counts']
+        cells = [f'{counts[item["id"]]}（{percent(counts[item["id"]], n)}）' for item in indicators]
+        md += [f'| {district}（{n}） | ' + ' | '.join(cells) + ' |']
+        page += [f'<tr><th scope="row">{esc(district)}<small>{n:,} 則</small></th>']
+        for item in indicators:
+            count = counts[item['id']]
+            pct = percent(count, n)
+            page += [f'<td data-district="{esc(district)}" data-indicator="{esc(item["id"])}"><strong>{count} 則</strong><span>{pct}</span><i aria-hidden="true" style="width:{pct}"></i></td>']
+        page += ['</tr>']
+    page += ['</tbody></table></div>']
+    coverage = '各區未命中任何一組詞的則數（仍計入分母）：' + '、'.join(
+        f'{district} {row["noIndicatorMatch"]}' for district, row in data['districtIndicators'].items()) + '。'
+    md += ['', coverage, '']
+    page += [f'<p class="feedback-note">{esc(coverage)}</p>']
+
+    # These descriptive contrasts follow the report's service questions, not a significance ranking.
+    selected = [('北投', 'dropoff'), ('北投', 'truck'), ('內湖', 'household'),
+                ('內湖', 'recycling'), ('萬華', 'litter'), ('萬華', 'bins')]
+    if {'北投', '內湖', '萬華', '大安'} <= set(data['districts']):
+        comparison_note = ('下表依投放時段、家戶分流與街面維護選取六個對照，並非差異排名或顯著性檢定。'
+                           '「其餘各區」排除該區，合併其餘留言作分母；差值＝區內比例−其餘各區比例，'
+                           '單位為百分點，以未四捨五入的比例計算後取一位小數。')
+        md += ['#### 把地區差異轉成查核問題', '', comparison_note, '',
+               '| 行政區／文字線索 | 本區：則數／分母（比例） | 其餘各區：則數／分母（比例） | 差值（百分點） |',
+               '| --- | ---: | ---: | ---: |']
+        page += ['<h5 class="feedback-cross-heading">把地區差異轉成查核問題</h5>', f'<p>{esc(comparison_note)}</p>',
+                 '<div class="feedback-comparison-scroll" role="region" aria-label="六個情境對照，可左右捲動" tabindex="0"><table class="feedback-table feedback-comparison"><caption>比較基準僅為本檔其餘各區的留言</caption><thead><tr><th scope="col">行政區／線索</th><th scope="col">本區</th><th scope="col">其餘各區</th><th scope="col">差值<br>百分點</th></tr></thead><tbody>']
+        labels = {item['id']: item['label'] for item in indicators}
+        for district, key in selected:
+            count, n, rest_count, rest_n, difference = district_comparison(data, district, key)
+            local = f'{count}／{n}（{percent(count, n)}）'
+            other = f'{rest_count}／{rest_n}（{percent(rest_count, rest_n)}）'
+            delta = f'{difference:+.1f}'
+            label = f'{district}／{labels[key]}'
+            md += [f'| {label} | {local} | {other} | {delta} |']
+            page += [f'<tr><th scope="row">{esc(label)}</th><td>{local}</td><td>{other}</td><td>{delta}</td></tr>']
+        page += ['</tbody></table></div>']
+        daan = data['districtIndicators']['大安']['counts']['truck']
+        beitou = data['districtIndicators']['北投']['counts']['truck']
+        volume = (f'筆數與比例回答不同問題。例如垃圾車詞在大安有 {daan} 則、北投有 {beitou} 則，'
+                  f'但分別占兩區留言的 {percent(daan, data["districts"]["大安"])} 與 {percent(beitou, data["districts"]["北投"])}。'
+                  '直接比較筆數會受到收集量影響；改用區內比例仍不能排除招募與篩選差異。')
+        notes = [volume,
+                 '北投可先查投放時段與替代管道：定點／彈性投放和垃圾車詞的區內比例較其餘各區高。應逐則核對是在描述可用時段、距離、噪音，還是其他情況；兩組比例不能當成同一批人的共同需求。',
+                 '內湖可先查家戶垃圾與分類接收：家戶垃圾、回收／廚餘詞的區內比例較高。這兩組詞沒有區分支持、反對、混投或接收困難，需回讀語意並核對現場，才能判斷應查分流、指引還是收運。',
+                 '萬華可先查街面垃圾的來源與維護：亂丟詞比例較高，但垃圾桶詞比例較低。這個組合不能證明缺桶或撤桶造成亂丟，也不能推定兩者出現在同一留言；需核對垃圾類別、事件位置、時間與實際巡收。',
+                 '下一步先做各區同一套語意複核：區分描述的事件、支持或反對、實際地點與服務情境，再以相同標準抽查未命中留言，確認詞表漏抓。定點／彈性投放等低筆數線索尤其需要回讀，不因比例較高就優先部署。取得各區完整回饋數、招募與篩選規則後，才能判斷差異是否主要來自資料收集；現場比較仍需另外建立基準。']
+        for note in notes:
+            md += ['', note]
+            page += [f'<p>{esc(note)}</p>']
+    md += ['']
+    page += ['<p><a href="#feedback-method">核對資料缺口與限制</a> · <a href="#feedback-validation">接回現場驗證順序</a></p></section>']
+    return md, page
 
 
 def table_markdown(values, total):
@@ -278,7 +401,7 @@ def render(data):
             f'<p>從 {total:,} 則垃圾相關留言，整理服務困擾、可能原因與驗證順序。</p>',
             f'<p class="research-update">整理於 {data["analysisDate"]}；收集期間未提供，非即時現場盤點。</p></header>',
             f'<p class="feedback-scope">{esc(SCOPE)}</p>',
-            '<nav class="feedback-contents" aria-label="留言分析章節"><a href="#feedback-findings">研究判斷</a><a href="#feedback-problems">三種情境</a><a href="#feedback-mechanisms">原因與反例</a><a href="#feedback-loop">驗證順序</a><a href="#feedback-method">資料與限制</a></nav>',
+            '<nav class="feedback-contents" aria-label="留言分析章節"><a href="#feedback-findings">研究判斷</a><a href="#feedback-problems">三種情境</a><a href="#feedback-mechanisms">原因與反例</a><a href="#feedback-loop">驗證順序</a><a href="#feedback-method">資料與限制</a><a href="#feedback-cross">行政區交叉分析</a></nav>',
             f'<section class="feedback-section" aria-labelledby="feedback-findings"><h3 id="feedback-findings" tabindex="-1">{esc(REPORT_JUDGMENT)}</h3>']
     for paragraph in REPORT_INTRO:
         md += [paragraph, '']
@@ -326,6 +449,10 @@ def render(data):
             md += ['']
             page += ['</dl></details>']
         page += ['</section>']
+        if key == 'signals':
+            cross_md, cross_page = render_districts(data)
+            md += cross_md
+            page += cross_page
     md += ['', '### 重現方式', '', '原始輸入由提供者在本地保存，未納入 Git、網站或離線研究包。請使用保留的原始檔重算；僅有摘要無法重做文字比對。', '',
            '在 `sites/taipei-waste-lab` 執行（離線包則在解壓根目錄）：', '',
            '```sh', 'python3 scripts/analyze-feedback.py --input "/absolute/path/to/Pasted text.txt"', 'python3 scripts/package-research.py', '```', '',
