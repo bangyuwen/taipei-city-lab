@@ -132,3 +132,84 @@ with tempfile.TemporaryDirectory() as directory:
   except ValueError:pass
   else:raise AssertionError('Impossible overlap accepted')
 `));
+
+test('district cross-tabs count each message once per signal and retain unmatched denominators', () => python(String.raw`
+import csv,runpy,tempfile
+from pathlib import Path
+m=runpy.run_path('scripts/analyze-feedback.py')
+with tempfile.TemporaryDirectory() as directory:
+ p=Path(directory)/'input.tsv'
+ rows=[['a','中正','環境','在意','垃圾桶垃圾桶與垃圾車'],['b','中正','環境','在意','無詞表文字'],['c','大同','環境','在意','垃圾車'],['d','大同','環境','在意','不要家庭垃圾']]
+ with p.open('w',newline='',encoding='utf-8') as f:
+  w=csv.writer(f,delimiter='\t');w.writerow(m['FIELDS']);w.writerows(rows)
+ data=m['analyze'](p);m['validate_districts'](data)
+ assert data['districts']=={'中正':2,'大同':2}
+ assert data['districtIndicators']['中正']['counts']['bins']==1
+ assert data['districtIndicators']['中正']['noIndicatorMatch']==1
+ assert data['districtIndicators']['大同']['counts']['household']==1
+ assert m['district_comparison'](data,'中正','bins')==(1,2,0,2,50.0)
+ assert m['district_comparison'](data,'中正','truck')==(1,2,1,2,0.0)
+ md,page=m['render_districts'](data)
+ assert '1（50.0%）' in '\n'.join(md)
+ assert '0（0.0%）' in '\n'.join(md)
+ assert '\n'.join(page).count('data-indicator=')==16
+ single=m['analyze'](p)
+ single['districts']={'中正':4}
+ single['districtIndicators']={'中正':{'counts':{i['id']:i['count'] for i in single['indicators']},'noIndicatorMatch':1}}
+ m['validate_districts'](single)
+ assert m['district_comparison'](single,'中正','bins')==(1,4,0,0,None)
+`));
+
+test('district rendering rejects missing or inconsistent cross-tabs instead of inventing cells', () => python(String.raw`
+import copy,json,runpy
+from pathlib import Path
+m=runpy.run_path('scripts/analyze-feedback.py')
+data=json.loads(Path('research/feedback-2026-10-17/summary.json').read_text())
+mutations=[
+ lambda d:d.pop('districtIndicators'),
+ lambda d:d.update(schemaVersion=1),
+ lambda d:d['districtIndicators'].pop('北投'),
+ lambda d:d['districtIndicators']['北投']['counts'].pop('bins'),
+ lambda d:d['districtIndicators']['北投']['counts'].update(bins=-1),
+ lambda d:d['districtIndicators']['北投']['counts'].update(bins=140),
+ lambda d:d['districtIndicators']['北投']['counts'].update(bins=78),
+ lambda d:d['districtIndicators']['北投']['counts'].update(bins=79.0),
+ lambda d:d['districtIndicators']['北投'].update(noIndicatorMatch=139),
+ lambda d:d['districts'].update(北投=0),
+]
+for mutate in mutations:
+ broken=copy.deepcopy(data);mutate(broken)
+ try:m['render_districts'](broken)
+ except ValueError:pass
+ else:raise AssertionError('Invalid cross-tab accepted')
+# At the denominator is allowed; denominator+1 was rejected above.
+single=copy.deepcopy(data)
+single['records']=1;single['districts']={'中正':1};single['noIndicatorMatch']=0
+single['indicators']=[dict(item,count=int(item['id']=='bins')) for item in data['indicators']]
+single['districtIndicators']={'中正':{'counts':{i['id']:i['count'] for i in single['indicators']},'noIndicatorMatch':0}}
+m['validate_districts'](single)
+single['districtIndicators']['中正']['counts']['bins']=2
+try:m['validate_districts'](single)
+except ValueError:pass
+else:raise AssertionError('n+1 accepted')
+`));
+
+test('district report preserves known cross-cells and excluded-district baselines in both formats', () => python(String.raw`
+import json,runpy
+from pathlib import Path
+m=runpy.run_path('scripts/analyze-feedback.py')
+d=json.loads(Path('research/feedback-2026-10-17/summary.json').read_text())
+m['validate_districts'](d)
+assert len(d['districtIndicators'])==12
+assert d['districtIndicators']['北投']['counts']['cigarettes']==0
+assert d['districtIndicators']['大安']['counts']['bins']==379
+count,n,rest,rn,delta=m['district_comparison'](d,'北投','dropoff')
+assert (count,n,rest,rn)==(11,139,41,2524)
+assert round(delta,1)==6.3
+md,page=m['render_districts'](d);md='\n'.join(md);page='\n'.join(page)
+assert page.count('data-indicator=')==96
+assert '11／139（7.9%）' in md and '41／2524（1.6%）' in page
+assert '其餘各區' in page and '百分點' in md
+assert '行政區標記尚未確認為居住地或事件所在地' in page
+assert '橫列比例不能相加' in md
+`));

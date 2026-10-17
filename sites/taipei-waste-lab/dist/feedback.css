@@ -97,3 +97,21 @@
  .problem-loop li+li:before{left:24px;top:-29px;width:0;height:27px;border-top:0;border-left:1px dashed var(--green)}
  .problem-loop li+li:after{left:21px;top:-8px;transform:rotate(135deg)}
 }
+
+/* District cross-tabs keep one shared 0–100% scale and readable values. */
+.feedback-matrix-scroll,.feedback-comparison-scroll{max-width:100%;overflow-x:auto;margin:24px 0;scroll-margin-top:96px}
+.feedback-matrix-scroll:focus-visible,.feedback-comparison-scroll:focus-visible{outline:3px solid #bd5c16;outline-offset:3px}
+.feedback-matrix{border-collapse:separate;border-spacing:0;table-layout:fixed;width:100%;min-width:900px;font-size:16px;font-variant-numeric:tabular-nums}
+.feedback-matrix caption{text-align:left;color:var(--muted);font-size:14px;line-height:1.8;padding:0 0 12px}
+.feedback-matrix th,.feedback-matrix td{position:relative;text-align:center;padding:14px 8px;border-bottom:1px solid var(--line);line-height:1.6;min-width:92px}
+.feedback-matrix thead th{font-size:14px;font-weight:600;vertical-align:bottom}
+.feedback-matrix th:first-child{position:sticky;left:0;z-index:1;min-width:102px;text-align:left;background:var(--paper);border-right:1px solid var(--line)}
+.feedback-matrix tbody th{font-weight:600}
+.feedback-matrix small,.feedback-matrix td>span{display:block;font-size:14px;font-weight:400;color:var(--muted)}
+.feedback-matrix td strong{font-size:16px;font-weight:550;display:block}
+.feedback-matrix td i{position:absolute;left:0;bottom:2px;height:3px;background:var(--green);opacity:.65;pointer-events:none}
+.feedback-cross-heading{font-size:20px;line-height:1.6;margin:32px 0 16px}
+.feedback-comparison{min-width:650px;max-width:none;margin:0}
+.feedback-comparison td{white-space:nowrap}
+.feedback-section .feedback-scroll-hint{font-size:14px;color:var(--muted)}
+@media(max-width:959px){#feedback-cross{scroll-margin-top:96px}}
