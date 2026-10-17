@@ -25,11 +25,6 @@ CODEBOOK = [
 ]
 SCOPE = '這份資料是台北市意見回饋中篩出的垃圾相關訊息。分析單位是一則留言；比例只描述這批留言，不代表全體意見回饋或台北市民意。'
 METHOD = '文字線索採固定詞表比對：先做 Unicode NFKC 正規化、移除空白，再檢查是否包含任一詞。每則留言在同組最多計一次，可跨組重複；比例不能相加。這不是逐則語意分類，不辨識否定、支持或反對，也可能漏掉同義詞。'
-FINDINGS = [
-    ('先把兩種服務需求分開', '留言摘述同時出現外出時難找投放處，以及上班、輪班或照顧安排難以配合垃圾車的情境。前者涉及行人服務，後者涉及家戶收運；不能用同一種桶或同一個數量指標代替兩者。', '先分別確認行人投放路徑、家戶收運時段與可用替代管道。'),
-    ('有桶與乾淨，需要一起檢查', '有人希望增設或恢復垃圾桶，也有人擔心家戶垃圾混入、滿溢與鼠蟲，甚至主張減少住宅附近的桶。這些立場可並存；本次未量化各立場人數。', '把桶的可達性、容量、周邊清潔、清運間隔與垃圾來源分開記錄。'),
-    ('把回饋轉成待驗證的問題', '留言中還有菸蒂、回收與廚餘等議題。文字可以提示查核方向，但留言中「撤桶導致髒亂」的敘述，尚不能證明時間順序、現場狀況或因果關係。', '先核對具體場景與服務紀錄，再評估設點、維護或收運調整。不要用本檔行政區件數排序設置優先度。'),
-]
 LIMITS = [
     '收集期間、招募方式、完整回饋總數、垃圾相關訊息的篩選規則均未提供；2026-10-17 是分析整理日。',
     '行政區與心情沿用原檔欄位。行政區是留言標記，未確認為居住地或事件所在地；心情標籤的填寫或標註方式未知。',
@@ -103,7 +98,80 @@ def problem_map():
             '這是分析架構，並非人數分群或已證明的因果。</figcaption><ol>' + rows + '</ol></figure>')
 
 
-def render_depth(data):
+REPORT_TITLE = '從投放到清運：台北垃圾回饋的完整分析'
+REPORT_JUDGMENT = '投放方便與環境負擔，需要一起判斷'
+REPORT_INTRO = [
+    '這批回饋提示了三種需要分開查核的困擾：外出時找不到可用的投放處、家戶作息難以配合收運，以及投放點周邊的滿溢與清潔負擔。我們的研究判斷是，先把投放到清運的完整過程看清楚，再決定要調整位置、時段、接收規則或維護。',
+    '希望增加或恢復垃圾桶，與反對住宅附近設桶，可以同時出現在這份資料中。前者可能關注沿途的方便，後者可能承擔堆積、異味與清掃負擔。因此，改善是否有用，需要同時看「使用者能否完成投放」與「周邊負擔是否減少」，也要查看問題有沒有轉往鄰近地點。',
+    '本文先區分三種情境，再追問原因與反例，最後把假說收斂成可執行的查核順序。留言是人工歸納與改寫摘述，本次未量化各立場人數，也未驗證現場；像「撤桶導致髒亂」這樣的描述，仍需核對時間順序與其他變化。',
+]
+SCENARIO_BRIDGE = '分開情境，是為了確認服務在哪一段難以使用。接下來要追問：路徑太遠、時段不合，還是到了現場仍不能投放？同樣的「不好丟」，可能需要不同的改善。'
+SHARED_BRIDGE = '位置、時段與維護之外，還有兩件事要與每種改善一起檢查：依照指引分類後，現場是否能接收；投放更方便之後，住戶、店家與清潔人員是否承擔更多負擔。'
+LOOP_BRIDGE = '前面的問題也可能相互影響。合法投放不易使用，可能讓垃圾轉往其他地點，增加維護壓力，再引發限縮或撤點。但本批留言沒有證明這些事件曾在同一地點依序發生；下圖用來決定要查什麼，不代表已成立的因果。'
+VALIDATION_BRIDGE = '要判斷圖中的關係是否存在，先把留言連到可核對的時間、地點與服務，再建立現場基準。接著才比較一項調整，並同時檢查使用者、鄰近地點與清潔人員的結果。以下順序是建議，尚未執行。'
+METHOD_BRIDGE = '目前最重要的資料缺口，是逐則事件時間與核實位置、實際服務時間、投放負荷、巡收及成本。缺少這些資料，仍無法區分位置、時間、容量與維護等解釋，也不能提出設點排名或成效估計。'
+
+
+def home_summary():
+    return ('<p>本批回饋提示：行人沿途的投放、家戶作息與收運的配合，以及投放點的持續維護，需要分開查核。分類接收與鄰近環境負擔，則要和每一種改善一起評估。</p>'
+            '<p>完整分析把這些情境串成「可能原因與反例 → 所需證據 → 驗證與決策」。目前仍是待查假說，尚未證明增桶、撤桶或調整收運的成效。</p>'
+            '<p class="feedback-report-entry"><a href="#feedback-findings">閱讀完整分析與圖解</a></p>')
+
+
+def render_depth():
+    esc = html.escape
+    md = ['## 先辨認三種服務情境', '',
+          '行人投放與家戶收運是兩種不同使用情境；現場維護則決定投放點能否持續可用。下面把留言線索整理成查核問題，箭頭表示查核順序，不是人數分群或因果證明。', '',
+          '| 留言情境 | 先分辨 | 要補的證據 |', '| --- | --- | --- |']
+    for _, label, scene, gap, check in PROBLEM_PATHS:
+        md += [f'| {label}：{scene} | {gap} | {check} |']
+    md += ['', SCENARIO_BRIDGE, '', '## 從情境追問原因與反例', '',
+           '以下以可達性、住宅負擔、時段、維護、垃圾來源及分類衝突為線索做目的抽樣閱讀，並保留反例；不是隨機抽樣，也未逐則語意編碼全部留言。可能機制與其他解釋均待驗證，未計算各問題的人數或發生率。', '']
+    page = ['<section class="feedback-section" aria-labelledby="feedback-problems"><h3 id="feedback-problems" tabindex="-1">先辨認三種服務情境</h3>',
+            '<p>行人投放與家戶收運是兩種不同使用情境；現場維護則決定投放點能否持續可用。下面把留言線索整理成查核問題，箭頭表示查核順序。</p>',
+            problem_map(), f'<p>{esc(SCENARIO_BRIDGE)}</p></section>',
+            '<section class="feedback-section" aria-labelledby="feedback-mechanisms"><h3 id="feedback-mechanisms" tabindex="-1">從情境追問原因與反例</h3>',
+            '<p class="feedback-note">以下以問題線索做目的抽樣閱讀並保留反例，未逐則語意編碼全部留言。「留言線索」是人工改寫摘述；可能機制與其他解釋都是待查假說，未計算各問題的人數或發生率。</p>']
+    groups = [
+        ('core', '三個主要問題：位置、時段與維護', '先沿著使用情境查核服務是否可用，逐一區分會導向不同措施的原因。', MECHANISMS[:3]),
+        ('shared', '兩個共同問題：接收是否一致，負擔由誰承擔', SHARED_BRIDGE, MECHANISMS[3:]),
+    ]
+    for key, title, bridge, mechanisms in groups:
+        md += [f'### {title}', '', bridge, '']
+        page += [f'<section class="feedback-problem-group" aria-labelledby="feedback-{key}-questions"><h4 id="feedback-{key}-questions" tabindex="-1">{esc(title)}</h4><p>{esc(bridge)}</p>']
+        for item, heading, observation, hypothesis, alternative, measure, decision in mechanisms:
+            md += [f'#### {heading}', '', f'**留言線索：**{observation}', '', f'**可能機制 · 待驗證：**{hypothesis}', '',
+                   f'**其他解釋與反例：**{alternative}', '', f'**如何查核：**{measure}', '', f'**結果如何改變決定：**{decision}', '']
+            page += [f'<article class="feedback-mechanism" aria-labelledby="feedback-mechanism-{item}"><h5 id="feedback-mechanism-{item}" tabindex="-1">{esc(heading)}</h5>',
+                     f'<p><strong>留言線索：</strong>{esc(observation)}</p>',
+                     f'<p><strong>可能機制 · 待驗證：</strong>{esc(hypothesis)}</p>',
+                     f'<p><strong>其他解釋與反例：</strong>{esc(alternative)}</p>',
+                     f'<div class="feedback-check"><p><strong>如何查核：</strong>{esc(measure)}</p><p><strong>結果如何改變決定：</strong>{esc(decision)}</p></div></article>']
+        page += ['</section>']
+    page += ['</section><section class="feedback-section" aria-labelledby="feedback-loop"><h3 id="feedback-loop" tabindex="-1">把可能的連鎖關係變成查核問題</h3>',
+             f'<p>{esc(LOOP_BRIDGE)}</p><figure class="problem-loop"><figcaption>{esc(LOOP_NOTE)}</figcaption><ol>']
+    page += [f'<li><span>{esc(node)}</span></li>' for node in LOOP_NODES]
+    page += ['</ol><p class="problem-loop-return">若替代服務未補上，可能回到起點：合法投放更難使用。</p></figure>',
+             '<p>可測試的介入點分別是：改善合法去處的可用時段、依實際負荷調整巡收，以及在限縮或撤點前確認替代服務。每一項都要連同鄰近地點與清潔工時一起觀察。</p>',
+             '<section class="feedback-validation" aria-labelledby="feedback-validation"><h4 id="feedback-validation" tabindex="-1">從資料缺口到改善決定</h4>',
+             f'<p>{esc(VALIDATION_BRIDGE)}</p><ol class="feedback-check-steps">']
+    md += ['## 把可能的連鎖關係變成查核問題', '', LOOP_BRIDGE, '', LOOP_NOTE, '', '```mermaid', 'flowchart LR',
+           '  A[合法投放難以使用] -. 可能 .-> B[垃圾轉往其他地點]',
+           '  B -. 可能 .-> C[集中投放與維護壓力]',
+           '  C -. 可能 .-> D[陳情、限縮或撤點]',
+           '  D -. 替代服務未補上時 .-> A', '```', '',
+           '可測試的介入點：合法去處的可用時段、依負荷調整巡收、限縮或撤點前確認替代服務。各項均須連同鄰近地點與清潔工時觀察。', '',
+           '### 從資料缺口到改善決定', '', VALIDATION_BRIDGE, '']
+    for i, (title, body) in enumerate(CHECK_STEPS, 1):
+        md += [f'{i}. **{title}：**{body}']
+        page += [f'<li><strong>{esc(title)}</strong><p>{esc(body)}</p></li>']
+    completion = '完成條件：形成有場景、時間、服務核對及待驗證原因的問題清單；試辦前固定比較方式與停止條件。未取得現場基準前，不發布設點排名、支持率或成效估計。'
+    md += ['', completion, '']
+    page += [f'</ol><p class="feedback-note">{esc(completion)}</p></section></section>']
+    return md, page
+
+
+def render_overlap(data):
     esc = html.escape
     counts = {item['id']: item['count'] for item in data['indicators']}
     both = data['binAndTruck']
@@ -111,59 +179,22 @@ def render_depth(data):
              data['records'] - counts['bins'] - counts['truck'] + both]
     if min(cells) < 0 or sum(cells) != data['records']:
         raise ValueError('Invalid bin/truck overlap aggregates')
-    overlap_note = ('四格互斥、合計涵蓋本檔全部留言；「未命中」只指這兩組詞，不是沒有垃圾問題。'
-                    '格子面積相同，不表示數量相同。這是詞語交集，不是需求分群、政策立場或因果關係。')
-    md = ['## 問題分流：先確定是哪一段服務失效', '',
-          '以下以本批留言的人工歸納提出查核架構；未逐則編碼需求或立場，也未驗證現場。箭頭表示查核順序。', '',
-          '| 留言情境 | 先分辨 | 要補的證據 |', '| --- | --- | --- |']
-    for _, label, scene, gap, check in PROBLEM_PATHS:
-        md += [f'| {label}：{scene} | {gap} | {check} |']
-    md += ['', '## 詞語交集：提到桶，不等於只需要桶', '', METHOD, '', overlap_note, '',
-           '| 文字命中 | 有垃圾車 | 無垃圾車 |', '| --- | ---: | ---: |',
-           f'| 有桶詞 | {cells[0]:,} | {cells[1]:,} |', f'| 無桶詞 | {cells[2]:,} | {cells[3]:,} |', '',
-           f'分母：本檔 {data["records"]:,} 則；桶詞為「垃圾桶、垃圾筒、清潔箱」。', '',
-           '即使兩類用詞只在部分留言重疊，也不能說兩類需求彼此獨立。一個人可遇到多種困擾，留言也可能省略服務名稱。方案判斷仍要回到具體情境。', '']
-    page = ['<section class="feedback-section" aria-labelledby="feedback-problems"><h3 id="feedback-problems" tabindex="-1">先確定是哪一段服務失效</h3>',
-            '<p>把「哪裡能丟、何時能丟、誰能維持可用」分開查核，才能知道配置、收運或維護各要改什麼。</p>', problem_map(), '</section>',
-            '<section class="feedback-section" aria-labelledby="feedback-overlap"><h3 id="feedback-overlap" tabindex="-1">提到桶，不等於只需要桶</h3>',
+    note = ('四格互斥、合計涵蓋本檔全部留言；「未命中」只指這兩組詞，不是沒有垃圾問題。'
+            '格子面積相同，不表示數量相同。這是詞語交集，不是需求分群、政策立場或因果關係。')
+    interpretation = '即使兩類用詞只在部分留言重疊，也不能說兩類需求彼此獨立。一個人可遇到多種困擾，留言也可能省略服務名稱。方案判斷仍要回到具體情境。'
+    md = ['### 桶詞與垃圾車的文字交集', '', METHOD, '', note, '',
+          '| 文字命中 | 有垃圾車 | 無垃圾車 |', '| --- | ---: | ---: |',
+          f'| 有桶詞 | {cells[0]:,} | {cells[1]:,} |', f'| 無桶詞 | {cells[2]:,} | {cells[3]:,} |', '',
+          f'分母：本檔 {data["records"]:,} 則；桶詞為「垃圾桶、垃圾筒、清潔箱」。', '', interpretation, '']
+    page = ['<section class="feedback-section" aria-labelledby="feedback-overlap"><h4 id="feedback-overlap" tabindex="-1">桶詞與垃圾車的文字交集</h4>',
             f'<p>依原有固定詞表重看兩種用詞。分母是本檔 {data["records"]:,} 則；桶詞為「垃圾桶、垃圾筒、清潔箱」，仍不辨識支持、反對或否定。</p>',
             '<figure class="feedback-overlap"><figcaption>桶詞 × 垃圾車：每則留言恰落在一格</figcaption>',
             '<table><thead><tr><th scope="col">文字命中</th><th scope="col">有垃圾車</th><th scope="col">無垃圾車</th></tr></thead><tbody>',
             f'<tr><th scope="row">有桶詞</th><td class="overlap-both"><strong>{cells[0]:,}</strong><span>兩者都有</span></td><td><strong>{cells[1]:,}</strong><span>只有桶詞</span></td></tr>',
             f'<tr><th scope="row">無桶詞</th><td><strong>{cells[2]:,}</strong><span>只有垃圾車</span></td><td><strong>{cells[3]:,}</strong><span>兩者皆未命中</span></td></tr>',
-            f'</tbody></table><p class="feedback-note">{esc(overlap_note)}</p></figure>',
-            '<p>即使兩類用詞只在部分留言重疊，也不能說兩類需求彼此獨立。一個人可遇到多種困擾，留言也可能省略服務名稱。方案判斷仍要回到具體情境。</p></section>',
-            '<section class="feedback-section" aria-labelledby="feedback-mechanisms"><h3 id="feedback-mechanisms" tabindex="-1">五個需要分開驗證的問題</h3>',
-            '<p>本節以問題線索做目的抽樣閱讀並保留反例，未逐則語意編碼全部留言。「留言線索」是人工改寫摘述；「可能機制」與「其他解釋」都是待查假說，未計算各機制的人數或發生率。</p>']
-    md += ['## 五個需要分開驗證的問題', '', '方法：以可達性、住宅負擔、時段、維護、垃圾來源及分類衝突為線索做目的抽樣閱讀，並刻意保留反例；不是隨機抽樣，也未逐則語意編碼全部留言。留言線索為人工改寫摘述；可能機制與其他解釋均待驗證，未計算各機制的人數或發生率。', '']
-    for key, title, observation, hypothesis, alternative, measure, decision in MECHANISMS:
-        md += [f'### {title}', '']
-        page += [f'<article class="feedback-mechanism" aria-labelledby="feedback-mechanism-{key}"><h4 id="feedback-mechanism-{key}" tabindex="-1">{esc(title)}</h4><dl>']
-        for label, value in [('留言線索', observation), ('可能機制 · 待驗證', hypothesis), ('其他解釋與反例', alternative), ('如何查核', measure), ('結果如何改變決定', decision)]:
-            md += [f'**{label}：**{value}', '']
-            page += [f'<div><dt>{esc(label)}</dt><dd>{esc(value)}</dd></div>']
-        page += ['</dl></article>']
-    page += ['</section><section class="feedback-section" aria-labelledby="feedback-loop"><h3 id="feedback-loop" tabindex="-1">一條待檢驗的惡性循環</h3>',
-             f'<figure class="problem-loop"><figcaption>{esc(LOOP_NOTE)}</figcaption><ol>']
-    page += [f'<li><span>{esc(node)}</span></li>' for node in LOOP_NODES]
-    page += ['</ol><p class="problem-loop-return">若替代服務未補上，可能回到起點：合法投放更難使用。</p></figure>',
-             '<p>可測試的介入點分別是：改善合法去處的可用時段、依實際負荷調整巡收，以及在限縮或撤點前確認替代服務。每一項都要連同鄰近地點與清潔工時一起觀察。</p></section>',
-             '<section class="feedback-section" aria-labelledby="feedback-validation"><h3 id="feedback-validation" tabindex="-1">下一步：讓不同解釋可以被區分</h3>',
-             '<p>目前仍缺逐則事件時間、核實位置、實際服務時間、投放負荷、巡收與成本。下面是建議的驗證順序，尚未執行。</p>',
-             '<ol class="feedback-check-steps">']
-    md += ['## 一條待檢驗的惡性循環', '', LOOP_NOTE, '', '```mermaid', 'flowchart LR',
-           '  A[合法投放難以使用] -. 可能 .-> B[垃圾轉往其他地點]',
-           '  B -. 可能 .-> C[集中投放與維護壓力]',
-           '  C -. 可能 .-> D[陳情、限縮或撤點]',
-           '  D -. 替代服務未補上時 .-> A', '```', '',
-           '可測試的介入點：合法去處的可用時段、依負荷調整巡收、限縮或撤點前確認替代服務。各項均須連同鄰近地點與清潔工時觀察。', '',
-           '## 下一步：讓不同解釋可以被區分', '', '目前仍缺逐則事件時間、核實位置、實際服務時間、投放負荷、巡收與成本。以下是建議順序，尚未執行。', '']
-    for i, (title, body) in enumerate(CHECK_STEPS, 1):
-        md += [f'{i}. **{title}：**{body}']
-        page += [f'<li><strong>{esc(title)}</strong><p>{esc(body)}</p></li>']
-    md += ['', '完成條件：形成有場景、時間、服務核對及待驗證原因的問題清單；試辦前固定比較方式與停止條件。未取得現場基準前，不發布設點排名、支持率或成效估計。', '']
-    page += ['</ol><p class="feedback-note">完成條件：形成有場景、時間、服務核對及待驗證原因的問題清單；試辦前固定比較方式與停止條件。未取得現場基準前，不發布設點排名、支持率或成效估計。</p></section>']
+            f'</tbody></table><p class="feedback-note">{esc(note)}</p></figure><p>{esc(interpretation)}</p></section>']
     return md, page
+
 
 
 def normalized(text):
@@ -240,23 +271,39 @@ def render(data):
         ('districts', '這批留言來自哪些行政區標記', list(data['districts'].items()), '順序沿用原檔首次出現次序。件數反映本檔組成，不是各區垃圾問題嚴重度或人口占比。'),
         ('topics', '原先被歸在哪些議題', sorted(data['originalTopics'].items(), key=lambda x: -x[1]), '沿用原議題欄位；垃圾相關訊息也可能被歸到交通、觀光等議題。'),
     ]
-    md = ['# 垃圾相關意見回饋：分析與結論', '', f'分析整理日：{data["analysisDate"]}（非收集日期）', '', SCOPE, '', intro, '', '## 結論與下一步', '']
-    page = ['<header class="research-page-heading"><p class="research-update">留言分析 · 整理於 2026-10-17，收集期間未提供</p><h2 id="feedback-heading">垃圾相關意見回饋</h2>',
-            f'<p>從 {total:,} 則留言，看投放與收運的不同困擾。</p></header>',
+    md = [f'# {REPORT_TITLE}', '', f'分析整理日：{data["analysisDate"]}（非收集日期）', '', SCOPE, '',
+          f'分析基礎：本檔 {total:,} 則留言；五個查核問題未逐則語意編碼，現場與因果尚未驗證。', '',
+          f'## {REPORT_JUDGMENT}', '']
+    page = [f'<header class="research-page-heading"><h2 id="feedback-heading">{esc(REPORT_TITLE)}</h2>',
+            f'<p>從 {total:,} 則垃圾相關留言，整理服務困擾、可能原因與驗證順序。</p>',
+            f'<p class="research-update">整理於 {data["analysisDate"]}；收集期間未提供，非即時現場盤點。</p></header>',
             f'<p class="feedback-scope">{esc(SCOPE)}</p>',
-            '<nav class="feedback-contents" aria-label="留言分析章節"><a href="#feedback-problems">問題圖解</a><a href="#feedback-mechanisms">深入分析</a><a href="#feedback-validation">驗證下一步</a><a href="#feedback-signals">文字線索</a><a href="#feedback-moods">心情與組成</a><a href="#feedback-method">方法與限制</a></nav>',
-            '<section class="feedback-section" aria-labelledby="feedback-findings"><h3 id="feedback-findings" tabindex="-1">先看見不同困擾，再決定服務怎麼改</h3>', f'<p>{esc(intro)}</p>']
-    for title, observation, action in FINDINGS:
-        md += [f'### {title}', '', observation, '', f'建議查核：{action}', '']
-        page += [f'<div class="feedback-finding"><h4>{esc(title)}</h4><p>{esc(observation)}</p><p class="feedback-next"><strong>建議查核：</strong>{esc(action)}</p></div>']
-    page += ['<p class="feedback-note">以上是留言的人工歸納與改寫摘述，未逐則編碼立場，也未驗證留言描述的現場。</p></section>']
-    md += ['以上為人工歸納與改寫摘述，未逐則編碼立場，也未驗證留言描述的現場。', '']
-    depth_md, depth_page = render_depth(data)
+            '<nav class="feedback-contents" aria-label="留言分析章節"><a href="#feedback-findings">研究判斷</a><a href="#feedback-problems">三種情境</a><a href="#feedback-mechanisms">原因與反例</a><a href="#feedback-loop">驗證順序</a><a href="#feedback-method">資料與限制</a></nav>',
+            f'<section class="feedback-section" aria-labelledby="feedback-findings"><h3 id="feedback-findings" tabindex="-1">{esc(REPORT_JUDGMENT)}</h3>']
+    for paragraph in REPORT_INTRO:
+        md += [paragraph, '']
+        page += [f'<p>{esc(paragraph)}</p>']
+    page += ['</section>']
+    depth_md, depth_page = render_depth()
     md += depth_md
     page += depth_page
+    md += ['## 這份資料能說到哪裡', '', METHOD_BRIDGE, '', quality_text, ''] + [f'- {item}' for item in LIMITS]
+    page += ['<section class="feedback-section" aria-labelledby="feedback-method"><h3 id="feedback-method" tabindex="-1">這份資料能說到哪裡</h3>',
+             f'<p>{esc(METHOD_BRIDGE)}</p><p>{esc(quality_text)}</p><ul class="feedback-limits">']
+    page += [f'<li>{esc(item)}</li>' for item in LIMITS]
+    page += ['</ul><p class="feedback-note">來源：研究團隊提供的垃圾相關意見回饋檔。分析以本次保存的檔案為準，未與公開清潔箱清冊逐筆連結。</p>',
+             '<p>到這裡，本文的研究判斷是：先找出能核實的服務情境，對照不同解釋，再用現場基準決定改善。下方附錄保留本檔的文字線索與組成，供核對分析基礎。</p>',
+             '<p><a href="#research">回到首頁研究結論</a> · <a href="#sources">查看公開資料與文獻</a> · <a href="#feedback-appendix">繼續核對資料附錄</a></p></section>',
+             '<section class="feedback-section feedback-appendix" aria-labelledby="feedback-appendix"><h3 id="feedback-appendix" tabindex="-1">資料附錄：文字線索與留言組成</h3>',
+             '<p>以下統計描述這份已篩選檔案的內容，不是前述五個問題的盛行率，也不能用來排序各區需求。</p>', f'<p>{esc(intro)}</p>']
+    md += ['', '## 資料附錄：文字線索與留言組成', '',
+           '以下統計描述這份已篩選檔案的內容，不是前述五個問題的盛行率，也不能用來排序各區需求。', '', intro, '']
+    overlap_md, overlap_page = render_overlap(data)
+    md += overlap_md
+    page += overlap_page
     for key, title, values, note in datasets:
-        md += [f'## {title}', '', note, '', f'分母：本檔 {total:,} 則留言。', '', table_markdown(values, total), '']
-        page += [f'<section class="feedback-section" aria-labelledby="feedback-{key}"><h3 id="feedback-{key}" tabindex="-1">{title}</h3><p>{esc(note)}</p>']
+        md += [f'### {title}', '', note, '', f'分母：本檔 {total:,} 則留言。', '', table_markdown(values, total), '']
+        page += [f'<section class="feedback-section" aria-labelledby="feedback-{key}"><h4 id="feedback-{key}" tabindex="-1">{title}</h4><p>{esc(note)}</p>']
         if key in ('signals', 'moods'):
             page += [f'<figure class="feedback-chart"><figcaption>每條長度以本檔 {total:,} 則為 100%；由零起算。</figcaption><ol>']
             for label, count in values:
@@ -270,7 +317,7 @@ def render(data):
             page += ['</tbody></table>']
         if key == 'signals':
             extra = f'有 {data["noIndicatorMatch"]:,} 則未命中以上詞表；未命中不代表沒有相關困擾。同時命中「垃圾桶／清潔箱」與「垃圾車」的有 {data["binAndTruck"]:,} 則。'
-            md += [extra, '', '### 詞表', '']
+            md += [extra, '', '#### 詞表', '']
             page += [f'<p class="feedback-note">{esc(extra)}</p><details class="feedback-codebook"><summary>查看固定詞表與計數方式</summary><p>只計是否出現，不計重複出現次數；含否定的句子也會命中。</p><dl>']
             for item in data['indicators']:
                 terms = '、'.join(item['terms'])
@@ -279,15 +326,12 @@ def render(data):
             md += ['']
             page += ['</dl></details>']
         page += ['</section>']
-    md += ['## 資料品質與限制', '', quality_text, ''] + [f'- {item}' for item in LIMITS]
-    md += ['', '## 重現方式', '', '原始輸入由提供者在本地保存，未納入 Git、網站或離線研究包。請使用保留的原始檔重算；僅有摘要無法重做文字比對。', '',
+    md += ['', '### 重現方式', '', '原始輸入由提供者在本地保存，未納入 Git、網站或離線研究包。請使用保留的原始檔重算；僅有摘要無法重做文字比對。', '',
            '在 `sites/taipei-waste-lab` 執行（離線包則在解壓根目錄）：', '',
            '```sh', 'python3 scripts/analyze-feedback.py --input "/absolute/path/to/Pasted text.txt"', 'python3 scripts/package-research.py', '```', '',
            '不提供 `--input` 時，只從保存的 `summary.json` 重建 Markdown 與網頁。完整資料建置也會執行此步驟，不需要原始留言。', '',
            f'原始檔 SHA-256：`{data["source"]["sha256"]}`。', '', '彙總檔：[summary.json](summary.json)。每次變更詞表都須重新提供原始輸入；程式拒絕用舊摘要搭配新詞表。', '']
-    page += ['<section class="feedback-section" aria-labelledby="feedback-method"><h3 id="feedback-method" tabindex="-1">方法、資料品質與限制</h3>', f'<p>{esc(quality_text)}</p><ul class="feedback-limits">']
-    page += [f'<li>{esc(item)}</li>' for item in LIMITS]
-    page += ['</ul><p class="feedback-note">來源：研究團隊提供的垃圾相關意見回饋檔。分析以本次保存的檔案為準，未與公開清潔箱清冊逐筆連結。</p><p><a href="#research">回到研究結論</a> · <a href="#sources">查看公開資料與文獻</a></p></section>']
+    page += ['<p class="feedback-appendix-return"><a href="#feedback-findings">回到本文研究判斷</a> · <a href="#research">回到首頁研究結論</a></p></section>']
     return '\n'.join(md), '\n'.join(page)
 
 
@@ -319,7 +363,7 @@ def main():
         raise ValueError('Expected one feedback panel marker')
     (folder / 'README.md').write_text(markdown, encoding='utf-8')
     page, count = re.subn(r'<!-- feedback-problem-map-start -->.*?<!-- feedback-problem-map-end -->',
-                          lambda _: '<!-- feedback-problem-map-start -->\n' + problem_map() + '\n<!-- feedback-problem-map-end -->',
+                          lambda _: '<!-- feedback-problem-map-start -->\n' + home_summary() + '\n<!-- feedback-problem-map-end -->',
                           page, flags=re.S)
     if count != 1:
         raise ValueError('Expected one homepage problem map marker')
