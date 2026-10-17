@@ -214,3 +214,43 @@ with tempfile.TemporaryDirectory() as directory:
  assert result.returncode!=0 and 'Recalculation requires' in result.stderr
  assert (root/'dist/index.html').read_bytes()==before
 `));
+
+
+test('district diagram keeps tied main issues and separates relative differences from untested directions', () => python(String.raw`
+import copy,json,runpy
+from pathlib import Path
+m=runpy.run_path('scripts/analyze-feedback.py')
+d=json.loads(Path('research/feedback-2026-10-17/summary.json').read_text())
+before=copy.deepcopy(d)
+assert m['district_profile'](d,'南港')==(['A','D','G'],'D')
+assert m['district_profile'](d,'文山')==(['A','C'],'B')
+assert m['district_profile'](d,'萬華')==(['C','A'],'C')
+# At a tie include every second-place issue; one fewer remains outside.
+tie=copy.deepcopy(d)
+c=tie['districtAnalysis']['南港']['themes']
+c['G']=22
+assert m['district_profile'](tie,'南港')[0]==['A','D']
+c['G']=23
+assert m['district_profile'](tie,'南港')[0]==['A','D','G']
+# Equal district compositions must not manufacture a positive contrast.
+equal=copy.deepcopy(d)
+equal['districts']={'甲':10,'乙':10};equal['records']=20
+counts={k:0 for k in m['THEMES']};counts['A']=5
+for item in equal['themes']: item['count']=2*counts[item['id']]
+equal['districtAnalysis']={k:{'themes':dict(counts)} for k in equal['districts']}
+assert m['district_profile'](equal,'甲')==(['A'],None)
+single=copy.deepcopy(equal);single['districts']={'甲':10}
+assert m['district_profile'](single,'甲')==(['A'],None)
+md,page=m['render_district_diagram'](d);page='\n'.join(page)
+assert d==before
+assert page.count('class="district-row"')==12
+assert page.count('data-contrast-theme=')==12
+assert '先查' in page and '再試' in page and '待驗證' in page
+assert '25／135 則' in page and '240／2528 則' in page
+assert '沒有比例較高的類別' in '\n'.join(m['render_district_diagram'](equal)[1])
+assert '無可比較的其他區' in '\n'.join(m['render_district_diagram'](single)[1])
+markdown,content=m['render'](d)
+assert content.index('id="feedback-cross"') < content.index('id="feedback-signals"')
+assert '<details class="feedback-codebook district-full-data">' in content
+assert '十二區問題與改善方向' in markdown
+`));
