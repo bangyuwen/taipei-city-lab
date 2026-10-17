@@ -4,7 +4,7 @@ import shutil
 
 ROOT = Path(__file__).resolve().parent.parent
 ASSETS = (
-    'index.html', 'siting-overlay.html', 'siting-ui.js', 'app.js', 'history.js', 'data-utils.js', 'styles.css', 'mark.svg',
+    'index.html', 'siting-overlay.html', 'field-checklist.html', 'siting-ui.js', 'app.js', 'history.js', 'data-utils.js', 'styles.css', 'mark.svg',
     'comparison-ui.js', 'comparison-utils.js', 'comparison.css',
     'design-ui.js', 'design-model.js', 'bin-scene.js', 'design.css',
     'images/design/t1-front.svg', 'images/design/t1-section.svg',

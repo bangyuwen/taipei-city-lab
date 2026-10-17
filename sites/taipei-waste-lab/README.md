@@ -168,3 +168,11 @@ The metadata lives in `dist/country-model-data.js`; geometry lives in `dist/coun
 預覽 `out/` 後，以 `SITING_QA_URL` 指定網址，執行 `node scripts/check-siting-browser.mjs`。可沿用 `PLAYWRIGHT_MODULE` 與 `CHROME_PATH`；檢查延後載入、頁籤與設計入口、返回時篩選保留、桌機／手機尺寸、點選定位、載入重試與私人輸入路徑，畫面證據留在忽略的 `.impeccable/review/siting/`。
 
 Use `--functional-only` with `check-redesign-browser.mjs` or `check-browser.py` to rerun behavior and responsive bounds without writing screenshots.
+
+### Desktop assessments for ten retained sites
+
+The siting overlay and printable `field-checklist.html` now present desktop-only judgments from the same curated `data/field-priorities.json`. The historical path remains addressable. The old field-visit P1/P2 assignments are replaced by two explicit dimensions: addition-evaluation priority (one review, five lower, four hold) and evidence confidence (seven medium, three low). Confidence describes consistency of the saved evidence, not field accuracy or a probability. Shilin deliberately combines medium confidence with hold priority: consistent scene/record evidence does not establish spatial feasibility.
+
+Each map marker, shortlist entry, popup and printable sheet identifies both dimensions. Details explain the priority and confidence reasons, retained evidence, limits and current recommendation. The source snapshot remains dated 2026-10-17; no new observations, demand measurements, weighted score or citywide ranking were created. The 425 polygons and five historical snapshots remain unchanged. Private research inputs and attachments remain excluded from the 56-file public allowlist.
+
+The existing map priority filter uses the new categories and retains its district/search intersections. The printable data-reading table has its own category filter; visible sheets, index, page count and sequential page numbers update together, while source site IDs stay fixed. Printing uses the selected sheets. No field visit tasks, record uploads or stored form data are introduced. Browser checks cover content parity, filters, printing, responsive layout and private attachment exclusions.
