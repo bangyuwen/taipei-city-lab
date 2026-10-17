@@ -175,3 +175,11 @@
  .district-bin-count{flex-basis:100%;margin-top:0}
 }
 @media(max-width:479px){.distribution-overview{padding:20px 16px}.distribution-overview h4{font-size:21px}}
+
+/* Venue leads have a different unit from street location records. */
+.coverage-focus{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin:24px 0}
+.coverage-focus-item{border-top:2px solid var(--ink);padding-top:16px;min-width:0}
+.coverage-focus-item h5{font-size:18px;line-height:1.7;margin:0 0 12px}
+.coverage-focus-item summary{cursor:pointer;min-height:44px;line-height:1.8;padding:8px 0}
+.coverage-focus-item ul{padding-left:24px;line-height:1.9}
+@media(max-width:799px){.coverage-focus{grid-template-columns:1fr;gap:16px}}

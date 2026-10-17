@@ -1,0 +1,125 @@
+{
+  "checkedDateTaipei": "2026-10-18",
+  "inventoryComplete": null,
+  "surveyDate": null,
+  "addedVerifiedStreetRows": 0,
+  "venueSourceUpdatedAt": "2026-08-18 16:27:22",
+  "streetSourceUpdatedAt": "2026-09-30 15:55:35",
+  "councilSessionDate": "2026-08-14",
+  "councilUrl": "https://gaz.tcc.gov.tw/topic-list/h-rr/123E9F693438E26896182BE431BB8C04/info.html",
+  "mapUrl": "https://www.dep-trash-can.gov.taipei/",
+  "sources": [
+    {
+      "file": "current-main.csv",
+      "url": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=267d550f-c6ec-46e0-b8af-fd5a464eb098",
+      "checkedAt": "2026-10-17T17:02:42.922784+00:00",
+      "status": 200,
+      "bytes": 63540,
+      "sha256": "ff3cf5528c057958f89871aa5300fc633b02d0f7b37131ab29d5ddc2f8e2370d",
+      "contentType": "text/csv;charset=BIG-5",
+      "rows": 681,
+      "districts": {
+        "中正區": 83,
+        "大安區": 47,
+        "大同區": 22,
+        "內湖區": 85,
+        "中山區": 50,
+        "松山區": 55,
+        "信義區": 60,
+        "萬華區": 82,
+        "士林區": 142,
+        "南港區": 4,
+        "文山區": 51
+      },
+      "retainedPath": "source-recovery-2026-10-15/raw/official-download.csv"
+    },
+    {
+      "file": "current-venues.csv",
+      "url": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=2030d728-9597-437d-81a4-cf2a44c7f114",
+      "checkedAt": "2026-10-17T17:02:42.925572+00:00",
+      "status": 200,
+      "bytes": 5396,
+      "sha256": "47b1ddfb4f0ab4d5e57afab538f71da3d41d22e59c984bdd9c10b4248223b066",
+      "contentType": "text/csv;charset=BIG-5",
+      "rows": 130,
+      "districts": {
+        "士林區": 7,
+        "大同區": 14,
+        "大安區": 18,
+        "中山區": 16,
+        "中正區": 16,
+        "內湖區": 7,
+        "文山區": 9,
+        "北投區": 10,
+        "松山區": 7,
+        "信義區": 18,
+        "南港區": 5,
+        "萬華區": 3
+      },
+      "retainedPath": "source-recovery-2026-10-15/raw/official-tourist.csv"
+    },
+    {
+      "file": "current-api-0.json",
+      "url": "https://data.taipei/api/v1/dataset/267d550f-c6ec-46e0-b8af-fd5a464eb098?scope=resourceAquire&limit=1000&offset=0",
+      "checkedAt": "2026-10-17T17:02:42.727179+00:00",
+      "status": 200,
+      "bytes": 196408,
+      "sha256": "8eaea29e277be00073bc7b3805eb0ef463ea6f130b45e01769b5066aa515d3c1",
+      "contentType": "application/json",
+      "resultMeta": {
+        "limit": 1000,
+        "offset": 0,
+        "count": 681,
+        "sort": ""
+      },
+      "rows": 681,
+      "retainedPath": "source-recovery-2026-10-15/raw/api-offset-0.json"
+    },
+    {
+      "file": "current-api-1000.json",
+      "url": "https://data.taipei/api/v1/dataset/267d550f-c6ec-46e0-b8af-fd5a464eb098?scope=resourceAquire&limit=1000&offset=1000",
+      "checkedAt": "2026-10-17T17:02:42.647594+00:00",
+      "status": 200,
+      "bytes": 74,
+      "sha256": "0c5948ce4363aed883c20b3c86e89dd40acb1513ff72cdcbc0c0cc0a53e31583",
+      "contentType": "application/json",
+      "resultMeta": {
+        "limit": 1000,
+        "offset": 1000,
+        "count": 681,
+        "sort": ""
+      },
+      "rows": 0,
+      "retainedPath": "source-recovery-2026-10-15/raw/api-offset-1000.json"
+    },
+    {
+      "file": "catalog.html",
+      "url": "https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c",
+      "checkedAt": "2026-10-17T17:02:43.147123+00:00",
+      "status": 200,
+      "bytes": 87258,
+      "sha256": "ea2983368f85ab6aa241cf69b00378997d6d310878de9aa633017f6796de74d5",
+      "contentType": "text/html;charset=utf-8",
+      "retainedPath": "bin-coverage-2026-10-18/catalog.html"
+    },
+    {
+      "url": "https://www.dep-trash-can.gov.taipei:17443/i/tc",
+      "finalUrl": "https://www.dep-trash-can.gov.taipei:17443/i/tc",
+      "status": 200,
+      "checkedAt": "2026-10-17T17:00:54.956733+00:00",
+      "contentType": "application/json; charset=utf-8",
+      "sha256": "793f93c30ef4f1cf7ae5b0703111b603bff34f5e129ac36673629335a073b8ba",
+      "bytes": 85439,
+      "retainedPath": "bin-coverage-2026-10-18/official-map-data.json"
+    },
+    {
+      "file": "council-beitou.doc",
+      "url": "https://obasfront.tcc.gov.tw/Agenda/DownloadFile.aspx?FileName=14108%E8%AD%A6%E9%83%A8%E9%96%8015.doc&FilePath=&FileGrpKind=3",
+      "checkedAt": "2026-10-17T17:03:27.861853+00:00",
+      "status": 200,
+      "bytes": 104448,
+      "sha256": "fa2188fef47b6456c41afd29166c97b55bbd340d9299a4c938519073ad6a93e9",
+      "retainedPath": "bin-coverage-2026-10-18/council-beitou.doc"
+    }
+  ]
+}
