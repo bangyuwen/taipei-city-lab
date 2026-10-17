@@ -72,6 +72,6 @@ test('export safely quotes text and labels row IDs as local identifiers',()=>{
 });
 
 test('history deep links and the independent country page remain addressable',()=>{
-  for(const page of ['map','comparison','history','countries'])assert.equal(pageFromHash('#'+page),page);
+  for(const page of ['map','comparison','history','siting','countries'])assert.equal(pageFromHash('#'+page),page);
   assert.equal(pageFromHash('#unknown'),'map');
 });
