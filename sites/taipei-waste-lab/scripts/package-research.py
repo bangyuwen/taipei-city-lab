@@ -86,16 +86,16 @@ def render_references(index_text, catalog, literature):
     contexts = [
         ('siting', '配置與服務缺口',
          '需確認實際步行路徑、通行空間、服務時段與清運責任；清冊少列不能當作服務不足。',
-         '尚無各點需求、現場阻礙與投放便利的完整資料，也不能由座標差異判定撤除或遷移。',
-         [('siting', '看台北的分布與差異'), ('countries', '比較各地設置做法')]),
+         '已有使用困擾的留言線索，但逐則時間與事件位置未完整核實；各點需求、桶況與通行阻礙仍待查，也不能由清冊差異認定撤除或遷移。',
+         [('feedback-findings', '對照本批回饋與限制'), ('siting', '看台北的分布與差異'), ('countries', '比較各地設置做法')]),
         ('collection', '清運與維護',
          '基本巡收、接單與故障備援須有人承接；感測方案需要實際調班能力。',
-         '尚無台北試辦成效與完整營運工時；海外設備規格不構成本地節省的證據。',
-         [('history', '看台北的歷程與紀錄'), ('countries', '比較各地清運做法')]),
+         '尚無可連結留言場景的巡收、滿溢、清洗與工時紀錄，也未驗證垃圾來源；海外設備規格與本批回饋都不是台北營運成效。',
+         [('feedback-findings', '對照本批回饋與限制'), ('history', '看台北的歷程與紀錄'), ('countries', '比較各地清運做法')]),
         ('household', '家戶垃圾分流',
          '先確認合法投放管道的時段與可達性，再比較費率、清運、維修及停機替代；保留免費行人基本服務。',
-         '尚未證實付費或改入口能減少台北家戶垃圾混入；袋子外觀與交易量不能單獨判定來源或成效。',
-         [('countries', '比較家戶收運案例'), ('design', '看方案的概念示意')])
+         '留言揭露時段不便的情境，但未核實各戶可用的合法管道，也未量化混入來源、方案接受度或成效；付費或改入口是否有效仍未知。',
+         [('feedback-findings', '對照本批回饋與限制'), ('countries', '比較家戶收運案例'), ('design', '看方案的概念示意')])
     ]
     assert len(catalog['synthesis']) == len(contexts)
     synthesis = []
@@ -112,7 +112,7 @@ def render_references(index_text, catalog, literature):
                          '</p><p><strong>成立條件：</strong>' + html.escape(condition) +
                          '</p><p class="research-unknown"><strong>仍未知：</strong>' + html.escape(unknown) +
                          '</p><p><strong>如何確認有用：</strong>' + html.escape(item['check']) +
-                         '</p><div class="research-synthesis-sources"><span>依據</span>' + ''.join(links) +
+                         '</p><div class="research-synthesis-sources"><span>文獻與實務依據</span>' + ''.join(links) +
                          '</div><div class="research-related-paths">' + path_links + '</div></article>')
     sections['research-synthesis'] = '\n'.join(synthesis)
     for marker, body in sections.items():
