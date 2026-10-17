@@ -83,3 +83,12 @@ test('reader entry and evidence links resolve to their owning pages',()=>{
   assert.equal(pageFromHash('#t1-process-heading'),'design');
   assert.equal(pageFromHash('#country-japan'),'countries');
 });
+
+test('the main landmark fragment keeps the active route',()=>{
+  for(const page of ['map','comparison','history','siting','countries','design','research','sources','materials']){
+    assert.equal(pageFromHash('#main',page),page);
+    assert.equal(pageFromHash('#unknown',page),'research');
+  }
+  assert.equal(pageFromHash('#main'),'research');
+  assert.equal(pageFromHash('#main',null),'research');
+});

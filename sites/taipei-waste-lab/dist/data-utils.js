@@ -23,8 +23,9 @@ export function csvForPoints(points, dataset) {
 }
 export const historyPages=['map','comparison','history','siting'];
 export const allowedPages=[...historyPages,'countries','design','research','sources','materials'];
-export function pageFromHash(hash) {
+export function pageFromHash(hash,currentPage='research') {
   const page=hash.replace(/^#/,'');
+  if(page==='main'&&allowedPages.includes(currentPage))return currentPage;
   if(allowedPages.includes(page))return page;
   if(/^reference-[LP]\d{2}$/.test(page)||/^source-/.test(page)||/^research-(?:literature|papers|paper-records|full-bibliography|practices|practice-records|operating-sources|audit)/.test(page))return 'sources';
   if(/^conclusion-/.test(page))return 'research';
