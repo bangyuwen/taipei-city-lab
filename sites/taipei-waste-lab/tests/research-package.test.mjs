@@ -102,3 +102,48 @@ for limitation in ['尚未選點、詢價或啟動試辦','全部單價與工時
 `],{cwd:new URL('../',import.meta.url),encoding:'utf8'});
   assert.equal(result.status,0,result.stderr||result.stdout);
 });
+
+test('public hundred-day plan retains the complete proposal with navigable tables and no attachments', () => {
+  const result=spawnSync(process.env.PYTHON_BIN||'python3',['-c',String.raw`
+import html,re,runpy
+from html.parser import HTMLParser
+from pathlib import Path
+source=Path('research/hundred-day-plan-2026-10-17/README.md').read_text()
+page=Path('dist/index.html').read_text()
+plan=re.search(r'<!-- hundred-day-plan-start -->(.*?)<!-- hundred-day-plan-end -->',page,re.S).group(1)
+class Text(HTMLParser):
+ def __init__(self): super().__init__(); self.parts=[]; self.ids=set(); self.links=[]
+ def handle_starttag(self,tag,attrs):
+  attrs=dict(attrs)
+  if 'id' in attrs: self.ids.add(attrs['id'])
+  if tag=='a': self.links.append(attrs['href'])
+ def handle_data(self,data): self.parts.append(data)
+p=Text();p.feed(plan)
+normalize=lambda s: re.sub(r'\s+','',''.join(s))
+visible=normalize(p.parts)
+for line in source.splitlines():
+ if not line.strip(): continue
+ if re.fullmatch(r'[| :\-]+',line): continue
+ cells=line.strip('|').split('|') if line.startswith('|') else [line]
+ for cell in cells:
+  cell=re.sub(r'\[([^\]]+)\]\([^\s)]+\)',r'\1',cell)
+  cell=cell.replace('**','').removeprefix('# ')
+  assert normalize(cell) in visible,cell
+assert plan.count('<table ')==sum(1 for line in source.splitlines() if re.fullmatch(r'[| :\-]+',line))
+for href in p.links:
+ assert href.startswith(('https://','#')),href
+ if href.startswith('#plan-'): assert href[1:] in p.ids,href
+assert len(p.ids)==12
+assert '尚未啟動' in plan and '仍待確認' in plan
+assert 'href="#plan"' in page.split('id="panel-research"')[1].split('id="panel-plan"')[0]
+assert 'href="#plan"' in page.split('<footer>')[1]
+assert '180 日是各點從開放日起的營運期' in page
+assert '原估約 250 萬元不是新計畫上限' in page
+module=runpy.run_path('scripts/package-research.py')
+assert '<script>' not in module['plan_inline']('<script>bad</script>')
+try: module['plan_inline']('[private](../private.csv)')
+except ValueError: pass
+else: raise AssertionError('Unmapped local attachment accepted')
+`],{cwd:new URL('../',import.meta.url),encoding:'utf8'});
+  assert.equal(result.status,0,result.stderr||result.stdout);
+});
