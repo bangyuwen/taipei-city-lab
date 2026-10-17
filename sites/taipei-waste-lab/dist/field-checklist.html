@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>10 處資料判讀表｜台北垃圾箱研究</title>
+<style>
+:root{color-scheme:light;--ink:#18333b;--muted:#52676d;--accent:#16566a;--line:#91aab3;--paper:#f2f6f7;--focus:#bd5c16}
+*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;overflow-wrap:anywhere}::selection{background:#d9ecf1;color:var(--ink)}a{color:var(--accent);text-underline-offset:.2em}button,select{font:inherit;min-height:44px;border-radius:4px;padding:9px 14px}button{cursor:pointer;background:var(--accent);color:#fff;border:1px solid var(--accent)}button:hover{background:#123d49}select{color:var(--ink);border:1px solid var(--line);background:#fff;max-width:100%}a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:3px}h1,h2,h3,p{margin:0}h1{font-size:28px;line-height:1.4}h2{font-size:22px;line-height:1.45}h3{font-size:16px;margin:20px 0 5px}.toolbar{max-width:210mm;margin:0 auto;padding:24px 0}.toolbar p{margin:10px 0;color:var(--muted)}.actions{display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap;margin-top:16px}.actions a{display:inline-flex;align-items:center;min-height:44px}.filter-field{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-weight:600;margin:16px 0 0}.toolbar summary{cursor:pointer;min-height:44px;padding:10px 0}.index{display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;margin:0;padding-left:26px}.index a{display:block;padding:8px 0}.sheet{width:210mm;min-height:273mm;margin:0 auto 24px;padding:12mm;background:#fff;border:1px solid #c6d6dc;display:flex;flex-direction:column;scroll-margin-top:16px}.sheet-heading{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted);margin-bottom:8px;font-variant-numeric:tabular-nums}.sheet-heading>span:last-child{white-space:nowrap}.assessment-grades{display:flex;gap:8px 24px;flex-wrap:wrap;margin:12px 0 8px;font-size:15px}.badge{display:inline-block;font-weight:750;border:1.5px solid currentColor;border-radius:3px;padding:1px 7px;color:var(--accent)}.badge.hold{color:#734917}.badge.lower{color:#52676d}.confidence{border-bottom:2px solid currentColor;padding:0 4px}.scope{color:var(--muted);font-size:13px}.evidence{margin:4px 0 0;padding-left:24px}.evidence li+li{margin-top:8px}.conclusion{border-top:1px solid #c6d6dc;margin-top:20px}.conclusion h3{margin-top:12px}.sources{font-size:13px;color:var(--muted)}.sources h3{font-size:14px}.sources ul{padding-left:18px;margin:4px 0 0}.sources li+li{margin-top:5px}.sheet-footer{margin-top:auto;padding-top:24px;color:var(--muted);font-size:12px;line-height:1.5}.sheet-footer p+p{margin-top:5px}
+@media(max-width:850px){.toolbar{padding:20px 16px}.sheet{width:calc(100% - 32px);padding:20px;min-height:0}.index{grid-template-columns:1fr}.sheet-heading{font-size:12px}.sheet-footer{margin-top:16px}.assessment-grades{display:grid;gap:8px}}
+@page{size:A4 portrait;margin:12mm}
+@media print{body{background:#fff;color:#111;font-size:10.5pt;line-height:1.55}.toolbar{display:none}.sheet{width:auto;min-height:270mm;margin:0;padding:0;border:0;break-after:page;scroll-margin:0}.sheet.last-visible{break-after:auto}h2{font-size:16pt;line-height:1.35}h3{font-size:11pt;margin:14px 0 4px}.sheet-heading{font-size:9pt;margin-bottom:5px}.assessment-grades{display:flex;font-size:10pt;margin:10px 0 7px}.scope{font-size:9pt}.evidence li+li{margin-top:6px}.sources{font-size:9pt}.sources h3{font-size:10pt}.sheet-footer{font-size:8.5pt;margin-top:auto;padding-top:14px}.badge,.badge.hold,.badge.lower{color:#111}.scope,.sheet-heading,.sheet-footer,.sources{color:#333}a{color:inherit}h2,h3{break-after:avoid}li,.conclusion{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="toolbar">
+<h1>10 處資料判讀表</h1>
+<p>只用保存資料評估，不安排現勘。新增評估優先度與資料可信度分開呈現；這是既有 10 處的桌面重評，不是全市前十名或核准設置清單。</p>
+<p>「先評估」指先研究可能缺口；「較低」指已有供給線索、缺乏新增依據；「暫緩」指定位、空間或資料穩健性不足。可信度「中」表示部分來源可互證，「低」表示關鍵證據不穩定；都不代表現場已驗證。</p>
+<label class="filter-field" for="assessment-filter">新增評估優先度<select id="assessment-filter"><option value="">全部 10 處</option><option value="review">先評估（1 處）</option><option value="lower">較低（5 處）</option><option value="hold">暫緩（4 處）</option></select></label>
+<p id="print-status" role="status" aria-live="polite">目前顯示 10 處 · 列印共 10 頁</p>
+<p>A4 直式，每處一頁。可列印或另存為 PDF；建議 100% 比例並關閉頁首與頁尾。頁碼會隨篩選更新，地點原始編號保留。</p>
+<div class="actions"><button type="button" id="print-checklist">列印全部 10 處</button><a href="./#siting">返回網站疊圖</a></div>
+<details><summary>跳到所選地點</summary><ol class="index"><li data-site="S-7007"><a href="#S-7007">較低 · 西門商圈入口：中華路成都—峨嵋段</a></li><li data-site="S-7012"><a href="#S-7012">較低 · 西門南側：中華路長沙—成都段</a></li><li data-site="S-2002"><a href="#S-2002">較低 · 信義百貨徒步空間：松高—松壽段</a></li><li data-site="S-1742"><a href="#S-1742">較低 · 信義路北側：松智—松仁段</a></li><li data-site="S-6569"><a href="#S-6569">較低 · 小巨蛋站周邊：南京東路四段 53 巷—健康路</a></li><li data-site="S-4520"><a href="#S-4520">先評估 · 華陰街徒步區：重慶北路—太原路</a></li><li data-site="S-6584"><a href="#S-6584">暫緩 · 饒河東口／松山站周邊：先校正圖資路名</a></li><li data-site="S-3899"><a href="#S-3899">暫緩 · 士林夜市南口：基河路文林—新士林夜市段</a></li><li data-site="S-0238"><a href="#S-0238">暫緩 · 中山站南京西路小圖形：定位及服務查核</a></li><li data-site="S-1558"><a href="#S-1558">暫緩 · 公館商圈巷口：羅斯福路四段 24 巷</a></li></ol></details>
+<noscript><p>篩選需啟用 JavaScript。也可用瀏覽器選單直接列印全部 10 處。</p></noscript>
+</header>
+<main aria-label="10 處資料判讀表"><article class="sheet" id="S-7007" data-priority="lower" aria-labelledby="title-S-7007">
+<div class="sheet-heading"><span>台北垃圾箱研究 · 資料判讀表</span><span>S-7007 · <span class="page-number">01 / 10</span></span></div>
+<h2 id="title-S-7007">西門商圈入口：中華路成都—峨嵋段</h2>
+<div class="assessment-grades"><p>新增評估優先度 <strong class="badge lower">較低</strong></p><p>資料可信度 <strong class="confidence">中</strong></p></div>
+<p class="scope">純資料評估 · 保存資料整理日 2026-10-17 · 不代表今日現況或核准設置</p>
+<section><h3>推薦理由</h3><p class="reason">新增評估優先度較低。候選旁已有近期與多期紀錄，資料較支持先分析既有服務配置；沒有足夠證據把此段列為新增首選。</p></section>
+<section><h3>資料可信度的理由</h3><p class="confidence-reason">商圈邊界可對應，多期都有近距離紀錄，線索相互支持；但點位與圖形約 2 公尺的差距及同側可達性未確認，因此為中。</p></section>
+<section><h3>資料依據</h3><ol class="evidence"><li>官方商圈範圍可對應中華路成都至峨嵋入口。</li><li>2026 最近紀錄約 2 公尺，門牌為中華路一段 144-3、152 號前。</li><li>100 公尺內不同原始座標：2015：27、2022：27、2024-10：25、2026-09：17；各期獨立解讀。</li></ol></section>
+<section><h3>判讀限制</h3><p class="uncertainty">近點不是已核實現役桶；17 個座標不等於同側 17 個可用桶。沒有容量、尖峰投放與清運紀錄，不能認定服務足夠或不足。</p></section>
+<section class="conclusion"><h3>目前建議</h3><p class="decision">保留為既有服務配置分析點；目前不優先主張新增，也不主張移除既有服務。</p></section>
+<section class="sources"><h3>保存時引用的官方來源</h3><ul><li><a href="https://www.tcooc.gov.taipei/cp.aspx?n=d6636c188a8adc8e&amp;s=73CBE562C2DE564B" target="_blank" rel="noopener">臺北市商業處：萬華區商圈／西門町</a> · 頁面個別段落更新日未確認；2026-10-17 查讀</li></ul></section>
+<footer class="sheet-footer"><p>優先度指新增的研究順序；可信度指資料互證程度，兩者不是同一件事。未計算加權分數，同級不細排名，這 10 處也不是全市前十名。</p><p>2.77 是本案假設，並非法定門檻；寬度單位未核實。缺列不代表撤桶，近點不代表可用供給；未取得的需求與營運條件保留未知。</p></footer>
+</article>
+<article class="sheet" id="S-7012" data-priority="lower" aria-labelledby="title-S-7012">
+<div class="sheet-heading"><span>台北垃圾箱研究 · 資料判讀表</span><span>S-7012 · <span class="page-number">02 / 10</span></span></div>
+<h2 id="title-S-7012">西門南側：中華路長沙—成都段</h2>
+<div class="assessment-grades"><p>新增評估優先度 <strong class="badge lower">較低</strong></p><p>資料可信度 <strong class="confidence">中</strong></p></div>
+<p class="scope">純資料評估 · 保存資料整理日 2026-10-17 · 不代表今日現況或核准設置</p>
+<section><h3>推薦理由</h3><p class="reason">新增評估優先度較低。近期面內紀錄與門牌、路名一致，已有具體供給線索；資料尚未顯示需要額外增加清潔箱。</p></section>
+<section><h3>資料可信度的理由</h3><p class="confidence-reason">中華路 160 號的區、路名與圖形相符，170 號近點可交叉參照；來源現役狀態與調查日未完整確認，因此為中。</p></section>
+<section><h3>資料依據</h3><ol class="evidence"><li>2026 中華路一段 160 號紀錄位於候選面內／邊界。</li><li>170 號紀錄距候選不到 1 公尺；不能因嚴格面內判定忽略近點。</li><li>來源最小淨寬值 4.83；商圈南口可與西門北側作服務配置對照。</li></ol></section>
+<section><h3>判讀限制</h3><p class="uncertainty">面內紀錄不能證明桶仍存在或可用。4.83 的單位與逐筆調查日未核實；沒有維修、溢出或容量資料，不能直接推薦汰換。</p></section>
+<section class="conclusion"><h3>目前建議</h3><p class="decision">以既有服務資料比對為主；目前沒有支持新增或汰換的充分證據。</p></section>
+<section class="sources"><h3>保存時引用的官方來源</h3><ul><li><a href="https://www.tcooc.gov.taipei/cp.aspx?n=d6636c188a8adc8e&amp;s=73CBE562C2DE564B" target="_blank" rel="noopener">臺北市商業處：萬華區商圈／西門町</a> · 頁面個別段落更新日未確認；2026-10-17 查讀</li><li><a href="https://www.gov.taipei/News_Content.aspx?n=9F394A83D9DF4A19&amp;s=100865EF02573DAE" target="_blank" rel="noopener">臺北市公有西門商場</a> · 內容更新日未確認；2026-10-17 查讀</li></ul></section>
+<footer class="sheet-footer"><p>優先度指新增的研究順序；可信度指資料互證程度，兩者不是同一件事。未計算加權分數，同級不細排名，這 10 處也不是全市前十名。</p><p>2.77 是本案假設，並非法定門檻；寬度單位未核實。缺列不代表撤桶，近點不代表可用供給；未取得的需求與營運條件保留未知。</p></footer>
+</article>
+<article class="sheet" id="S-2002" data-priority="lower" aria-labelledby="title-S-2002">
+<div class="sheet-heading"><span>台北垃圾箱研究 · 資料判讀表</span><span>S-2002 · <span class="page-number">03 / 10</span></span></div>
+<h2 id="title-S-2002">信義百貨徒步空間：松高—松壽段</h2>
+<div class="assessment-grades"><p>新增評估優先度 <strong class="badge lower">較低</strong></p><p>資料可信度 <strong class="confidence">中</strong></p></div>
+<p class="scope">純資料評估 · 保存資料整理日 2026-10-17 · 不代表今日現況或核准設置</p>
+<section><h3>推薦理由</h3><p class="reason">新增評估優先度較低。公共清潔箱與百貨場所均有資料線索，先分析公私服務範圍比直接增加設施更有資料依據。</p></section>
+<section><h3>資料可信度的理由</h3><p class="confidence-reason">A9 候選名稱、附近官方百貨場所與近期近點相互支持；但分組範圍大，場所清冊不是逐箱清冊，因此為中。</p></section>
+<section><h3>資料依據</h3><ol class="evidence"><li>2026 松壽路新光三越 A9 館前紀錄距圖形不到 1 公尺。</li><li>松壽路 18 號另一筆近期紀錄距圖形約 22 公尺。</li><li>候選分組外接框對角約 343 公尺；官方場所資料列有附近 A4、A8、A9、A11。</li></ol></section>
+<section><h3>判讀限制</h3><p class="uncertainty">不能把大範圍圖形當成整段都有空間。商場場所點不代表沿街可用桶，且開放時段、維護分工與一般路人的使用資格未知。</p></section>
+<section class="conclusion"><h3>目前建議</h3><p class="decision">保留為公私服務覆蓋分析點；不從百貨密度推論新增需求，也不假定商場可完全替代公共服務。</p></section>
+<section class="sources"><h3>保存時引用的官方來源</h3><ul><li><a href="https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c" target="_blank" rel="noopener">臺北市清潔箱主檔／景點商圈服務場所</a> · 主檔 2026-09-30；場所 2026-08-18；保存下載 2026-10-17</li></ul></section>
+<footer class="sheet-footer"><p>優先度指新增的研究順序；可信度指資料互證程度，兩者不是同一件事。未計算加權分數，同級不細排名，這 10 處也不是全市前十名。</p><p>2.77 是本案假設，並非法定門檻；寬度單位未核實。缺列不代表撤桶，近點不代表可用供給；未取得的需求與營運條件保留未知。</p></footer>
+</article>
+<article class="sheet" id="S-1742" data-priority="lower" aria-labelledby="title-S-1742">
+<div class="sheet-heading"><span>台北垃圾箱研究 · 資料判讀表</span><span>S-1742 · <span class="page-number">04 / 10</span></span></div>
+<h2 id="title-S-1742">信義路北側：松智—松仁段</h2>
+<div class="assessment-grades"><p>新增評估優先度 <strong class="badge lower">較低</strong></p><p>資料可信度 <strong class="confidence">中</strong></p></div>
+<p class="scope">純資料評估 · 保存資料整理日 2026-10-17 · 不代表今日現況或核准設置</p>
+<section><h3>推薦理由</h3><p class="reason">新增評估優先度較低。候選內已有兩筆區、路名一致的近期紀錄，資料較支持分析既有位置與候車動線的關係。</p></section>
+<section><h3>資料可信度的理由</h3><p class="confidence-reason">106、108 號兩筆近期紀錄均能與候選路名和圖形對應；動態通行空間與服務狀態未知，因此為中。</p></section>
+<section><h3>資料依據</h3><ol class="evidence"><li>2026 信義路五段 106、108 號紀錄均在候選面內／邊界。</li><li>108 號來源註記為公車站牌；候選最小淨寬原始值為 3.35。</li><li>官方臺北 101、象山站場所點到圖形約 149、195 公尺，僅表示場景鄰近。</li></ol></section>
+<section><h3>判讀限制</h3><p class="uncertainty">場所距離不是站口步行距離。寬度值不能代表候車尖峰淨空；沒有桶況、投放量與清運成本，無法判定加桶、汰換或移位效益。</p></section>
+<section class="conclusion"><h3>目前建議</h3><p class="decision">目前不優先新增；既有位置是否應調整仍屬未知，不能由資料直接判作衝突。</p></section>
+<section class="sources"><h3>保存時引用的官方來源</h3><ul><li><a href="https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c" target="_blank" rel="noopener">臺北市清潔箱主檔／景點商圈服務場所</a> · 主檔 2026-09-30；場所 2026-08-18；保存下載 2026-10-17</li></ul></section>
+<footer class="sheet-footer"><p>優先度指新增的研究順序；可信度指資料互證程度，兩者不是同一件事。未計算加權分數，同級不細排名，這 10 處也不是全市前十名。</p><p>2.77 是本案假設，並非法定門檻；寬度單位未核實。缺列不代表撤桶，近點不代表可用供給；未取得的需求與營運條件保留未知。</p></footer>
+</article>
+<article class="sheet" id="S-6569" data-priority="lower" aria-labelledby="title-S-6569">
+<div class="sheet-heading"><span>台北垃圾箱研究 · 資料判讀表</span><span>S-6569 · <span class="page-number">05 / 10</span></span></div>
+<h2 id="title-S-6569">小巨蛋站周邊：南京東路四段 53 巷—健康路</h2>
+<div class="assessment-grades"><p>新增評估優先度 <strong class="badge lower">較低</strong></p><p>資料可信度 <strong class="confidence">中</strong></p></div>
+<p class="scope">純資料評估 · 保存資料整理日 2026-10-17 · 不代表今日現況或核准設置</p>
+<section><h3>推薦理由</h3><p class="reason">新增評估優先度較低。資料已有近期供給線索，活動場景也不能直接轉成全年固定加桶需求。</p></section>
+<section><h3>資料可信度的理由</h3><p class="confidence-reason">近期紀錄與候選區、路名相符，官方來源支持活動交通場景；但出口註記與主要交通指引不同，因此為中。</p></section>
+<section><h3>資料依據</h3><ol class="evidence"><li>2026 南京東路四段 55-1 號紀錄位於候選面內／邊界。</li><li>53 巷口另一筆近期紀錄距候選約 21 公尺。</li><li>來源紀錄註記小巨蛋站 5 號出口附近；場館官方主要捷運指引為 2 號出口。</li></ol></section>
+<section><h3>判讀限制</h3><p class="uncertainty">不能將此候選視為主要散場口，也不能套用全場人流。沒有活動日／平日投放與清運資料，常態需求及活動維運不足都未證實。</p></section>
+<section class="conclusion"><h3>目前建議</h3><p class="decision">保留活動情境的資料分析價值；目前不支持以活動峰值理由增加全年固定設施。</p></section>
+<section class="sources"><h3>保存時引用的官方來源</h3><ul><li><a href="https://english.arena.taipei/cp.aspx?n=C743A5130850CC53&amp;s=F5ACC320A359E6AC" target="_blank" rel="noopener">Taipei Arena: Getting Here</a> · 內容更新／檢視 2024-09-25</li></ul></section>
+<footer class="sheet-footer"><p>優先度指新增的研究順序；可信度指資料互證程度，兩者不是同一件事。未計算加權分數，同級不細排名，這 10 處也不是全市前十名。</p><p>2.77 是本案假設，並非法定門檻；寬度單位未核實。缺列不代表撤桶，近點不代表可用供給；未取得的需求與營運條件保留未知。</p></footer>
+</article>
+<article class="sheet" id="S-4520" data-priority="review" aria-labelledby="title-S-4520">
+<div class="sheet-heading"><span>台北垃圾箱研究 · 資料判讀表</span><span>S-4520 · <span class="page-number">06 / 10</span></span></div>
+<h2 id="title-S-4520">華陰街徒步區：重慶北路—太原路</h2>
+<div class="assessment-grades"><p>新增評估優先度 <strong class="badge review">先評估</strong></p><p>資料可信度 <strong class="confidence">中</strong></p></div>
+<p class="scope">純資料評估 · 保存資料整理日 2026-10-17 · 不代表今日現況或核准設置</p>
+<section><h3>推薦理由</h3><p class="reason">先評估可能的服務缺口。官方徒步區起迄與候選吻合，近期最近紀錄約 62 公尺，可優先研究區內與兩端的供給關係；這是研究優先度，不是加桶推薦。</p></section>
+<section><h3>資料可信度的理由</h3><p class="confidence-reason">街段位置與官方範圍吻合，且多期有鄰近紀錄；但 50／100 公尺門檻會改變判讀，因此為中，不能提高為已確認缺口。</p></section>
+<section><h3>資料依據</h3><ol class="evidence"><li>官方華陰街徒步區為重慶北路一段至太原路，與候選起迄一致。</li><li>2026 最近紀錄為重慶北路一段 18 號，約 62 公尺；10 號前約 88 公尺。</li><li>100 公尺內有 2 個近期原始座標，50 公尺內未列；縮至 50 公尺且排除 2022、2026 層時，歷史支持變弱。</li></ol></section>
+<section><h3>判讀限制</h3><p class="uncertainty">50 公尺未列不等於沒有桶。距離是點到圖形的平面距離，未包含實際入口、跨街阻隔與步行路網；服務不足及新增效益都未知。</p></section>
+<section class="conclusion"><h3>目前建議</h3><p class="decision">在這 10 處中先研究新增的必要性；目前只能提出可能的服務缺口，不能給出確定設點或數量。</p></section>
+<section class="sources"><h3>保存時引用的官方來源</h3><ul><li><a href="https://udd.gov.taipei/announcement/a0b4c27" target="_blank" rel="noopener">都市發展局：臺北市行人徒步區列表</a> · 公告 2021-04-27；內容更新／檢視 2024-10-24</li><li><a href="https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c" target="_blank" rel="noopener">臺北市清潔箱主檔／景點商圈服務場所</a> · 主檔 2026-09-30；場所 2026-08-18；保存下載 2026-10-17</li></ul></section>
+<footer class="sheet-footer"><p>優先度指新增的研究順序；可信度指資料互證程度，兩者不是同一件事。未計算加權分數，同級不細排名，這 10 處也不是全市前十名。</p><p>2.77 是本案假設，並非法定門檻；寬度單位未核實。缺列不代表撤桶，近點不代表可用供給；未取得的需求與營運條件保留未知。</p></footer>
+</article>
+<article class="sheet" id="S-6584" data-priority="hold" aria-labelledby="title-S-6584">
+<div class="sheet-heading"><span>台北垃圾箱研究 · 資料判讀表</span><span>S-6584 · <span class="page-number">07 / 10</span></span></div>
+<h2 id="title-S-6584">饒河東口／松山站周邊：先校正圖資路名</h2>
+<div class="assessment-grades"><p>新增評估優先度 <strong class="badge hold">暫緩</strong></p><p>資料可信度 <strong class="confidence">低</strong></p></div>
+<p class="scope">純資料評估 · 保存資料整理日 2026-10-17 · 不代表今日現況或核准設置</p>
+<section><h3>推薦理由</h3><p class="reason">暫緩新增評估。候選路名與面內近期紀錄衝突，現有資料無法把場景、供給與寬度可靠地綁定到同一位置。</p></section>
+<section><h3>資料可信度的理由</h3><p class="confidence-reason">候選寫南港路三段，近期面內紀錄寫八德路四段 746 號；定位對應尚有矛盾，因此為低。</p></section>
+<section><h3>資料依據</h3><ol class="evidence"><li>候選來源路名為南港路三段，起迄為饒河街至八德路四段。</li><li>2026 面內／邊界紀錄為八德路四段 746 號，註記松山國小、松山站 5 號出口。</li><li>另一筆 746 號近期紀錄距候選約 9 公尺；原始寬度值 10.07 暫不能套到該門牌。</li></ol></section>
+<section><h3>判讀限制</h3><p class="uncertainty">相近座標不能消除路名矛盾。尚未取得能解釋錯位的來源修訂或圖資對照，不能據此確認可設置範圍。</p></section>
+<section class="conclusion"><h3>目前建議</h3><p class="decision">維持資料不足；除非新增文件或圖資解決定位矛盾，否則不列入正向新增推薦。</p></section>
+<section class="sources"><h3>保存時引用的官方來源</h3><ul><li><a href="https://www.travel.taipei/zh-tw/attraction/details/1538" target="_blank" rel="noopener">臺北旅遊網：饒河街觀光夜市</a> · 個別內容更新日未確認；2026-10-17 讀取官方搜尋索引內容；直接頁面讀取失敗</li><li><a href="https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c" target="_blank" rel="noopener">臺北市清潔箱主檔／景點商圈服務場所</a> · 主檔 2026-09-30；場所 2026-08-18；保存下載 2026-10-17</li></ul></section>
+<footer class="sheet-footer"><p>優先度指新增的研究順序；可信度指資料互證程度，兩者不是同一件事。未計算加權分數，同級不細排名，這 10 處也不是全市前十名。</p><p>2.77 是本案假設，並非法定門檻；寬度單位未核實。缺列不代表撤桶，近點不代表可用供給；未取得的需求與營運條件保留未知。</p></footer>
+</article>
+<article class="sheet" id="S-3899" data-priority="hold" aria-labelledby="title-S-3899">
+<div class="sheet-heading"><span>台北垃圾箱研究 · 資料判讀表</span><span>S-3899 · <span class="page-number">08 / 10</span></span></div>
+<h2 id="title-S-3899">士林夜市南口：基河路文林—新士林夜市段</h2>
+<div class="assessment-grades"><p>新增評估優先度 <strong class="badge hold">暫緩</strong></p><p>資料可信度 <strong class="confidence">中</strong></p></div>
+<p class="scope">純資料評估 · 保存資料整理日 2026-10-17 · 不代表今日現況或核准設置</p>
+<section><h3>推薦理由</h3><p class="reason">暫緩新增評估。使用場景及既有紀錄有依據，但原始淨寬值 2.80 僅比本案假設 2.77 多 0.03，缺乏可支持新增空間的餘裕證據。</p></section>
+<section><h3>資料可信度的理由</h3><p class="confidence-reason">官方夜市範圍與候選場景相符，歷史及近期近點可互相參照，因此為中；這不代表空間可行性同樣可靠。</p></section>
+<section><h3>資料依據</h3><ol class="evidence"><li>官方夜市範圍包含基河路文林路至士林市場路段。</li><li>2026 最近紀錄約 32 公尺，北藝中心附近另一筆約 52 公尺。</li><li>來源最小淨寬值 2.80；本案設計假設為 2.77，差額只有 0.03，來源單位尚未核實。</li></ol></section>
+<section><h3>判讀限制</h3><p class="uncertainty">2.77 並非法定門檻，兩個數值的比較只是本案假設。來源終點「新士林夜市」不夠精確，且未含排隊、臨停與換袋空間。</p></section>
+<section class="conclusion"><h3>目前建議</h3><p class="decision">資料可信度中、但新增評估暫緩：來源線索一致，不等於設置條件成立；也不能斷言此處永久不適合。</p></section>
+<section class="sources"><h3>保存時引用的官方來源</h3><ul><li><a href="https://www.tcma.gov.taipei/News_Content.aspx?n=9B6A9939FFA87091&amp;s=DC5787F870F8AB1E&amp;sms=635C98D675173C4C" target="_blank" rel="noopener">臺北市市場處：士林夜市</a> · 內容更新／檢視 2025-05-13</li><li><a href="https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c" target="_blank" rel="noopener">臺北市清潔箱主檔／景點商圈服務場所</a> · 主檔 2026-09-30；場所 2026-08-18；保存下載 2026-10-17</li></ul></section>
+<footer class="sheet-footer"><p>優先度指新增的研究順序；可信度指資料互證程度，兩者不是同一件事。未計算加權分數，同級不細排名，這 10 處也不是全市前十名。</p><p>2.77 是本案假設，並非法定門檻；寬度單位未核實。缺列不代表撤桶，近點不代表可用供給；未取得的需求與營運條件保留未知。</p></footer>
+</article>
+<article class="sheet" id="S-0238" data-priority="hold" aria-labelledby="title-S-0238">
+<div class="sheet-heading"><span>台北垃圾箱研究 · 資料判讀表</span><span>S-0238 · <span class="page-number">09 / 10</span></span></div>
+<h2 id="title-S-0238">中山站南京西路小圖形：定位及服務查核</h2>
+<div class="assessment-grades"><p>新增評估優先度 <strong class="badge hold">暫緩</strong></p><p>資料可信度 <strong class="confidence">低</strong></p></div>
+<p class="scope">純資料評估 · 保存資料整理日 2026-10-17 · 不代表今日現況或核准設置</p>
+<section><h3>推薦理由</h3><p class="reason">暫緩新增評估。候選實際圖形很小，不能依文字起迄當成整段道路；近期未列與較早紀錄不足以證明缺口。</p></section>
+<section><h3>資料可信度的理由</h3><p class="confidence-reason">文字範圍與約 17 公尺的小圖形容易被混讀，50 公尺歷史旁證又依賴 2022 層，因此為低。</p></section>
+<section><h3>資料依據</h3><ol class="evidence"><li>候選圖形外接框對角約 17 公尺，並非整段南京西路。</li><li>官方中山站場所點距圖形約 16 公尺；場所點不是站口或垃圾桶。</li><li>2026 最近所列紀錄約 632 公尺；歷史半徑縮至 50 公尺時只剩 2022 旁證，未通過原本的多年份門檻。</li></ol></section>
+<section><h3>判讀限制</h3><p class="uncertainty">近期最近紀錄較遠，不等於地面、站內或地下街沒有服務。清冊涵蓋與小圖形位置不足以支持供給缺口推論。</p></section>
+<section class="conclusion"><h3>目前建議</h3><p class="decision">維持定位與供給未知，不因 632 公尺這個值而把中山列為新增首選。</p></section>
+<section class="sources"><h3>保存時引用的官方來源</h3><ul><li><a href="https://www.metro.taipei/cp.aspx?n=1DE23B423CA113D2" target="_blank" rel="noopener">臺北捷運：中山地下街簡介</a> · 內容更新日未確認；2026-10-17 查讀</li><li><a href="https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c" target="_blank" rel="noopener">臺北市清潔箱主檔／景點商圈服務場所</a> · 主檔 2026-09-30；場所 2026-08-18；保存下載 2026-10-17</li></ul></section>
+<footer class="sheet-footer"><p>優先度指新增的研究順序；可信度指資料互證程度，兩者不是同一件事。未計算加權分數，同級不細排名，這 10 處也不是全市前十名。</p><p>2.77 是本案假設，並非法定門檻；寬度單位未核實。缺列不代表撤桶，近點不代表可用供給；未取得的需求與營運條件保留未知。</p></footer>
+</article>
+<article class="sheet" id="S-1558" data-priority="hold" aria-labelledby="title-S-1558">
+<div class="sheet-heading"><span>台北垃圾箱研究 · 資料判讀表</span><span>S-1558 · <span class="page-number">10 / 10</span></span></div>
+<h2 id="title-S-1558">公館商圈巷口：羅斯福路四段 24 巷</h2>
+<div class="assessment-grades"><p>新增評估優先度 <strong class="badge hold">暫緩</strong></p><p>資料可信度 <strong class="confidence">低</strong></p></div>
+<p class="scope">純資料評估 · 保存資料整理日 2026-10-17 · 不代表今日現況或核准設置</p>
+<section><h3>推薦理由</h3><p class="reason">暫緩新增評估。原始淨寬值餘裕小，近距離歷史支持又依賴較弱的年份資料，尚不足以支持巷口新增。</p></section>
+<section><h3>資料可信度的理由</h3><p class="confidence-reason">官方商圈場景可對應，但 50 公尺歷史支持依賴 2022 層，且近期與歷史近點差異不能做實體配對，因此為低。</p></section>
+<section><h3>資料依據</h3><ol class="evidence"><li>候選為羅斯福路四段 24 巷，連接汀洲路與羅斯福路。</li><li>來源最小淨寬值 2.96，比本案 2.77 假設多 0.19；來源單位未核實。</li><li>2024-10 最近列約 31 公尺、2026 最近列約 147 公尺；50 公尺內的歷史支持依賴 2022 層。</li></ol></section>
+<section><h3>判讀限制</h3><p class="uncertainty">跨年最近距離變遠不是撤桶證據。沒有穩定箱號與完整服務覆蓋，不能推論巷內缺桶；寬度值也未包含動態障礙與維運空間。</p></section>
+<section class="conclusion"><h3>目前建議</h3><p class="decision">保留商圈服務分析的可能性，但目前不支持新增推薦；缺少的條件保留未知。</p></section>
+<section class="sources"><h3>保存時引用的官方來源</h3><ul><li><a href="https://www.tcooc.gov.taipei/cp.aspx?n=D6636C188A8ADC8E&amp;s=92361765CFA505C3" target="_blank" rel="noopener">臺北市商業處：臺大公館商圈</a> · 個別段落更新日未確認；2026-10-17 查讀</li><li><a href="https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c" target="_blank" rel="noopener">臺北市清潔箱主檔／景點商圈服務場所</a> · 主檔 2026-09-30；場所 2026-08-18；保存下載 2026-10-17</li></ul></section>
+<footer class="sheet-footer"><p>優先度指新增的研究順序；可信度指資料互證程度，兩者不是同一件事。未計算加權分數，同級不細排名，這 10 處也不是全市前十名。</p><p>2.77 是本案假設，並非法定門檻；寬度單位未核實。缺列不代表撤桶，近點不代表可用供給；未取得的需求與營運條件保留未知。</p></footer>
+</article></main>
+<script>
+const filter=document.getElementById('assessment-filter'),sheets=[...document.querySelectorAll('.sheet')],printButton=document.getElementById('print-checklist');
+function updateSheets(){
+ const selected=sheets.filter(sheet=>!filter.value||sheet.dataset.priority===filter.value);
+ for(const sheet of sheets){sheet.hidden=!selected.includes(sheet);sheet.classList.remove('last-visible');document.querySelector(`[data-site="${sheet.id}"]`).hidden=sheet.hidden;}
+ selected.forEach((sheet,i)=>sheet.querySelector('.page-number').textContent=String(i+1).padStart(2,'0')+' / '+selected.length);
+ selected.at(-1)?.classList.add('last-visible');
+ document.getElementById('print-status').textContent='目前顯示 '+selected.length+' 處 · 列印共 '+selected.length+' 頁';
+ printButton.textContent=(filter.value?'列印所選 ':'列印全部 ')+selected.length+' 處';
+}
+filter.addEventListener('change',updateSheets);
+window.addEventListener('beforeprint',updateSheets);
+printButton.addEventListener('click',()=>{updateSheets();window.print()});
+updateSheets();
+</script>
+</body>
+</html>
