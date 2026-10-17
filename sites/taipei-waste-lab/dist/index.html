@@ -50,6 +50,7 @@
         <a href="#map" data-page="map" aria-current="page">點位地圖</a>
         <a href="#comparison" data-page="comparison">版本比較</a>
         <a href="#history" data-page="history">撤除歷程</a>
+        <a href="#siting" data-page="siting">設點疊圖</a>
       </nav>
     </div>
 
@@ -109,11 +110,22 @@
       <p class="comparison-source-link"><a href="#sources">查看各版本來源</a></p>
     </section>
 
+    <section id="panel-siting" class="page-panel siting-panel" aria-labelledby="siting-heading" hidden>
+      <div class="section-heading"><div><h2 id="siting-heading">候選街段，疊上歷史位置。</h2><p>切換快照、查找街道，先看既有紀錄與現勘線索。候選街段仍待現勘，跨年缺列不代表撤除。</p></div><a class="text-link" href="siting-overlay.html" target="_blank" rel="noopener noreferrer">完整頁面開啟 ↗</a></div>
+      <p id="siting-status" class="load-status" role="status">第一次開啟時載入疊圖資料。</p><button id="siting-retry" type="button" hidden>重新載入疊圖</button>
+      <iframe id="siting-frame" title="候選街段與歷史清潔箱互動疊圖" data-src="siting-overlay.html" loading="lazy"></iframe>
+    </section>
+
     <section id="panel-design" class="page-panel design-panel" aria-labelledby="design-heading" hidden>
-      <div class="design-heading"><h2 id="design-heading">不同的垃圾，<span>需要不同的服務。</span></h2><p>選一種用途，試著投放或清運。從入口、機構到收運安排，一起看設計的理由。</p><p class="design-concept-note">本站概念體驗 · 尺寸與狀態為示意，非現役設備規格</p></div>
+      <div class="design-heading"><h2 id="design-heading">台北街角桶 T1：<span>從投放想到清運。</span></h2><p>為台北街頭與商圈設計。收下行人隨手產生的小垃圾，把遮雨、辨識與清運一起做好。</p><p class="design-concept-note">T1 候選概念 · 尚未定案或打樣，尺寸、容量與性能均待驗證。</p></div>
+      <div class="t1-intro">
+        <p><strong>48 × 42 × 110 cm</strong> 的窄身外形，搭配內縮投入口、可換外板與前方移出的帶輪內桶。先把每天的投放和清潔做好，再評估是否需要感測。</p>
+        <div class="t1-actions"><button id="design-try-cleaning" type="button" class="t1-action">看看怎麼清運</button><button id="design-read-proposal" type="button" class="t1-text-action">閱讀完整設計</button><button type="button" class="t1-text-action" data-design-jump="t1-process-heading">查看設計流程</button><a class="t1-text-action" href="#siting">查看設點與歷史疊圖</a></div>
+      </div>
+      <p class="t1-experience-note">下方「街角隨手投」呈現 T1 外觀與清運構想。其他三種用途為獨立概念，供比較服務差異。</p>
       <div id="design-options" class="design-options" role="group" aria-label="選擇垃圾桶的服務用途"></div>
       <div class="design-purpose-summary"><h3 id="design-name">街角隨手投</h3><p id="design-description"></p></div>
-      <div class="design-workspace">
+      <div id="design-workspace" class="design-workspace">
         <div class="design-stage-column">
           <div class="design-stage-bar"><span>用途與機構・概念場景</span><button id="design-reset-view" type="button">重設視角</button></div>
           <div id="design-viewport" class="design-viewport" aria-label="垃圾桶概念模型，可拖曳旋轉及縮放">
@@ -126,7 +138,7 @@
             <div class="design-slider"><label for="design-opening">投入口寬度 <output id="design-opening-value" for="design-opening">22 cm</output></label><input id="design-opening" type="range" min="8" max="26" step="1" value="22"></div>
             <div class="design-slider"><label for="design-sidewalk">人行道總寬 <output id="design-sidewalk-value" for="design-sidewalk">200 cm</output></label><input id="design-sidewalk" type="range" min="120" max="320" step="10" value="200"></div>
             <dl class="design-readouts"><div><dt>投入口中心離地</dt><dd><span id="design-opening-height">—</span> cm</dd></div><div><dt>桶前剩餘空間</dt><dd><span id="design-clearance">—</span> cm</dd></div></dl>
-            <p class="design-dimension-note">假設桶背貼路緣；未計門片、退縮、作業與其他障礙。坐姿視角不代表已通過無障礙驗證。</p>
+            <p class="design-dimension-note">滑桿只改變互動示意；T1 固定提案尺寸見下方設計。剩餘空間假設桶背貼路緣，未計門片、退縮、作業與其他障礙；坐姿視角不代表已通過無障礙驗證。</p>
           </details>
         </div>
         <div class="design-controls" aria-label="用途與操作體驗">
@@ -148,6 +160,93 @@
           <button id="design-reset" class="design-reset" type="button">重新開始這個用途</button>
         </div>
       </div>
+      <section class="t1-process" aria-labelledby="t1-process-heading">
+        <h3 id="t1-process-heading" tabindex="-1">從需求到打樣，一步步做出設計。</h3>
+        <p class="t1-process-intro">先弄清楚誰要用、垃圾往哪裡去，再比較做法、完成圖面，用樣機找問題。每一步都留下成果與選擇理由，才能知道下一步該做什麼。</p>
+        <p class="t1-process-status"><strong>目前：已有研究資料、完整設計計劃與 T1 候選概念。</strong>需求仍須整理，同需求方案比較尚未完成；T1 尚未定案。完整圖面、操作樣機與金屬原型都是後續交付。</p>
+        <ol class="t1-process-list">
+          <li><details class="t1-process-step">
+            <summary>確認需求與證據<span class="t1-process-output"><strong>交付：</strong>需求優先序、垃圾去向與來源依據</span><span class="t1-process-state">情境已選定；需求整理與現地確認待做</span></summary>
+            <div class="t1-process-body"><p class="t1-process-owner"><strong>建議參與角色：</strong>設計團隊整理資料，管理單位、行人及清運人員確認現地條件。</p>
+              <dl><div><dt>要解決什麼</dt><dd>誰會使用、手上有什麼垃圾、現場由誰清運？把面紙、杯罐、餐盒、殘液、菸蒂，以及家戶與商家垃圾的去向逐項說清楚。</dd></div><div><dt>怎麼進行</dt><dd>從各國案例與台北資料整理需求，分開標記來源事實、專案推論、設計假設與待現場確認。盤點站姿、坐姿、單手持物及雨天情境；到候選點核對通行、開門、抽桶空間與收運設備。</dd></div><div><dt>何時往下走</dt><dd>形成需求與任務表：列出服務範圍、需求優先序、來源、可投與不可投的去向，以及未知項目和承接角色。可以先做桌面設計；場地、管理者及替代服務未確認時，不能當成已具備設置條件。</dd></div></dl>
+              <div class="t1-process-related"><a href="#research">回看論文與實務依據</a><button type="button" class="t1-process-link" data-design-jump="t1-operations">查看空間與清運假設</button></div>
+            </div>
+          </details></li>
+          <li><details class="t1-process-step">
+            <summary>比較方案，說明取捨<span class="t1-process-output"><strong>交付：</strong>同需求候選、比較結果與暫選理由</span><span class="t1-process-state">比較框架已備；尚未完成選案</span></summary>
+            <div class="t1-process-body"><p class="t1-process-owner"><strong>建議參與角色：</strong>設計團隊提出候選，管理、使用與清運端共同檢視取捨。</p>
+              <dl><div><dt>要解決什麼</dt><dd>同樣收行人小量垃圾，哪種入口、容器與清運方式比較合適？先和現有設備比較，再判斷是否需要新桶。</dd></div><div><dt>怎麼進行</dt><dd>以相同服務範圍、容量需求與場景比較。先看投放、通行、衛生與清運，再比較辨識、維修、成本及街景。未知就標未知，不填成通過或用虛構分數排出名次。</dd></div><div><dt>何時往下走</dt><dd>寫出暫選方案、未選理由、一項實質代價，以及什麼新證據會讓我們改選。關鍵資訊不足時保留條件分支；T1 不預設勝出，其他三種不同用途體驗也不當作同題候選。</dd></div></dl>
+              <dl class="t1-candidates"><div><dt>現況基準</dt><dd>可追溯的台北既有桶與服務；比較保留或局部改善。</dd></div><div><dt>A · T1 起始方案</dt><dd>內縮無翻蓋入口、前門與帶輪內桶；檢視遮護、作業空間與轉運。</dd></div><div><dt>B · 自閉入口</dt><dd>在可比容器上比較翻蓋操作、卡物、清潔與遮護的取捨。</dd></div><div><dt>C · 既有容器接口</dt><dd>以可核對的內桶或收運容器配置外殼；比較零件取得、轉運與占地。</dd></div></dl><p class="t1-process-caution">以上是待發展的候選方向，尚無完整比較圖、實體樣品或效能排名。</p><a class="t1-process-link" href="#countries">回看各國設備與服務</a>
+            </div>
+          </details></li>
+          <li><details class="t1-process-step">
+            <summary>完成產品與圖面設計<span class="t1-process-output"><strong>交付：</strong>外觀、尺寸、構件、標示與完整操作圖</span><span class="t1-process-state">已有 T1 基本圖；完整設計包待完成</span></summary>
+            <div class="t1-process-body"><p class="t1-process-owner"><strong>建議參與角色：</strong>設計團隊繪製，清運端與製造端提早確認操作及初步可製造性。</p>
+              <dl><div><dt>要解決什麼</dt><dd>每個部分如何配合，為什麼採用這個尺寸與構造？把選擇理由連回需求，並把整個使用任務畫完整。</dd></div><div><dt>怎麼進行</dt><dd>完成正、側、背、俯視圖、剖面、構件分解、材料配色與標示。加入街景配置、回收容器占地及投放／清運分鏡；清運須走到轉運、倒空或換袋、清洗、復位。圖面、文字與 Three.js 使用同一方案版本。</dd></div><div><dt>何時往下走</dt><dd>需求、選擇理由、圖面與零件表能互相對照。提案尺寸與未解接口明確標示；設計圖可用來評議與製作操作樣機，工程接合、公差、承載與固定仍須專業確認。</dd></div></dl>
+              <button type="button" class="t1-process-link" data-design-jump="t1-specification">查看目前的 T1 基本圖與尺寸</button>
+            </div>
+          </details></li>
+          <li><details class="t1-process-step">
+            <summary>製作一比一操作樣機<span class="t1-process-output"><strong>交付：</strong>試用紀錄、問題清單與修訂設計</span><span class="t1-process-state">尚未製作或進行實際試用</span></summary>
+            <div class="t1-process-body"><p class="t1-process-owner"><strong>建議參與角色：</strong>設計團隊製作，輪椅使用者、年長者、行人與實際清運人員共同試用。</p>
+              <dl><div><dt>要解決什麼</dt><dd>人能不能順利接近、看懂、投放及清運？紙上可及的入口，放進實際使用情境後還需要哪些調整？</dd></div><div><dt>怎麼進行</dt><dd>以低成本全尺寸模型試投、開門、抽桶、換袋及轉運動線。使用相同物件與任務比較候選；記錄需要協助、碰觸桶口、錯投、卡住、搬抬與通道占用，保留不順利的情況。</dd></div><div><dt>何時往下走</dt><dd>交付操作紀錄、問題清單、修訂圖與版本差異。必要任務可依約定條件完成，已發現問題有修正或明確處置，才往工程原型前進。低成本樣機不替代金屬原型的防漏、耐候或強度測試。</dd></div></dl>
+              <button type="button" class="t1-process-link" data-design-jump="t1-validation">查看後續需要驗證的項目</button>
+            </div>
+          </details></li>
+          <li><details class="t1-process-step">
+            <summary>工程設計、詢價與金屬打樣<span class="t1-process-output"><strong>交付：</strong>製造圖、材料零件表、報價與金屬原型</span><span class="t1-process-state">尚無工程簽認、報價或金屬樣品</span></summary>
+            <div class="t1-process-body"><p class="t1-process-owner"><strong>建議參與角色：</strong>製造端與合適專業人員負責工程，設計、管理及清運端確認交接。</p>
+              <dl><div><dt>要解決什麼</dt><dd>設計如何製造、安裝、維修，並接上真實收運設備？打樣前，哪些條件必須先寫定？</dd></div><div><dt>怎麼進行</dt><dd>完成板件、折邊、接合、公差、門鎖、輪組、內桶與固定設計；用同一版圖面詢價，確認備品、交期、保固及車輛接口。製作前議定測試方法、負載、合格門檻、驗收責任與失敗處理，再製作有版本編號的金屬原型。</dd></div><div><dt>何時往下走</dt><dd>必要的工程與製造可行性確認完成，費用及維修安排可接受，交付製造圖、材料零件表、分項報價、原型及測試計畫。打樣完成只代表有可測的原型，通過實體驗收與設置核准後才能進入街頭試辦。</dd></div></dl>
+              <button type="button" class="t1-process-link" data-design-jump="t1-validation">查看詢價與驗收範圍</button>
+            </div>
+          </details></li>
+        </ol>
+        <p class="t1-process-next"><strong>下一個交付：</strong>需求與垃圾去向表。先把各類隨身垃圾、使用情境、清運安排與未知條件列清楚，再畫候選方案，進行同題比較。</p>
+        <details class="t1-detail t1-process-after"><summary>打樣之後：驗收、試辦與量產決策<span>後續路徑；目前均未執行</span></summary>
+          <div class="t1-after-body"><p>有了金屬原型，才開始依約定條件驗收。驗收、進場核准與是否量產，各自需要證據。</p>
+            <ol class="t1-process-list" start="6">
+          <li><details class="t1-process-step"><summary>實體驗收、修正與重測<span>尚未測試；性能未證實</span></summary><div class="t1-process-body"><p class="t1-process-owner"><strong>建議參與角色：</strong>驗收責任人依測試計畫執行，製造端負責修正。</p><dl><div><dt>要做什麼</dt><dd>依事先寫定的方法測試進水、盛液漏水、異味、動物翻找、清洗、滿載移桶、門片、輪組與固定安全。逐項留下原始紀錄及判定。</dd></div><div><dt>交付什麼</dt><dd>附條件與版本的測試紀錄、通過／失敗／未測清單、修正原因及重測結果。</dd></div><div><dt>何時往下走</dt><dd>必要項目全部通過；不能以未測代替通過。失敗就回到樣機或工程設計，修改後重測受影響項目，再決定是否進場。</dd></div></dl><button type="button" class="t1-process-link" data-design-jump="t1-validation">查看具體驗收項目</button></div></details></li>
+          <li><details class="t1-process-step"><summary>核准後，小規模街頭試辦<span>尚未核准、設置或收集成效資料</span></summary><div class="t1-process-body"><p class="t1-process-owner"><strong>建議參與角色：</strong>管理單位取得必要核准，清運團隊執行並記錄。</p><dl><div><dt>要做什麼</dt><dd>先訂試辦點位、期間、觀察時段、現況基準和停止條件。進場後追蹤滿溢、錯投、漏液、清運工時、維修及申訴，同時記錄天氣與人流差異。</dd></div><div><dt>交付什麼</dt><dd>設置與維運確認紀錄、現況及試辦資料、問題處置，以及「繼續、修正或停止」的建議。</dd></div><div><dt>何時往下走</dt><dd>先完成場地與維運安排的核准，才開始試辦；再依預先訂定的條件決定下一步。漏液、固定失效、危險夾點或通道受阻時先停用處理。少量前後比較只作描述。</dd></div></dl></div></details></li>
+          <li><details class="t1-process-step"><summary>決定量產，接上長期維運<span>待試辦證據與採購決策</span></summary><div class="t1-process-body"><p class="t1-process-owner"><strong>建議參與角色：</strong>管理與採購單位決策，供應商及清運團隊交接。</p><dl><div><dt>要做什麼</dt><dd>用試辦結果決定是否修版或擴大。鎖定採購規格、驗收方式、備品、保固、清運責任與年度費用；建立故障停用、零件更換及汰換回收流程。</dd></div><div><dt>交付什麼</dt><dd>核定版本與變更紀錄、採購及維運文件、資產編號、交接訓練紀錄、定期檢視安排。</dd></div><div><dt>何時往下走</dt><dd>有證據支持擴大，經費、責任與維修供應已確認。使用條件或關鍵零件改變時重新評估，不把一個點位的通過結果直接套到全市。</dd></div></dl></div></details></li>
+            </ol>
+          </div>
+        </details>
+        <p class="t1-process-return">遇到問題就回到相關階段修正，保留失敗、變更與重測紀錄。時程由現勘、廠商交期及驗收結果決定，目前沒有承諾量產日期。</p>
+      </section>
+      <section class="t1-proposal" aria-labelledby="t1-heading">
+        <div class="t1-proposal-heading"><h3 id="t1-heading">一款桶，從街頭用到清運。</h3><p>以下是 T1 的固定提案。上方切換用途或調整滑桿，都不會改變這份設計。</p></div>
+        <details id="t1-specification" class="t1-detail">
+          <summary>外觀與尺寸<span>看正視圖、剖面與材質選擇</span></summary>
+          <div class="t1-detail-body">
+            <div class="t1-drawings"><figure><img src="./images/design/t1-front.svg" width="480" height="600" alt="T1 正視提案：寬 48、高 110 公分，22 × 14.3 公分投入口的中心離地 82.5 公分，下方為清運門。" loading="lazy"><figcaption>正面：直接投放，無需碰翻蓋或踩踏板。</figcaption></figure><figure><img src="./images/design/t1-section.svg" width="480" height="600" alt="T1 側面剖視提案：深 42 公分，雨蓋向後導水，入口內縮，目標 60 公升的防漏內桶向前移出，不設排液孔。" loading="lazy"><figcaption>剖面：內桶盛接漏液；輪組與門片須以實體驗證。</figcaption></figure></div>
+            <dl class="t1-specs"><div><dt>外形包絡</dt><dd>寬 48 × 深 42 × 高 110 cm；雨蓋、鎖把收在包絡內。</dd></div><div><dt>投入口</dt><dd>寬 22 × 高 14.3 cm；中心離地 82.5 cm。入口大小不能辨識家戶垃圾。</dd></div><div><dt>內桶</dt><dd>目標有效容量 60 L，開口向上、底部防漏、帶輪移出。實際容積、滿載重量及相容桶型待確認。</dd></div><div><dt>外板與結構</dt><dd>提案採 304 不鏽鋼，外板厚 1.2–1.5 mm，細霧面、可單片更換。折邊、骨架、強度與耐蝕處理由製造端確認。</dd></div><div><dt>視覺辨識</dt><dd>深青色入口框、淺色門板；同時使用文字與圖示。一般垃圾／General waste、箱號與管理聯絡方式均可替換。</dd></div></dl>
+            <p class="t1-boundary">兩張圖及 3D 表達外觀、尺寸目標與動作順序，未表達板材公差、製造接合或結構計算，不能直接作為施工圖。</p>
+          </div>
+        </details>
+        <details class="t1-detail"><summary>投得對，也不把雨水與殘液混在一起<span>入口、分類、可及性與防漏</span></summary><div class="t1-detail-body t1-reading">
+          <h4>不用摸蓋子，先看見要丟哪裡</h4><p>正面內縮入口加上遮雨上緣與錯位擋片，降低雨水直入的機會；頂蓋向後導水，導水邊不超出桶身。沒有踏板，也不要求扭轉手腕。開口與擋片是否足以防止動物翻找、雨水進入及異味外散，須通過實體測試。</p>
+          <h4>一般垃圾與回收各有去處</h4><p>面紙等隨手一般垃圾進 T1；已清空的寶特瓶走資源回收。商圈若沒有可用的回收點，應成對設置獨立回收桶並安排分開清運，重新計算整組占地。這份 T1 規格只涵蓋一般垃圾桶。家戶與店家營業垃圾仍須使用各自的合法清運管道。</p>
+          <p>飲料先處理殘液，空杯可交給依法應回收的飲料店、便利商店等通路。T1 不設公共倒液口；內桶盛接意外漏液，沒有排往路面或水溝的孔。</p>
+          <h4>輪椅與年長者，都要實際試投</h4><p>入口中心 82.5 cm 是設計目標。以臺灣無障礙規範附錄的可及範圍作參考，仍須讓不同身高與輪椅使用者在實際退縮、入口深度與路面條件下試投。可及高度不是整體無障礙合格證明。</p>
+          <p class="t1-source-note">依據：<a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?PCODE=O0050024" target="_blank" rel="noopener noreferrer">一般廢棄物回收清除處理辦法第 11、12 條</a>、<a href="https://www.nlma.gov.tw/uploads/files/e9abb44ff171074d23a7d1d5ee35b4a4.pdf" target="_blank" rel="noopener noreferrer">無障礙設施設計規範附錄 A102</a>、<a href="https://www.dep.gov.taipei/News_Content.aspx?n=D6521D207DE817C2&amp;s=83534F468DAF3FF0&amp;sms=53780C1906F94AB4" target="_blank" rel="noopener noreferrer">臺北市環保局飲料杯回收說明</a>。</p>
+        </div></details>
+        <details id="t1-operations" class="t1-detail"><summary>清得動，才有辦法每天用<span>清運順序、設置空間與維修零件</span></summary><div class="t1-detail-body t1-reading">
+          <ol class="t1-steps"><li><strong>先暫停投放。</strong>確認作業區與行人動線，開啟清運門並固定門片。</li><li><strong>將內桶向前移出。</strong>握住內桶把手，以輪組承重，接上清運設備。門檻、拉力、滿載重量與轉運方式均須打樣確認。</li><li><strong>換袋並檢查漏液。</strong>擦拭桶口、把手和周邊；需要沖洗時，送到可收集廢水的作業場所。</li><li><strong>收回、上鎖、恢復服務。</strong>確認門片與輪組到位，記錄箱號、時間、滿度、異常及處理結果。</li></ol>
+          <h4>先量通道，再決定放不放</h4><p>本提案以設置後保留至少 150 cm 連續淨寬作為選址目標，另外扣除樹穴、招牌、柱體與其他障礙。例：200 cm 人行道 − 42 cm 桶深 − 5 cm 提案退縮 = 153 cm；這只是平面估算，不能代替現場審查。</p><p>桶前另以約 80 cm 作為抽桶作業空間的初步目標，必須放進路側凹入或加寬區，讓清運時仍有連續通道。空間不足就另選位置；不把關門時的淨寬當作開門作業也足夠。不可遮擋導盲設施、路口視線、出入口或消防設備。</p>
+          <p>錨定方式與基座須依地坪、地下管線及結構評估另行設計。確認設置單位、巡收責任與故障處理後才進場；滿溢應加密巡收，不靠壓縮功能掩蓋清運不足。</p>
+          <h4>壞一個零件，換一個零件</h4><p>拆換分成入口嵌件、雨蓋、外板、門鉸鏈與鎖、帶輪內桶、標示片、底座七組。共用維修工具並保留零件編號；袋材與內桶採購前做實際相容測試。基本款不配鏡頭、住戶辨識、付款或壓縮機。</p>
+          <p class="t1-source-note">選址參考：<a href="https://www.dep.gov.taipei/News_Content.aspx?n=ACEFA960B5A4ACD7&amp;s=B90A10FBBF73521B" target="_blank" rel="noopener noreferrer">環保局行人專用清潔箱設置原則</a>與<a href="https://laws.gov.taipei/Law/LawSearch/LawArticleContent/FL037831" target="_blank" rel="noopener noreferrer">市區道路及附屬工程設計標準第 16 條</a>。道路標準另有條件式例外，不能由本頁試算自行認定適用。</p>
+        </div></details>
+        <details id="t1-validation" class="t1-detail"><summary>從概念走到可採購的原型<span>驗收項目、試辦紀錄與報價範圍</span></summary><div class="t1-detail-body t1-reading">
+          <h4>先做一比一，再做金屬樣品</h4><p>先用 1:1 模型確認站姿、坐姿投放和清運空間，再製作金屬樣品。邀請輪椅使用者、年長者與實際清運人員共同試用；把問題逐項修正，不能用少量試用推論全市成效。</p>
+          <dl class="t1-checks"><div><dt>投放與辨識</dt><dd>記錄錯投、需要協助、碰觸桶口與入口可及性；確認文字及圖示可在戶外辨識。</dd></div><div><dt>雨、殘液與環境</dt><dd>按預先約定的雨量、方向和時間測進水；做盛液與清洗測試，檢查接縫漏液、積水、異味及動物翻找風險。</dd></div><div><dt>清運與安全</dt><dd>在約定最大作業重量下，量拉力、抽換時間與通道占用；檢查銳邊、夾點、門片固定、輪組及袋體破損。</dd></div><div><dt>耐用與固定</dt><dd>製造端提出開關循環、腐蝕、撞擊、傾倒及錨定的測試條件與結果，由合適專業人員確認。</dd></div></dl>
+          <p>以上均為<strong>待驗證項目</strong>。測試方法、負載、合格門檻與責任人須在打樣前共同寫定；失敗項目完成修正後再進場。</p>
+          <h4>用小規模試辦回答維運問題</h4><p>選少量經核准的街頭與商圈點位，先記錄現況，再以相同時段追蹤溢滿、錯投、漏液、清運工時、維修及申訴。記錄天氣與人流差異；描述性的前後比較不當成因果證據。漏液、固定失效、危險夾點或通道受阻時先停用處理。</p>
+          <h4>報價拆開看，現在不填假價格</h4><p>詢價分列：設計與模具、單桶外殼、內桶輪組、標示、基座施工、運送安裝、備品、保固，以及每年耗材、清洗與清運。單價、量產量、保固年限、週期費用與替換頻率目前全部待報價；國外設備價格及本站 30 點試辦預算都不是 T1 製造成本。</p>
+          <p class="t1-boundary">目前交付為設計提案與互動模型，尚無製造圖、工程簽認、供應商報價或實體驗收結果。</p>
+          <p class="t1-source-note">來源核對：2026-10-16。<a href="https://laws.gov.taipei/Law/LawSearch/LawArticleContent/FL076512" target="_blank" rel="noopener noreferrer">舊行人專用清潔箱管理維護 SOP</a>已於 2022-08-24 停止適用，沒有把其舊清潔頻率當作現行要求。<a href="https://www.dep.gov.taipei/News_Content.aspx?n=ACEFA960B5A4ACD7&amp;s=84EC6A2E88CC22ED&amp;sms=87415A8B9CE81B16" target="_blank" rel="noopener noreferrer">家戶垃圾禁投說明</a>及<a href="https://www.dep.gov.taipei/News_Content.aspx?n=ACEFA960B5A4ACD7&amp;s=B58711D230F0D78B&amp;sms=87415A8B9CE81B16" target="_blank" rel="noopener noreferrer">滿溢通報與巡收說明</a>保留官方連結供核對。</p>
+        </div></details>
+      </section>
       <div class="design-bottom-note"><div><h3>這個設計的取捨</h3><p id="design-tradeoff"></p></div><div><h3>把體驗接回實際服務</h3><p>滿度、外形與物件大小都不能判定垃圾來源。家戶收受需要可用的服務與清運安排；示意操作沒有證明防濫倒、節省人力或實際回收成效。</p><p><a href="#research">閱讀設置、清運與家戶分流方案</a> · <a href="#countries">比較實際設備與價格</a></p></div></div>
       <p class="design-evidence-note">投放規則只涵蓋本頁選定示例，不是完整分類指引。物件截面、感測門檻與機構動作皆為概念設定；沒有實際感測、住戶辨識或付款。</p>
     </section>
@@ -161,47 +260,10 @@
     </section>
 
     <section id="panel-countries" class="page-panel" aria-labelledby="countries-heading" hidden>
-      <div class="section-heading"><div><h2 id="countries-heading" tabindex="-1">各國垃圾桶</h2></div><p>實物照片、功能與公開價格，一起比較。</p></div>
+      <div class="section-heading"><div><h2 id="countries-heading" tabindex="-1">各國垃圾桶</h2></div><p>先選一國，看照片、使用方式與收運；想看動作時，再展開 3D。</p></div>
       <section class="research-section smart-bin-comparison" aria-labelledby="smart-bin-heading">
-        <h3 id="smart-bin-heading">十二國垃圾桶，從投放到收運一起看。</h3>
-        <p><strong>我們建議：一般桶先做到易投、易清、易維修；垃圾量波動大才比較滿度感測，容量不足才比較壓縮。</strong>地下集中收集及住戶 RFID 屬不同服務。以下對照使用對象、收運、數位功能、營運證據與公開成本。查核：2026-10-16；各案例的資料年份分開標示。</p>
-        <p class="country-comparison-note">照片用來比較外觀，功能與價格另依文字來源核對。保留原幣別及年度；歷史單價、計畫預算與完整營運成本不能直接排名。照片不按設備實際尺寸等比例呈現。</p>
-        <p id="country-load-status" role="status" hidden>3D 控制暫時無法載入；重新整理可再試一次。各國照片與來源仍可閱讀。</p>
-        <div class="country-browser"><nav class="country-index" aria-label="依用途查看各國案例"><div><h4>日常投放與防散落</h4><ul><li><button type="button" data-country-target="country-us"><strong>美國</strong><span>好維修</span></button></li><li><button type="button" data-country-target="country-france"><strong>法國</strong><span>防鼠與日清</span></button></li><li><button type="button" data-country-target="country-netherlands"><strong>荷蘭</strong><span>防翻找</span></button></li><li><button type="button" data-country-target="country-singapore"><strong>新加坡</strong><span>配置與巡收</span></button></li><li><button type="button" data-country-target="country-south-africa"><strong>南非</strong><span>行人路線</span></button></li></ul></div><div><h4>滿溢與清運負荷</h4><ul><li><button type="button" data-country-target="country-japan"><strong>日本</strong><span>商圈合作</span></button></li><li><button type="button" data-country-target="country-uk"><strong>英國</strong><span>壓縮與巡收</span></button></li><li><button type="button" data-country-target="country-denmark"><strong>丹麥</strong><span>帶輪壓縮</span></button></li><li><button type="button" data-country-target="country-australia"><strong>澳洲</strong><span>巷道共用站</span></button></li></ul></div><div><h4>家戶與集中收運</h4><ul><li><button type="button" data-country-target="country-finland"><strong>芬蘭</strong><span>物業滿度</span></button></li><li><button type="button" data-country-target="country-korea"><strong>韓國</strong><span>秤重付費</span></button></li><li><button type="button" data-country-target="country-india"><strong>印度</strong><span>到戶收運</span></button></li></ul></div></nav>
+        <div class="country-browser"><aside class="country-reading-navigation"><h3 id="country-index-heading" tabindex="-1">選一國</h3><label class="country-current">閱讀案例<select id="country-reader-select"></select></label><details class="country-index-disclosure" open><summary>依用途找國家</summary><nav class="country-index" aria-label="依用途查看各國案例"><div><h4>日常投放與防散落</h4><ul><li><button type="button" data-country-target="country-us"><strong>美國</strong><span>好維修</span></button></li><li><button type="button" data-country-target="country-france"><strong>法國</strong><span>防鼠與日清</span></button></li><li><button type="button" data-country-target="country-netherlands"><strong>荷蘭</strong><span>防翻找</span></button></li><li><button type="button" data-country-target="country-singapore"><strong>新加坡</strong><span>配置與巡收</span></button></li><li><button type="button" data-country-target="country-south-africa"><strong>南非</strong><span>行人路線</span></button></li></ul></div><div><h4>滿溢與清運負荷</h4><ul><li><button type="button" data-country-target="country-japan"><strong>日本</strong><span>商圈合作</span></button></li><li><button type="button" data-country-target="country-uk"><strong>英國</strong><span>壓縮與巡收</span></button></li><li><button type="button" data-country-target="country-denmark"><strong>丹麥</strong><span>帶輪壓縮</span></button></li><li><button type="button" data-country-target="country-australia"><strong>澳洲</strong><span>巷道共用站</span></button></li></ul></div><div><h4>家戶與集中收運</h4><ul><li><button type="button" data-country-target="country-finland"><strong>芬蘭</strong><span>物業滿度</span></button></li><li><button type="button" data-country-target="country-korea"><strong>韓國</strong><span>秤重付費</span></button></li><li><button type="button" data-country-target="country-india"><strong>印度</strong><span>到戶收運</span></button></li></ul></div></nav></details></aside>
         <ol class="country-cases">
-          <li><article class="country-case" aria-labelledby="country-japan">
-            <h4 id="country-japan" tabindex="-1">日本・大阪<span>SmaGO</span></h4>
-            <div class="country-case-grid">
-              <figure class="country-photo">
-                <div class="country-photo-frame"><img src="images/countries/osaka-smago.jpg" alt="黃色 SmaGO 分類箱，一般垃圾與瓶罐有不同投入口" width="1500" height="1384" loading="eager" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
-                <figcaption>大阪道頓堀計畫共同新聞稿的 SmaGO 照片；2023-11-16 發布，拍攝日期未列。<span class="country-photo-credit">照片摘自 JTB 共同新聞稿；© JTB Corp.。</span><a class="country-source" href="https://www.jtbcorp.jp/jp/newsroom/2023/11/16_01_dotonbori-clean%EF%BD%B0activities.html" target="_blank" rel="noopener noreferrer">照片來源 ↗</a></figcaption>
-              </figure>
-              <dl class="country-facts"><div><dt>外觀</dt><dd>黃色箱身，分開的一般垃圾與瓶罐投入口；正面設有清運門。</dd></div><div><dt>功能與使用對象</dt><dd>商圈行人與觀光客；SmaGO 自動壓縮、雲端監測與滿溢前通知。</dd></div><div><dt>怎麼收／維護</dt><dd>商店會主導、合同衛生負責回收；有人接收通知並安排清運，才形成完整服務。固定清運頻率及逐次費用未列。<a class="country-source" href="https://www.ntt.com/about-us/press-releases/news/article/2023/1116.html" target="_blank" rel="noopener noreferrer">作業來源 ↗</a></dd></div><div><dt>已有證據</dt><dd>2023-11-16 聯合公告：1 月試驗附近散落垃圾約減四成；11 月擴至 10 處。屬營運方前後觀察，無同期對照，不能把效果只歸因設備。<a class="country-source" href="https://www.ntt.com/about-us/press-releases/news/article/2023/1116.html" target="_blank" rel="noopener noreferrer">功能與營運來源 ↗</a></dd></div></dl>
-              <dl class="country-facts country-cost"><div><dt>公開成本 · 未公開單價</dt><dd><p class="country-price">來源未列單價與完整維護費。</p><a class="country-source" href="https://www.ntt.com/about-us/press-releases/news/article/2023/1116.html" target="_blank" rel="noopener noreferrer">成本來源 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>適合比較觀光熱點容量與清運；效果不能只歸因壓縮。</dd></div></dl>
-            </div>
-          </article></li>
-          <li><article class="country-case" aria-labelledby="country-uk">
-            <h4 id="country-uk" tabindex="-1">英國・倫敦金融城<span>Bigbelly</span></h4>
-            <div class="country-case-grid">
-              <figure class="country-photo">
-                <div class="country-photo-frame"><img src="images/countries/london-bigbelly.jpg" alt="西敏市黑色 BigBelly 桶，弧形頂蓋與正面把手式投入口" width="960" height="1280" loading="lazy" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
-                <figcaption>倫敦西敏市 Belgrave Square，2015-09-20。同系列設備，非金融城 Bishopsgate 試辦現場。<span class="country-photo-credit">攝影：Philafrenzy／Wikimedia Commons。原圖未改作。</span><a class="country-source" href="https://commons.wikimedia.org/wiki/File:BigBelly_solar_compactor_in_Belgrave_Square_02.JPG" target="_blank" rel="noopener noreferrer">照片來源 ↗</a><a class="country-photo-license" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></figcaption>
-              </figure>
-              <dl class="country-facts"><div><dt>外觀</dt><dd>黑色直立箱，頂部弧面，正面有帶把手的投入口與下方維修門。</dd></div><div><dt>功能與使用對象</dt><dd>交通與夜生活熱點；Bigbelly 太陽能壓縮，回報滿度及清空次數。</dd></div><div><dt>怎麼收／維護</dt><dd>2015 試辦平均每天清空略多於一次，利用既有承包人力；桶位集中，往返時間較短。未證明減少人員或車輛。<a class="country-source" href="https://democracy.cityoflondon.gov.uk/documents/s61842/Bishopsgate%20Bin%20Trial%202016%20PHES%20-%20Final.pdf" target="_blank" rel="noopener noreferrer">作業來源 ↗</a></dd></div><div><dt>已有證據</dt><dd>2015 年試 9 桶、2016 年報告；清潔分級改善，未證實省人力或車次。<a class="country-source" href="https://democracy.cityoflondon.gov.uk/documents/s61842/Bishopsgate%20Bin%20Trial%202016%20PHES%20-%20Final.pdf" target="_blank" rel="noopener noreferrer">功能與營運來源 ↗</a></dd></div></dl>
-              <dl class="country-facts country-cost"><div><dt>公開成本 · 2016 歷史採購價</dt><dd><p class="country-price">歷史 £4,300／桶含啟用與軟體；整批年維護約 £1,500。</p><a class="country-source" href="https://democracy.cityoflondon.gov.uk/documents/s61842/Bishopsgate%20Bin%20Trial%202016%20PHES%20-%20Final.pdf" target="_blank" rel="noopener noreferrer">成本來源 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>需與普通有蓋增容桶及調班比較，不能把壓縮倍率當節省率。</dd></div></dl>
-            </div>
-          </article></li>
-          <li><article class="country-case" aria-labelledby="country-denmark">
-            <h4 id="country-denmark" tabindex="-1">丹麥・哥本哈根<span>CitySolar · 240 L</span></h4>
-            <div class="country-case-grid">
-              <figure class="country-photo">
-                <div class="country-photo-frame"><img src="images/countries/copenhagen-citysolar.jpg" alt="CitySolar 黑色垃圾桶，頂部面板、正面投入口及底部腳踏" width="1392" height="1044" loading="lazy" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
-                <figcaption>市府介紹的 CitySolar 桶型照片，非已確認的哥本哈根試辦現場；拍攝日期未列。<span class="country-photo-credit">照片摘自哥本哈根 Indre By 地方委員會；攝影者未列。</span><a class="country-source" href="https://indrebylokaludvalg.kk.dk/nyheder/forsoeg-med-komprimerende-affaldskurve-i-indre-by" target="_blank" rel="noopener noreferrer">照片來源 ↗</a></figcaption>
-              </figure>
-              <dl class="country-facts"><div><dt>外觀</dt><dd>黑色箱身，頂部面板、正面投入口與下方腳踏；亮色標示操作位置。</dd></div><div><dt>功能與使用對象</dt><dd>高垃圾量街區；標準 240 L 帶輪內桶、太陽能壓縮及滿度通知。</dd></div><div><dt>怎麼收／維護</dt><dd>可沿用大型帶輪桶的清運作業。2025-12-04 備忘錄列 16 處、規劃測試 16 個月；時程不等於已完成成效。<a class="country-source" href="https://www.kk.dk/sites/default/files/2025-12/04.12.25%20-%20Orienteringsnotat%20om%20test%20af%20maskinelt%20t%C3%B8mte%20mini-t%C3%A5rnkurve%20og%20kompressionskurve.pdf" target="_blank" rel="noopener noreferrer">作業來源 ↗</a></dd></div><div><dt>已有證據</dt><dd>2025 方案試 16 桶；早期 2018–2023 智慧桶預期效率未實現。未找到新版完成評估。<a class="country-source" href="https://www.kk.dk/sites/default/files/agenda/83c5755d-bc0a-49e1-b04f-869a658fcdf6/48a7f707-43e3-4d42-a322-3581c4926820-bilag-2.pdf" target="_blank" rel="noopener noreferrer">功能與營運來源 ↗</a></dd></div></dl>
-              <dl class="country-facts country-cost"><div><dt>公開成本 · 年度計畫額度</dt><dd><p class="country-price">市府列 2025 起每年 DKK 550,000 計畫額度；非單桶價或完整成本。 <a href="https://indrebylokaludvalg.kk.dk/nyheder/forsoeg-med-komprimerende-affaldskurve-i-indre-by" target="_blank" rel="noopener noreferrer">額度來源</a></p></dd></div><div><dt>台北怎麼參考</dt><dd>保留基本巡收、員工操作評估及恢復舊桶的條件。</dd></div></dl>
-            </div>
-          </article></li>
           <li><article class="country-case" aria-labelledby="country-us">
             <h4 id="country-us" tabindex="-1">美國・舊金山<span>Slim Silhouette</span></h4>
             <div class="country-case-grid">
@@ -211,28 +273,6 @@
               </figure>
               <dl class="country-facts"><div><dt>外觀</dt><dd>直條金屬外殼與弧形上蓋。照片可見清潔人員擦拭桶身；投入口位於另一側。</dd></div><div><dt>功能與使用對象</dt><dd>一般行人；32 美制加侖帶輪內桶，兼顧防翻找、維修及瓶罐交換。可裝感測器，不代表已安裝。</dd></div><div><dt>怎麼收／維護</dt><dd>帶輪內桶配合清運車；2026-03 簡報列清運方另負責周邊撿拾與通報損壞。需分開計清運、清洗和維修。<a class="country-source" href="https://media.api.sf.gov/documents/Public_Works_Refuse_Rate_Board_presentation_3.13.26_final.pdf" target="_blank" rel="noopener noreferrer">作業來源 ↗</a></dd></div><div><dt>已有證據</dt><dd>2026-03 簡報：首 10 桶進入測試，街頭部署其後進行；未以預定夏／秋季上線推定已全市換裝。<a class="country-source" href="https://media.api.sf.gov/documents/Public_Works_Refuse_Rate_Board_presentation_3.13.26_final.pdf" target="_blank" rel="noopener noreferrer">功能與營運來源 ↗</a></dd></div></dl>
               <dl class="country-facts country-cost"><div><dt>公開成本 · 2026 大量採購單價</dt><dd><p class="country-price">3,000 桶以上 US$1,591／桶含內桶；另列關稅 US$158，可能變動。</p><p class="country-price-note">桶體 US$1,495＋內桶 US$96。來源未列運送、安裝及感測服務完整費用；照片原型與 2026 採購價分開閱讀。</p><a class="country-source" href="https://media.api.sf.gov/documents/Public_Works_Refuse_Rate_Board_presentation_3.13.26_final.pdf" target="_blank" rel="noopener noreferrer">成本來源 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>先比較省力、耐用與車輛相容；不是壓縮桶的同規格報價。</dd></div></dl>
-            </div>
-          </article></li>
-          <li><article class="country-case" aria-labelledby="country-finland">
-            <h4 id="country-finland" tabindex="-1">芬蘭・赫爾辛基<span>Molok 深埋式收集桶</span></h4>
-            <div class="country-case-grid">
-              <figure class="country-photo">
-                <div class="country-photo-frame"><img src="images/countries/finland-molok.jpg" alt="Oulu 多座木紋圓筒 Molok 收集桶，黑色頂蓋與分類標示" width="960" height="720" loading="lazy" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
-                <figcaption>芬蘭 Oulu，2009-09-26。同系列 Molok 桶，非赫爾辛基 2024 感測試驗；照片不證明裝有感測器。<span class="country-photo-credit">攝影：SeppVei／Wikimedia Commons；作者釋出至公有領域。</span><a class="country-source" href="https://commons.wikimedia.org/wiki/File:Molok_waste_cans.JPG" target="_blank" rel="noopener noreferrer">照片來源 ↗</a></figcaption>
-              </figure>
-              <dl class="country-facts"><div><dt>外觀</dt><dd>大型圓筒、木紋外殼與掀蓋投入口；地上部分比一般行人箱寬。</dd></div><div><dt>功能與使用對象</dt><dd>市有物業集中收集；Molok 深埋式桶＋Futuren 滿度感測＋Wastebook 平台，並非行人小型箱。</dd></div><div><dt>怎麼收／維護</dt><dd>原依清運秤重資訊估算下次收運，試驗改用即時滿度協助訂單；省下空車與成本是待驗證目標。<a class="country-source" href="https://testbed.hel.fi/rakennettu-ymparisto/alykasta-jatehuoltoa-kokeillaan-ympari-helsinkia-kokeilu-on-tassa-mittakaavassa-ainutlaatuinen/" target="_blank" rel="noopener noreferrer">作業來源 ↗</a></dd></div><div><dt>已有證據</dt><dd>2024-09 公告：26 處市有物業、117 桶；原訂夏季 2025 結束；本輪未找到最終節省評估，不能視為仍在試辦或已成功。<a class="country-source" href="https://testbed.hel.fi/rakennettu-ymparisto/alykasta-jatehuoltoa-kokeillaan-ympari-helsinkia-kokeilu-on-tassa-mittakaavassa-ainutlaatuinen/" target="_blank" rel="noopener noreferrer">功能與營運來源 ↗</a></dd></div></dl>
-              <dl class="country-facts country-cost"><div><dt>公開成本 · 未公開完整費用</dt><dd><p class="country-price">來源未列感測、平台、維護或土建完整費用。</p><a class="country-source" href="https://testbed.hel.fi/rakennettu-ymparisto/alykasta-jatehuoltoa-kokeillaan-ympari-helsinkia-kokeilu-on-tassa-mittakaavassa-ainutlaatuinen/" target="_blank" rel="noopener noreferrer">成本來源 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>適合物業集中收集；要有吊運空間，不能直接套用一般人行道。</dd></div></dl>
-            </div>
-          </article></li>
-          <li><article class="country-case" aria-labelledby="country-korea">
-            <h4 id="country-korea" tabindex="-1">韓國<span>RFID 家戶廚餘秤重站</span></h4>
-            <div class="country-case-grid">
-              <figure class="country-photo">
-                <div class="country-photo-frame"><img src="images/countries/korea-rfid.jpg" alt="九里市四台橘灰色廚餘秤重設備，帶上掀投入口與側邊操作面板" width="1440" height="648" loading="lazy" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
-                <figcaption>韓國九里市住宅廚餘設備，2022-04-22 新聞稿；拍攝日期未確認。屬同類 RFID 秤重系統，非全國統一機型。<span class="country-photo-credit">照片：九里市（Guri City）；攝影者未列。</span><a class="country-source" href="https://www.guri.go.kr/www/selectBbsNttView.do?bbsNo=42&amp;integrDeptCode=&amp;key=393&amp;nttNo=1538&amp;pageIndex=562&amp;searchCnd=all&amp;searchCtgry=&amp;searchKrwd=" target="_blank" rel="noopener noreferrer">照片來源 ↗</a><a class="country-photo-license" href="https://www.kogl.or.kr/info/licenseType4.do" target="_blank" rel="noopener noreferrer">公共著作物第 4 類：署名、非商用、禁止改作</a></figcaption>
-              </figure>
-              <dl class="country-facts"><div><dt>外觀</dt><dd>橘色上蓋、灰色箱身，投入口旁有操作面板，正面貼有使用說明。</dd></div><div><dt>功能與使用對象</dt><dd>已登錄住戶的廚餘；RFID 辨識、逐次秤重並按排出量計費。秤重與滿度偵測是不同功能。</dd></div><div><dt>怎麼收／維護</dt><dd>首爾 2026-03-03 說明：每台約供 60 戶、每日處理容量 120 L；申請採購及電力工程補助，各區可能需自付。仍須安排收運、清洗及維護。<a class="country-source" href="https://news.seoul.go.kr/env/archives/74584" target="_blank" rel="noopener noreferrer">作業來源 ↗</a></dd></div><div><dt>已有證據</dt><dd>官方列 2025 年 186 自治體、約 861 萬公寓住戶；用途是家戶廚餘。<a class="country-source" href="https://www.keco.or.kr/web/lay1/S1T184C1061/contents.do" target="_blank" rel="noopener noreferrer">功能與營運來源 ↗</a></dd></div></dl>
-              <dl class="country-facts country-cost"><div><dt>公開成本 · 地方安裝補助</dt><dd><p class="country-price">首爾東大門區：安裝補助說明列約 KRW 2,000,000。</p><p class="country-price-note">頁面更新 2026-02-02；未列統一機型、完整維護費或每公斤投放費。這是地方補助資訊，非全韓國單價，也不是照片中九里市機型的報價。</p><a class="country-source" href="https://www.ddm.go.kr/www/contents.do?key=859" target="_blank" rel="noopener noreferrer">補助來源 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>可參考社區廚餘分流；不是匿名行人箱的防家戶垃圾裝置。</dd></div></dl>
             </div>
           </article></li>
           <li><article class="country-case" aria-labelledby="country-france">
@@ -268,15 +308,48 @@
               <dl class="country-facts country-cost"><div><dt>公開成本 · 未公開單桶價格</dt><dd><p class="country-price">所查 NEA 資料未列單價、維護合約或每次清運費。</p><p class="country-price-note">園區照片不提供 NEA 街桶規格、價格或成效證據。</p><a class="country-source" href="https://www.nea.gov.sg/media/readers-letters/index/there-are-more-than-10-000-trash-cans-across-the-island" target="_blank" rel="noopener noreferrer">成本查閱範圍 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>先把人流、民眾回報與清運資源接起來；評估增桶時，另外記錄清掃及執法變化。</dd></div></dl>
             </div>
           </article></li>
-          <li><article class="country-case" aria-labelledby="country-india">
-            <h4 id="country-india" tabindex="-1">印度・Indore<span>家戶到戶收運，與行人桶分工</span></h4>
+          <li><article class="country-case" aria-labelledby="country-south-africa">
+            <h4 id="country-south-africa" tabindex="-1">南非・開普敦<span>商場周邊行人桶與每日清運</span></h4>
             <div class="country-case-grid">
               <figure class="country-photo">
-                <div class="country-photo-frame"><img src="images/countries/indore-collection.jpg" alt="Indore 居民將小桶垃圾交給黃色到戶收運車" width="960" height="720" loading="lazy" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
-                <figcaption>Indore 到戶收運實景，2016-12-16；這是服務流程照片，不代表公用行人垃圾桶的型式。<span class="country-photo-credit">TheodoreIndiana／Wikimedia Commons；CC BY-SA 3.0，原圖未改作。</span><a class="country-source" href="https://commons.wikimedia.org/wiki/File:Door-to-door_Garbage_Collection_Vans_in_Indore_-_Under_Swachh_Bharat_Abhiyan.jpg" target="_blank" rel="noopener noreferrer">照片來源 ↗</a><a class="country-source" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer">照片授權 ↗</a></figcaption>
+                <div class="country-photo-frame"><img src="images/countries/cape-town-waterfront.jpg" alt="開普敦 Waterfront 木條外殼三分隔桶，分紙類、一般垃圾及玻璃塑膠罐類" width="960" height="724" loading="lazy" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
+                <figcaption>開普敦 V&A Waterfront 的一般垃圾與分類回收設施，2018-07-23。不同地點與桶型，不是下述 Site C Plaza 設置案。<span class="country-photo-credit">Daniel Case／Wikimedia Commons；CC BY-SA 3.0，使用來源縮圖，未裁切或改作。</span><a class="country-source" href="https://commons.wikimedia.org/wiki/File:Sorted_waste_containers_at_Victoria_%26_Alfred_Waterfront,_Cape_Town.jpg" target="_blank" rel="noopener noreferrer">照片來源 ↗</a><a class="country-source" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer">照片授權 ↗</a><a class="country-source" href="https://www.capetown.gov.za/media-and-news/ikwezi-park-to-shine-with-new-public-litter-bins/" target="_blank" rel="noopener noreferrer">官方案例實物照 ↗</a></figcaption>
               </figure>
-              <dl class="country-facts"><div><dt>外觀</dt><dd>照片呈現居民用家用小桶交付垃圾，車輛沿巷收運；舊路邊集中桶的型號與尺寸未確認。</dd></div><div><dt>功能與使用對象</dt><dd>以到戶收運承接家戶垃圾，分流濕、乾及家戶危險垃圾。商業區行人投放需求仍須另處理。</dd></div><div><dt>怎麼收／維護</dt><dd>官方歷史紀錄：2016 年先在 2 區試行，再擴大到全市；車隊以 GPS 追蹤路線，再送轉運站。GPS 不是桶內滿度感測。</dd></div><div><dt>已有證據</dt><dd>官方頁描述改革前 1,380 個路邊儲存桶與後續到戶收運；頁面未標發布日。城市排名與行政成果不能證明撤除行人桶有效。<a class="country-source" href="https://www.smartcityindore.org/solid-waste/" target="_blank" rel="noopener noreferrer">Smart City Indore 歷史改革紀錄 ↗</a></dd></div></dl>
-              <dl class="country-facts country-cost"><div><dt>公開成本 · 未公開可比桶價</dt><dd><p class="country-price">官方案例未列公用桶單價或完整到戶收運成本。</p><p class="country-price-note">車隊、轉運站與家戶服務費用，不能拿來當成行人桶價格。</p><a class="country-source" href="https://www.smartcityindore.org/solid-waste/" target="_blank" rel="noopener noreferrer">成本查閱範圍 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>先讓家戶有可靠合法去處，再討論路邊家戶儲存桶；不能把「無桶」直接套成台北撤行人桶。</dd></div></dl>
+              <dl class="country-facts"><div><dt>外觀</dt><dd>照片為 Waterfront 木條外殼三分隔設施；Site C Plaza 官方實物照則為綠色圓頂桶，容量、材質與型號未列。</dd></div><div><dt>功能與使用對象</dt><dd>供商場與通勤路線行人投零食包裝、飲料容器；明定不是家戶或商業垃圾收集站，來源未提感測器。</dd></div><div><dt>怎麼收／維護</dt><dd>公告由區域清潔隊每日清空。同文提醒其他點位曾因家戶、商家混倒而滿溢；清運與合法替代管道仍是關鍵。</dd></div><div><dt>已有證據</dt><dd>2022-12-07 公告列 28 桶、分布三條道路；屬行政設置數，未獨立盤點完成數，也未取得後續清潔或防洪成效。<a class="country-source" href="https://www.capetown.gov.za/media-and-news/ikwezi-park-to-shine-with-new-public-litter-bins/" target="_blank" rel="noopener noreferrer">開普敦市府設桶與收運公告 · 2022 ↗</a></dd></div></dl>
+              <dl class="country-facts country-cost"><div><dt>公開成本 · 未公開單桶價格</dt><dd><p class="country-price">設置公告未列單價、採購總額或維護費。</p><p class="country-price-note">每日清運是一項持續支出，不能只以桶體估算服務成本。</p><a class="country-source" href="https://www.capetown.gov.za/media-and-news/ikwezi-park-to-shine-with-new-public-litter-bins/" target="_blank" rel="noopener noreferrer">成本查閱範圍 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>行人需求高的地方仍可設桶，但要寫清可投項目、收運頻率及混倒後的處理責任。</dd></div></dl>
+            </div>
+          </article></li>
+          <li><article class="country-case" aria-labelledby="country-japan">
+            <h4 id="country-japan" tabindex="-1">日本・大阪<span>SmaGO</span></h4>
+            <div class="country-case-grid">
+              <figure class="country-photo">
+                <div class="country-photo-frame"><img src="images/countries/osaka-smago.jpg" alt="黃色 SmaGO 分類箱，一般垃圾與瓶罐有不同投入口" width="1500" height="1384" loading="eager" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
+                <figcaption>大阪道頓堀計畫共同新聞稿的 SmaGO 照片；2023-11-16 發布，拍攝日期未列。<span class="country-photo-credit">照片摘自 JTB 共同新聞稿；© JTB Corp.。</span><a class="country-source" href="https://www.jtbcorp.jp/jp/newsroom/2023/11/16_01_dotonbori-clean%EF%BD%B0activities.html" target="_blank" rel="noopener noreferrer">照片來源 ↗</a></figcaption>
+              </figure>
+              <dl class="country-facts"><div><dt>外觀</dt><dd>黃色箱身，分開的一般垃圾與瓶罐投入口；正面設有清運門。</dd></div><div><dt>功能與使用對象</dt><dd>商圈行人與觀光客；SmaGO 自動壓縮、雲端監測與滿溢前通知。</dd></div><div><dt>怎麼收／維護</dt><dd>商店會主導、合同衛生負責回收；有人接收通知並安排清運，才形成完整服務。固定清運頻率及逐次費用未列。<a class="country-source" href="https://www.ntt.com/about-us/press-releases/news/article/2023/1116.html" target="_blank" rel="noopener noreferrer">作業來源 ↗</a></dd></div><div><dt>已有證據</dt><dd>2023-11-16 聯合公告：1 月試驗附近散落垃圾約減四成；11 月擴至 10 處。屬營運方前後觀察，無同期對照，不能把效果只歸因設備。<a class="country-source" href="https://www.ntt.com/about-us/press-releases/news/article/2023/1116.html" target="_blank" rel="noopener noreferrer">功能與營運來源 ↗</a></dd></div></dl>
+              <dl class="country-facts country-cost"><div><dt>公開成本 · 未公開單價</dt><dd><p class="country-price">來源未列單價與完整維護費。</p><a class="country-source" href="https://www.ntt.com/about-us/press-releases/news/article/2023/1116.html" target="_blank" rel="noopener noreferrer">成本來源 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>適合比較觀光熱點容量與清運；效果不能只歸因壓縮。</dd></div></dl>
+            </div>
+          </article></li>
+          <li><article class="country-case" aria-labelledby="country-uk">
+            <h4 id="country-uk" tabindex="-1">英國・倫敦金融城<span>Bigbelly</span></h4>
+            <div class="country-case-grid">
+              <figure class="country-photo">
+                <div class="country-photo-frame"><img src="images/countries/london-bigbelly.jpg" alt="西敏市黑色 BigBelly 桶，弧形頂蓋與正面把手式投入口" width="960" height="1280" loading="lazy" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
+                <figcaption>倫敦西敏市 Belgrave Square，2015-09-20。同系列設備，非金融城 Bishopsgate 試辦現場。<span class="country-photo-credit">攝影：Philafrenzy／Wikimedia Commons。原圖未改作。</span><a class="country-source" href="https://commons.wikimedia.org/wiki/File:BigBelly_solar_compactor_in_Belgrave_Square_02.JPG" target="_blank" rel="noopener noreferrer">照片來源 ↗</a><a class="country-photo-license" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></figcaption>
+              </figure>
+              <dl class="country-facts"><div><dt>外觀</dt><dd>黑色直立箱，頂部弧面，正面有帶把手的投入口與下方維修門。</dd></div><div><dt>功能與使用對象</dt><dd>交通與夜生活熱點；Bigbelly 太陽能壓縮，回報滿度及清空次數。</dd></div><div><dt>怎麼收／維護</dt><dd>2015 試辦平均每天清空略多於一次，利用既有承包人力；桶位集中，往返時間較短。未證明減少人員或車輛。<a class="country-source" href="https://democracy.cityoflondon.gov.uk/documents/s61842/Bishopsgate%20Bin%20Trial%202016%20PHES%20-%20Final.pdf" target="_blank" rel="noopener noreferrer">作業來源 ↗</a></dd></div><div><dt>已有證據</dt><dd>2015 年試 9 桶、2016 年報告；清潔分級改善，未證實省人力或車次。<a class="country-source" href="https://democracy.cityoflondon.gov.uk/documents/s61842/Bishopsgate%20Bin%20Trial%202016%20PHES%20-%20Final.pdf" target="_blank" rel="noopener noreferrer">功能與營運來源 ↗</a></dd></div></dl>
+              <dl class="country-facts country-cost"><div><dt>公開成本 · 2016 歷史採購價</dt><dd><p class="country-price">歷史 £4,300／桶含啟用與軟體；整批年維護約 £1,500。</p><a class="country-source" href="https://democracy.cityoflondon.gov.uk/documents/s61842/Bishopsgate%20Bin%20Trial%202016%20PHES%20-%20Final.pdf" target="_blank" rel="noopener noreferrer">成本來源 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>需與普通有蓋增容桶及調班比較，不能把壓縮倍率當節省率。</dd></div></dl>
+            </div>
+          </article></li>
+          <li><article class="country-case" aria-labelledby="country-denmark">
+            <h4 id="country-denmark" tabindex="-1">丹麥・哥本哈根<span>CitySolar · 240 L</span></h4>
+            <div class="country-case-grid">
+              <figure class="country-photo">
+                <div class="country-photo-frame"><img src="images/countries/copenhagen-citysolar.jpg" alt="CitySolar 黑色垃圾桶，頂部面板、正面投入口及底部腳踏" width="1392" height="1044" loading="lazy" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
+                <figcaption>市府介紹的 CitySolar 桶型照片，非已確認的哥本哈根試辦現場；拍攝日期未列。<span class="country-photo-credit">照片摘自哥本哈根 Indre By 地方委員會；攝影者未列。</span><a class="country-source" href="https://indrebylokaludvalg.kk.dk/nyheder/forsoeg-med-komprimerende-affaldskurve-i-indre-by" target="_blank" rel="noopener noreferrer">照片來源 ↗</a></figcaption>
+              </figure>
+              <dl class="country-facts"><div><dt>外觀</dt><dd>黑色箱身，頂部面板、正面投入口與下方腳踏；亮色標示操作位置。</dd></div><div><dt>功能與使用對象</dt><dd>高垃圾量街區；標準 240 L 帶輪內桶、太陽能壓縮及滿度通知。</dd></div><div><dt>怎麼收／維護</dt><dd>可沿用大型帶輪桶的清運作業。2025-12-04 備忘錄列 16 處、規劃測試 16 個月；時程不等於已完成成效。<a class="country-source" href="https://www.kk.dk/sites/default/files/2025-12/04.12.25%20-%20Orienteringsnotat%20om%20test%20af%20maskinelt%20t%C3%B8mte%20mini-t%C3%A5rnkurve%20og%20kompressionskurve.pdf" target="_blank" rel="noopener noreferrer">作業來源 ↗</a></dd></div><div><dt>已有證據</dt><dd>2025 方案試 16 桶；早期 2018–2023 智慧桶預期效率未實現。未找到新版完成評估。<a class="country-source" href="https://www.kk.dk/sites/default/files/agenda/83c5755d-bc0a-49e1-b04f-869a658fcdf6/48a7f707-43e3-4d42-a322-3581c4926820-bilag-2.pdf" target="_blank" rel="noopener noreferrer">功能與營運來源 ↗</a></dd></div></dl>
+              <dl class="country-facts country-cost"><div><dt>公開成本 · 年度計畫額度</dt><dd><p class="country-price">市府列 2025 起每年 DKK 550,000 計畫額度；非單桶價或完整成本。 <a href="https://indrebylokaludvalg.kk.dk/nyheder/forsoeg-med-komprimerende-affaldskurve-i-indre-by" target="_blank" rel="noopener noreferrer">額度來源</a></p></dd></div><div><dt>台北怎麼參考</dt><dd>保留基本巡收、員工操作評估及恢復舊桶的條件。</dd></div></dl>
             </div>
           </article></li>
           <li><article class="country-case" aria-labelledby="country-australia">
@@ -290,22 +363,67 @@
               <dl class="country-facts country-cost"><div><dt>公開成本 · 未公開完整站體成本</dt><dd><p class="country-price">所查資料未列站體單價、安裝與影像服務完整費用。</p><p class="country-price-note">2022 行人桶設計規範未確認為 2026 最新版；巷道站也不能和單座行人桶直接比價。</p><a class="country-source" href="https://participate.melbourne.vic.gov.au/emerging-tech-testbed/bullens-lane" target="_blank" rel="noopener noreferrer">成本查閱範圍 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>共用站先查垃圾來源、使用資格、清運車進出與故障備援；投放量大才有評估集中服務的基礎。</dd></div></dl>
             </div>
           </article></li>
-          <li><article class="country-case" aria-labelledby="country-south-africa">
-            <h4 id="country-south-africa" tabindex="-1">南非・開普敦<span>商場周邊行人桶與每日清運</span></h4>
+          <li><article class="country-case" aria-labelledby="country-finland">
+            <h4 id="country-finland" tabindex="-1">芬蘭・赫爾辛基<span>Molok 深埋式收集桶</span></h4>
             <div class="country-case-grid">
               <figure class="country-photo">
-                <div class="country-photo-frame"><img src="images/countries/cape-town-waterfront.jpg" alt="開普敦 Waterfront 木條外殼三分隔桶，分紙類、一般垃圾及玻璃塑膠罐類" width="960" height="724" loading="lazy" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
-                <figcaption>開普敦 V&A Waterfront 的一般垃圾與分類回收設施，2018-07-23。不同地點與桶型，不是下述 Site C Plaza 設置案。<span class="country-photo-credit">Daniel Case／Wikimedia Commons；CC BY-SA 3.0，使用來源縮圖，未裁切或改作。</span><a class="country-source" href="https://commons.wikimedia.org/wiki/File:Sorted_waste_containers_at_Victoria_%26_Alfred_Waterfront,_Cape_Town.jpg" target="_blank" rel="noopener noreferrer">照片來源 ↗</a><a class="country-source" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer">照片授權 ↗</a><a class="country-source" href="https://www.capetown.gov.za/media-and-news/ikwezi-park-to-shine-with-new-public-litter-bins/" target="_blank" rel="noopener noreferrer">官方案例實物照 ↗</a></figcaption>
+                <div class="country-photo-frame"><img src="images/countries/finland-molok.jpg" alt="Oulu 多座木紋圓筒 Molok 收集桶，黑色頂蓋與分類標示" width="960" height="720" loading="lazy" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
+                <figcaption>芬蘭 Oulu，2009-09-26。同系列 Molok 桶，非赫爾辛基 2024 感測試驗；照片不證明裝有感測器。<span class="country-photo-credit">攝影：SeppVei／Wikimedia Commons；作者釋出至公有領域。</span><a class="country-source" href="https://commons.wikimedia.org/wiki/File:Molok_waste_cans.JPG" target="_blank" rel="noopener noreferrer">照片來源 ↗</a></figcaption>
               </figure>
-              <dl class="country-facts"><div><dt>外觀</dt><dd>照片為 Waterfront 木條外殼三分隔設施；Site C Plaza 官方實物照則為綠色圓頂桶，容量、材質與型號未列。</dd></div><div><dt>功能與使用對象</dt><dd>供商場與通勤路線行人投零食包裝、飲料容器；明定不是家戶或商業垃圾收集站，來源未提感測器。</dd></div><div><dt>怎麼收／維護</dt><dd>公告由區域清潔隊每日清空。同文提醒其他點位曾因家戶、商家混倒而滿溢；清運與合法替代管道仍是關鍵。</dd></div><div><dt>已有證據</dt><dd>2022-12-07 公告列 28 桶、分布三條道路；屬行政設置數，未獨立盤點完成數，也未取得後續清潔或防洪成效。<a class="country-source" href="https://www.capetown.gov.za/media-and-news/ikwezi-park-to-shine-with-new-public-litter-bins/" target="_blank" rel="noopener noreferrer">開普敦市府設桶與收運公告 · 2022 ↗</a></dd></div></dl>
-              <dl class="country-facts country-cost"><div><dt>公開成本 · 未公開單桶價格</dt><dd><p class="country-price">設置公告未列單價、採購總額或維護費。</p><p class="country-price-note">每日清運是一項持續支出，不能只以桶體估算服務成本。</p><a class="country-source" href="https://www.capetown.gov.za/media-and-news/ikwezi-park-to-shine-with-new-public-litter-bins/" target="_blank" rel="noopener noreferrer">成本查閱範圍 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>行人需求高的地方仍可設桶，但要寫清可投項目、收運頻率及混倒後的處理責任。</dd></div></dl>
+              <dl class="country-facts"><div><dt>外觀</dt><dd>大型圓筒、木紋外殼與掀蓋投入口；地上部分比一般行人箱寬。</dd></div><div><dt>功能與使用對象</dt><dd>市有物業集中收集；Molok 深埋式桶＋Futuren 滿度感測＋Wastebook 平台，並非行人小型箱。</dd></div><div><dt>怎麼收／維護</dt><dd>原依清運秤重資訊估算下次收運，試驗改用即時滿度協助訂單；省下空車與成本是待驗證目標。<a class="country-source" href="https://testbed.hel.fi/rakennettu-ymparisto/alykasta-jatehuoltoa-kokeillaan-ympari-helsinkia-kokeilu-on-tassa-mittakaavassa-ainutlaatuinen/" target="_blank" rel="noopener noreferrer">作業來源 ↗</a></dd></div><div><dt>已有證據</dt><dd>2024-09 公告：26 處市有物業、117 桶；原訂夏季 2025 結束；本輪未找到最終節省評估，不能視為仍在試辦或已成功。<a class="country-source" href="https://testbed.hel.fi/rakennettu-ymparisto/alykasta-jatehuoltoa-kokeillaan-ympari-helsinkia-kokeilu-on-tassa-mittakaavassa-ainutlaatuinen/" target="_blank" rel="noopener noreferrer">功能與營運來源 ↗</a></dd></div></dl>
+              <dl class="country-facts country-cost"><div><dt>公開成本 · 未公開完整費用</dt><dd><p class="country-price">來源未列感測、平台、維護或土建完整費用。</p><a class="country-source" href="https://testbed.hel.fi/rakennettu-ymparisto/alykasta-jatehuoltoa-kokeillaan-ympari-helsinkia-kokeilu-on-tassa-mittakaavassa-ainutlaatuinen/" target="_blank" rel="noopener noreferrer">成本來源 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>適合物業集中收集；要有吊運空間，不能直接套用一般人行道。</dd></div></dl>
+            </div>
+          </article></li>
+          <li><article class="country-case" aria-labelledby="country-korea">
+            <h4 id="country-korea" tabindex="-1">韓國<span>RFID 家戶廚餘秤重站</span></h4>
+            <div class="country-case-grid">
+              <figure class="country-photo">
+                <div class="country-photo-frame"><img src="images/countries/korea-rfid.jpg" alt="九里市四台橘灰色廚餘秤重設備，帶上掀投入口與側邊操作面板" width="1440" height="648" loading="lazy" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
+                <figcaption>韓國九里市住宅廚餘設備，2022-04-22 新聞稿；拍攝日期未確認。屬同類 RFID 秤重系統，非全國統一機型。<span class="country-photo-credit">照片：九里市（Guri City）；攝影者未列。</span><a class="country-source" href="https://www.guri.go.kr/www/selectBbsNttView.do?bbsNo=42&amp;integrDeptCode=&amp;key=393&amp;nttNo=1538&amp;pageIndex=562&amp;searchCnd=all&amp;searchCtgry=&amp;searchKrwd=" target="_blank" rel="noopener noreferrer">照片來源 ↗</a><a class="country-photo-license" href="https://www.kogl.or.kr/info/licenseType4.do" target="_blank" rel="noopener noreferrer">公共著作物第 4 類：署名、非商用、禁止改作</a></figcaption>
+              </figure>
+              <dl class="country-facts"><div><dt>外觀</dt><dd>橘色上蓋、灰色箱身，投入口旁有操作面板，正面貼有使用說明。</dd></div><div><dt>功能與使用對象</dt><dd>已登錄住戶的廚餘；RFID 辨識、逐次秤重並按排出量計費。秤重與滿度偵測是不同功能。</dd></div><div><dt>怎麼收／維護</dt><dd>首爾 2026-03-03 說明：每台約供 60 戶、每日處理容量 120 L；申請採購及電力工程補助，各區可能需自付。仍須安排收運、清洗及維護。<a class="country-source" href="https://news.seoul.go.kr/env/archives/74584" target="_blank" rel="noopener noreferrer">作業來源 ↗</a></dd></div><div><dt>已有證據</dt><dd>官方列 2025 年 186 自治體、約 861 萬公寓住戶；用途是家戶廚餘。<a class="country-source" href="https://www.keco.or.kr/web/lay1/S1T184C1061/contents.do" target="_blank" rel="noopener noreferrer">功能與營運來源 ↗</a></dd></div></dl>
+              <dl class="country-facts country-cost"><div><dt>公開成本 · 地方安裝補助</dt><dd><p class="country-price">首爾東大門區：安裝補助說明列約 KRW 2,000,000。</p><p class="country-price-note">頁面更新 2026-02-02；未列統一機型、完整維護費或每公斤投放費。這是地方補助資訊，非全韓國單價，也不是照片中九里市機型的報價。</p><a class="country-source" href="https://www.ddm.go.kr/www/contents.do?key=859" target="_blank" rel="noopener noreferrer">補助來源 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>可參考社區廚餘分流；不是匿名行人箱的防家戶垃圾裝置。</dd></div></dl>
+            </div>
+          </article></li>
+          <li><article class="country-case" aria-labelledby="country-india">
+            <h4 id="country-india" tabindex="-1">印度・Indore<span>家戶到戶收運，與行人桶分工</span></h4>
+            <div class="country-case-grid">
+              <figure class="country-photo">
+                <div class="country-photo-frame"><img src="images/countries/indore-collection.jpg" alt="Indore 居民將小桶垃圾交給黃色到戶收運車" width="960" height="720" loading="lazy" decoding="async"><p class="country-photo-error" hidden>照片暫時無法載入，可由下方來源查看。</p></div>
+                <figcaption>Indore 到戶收運實景，2016-12-16；這是服務流程照片，不代表公用行人垃圾桶的型式。<span class="country-photo-credit">TheodoreIndiana／Wikimedia Commons；CC BY-SA 3.0，原圖未改作。</span><a class="country-source" href="https://commons.wikimedia.org/wiki/File:Door-to-door_Garbage_Collection_Vans_in_Indore_-_Under_Swachh_Bharat_Abhiyan.jpg" target="_blank" rel="noopener noreferrer">照片來源 ↗</a><a class="country-source" href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer">照片授權 ↗</a></figcaption>
+              </figure>
+              <dl class="country-facts"><div><dt>外觀</dt><dd>照片呈現居民用家用小桶交付垃圾，車輛沿巷收運；舊路邊集中桶的型號與尺寸未確認。</dd></div><div><dt>功能與使用對象</dt><dd>以到戶收運承接家戶垃圾，分流濕、乾及家戶危險垃圾。商業區行人投放需求仍須另處理。</dd></div><div><dt>怎麼收／維護</dt><dd>官方歷史紀錄：2016 年先在 2 區試行，再擴大到全市；車隊以 GPS 追蹤路線，再送轉運站。GPS 不是桶內滿度感測。</dd></div><div><dt>已有證據</dt><dd>官方頁描述改革前 1,380 個路邊儲存桶與後續到戶收運；頁面未標發布日。城市排名與行政成果不能證明撤除行人桶有效。<a class="country-source" href="https://www.smartcityindore.org/solid-waste/" target="_blank" rel="noopener noreferrer">Smart City Indore 歷史改革紀錄 ↗</a></dd></div></dl>
+              <dl class="country-facts country-cost"><div><dt>公開成本 · 未公開可比桶價</dt><dd><p class="country-price">官方案例未列公用桶單價或完整到戶收運成本。</p><p class="country-price-note">車隊、轉運站與家戶服務費用，不能拿來當成行人桶價格。</p><a class="country-source" href="https://www.smartcityindore.org/solid-waste/" target="_blank" rel="noopener noreferrer">成本查閱範圍 ↗</a></dd></div><div><dt>台北怎麼參考</dt><dd>先讓家戶有可靠合法去處，再討論路邊家戶儲存桶；不能把「無桶」直接套成台北撤行人桶。</dd></div></dl>
             </div>
           </article></li>
         </ol></div>
+      </section>
+      <details id="country-play-disclosure" class="country-start country-play-disclosure"><summary>試玩這個案例的 3D 示意</summary>
+        <div id="country-playground"><p>展開後載入 3D；實拍與來源可直接閱讀。</p></div>
+        <p id="country-load-status" role="status" hidden>3D 控制暫時無法載入；重新整理可再試一次。各國照片與來源仍可閱讀。</p>
+      </details>
+      <details class="country-reading-extra"><summary>依用途比較十二國</summary>
+      <section id="country-comparison" class="country-comparison" aria-labelledby="country-comparison-heading">
+        <h3 id="country-comparison-heading" tabindex="-1">先看用途，再比較設備。</h3>
+        <p>選一種服務，展開同欄位摘要；各案例保留原幣、年度與未知成本，不以價格直接排名。</p>
+        <div id="country-comparison-list"></div>
+      </section>
+      </details>
+      <details class="country-reading-extra"><summary>延伸閱讀：台北的日常投放</summary>
+      <section class="country-taipei" aria-labelledby="country-taipei-heading">
+        <h3 id="country-taipei-heading" tabindex="-1">回到台北，遇到這些情況呢？</h3>
+        <p>從國外案例回到日常投放；以下依臺北市環保局說明，來源日期各自標示。</p>
+        <div id="country-taipei-scenarios"></div>
+      </section>
+      </details>
+        <details class="country-research-context"><summary>比較前：研究建議與資料限制</summary>
+        <h3 id="smart-bin-heading">十二國垃圾桶，從投放到收運一起看。</h3>
+        <p><strong>我們建議：一般桶先做到易投、易清、易維修；垃圾量波動大才比較滿度感測，容量不足才比較壓縮。</strong>地下集中收集及住戶 RFID 屬不同服務。以下對照使用對象、收運、數位功能、營運證據與公開成本。查核：2026-10-16；各案例的資料年份分開標示。</p>
+        <p class="country-comparison-note">照片用來比較外觀，功能與價格另依文字來源核對。保留原幣別及年度；歷史單價、計畫預算與完整營運成本不能直接排名。照片不按設備實際尺寸等比例呈現。</p>
         <p class="service-outcomes"><strong>滿度偵測不能判斷家戶來源。</strong>它回答「何時可能要收」，仍須配合清運人力、合法收受管道及已確認熱點的管理。縮口或鎖桶也要留意垃圾是否改堆桶外。</p>
         <details class="service-evidence"><summary>從感測到清運：有讀值，還需要有人處理。</summary><p>讀值與時間戳 → 檢查異常或失聯 → 依滿度、等待時間與衛生需求排班 → 清運回報 → 維修與績效記錄。失聯或讀值不可靠時回到人工巡查；高溫、殘液與異味可能要求未滿先收。</p><p>瑞士 98 桶研究使用實際資料加模擬，提醒感測需校正、節省須連同成本檢驗。其模擬沒有完整計入設備與安裝，不能拿來承諾台北回本年限。<a href="https://doi.org/10.1016/j.dajour.2023.100347" target="_blank" rel="noopener noreferrer">Barth 等人，2023</a></p></details>
         <details class="service-evidence"><summary>智慧化預算：要比五年總成本，不能只看桶價。</summary><p>現有 30 處、半年約 250 萬元規劃未含智慧桶、平台、土建或新車。新增方案須另計設備、安裝、通訊、電池、校準、維修、清運、清洗、替換及故障備援；只有已證實省下的支出才可扣除。</p><p>五年是比較期間，不是保固承諾。若取代原案設備，扣除不再購買的基準設備以免重算。未取得台北同規格報價，暫不填造追加金額或回本年限；完整文件列出詢價項目。壓縮倍率、倒桶次數、人車支出是三種不同指標。</p></details>
-      </section>
+        </details>
       <p class="related-reading">付費投放、家戶分流及台北的實作建議，見<a href="#research">論文與實務</a>。</p>
     </section>
 

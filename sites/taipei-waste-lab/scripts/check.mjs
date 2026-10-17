@@ -5,12 +5,12 @@ const root=resolve(import.meta.dirname,'../dist');
 const html=await readFile(resolve(root,'index.html'),'utf8');
 const hosting=JSON.parse(await readFile(resolve(root,'../.openai/hosting.json')));
 if(hosting.project_id!=='appgprj_6acfae6c57308191a1c3f97a36d33b66'||hosting.static?.directory!=='out')throw Error('Hosting manifest incomplete');
-const files=['app.js','history.js','data-utils.js','styles.css','mark.svg','data/datasets.json','data/taipei-bins-2026-study-area.provenance.json',
+const files=['siting-ui.js','siting-overlay.html','app.js','history.js','data-utils.js','styles.css','mark.svg','data/datasets.json','data/taipei-bins-2026-study-area.provenance.json',
   'comparison-ui.js','comparison-utils.js','comparison.css','data/comparison-2024-2026.json','data/comparison-2024-2026.csv',
   'research/comparison-2024-2026/README.md','research/comparison-2024-2026/protocol.json',
   'data/comparison-coordinate-distances.json','data/comparison-coordinate-distances.csv',
   'research/coordinate-distances-2024-2026/README.md','research/coordinate-distances-2024-2026/protocol.json',
-  'country-ui.js','country-scene.js','country-model-data.js','country-models.js','country.css',
+  'country-ui.js', 'country-comparison.js', 'country-stories.js','country-scene.js','country-model-data.js','country-models.js','country.css',
   'design-ui.js','design-model.js','bin-scene.js','design.css','research/bin-design.md',
   'vendor/three/three.module.js','vendor/three/three.core.js','vendor/three/OrbitControls.js','vendor/three/LICENSE','vendor/three/manifest.json'];
 for(const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)){
@@ -86,10 +86,21 @@ for(const name of assets){
 const publicHTML=await readFile(resolve(publicRoot,'index.html'),'utf8');
 if(/\bdownload(?:\s|=|>)/i.test(publicHTML)||/id=["'](?:export-csv|comparison-export|comparison-district-export)["']/.test(publicHTML))throw Error('Public download control remains');
 for(const [,href] of publicHTML.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)){
-  if(!/^(?:https?:|#)/i.test(href))throw Error(`Local public attachment link: ${href}`);
+  if(!/^(?:https?:|#)/i.test(href)&&href!=='siting-overlay.html')throw Error(`Local public attachment link: ${href}`);
 }
 for(const name of ['app.js','comparison-ui.js']){
   const code=await readFile(resolve(publicRoot,name),'utf8');
   if(/createObjectURL|\.download\s*=/.test(code))throw Error(`Public export handler remains: ${name}`);
 }
 console.log(`Private integrity, public runtime allowlist, hosting identity and ${ids.length} unique HTML IDs verified.`);
+
+const overlay=await readFile(resolve(publicRoot,'siting-overlay.html'),'utf8');
+const overlayInput=JSON.parse(await readFile(resolve(root,'../data/siting-overlay.json'),'utf8'));
+const embedded=overlay.match(/<script type="application\/json" id="overlay-data">([\s\S]*?)<\/script>/);
+if(!embedded||JSON.stringify(JSON.parse(embedded[1]))!==JSON.stringify(overlayInput))throw Error('Siting display snapshot differs from preserved source');
+if(overlayInput.candidates.features.length!==425||JSON.stringify(overlayInput.layers.map(layer=>layer.mapped))!=='[2505,1799,1000,1969,680]')throw Error('Siting snapshot scope changed');
+if(/\bdownload(?:\s|=|>)/i.test(overlay)||/href=["']inventory\.html/.test(overlay))throw Error('Siting attachment control remains');
+for(const [,href] of overlay.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)){
+  if(!/^(?:https?:|#)/i.test(href)&&href!=='./#siting')throw Error(`Siting attachment link: ${href}`);
+}
+console.log('Siting snapshot and interactive-page publication boundary verified.');

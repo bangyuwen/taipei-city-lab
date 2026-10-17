@@ -11,7 +11,13 @@ function context(id) {
     material(color, metalness = 0, roughness = metalness > 0 ? 0.42 : 0.7) {
       const key = color + '|' + metalness + '|' + roughness;
       if (!materials.has(key)) {
-        materials.set(key, new THREE.MeshStandardMaterial({ color, metalness, roughness }));
+        materials.set(key, new THREE.MeshStandardMaterial({
+          color,
+          metalness,
+          roughness,
+          // Keep polymer bodies softly lit while existing metal trim catches the studio panels.
+          envMapIntensity: metalness >= 0.55 ? 1.16 : 0.78,
+        }));
       }
       return materials.get(key);
     },
@@ -248,8 +254,8 @@ function openAmount(progress, target) {
   return opening * (1 - closing);
 }
 
-function attachPlay(ctx, options = {}) {
-  const play = {
+function createAction(options = {}) {
+  const action = {
     duration: options.duration || 3.2,
     update(progress) {
       const p = Number.isFinite(progress) ? Math.max(0, Math.min(1, progress)) : 0;
@@ -257,8 +263,10 @@ function attachPlay(ctx, options = {}) {
         target.object.rotation[target.axis] = target.base + target.delta * openAmount(p, target);
       }
       for (const entry of options.items || []) {
-        const t = smooth((p - (entry.startAt ?? 0.24)) / ((entry.endAt ?? 0.73) - (entry.startAt ?? 0.24)));
-        entry.object.visible = p > (entry.startAt ?? 0.24) && p < (entry.endAt ?? 0.73);
+        const startAt = entry.startAt ?? 0.24;
+        const endAt = entry.endAt ?? 0.73;
+        const t = smooth((p - startAt) / (endAt - startAt));
+        entry.object.visible = p > startAt && p < endAt;
         if (entry.object.visible) {
           entry.object.position.set(
             entry.start[0] + (entry.end[0] - entry.start[0]) * t,
@@ -267,17 +275,48 @@ function attachPlay(ctx, options = {}) {
           );
           entry.object.rotation.set(t * Math.PI * 1.5, t * Math.PI * 2, t * Math.PI * 0.8);
         } else {
-          entry.object.position.set(entry.end[0], entry.end[1], entry.end[2]);
+          const rest = entry.rest || entry.end;
+          entry.object.position.set(rest[0], rest[1], rest[2]);
           entry.object.rotation.set(0, 0, 0);
         }
       }
       if (options.update) options.update(p);
     },
     reset() {
-      play.update(0);
+      action.update(0);
     },
   };
+  return action;
+}
+
+function actionPart(id, label, description, hitTargets, action = {}) {
+  return { id, label, description, hitTargets, ...action };
+}
+
+function attachPlay(ctx, options = {}) {
+  const play = createAction(options);
+  const parts = [];
+  const partActions = Object.create(null);
+  for (const definition of options.parts || []) {
+    const { id, label, description } = definition;
+    if (typeof id !== 'string' || !id || Object.prototype.hasOwnProperty.call(partActions, id)) {
+      throw new TypeError('Country model part ids must be unique nonempty strings');
+    }
+    const action = createAction({
+      ...definition,
+      duration: definition.duration ?? options.duration,
+    });
+    const hitTargets = Array.isArray(definition.hitTargets) ? definition.hitTargets : [definition.hitTargets];
+    for (const target of hitTargets) {
+      if (target) target.userData.countryPartId = id;
+    }
+    parts.push({ id, label, description });
+    partActions[id] = action;
+  }
   ctx.group.userData.play = play;
+  ctx.group.userData.parts = parts;
+  ctx.group.userData.partActions = partActions;
+  for (const action of Object.values(partActions)) action.reset();
   play.reset();
   return ctx.group;
 }
@@ -303,7 +342,7 @@ function buildJapan() {
     addBox(ctx, side < 0 ? 'left-foot-pedal-grip' : 'right-foot-pedal-grip', 0.48, 0.018, 0.10, x, 0.195, 0.53, '#d5d9d9', ctx.group, 0.58);
   }
   addRoundedBox(ctx, 'center-divider', 0.09, 1.82, 0.84, 0, 0.14, 0, '#24292c', 0.025, ctx.group, 0.28, 0.42);
-  addRoundedBox(ctx, 'left-intake-recess', 0.82, 0.56, 0.055, -0.55, 1.18, 0.423, '#171d20', 0.025, ctx.group, 0.16, 0.38);
+  const intake = addRoundedBox(ctx, 'left-intake-recess', 0.82, 0.56, 0.055, -0.55, 1.18, 0.423, '#171d20', 0.025, ctx.group, 0.16, 0.38);
 
   const leftFlap = addDoor(ctx, 'left-dark-intake-flap', -0.55, 1.72, 0.455, 0.77, 0.50, '#262b2e', { handle: true, delta: -0.96 });
   const rightPanel = addRoundedBox(ctx, 'right-blue-inset-panel', 0.8, 0.54, 0.055, 0.55, 1.18, 0.424, '#1763ae', 0.04, ctx.group, 0.12, 0.42);
@@ -313,10 +352,15 @@ function buildJapan() {
   addRoundedBox(ctx, 'left-classification-band', 0.76, 0.09, 0.025, -0.55, 1.76, 0.469, '#9d3232', 0.015, ctx.group, 0.06, 0.48);
   addRoundedBox(ctx, 'right-classification-band', 0.76, 0.09, 0.025, 0.55, 1.76, 0.469, '#164a86', 0.015, ctx.group, 0.06, 0.48);
   const item = addPlayItem(ctx, 'japan-paper', [-0.55, 0.52, 0]);
+  const deposit = { object: item, start: [-0.55, 1.49, 0.59], end: [-0.55, 0.54, 0] };
   return attachPlay(ctx, {
     duration: 3.2,
     targets: [leftFlap],
-    items: [{ object: item, start: [-0.55, 1.49, 0.59], end: [-0.55, 0.54, 0] }],
+    items: [deposit],
+    parts: [
+      actionPart('left-flap', '左側入口翻板', '翻開並闔上左側黑色入口翻板。', [leftFlap.object], { targets: [leftFlap] }),
+      actionPart('paper-deposit', '紙張投入', '示意紙張經左側入口投入箱內。', [intake], { targets: [leftFlap], items: [deposit] }),
+    ],
   });
 }
 
@@ -336,7 +380,7 @@ function buildUk() {
   for (let index = 0; index < 4; index += 1) {
     addBox(ctx, 'roof-plate-cell-' + index, 0.085, 0.009, 0.22, -0.15 + index * 0.1, 1.952, -0.035, '#60737b', ctx.group, 0.46);
   }
-  addRoundedBox(ctx, 'front-intake-recess', 0.82, 0.56, 0.055, 0, 0.82, 0.43, '#171c1f', 0.045, ctx.group, 0.2, 0.38);
+  const intake = addRoundedBox(ctx, 'front-intake-recess', 0.82, 0.56, 0.055, 0, 0.82, 0.43, '#171c1f', 0.045, ctx.group, 0.2, 0.38);
   addBox(ctx, 'front-brass-band-upper', 0.98, 0.024, 0.022, 0, 0.58, 0.434, '#94744a', ctx.group, 0.42);
   addBox(ctx, 'front-brass-band-lower', 0.98, 0.024, 0.022, 0, 0.34, 0.434, '#94744a', ctx.group, 0.42);
   const flap = addDoor(ctx, 'front-entry-flap', 0, 1.30, 0.46, 0.60, 0.40, '#40484b', { handle: true, delta: -0.92 });
@@ -345,9 +389,14 @@ function buildUk() {
   addBox(ctx, 'left-side-edge-rail', 0.055, 1.28, 0.07, -0.55, 0.20, 0.22, '#495154', ctx.group, 0.42);
   addBox(ctx, 'right-side-edge-rail', 0.055, 1.28, 0.07, 0.55, 0.20, 0.22, '#495154', ctx.group, 0.42);
   const item = addPlayItem(ctx, 'uk-paper', [0, 0.45, 0]);
+  const deposit = { object: item, start: [0, 1.08, 0.59], end: [0, 0.45, 0] };
   return attachPlay(ctx, {
     targets: [flap],
-    items: [{ object: item, start: [0, 1.08, 0.59], end: [0, 0.45, 0] }],
+    items: [deposit],
+    parts: [
+      actionPart('entry-flap', '入口翻板', '翻開並闔上前方入口翻板。', [flap.object], { targets: [flap] }),
+      actionPart('paper-deposit', '紙張投入', '示意紙張經前方入口投入箱內。', [intake], { targets: [flap], items: [deposit] }),
+    ],
   });
 }
 
@@ -359,7 +408,7 @@ function buildDenmark() {
   for (let index = 0; index < 5; index += 1) {
     addBox(ctx, 'solar-cell-line-' + index, 0.012, 0.008, 0.42, -0.27 + index * 0.135, 1.897, -0.02, '#789099', ctx.group, 0.5);
   }
-  addRoundedBox(ctx, 'upper-intake-recess', 0.74, 0.45, 0.05, 0, 1.16, 0.42, '#171d20', 0.025, ctx.group, 0.16, 0.4);
+  const intake = addRoundedBox(ctx, 'upper-intake-recess', 0.74, 0.45, 0.05, 0, 1.16, 0.42, '#171d20', 0.025, ctx.group, 0.16, 0.4);
   addBox(ctx, 'lime-identification-band', 0.92, 0.075, 0.035, 0, 1.39, 0.43, '#afc346');
   const flap = addDoor(ctx, 'upper-intake-flap', 0, 1.55, 0.46, 0.66, 0.36, '#383f42', { handle: true, delta: -0.95 });
   addRoundedBox(ctx, 'lower-service-panel', 0.54, 0.34, 0.045, 0, 0.45, 0.43, '#303639', 0.03, ctx.group, 0.18, 0.48);
@@ -367,12 +416,19 @@ function buildDenmark() {
   const pedal = addRoundedBox(ctx, 'front-foot-pedal', 0.62, 0.08, 0.24, 0, 0.11, 0.49, '#aeb6b7', 0.03, ctx.group, 0.68, 0.34);
   addBox(ctx, 'pedal-grip', 0.48, 0.02, 0.12, 0, 0.18, 0.55, '#d2d7d7', ctx.group, 0.58);
   const item = addPlayItem(ctx, 'denmark-paper', [0, 0.52, 0]);
+  const deposit = { object: item, start: [0, 1.34, 0.58], end: [0, 0.52, 0] };
+  const pressPedal = (progress) => {
+    pedal.rotation.x = 0.18 * Math.sin(Math.PI * progress);
+  };
   return attachPlay(ctx, {
     targets: [flap],
-    items: [{ object: item, start: [0, 1.34, 0.58], end: [0, 0.52, 0] }],
-    update(progress) {
-      pedal.rotation.x = 0.18 * Math.sin(Math.PI * progress);
-    },
+    items: [deposit],
+    update: pressPedal,
+    parts: [
+      actionPart('entry-flap', '入口翻板', '翻開並闔上上方入口翻板。', [flap.object], { targets: [flap] }),
+      actionPart('paper-deposit', '紙張投入', '示意紙張經上方入口投入箱內。', [intake], { targets: [flap], items: [deposit] }),
+      actionPart('foot-pedal', '前踏板', '示意踩下前方踏板並讓踏板回位。', [pedal], { update: pressPedal }),
+    ],
   });
 }
 
@@ -407,12 +463,17 @@ function buildUs() {
       roughness: 0.34,
     });
   }
-  addRoundedBox(ctx, 'upper-slot-recess', 0.36, 0.14, 0.045, 0, 1.59, 0.49, '#242a2c', 0.025, ctx.group, 0.35, 0.38);
+  const intake = addRoundedBox(ctx, 'upper-slot-recess', 0.36, 0.14, 0.045, 0, 1.59, 0.49, '#242a2c', 0.025, ctx.group, 0.35, 0.38);
   const flap = addDoor(ctx, 'upper-slot-flap', 0, 1.68, 0.525, 0.30, 0.10, '#6e7779', { depth: 0.035, delta: -0.78 });
   const item = addPlayItem(ctx, 'us-paper', [0, 0.53, 0]);
+  const deposit = { object: item, start: [0, 1.61, 0.59], end: [0, 0.53, 0] };
   return attachPlay(ctx, {
     targets: [flap],
-    items: [{ object: item, start: [0, 1.61, 0.59], end: [0, 0.53, 0] }],
+    items: [deposit],
+    parts: [
+      actionPart('slot-flap', '投入口翻板', '翻開並闔上圓筒上方的投入口翻板。', [flap.object], { targets: [flap] }),
+      actionPart('paper-deposit', '紙張投入', '示意紙張經上方窄槽投入籃內。', [intake], { targets: [flap], items: [deposit] }),
+    ],
   });
 }
 
@@ -447,9 +508,13 @@ function buildFinland() {
     delta: -0.84,
   });
   const item = addPlayItem(ctx, 'finland-paper', [0, 0.55, 0]);
+  const deposit = { object: item, start: [0, 1.56, 0.60], end: [0, 0.55, 0] };
   return attachPlay(ctx, {
     targets: [hatch],
-    items: [{ object: item, start: [0, 1.56, 0.60], end: [0, 0.55, 0] }],
+    items: [deposit],
+    parts: [
+      actionPart('front-hatch-deposit', '前方小蓋與投入', '翻開前方小蓋，示意紙張進入木桶。', [hatch.object], { targets: [hatch], items: [deposit] }),
+    ],
   });
 }
 
@@ -463,7 +528,7 @@ function buildKorea() {
   addRoundedBox(ctx, 'orange-hood-side-right', 0.075, 0.52, 0.70, 0.52, 1.52, 0, '#ef6330', 0.025, ctx.group, 0.08, 0.42);
   addRoundedBox(ctx, 'orange-hood-top', 1.22, 0.15, 0.91, 0, 2.03, 0, '#f16a35', 0.045, ctx.group, 0.08, 0.4);
   addRoundedBox(ctx, 'horizontal-tray-recess', 0.84, 0.12, 0.55, 0, 1.49, 0.02, '#737d7f', 0.04, ctx.group, 0.34, 0.42);
-  addRoundedBox(ctx, 'horizontal-intake-slot', 0.54, 0.04, 0.32, 0, 1.59, 0.06, '#202628', 0.02, ctx.group, 0.24, 0.38);
+  const intake = addRoundedBox(ctx, 'horizontal-intake-slot', 0.54, 0.04, 0.32, 0, 1.59, 0.06, '#202628', 0.02, ctx.group, 0.24, 0.38);
   const hatch = addTopHatch(ctx, 'horizontal-intake-hatch', 0, 1.59, -0.23, 0.68, 0.46, '#a9b0b2', {
     delta: -0.82,
     thickness: 0.045,
@@ -474,9 +539,13 @@ function buildKorea() {
     addFrontDisc(ctx, 'keypad-button-' + index, 0.018, 0.02, 0.425 + (index % 2) * 0.06, 1.21 - Math.floor(index / 2) * 0.07, 0.465, '#d5dada', 0.4);
   }
   const item = addPlayItem(ctx, 'korea-paper', [0, 0.48, 0]);
+  const deposit = { object: item, start: [0, 1.67, 0.18], end: [0, 0.48, 0] };
   return attachPlay(ctx, {
     targets: [hatch],
-    items: [{ object: item, start: [0, 1.67, 0.18], end: [0, 0.48, 0] }],
+    items: [deposit],
+    parts: [
+      actionPart('horizontal-hatch-deposit', '水平上蓋與投入', '掀開水平入口蓋，示意物品投入秤重箱。', [hatch.object, intake], { targets: [hatch], items: [deposit] }),
+    ],
   });
 }
 
@@ -512,7 +581,7 @@ function buildFrance() {
   addHorizontalRing(ctx, 'lower-wire-ring', 0.36, 0.018, 0, 0.19, 0, '#abb2b3', 0.72);
   addHorizontalRing(ctx, 'middle-wire-ring', 0.36, 0.016, 0, 0.7, 0, '#abb2b3', 0.72);
   addHorizontalRing(ctx, 'upper-wire-ring', 0.36, 0.017, 0, 1.13, 0, '#abb2b3', 0.72);
-  addHorizontalRing(ctx, 'open-rim-ring', 0.38, 0.022, 0, 1.3, 0, '#c1c7c8', 0.78);
+  const openRim = addHorizontalRing(ctx, 'open-rim-ring', 0.38, 0.022, 0, 1.3, 0, '#c1c7c8', 0.78);
   for (let index = 0; index < 3; index += 1) {
     addCylinderAt(ctx, 'short-ground-foot-' + index, 0.035, 0.035, 0.10, Math.cos(index * 2.1) * 0.28, 0.05, Math.sin(index * 2.1) * 0.28, '#80898a', {
       segments: 10,
@@ -520,8 +589,19 @@ function buildFrance() {
     });
   }
   const item = addPlayItem(ctx, 'france-paper', [0, 0.5, 0]);
+  const deposit = { object: item, start: [0, 1.44, 0], end: [0, 0.50, 0] };
+  const liftLiner = (progress) => {
+    const lift = progress <= 0.5
+      ? smooth(progress / 0.5) * 0.42
+      : (1 - smooth((progress - 0.5) / 0.5)) * 0.42;
+    liner.position.y = 0.62 + lift;
+  };
   return attachPlay(ctx, {
-    items: [{ object: item, start: [0, 1.44, 0], end: [0, 0.50, 0] }],
+    items: [deposit],
+    parts: [
+      actionPart('open-top-deposit', '敞口投入', '示意紙張經開放式籃口投入；模型沒有另加翻蓋。', [openRim], { items: [deposit] }),
+      actionPart('remove-liner', '提出內袋', '將現有內袋向上提出，再放回籃內。', [liner], { update: liftLiner }),
+    ],
   });
 }
 
@@ -553,12 +633,16 @@ function buildNetherlands() {
   }
   addFrontDisc(ctx, 'round-deposit-opening-trim', 0.20, 0.055, 0, 1.49, 0.307, '#9c9b75', 0.46);
   addFrontDisc(ctx, 'round-deposit-opening-rim', 0.17, 0.06, 0, 1.49, 0.338, '#353a38', 0.32);
-  addFrontDisc(ctx, 'round-deposit-opening', 0.125, 0.065, 0, 1.49, 0.37, '#101617', 0.12);
+  const depositOpening = addFrontDisc(ctx, 'round-deposit-opening', 0.125, 0.065, 0, 1.49, 0.37, '#101617', 0.12);
   addRoundedBox(ctx, 'lower-pull-hatch', 0.58, 0.30, 0.05, 0, 0.69, 0.31, '#b5a747', 0.04, ctx.group, 0.16, 0.48);
   addBox(ctx, 'lower-hatch-handle', 0.23, 0.04, 0.045, 0, 0.85, 0.35, '#6c716e', ctx.group, 0.58);
   const item = addPlayItem(ctx, 'netherlands-bottle', [0, 0.55, 0]);
+  const deposit = { object: item, start: [0, 1.49, 0.48], end: [0, 0.55, -0.08] };
   return attachPlay(ctx, {
-    items: [{ object: item, start: [0, 1.49, 0.48], end: [0, 0.55, -0.08] }],
+    items: [deposit],
+    parts: [
+      actionPart('bottle-deposit', '瓶罐投入', '示意物品經圓形回收入口投入箱內。', [depositOpening], { items: [deposit] }),
+    ],
   });
 }
 
@@ -571,10 +655,11 @@ function buildSingapore() {
     { x: 0.84, color: '#d0ad35' },
   ];
   const targets = [];
+  const slotHits = [];
   bins.forEach((bin, index) => {
     addRoundedBox(ctx, 'colored-cabinet-' + index, 0.49, 1.4, 0.49, bin.x, 0, 0, bin.color, 0.045, ctx.group, 0.12, 0.46);
     addRoundedBox(ctx, 'front-identification-inset-' + index, 0.37, 0.42, 0.035, bin.x, 0.88, 0.258, '#d2d8d6', 0.025, ctx.group, 0.08, 0.48);
-    addRoundedBox(ctx, 'front-slot-' + index, 0.23, 0.065, 0.04, bin.x, 1.07, 0.286, '#263033', 0.02, ctx.group, 0.2, 0.4);
+    slotHits.push(addRoundedBox(ctx, 'front-slot-' + index, 0.23, 0.065, 0.04, bin.x, 1.07, 0.286, '#263033', 0.02, ctx.group, 0.2, 0.4));
     const lid = addTopHatch(ctx, 'colored-top-flap-' + index, bin.x, 1.38, -0.22, 0.5, 0.46, bin.color, {
       base: 0.14,
       delta: -0.90,
@@ -585,9 +670,15 @@ function buildSingapore() {
     targets.push(lid);
   });
   const item = addPlayItem(ctx, 'singapore-paper', [-0.28, 0.52, 0]);
+  const deposit = { object: item, start: [-0.28, 1.57, 0.05], end: [-0.28, 0.52, 0] };
+  const blueDeposit = { object: item, start: [-0.28, 1.10, 0.35], end: [-0.28, 0.52, 0] };
   return attachPlay(ctx, {
     targets,
-    items: [{ object: item, start: [-0.28, 1.57, 0.05], end: [-0.28, 0.52, 0] }],
+    items: [deposit],
+    parts: [
+      actionPart('sorting-lids', '分類入口上蓋', '依序翻開並闔上四個分類入口上蓋。', targets.map((target) => target.object), { targets }),
+      actionPart('paper-deposit', '藍色入口投入', '示意紙張經藍色前方槽投入分類箱。', [slotHits[1]], { items: [blueDeposit] }),
+    ],
   });
 }
 
@@ -649,15 +740,25 @@ function buildIndia() {
   addRoundedBox(ctx, 'small-container-body', 0.54, 0.67, 0.56, 1.03, 0.04, -0.25, '#57846a', 0.055, ctx.group, 0.08, 0.5);
   addRoundedBox(ctx, 'small-container-rim', 0.60, 0.08, 0.62, 1.03, 0.71, -0.25, '#416d55', 0.035, ctx.group, 0.12, 0.46);
   addBox(ctx, 'container-side-grip', 0.04, 0.16, 0.09, 1.32, 0.38, -0.25, '#c0c7c3', ctx.group, 0.48);
+  const turnWheels = (progress) => {
+    const travel = smooth(progress);
+    for (const wheel of wheelAssemblies) {
+      wheel.rotation.y = travel * Math.PI * 2;
+    }
+  };
+  const tiltBed = (progress) => {
+    bed.rotation.x = 0.30 * Math.sin(Math.PI * progress);
+  };
   return attachPlay(ctx, {
     duration: 3.5,
     update(progress) {
-      const travel = smooth(progress);
-      for (const wheel of wheelAssemblies) {
-        wheel.rotation.y = travel * Math.PI * 2;
-      }
-      bed.rotation.x = 0.30 * Math.sin(Math.PI * progress);
+      turnWheels(progress);
+      tiltBed(progress);
     },
+    parts: [
+      actionPart('collection-bed', '傾斜收集斗', '示意車斗抬起並回到行駛位置。', [bed], { update: tiltBed }),
+      actionPart('truck-wheels', '車輪轉動', '示意四個車輪轉動一圈。', wheelAssemblies, { update: turnWheels }),
+    ],
   });
 }
 
@@ -670,6 +771,12 @@ function buildAustralia() {
     { x: 0.62, color: '#7b8956' },
   ];
   const targets = [];
+  const parts = [];
+  const bayParts = [
+    ['left-bay', '左側入口', '翻開並闔上左側投入入口。'],
+    ['center-bay', '中央入口', '翻開並闔上中央投入入口。'],
+    ['right-bay', '右側入口', '翻開並闔上右側投入入口。'],
+  ];
   bays.forEach((bay, index) => {
     addRoundedBox(ctx, 'generic-receiving-bay-' + index, 0.58, 1.16, 0.70, bay.x, 0.15, 0, bay.color, 0.06, ctx.group, 0.1, 0.48);
     addRoundedBox(ctx, 'bay-front-recess-' + index, 0.43, 0.39, 0.045, bay.x, 0.65, 0.36, '#29393d', 0.03, ctx.group, 0.24, 0.4);
@@ -681,6 +788,8 @@ function buildAustralia() {
       metalness: 0.28,
     });
     targets.push(flap);
+    const [id, label, description] = bayParts[index];
+    parts.push(actionPart(id, label, description, [flap.object], { targets: [flap] }));
   });
   addRoundedBox(ctx, 'shared-canopy', 2.08, 0.17, 0.94, 0, 1.48, 0, '#38474b', 0.055, ctx.group, 0.28, 0.4);
   for (const side of [-1, 1]) {
@@ -692,6 +801,7 @@ function buildAustralia() {
   return attachPlay(ctx, {
     targets,
     duration: 3.1,
+    parts,
   });
 }
 
@@ -709,6 +819,7 @@ function buildSouthAfrica() {
   }
 
   const bayCenters = [-0.82, 0, 0.82];
+  const intakeSlots = [];
   bayCenters.forEach((x, index) => {
     addRoundedBox(ctx, 'dark-bay-interior-' + index, 0.72, 1.22, 0.06, x, 0.16, -0.32, '#32393b', 0.03, ctx.group, 0.18, 0.44);
     for (let row = 0; row < 6; row += 1) {
@@ -717,7 +828,7 @@ function buildSouthAfrica() {
     for (const side of [-1, 1]) {
       addRoundedBox(ctx, 'wood-side-slat-' + index + '-' + side, 0.065, 1.04, 0.70, x + side * 0.37, 0.18, 0, '#896f4e', 0.018, ctx.group, 0.02, 0.78);
     }
-    addRoundedBox(ctx, 'open-intake-slot-' + index, 0.56, 0.19, 0.035, x, 1.2, 0.405, '#1e282a', 0.02, ctx.group, 0.12, 0.38);
+    intakeSlots.push(addRoundedBox(ctx, 'open-intake-slot-' + index, 0.56, 0.19, 0.035, x, 1.2, 0.405, '#1e282a', 0.02, ctx.group, 0.12, 0.38));
     addRoundedBox(ctx, 'bay-identification-plate-' + index, 0.56, 0.23, 0.035, x, 1.42, 0.405, ['#477f77', '#a99049', '#3c7190'][index], 0.02, ctx.group, 0.05, 0.54);
   });
 
@@ -728,8 +839,20 @@ function buildSouthAfrica() {
     addRoundedBox(ctx, 'roof-wood-slat-' + index, 2.5, 0.075, 0.095, 0, 1.99, z, index % 2 ? '#8d714e' : '#9a7b53', 0.018, ctx.group, 0.02, 0.76);
   }
   const item = addPlayItem(ctx, 'south-africa-paper', [0, 0.52, -0.12]);
+  const centerDeposit = { object: item, start: [0, 1.26, 0.44], end: [0, 0.52, -0.12] };
+  const bayDeposits = bayCenters.map((x) => ({
+    object: item,
+    start: [x, 1.26, 0.44],
+    end: [x, 0.52, -0.12],
+    rest: [0, 0.52, -0.12],
+  }));
   return attachPlay(ctx, {
-    items: [{ object: item, start: [0, 1.26, 0.44], end: [0, 0.52, -0.12] }],
+    items: [centerDeposit],
+    parts: [
+      actionPart('left-bay-deposit', '左側槽投入', '示意物品經左側開放槽投入。', [intakeSlots[0]], { items: [bayDeposits[0]] }),
+      actionPart('center-bay-deposit', '中央槽投入', '示意物品經中央開放槽投入。', [intakeSlots[1]], { items: [bayDeposits[1]] }),
+      actionPart('right-bay-deposit', '右側槽投入', '示意物品經右側開放槽投入。', [intakeSlots[2]], { items: [bayDeposits[2]] }),
+    ],
   });
 }
 

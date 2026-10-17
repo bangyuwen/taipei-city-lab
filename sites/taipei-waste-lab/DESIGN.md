@@ -249,3 +249,21 @@ The desktop rail is fixed, petrol, and vertically stacked. Links use 16px text a
 - **Don't** separate a claim from the source and coverage limit that bounds it.
 - **Don't** add public downloads or attachments to the research presentation.
 - **Don't** borrow decorative motifs from unrelated visual worlds.
+
+## Country discovery and parts
+
+The country page leads with one selected case, its real photograph and complete provenance, and the existing use, collection, and evidence fields. A purpose-grouped index selects the case on desktop; a native grouped select serves narrower screens. Reading and play share one country selection. Keep all twelve static articles available when the country module cannot load. Costs and local interpretation remain in a labeled disclosure; comparison, Taipei scenarios, and research context follow as optional reading.
+
+The shared Three.js renderer loads only when the visitor opens the selected case's play disclosure. Keep direct part selection with labeled button alternatives, deterministic seeking, and reduced-motion/offscreen suspension. Closing the disclosure suspends rendering; switching country ends the old guide. Preserve the photo comparison, full caption, credit, license, and case limitations inside play. Advanced camera controls stay in a native disclosure. Source labels retain date and coverage text on narrow layouts; never normalize currencies or turn unknown costs into numbers.
+
+## T1 physical proposal
+
+The design route pairs the fixed T1 street-bin proposal with the existing four-purpose experience. Lead with the street/shopping-district use and three actions: demonstrate cleaning, open the current specification, or read the design process. Keep drawings, proposed dimensions, material choices, siting, maintenance, validation and unquoted costs in four native disclosures. Readable 16px copy and aligned specification rows carry detail without adding a second navigation system.
+
+T1 defaults to a 48 × 42 × 110 cm envelope and a 22 × 14.3 cm opening centered at 82.5 cm. The 60 L capacity is a target, not measured volume. Sliders change the interactive appearance only; the fixed proposal remains explicit. Three.js shows the hood, replaceable panels, door and rolling liner. Motion respects reduced-motion settings. Preserve all other purposes and the text-only/WebGL-failure path. No drawing or animation is a fabrication document or a verified physical result.
+
+The T1 design process is a Read surface between the interactive workspace and the detailed proposal. Use five primary ordered native disclosures: needs and evidence, same-need comparison, complete design, full-size operation mock-up, and engineering/metal prototype. Each closed stage shows its deliverable and current evidence status. Expanded content explains participants, the question, actions and advancement conditions. Keep acceptance, approved pilot and production/operations in one secondary disclosure after the five stages. T1 remains a candidate until comparison supports selection. The existing process jump control focuses its heading without changing the route hash; specification links open and focus their existing disclosure. Keep 16px body copy, one-column phone details and no completion percentages or invented field results.
+
+## Siting history overlay
+
+Keep `#siting` as the fourth history subview and link it from the existing T1 actions. Reuse the petrol and cool-paper palette. Load the same-origin overlay document only on first activation, size it to its content to avoid nested scrolling, and preserve its filters when switching routes. Keep a full-page navigation link and retry state. The embedded document hides its duplicate masthead, while the standalone page retains its return navigation. Actual sidewalk polygons and separately dated snapshot markers remain distinct; coverage, provisional width units and unverified installation status stay adjacent to the controls and details. Publish only the display document and its runtime controller; preserve research inputs privately.

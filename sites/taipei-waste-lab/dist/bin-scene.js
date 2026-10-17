@@ -199,12 +199,16 @@ export function createBinScene(container, { onStatus = () => {} } = {}) {
       mesh(new THREE.IcosahedronGeometry(radius, 1), material(0x809a75, { roughness: 1 }), environment, [2.7 + dx, dy, streetBack - .48 + dz]);
     }
     addScalePerson(Math.max(width / 2 + 0.75, 1.1), clamp(depth / 2 + 0.35, 0.55, frontEdge - 0.12));
-    dimension([-width / 2, .035, depth / 2 + .13], [width / 2, .035, depth / 2 + .13], `桶寬 ${Math.round(width * 100)} cm`, [0, .08, depth / 2 + .32], .95);
-    dimension([-width / 2 - .22, .04, -depth / 2], [-width / 2 - .22, .04, depth / 2], `深 ${Math.round(depth * 100)} cm`, [-width / 2 - .5, .12, 0], .78);
-    dimension([-width / 2 - .16, .02, depth / 2], [-width / 2 - .16, height, depth / 2], `高 ${Math.round(height * 100)} cm`, [-width / 2 - .55, height * .57, depth / 2 + .04], .72);
-    const remaining = sidewalk - depth;
-    const dimensionX = width / 2 + .42;
-    dimension([dimensionX, .04, depth / 2], [dimensionX, .04, frontEdge], `桶前 ${Math.round(remaining * 100)} cm`, [dimensionX + .20, .13, (depth / 2 + frontEdge) / 2], 1.04);
+    // T1 dimensions are readable beside the scene and in the proposal drawings.
+    // Keep the mechanism clear of floating dimension labels.
+    if (design.id !== 'street') {
+      dimension([-width / 2, .035, depth / 2 + .13], [width / 2, .035, depth / 2 + .13], `桶寬 ${Math.round(width * 100)} cm`, [0, .08, depth / 2 + .32], .95);
+      dimension([-width / 2 - .22, .04, -depth / 2], [-width / 2 - .22, .04, depth / 2], `深 ${Math.round(depth * 100)} cm`, [-width / 2 - .5, .12, 0], .78);
+      dimension([-width / 2 - .16, .02, depth / 2], [-width / 2 - .16, height, depth / 2], `高 ${Math.round(height * 100)} cm`, [-width / 2 - .55, height * .57, depth / 2 + .04], .72);
+      const remaining = sidewalk - depth;
+      const dimensionX = width / 2 + .42;
+      dimension([dimensionX, .04, depth / 2], [dimensionX, .04, frontEdge], `桶前 ${Math.round(remaining * 100)} cm`, [dimensionX + .20, .13, (depth / 2 + frontEdge) / 2], 1.04);
+    }
   }
 
   function addScalePerson(x, z) {
@@ -297,29 +301,89 @@ export function createBinScene(container, { onStatus = () => {} } = {}) {
   }
 
   function buildStreetBin(width, depth, height, opening, colors) {
-    const openingY = height * (design.openingRatio ?? .75);
-    const point = frontCabinet({
-      x: 0, width, depth, height, opening, openingY,
-      openingAspect: design.openingAspectRatio ?? .65,
-      color: colors.body, label: '街頭', service: true,
-    });
-    mouths = { general: point };
-    mouth.copy(point);
-    isFrontOpening = true;
+    // T1 appearance and sequence only; geometry is not a fabrication or capacity model.
+    const front = depth / 2, wall = .018;
+    const openingY = height * design.openingRatio;
+    const apertureHeight = opening * design.openingAspectRatio;
+    const lower = openingY - apertureHeight / 2, upper = openingY + apertureHeight / 2;
+    const face = front - .035;
+    const steel = { metalness: .62, roughness: .49 };
+    const label = (text, x, y, z, w, h, parent = modelGroup) => mesh(
+      new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({
+        map: textTexture(text, { ink: '#18333b', size: 64, width: 512, height: 128 }),
+        transparent: true, depthWrite: false,
+      }), parent, [x, y, z]);
 
-    // A narrow, low canopy slopes toward the pedestrian side to shield the intake.
-    const canopy = new THREE.Group();
-    canopy.position.set(0, height * .88, depth / 2 - .045);
-    modelGroup.add(canopy);
-    const canopyDepth = depth * .34;
-    const roof = box(width * .94, .04, canopyDepth, colors.body, canopy, [0, 0, 0], { roughness: .54 });
-    roof.rotation.x = .12;
-    box(width * .9, .045, .025, colors.accent, canopy, [0, -.02, canopyDepth * .45], { metalness: .32 });
+    // Replaceable side skins, rear skin and folded edges stay inside the envelope.
     for (const side of [-1, 1]) {
-      box(.018, .11, .025, 0x42584c, modelGroup,
-        [side * width * .37, height * .82, depth * .34]);
+      box(wall, height - .035, depth, colors.body, modelGroup,
+        [side * (width - wall) / 2, (height - .035) / 2, 0], steel);
+      box(.012, height - .08, .026, 0x81999f, modelGroup,
+        [side * (width / 2 - .025), (height - .08) / 2 + .015, front - .016], steel);
     }
-    frontLabel('街頭一般', 0, height * .31, depth / 2 + .01, width * .76, .075);
+    box(width - wall * 2, height - .035, wall, colors.body, modelGroup,
+      [0, (height - .035) / 2, -front + wall / 2], steel);
+    const roof = box(width, .008, depth - .002, 0xb8cbd0, modelGroup,
+      [0, height - .022, 0], steel);
+    roof.rotation.x = -.06; // Front high, rear low; including the slope stays inside height/depth.
+    box(width - .04, height - upper - .04, .026, colors.body, modelGroup,
+      [0, (height - .04 + upper) / 2, face], steel);
+    label('T1', 0, height - .1, face + .014, .1, .05);
+    const cheek = (width - .04 - opening) / 2;
+    for (const side of [-1, 1]) box(cheek, apertureHeight + .025, .026, colors.accent, modelGroup,
+      [side * (opening + cheek) / 2, openingY, face], { roughness: .72 });
+    // Recessed opening, inset hood and downward chute; no user flap or pedal.
+    box(opening + .025, .022, .08, colors.accent, modelGroup, [0, upper + .011, front - .045]);
+    box(opening + .025, .014, .06, 0x81999f, modelGroup, [0, lower - .007, front - .05], steel);
+    const chute = box(opening, .008, .115, 0x80969d, modelGroup,
+      [0, lower - .025, front - .105], steel);
+    chute.rotation.x = -.4;
+    box(opening, apertureHeight + .025, .006, 0x18333b, modelGroup,
+      [0, openingY, front - .17], { roughness: 1 });
+    box(width - .04, .027, .026, colors.body, modelGroup, [0, lower - .026, face], steel);
+
+    // The service door swings clear before the wheeled liner moves forward.
+    const hinge = new THREE.Group();
+    hinge.position.set(-width / 2 + .025, .015, front - .016);
+    modelGroup.add(hinge);
+    const doorWidth = width - .05, doorHeight = lower - .055;
+    box(doorWidth, doorHeight, .016, 0xe2e9e9, hinge, [doorWidth / 2, doorHeight / 2, 0], steel);
+    doorParts.push({ object: hinge, direction: -1 });
+    for (const y of [.12, doorHeight - .12]) cylinder(.009, .065, 0x8b9da1, hinge, [0, y, 0]);
+    box(.025, .09, .01, 0x708a92, hinge, [doorWidth - .045, doorHeight * .45, .012], steel);
+    const key = cylinder(.004, .002, 0x18333b, hinge, [doorWidth - .045, doorHeight * .45 + .025, .018]);
+    key.rotation.x = Math.PI / 2;
+    label('一般垃圾', doorWidth / 2, doorHeight * .73, .009, doorWidth * .75, .085, hinge);
+    label('GENERAL WASTE', doorWidth / 2, doorHeight * .61, .009, doorWidth * .72, .027, hinge);
+    label('面紙等隨手垃圾', doorWidth / 2, doorHeight * .51, .009, doorWidth * .63, .032, hinge);
+    label('T1・概念提案', doorWidth / 2, .075, .009, doorWidth * .6, .027, hinge);
+    // A simple litter pictogram supplements text and does not depend on color.
+    box(.07, .055, .003, colors.accent, hinge, [doorWidth / 2, doorHeight * .32, .01]);
+    box(.085, .007, .003, colors.accent, hinge, [doorWidth / 2, doorHeight * .32 + .035, .01]);
+    const paper = box(.02, .02, .003, colors.accent, hinge,
+      [doorWidth / 2 + .025, doorHeight * .32 + .075, .01]);
+    paper.rotation.z = .35;
+
+    const liner = new THREE.Group();modelGroup.add(liner);
+    const lw = width - .12, ld = depth - .1, lh = lower - .16, thickness = .004;
+    box(lw, thickness, ld, 0x8da5aa, liner, [0, .08, 0], steel);
+    for (const side of [-1, 1]) {
+      box(thickness, lh, ld, 0xb8c9cc, liner, [side * (lw - thickness) / 2, .08 + lh / 2, 0], steel);
+      box(lw, lh, thickness, 0xb8c9cc, liner, [0, .08 + lh / 2, side * (ld - thickness) / 2], steel);
+      box(.013, .018, ld, 0x4b686f, liner, [side * (lw - .013) / 2, .08 + lh, 0]);
+      box(lw, .018, .013, 0x4b686f, liner, [0, .08 + lh, side * (ld - .013) / 2]);
+    }
+    box(lw * .5, .018, .022, 0x45656e, liner, [0, lh + .045, ld / 2 + .008]);
+    const wheels = [];
+    for (const x of [-1, 1]) for (const z of [-1, 1]) {
+      const wheel = cylinder(.034, .02, 0x263c44, liner, [x * (lw / 2 - .025), .034, z * (ld / 2 - .035)]);
+      wheel.rotation.z = Math.PI / 2;wheels.push(wheel);
+    }
+    label('防漏內桶', 0, lh * .65, ld / 2 + .003, lw * .74, .055, liner);
+    addFill(liner, 0, lw / 2 - .01, lh + .075, lh + .06, params.fillPercent, 'rect', ld - .01);
+    linerParts.push({ object: liner, startZ: 0, lift: 0, distance: depth + .12, reveal: false, wheels });
+    const point = new THREE.Vector3(0, openingY, face + .015);
+    mouths = { general: point };mouth.copy(point);isFrontOpening = true;
   }
 
   function buildSortingBins(width, depth, height, opening, colors) {
@@ -546,12 +610,16 @@ export function createBinScene(container, { onStatus = () => {} } = {}) {
       } else {
         part.object.position.z = part.startZ + part.distance * linerProgress;
         part.object.position.y = 0;
+        for (const wheel of part.wheels || []) wheel.rotation.x = part.distance * linerProgress / .034;
       }
     }
   }
 
   function update(nextDesign, nextParams) {
     if (disposed) return;
+    const changedDesign = design?.id !== nextDesign.id;
+    const sameStreet = design?.id === 'street' && nextDesign.id === 'street';
+    const priorProgress = serviceProgress;
     design = nextDesign;
     params = {
       heightCm: 110, openingCm: 22, sidewalkCm: 200, fillPercent: 30,
@@ -578,8 +646,14 @@ export function createBinScene(container, { onStatus = () => {} } = {}) {
     else if (design.id === 'household') buildHouseholdCabinet(width, depth, height, opening, colors);
     else throw new Error('不支援的垃圾桶設計。');
     serviceOpen = params.serviceOpen === true;
-    applyService(serviceOpen ? 1 : 0);
-    if (!camera.position.length()) setView(currentView, true);
+    const target = serviceOpen ? 1 : 0;
+    if (sameStreet && !reducedMotion && Math.abs(priorProgress - target) > .001) {
+      applyService(priorProgress);
+      runningAction = { start: performance.now(), duration: 1050,
+        step: t => applyService(THREE.MathUtils.lerp(priorProgress, target, ease(t))),
+        finish: () => applyService(target) };
+    } else applyService(target);
+    if (changedDesign || !camera.position.length()) setView(currentView, true);
     requestRender();
   }
 
@@ -593,6 +667,10 @@ export function createBinScene(container, { onStatus = () => {} } = {}) {
       wheelchair: { position: [.8 * scale, 1.1, 2.7 * scale], target: [0, height * .68, .03] },
       worker: { position: [-2.0 * scale, 1.7, 3.1 * scale], target: [0, height * .46, .25] },
     };
+    if (design?.id === 'street') {
+      presets.overview = { position: [1.65 * scale, 1.55 * scale, 2.5 * scale], target: [0, height * .53, .12] };
+      presets.worker = { position: [-1.55 * scale, 1.45, 2.6 * scale], target: [0, height * .48, .3] };
+    }
     return presets[view] || presets.overview;
   }
   function setView(view, instant = false) {

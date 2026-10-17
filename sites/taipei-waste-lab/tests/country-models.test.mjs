@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import * as THREE from '../dist/vendor/three/three.module.js';
 import { COUNTRY_MODELS } from '../dist/country-model-data.js';
 import { buildCountryModel } from '../dist/country-models.js';
+import { highlightCountryPart } from '../dist/country-scene.js';
 
 const countryIds = [
   'japan',
@@ -127,7 +128,144 @@ test('each country action is finite, seekable, and resets to its exact rest pose
   }
 });
 
+
+test('each country exposes one to three illustrated parts with deterministic resettable actions', () => {
+  const capturePose = (model) => {
+    const pose = [];
+    model.traverse((object) => {
+      pose.push({
+        name: object.name,
+        position: object.position.toArray(),
+        rotation: object.rotation.toArray(),
+        scale: object.scale.toArray(),
+        visible: object.visible,
+      });
+    });
+    return pose;
+  };
+
+  for (const id of countryIds) {
+    const model = buildCountryModel(id);
+    const parts = model.userData?.parts;
+    const actions = model.userData?.partActions;
+    assert.ok(Array.isArray(parts) && parts.length >= 1 && parts.length <= 3, id + ' should expose one to three parts');
+    assert.equal(Object.keys(actions || {}).length, parts.length, id + ' should define one action per part');
+    const restPose = capturePose(model);
+
+    for (const part of parts) {
+      assert.equal(typeof part.id, 'string');
+      assert.ok(part.id.length > 0);
+      assert.equal(typeof part.label, 'string');
+      assert.ok(part.label.length > 0);
+      assert.equal(typeof part.description, 'string');
+      assert.ok(part.description.length > 0);
+      assert.equal(typeof actions[part.id]?.update, 'function', id + ' ' + part.id + ' should be seekable');
+      assert.equal(typeof actions[part.id]?.reset, 'function', id + ' ' + part.id + ' should reset');
+      assert.ok(actions[part.id].duration >= 3 && actions[part.id].duration <= 4);
+
+      let hasRaycastTarget = false;
+      model.traverse((object) => {
+        if (object.userData?.countryPartId === part.id) hasRaycastTarget = true;
+      });
+      assert.equal(hasRaycastTarget, true, id + ' ' + part.id + ' should map to a named raycast target');
+
+      const action = actions[part.id];
+      action.reset();
+      assert.deepEqual(capturePose(model), restPose, id + ' ' + part.id + ' reset should restore its rest pose');
+      action.update(0.46);
+      const midPose = capturePose(model);
+      assert.notDeepEqual(midPose, restPose, id + ' ' + part.id + ' should visibly move a component or illustrative item');
+      action.update(0.08);
+      action.update(0.46);
+      assert.deepEqual(capturePose(model), midPose, id + ' ' + part.id + ' seeking should be deterministic');
+
+      for (const progress of [0, 0.12, 0.35, 0.68, 0.9, 1]) {
+        action.update(progress);
+        model.updateMatrixWorld(true);
+        const bounds = new THREE.Box3().setFromObject(model);
+        assert.equal(bounds.isEmpty(), false, id + ' ' + part.id + ' should retain geometry at ' + progress);
+        assert.ok([...bounds.min.toArray(), ...bounds.max.toArray()].every(Number.isFinite), id + ' ' + part.id + ' has invalid bounds');
+        model.traverse((object) => {
+          assert.ok(object.position.toArray().every(Number.isFinite), id + ' ' + part.id + ' has non-finite position');
+          assert.ok(object.rotation.toArray().slice(0, 3).every(Number.isFinite), id + ' ' + part.id + ' has non-finite rotation');
+          assert.ok(object.scale.toArray().every(Number.isFinite), id + ' ' + part.id + ' has non-finite scale');
+        });
+      }
+      action.reset();
+      assert.deepEqual(capturePose(model), restPose, id + ' ' + part.id + ' should reset after seeking');
+    }
+  }
+});
+
 test('unknown country ids are rejected', () => {
   assert.throws(() => buildCountryModel('missing'), RangeError);
   assert.throws(() => buildCountryModel(undefined), RangeError);
+});
+
+
+test('selected part highlighting isolates material clones and restores shared originals', () => {
+  const captureMaterials = (model) => {
+    const materials = new Map();
+    model.traverse((object) => {
+      if (object.isMesh) materials.set(object, object.material);
+    });
+    return materials;
+  };
+
+  for (const id of countryIds) {
+    const model = buildCountryModel(id);
+    for (const part of model.userData.parts) {
+      const roots = [];
+      model.traverse((object) => {
+        if (object.userData?.countryPartId === part.id) roots.push(object);
+      });
+      const highlightedMeshes = new Set();
+      const collect = (node, root) => {
+        if (node !== root && node.userData?.countryPartId && node.userData.countryPartId !== part.id) return;
+        if (node.isMesh) highlightedMeshes.add(node);
+        for (const child of node.children) collect(child, root);
+      };
+      for (const root of roots) collect(root, root);
+      assert.ok(highlightedMeshes.size > 0, id + ' ' + part.id + ' should highlight its visible model meshes');
+
+      const originals = captureMaterials(model);
+      const sourceAppearance = new Map();
+      for (const materialValue of originals.values()) {
+        for (const material of Array.isArray(materialValue) ? materialValue : [materialValue]) {
+          if (material && !sourceAppearance.has(material)) {
+            sourceAppearance.set(material, {
+              color: material.color?.toArray(),
+              emissive: material.emissive?.toArray(),
+              emissiveIntensity: material.emissiveIntensity,
+            });
+          }
+        }
+      }
+
+      const clearHighlight = highlightCountryPart(model, part.id);
+      for (const [mesh, originalValue] of originals) {
+        if (!highlightedMeshes.has(mesh)) {
+          assert.strictEqual(mesh.material, originalValue, id + ' ' + part.id + ' must not recolor unrelated meshes');
+          continue;
+        }
+        const original = Array.isArray(originalValue) ? originalValue : [originalValue];
+        const highlighted = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+        assert.equal(highlighted.length, original.length);
+        for (let index = 0; index < original.length; index += 1) {
+          assert.notStrictEqual(highlighted[index], original[index], id + ' ' + part.id + ' should use isolated material clones');
+        }
+      }
+      for (const [material, appearance] of sourceAppearance) {
+        assert.deepEqual(material.color?.toArray(), appearance.color, id + ' ' + part.id + ' must preserve shared source color');
+        assert.deepEqual(material.emissive?.toArray(), appearance.emissive, id + ' ' + part.id + ' must preserve shared source emissive');
+        assert.equal(material.emissiveIntensity, appearance.emissiveIntensity, id + ' ' + part.id + ' must preserve shared source intensity');
+      }
+
+      clearHighlight();
+      for (const [mesh, originalValue] of originals) {
+        assert.strictEqual(mesh.material, originalValue, id + ' ' + part.id + ' should restore material identity');
+      }
+      clearHighlight();
+    }
+  }
 });

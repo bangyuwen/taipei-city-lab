@@ -21,9 +21,9 @@ async function nav(page,target){
     const box=await page.locator('#site-menu-toggle').boundingBox();
     await page.mouse.click(box.x+box.width/2,box.y+box.height/2);
   }
-  const selector=['map','comparison','history'].includes(target)?'[data-section="history"]':`#site-navigation [data-page="${target}"]`;
+  const selector=['map','comparison','history','siting'].includes(target)?'[data-section="history"]':`#site-navigation [data-page="${target}"]`;
   await page.click(selector);
-  if(['comparison','history'].includes(target))await page.click(`.history-subnav [data-page="${target}"]`);
+  if(['comparison','history','siting'].includes(target))await page.click(`.history-subnav [data-page="${target}"]`);
   await page.locator(`#panel-${target}`).waitFor({state:'visible'});
   await page.waitForTimeout(100);
 }
@@ -33,7 +33,7 @@ try{
     const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
     // Keep a real map in screenshots; interaction checks also tolerate tile failure.
     await page.goto(url);await page.locator('#load-status[hidden]').waitFor({state:'attached'});
-    for(const target of ['map','comparison','history','countries','design','research','sources']){
+    for(const target of ['map','comparison','history','siting','countries','design','research','sources']){
       if(target!=='map')await nav(page,target);
       if(target==='comparison')await page.locator('#comparison-content:not([hidden])').waitFor();
       if(target==='design')await page.waitForTimeout(800);

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 600" role="img" aria-labelledby="title desc">
+<title id="title">T1 行人垃圾桶側面剖視提案圖</title>
+<desc id="desc">提案深42公分、高110公分，左後右前。斜雨蓋與內縮導入口均收於桶體範圍。獨立防漏內桶目標60公升，尚待驗證，底部輪組讓內桶經前側維修門抽出。無排液孔且不向地面排放。尺寸為概念示意，非施工圖。</desc>
+<style>:root{color-scheme:light;--paper:#f2f6f7;--ink:#18333b;--accent:#16566a;--steel:#dbe3e5;--white:#fff;--muted:#536d76;--dim:#6b858d} text{font-family:system-ui,-apple-system,"Noto Sans TC",sans-serif;fill:var(--ink);font-size:18px}.line{fill:none;stroke:var(--accent);stroke-width:2.3;stroke-linejoin:round}.dim{fill:none;stroke:var(--dim);stroke-width:1.3}.small{fill:var(--muted);font-size:18px}.call{font-size:19px;font-weight:600}</style>
+<defs><marker id="dimarrow" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M8 0 0 4 8 8" fill="none" stroke="var(--dim)" stroke-width="1.1"/></marker><marker id="flow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="m2 1 6 4-6 4" fill="none" stroke="var(--accent)" stroke-width="1.6"/></marker></defs>
+<path fill="var(--paper)" d="M0 0h480v600H0z"/>
+<text x="28" y="34" font-size="21" font-weight="700">T1 ／ 側面剖視</text><text x="452" y="34" text-anchor="end" class="small">左後・右前</text>
+<path class="dim" d="M130 83V54M284 83V54M130 63H284"/>
+<path class="dim" d="M130 63H284" marker-start="url(#dimarrow)" marker-end="url(#dimarrow)"/>
+<text x="207" y="56" text-anchor="middle" class="small">42 cm</text>
+<path class="dim" d="M119 92H69M119 495H69M79 92V495"/>
+<path class="dim" d="M79 92V495" marker-start="url(#dimarrow)" marker-end="url(#dimarrow)"/>
+<text x="57" y="296" text-anchor="middle" transform="rotate(-90 57 296)" class="small">110 cm</text>
+<!-- Cutaway envelope; no dimensions or material thickness inferred. -->
+<path d="M130 110 284 92V166H263V211L235 235H143V480H284V495H130Z" fill="var(--steel)" stroke="var(--accent)" stroke-width="2.3" stroke-linejoin="round"/>
+<path d="M137 119 277 103" class="line"/>
+<path d="M284 219 258 219 234 245H143" class="line"/>
+<path d="M284 166V219" class="dim" stroke-dasharray="4 4"/>
+<path d="M284 255V480" class="line" stroke-dasharray="7 5"/>
+<path d="M288 255 306 266V477" class="dim"/>
+<!-- Independent, closed-bottom liner with removable top rim. -->
+<path d="M151 270H259L254 437Q253 445 245 445H165Q157 445 156 437Z" fill="var(--white)" stroke="var(--accent)" stroke-width="2.3"/>
+<rect x="148" y="263" width="114" height="12" rx="3" fill="var(--steel)" stroke="var(--accent)" stroke-width="2"/>
+<path d="M165 444V457M245 444V457" class="line"/>
+<circle cx="165" cy="465" r="10" fill="var(--steel)" stroke="var(--accent)" stroke-width="2"/>
+<circle cx="245" cy="465" r="10" fill="var(--steel)" stroke="var(--accent)" stroke-width="2"/>
+<text x="205" y="333" text-anchor="middle" font-size="28" font-weight="700">60 L</text>
+<text x="205" y="362" text-anchor="middle" class="small">目標</text>
+<text x="205" y="389" text-anchor="middle" class="small">待驗證</text>
+<!-- Three callouts. -->
+<path d="M224 105 294 117H311" class="dim"/><text x="316" y="124" class="call">內收雨蓋</text>
+<path d="M256 210 296 211H311" class="dim"/><text x="316" y="218" class="call">內縮導入口</text>
+<path d="M255 304H311" class="dim"/><text x="316" y="311" class="call">防漏內桶</text><text x="316" y="340" class="small">無排液孔</text><text x="316" y="366" class="small">不向地面排放</text>
+<!-- Direction arrows: runoff to the rear and liner exit to the front. -->
+<path d="M187 88 116 98 107 136" class="line" marker-end="url(#flow)"/>
+<path d="M229 450H410" class="line" marker-end="url(#flow)"/>
+<text x="352" y="429" text-anchor="middle" class="small">向前抽出</text>
+<path d="M112 495H320" class="line"/>
+<text x="240" y="531" text-anchor="middle" class="small">雨水後導・前側維修抽換</text>
+<text x="240" y="575" text-anchor="middle" class="small">提案尺寸・非施工圖</text>
+</svg>

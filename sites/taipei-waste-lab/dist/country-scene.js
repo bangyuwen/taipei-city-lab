@@ -3,6 +3,56 @@ import {OrbitControls} from './vendor/three/OrbitControls.js';
 import {buildCountryModel} from './country-models.js';
 
 // Photo-based shapes and actions are illustrative, never measured equipment behavior.
+export function highlightCountryPart(model, partId) {
+  if (!model || typeof partId !== 'string') return () => {};
+
+  const roots = [];
+  model.traverse((object) => {
+    if (object.userData?.countryPartId === partId) roots.push(object);
+  });
+
+  const meshes = new Set();
+  function collect(node, root) {
+    if (node !== root && node.userData?.countryPartId && node.userData.countryPartId !== partId) return;
+    if (node.isMesh) meshes.add(node);
+    for (const child of node.children) collect(child, root);
+  }
+  for (const root of roots) collect(root, root);
+
+  const originals = new Map();
+  const clones = new Map();
+  const tint = new THREE.Color('#52d5b2');
+  function cloneMaterial(material) {
+    if (!material || typeof material.clone !== 'function') return material;
+    if (!clones.has(material)) {
+      const clone = material.clone();
+      if (clone.color?.lerp) clone.color.lerp(tint, 0.18);
+      if (clone.emissive?.set) {
+        clone.emissive.set('#138d70');
+        clone.emissiveIntensity = Math.max(clone.emissiveIntensity || 0, 0.62);
+      }
+      clones.set(material, clone);
+    }
+    return clones.get(material);
+  }
+
+  for (const mesh of meshes) {
+    const material = mesh.material;
+    originals.set(mesh, material);
+    mesh.material = Array.isArray(material)
+      ? material.map(cloneMaterial)
+      : cloneMaterial(material);
+  }
+
+  let cleared = false;
+  return () => {
+    if (cleared) return;
+    cleared = true;
+    for (const [mesh, material] of originals) mesh.material = material;
+    for (const material of clones.values()) material.dispose();
+  };
+}
+
 export function createCountryScene(container,{onFailure=()=>{},onChange=()=>{},onPlayback=()=>{}}={}){
   const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'low-power'});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.7));
@@ -14,7 +64,7 @@ export function createCountryScene(container,{onFailure=()=>{},onChange=()=>{},o
   const canvas=renderer.domElement;
   canvas.tabIndex=0;
   canvas.setAttribute('role','img');
-  canvas.setAttribute('aria-label','可操作的 3D 外觀示意；點模型或按 Enter 播放與暫停，方向鍵旋轉，加減鍵縮放，Home 回到全景');
+  canvas.setAttribute('aria-label','可操作的 3D 外觀示意；點模型部件播放對應動作，按 Enter 或空白鍵播放與暫停，方向鍵旋轉，加減鍵縮放，Home 回到全景');
   container.append(canvas);
   const scene=new THREE.Scene();
   scene.background=new THREE.Color('#eaf0f2');
@@ -52,7 +102,7 @@ export function createCountryScene(container,{onFailure=()=>{},onChange=()=>{},o
   const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({color:0x566e78,opacity:.22}));
   floor.rotation.x=-Math.PI/2;floor.position.y=-.012;floor.receiveShadow=true;scene.add(floor);
   let model,active=false,inViewport=false,frame=0,disposed=false,failed=false,lastTime=0;
-  let state='ready',progress=0,rotating=false,pointer=null;
+  let state='ready',progress=0,rotating=false,pointer=null,selectedPartId=null,clearPartHighlight=()=>{};
   const motion=window.matchMedia('(prefers-reduced-motion: reduce)');
   const positions={overview:[3.2,2.5,4.5],front:[0,1.3,5.5],side:[5.5,1.3,0],back:[0,1.3,-5.5]};
   const canRender=()=>active&&inViewport&&!failed&&!disposed&&!document.hidden;
@@ -61,7 +111,7 @@ export function createCountryScene(container,{onFailure=()=>{},onChange=()=>{},o
     const view=Object.entries(positions).find(([,position])=>direction.distanceTo(new THREE.Vector3(...position).sub(controls.target).normalize())<.00001)?.[0]??null;
     onChange({view,canZoomIn:distance>controls.minDistance+.001,canZoomOut:distance<controls.maxDistance-.001});
   }
-  function reportPlayback(){onPlayback({state,progress,rotating,reducedMotion:motion.matches,suspended:!canRender()})}
+  function reportPlayback(){onPlayback({state,progress,rotating,reducedMotion:motion.matches,suspended:!canRender(),partId:selectedPartId})}
   function changed(){render();reportView()}
   function stopFrame(){cancelAnimationFrame(frame);frame=0;lastTime=0}
   function render(){if(canRender()&&!frame)frame=requestAnimationFrame(tick)}
@@ -69,10 +119,13 @@ export function createCountryScene(container,{onFailure=()=>{},onChange=()=>{},o
     frame=0;if(!canRender()){lastTime=0;return}
     const delta=lastTime?Math.min((time-lastTime)/1000,.05):0;lastTime=time;
     if(state==='playing'&&model){
-      progress=Math.min(1,progress+delta/model.userData.play.duration);
-      model.userData.play.update(progress);
-      if(progress===1)state='complete';
-      reportPlayback();
+      const action=currentAction();
+      if(action){
+        progress=Math.min(1,progress+delta/action.duration);
+        action.update(progress);
+        if(progress===1)state='complete';
+        reportPlayback();
+      }
     }
     if(rotating){
       const offset=camera.position.clone().sub(controls.target).applyAxisAngle(new THREE.Vector3(0,1,0),delta*.25);
@@ -94,6 +147,15 @@ export function createCountryScene(container,{onFailure=()=>{},onChange=()=>{},o
     for(const material of materials){for(const value of Object.values(material))if(value?.isTexture)textures.add(value);material.dispose()}
     for(const geometry of geometries)geometry.dispose();for(const texture of textures)texture.dispose();
   }
+  function currentAction(){
+    if(!model)return null;
+    return selectedPartId===null?model.userData.play:model.userData.partActions[selectedPartId]||null;
+  }
+  function resetAllActions(target=model){
+    if(!target)return;
+    target.userData.play.reset();
+    for(const action of Object.values(target.userData.partActions||{}))action.reset();
+  }
   function stopRotation(){if(rotating){rotating=false;reportPlayback()}}
   function setView(name='overview'){
     stopRotation();camera.position.set(...(positions[name]||positions.overview));
@@ -105,18 +167,38 @@ export function createCountryScene(container,{onFailure=()=>{},onChange=()=>{},o
     camera.position.copy(controls.target).add(offset);controls.update();render();
   }
   function play(){
-    if(!model||!active||failed||disposed)return;
-    if(motion.matches){progress=1;state='complete';model.userData.play.update(1)}
+    const action=currentAction();
+    if(!action||!active||failed||disposed)return;
+    if(motion.matches){progress=1;state='complete';action.update(1)}
     else if(state==='playing')state='paused';
-    else{if(progress>=1){progress=0;model.userData.play.reset()}state='playing'}
+    else{if(progress>=1){progress=0;action.reset()}state='playing'}
     lastTime=0;reportPlayback();render();
   }
   function seek(value){
-    if(!model||failed||disposed)return;
-    progress=THREE.MathUtils.clamp(value,0,1);state=progress===0?'ready':progress===1?'complete':'paused';
-    model.userData.play.update(progress);lastTime=0;reportPlayback();render();
+    const action=currentAction();
+    if(!action||failed||disposed)return;
+    progress=THREE.MathUtils.clamp(Number.isFinite(value)?value:0,0,1);state=progress===0?'ready':progress===1?'complete':'paused';
+    action.update(progress);lastTime=0;reportPlayback();render();
   }
-  function reset(){if(!model)return;model.userData.play.reset();progress=0;state='ready';rotating=false;lastTime=0;reportPlayback();render()}
+  function reset(){
+    const action=currentAction();
+    if(!action)return;
+    action.reset();progress=0;state='ready';rotating=false;lastTime=0;reportPlayback();render();
+  }
+  function getParts(){
+    return model?model.userData.parts.map(({id,label,description})=>({id,label,description})):[];
+  }
+  function selectPart(id=null,{play:playAfterSelection=true}={}){
+    if(!model||failed||disposed)return false;
+    if(id!==null&&!model.userData.partActions[id])return false;
+    resetAllActions();
+    clearPartHighlight();clearPartHighlight=()=>{};
+    selectedPartId=id;progress=0;state='ready';rotating=false;lastTime=0;
+    if(id!==null)clearPartHighlight=highlightCountryPart(model,id);
+    if(playAfterSelection)play();
+    else{reportPlayback();render()}
+    return true;
+  }
   function keydown(event){
     if(!active||event.altKey||event.ctrlKey||event.metaKey)return;
     const angles={ArrowLeft:[-.18,0],ArrowRight:[.18,0],ArrowUp:[0,-.12],ArrowDown:[0,.12]};
@@ -141,13 +223,26 @@ export function createCountryScene(container,{onFailure=()=>{},onChange=()=>{},o
     const rect=canvas.getBoundingClientRect(),ray=new THREE.Raycaster();
     camera.updateMatrixWorld();model.updateWorldMatrix(true,true);
     ray.setFromCamera(new THREE.Vector2((event.clientX-rect.left)/rect.width*2-1,-(event.clientY-rect.top)/rect.height*2+1),camera);
-    const hit=ray.intersectObject(model,true).some(({object})=>{for(let node=object;node;node=node.parent)if(!node.visible)return false;return true});
-    if(hit)play();
+    for(const hit of ray.intersectObject(model,true)){
+      let visible=true,partId=null;
+      for(let node=hit.object;node;node=node.parent){
+        if(!node.visible){visible=false;break}
+        if(partId===null&&node.userData?.countryPartId)partId=node.userData.countryPartId;
+        if(node===model)break;
+      }
+      if(!visible)continue;
+      if(partId!==null){
+        if(partId===selectedPartId)play();
+        else selectPart(partId);
+      }else if(selectedPartId===null)play();
+      else selectPart(null);
+      break;
+    }
   }
   function pointercancel(){pointer=null}
   function lost(event){event.preventDefault();failed=true;controls.enabled=false;stopFrame();onFailure()}
   function visibility(){stopFrame();reportPlayback();render()}
-  function motionChanged(){if(motion.matches){rotating=false;if(state==='playing'){progress=1;state='complete';model?.userData.play.update(1)}}stopFrame();reportPlayback();render()}
+  function motionChanged(){if(motion.matches){rotating=false;if(state==='playing'){progress=1;state='complete';currentAction()?.update(1)}}stopFrame();reportPlayback();render()}
   controls.addEventListener('change',changed);controls.addEventListener('start',stopRotation);
   canvas.addEventListener('keydown',keydown);canvas.addEventListener('webglcontextlost',lost);
   canvas.addEventListener('pointerdown',pointerdown);canvas.addEventListener('pointermove',pointermove);
@@ -158,15 +253,15 @@ export function createCountryScene(container,{onFailure=()=>{},onChange=()=>{},o
   setView();resize();
   return {
     setModel(id){
-      const next=buildCountryModel(id);next.userData.play.reset();
+      const next=buildCountryModel(id);resetAllActions(next);
       const bounds=new THREE.Box3().setFromObject(next),size=bounds.getSize(new THREE.Vector3()),center=bounds.getCenter(new THREE.Vector3());
       const scale=2/Math.max(size.x,size.y,size.z);
       next.scale.setScalar(scale);next.position.set(-center.x*scale,-bounds.min.y*scale,-center.z*scale);
       next.traverse(child=>{if(child.isMesh){child.castShadow=true;child.receiveShadow=true}});
-      if(model){scene.remove(model);disposeObject(model)}
-      model=next;scene.add(model);reset();setView();render();
+      if(model){clearPartHighlight();clearPartHighlight=()=>{};scene.remove(model);disposeObject(model)}
+      model=next;selectedPartId=null;scene.add(model);reset();setView();render();
     },
-    setView,zoom,play,seek,reset,
+    setView,zoom,play,seek,reset,getParts,selectPart,
     toggleRotation(){rotating=!rotating&&!motion.matches;lastTime=0;reportPlayback();render()},
     setActive(value){active=Boolean(value);controls.enabled=active&&!failed;stopFrame();reportPlayback();if(active){resize();render()}},
     dispose(){
@@ -176,7 +271,7 @@ export function createCountryScene(container,{onFailure=()=>{},onChange=()=>{},o
       canvas.removeEventListener('wheel',wheel,true);canvas.removeEventListener('pointerdown',pointerdown);
       canvas.removeEventListener('pointermove',pointermove);canvas.removeEventListener('pointerup',pointerup);canvas.removeEventListener('pointercancel',pointercancel);
       controls.removeEventListener('change',changed);controls.removeEventListener('start',stopRotation);controls.dispose();
-      if(model)disposeObject(model);disposeObject(floor);key.shadow.dispose();environment.dispose();renderer.dispose();renderer.forceContextLoss();canvas.remove();
+      clearPartHighlight();clearPartHighlight=()=>{};if(model)disposeObject(model);disposeObject(floor);key.shadow.dispose();environment.dispose();renderer.dispose();renderer.forceContextLoss();canvas.remove();
     }
   };
 }
