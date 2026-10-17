@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {mkdir} from 'node:fs/promises';
+import {mkdir,readFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 const {chromium}=await import(process.env.PLAYWRIGHT_MODULE?pathToFileURL(resolve(process.env.PLAYWRIGHT_MODULE)).href:'playwright');
@@ -8,6 +8,11 @@ const base=process.env.SITING_QA_URL||'http://127.0.0.1:4174/';
 const output=resolve('.impeccable/review/siting');
 await mkdir(output,{recursive:true});
 const errors=[];
+const priorities=JSON.parse(await readFile(new URL('../data/field-priorities.json',import.meta.url),'utf8'));
+const priorityLabels=new Map(priorities.classification.priorityLevels.map(p=>[p.id,p.label]));
+const confidenceLabels=new Map(priorities.classification.confidenceLevels.map(p=>[p.id,p.label]));
+const markerTitle=p=>'新增評估優先度 '+priorityLabels.get(p.priority)+' · 資料可信度 '+confidenceLabels.get(p.confidence)+' · '+p.name;
+const original=JSON.parse(await readFile(new URL('../data/siting-overlay.json',import.meta.url),'utf8'));
 async function ready(page){
   const frame=page.frameLocator('#siting-frame');
   await frame.locator('#candidate-count').filter({hasText:'425'}).waitFor();
@@ -22,6 +27,7 @@ async function bounds(page,frame){
 }
 try{
   for(const width of [1440,390,320]){
+    console.log('Checking overlay at '+width+'px');
     const page=await browser.newPage({viewport:{width,height:1000},reducedMotion:'reduce'});
     page.on('pageerror',e=>errors.push(e.message));
     let overlayRequests=0;
@@ -34,8 +40,88 @@ try{
     const frame=await ready(page);
     assert.equal(overlayRequests,1);
     assert.equal(await page.locator('.history-subnav [data-page="siting"]').getAttribute('aria-current'),'page');
-    assert.equal(await page.locator('[data-section="history"]').getAttribute('aria-current'),'page');
+    assert.equal(await page.locator('[data-section="history"]').getAttribute('aria-current'),null);
+    assert.equal(await page.locator('[data-section="history"]').getAttribute('data-section-active'),'');
     assert.equal(await frame.locator('.top').isVisible(),false);
+    assert.equal(await frame.locator('#shortlist button').count(),10);
+    assert.equal(await frame.locator('.priority-marker').count(),10);
+    assert.equal(await frame.locator('#shortlist .review').count(),1);
+    assert.equal(await frame.locator('#shortlist .lower').count(),5);
+    assert.equal(await frame.locator('#shortlist .hold').count(),4);
+    assert.equal(await frame.locator('#shortlist .confidence-badge').count(),10);
+    const embedded=await frame.locator('#overlay-data').evaluate(e=>JSON.parse(e.textContent));
+    const {fieldPriorities,...snapshot}=embedded;
+    assert.deepEqual(snapshot,original);
+    assert.deepEqual(fieldPriorities,priorities);
+    assert.ok((await frame.locator('#priority-definition').textContent()).includes('新增評估優先度'));
+    await frame.locator('#priority-method summary').click();
+    for(const value of [...priorities.classification.criteria,...priorities.classification.priorityLevels.map(p=>p.description),...priorities.classification.confidenceLevels.map(p=>p.description),...priorities.classification.limits])assert.ok((await frame.locator('#priority-method-content').textContent()).includes(value));
+    await page.waitForTimeout(100);
+    await bounds(page,frame);
+    await frame.locator('#priority-method').scrollIntoViewIfNeeded();
+    await page.screenshot({path:resolve(output,`${width}-classification.png`)});
+    await frame.locator('#priority-method summary').click();
+    const historyCount=await frame.locator('#record-count').textContent();
+    for(const grade of ['review','lower','hold','']){
+      await frame.locator('#priority-filter').selectOption(grade);
+      const expected=priorities.sites.filter(p=>!grade||p.priority===grade);
+      assert.deepEqual(await frame.locator('#shortlist button').evaluateAll(nodes=>nodes.map(n=>n.dataset.priorityId)),expected.map(p=>p.id));
+      assert.deepEqual((await frame.locator('.priority-marker').evaluateAll(nodes=>nodes.map(n=>n.title))).sort(),expected.map(p=>markerTitle(p)).sort());
+      assert.equal(await frame.locator('#candidate-count').textContent(),(grade?expected.length:425)+' 段');
+      assert.equal(await frame.locator('#priority-count').textContent(),'篩選後 '+expected.length+'／10 處');
+      assert.equal(await frame.locator('#record-count').textContent(),historyCount);
+    }
+    await frame.locator('#priority-filter').selectOption('lower');
+    await frame.locator('#district').selectOption('松山區');
+    assert.deepEqual(await frame.locator('#shortlist button').evaluateAll(nodes=>nodes.map(n=>n.dataset.priorityId)),['S-6569']);
+    await frame.locator('#shortlist button').click();
+    await frame.locator('#priority-toggle').uncheck();
+    await frame.locator('#priority-filter').selectOption('hold');
+    assert.equal(await frame.locator('.leaflet-popup-content').count(),0);
+    assert.ok(!(await frame.locator('#detail').textContent()).includes('S-6569'));
+    assert.deepEqual(await frame.locator('#shortlist button').evaluateAll(nodes=>nodes.map(n=>n.dataset.priorityId)),['S-6584']);
+    assert.equal(await frame.locator('.priority-marker').count(),0);
+    await frame.locator('#priority-toggle').check();
+    assert.deepEqual(await frame.locator('.priority-marker').evaluateAll(nodes=>nodes.map(n=>n.title)),[markerTitle(priorities.sites.find(p=>p.id==='S-6584'))]);
+    await frame.locator('#search').fill('S-7007');
+    await frame.locator('#priority-empty').waitFor({state:'visible'});
+    assert.equal(await frame.locator('.priority-marker').count(),0);
+    assert.equal(await frame.locator('#candidate-count').textContent(),'0 段');
+    await frame.locator('#reset').click();
+    assert.equal(await frame.locator('#priority-filter').inputValue(),'');
+    assert.equal(await frame.locator('.priority-marker').count(),10);
+    await frame.locator('#priority-filter').selectOption('hold');
+    await frame.locator('#priority-filter').scrollIntoViewIfNeeded();
+    await page.screenshot({path:resolve(output,`${width}-priority-filter.png`)});
+    await frame.locator('#reset').click();
+    for(const item of priorities.sites){
+      await frame.locator(`[data-priority-id="${item.id}"]`).click();
+      assert.equal(await frame.locator('#detail h3').textContent(),item.name);
+      for(const value of [item.priorityReason,item.confidenceReason,item.uncertainty,...item.evidence,item.decision])assert.ok((await frame.locator('#detail').textContent()).includes(value),item.id);
+      const popupText=await frame.locator('.leaflet-popup-content').textContent();
+      assert.ok(popupText.includes(item.confidenceReason));
+      assert.ok(popupText.includes('資料可信度 '+confidenceLabels.get(item.confidence)));
+      assert.ok(popupText.includes(item.priorityReason));
+      assert.ok(popupText.includes('新增評估優先度 '+priorityLabels.get(item.priority)));
+      assert.ok(!/現勘問題|現勘優先序|現場必查/.test(popupText));
+    }
+    await frame.locator('.leaflet-popup-close-button').click();
+    await frame.locator('#priority-toggle').uncheck();
+    assert.equal(await frame.locator('.priority-marker').count(),0);
+    await frame.locator('#priority-toggle').check();
+    const marker=frame.locator('.priority-marker').first();
+    await marker.focus();await marker.press('Enter');
+    await frame.locator('.leaflet-popup-content').waitFor();
+    assert.ok((await frame.locator('#detail').textContent()).includes('推薦理由'));
+    await frame.locator('#search').fill('S-6584');
+    await frame.locator('#candidate-count').filter({hasText:'1 段'}).waitFor();
+    assert.equal(await frame.locator('#shortlist button').count(),1);
+    assert.equal(await frame.locator('.priority-marker').count(),1);
+    await frame.locator('#shortlist button').click();
+    await frame.locator('#detail').scrollIntoViewIfNeeded();
+    await page.screenshot({path:resolve(output,`${width}-priority-detail.png`)});
+    await frame.locator('#reset').click();
+    await page.waitForTimeout(100);
     await bounds(page,frame);
     await page.locator('#siting-heading').scrollIntoViewIfNeeded();
     await page.screenshot({path:resolve(output,`${width}-overlay.png`)});
@@ -43,6 +129,7 @@ try{
     await page.evaluate(()=>window.postMessage({type:'taipei-siting-size',height:9999},location.origin));
     await page.waitForTimeout(50);
     assert.equal(await page.locator('#siting-frame').evaluate(e=>e.style.height),oldHeight);
+    await frame.locator('#priority-filter').selectOption('hold');
     await frame.locator('#district').selectOption('北投區');
     await frame.locator('#search').fill('不可能存在測試字串');
     await frame.locator('#candidate-empty').waitFor({state:'visible'});
@@ -52,6 +139,7 @@ try{
     await page.locator('.history-subnav [data-page="history"]').click();
     await page.goBack();
     await page.locator('#panel-siting').waitFor({state:'visible'});
+    assert.equal(await frame.locator('#priority-filter').inputValue(),'hold');
     assert.equal(await frame.locator('#district').inputValue(),'北投區');
     assert.equal(await frame.locator('#search').inputValue(),'不可能存在測試字串');
     assert.equal(overlayRequests,1);
@@ -84,14 +172,17 @@ try{
   await independent.goto(base+'siting-overlay.html');
   await independent.locator('#candidate-count').filter({hasText:'425'}).waitFor();
   assert.equal(await independent.locator('.top').isVisible(),true);
+  await independent.locator('#priority-filter').selectOption('hold');
+  assert.equal(await independent.locator('.priority-marker').count(),4);
+  assert.equal(await independent.locator('#shortlist button').count(),4);
   await independent.locator('.top a').click();
   assert.equal(new URL(independent.url()).hash,'#siting');
   await ready(independent);
-  for(const path of ['inventory.html','data/siting-overlay.json','data/siting-overlay.provenance.json','data/taipei-bins-2015.csv']){
+  for(const path of ['inventory.html','data/siting-overlay.json','data/siting-overlay.provenance.json','data/taipei-bins-2015.csv','data/field-priorities.json','research/field-priority-2026-10-17/protocol.md','research/field-priority-2026-10-17/selection.json','research/field-priority-2026-10-17/report.md','research/field-priority-2026-10-17/shortlist.csv','research/field-priority-2026-10-17/shortlist.geojson','topics/bins/research/field-priority-2026-10-17/selection.json']){
     const response=await independent.request.get(base+path);
     assert.equal(response.status(),404,path);
   }
   await independent.close();
   assert.deepEqual(errors,[]);
-  console.log('PASS: lazy route, design entry, history navigation, state/back, responsive sizing, map focus, message source boundary, iframe retry, independent data failure, standalone return, private source exclusions.');
+  console.log('PASS: classification explanation and all ten priority/confidence reasons in details/popups; review/lower/hold/all synchronization, district/search intersections, empty states, stale selection cleanup, layer toggle persistence, reset, route/back persistence and standalone filtering; all ten desktop assessments, separate priority/confidence labels, keyboard marker, filters/toggle, preserved 425 polygons and five snapshots, private attachment exclusions; lazy route, design entry, history navigation, state/back, responsive sizing, map focus, message source boundary, iframe retry, independent data failure, standalone return, private source exclusions.');
 } finally {await browser.close()}

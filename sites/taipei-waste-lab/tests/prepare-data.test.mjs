@@ -24,7 +24,7 @@ for (const monorepo of [true, false]) {
     }
     await cp(new URL('templates/', site), join(output, 'templates'), {recursive:true});
     await mkdir(join(output, 'data'), {recursive:true});
-    for(const name of ['siting-overlay.json','siting-overlay.provenance.json'])await cp(new URL('data/'+name,site),join(output,'data',name));
+    for(const name of ['siting-overlay.json','siting-overlay.provenance.json','field-priorities.json'])await cp(new URL('data/'+name,site),join(output,'data',name));
     await mkdir(join(output, 'dist'), {recursive: true});
     await cp(new URL('dist/', site), join(output, 'dist'), {recursive: true, filter: source => !/[\\/]dist[\\/](data|research)([\\/]|$)/.test(source)});
     const bundle = monorepo ? join(fixture, 'topics/bins/research') : join(output, 'research');
