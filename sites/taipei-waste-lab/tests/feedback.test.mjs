@@ -204,7 +204,7 @@ with tempfile.TemporaryDirectory() as directory:
  root=Path(directory)
  (root/'scripts').mkdir();(root/'dist').mkdir()
  shutil.copy('scripts/analyze-feedback.py',root/'scripts/analyze-feedback.py')
- for name in ['feedback-2026-10-17','feedback-distribution-2026-10-18','source-recovery-2026-10-15']:
+ for name in ['feedback-2026-10-17','feedback-distribution-2026-10-18','bin-coverage-2026-10-18','source-recovery-2026-10-15']:
   shutil.copytree(Path('research')/name,root/'research'/name)
  shutil.copy('dist/index.html',root/'dist/index.html')
  result=subprocess.run([sys.executable,'scripts/analyze-feedback.py'],cwd=root,capture_output=True,text=True)

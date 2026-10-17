@@ -40,7 +40,7 @@ assert joined['source']['sha256']==joined['source']['retainedRawSha256']
 test('source drift and incomplete district interpretations fail before publishing new conclusions', () => python(setup + String.raw`
 with tempfile.TemporaryDirectory() as directory:
  target=Path(directory)
- for name in ('feedback-2026-10-17','feedback-distribution-2026-10-18','source-recovery-2026-10-15'):
+ for name in ('feedback-2026-10-17','feedback-distribution-2026-10-18','bin-coverage-2026-10-18','source-recovery-2026-10-15'):
   shutil.copytree(research/name,target/name)
  report=target/'feedback-distribution-2026-10-18'
  original=(report/'assessments.json').read_text()
@@ -72,4 +72,48 @@ assert report==Path('dist/research/feedback-distribution-2026-10-18/README.md').
 assert '681 位置列、680 列通過既有座標粗篩、2663 則回饋' in report
 public=runpy.run_path('scripts/prepare-public.py')['ASSETS']
 assert not any('feedback-distribution' in asset for asset in public)
+`));
+
+
+test('venue leads enrich all districts without becoming verified street stock', () => python(setup + String.raw`
+joined=m['load_distribution'](data)
+expected={'松山':7,'信義':18,'大安':18,'中山':16,'中正':16,'大同':14,'萬華':3,'文山':9,'南港':5,'內湖':7,'士林':7,'北投':10}
+assert {d:len(v) for d,v in joined['venues'].items()}==expected
+assert sum(map(len,joined['venues'].values()))==130
+assert joined['coverage']['addedVerifiedStreetRows']==0
+assert joined['bins']['北投']['rows']==0 and joined['bins']['南港']['rows']==4
+text='\n'.join(m['render_district_diagram'](data,joined)[1])
+assert text.count('data-venue-count=')==12
+assert text.count('<article class="coverage-focus-item">')==2
+for d in ['北投','南港']:
+ for name in joined['venues'][d]:assert name in text
+assert '不能直接當成可用投放點' in text and '沒有確認北投全區撤除' in text
+assert '北投 0 列、南港 4 列是公開清單的缺口' not in text
+`));
+
+test('changed map identity and venue provenance cannot silently retain district interpretations', () => python(setup + String.raw`
+with tempfile.TemporaryDirectory() as directory:
+ target=Path(directory)
+ for name in ('feedback-2026-10-17','feedback-distribution-2026-10-18','bin-coverage-2026-10-18','source-recovery-2026-10-15'):
+  shutil.copytree(research/name,target/name)
+ manifest=target/'bin-coverage-2026-10-18/source-check.json'
+ original=manifest.read_bytes()
+ source=target/'bin-coverage-2026-10-18/official-map-data.json'
+ raw=source.read_bytes();rows=json.loads(raw);rows[0]=rows[0].replace('中正區','北投區',1)
+ source.write_text(json.dumps(rows,ensure_ascii=False))
+ fails(lambda:m['load_distribution'](data,target),'Coverage source no longer matches')
+ # Even an explicitly refreshed digest must satisfy the same-source comparison.
+ receipt=json.loads(original)
+ for entry in receipt['sources']:
+  if entry['retainedPath'].endswith('/official-map-data.json'):
+   entry['sha256']=hashlib.sha256(source.read_bytes()).hexdigest();entry['bytes']=source.stat().st_size
+ manifest.write_text(json.dumps(receipt,ensure_ascii=False))
+ a_path=target/'feedback-distribution-2026-10-18/assessments.json'
+ a=json.loads(a_path.read_text());a['coverageSha256']=hashlib.sha256(manifest.read_bytes()).hexdigest();a_path.write_text(json.dumps(a,ensure_ascii=False))
+ fails(lambda:m['load_distribution'](data,target),'Official map and street CSV differ')
+ source.write_bytes(raw);manifest.write_bytes(original)
+ a['coverageSha256']=hashlib.sha256(original).hexdigest();a_path.write_text(json.dumps(a,ensure_ascii=False))
+ venue=target/'source-recovery-2026-10-15/raw/official-tourist.csv'
+ venue.write_bytes(venue.read_bytes()+b'\n')
+ fails(lambda:m['load_distribution'](data,target),'Coverage source no longer matches')
 `));
