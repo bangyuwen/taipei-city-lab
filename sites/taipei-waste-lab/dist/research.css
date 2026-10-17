@@ -250,3 +250,21 @@
  .plan-table td{padding:8px 0;border:0;font-size:16px}.plan-table td:first-child{background:var(--light);padding:12px;margin-bottom:4px}
  .plan-cell-label{display:block;font-size:14px;color:var(--muted);font-weight:500;margin-bottom:4px}
 }
+
+/* Dated public records precede interpretation on the research homepage. */
+.current-evidence{max-width:76ch;margin:32px 0}
+.current-evidence h3{font:700 25px/1.65 var(--sans);margin:0 0 16px;text-wrap:balance;scroll-margin-top:110px}
+.current-evidence p{font-size:16px;line-height:1.85;margin:0 0 12px}
+.current-evidence .current-evidence-date,.current-record-date{font-size:14px;line-height:1.8;color:var(--muted)}
+.current-records,.current-boundaries{margin:24px 0}
+.current-records>div,.current-boundaries>div{display:grid;grid-template-columns:128px minmax(0,1fr);gap:16px;padding:16px 0;border-top:1px solid var(--line)}
+.current-evidence dt{font-weight:600;font-size:16px;line-height:1.85}
+.current-evidence dd{margin:0;font-size:16px;line-height:1.85}
+.current-record-date{display:block;margin:4px 0 8px}
+.current-records a{display:block;width:fit-content;max-width:100%;min-height:44px;padding:8px 0;color:var(--green);text-underline-offset:4px;overflow-wrap:anywhere}
+.current-evidence .current-evidence-limit{padding:12px 16px;background:#fff0d9;color:#734917}
+.current-boundaries{margin-bottom:8px}
+@media(max-width:639px){
+ .current-evidence h3{font-size:23px}
+ .current-records>div,.current-boundaries>div{grid-template-columns:minmax(0,1fr);gap:8px}
+}
