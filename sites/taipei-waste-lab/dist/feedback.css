@@ -7,9 +7,7 @@
 .feedback-section{padding:36px 0;border-bottom:1px solid var(--line);scroll-margin-top:24px}
 .feedback-section h3{font-family:var(--serif);font-size:26px;font-weight:550;line-height:1.5;margin:0 0 16px;scroll-margin-top:24px}
 .feedback-section p{max-width:76ch;font-size:16px;line-height:1.9;margin:0 0 16px}
-.feedback-finding{margin:28px 0}
-.feedback-finding h4{font-size:19px;line-height:1.6;margin:0 0 8px}
-.feedback-section .feedback-next,.feedback-section .feedback-note{color:var(--muted)}
+.feedback-section .feedback-note{color:var(--muted)}
 .feedback-section .feedback-note,.feedback-chart figcaption{font-size:14px;line-height:1.8}
 .feedback-chart{margin:24px 0}
 .feedback-chart figcaption{color:var(--muted);margin-bottom:20px}
@@ -60,12 +58,17 @@
 .feedback-overlap td strong{display:block;font-size:28px;font-weight:600}
 .feedback-overlap td span{display:block;font-size:14px;color:var(--muted);margin-top:4px}
 .feedback-overlap .feedback-note{margin-top:16px}
+.feedback-problem-group{margin-top:36px}
+.feedback-problem-group>h4,.feedback-validation>h4{font-size:23px;line-height:1.6;margin:32px 0 16px;scroll-margin-top:24px}
 .feedback-mechanism{padding:28px 0;border-top:1px solid var(--line)}
-.feedback-mechanism h4{font-size:21px;line-height:1.6;margin:0 0 20px;scroll-margin-top:24px}
-.feedback-mechanism dl{margin:0;font-size:16px;line-height:1.9}
-.feedback-mechanism dl>div{display:grid;grid-template-columns:164px minmax(0,1fr);gap:24px;padding:12px 0}
-.feedback-mechanism dt{font-weight:600;color:var(--green)}
-.feedback-mechanism dd{margin:0;max-width:66ch}
+.feedback-mechanism h5{font-size:20px;line-height:1.6;margin:0 0 20px;scroll-margin-top:24px}
+.feedback-mechanism p{max-width:74ch}
+.feedback-check{max-width:76ch;margin-top:24px;padding:20px;background:var(--light)}
+.feedback-check p:last-child{margin-bottom:0}
+.feedback-check strong{color:var(--green)}
+.feedback-report-entry a,.feedback-appendix-return a{display:inline-flex;align-items:center;min-height:44px}
+.feedback-appendix>h3{margin-bottom:16px}
+.feedback-appendix .feedback-section>h4{font-size:22px;line-height:1.6;margin:0 0 16px;scroll-margin-top:24px}
 .problem-loop{margin:24px 0}
 .problem-loop ol{list-style:none;padding:0;margin:28px 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}
 .problem-loop li{position:relative;display:flex;align-items:center;padding:16px 12px;min-height:112px;background:var(--paper);border:1px solid var(--line);font-size:17px;font-weight:600;line-height:1.7}
@@ -78,15 +81,15 @@
 .feedback-check-steps li::marker{font-weight:600;color:var(--green)}
 .feedback-check-steps strong{display:block;font-size:18px;margin-bottom:6px}
 .feedback-check-steps p{margin:0}
-@media(max-width:959px){.feedback-mechanism h4,#problem-map-heading{scroll-margin-top:96px}}
+@media(max-width:959px){.feedback-mechanism h5,.feedback-problem-group>h4,.feedback-validation>h4,.feedback-appendix .feedback-section>h4,#problem-map-heading{scroll-margin-top:96px}}
 @media(max-width:639px){
  .problem-map li{grid-template-columns:1fr;gap:26px;padding:24px 0}
  .problem-map li>div+div:before{left:9px;top:-21px;width:0;height:15px;border-top:0;border-left:1px dashed var(--green)}
  .problem-map li>div+div:after{left:6px;top:-12px;transform:rotate(135deg)}
  .feedback-overlap th,.feedback-overlap td{padding:12px 6px}
  .feedback-overlap td strong{font-size:25px}
- .feedback-mechanism dl>div{grid-template-columns:1fr;gap:4px;padding:12px 0}
- .feedback-mechanism h4{font-size:20px}
+ .feedback-problem-group>h4,.feedback-validation>h4{font-size:21px}
+ .feedback-check{padding:16px}
  .feedback-section .problem-loop-return{margin:16px 0 24px;border:0;border-bottom:1px dashed var(--green);padding:0 0 16px}
  .problem-loop-return:before{display:none}
  .problem-loop ol{grid-template-columns:1fr;gap:28px}
