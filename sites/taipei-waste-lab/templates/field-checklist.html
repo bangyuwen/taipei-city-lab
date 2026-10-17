@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>10 處資料判讀表｜台北垃圾箱研究</title>
+<style>
+:root{color-scheme:light;--ink:#18333b;--muted:#52676d;--accent:#16566a;--line:#91aab3;--paper:#f2f6f7;--focus:#bd5c16}
+*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;overflow-wrap:anywhere}::selection{background:#d9ecf1;color:var(--ink)}a{color:var(--accent);text-underline-offset:.2em}button,select{font:inherit;min-height:44px;border-radius:4px;padding:9px 14px}button{cursor:pointer;background:var(--accent);color:#fff;border:1px solid var(--accent)}button:hover{background:#123d49}select{color:var(--ink);border:1px solid var(--line);background:#fff;max-width:100%}a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:3px}h1,h2,h3,p{margin:0}h1{font-size:28px;line-height:1.4}h2{font-size:22px;line-height:1.45}h3{font-size:16px;margin:20px 0 5px}.toolbar{max-width:210mm;margin:0 auto;padding:24px 0}.toolbar p{margin:10px 0;color:var(--muted)}.actions{display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap;margin-top:16px}.actions a{display:inline-flex;align-items:center;min-height:44px}.filter-field{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-weight:600;margin:16px 0 0}.toolbar summary{cursor:pointer;min-height:44px;padding:10px 0}.index{display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;margin:0;padding-left:26px}.index a{display:block;padding:8px 0}.sheet{width:210mm;min-height:273mm;margin:0 auto 24px;padding:12mm;background:#fff;border:1px solid #c6d6dc;display:flex;flex-direction:column;scroll-margin-top:16px}.sheet-heading{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted);margin-bottom:8px;font-variant-numeric:tabular-nums}.sheet-heading>span:last-child{white-space:nowrap}.assessment-grades{display:flex;gap:8px 24px;flex-wrap:wrap;margin:12px 0 8px;font-size:15px}.badge{display:inline-block;font-weight:750;border:1.5px solid currentColor;border-radius:3px;padding:1px 7px;color:var(--accent)}.badge.hold{color:#734917}.badge.lower{color:#52676d}.confidence{border-bottom:2px solid currentColor;padding:0 4px}.scope{color:var(--muted);font-size:13px}.evidence{margin:4px 0 0;padding-left:24px}.evidence li+li{margin-top:8px}.conclusion{border-top:1px solid #c6d6dc;margin-top:20px}.conclusion h3{margin-top:12px}.sources{font-size:13px;color:var(--muted)}.sources h3{font-size:14px}.sources ul{padding-left:18px;margin:4px 0 0}.sources li+li{margin-top:5px}.sheet-footer{margin-top:auto;padding-top:24px;color:var(--muted);font-size:12px;line-height:1.5}.sheet-footer p+p{margin-top:5px}
+@media(max-width:850px){.toolbar{padding:20px 16px}.sheet{width:calc(100% - 32px);padding:20px;min-height:0}.index{grid-template-columns:1fr}.sheet-heading{font-size:12px}.sheet-footer{margin-top:16px}.assessment-grades{display:grid;gap:8px}}
+@page{size:A4 portrait;margin:12mm}
+@media print{body{background:#fff;color:#111;font-size:10.5pt;line-height:1.55}.toolbar{display:none}.sheet{width:auto;min-height:270mm;margin:0;padding:0;border:0;break-after:page;scroll-margin:0}.sheet.last-visible{break-after:auto}h2{font-size:16pt;line-height:1.35}h3{font-size:11pt;margin:14px 0 4px}.sheet-heading{font-size:9pt;margin-bottom:5px}.assessment-grades{display:flex;font-size:10pt;margin:10px 0 7px}.scope{font-size:9pt}.evidence li+li{margin-top:6px}.sources{font-size:9pt}.sources h3{font-size:10pt}.sheet-footer{font-size:8.5pt;margin-top:auto;padding-top:14px}.badge,.badge.hold,.badge.lower{color:#111}.scope,.sheet-heading,.sheet-footer,.sources{color:#333}a{color:inherit}h2,h3{break-after:avoid}li,.conclusion{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="toolbar">
+<h1>10 處資料判讀表</h1>
+<p>只用保存資料評估，不安排現勘。新增評估優先度與資料可信度分開呈現；這是既有 10 處的桌面重評，不是全市前十名或核准設置清單。</p>
+<p>「先評估」指先研究可能缺口；「較低」指已有供給線索、缺乏新增依據；「暫緩」指定位、空間或資料穩健性不足。可信度「中」表示部分來源可互證，「低」表示關鍵證據不穩定；都不代表現場已驗證。</p>
+<label class="filter-field" for="assessment-filter">新增評估優先度<select id="assessment-filter"><option value="">全部 10 處</option><option value="review">先評估（1 處）</option><option value="lower">較低（5 處）</option><option value="hold">暫緩（4 處）</option></select></label>
+<p id="print-status" role="status" aria-live="polite">目前顯示 10 處 · 列印共 10 頁</p>
+<p>A4 直式，每處一頁。可列印或另存為 PDF；建議 100% 比例並關閉頁首與頁尾。頁碼會隨篩選更新，地點原始編號保留。</p>
+<div class="actions"><button type="button" id="print-checklist">列印全部 10 處</button><a href="./#siting">返回網站疊圖</a></div>
+<details><summary>跳到所選地點</summary><ol class="index">__CHECKLIST_INDEX__</ol></details>
+<noscript><p>篩選需啟用 JavaScript。也可用瀏覽器選單直接列印全部 10 處。</p></noscript>
+</header>
+<main aria-label="10 處資料判讀表">__CHECKLIST_SHEETS__</main>
+<script>
+const filter=document.getElementById('assessment-filter'),sheets=[...document.querySelectorAll('.sheet')],printButton=document.getElementById('print-checklist');
+function updateSheets(){
+ const selected=sheets.filter(sheet=>!filter.value||sheet.dataset.priority===filter.value);
+ for(const sheet of sheets){sheet.hidden=!selected.includes(sheet);sheet.classList.remove('last-visible');document.querySelector(`[data-site="${sheet.id}"]`).hidden=sheet.hidden;}
+ selected.forEach((sheet,i)=>sheet.querySelector('.page-number').textContent=String(i+1).padStart(2,'0')+' / '+selected.length);
+ selected.at(-1)?.classList.add('last-visible');
+ document.getElementById('print-status').textContent='目前顯示 '+selected.length+' 處 · 列印共 '+selected.length+' 頁';
+ printButton.textContent=(filter.value?'列印所選 ':'列印全部 ')+selected.length+' 處';
+}
+filter.addEventListener('change',updateSheets);
+window.addEventListener('beforeprint',updateSheets);
+printButton.addEventListener('click',()=>{updateSheets();window.print()});
+updateSheets();
+</script>
+</body>
+</html>

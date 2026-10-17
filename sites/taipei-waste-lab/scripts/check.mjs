@@ -96,11 +96,20 @@ console.log(`Private integrity, public runtime allowlist, hosting identity and $
 
 const overlay=await readFile(resolve(publicRoot,'siting-overlay.html'),'utf8');
 const overlayInput=JSON.parse(await readFile(resolve(root,'../data/siting-overlay.json'),'utf8'));
+overlayInput.fieldPriorities=JSON.parse(await readFile(resolve(root,'../data/field-priorities.json'),'utf8'));
 const embedded=overlay.match(/<script type="application\/json" id="overlay-data">([\s\S]*?)<\/script>/);
 if(!embedded||JSON.stringify(JSON.parse(embedded[1]))!==JSON.stringify(overlayInput))throw Error('Siting display snapshot differs from preserved source');
 if(overlayInput.candidates.features.length!==425||JSON.stringify(overlayInput.layers.map(layer=>layer.mapped))!=='[2505,1799,1000,1969,680]')throw Error('Siting snapshot scope changed');
 if(/\bdownload(?:\s|=|>)/i.test(overlay)||/href=["']inventory\.html/.test(overlay))throw Error('Siting attachment control remains');
 for(const [,href] of overlay.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)){
-  if(!/^(?:https?:|#)/i.test(href)&&href!=='./#siting')throw Error(`Siting attachment link: ${href}`);
+  if(!/^(?:https?:|#)/i.test(href)&&!['./#siting','field-checklist.html'].includes(href))throw Error(`Siting attachment link: ${href}`);
+}
+const checklist=await readFile(resolve(publicRoot,'field-checklist.html'),'utf8');
+if((checklist.match(/<article class="sheet"/g)||[]).length!==10)throw Error('Expected ten printable data assessments');
+if(/<script[^>]*src=|<iframe|\bdownload(?:\s|=|>)/i.test(checklist))throw Error('Checklist must remain self-contained without attachment controls');
+for(const [,href] of checklist.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)){
+  if(!href.startsWith('#')&&href!=='./#siting'&&!overlayInput.fieldPriorities.sources.some(source=>source.url===href.replaceAll('&amp;','&')))throw Error(`Checklist attachment link: ${href}`);
 }
 console.log('Siting snapshot and interactive-page publication boundary verified.');
+
+if(/現勘問題|現場共通紀錄|現勘優先序|P1／P2/.test(checklist))throw Error('Old field workflow remains in data-reading table');
