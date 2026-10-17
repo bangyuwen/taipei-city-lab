@@ -233,7 +233,7 @@ The desktop rail is fixed, petrol, and vertically stacked. Links use 16px text a
 
 ### Signature Components
 - **Version strip:** Four aligned dataset choices lead with count and coverage; the active choice uses a pale fill and green underline.
-- **Map workspace:** Filters and results sit beside the map on desktop and return to filter → map → results order on phones.
+- **Map workspace:** Filters and results sit beside the map on desktop and return to filter → map → results order on phones. The default CARTO Positron basemap keeps geographic detail quiet behind the dated point colors; a labeled native select offers the original street map. If CARTO fails, a desaturated street layer at 55% opacity preserves the map with a visible fallback notice. Basemap changes retain the current view, records, and filters.
 - **Country case:** Each of the twelve photo-backed examples keeps its image, caption, credit, and license with the evidence.
 - **Evidence note:** Warm fill and contrasting text keep a coverage or source limit attached to the relevant record.
 

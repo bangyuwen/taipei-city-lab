@@ -51,7 +51,7 @@
           <label for="district">行政區</label><select id="district"><option value="">全部行政區</option></select>
           <label for="search">地址或路名</label><div class="search-input"><input id="search" type="search" placeholder="例如：中山北路" maxlength="100" autocomplete="off"></div>
           </section>
-        <div class="map-column"><div class="map-topline"><span id="map-legend">保存位置</span><button id="fit-map" type="button">顯示搜尋範圍 </button></div>
+        <div class="map-column"><div class="map-topline"><span id="map-legend">保存位置</span><div class="map-tools"><button id="fit-map" type="button">顯示搜尋範圍 </button><label for="map-basemap">底圖<select id="map-basemap"><option value="light">簡潔</option><option value="street">街道</option></select></label></div></div>
           <div id="map" role="region" aria-label="垃圾箱位置地圖"></div>
           <p id="map-status" class="map-status" role="status"></p>
           <div class="map-bottomline"><span id="map-caption">地圖只顯示可繪製的保存位置。</span><span>點擊位置查看地址</span></div>
