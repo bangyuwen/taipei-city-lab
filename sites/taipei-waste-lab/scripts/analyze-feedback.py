@@ -356,16 +356,93 @@ def district_comparison(data, district, key):
     return count, n, rest_count, rest_n, difference
 
 
+# Research directions are authored hypotheses, separate from semantic labels.
+DISTRICT_DIRECTIONS = {
+    'A': ('核對步行路徑、桶的位置與可用性', '比較位置或指引調整；同時追蹤投放距離與桶旁堆積。'),
+    'B': ('核對作息與垃圾車時段的落差', '比較時段調整或合法代收管道；觀察錯過收運是否減少。'),
+    'C': ('同點記錄滿溢時段、巡收與設備狀態', '比較巡收頻率或設備修復；觀察滿溢持續時間與周邊清潔。'),
+    'D': ('釐清垃圾來源與投放情境', '依來源比較合法投放引導或管理措施；觀察棄置有無移往鄰近點。'),
+    'E': ('核對接收規則、拒收原因與指引', '比較一致的分類指引與接收說明；觀察誤投和拒收是否減少。'),
+    'F': ('核對異味、鼠蟲或鄰近負擔的來源與時段', '比較清潔、清運或位置調整；追蹤負擔有無轉移到鄰近地點。'),
+    'G': ('核對規則、管理責任與陳情處理紀錄', '比較責任分工與回覆追蹤流程；觀察處理時間及重複反映。'),
+}
+
+
+def district_profile(data, district):
+    """Summarize existing judgments without classifying feedback again."""
+    counts = data['districtAnalysis'][district]['themes']
+    ranked = sorted(THEMES, key=lambda k: -counts[k])
+    cutoff = counts[ranked[1]]
+    top = [k for k in ranked if counts[k] > 0 and counts[k] >= cutoff]
+    contrast = None
+    if len(data['districts']) > 1:
+        candidate = max(THEMES, key=lambda k: district_comparison(data, district, k)[4])
+        if district_comparison(data, district, candidate)[4] > 0:
+            contrast = candidate
+    return top, contrast
+
+
+def render_district_diagram(data):
+    esc = html.escape
+    intro = ('常談議題取區內則數最多的兩類，同數並列；相對差異取本區與其餘各區合併留言的最大正向比例差。'
+             '兩者回答不同問題。差異是探索性描述，未做顯著性檢定。細條統一以 0–100% 顯示區內比例；一則可跨類，比例不能相加。')
+    direction_note = ('改善方向依相對差異的主題提出，屬於研究建議，並非留言已支持某項措施。先核實情境，再小規模比較；'
+                      '下列方向都待驗證，不是各區改善優先序。')
+    md = ['### 十二區問題與改善方向', '', intro, '', direction_note, '',
+          '| 行政區（本檔則數） | 區內常談議題 | 相對差異（本區 vs 其餘各區） | 改善方向 · 待驗證 |',
+          '| --- | --- | --- | --- |']
+    page = [f'<p>{esc(intro)}</p>',
+            '<div class="district-common"><strong>共通方向：投放便利與周邊負擔一起看</strong><p>桶位與便利在各區都有被提到，但談到桶不等於支持增設。先核對實際路徑、桶況與清運條件，再比較位置、指引或服務調整。</p></div>',
+            f'<p id="district-directions-note" class="feedback-note">{esc(direction_note)}</p>',
+            '<div class="district-column-headings" aria-hidden="true"><span>行政區標記</span><span>區內常談議題</span><span>相對其他區的差異</span><span>改善方向 · 待驗證</span></div>',
+            '<ol class="district-diagram" aria-label="十二區問題、差異與改善方向" aria-describedby="district-directions-note">']
+    for district, n in data['districts'].items():
+        counts = data['districtAnalysis'][district]['themes']
+        top, contrast = district_profile(data, district)
+        issues = '；'.join(f'{THEMES[k][0]} {counts[k]}／{n}（{percent(counts[k],n)}）' for k in top) or '無可歸類議題'
+        page += [f'<li class="district-row" data-profile="{esc(district)}"><div class="district-name"><h4>{esc(district)}</h4><span>本檔 {n:,} 則</span></div>',
+                 '<div class="district-issues"><span class="district-mobile-label">區內常談議題</span><ul>']
+        for key in top:
+            pct = percent(counts[key], n)
+            page += [f'<li data-primary-theme="{key}"><strong>{esc(THEMES[key][0])}</strong><span>{counts[key]}／{n} 則 · {pct}</span><div class="district-bar" aria-hidden="true"><i style="width:{pct}"></i></div></li>']
+        if not top:
+            page += ['<li>無可歸類議題</li>']
+        page += ['</ul></div><div class="district-contrast"><span class="district-mobile-label">相對其他區的差異</span>']
+        if contrast:
+            count, total, other, rest, delta = district_comparison(data, district, contrast)
+            local_pct, rest_pct = percent(count,total), percent(other,rest)
+            comparison = f'{THEMES[contrast][0]}：{count}／{total}（{local_pct}）vs {other}／{rest}（{rest_pct}），+{delta:.1f} 百分點'
+            check, trial = DISTRICT_DIRECTIONS[contrast]
+            page += [f'<strong data-contrast-theme="{contrast}">{esc(THEMES[contrast][0])}</strong>',
+                     f'<dl><div><dt>本區</dt><dd>{local_pct}</dd></div><div><dt>其餘各區</dt><dd>{rest_pct}</dd></div></dl>',
+                     f'<p class="district-delta">+{delta:.1f} <span>百分點</span></p>',
+                     f'<span class="district-comparison-counts">本區 {count}／{total} 則<br>其餘各區 {other}／{rest} 則</span>',
+                     '</div><div class="district-direction"><span class="district-mobile-label">改善方向 · 待驗證</span>',
+                     f'<p><strong>先查</strong>{esc(check)}</p><p><strong>再試</strong>{esc(trial)}</p>']
+            direction = f'先查：{check}；再試：{trial}'
+        else:
+            comparison = '無可比較的其他區' if len(data['districts']) == 1 else '沒有比例較高的類別'
+            direction = '先補齊情境與可比資料，暫不由相對差異指定措施。'
+            page += [f'<p>{comparison}</p></div><div class="district-direction"><span class="district-mobile-label">改善方向 · 待驗證</span><p>{direction}</p>']
+        page += ['</div></li>']
+        md += [f'| {district}（{n}） | {issues} | {comparison} | {direction} |']
+    page += ['</ol>']
+    md += ['']
+    return md, page
+
+
 def render_districts(data):
     validate(data)
     esc = html.escape
-    title = '行政區 × 語意問題：比較留言談了什麼'
-    framing = ('每格來自逐則語意判讀，並非詞語命中。分母是該行政區標記在本檔的全部留言，'
+    title = '十二區留言：主要問題、相對差異與改善方向'
+    framing = ('以下數字來自逐則語意判讀。分母是該行政區標記在本檔的全部留言，'
                '包含資訊不足與其他內容；行政區尚未確認為事件所在地或居住地。'
                '一則可以談多個問題或訴求，橫列比例不能相加；描述、預期風險與改善訴求都可能被納入，並非核實事件數。')
-    md = [f'### {title}', '', framing, '', '| 行政區（則數） | ' + ' | '.join(x['label'] for x in data['themes']) + ' |',
+    diagram_md, diagram_page = render_district_diagram(data)
+    md = [f'## {title}', '', framing, '', *diagram_md, '### 完整七類數據與比較方法', '', '| 行政區（則數） | ' + ' | '.join(x['label'] for x in data['themes']) + ' |',
           '| --- | ' + ' | '.join(['---:'] * len(THEMES)) + ' |']
-    page = [f'<section class="feedback-section feedback-cross" aria-labelledby="feedback-cross"><h4 id="feedback-cross" tabindex="-1">{title}</h4><p>{esc(framing)}</p>',
+    page = [f'<section class="feedback-section feedback-cross" aria-labelledby="feedback-cross"><h3 id="feedback-cross" tabindex="-1">{title}</h3><p>{esc(framing)}</p>',
+            *diagram_page, '<details class="feedback-codebook district-full-data"><summary>查看完整七類數據與比較方法</summary>',
             '<p id="feedback-cross-method" class="feedback-note">數字為則數與區內比例；細條皆以 0–100% 為同一尺度。窄螢幕可左右捲動，行政區欄固定；鍵盤聚焦後可用方向鍵。</p>',
             '<div class="feedback-matrix-scroll" role="region" aria-label="十二區語意問題交叉表，可左右捲動" tabindex="0" aria-describedby="feedback-cross-method"><table class="feedback-matrix"><caption>行政區 × 七類問題與訴求 · AI 語意判讀</caption><thead><tr><th scope="col">行政區<br>本檔則數</th>']
     page += [f'<th scope="col">{esc(item["label"])}</th>' for item in data['themes']]
@@ -400,7 +477,7 @@ def render_districts(data):
     coverage = '各區「判讀不明確／無法歸入七類」則數（兩者可重疊，均保留在分母）：' + '、'.join(
         f'{d} {g["unclear"]}／{g["unclassified"]}' for d, g in data['districtAnalysis'].items()) + '。'
     md += ['', coverage, '']
-    page += [f'<p class="feedback-note">{esc(coverage)}</p><p>下一步先依具體情境核對時間、地點、垃圾來源與服務條件，再安排可比的現場觀察。語意比例可以幫助選取訪談題目；仍需補齊各區招募、完整回饋數與篩選方式，才能評估資料收集造成的差異。</p></section>']
+    page += [f'<p class="feedback-note">{esc(coverage)}</p></details><p>下一步先依具體情境核對時間、地點、垃圾來源與服務條件，再安排可比的現場觀察。語意比例可以幫助選取訪談題目；仍需補齊各區招募、完整回饋數與篩選方式，才能評估資料收集造成的差異。</p></section>']
     md += ['下一步先依具體情境核對時間、地點、垃圾來源與服務條件，再安排可比的現場觀察。語意比例可以幫助選取訪談題目；仍需補齊各區招募、完整回饋數與篩選方式，才能評估資料收集造成的差異。', '']
     return md, page
 
@@ -427,7 +504,7 @@ def semantic_findings(data):
 def home_summary(data):
     return (''.join(f'<p>{html.escape(text)}</p>' for text in semantic_findings(data)) +
             '<p>已由子代理逐則區分問題、訴求與公共桶立場。先前由關鍵字推論北投、內湖與萬華問題的結論已撤回；現在應以語意交叉表重新閱讀，並由研究者複核。現場時間、地點與服務條件仍待確認，不能推出設點或改善優先序。</p>'
-            '<p class="feedback-report-entry"><a href="#feedback-findings">閱讀完整分析與圖解</a> · <a href="#feedback-cross">看語意交叉分析</a></p>')
+            '<p class="feedback-report-entry"><a href="#feedback-findings">閱讀完整分析與圖解</a> · <a href="#feedback-cross">看十二區問題與改善圖解</a></p>')
 
 
 def render(data):
@@ -448,11 +525,12 @@ def render(data):
           f'## {REPORT_JUDGMENT}', '']
     page = [f'<header class="research-page-heading"><h2 id="feedback-heading">{REPORT_TITLE}</h2><p>逐則理解 {total:,} 則留言，再比較各區問題與訴求。</p><p class="research-update">整理於 {data["analysisDate"]}；收集期間未提供。</p></header>',
             f'<p class="feedback-scope">{esc(SCOPE)}</p><p class="feedback-note">{esc(correction)}</p>',
-            '<nav class="feedback-contents" aria-label="留言分析章節"><a href="#feedback-findings">研究判斷</a><a href="#feedback-cross">行政區交叉分析</a><a href="#feedback-stances">設桶立場</a><a href="#feedback-mechanisms">原因與反例</a><a href="#feedback-method">方法與限制</a></nav>',
+            '<nav class="feedback-contents" aria-label="留言分析章節"><a href="#feedback-findings">研究判斷</a><a href="#feedback-cross">十二區圖解</a><a href="#feedback-stances">設桶立場</a><a href="#feedback-mechanisms">原因與反例</a><a href="#feedback-method">方法與限制</a></nav>',
             f'<section class="feedback-section" aria-labelledby="feedback-findings"><h3 id="feedback-findings" tabindex="-1">{REPORT_JUDGMENT}</h3>']
     for paragraph in [*semantic_findings(data), *REPORT_INTRO]:
         md += [paragraph, '']; page += [f'<p>{esc(paragraph)}</p>']
     page += ['</section>']
+    cross_md, cross_page = render_districts(data); md += cross_md; page += cross_page
     # Preserve earlier anchor destinations while replacing word-hit content.
     page += ['<section class="feedback-section feedback-appendix" aria-labelledby="feedback-signals"><h3 id="feedback-signals" tabindex="-1">逐則語意判讀：談及的問題與訴求</h3>', f'<p>{esc(METHOD)}</p>']
     md += ['## 逐則語意判讀：談及的問題與訴求', '', METHOD, '', table_markdown([(x['label'], x['count']) for x in data['themes']], total), '']
@@ -467,7 +545,6 @@ def render(data):
     page += ['</dl></details>']
     uncertain = f'判讀不明確 {data["unclear"]} 則；無法歸入七類 {data["unclassified"]} 則。兩者可能重疊，全部保留在分母，沒有強迫分類。'
     md += ['', uncertain, '']; page += [f'<p class="feedback-note">{esc(uncertain)}</p>']
-    cross_md, cross_page = render_districts(data); md += cross_md; page += cross_page
     page += ['</section><section class="feedback-section" aria-labelledby="feedback-stances"><h3 id="feedback-stances" tabindex="-1">提到垃圾桶，不等於支持增設</h3>']
     stance_note = '以下僅判讀公共／街道垃圾桶的方向；家戶定點收運不自動算成增設公共桶。每則恰有一個立場標籤，分母仍為全檔留言，不是市民支持率。'
     md += ['## 提到垃圾桶，不等於支持增設', '', stance_note, '', table_markdown([(STANCES[k], v) for k,v in data['stances'].items()], total), '']
