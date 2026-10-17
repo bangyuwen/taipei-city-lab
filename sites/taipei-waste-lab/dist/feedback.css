@@ -158,3 +158,20 @@
  .district-common{padding:20px 16px}
  .district-direction{padding-top:16px;border-top:1px dashed var(--line)}
 }
+
+/* Official location rows and feedback are separate populations, never a stock ratio. */
+.distribution-overview{margin:24px 0;padding:24px;background:var(--light)}
+.distribution-overview h4{font-size:23px;line-height:1.6;margin:0 0 16px}
+.distribution-overview>p:last-child{margin-bottom:0}
+.district-bin-count{margin-top:20px;line-height:1.7;font-size:14px}
+.district-bin-count strong,.district-bin-count span{display:block;font-size:14px}
+.district-bin-count span{color:var(--muted)}
+.district-bin-count a{display:inline-flex;align-items:center;min-height:44px;font-size:14px;text-underline-offset:4px}
+.district-assessment h5{font-size:18px;line-height:1.7;margin:0 0 12px}
+.district-joined-evidence{list-style:none;padding:0;margin:0 0 16px;font-size:14px;line-height:1.8;color:var(--muted)}
+.district-joined-evidence li+li{margin-top:6px}
+@media(min-width:960px) and (max-width:1199px),(max-width:799px){
+ .district-name{flex-wrap:wrap}
+ .district-bin-count{flex-basis:100%;margin-top:0}
+}
+@media(max-width:479px){.distribution-overview{padding:20px 16px}.distribution-overview h4{font-size:21px}}
