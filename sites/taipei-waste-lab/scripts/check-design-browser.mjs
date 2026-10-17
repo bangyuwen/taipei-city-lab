@@ -32,7 +32,7 @@ async function newPage(browser,{width=1440,reducedMotion='no-preference',webglFa
   page.on('pageerror',error=>diagnostics.pageErrors.push(error.message));
   page.on('console',message=>{if(message.type()==='error')diagnostics.consoleErrors.push(message.text());});
   page.on('requestfailed',request=>diagnostics.failedRequests.push(request.url()));
-  await page.route('**/tile.openstreetmap.org/**',route=>route.fulfill({status:200,contentType:'image/png',body:ONE_PIXEL_PNG}));
+  await page.route('https://{tile.openstreetmap.org,basemaps.cartocdn.com}/**',route=>route.fulfill({status:200,contentType:'image/png',body:ONE_PIXEL_PNG}));
   if(datasetFailure)await page.route('**/data/datasets.json',route=>route.fulfill({status:503,contentType:'text/plain',body:'unavailable'}));
   await page.goto(TARGET_URL.href,{waitUntil:'domcontentloaded'});
   await page.locator('#panel-design').waitFor({state:'visible',timeout:TIMEOUT});

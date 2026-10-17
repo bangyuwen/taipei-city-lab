@@ -21,7 +21,7 @@ function urlFor(hash=''){
 function observe(page,label){
   page.on('pageerror',error=>errors.push(`${label}: ${error.message}`));
   // Map markers and source records must remain useful without external tiles.
-  return page.route('https://tile.openstreetmap.org/**',route=>route.abort());
+  return page.route('https://{tile.openstreetmap.org,basemaps.cartocdn.com}/**',route=>route.abort());
 }
 async function checkBounds(page,label){
   const overflow=await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,bad:[...document.querySelectorAll('main *')].filter(element=>{

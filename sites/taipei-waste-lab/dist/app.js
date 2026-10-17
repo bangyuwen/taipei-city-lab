@@ -4,6 +4,7 @@ import {filterPoints,recordStats,pageFromHash,allowedPages,historyPages,escapeHT
 const $=id=>document.getElementById(id),num=n=>new Intl.NumberFormat('zh-TW',{maximumFractionDigits:1}).format(n);
 const colors={'2015':'#986838','2022':'#30694e','2024':'#396e88','2026':'#244d43'};
 let catalog,map,L,layers,markers=new Map(),filtered=[],shown=40,currentPage=null,lastHash;
+let basemap;
 let state={year:'2015',district:'',search:''},mapStarting=false;
 let designExperience,designLoading;
 let comparisonLoading;
@@ -180,16 +181,36 @@ async function ensureMap(){
   try{
     L=await import('./vendor/leaflet/leaflet-src.esm.js');
     map=L.map('map',{preferCanvas:true,scrollWheelZoom:false}).setView([25.045,121.535],12);
-    let failures=0;
-    const tiles=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
-      maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors'}).addTo(map);
-    tiles.on('tileerror',()=>{if(++failures>=4)$('map-status').textContent='底圖連線暫時不穩；位置與清單仍可查詢。'});
-    tiles.on('load',()=>{if(!failures)$('map-status').textContent=''});
+    setBasemap();
     layers=L.layerGroup().addTo(map);renderMap();
   }catch(error){
     $('map-status').textContent='地圖暫時無法載入；仍可搜尋位置與查看清單。';
     console.error('Map initialization failed:',error.message);
   }finally{mapStarting=false}
+}
+function setBasemap(fallback=false){
+  if(!map)return;
+  const light=$('map-basemap').value==='light';
+  const carto=light&&!fallback;
+  if(basemap){basemap.off('tileerror load');map.removeLayer(basemap)}
+  $('map-status').textContent=fallback?'簡潔底圖暫時無法載入，已改用淡色街道底圖。':'';
+  const attribution='&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors';
+  const tiles=L.tileLayer(carto?'https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png':'https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    maxZoom:19,keepBuffer:1,updateWhenIdle:true,
+    className:light&&!carto?'map-tiles-muted':'',opacity:light&&!carto?.55:1,
+    attribution:attribution+(carto?' &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener noreferrer">CARTO</a>':'')
+  });
+  basemap=tiles;
+  let failures=0;
+  tiles.on('tileerror',()=>{
+    if(basemap!==tiles)return;
+    if(carto){setBasemap(true);return}
+    if(++failures>=4)$('map-status').textContent='底圖連線暫時不穩；位置與清單仍可查詢。';
+  });
+  tiles.on('load',()=>{
+    if(basemap===tiles&&!failures&&!fallback)$('map-status').textContent='';
+  });
+  tiles.addTo(map);
 }
 function popup(p){
   const el=document.createElement('div'),strong=document.createElement('strong'),addr=document.createElement('div'),small=document.createElement('small');
@@ -280,6 +301,7 @@ async function start(){
   });
   $('comparison-retry').addEventListener('click',ensureComparison);
   $('siting-retry').addEventListener('click',()=>sitingExperience?sitingExperience.reload():ensureSiting());
+  $('map-basemap').addEventListener('change',()=>setBasemap());
   window.addEventListener('hashchange',panel);
   window.addEventListener('popstate',()=>{
     if(catalog){

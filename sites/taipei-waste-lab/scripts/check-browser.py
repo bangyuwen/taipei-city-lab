@@ -101,7 +101,7 @@ def main():
         errors = []
         page.on('pageerror', lambda error: errors.append(str(error)))
         # External tile availability is independent of local map interactions.
-        page.route('https://tile.openstreetmap.org/**', lambda route: route.abort())
+        page.route('https://{tile.openstreetmap.org,basemaps.cartocdn.com}/**', lambda route: route.abort())
         ready(page)
         assert page.locator('#dataset-version option').count() == 6
         assert page.locator('[data-year]').count() == 0
@@ -185,7 +185,7 @@ def main():
         phone = mobile.new_page()
         phone_errors = []
         phone.on('pageerror', lambda error: phone_errors.append(str(error)))
-        phone.route('https://tile.openstreetmap.org/**', lambda route: route.abort())
+        phone.route('https://{tile.openstreetmap.org,basemaps.cartocdn.com}/**', lambda route: route.abort())
         ready(phone)
         for panel in ['research', 'map', 'history', 'sources']:
             navigate(phone, panel)
