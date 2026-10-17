@@ -10,7 +10,7 @@ function python(code) {
 }
 
 test('feedback links and chapter deep links resolve without changing existing destinations', () => {
-  for (const hash of ['#feedback', '#feedback-signals', '#feedback-moods', '#feedback-method']) {
+  for (const hash of ['#feedback', '#feedback-signals', '#feedback-moods', '#feedback-method', '#feedback-overlap', '#feedback-loop', '#feedback-mechanism-sorting', '#feedback-validation']) {
     assert.equal(pageFromHash(hash), 'feedback');
   }
   assert.equal(pageFromHash('#main', 'feedback'), 'feedback');
@@ -105,4 +105,30 @@ assert not any(name.endswith(('summary.json','.tsv','.md')) for name in assets)
 with zipfile.ZipFile('dist/research/research-execution-2026-10-15.zip') as bundle:
  assert 'scripts/analyze-feedback.py' in bundle.namelist()
  assert not any('private' in name or name.endswith('.tsv') for name in bundle.namelist())
+`));
+
+test('overlap diagram partitions messages and rejects inconsistent aggregates', () => python(String.raw`
+import csv,runpy,tempfile,copy
+from pathlib import Path
+m=runpy.run_path('scripts/analyze-feedback.py')
+with tempfile.TemporaryDirectory() as directory:
+ p=Path(directory)/'input.tsv'
+ texts=['垃圾桶與垃圾車','垃圾筒','清潔箱','垃圾車','無相關詞']
+ with p.open('w',newline='') as f:
+  w=csv.writer(f,delimiter='\t');w.writerow(m['FIELDS'])
+  w.writerows([[str(i),'中正','環境','在意',text] for i,text in enumerate(texts)])
+ data=m['analyze'](p)
+ md,page=m['render_depth'](data)
+ md='\n'.join(md);page='\n'.join(page)
+ assert '| 有桶詞 | 1 | 2 |' in md
+ assert '| 無桶詞 | 1 | 1 |' in md
+ assert '兩者皆未命中' in page and '不是需求分群' in page
+ for valid in (0,2):
+  adjacent=copy.deepcopy(data);adjacent['binAndTruck']=valid
+  m['render_depth'](adjacent)
+ for broken in (3,-1):
+  invalid=copy.deepcopy(data);invalid['binAndTruck']=broken
+  try:m['render_depth'](invalid)
+  except ValueError:pass
+  else:raise AssertionError('Impossible overlap accepted')
 `));
