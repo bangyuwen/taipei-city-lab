@@ -1,0 +1,26 @@
+{
+  "checkedAt": "2026-10-17T16:22:19.674549+00:00",
+  "url": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=267d550f-c6ec-46e0-b8af-fd5a464eb098",
+  "httpStatus": 200,
+  "contentType": "text/csv;charset=BIG-5",
+  "bytes": 63540,
+  "sha256": "ff3cf5528c057958f89871aa5300fc633b02d0f7b37131ab29d5ddc2f8e2370d",
+  "retainedRawPath": "source-recovery-2026-10-15/raw/official-download.csv",
+  "retainedRawSha256": "ff3cf5528c057958f89871aa5300fc633b02d0f7b37131ab29d5ddc2f8e2370d",
+  "rows": 681,
+  "rowsMatchRetained": true,
+  "columns": [
+    "行政區",
+    "地址",
+    "經度",
+    "緯度",
+    "備註"
+  ],
+  "checkedDateTaipei": "2026-10-18",
+  "sourceUpdatedAt": "2026-09-30 15:55:35",
+  "catalogUrl": "https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c",
+  "csvFile": "taipei-bins-2026-09-30-published.csv",
+  "csvSha256": "38b4af06dc0d57a38cc1361079fed8963632be746f5033638dec1001c072fda1",
+  "inventoryComplete": null,
+  "surveyDate": null
+}

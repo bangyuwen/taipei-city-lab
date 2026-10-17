@@ -3,8 +3,10 @@ import argparse
 import csv
 import hashlib
 import html
+import io
 import json
 import re
+from urllib.parse import urlencode
 from collections import Counter
 from pathlib import Path
 
@@ -356,6 +358,116 @@ def district_comparison(data, district, key):
     return count, n, rest_count, rest_n, difference
 
 
+DISTRIBUTION_FOLDER = 'feedback-distribution-2026-10-18'
+DISTRIBUTION_TITLE = '有位置紀錄，仍要分清缺桶、難用與清運管理'
+DISTRIBUTION_CONCLUSION = ('對照後，沒有一區能由這兩份資料直接判定實際缺桶。較可支持的是查核方向：'
+    '松山、大安、大同先查投放可達性；萬華先查清掃與巡收；文山先拆開家戶收運與行人桶；'
+    '內湖、士林的配置與制度管理一起查。北投、南港先補清冊，信義、中山、中正保留多種解釋。')
+
+
+def load_distribution(data, research=None):
+    """Join district aggregates only; source absence never measures physical stock."""
+    canonical = ROOT.parent.parent / 'topics/bins/research'
+    research = research or (canonical if canonical.is_dir() else ROOT / 'research')
+    folder = research / DISTRIBUTION_FOLDER
+    receipt = json.loads((folder / 'source-check.json').read_text())
+    assessments = json.loads((folder / 'assessments.json').read_text())
+    feedback_bytes = (research / FOLDER / 'summary.json').read_bytes()
+    if hashlib.sha256(feedback_bytes).hexdigest() != assessments['feedbackSha256'] or json.loads(feedback_bytes) != data:
+        raise ValueError('District interpretations require their reviewed semantic summary')
+    if set(assessments['districts']) != set(data['districts']):
+        raise ValueError('Every feedback district needs exactly one interpretation')
+    raw = (research / receipt['retainedRawPath']).read_bytes()
+    snapshot = research / 'source-recovery-2026-10-15' / receipt['csvFile']
+    csv_bytes = snapshot.read_bytes()
+    if hashlib.sha256(raw).hexdigest() != receipt['sha256'] or receipt['sha256'] != receipt['retainedRawSha256']:
+        raise ValueError('Official source verification no longer matches retained raw input')
+    if hashlib.sha256(csv_bytes).hexdigest() != receipt['csvSha256'] or receipt['csvSha256'] != assessments['distributionSha256']:
+        raise ValueError('Official CSV changed; repeat comparison and interpretation')
+    with snapshot.open(encoding='utf-8-sig', newline='') as f:
+        rows = list(csv.DictReader(f))
+    if rows != list(csv.DictReader(io.StringIO(raw.decode('cp950')))):
+        raise ValueError('Normalized CSV differs from retained official response')
+    if len(rows) != receipt['rows'] or receipt['rowsMatchRetained'] is not True or receipt['inventoryComplete'] is not None:
+        raise ValueError('Unverified distribution source or physical coverage claim')
+    mapping = {district + '區': district for district in data['districts']}
+    bins = {d: {'rows': 0, 'plottable': 0, 'coordinates': set()} for d in data['districts']}
+    for row in rows:
+        if row['行政區'] not in mapping:
+            raise ValueError('Unmatched official district; refuse an incomplete join')
+        group = bins[mapping[row['行政區']]]
+        group['rows'] += 1
+        try:
+            x, y = float(row['經度']), float(row['緯度'])
+        except (TypeError, ValueError):
+            continue
+        if 121.4 < x < 121.7 and 24.95 < y < 25.3:
+            group['plottable'] += 1
+            group['coordinates'].add((x, y))
+    for group in bins.values():
+        group['distinctPlottableCoordinates'] = len(group.pop('coordinates'))
+    for item in assessments['districts'].values():
+        if not item['evidence'] or len(set(item['evidence'])) != len(item['evidence']) or any(k not in ('more', *THEMES) for k in item['evidence']):
+            raise ValueError('Invalid semantic evidence selection')
+        if any(not isinstance(item[k], str) or not item[k].strip() for k in ('reading', 'interpretation', 'next')):
+            raise ValueError('Missing conditional district interpretation')
+    return {'source': receipt, 'assessments': assessments, 'bins': bins}
+
+
+def distribution_evidence(data, district, keys):
+    group, n = data['districtAnalysis'][district], data['districts'][district]
+    result = []
+    for key in keys:
+        count = group['stances']['more'] if key == 'more' else group['themes'][key]
+        label = '偏向增設／恢復／保留桶' if key == 'more' else THEMES[key][0]
+        result.append(f'{label} {count}／{n}（{percent(count,n)}）')
+    return result
+
+
+def distribution_intro(distribution):
+    s = distribution['source']
+    description = (f'採用 {s["sourceUpdatedAt"][:10]} 更新的官方主檔，於 {s["checkedDateTaipei"]} 重新下載核對，'
+                   f'全部 {s["rows"]} 列與保存檔一致。這是位置列，不是已核實的全市桶數；原調查日期與全市完整性未知。')
+    boundary = ('僅依行政區標記對照，沒有把留言配到某個垃圾桶。回饋的日期及事件位置未核實，'
+                '因此沒有計算每桶留言數、步行覆蓋率或缺桶排名。不同問題可出現在同一則，比例不能相加。')
+    return f'''<div class="distribution-overview"><h4>{DISTRIBUTION_TITLE}</h4><p>{DISTRIBUTION_CONCLUSION}</p>
+<p>{description}</p><p><strong>北投 0 列、南港 4 列是公開清單的缺口，不能當成現場桶數。</strong>同樣地，士林列數較多，也不代表位置、可用性與收運已足夠。</p>
+<details class="feedback-codebook"><summary>這次比對能說明什麼？</summary><p>{boundary}「偏向增設／恢復／保留」含保留既有設施的方向，並非每則都在描述桶數不足；它也不能與維護或管理主題當成互斥票數。</p></details>
+<p><a href="{html.escape(s['catalogUrl'])}" target="_blank" rel="noopener noreferrer">官方位置資料與更新時間</a> · <a href="#feedback-method">語意判讀方法與限制</a></p></div>'''
+
+
+def distribution_report(data, distribution):
+    s, bins = distribution['source'], distribution['bins']
+    md = ['# 語意回饋 × 官方位置清單：十二區交叉判讀', '',
+          f'分析與來源複查日：{s["checkedDateTaipei"]}。回饋收集日期與設施逐點調查日期未知。', '',
+          DISTRIBUTION_CONCLUSION, '',
+          '## 比對方法與可回答的範圍', '',
+          f'- 回饋：{data["records"]:,} 則篩選後訊息，沿用已完成的逐則語意判讀；不重新用關鍵字分類。每區分母包含全部留言。',
+          f'- 分布：官方 {s["sourceUpdatedAt"]} 更新的主檔，{s["checkedDateTaipei"]} 重下載仍為 {s["rows"]} 列；原始位元組及各列均與保存檔一致。',
+          '- 只按行政區欄位一對一連結彙總；留言標記尚未確認為居住地或事件所在地，不能作逐點距離比對。回饋與設施也未建立同期間關係。',
+          '- 公開清單列數不是完整現場存量；不以零列當零設施，不把同座標列去重成實體桶，也不加入其他年份、294 列中心子集、場所清單或候選街段。',
+          '- 「偏向增設／恢復／保留桶」包含維持既有設施，不等於已核實不足；C 維護、G 管理及其他主題各自計數，不相加，也不是互斥選項。',
+          '- 不計算留言／桶比、人口密度、步行覆蓋或不足分數。沒有足以支持它們的完整清冊、事件位置、日期、路徑、人流與使用量。',
+          '- 下表為 AI 協助提出的有條件研究判讀，並非新的逐則分類、統計檢定、政策效果或設點優先序，仍需人類與現場核對。', '',
+          '## 十二區對照', '', '| 行政區 | 本檔留言 | 公開位置列／可繪製列 | 分開閱讀的語意證據 | 合併判讀與下一步 |', '| --- | ---: | ---: | --- | --- |']
+    for d,n in data['districts'].items():
+        a = distribution['assessments']['districts'][d]
+        evidence = '；'.join(distribution_evidence(data,d,a['evidence']))
+        md += [f'| {d} | {n} | {bins[d]["rows"]}／{bins[d]["plottable"]} | {evidence} | **{a["reading"]}**。{a["interpretation"]} 下一步：{a["next"]} |']
+    md += ['', f'核對總數：{sum(x["rows"] for x in bins.values())} 位置列、{sum(x["plottable"] for x in bins.values())} 列通過既有座標粗篩、{sum(data["districts"].values())} 則回饋；沒有因缺列或座標異常移除留言。座標粗篩不是現場核實。', '',
+           '## 什麼證據能分清原因', '',
+           '| 待判斷問題 | 需要補的證據 | 會改變判斷的觀察 |', '| --- | --- | --- |',
+           '| 桶位或可達性不足 | 日期明確的完整清冊、事件地點、實際步行路徑與可用狀態 | 沿使用路徑確實沒有可到達的合法投放點，且不能由指引或可用性問題解釋。 |',
+           '| 清運與設備維護 | 同點分時桶況、投放負荷、清空時間、設備狀態 | 有合適可達的桶，但在使用時常滿溢、損壞或清運不及。 |',
+           '| 管理或家戶服務 | 接收規則、責任、陳情紀錄、垃圾車時間、合法替代管道 | 投放點存在，但時段、接收規則或管理回應讓使用者無法完成投放。 |',
+           '', '以上解釋可能同時成立。先選能核實時間與地點的情境；沒有這些證據前，不宣布哪區應增設多少桶。', '',
+           '## 來源與重現', '', f'- [官方清潔箱資料集]({s["catalogUrl"]})；[本次下載端點]({s["url"]})。',
+           '- [已保存的原始主檔](../source-recovery-2026-10-15/raw/official-download.csv)、[來源複查收據](source-check.json)、[有條件判讀](assessments.json)、[既有語意分析](../feedback-2026-10-17/README.md)。',
+           f'- 本次原檔 SHA-256：`{s["sha256"]}`。來源日期與下載／複查日期分開保存；本次沒有改寫舊快照。',
+           '- 在網站目錄執行 `python3 scripts/analyze-feedback.py`，再執行 `python3 scripts/package-research.py`。使用已保存的語意彙總、官方 CSV 與收據，不需原始私有留言或網路。', '']
+    return '\n'.join(md)
+
+
 # Research directions are authored hypotheses, separate from semantic labels.
 DISTRICT_DIRECTIONS = {
     'A': ('核對步行路徑、桶的位置與可用性', '比較位置或指引調整；同時追蹤投放距離與桶旁堆積。'),
@@ -382,7 +494,7 @@ def district_profile(data, district):
     return top, contrast
 
 
-def render_district_diagram(data):
+def render_district_diagram(data, distribution=None):
     esc = html.escape
     intro = ('常談議題取區內則數最多的兩類，同數並列；相對差異取本區與其餘各區合併留言的最大正向比例差。'
              '兩者回答不同問題。差異是探索性描述，未做顯著性檢定。細條統一以 0–100% 顯示區內比例；一則可跨類，比例不能相加。')
@@ -391,16 +503,25 @@ def render_district_diagram(data):
     md = ['### 十二區問題與改善方向', '', intro, '', direction_note, '',
           '| 行政區（本檔則數） | 區內常談議題 | 相對差異（本區 vs 其餘各區） | 改善方向 · 待驗證 |',
           '| --- | --- | --- | --- |']
-    page = [f'<p>{esc(intro)}</p>',
-            '<div class="district-common"><strong>共通方向：投放便利與周邊負擔一起看</strong><p>桶位與便利在各區都有被提到，但談到桶不等於支持增設。先核對實際路徑、桶況與清運條件，再比較位置、指引或服務調整。</p></div>',
+    if distribution:
+        direction_note = '合併判讀同時讀取公開位置列與語意結果，屬於待驗證的研究解釋，不是缺桶診斷或設點優先序。'
+        md = ['### 十二區問題與改善方向', '', intro, '', direction_note, '', DISTRIBUTION_CONCLUSION, '', '[完整位置與回饋對照及來源](../feedback-distribution-2026-10-18/README.md)', '', '| 行政區（本檔則數） | 公開位置列（非現場桶數） | 區內常談議題 | 相對差異（本區 vs 其餘各區） | 合併判讀 · 待驗證 |', '| --- | ---: | --- | --- | --- |']
+    page = [distribution_intro(distribution) if distribution else '', f'<p class="feedback-note">{esc(intro)}</p>',
+            '' if distribution else '<div class="district-common"><strong>共通方向：投放便利與周邊負擔一起看</strong><p>桶位與便利在各區都有被提到，但談到桶不等於支持增設。先核對實際路徑、桶況與清運條件，再比較位置、指引或服務調整。</p></div>',
             f'<p id="district-directions-note" class="feedback-note">{esc(direction_note)}</p>',
-            '<div class="district-column-headings" aria-hidden="true"><span>行政區標記</span><span>區內常談議題</span><span>相對其他區的差異</span><span>改善方向 · 待驗證</span></div>',
+            '<div class="district-column-headings" aria-hidden="true"><span>行政區標記</span><span>區內常談議題</span><span>相對其他區的差異</span><span>' + ('合併判讀' if distribution else '改善方向') + ' · 待驗證</span></div>',
             '<ol class="district-diagram" aria-label="十二區問題、差異與改善方向" aria-describedby="district-directions-note">']
     for district, n in data['districts'].items():
         counts = data['districtAnalysis'][district]['themes']
+        distribution_label = ''
+        if distribution:
+            group = distribution['bins'][district]
+            url = '?' + urlencode({'year':'2026-main','district':district+'區'}) + '#map'
+            label = '主檔未列本區' if group['rows'] == 0 else f'公開清單 {group["rows"]} 列'
+            distribution_label = f'<div class="district-bin-count" data-bin-rows="{group["rows"]}"><strong>{label}</strong><span>不等於現場桶數</span><a href="{esc(url)}">查看公開地圖</a></div>'
         top, contrast = district_profile(data, district)
         issues = '；'.join(f'{THEMES[k][0]} {counts[k]}／{n}（{percent(counts[k],n)}）' for k in top) or '無可歸類議題'
-        page += [f'<li class="district-row" data-profile="{esc(district)}"><div class="district-name"><h4>{esc(district)}</h4><span>本檔 {n:,} 則</span></div>',
+        page += [f'<li class="district-row" data-profile="{esc(district)}"><div class="district-name"><h4>{esc(district)}</h4><span>本檔 {n:,} 則</span>{distribution_label}</div>',
                  '<div class="district-issues"><span class="district-mobile-label">區內常談議題</span><ul>']
         for key in top:
             pct = percent(counts[key], n)
@@ -417,28 +538,38 @@ def render_district_diagram(data):
                      f'<dl><div><dt>本區</dt><dd>{local_pct}</dd></div><div><dt>其餘各區</dt><dd>{rest_pct}</dd></div></dl>',
                      f'<p class="district-delta">+{delta:.1f} <span>百分點</span></p>',
                      f'<span class="district-comparison-counts">本區 {count}／{total} 則<br>其餘各區 {other}／{rest} 則</span>',
-                     '</div><div class="district-direction"><span class="district-mobile-label">改善方向 · 待驗證</span>',
-                     f'<p><strong>先查</strong>{esc(check)}</p><p><strong>再試</strong>{esc(trial)}</p>']
+                     '</div>']
             direction = f'先查：{check}；再試：{trial}'
         else:
             comparison = '無可比較的其他區' if len(data['districts']) == 1 else '沒有比例較高的類別'
             direction = '先補齊情境與可比資料，暫不由相對差異指定措施。'
-            page += [f'<p>{comparison}</p></div><div class="district-direction"><span class="district-mobile-label">改善方向 · 待驗證</span><p>{direction}</p>']
+            page += [f'<p>{comparison}</p></div>']
+        if distribution:
+            a = distribution['assessments']['districts'][district]
+            evidence = distribution_evidence(data, district, a['evidence'])
+            page += ['<div class="district-direction district-assessment"><span class="district-mobile-label">合併判讀 · 待驗證</span>',
+                     f'<h5>{esc(a["reading"])}</h5><ul class="district-joined-evidence">' + ''.join(f'<li>{esc(text)}</li>' for text in evidence) + '</ul>',
+                     f'<p>{esc(a["interpretation"])}</p><p><strong>下一步</strong>{esc(a["next"])}</p>']
+            direction = f'{a["reading"]}：{a["interpretation"]} 下一步：{a["next"]}'
+        else:
+            page += ['<div class="district-direction"><span class="district-mobile-label">改善方向 · 待驗證</span>']
+            page += [f'<p><strong>先查</strong>{esc(check)}</p><p><strong>再試</strong>{esc(trial)}</p>' if contrast else f'<p>{direction}</p>']
         page += ['</div></li>']
-        md += [f'| {district}（{n}） | {issues} | {comparison} | {direction} |']
+        distribution_cell = f'{distribution["bins"][district]["rows"]} | ' if distribution else ''
+        md += [f'| {district}（{n}） | {distribution_cell}{issues} | {comparison} | {direction} |']
     page += ['</ol>']
     md += ['']
     return md, page
 
 
-def render_districts(data):
+def render_districts(data, distribution=None):
     validate(data)
     esc = html.escape
-    title = '十二區留言：主要問題、相對差異與改善方向'
+    title = '語意回饋 × 公開位置：十二區的查核方向' if distribution else '十二區留言：主要問題、相對差異與改善方向'
     framing = ('以下數字來自逐則語意判讀。分母是該行政區標記在本檔的全部留言，'
                '包含資訊不足與其他內容；行政區尚未確認為事件所在地或居住地。'
                '一則可以談多個問題或訴求，橫列比例不能相加；描述、預期風險與改善訴求都可能被納入，並非核實事件數。')
-    diagram_md, diagram_page = render_district_diagram(data)
+    diagram_md, diagram_page = render_district_diagram(data, distribution)
     md = [f'## {title}', '', framing, '', *diagram_md, '### 完整七類數據與比較方法', '', '| 行政區（則數） | ' + ' | '.join(x['label'] for x in data['themes']) + ' |',
           '| --- | ' + ' | '.join(['---:'] * len(THEMES)) + ' |']
     page = [f'<section class="feedback-section feedback-cross" aria-labelledby="feedback-cross"><h3 id="feedback-cross" tabindex="-1">{title}</h3><p>{esc(framing)}</p>',
@@ -501,13 +632,13 @@ def semantic_findings(data):
     return [common, contrast] if contrast else [common]
 
 
-def home_summary(data):
-    return (''.join(f'<p>{html.escape(text)}</p>' for text in semantic_findings(data)) +
+def home_summary(data, distribution=None):
+    return ((f'<p>{html.escape(DISTRIBUTION_CONCLUSION)}</p>' if distribution else '') + ''.join(f'<p>{html.escape(text)}</p>' for text in semantic_findings(data)) +
             '<p>已由子代理逐則區分問題、訴求與公共桶立場。先前由關鍵字推論北投、內湖與萬華問題的結論已撤回；現在應以語意交叉表重新閱讀，並由研究者複核。現場時間、地點與服務條件仍待確認，不能推出設點或改善優先序。</p>'
             '<p class="feedback-report-entry"><a href="#feedback-findings">閱讀完整分析與圖解</a> · <a href="#feedback-cross">看十二區問題與改善圖解</a></p>')
 
 
-def render(data):
+def render(data, distribution=None):
     validate(data)
     total, esc, audit = data['records'], html.escape, data['semantic']['audit']
     quality = data['quality']
@@ -530,7 +661,7 @@ def render(data):
     for paragraph in [*semantic_findings(data), *REPORT_INTRO]:
         md += [paragraph, '']; page += [f'<p>{esc(paragraph)}</p>']
     page += ['</section>']
-    cross_md, cross_page = render_districts(data); md += cross_md; page += cross_page
+    cross_md, cross_page = render_districts(data, distribution); md += cross_md; page += cross_page
     # Preserve earlier anchor destinations while replacing word-hit content.
     page += ['<section class="feedback-section feedback-appendix" aria-labelledby="feedback-signals"><h3 id="feedback-signals" tabindex="-1">逐則語意判讀：談及的問題與訴求</h3>', f'<p>{esc(METHOD)}</p>']
     md += ['## 逐則語意判讀：談及的問題與訴求', '', METHOD, '', table_markdown([(x['label'], x['count']) for x in data['themes']], total), '']
@@ -600,13 +731,15 @@ def main():
         raise ValueError('Saved summary protocol does not match preserved coding protocol')
     if hashlib.sha256((folder / 'semantic-adjudication-notes.md').read_bytes()).hexdigest() != data['semantic']['reviewNotesSha256']:
         raise ValueError('Saved summary does not match the retained adjudication notes')
-    markdown, content = render(data)
+    distribution = load_distribution(data)
+    markdown, content = render(data, distribution)
+    (folder.parent / DISTRIBUTION_FOLDER / 'README.md').write_text(distribution_report(data, distribution))
     index = ROOT / 'dist/index.html'
     page, count = re.subn(r'<!-- feedback-analysis-start -->.*?<!-- feedback-analysis-end -->',
                          lambda _: '<!-- feedback-analysis-start -->\n' + content + '\n<!-- feedback-analysis-end -->', index.read_text(), flags=re.S)
     if count != 1: raise ValueError('Expected one feedback panel marker')
     page, count = re.subn(r'<!-- feedback-problem-map-start -->.*?<!-- feedback-problem-map-end -->',
-                         lambda _: '<!-- feedback-problem-map-start -->\n' + home_summary(data) + '\n<!-- feedback-problem-map-end -->', page, flags=re.S)
+                         lambda _: '<!-- feedback-problem-map-start -->\n' + home_summary(data, distribution) + '\n<!-- feedback-problem-map-end -->', page, flags=re.S)
     if count != 1: raise ValueError('Expected one homepage summary marker')
     if all(inputs): summary_path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
     (folder / 'README.md').write_text(markdown)

@@ -172,7 +172,7 @@ assert sum(data['stances'].values())==2663
 assert data['semantic']['audit']['sampleSize']==144
 assert hashlib.sha256((folder/'semantic-protocol.md').read_bytes()).hexdigest()==data['semantic']['protocolSha256']
 for key in ('districts','moods','originalTopics'):assert sum(data[key].values())==2663
-markdown,content=m['render'](data)
+markdown,content=m['render'](data,m['load_distribution'](data))
 assert markdown==(folder/'README.md').read_text()==Path('dist/research/feedback-2026-10-17/README.md').read_text()
 assert content in Path('dist/index.html').read_text()
 assert content.count('data-theme=')==84
@@ -204,7 +204,8 @@ with tempfile.TemporaryDirectory() as directory:
  root=Path(directory)
  (root/'scripts').mkdir();(root/'dist').mkdir()
  shutil.copy('scripts/analyze-feedback.py',root/'scripts/analyze-feedback.py')
- shutil.copytree('research/feedback-2026-10-17',root/'research/feedback-2026-10-17')
+ for name in ['feedback-2026-10-17','feedback-distribution-2026-10-18','source-recovery-2026-10-15']:
+  shutil.copytree(Path('research')/name,root/'research'/name)
  shutil.copy('dist/index.html',root/'dist/index.html')
  result=subprocess.run([sys.executable,'scripts/analyze-feedback.py'],cwd=root,capture_output=True,text=True)
  assert result.returncode==0,result.stderr
