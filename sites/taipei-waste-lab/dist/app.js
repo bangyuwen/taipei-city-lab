@@ -88,7 +88,7 @@ function syncURL(){
 function dataset(){return catalog.datasets.find(d=>d.key===state.year)}
 function panel(){
   const previousPage=currentPage;
-  const nextPage=pageFromHash(location.hash);
+  const nextPage=pageFromHash(location.hash,currentPage);
   const moved=nextPage!==previousPage||lastHash!==location.hash;
   if(previousPage&&nextPage!==previousPage)pageScroll.set(previousPage,window.scrollY);
   currentPage=nextPage;
@@ -103,20 +103,22 @@ function panel(){
     requestAnimationFrame(()=>{
       const target=document.getElementById(location.hash.slice(1));
       const anchor=!allowedPages.includes(location.hash.slice(1))&&target?.closest('.page-panel')?.id===`panel-${currentPage}`?target:null;
-      const heading=anchor||document.querySelector(`#panel-${currentPage} h2`);
+      const mainTarget=target?.id==='main'?target:null;
+      const heading=mainTarget||anchor||document.querySelector(`#panel-${currentPage} h2`);
       for(let parent=heading?.parentElement;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;
       heading?.setAttribute('tabindex','-1');
-      if(previousPage||anchor)heading?.focus({preventScroll:true});
-      if(anchor)anchor.scrollIntoView({block:'start',behavior:'instant'});
+      if(previousPage||anchor||mainTarget)heading?.focus({preventScroll:true});
+      if(mainTarget||anchor)heading.scrollIntoView({block:'start',behavior:'instant'});
       else window.scrollTo({top:pageScroll.get(currentPage)??0,behavior:'instant'});
     });
   }
   const inHistory=historyPages.includes(currentPage);
   $('history-navigation').hidden=!inHistory;
   const historyLink=document.querySelector('[data-section="history"]');
-  if(inHistory)historyLink.setAttribute('aria-current','page');else historyLink.removeAttribute('aria-current');
+  historyLink.toggleAttribute('data-section-active',inHistory);
+  if(currentPage==='history')historyLink.setAttribute('aria-current','page');else historyLink.removeAttribute('aria-current');
   const researchLink=document.querySelector('#site-navigation [data-page="research"]');
-  if(currentPage==='design'||currentPage==='materials')researchLink.setAttribute('aria-current','page');
+  researchLink.toggleAttribute('data-section-active',['research','design','materials'].includes(currentPage));
   for(const p of allowedPages)if($(`panel-${p}`))$(`panel-${p}`).hidden=p!==currentPage;
   $('load-status').hidden=Boolean(catalog)||currentPage!=='map';
   document.body.classList.toggle('design-mode',currentPage==='design');
@@ -229,6 +231,13 @@ function renderTimeline(){
 }
 async function start(){
   document.body.classList.add('enhanced');
+  document.querySelector('.skip-link').addEventListener('click',event=>{
+    event.preventDefault();
+    const main=$('main');
+    main.setAttribute('tabindex','-1');
+    main.focus({preventScroll:true});
+    main.scrollIntoView({block:'start',behavior:'instant'});
+  });
   $('site-menu-toggle').hidden=false;
   $('site-menu-toggle').addEventListener('click',()=>{
     const open=document.querySelector('.site-header').classList.toggle('menu-open');

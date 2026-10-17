@@ -48,7 +48,7 @@ input { caret-color: var(--green); }
 .site-header nav { display: flex; flex-direction: column; gap: 8px; width: 100%; }
 .site-header nav a { display: flex; align-items: center; min-height: 52px; padding: 12px 16px; color: var(--nav-muted); font-size: 16px; text-decoration: none; border: 1px solid transparent; border-radius: 6px; }
 .site-header nav a:hover { background: #1a5060; color: white; }
-.site-header nav a[aria-current=page] { background: #d9ecf1; color: #123d49; font-weight: 700; }
+.site-header nav a:is([aria-current=page],[data-section-active]) { background: #d9ecf1; color: #123d49; font-weight: 700; }
 .site-header a:focus-visible, #site-menu-toggle:focus-visible { outline-color: #ffc287; }
 .header-note { margin: auto 0 0; border-top: 1px solid #43707c; padding: 22px 12px 0; font-size: 14px; color: var(--nav-muted); }
 #site-menu-toggle { display: none; }

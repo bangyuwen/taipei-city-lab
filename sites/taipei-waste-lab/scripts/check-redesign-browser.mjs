@@ -72,6 +72,39 @@ async function checkHome(page){
   assert.equal(await page.locator('#site-navigation [data-page="research"]').getAttribute('aria-current'),'page');
   assert.equal(await page.locator('#history-navigation').isVisible(),false);
 }
+async function checkCurrentNavigation(page,target){
+  const current=await page.locator('a[aria-current="page"]').evaluateAll(links=>links.map(link=>({hash:link.hash,text:link.textContent.trim()})));
+  assert.ok(current.every(link=>link.hash===`#${target}`),`${target}: current-page links must identify the displayed route: ${JSON.stringify(current)}`);
+  assert.equal(await page.locator('#site-navigation [data-page="research"]').getAttribute('aria-current'),target==='research'?'page':null);
+  assert.equal(await page.locator('#site-navigation [data-section="history"]').getAttribute('aria-current'),target==='history'?'page':null);
+  if(target==='design')assert.deepEqual(current,[],'The design route has no current-page link in the navigation');
+  else assert.ok(current.length>0,`${target}: its navigation link must identify the current page`);
+  if(target==='materials')assert.equal(current.length,1,'Only the materials footer link identifies the current page');
+}
+async function checkSkipLink(page){
+  await nav(page,'map');
+  await page.selectOption('#dataset-version','2026-main');
+  await page.selectOption('#district','中山區');
+  await page.fill('#search','中山');
+  for(const target of ['map','materials']){
+    if(target!=='map')await nav(page,target);
+    // Reload starts keyboard navigation at the document, as on a direct visit.
+    await page.reload();
+    await page.waitForFunction(expected=>document.body.dataset.page===expected,target);
+    await page.locator('#dataset-version:not([disabled])').waitFor({state:'attached'});
+    const before=page.url();
+    const filters=await page.locator('#dataset-version,#district,#search').evaluateAll(controls=>controls.map(control=>control.value));
+    await page.keyboard.press('Tab');
+    assert.equal(await page.locator('.skip-link').evaluate(link=>link===document.activeElement),true,`${target}: the first Tab must reach the skip link`);
+    await page.keyboard.press('Enter');
+    await focused(page,'main');
+    assert.equal(page.url(),before,`${target}: skipping navigation must preserve the route and query`);
+    assert.equal(await page.locator('body').getAttribute('data-page'),target);
+    assert.equal(await page.locator(`#panel-${target}`).isVisible(),true);
+    assert.deepEqual(await page.locator('#dataset-version,#district,#search').evaluateAll(controls=>controls.map(control=>control.value)),filters);
+    await checkCurrentNavigation(page,target);
+  }
+}
 async function checkCountryReader(page){
   await page.locator('#panel-countries.country-reading-ready').waitFor();
   assert.equal(await page.locator('#country-reader-select').count(),1);
@@ -171,6 +204,7 @@ try{
     assert.deepEqual(candidateRequests,[],'Candidate tools must not load with the homepage');
     for(const target of ['research','map','comparison','history','siting','countries','design','materials','sources']){
       if(target!=='research')await nav(page,target);
+      await checkCurrentNavigation(page,target);
       if(target==='comparison')await page.locator('#comparison-content:not([hidden])').waitFor();
       if(target==='countries')await checkCountryReader(page);
       if(target==='design')await checkDesign(page);
@@ -183,6 +217,7 @@ try{
       measurements.push({width,target,body:await page.locator('body').evaluate(element=>getComputedStyle(element).fontSize)});
     }
     await checkMapState(page);
+    await checkSkipLink(page);
     await nav(page,'comparison');await page.locator('#comparison-content:not([hidden])').waitFor();
     await page.selectOption('#comparison-categories','same_address_changed');
     await page.locator('#coordinate-distance-content:not([hidden])').waitFor();
@@ -248,6 +283,6 @@ try{
   await retryContext.close();
 
   assert.deepEqual(errors,[]);
-  const report={status:'passed',widths,breakpoints:[639,640,959,960],screenshots:captureScreens?'captured':'skipped',screens,measurements,checks:'three primary entrances, research default, cited conclusions, secondary routes, reference hash focus, lazy candidate tools, single dataset selector, single photo-first country reader, guided design, navigation focus, map state/back, overflow, comparison empty/retry, photo fallback, static homepage on data failure, no downloads'};
+  const report={status:'passed',widths,breakpoints:[639,640,959,960],screenshots:captureScreens?'captured':'skipped',screens,measurements,checks:'three primary entrances, research default, cited conclusions, secondary routes, current-page navigation semantics, keyboard skip preserves route/query/filter state and focuses main, reference hash focus, lazy candidate tools, single dataset selector, single photo-first country reader, guided design, navigation focus, map state/back, overflow, comparison empty/retry, photo fallback, static homepage on data failure, no downloads'};
   await writeFile(resolve(qa,'redesign-report.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));
 }finally{await browser.close()}
