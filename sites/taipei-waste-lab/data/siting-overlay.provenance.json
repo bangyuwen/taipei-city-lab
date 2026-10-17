@@ -1,0 +1,58 @@
+{
+  "asOf": "2026-10-17｜各來源日期分列",
+  "verificationScope": "This manifest identifies the preserved display snapshot used by the standalone Site build. It does not verify or reproduce the upstream inventory and historical-data ingestion.",
+  "researchReference": {
+    "repository": "taipei-city-lab",
+    "directory": "topics/bins/research/siting-inventory-2026-10-17/",
+    "sourceArtifact": "history-overlay.html",
+    "sourceSummary": "history-overlay-summary.json",
+    "availability": "Upstream research inputs and their original provenance are retained in the canonical research workspace. They are not bundled with this standalone Site source or its public output."
+  },
+  "displaySnapshot": {
+    "path": "data/siting-overlay.json",
+    "sha256": "a62432606bc8910e5134e0ded3a4d44b53c3e25bff64e82e2287a9b323250fb6",
+    "bytes": 1949561,
+    "candidateGroups": 425,
+    "historicalLayers": [
+      {
+        "id": "y2015",
+        "label": "2015 保存版",
+        "displayPoints": 2505
+      },
+      {
+        "id": "y2022",
+        "label": "2022 保存版",
+        "displayPoints": 1799
+      },
+      {
+        "id": "y2024may",
+        "label": "2024.05 缺頁版",
+        "displayPoints": 1000
+      },
+      {
+        "id": "y2024oct",
+        "label": "2024.10 封存版",
+        "displayPoints": 1969
+      },
+      {
+        "id": "y2026",
+        "label": "2026.09 官方主檔",
+        "displayPoints": 680
+      }
+    ]
+  },
+  "limits": [
+    "此為桌面研究疊圖；候選街段尚未完成現場可建性或設置核准確認。",
+    "人行道寬度來源單位尚未核實，暫按公尺篩選；逐筆調查日期未提供。",
+    "候選圖形使用粗略座標範圍，並非臺北市行政邊界。",
+    "公園入口資料因座標投影未確認而未納入；此非臺北市完整可設點位盤點。",
+    "清潔箱快照未執行跨年實體身分配對；紀錄未出現不代表設備已撤除。",
+    "2024 年 5 月快照為部分資料；2026 年快照未列北投區，不代表該區沒有清潔箱。",
+    "設置前仍需現場確認實際淨寬、障礙物、地下管線、土地管理、清運作業與需求。"
+  ],
+  "publication": {
+    "page": "dist/siting-overlay.html",
+    "rawInventoriesPublished": false,
+    "displaySnapshotEmbedded": true
+  }
+}

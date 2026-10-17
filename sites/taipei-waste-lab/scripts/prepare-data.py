@@ -172,6 +172,7 @@ def main():
     for script in ['prepare-research-execution.py', 'estimate-budget.py', 'package-research.py']:
         subprocess.run([sys.executable, str(ROOT / 'scripts' / script)], check=True)
 
+    subprocess.run([sys.executable, str(ROOT / 'scripts/prepare-siting-overlay.py')], check=True)
     subprocess.run([sys.executable, str(ROOT / 'scripts/prepare-public.py')], check=True)
 
 if __name__ == '__main__':

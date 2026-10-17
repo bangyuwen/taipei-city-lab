@@ -299,3 +299,10 @@ body[data-page]:not([data-page=map]):not([data-page=design]):not([data-page=rese
 .dataset-limit>p{background:var(--warning);color:#734917;font-size:14px;padding:12px 16px;margin:0}
 @media(max-width:1199px){.hero{gap:0}.hero .research-note{padding:0;border:0}.hero .research-note h2{font-size:15px;margin:0}.hero .research-note>p,.hero .note-bottom{display:none}}
 @media(max-width:639px){.hero{padding:20px 0;margin-bottom:20px}.hero h1{font-size:27px;margin-bottom:6px}.hero h1 span{font-size:16px;margin-top:5px}.hero-description{display:none}.hero .text-link{min-height:40px}.hero .research-note{display:none}.dataset-meta{margin-bottom:16px}}
+
+/* The overlay keeps one document scroll and loads only on its history route. */
+.siting-panel .section-heading { align-items: start; }
+.siting-panel .section-heading p { margin: 10px 0 0; color: var(--muted); font-size: 16px; max-width: 65ch; }
+.siting-panel .text-link { flex-shrink: 0; }
+#siting-frame { display: block; width: 100%; height: 1200px; border: 1px solid var(--line); border-radius: 8px; background: var(--white); }
+@media (max-width: 639px) { .siting-panel .section-heading { flex-direction: column; gap: 8px; } .history-subnav { gap: 12px; } .history-subnav a { font-size: 14px; } }

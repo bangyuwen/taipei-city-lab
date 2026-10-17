@@ -37,6 +37,9 @@ test('public staging removes stale attachments, preserves originals and copies o
   assert.equal(result.status,0,result.stderr);
   assert.deepEqual(await readFile(privateFile),original);
   const names=await files(join(root,'out'));
+  assert.ok(names.includes('siting-overlay.html'));
+  assert.ok(names.includes('siting-ui.js'));
+  assert.ok(!names.some(name=>/inventory|siting-overlay\.(json|provenance)/.test(name)));
   assert.ok(!names.some(name=>/\.(?:zip|csv|geojson|md)$/.test(name)));
   assert.deepEqual(names.filter(name=>name.endsWith('.json')).sort(),[
     'data/comparison-2024-2026.json','data/comparison-coordinate-distances.json',

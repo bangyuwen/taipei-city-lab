@@ -62,7 +62,7 @@
 
 ## 公開瀏覽與附件範圍
 
-網站保持公開，移除資料下載按鈕、CSV 匯出與本站附件連結。公開輸出採固定資產清單，只包含網頁、樣式、字型、必要函式庫、六張展示照片及四份顯示用 JSON；原始 CSV／GeoJSON、來源紀錄、研究 Markdown、計算協定及 ZIP 不在公開目錄。原網址不再提供這些檔案；不得把 `dist/` 或專案根目錄當公開服務目錄。
+網站保持公開，移除資料下載按鈕、CSV 匯出與本站附件連結。公開輸出採固定資產清單，只包含互動網頁、樣式、字型、必要函式庫、展示照片及四份顯示用 JSON；原始 CSV／GeoJSON、來源紀錄、研究 Markdown、計算協定及 ZIP 不在公開目錄。原網址不再提供這些檔案；不得把 `dist/` 或專案根目錄當公開服務目錄。
 
 這是取消直接下載與公開附件，不是禁止擷取已顯示的資料。地圖和比較頁需要的地址、座標與分析 JSON 仍送到訪客瀏覽器；來源引用的外部網站由原發布者管理。原始證據保留在私人專案，不做刪除或公開權限變更。
 
@@ -143,3 +143,13 @@ Each country case opens one shared inline viewer. The viewer loads Three.js on t
 The authored Three.js meshes and their actions are photo-reference illustrations, not measured or manufacturer models. Hidden surfaces, proportions and movement paths are inferred; animated flaps, lids, items and collection steps do not establish the real equipment's operating mechanism. Case-specific photo mismatches appear alongside each model. India depicts a collection service; Australia uses a generic receiving-station concept because no redistributable equipment photo is embedded. These models do not establish dimensions, capacity or performance.
 
 The metadata lives in `dist/country-model-data.js`; geometry lives in `dist/country-models.js`. Keep these distinct from the purpose simulator. Add any runtime file to `scripts/prepare-public.py`. Run `npm test`, `npm run check`, `node scripts/check-country-browser.mjs`, and `node scripts/check-country-play-browser.mjs` against the preview (optional `COUNTRY_QA_URL`, `PLAYWRIGHT_MODULE`, `CHROME_PATH`). The play check covers all twelve action sequences, pause/seek/reset, tap versus drag, turntable controls, reduced motion and suspended rendering on desktop and mobile. Screenshots and browser evidence are generated under ignored `.impeccable/review/`. Rebuild the private research ZIP with `npm run prepare-data` after editing HTML.
+
+## 設點與歷史疊圖
+
+「垃圾桶歷史 → 設點疊圖」（`#siting`）把 425 組條件式寬度候選街段與 2015、2022、2024 年 5 月缺頁版、2024 年 10 月封存版及 2026 年 9 月主檔疊圖。設計頁亦有入口。圖層與行政區／地址篩選可獨立操作，點擊圖形或鍵盤清單可查看來源。跨年缺列不等於撤除，候選街段不代表核准設點。寬度單位暫按公尺解讀，現場及管理權責仍待查核。
+
+公開的 `siting-overlay.html` 只內嵌瀏覽所需的點位、街段圖形與來源說明。來源 CSV／GeoJSON、完整盤點清單、重建輸入與溯源檔不加入公開資產清單。`data/siting-overlay.json` 保存這次研究的展示快照，`data/siting-overlay.provenance.json` 只記錄此保存快照的雜湊、內容數量及研究出處；這兩檔留在私有原始碼。完整上游輸入與原始溯源紀錄保留在 monorepo 的 `topics/bins/research/siting-inventory-2026-10-17/` 及其引用來源，不包含在獨立 Sites 原始碼。本網站可重建保存快照的展示頁，不能從本站檔案重做完整上游盤點。
+
+`python scripts/prepare-siting-overlay.py` 由保存快照、`templates/siting-overlay.html` 與既有 Leaflet 重建互動頁，不重新下載或推論資料。這個步驟已接入 `npm run prepare-data` 與 `npm run check`。疊圖頁首次進入才載入；回到此頁保留篩選，嵌入頁高度跟隨內容，亦可另開完整頁面。底圖仍需 OpenStreetMap 連線，失敗時顯示提示並保留資料操作。
+
+預覽 `out/` 後，以 `SITING_QA_URL` 指定網址，執行 `node scripts/check-siting-browser.mjs`。可沿用 `PLAYWRIGHT_MODULE` 與 `CHROME_PATH`；檢查延後載入、頁籤與設計入口、返回時篩選保留、桌機／手機尺寸、點選定位、載入重試與私人輸入路徑，畫面證據留在忽略的 `.impeccable/review/siting/`。

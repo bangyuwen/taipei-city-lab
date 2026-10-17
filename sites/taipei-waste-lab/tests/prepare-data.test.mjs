@@ -18,10 +18,13 @@ for (const monorepo of [true, false]) {
     t.after(() => rm(fixture, {recursive: true, force: true}));
     const output = join(fixture, 'sites/taipei-waste-lab');
     await mkdir(join(output, 'scripts'), {recursive: true});
-    for (const script of ['prepare-data.py', 'prepare-public.py', 'compare-snapshots.py', 'analyze-coordinate-distances.py',
+    for (const script of ['prepare-data.py', 'prepare-public.py', 'prepare-siting-overlay.py', 'compare-snapshots.py', 'analyze-coordinate-distances.py',
                           'prepare-research-execution.py', 'estimate-budget.py', 'package-research.py']) {
       await cp(new URL('scripts/'+script, site), join(output, 'scripts', script));
     }
+    await cp(new URL('templates/', site), join(output, 'templates'), {recursive:true});
+    await mkdir(join(output, 'data'), {recursive:true});
+    for(const name of ['siting-overlay.json','siting-overlay.provenance.json'])await cp(new URL('data/'+name,site),join(output,'data',name));
     await mkdir(join(output, 'dist'), {recursive: true});
     await cp(new URL('dist/', site), join(output, 'dist'), {recursive: true, filter: source => !/[\\/]dist[\\/](data|research)([\\/]|$)/.test(source)});
     const bundle = monorepo ? join(fixture, 'topics/bins/research') : join(output, 'research');
@@ -50,6 +53,7 @@ for (const monorepo of [true, false]) {
       assert.deepEqual(await readFile(join(output, 'research/budget-2026-10-15', name)), expected);
       assert.deepEqual(await readFile(join(output, 'dist/research/budget-2026-10-15', name)), expected);
     }
+    assert.deepEqual(await readFile(join(output,'dist/siting-overlay.html')),await readFile(new URL('dist/siting-overlay.html',site)));
     const rebuilt = JSON.parse(await readFile(join(output, 'dist/data/datasets.json')));
     assert.deepEqual(rebuilt, expectedCatalog);
     assert.deepEqual(JSON.parse(await readFile(join(output, 'dist/data/comparison-2024-2026.json'))), expectedComparison);

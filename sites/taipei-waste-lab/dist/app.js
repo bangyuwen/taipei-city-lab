@@ -7,9 +7,23 @@ let catalog,map,L,layers,markers=new Map(),filtered=[],shown=40,currentPage='map
 let state={year:'2015',district:'',search:''},mapStarting=false,eventFilter='all';
 let designExperience,designLoading;
 let comparisonLoading;
+let sitingExperience,sitingLoading;
 let researchLoading;
 let countryExperience,countryLoading;
 const pageScroll = new Map();
+
+function ensureSiting(){
+  if(!sitingLoading)sitingLoading=import('./siting-ui.js').then(module=>{
+    sitingExperience=module.initializeSitingExperience();
+    sitingExperience.setActive(currentPage==='siting');
+  }).catch(()=>{
+    sitingLoading=null;
+    $('siting-status').hidden=false;
+    $('siting-status').textContent='疊圖暫時無法載入，可重試或開啟完整頁面。';
+    $('siting-retry').hidden=false;
+  });
+  return sitingLoading;
+}
 
 function ensureResearch(){
   if(!researchLoading)researchLoading=import('./research-ui.js').then(module=>module.initializeResearch()).catch(()=>{
@@ -100,6 +114,8 @@ function panel(){
   document.body.classList.toggle('comparison-mode',currentPage==='comparison');
   document.body.classList.toggle('research-mode',currentPage==='research');
   if(currentPage==='design')ensureDesign();
+  if(currentPage==='siting')ensureSiting();
+  sitingExperience?.setActive(currentPage==='siting');
   if(currentPage==='comparison')ensureComparison();
   if(currentPage==='research')ensureResearch();
   if(currentPage==='countries')ensureCountries();
@@ -271,6 +287,7 @@ async function start(){
     target.focus({preventScroll:true});target.scrollIntoView({block:'start',behavior:'instant'});
   });
   $('comparison-retry').addEventListener('click',ensureComparison);
+  $('siting-retry').addEventListener('click',()=>sitingExperience?sitingExperience.reload():ensureSiting());
   window.addEventListener('hashchange',panel);
   window.addEventListener('popstate',()=>{
     if(catalog){

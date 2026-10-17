@@ -50,6 +50,7 @@
         <a href="#map" data-page="map" aria-current="page">點位地圖</a>
         <a href="#comparison" data-page="comparison">版本比較</a>
         <a href="#history" data-page="history">撤除歷程</a>
+        <a href="#siting" data-page="siting">設點疊圖</a>
       </nav>
     </div>
 
@@ -109,11 +110,17 @@
       <p class="comparison-source-link"><a href="#sources">查看各版本來源</a></p>
     </section>
 
+    <section id="panel-siting" class="page-panel siting-panel" aria-labelledby="siting-heading" hidden>
+      <div class="section-heading"><div><h2 id="siting-heading">候選街段，疊上歷史位置。</h2><p>切換快照、查找街道，先看既有紀錄與現勘線索。候選街段仍待現勘，跨年缺列不代表撤除。</p></div><a class="text-link" href="siting-overlay.html" target="_blank" rel="noopener noreferrer">完整頁面開啟 ↗</a></div>
+      <p id="siting-status" class="load-status" role="status">第一次開啟時載入疊圖資料。</p><button id="siting-retry" type="button" hidden>重新載入疊圖</button>
+      <iframe id="siting-frame" title="候選街段與歷史清潔箱互動疊圖" data-src="siting-overlay.html" loading="lazy"></iframe>
+    </section>
+
     <section id="panel-design" class="page-panel design-panel" aria-labelledby="design-heading" hidden>
       <div class="design-heading"><h2 id="design-heading">台北街角桶 T1：<span>從投放想到清運。</span></h2><p>為台北街頭與商圈設計。收下行人隨手產生的小垃圾，把遮雨、辨識與清運一起做好。</p><p class="design-concept-note">T1 候選概念 · 尚未定案或打樣，尺寸、容量與性能均待驗證。</p></div>
       <div class="t1-intro">
         <p><strong>48 × 42 × 110 cm</strong> 的窄身外形，搭配內縮投入口、可換外板與前方移出的帶輪內桶。先把每天的投放和清潔做好，再評估是否需要感測。</p>
-        <div class="t1-actions"><button id="design-try-cleaning" type="button" class="t1-action">看看怎麼清運</button><button id="design-read-proposal" type="button" class="t1-text-action">閱讀完整設計</button><button type="button" class="t1-text-action" data-design-jump="t1-process-heading">查看設計流程</button></div>
+        <div class="t1-actions"><button id="design-try-cleaning" type="button" class="t1-action">看看怎麼清運</button><button id="design-read-proposal" type="button" class="t1-text-action">閱讀完整設計</button><button type="button" class="t1-text-action" data-design-jump="t1-process-heading">查看設計流程</button><a class="t1-text-action" href="#siting">查看設點與歷史疊圖</a></div>
       </div>
       <p class="t1-experience-note">下方「街角隨手投」呈現 T1 外觀與清運構想。其他三種用途為獨立概念，供比較服務差異。</p>
       <div id="design-options" class="design-options" role="group" aria-label="選擇垃圾桶的服務用途"></div>
