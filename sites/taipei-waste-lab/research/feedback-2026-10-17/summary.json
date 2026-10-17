@@ -1,163 +1,5 @@
 {
-  "schemaVersion": 2,
-  "districtIndicators": {
-    "松山": {
-      "counts": {
-        "bins": 177,
-        "truck": 12,
-        "household": 18,
-        "dropoff": 6,
-        "litter": 16,
-        "pests": 22,
-        "cigarettes": 4,
-        "recycling": 12
-      },
-      "noIndicatorMatch": 27
-    },
-    "信義": {
-      "counts": {
-        "bins": 155,
-        "truck": 15,
-        "household": 13,
-        "dropoff": 3,
-        "litter": 11,
-        "pests": 16,
-        "cigarettes": 1,
-        "recycling": 11
-      },
-      "noIndicatorMatch": 33
-    },
-    "大安": {
-      "counts": {
-        "bins": 379,
-        "truck": 34,
-        "household": 43,
-        "dropoff": 6,
-        "litter": 42,
-        "pests": 41,
-        "cigarettes": 14,
-        "recycling": 22
-      },
-      "noIndicatorMatch": 59
-    },
-    "中山": {
-      "counts": {
-        "bins": 267,
-        "truck": 21,
-        "household": 25,
-        "dropoff": 2,
-        "litter": 26,
-        "pests": 32,
-        "cigarettes": 7,
-        "recycling": 20
-      },
-      "noIndicatorMatch": 41
-    },
-    "中正": {
-      "counts": {
-        "bins": 139,
-        "truck": 16,
-        "household": 18,
-        "dropoff": 4,
-        "litter": 14,
-        "pests": 13,
-        "cigarettes": 6,
-        "recycling": 19
-      },
-      "noIndicatorMatch": 31
-    },
-    "大同": {
-      "counts": {
-        "bins": 142,
-        "truck": 14,
-        "household": 7,
-        "dropoff": 1,
-        "litter": 20,
-        "pests": 17,
-        "cigarettes": 4,
-        "recycling": 15
-      },
-      "noIndicatorMatch": 25
-    },
-    "萬華": {
-      "counts": {
-        "bins": 116,
-        "truck": 19,
-        "household": 18,
-        "dropoff": 4,
-        "litter": 31,
-        "pests": 21,
-        "cigarettes": 5,
-        "recycling": 21
-      },
-      "noIndicatorMatch": 53
-    },
-    "文山": {
-      "counts": {
-        "bins": 76,
-        "truck": 16,
-        "household": 7,
-        "dropoff": 5,
-        "litter": 11,
-        "pests": 7,
-        "cigarettes": 4,
-        "recycling": 12
-      },
-      "noIndicatorMatch": 26
-    },
-    "南港": {
-      "counts": {
-        "bins": 55,
-        "truck": 7,
-        "household": 4,
-        "dropoff": 3,
-        "litter": 7,
-        "pests": 7,
-        "cigarettes": 1,
-        "recycling": 6
-      },
-      "noIndicatorMatch": 10
-    },
-    "內湖": {
-      "counts": {
-        "bins": 113,
-        "truck": 11,
-        "household": 21,
-        "dropoff": 2,
-        "litter": 10,
-        "pests": 10,
-        "cigarettes": 1,
-        "recycling": 20
-      },
-      "noIndicatorMatch": 15
-    },
-    "士林": {
-      "counts": {
-        "bins": 133,
-        "truck": 21,
-        "household": 20,
-        "dropoff": 5,
-        "litter": 24,
-        "pests": 15,
-        "cigarettes": 6,
-        "recycling": 19
-      },
-      "noIndicatorMatch": 34
-    },
-    "北投": {
-      "counts": {
-        "bins": 79,
-        "truck": 18,
-        "household": 11,
-        "dropoff": 11,
-        "litter": 18,
-        "pests": 2,
-        "cigarettes": 0,
-        "recycling": 18
-      },
-      "noIndicatorMatch": 23
-    }
-  },
+  "schemaVersion": 3,
   "analysisDate": "2026-10-17",
   "source": {
     "name": "Pasted text.txt",
@@ -214,96 +56,338 @@
     "食安": 5,
     "文化": 1
   },
-  "indicators": [
+  "themes": [
     {
-      "id": "bins",
-      "label": "垃圾桶／清潔箱",
-      "terms": [
-        "垃圾桶",
-        "垃圾筒",
-        "清潔箱"
-      ],
-      "count": 1831
+      "id": "A",
+      "label": "桶位與投放便利",
+      "definition": "桶的數量、撤除、位置、距離、入口與使用便利；家戶收運站另歸家戶服務。",
+      "count": 1737
     },
     {
-      "id": "truck",
-      "label": "垃圾車",
-      "terms": [
-        "垃圾車"
-      ],
-      "count": 204
+      "id": "B",
+      "label": "家戶收運與投放管道",
+      "definition": "垃圾車時間、路線、等待、作息衝突、定點或社區代收；僅描述家戶混投不算此類。",
+      "count": 265
     },
     {
-      "id": "household",
-      "label": "家戶垃圾",
-      "terms": [
-        "家庭垃圾",
-        "家戶垃圾",
-        "居家垃圾",
-        "家用垃圾"
-      ],
-      "count": 205
+      "id": "C",
+      "label": "清掃、清運與設備維護",
+      "definition": "滿溢、清掃或清運不足、設備損壞、髒亂未處理；不因提到桶或亂丟就自動納入。",
+      "count": 767
     },
     {
-      "id": "dropoff",
-      "label": "定點／彈性投放",
-      "terms": [
-        "定點",
-        "固定地點",
-        "24小時",
-        "二十四小時",
-        "隨時丟",
-        "隨時倒"
-      ],
-      "count": 52
+      "id": "D",
+      "label": "亂丟、混投與垃圾來源",
+      "definition": "亂丟、非法棄置、家戶或商業垃圾混投、菸蒂狗便等來源行為；明示的風險仍是訴求而非核實事件。",
+      "count": 613
     },
     {
-      "id": "litter",
-      "label": "亂丟／隨地丟棄",
-      "terms": [
-        "亂丟",
-        "亂扔",
-        "隨地",
-        "隨手丟",
-        "隨手扔"
-      ],
-      "count": 230
-    },
-    {
-      "id": "pests",
-      "label": "鼠蟲／異味",
-      "terms": [
-        "老鼠",
-        "鼠患",
-        "蟑螂",
-        "蚊蟲",
-        "惡臭",
-        "臭味",
-        "異味"
-      ],
+      "id": "E",
+      "label": "分類、回收與廚餘處理",
+      "definition": "分類與接收規則、拒收、指引差異、回收或廚餘處理；只提物品名稱不算。",
       "count": 203
     },
     {
-      "id": "cigarettes",
-      "label": "菸蒂／菸頭",
-      "terms": [
-        "菸蒂",
-        "煙蒂",
-        "菸頭",
-        "煙頭"
-      ],
-      "count": 53
+      "id": "F",
+      "label": "異味、鼠蟲與鄰近負擔",
+      "definition": "明示的臭味、鼠蟲、收運噪音、阻礙通行或鄰近負擔；不從髒亂自行推定鼠蟲。",
+      "count": 357
     },
     {
-      "id": "recycling",
-      "label": "回收／廚餘",
-      "terms": [
-        "回收",
-        "廚餘"
-      ],
-      "count": 195
+      "id": "G",
+      "label": "制度、執法與管理回應",
+      "definition": "費率與袋規則、執法、責任、政策溝通、陳情回應與治理公平；一般增桶請求不自動納入。",
+      "count": 713
     }
   ],
-  "noIndicatorMatch": 377,
-  "binAndTruck": 47
+  "stances": {
+    "more": 1456,
+    "less": 29,
+    "conditional": 9,
+    "mixed": 16,
+    "unspecified": 330,
+    "none": 823
+  },
+  "unclear": 87,
+  "unclassified": 11,
+  "districtAnalysis": {
+    "松山": {
+      "themes": {
+        "A": 169,
+        "B": 17,
+        "C": 62,
+        "D": 51,
+        "E": 13,
+        "F": 33,
+        "G": 43
+      },
+      "stances": {
+        "more": 141,
+        "less": 3,
+        "conditional": 0,
+        "mixed": 0,
+        "unspecified": 38,
+        "none": 51
+      },
+      "unclear": 3,
+      "unclassified": 1
+    },
+    "信義": {
+      "themes": {
+        "A": 145,
+        "B": 18,
+        "C": 67,
+        "D": 37,
+        "E": 12,
+        "F": 24,
+        "G": 53
+      },
+      "stances": {
+        "more": 120,
+        "less": 2,
+        "conditional": 0,
+        "mixed": 1,
+        "unspecified": 31,
+        "none": 62
+      },
+      "unclear": 6,
+      "unclassified": 1
+    },
+    "大安": {
+      "themes": {
+        "A": 368,
+        "B": 47,
+        "C": 132,
+        "D": 107,
+        "E": 23,
+        "F": 62,
+        "G": 120
+      },
+      "stances": {
+        "more": 313,
+        "less": 5,
+        "conditional": 0,
+        "mixed": 3,
+        "unspecified": 60,
+        "none": 111
+      },
+      "unclear": 17,
+      "unclassified": 0
+    },
+    "中山": {
+      "themes": {
+        "A": 249,
+        "B": 21,
+        "C": 107,
+        "D": 76,
+        "E": 17,
+        "F": 54,
+        "G": 102
+      },
+      "stances": {
+        "more": 203,
+        "less": 3,
+        "conditional": 2,
+        "mixed": 2,
+        "unspecified": 60,
+        "none": 84
+      },
+      "unclear": 8,
+      "unclassified": 1
+    },
+    "中正": {
+      "themes": {
+        "A": 127,
+        "B": 24,
+        "C": 59,
+        "D": 43,
+        "E": 21,
+        "F": 24,
+        "G": 47
+      },
+      "stances": {
+        "more": 103,
+        "less": 4,
+        "conditional": 0,
+        "mixed": 1,
+        "unspecified": 29,
+        "none": 74
+      },
+      "unclear": 7,
+      "unclassified": 1
+    },
+    "大同": {
+      "themes": {
+        "A": 143,
+        "B": 14,
+        "C": 52,
+        "D": 47,
+        "E": 14,
+        "F": 29,
+        "G": 45
+      },
+      "stances": {
+        "more": 121,
+        "less": 0,
+        "conditional": 1,
+        "mixed": 2,
+        "unspecified": 22,
+        "none": 49
+      },
+      "unclear": 4,
+      "unclassified": 1
+    },
+    "萬華": {
+      "themes": {
+        "A": 106,
+        "B": 28,
+        "C": 110,
+        "D": 67,
+        "E": 21,
+        "F": 48,
+        "G": 73
+      },
+      "stances": {
+        "more": 92,
+        "less": 1,
+        "conditional": 1,
+        "mixed": 1,
+        "unspecified": 21,
+        "none": 125
+      },
+      "unclear": 11,
+      "unclassified": 0
+    },
+    "文山": {
+      "themes": {
+        "A": 73,
+        "B": 25,
+        "C": 33,
+        "D": 31,
+        "E": 13,
+        "F": 16,
+        "G": 30
+      },
+      "stances": {
+        "more": 61,
+        "less": 4,
+        "conditional": 0,
+        "mixed": 0,
+        "unspecified": 12,
+        "none": 58
+      },
+      "unclear": 7,
+      "unclassified": 2
+    },
+    "南港": {
+      "themes": {
+        "A": 53,
+        "B": 9,
+        "C": 18,
+        "D": 23,
+        "E": 6,
+        "F": 9,
+        "G": 23
+      },
+      "stances": {
+        "more": 44,
+        "less": 1,
+        "conditional": 1,
+        "mixed": 1,
+        "unspecified": 7,
+        "none": 28
+      },
+      "unclear": 2,
+      "unclassified": 1
+    },
+    "內湖": {
+      "themes": {
+        "A": 104,
+        "B": 14,
+        "C": 44,
+        "D": 40,
+        "E": 20,
+        "F": 19,
+        "G": 50
+      },
+      "stances": {
+        "more": 83,
+        "less": 4,
+        "conditional": 2,
+        "mixed": 3,
+        "unspecified": 23,
+        "none": 40
+      },
+      "unclear": 10,
+      "unclassified": 3
+    },
+    "士林": {
+      "themes": {
+        "A": 126,
+        "B": 26,
+        "C": 57,
+        "D": 57,
+        "E": 20,
+        "F": 31,
+        "G": 74
+      },
+      "stances": {
+        "more": 111,
+        "less": 2,
+        "conditional": 1,
+        "mixed": 2,
+        "unspecified": 17,
+        "none": 77
+      },
+      "unclear": 7,
+      "unclassified": 0
+    },
+    "北投": {
+      "themes": {
+        "A": 74,
+        "B": 22,
+        "C": 26,
+        "D": 34,
+        "E": 23,
+        "F": 8,
+        "G": 53
+      },
+      "stances": {
+        "more": 64,
+        "less": 0,
+        "conditional": 1,
+        "mixed": 0,
+        "unspecified": 10,
+        "none": 64
+      },
+      "unclear": 5,
+      "unclassified": 0
+    }
+  },
+  "semantic": {
+    "method": "三個子代理逐則閱讀檔案內文字，依實際意思標註問題、訴求與公共桶立場，不使用關鍵字規則分類。每則可涉及多個問題，同類最多計一次；比例不能相加。原文中的否定、條件與服務情境需要分開理解。AI 判讀仍可能有誤，現場與因果均未驗證。",
+    "primaryCoders": 3,
+    "codingProtocol": "semantic-protocol-v1",
+    "protocolSha256": "1e5504997646d00fc34eb6f4aefc1a435446a20950d7eeb745cf1202fbac72b6",
+    "annotationSha256": "ec89ab1a194d4a661226526f62ba22263e0bde88a6f887a0b2a93c1d5289066d",
+    "initialAnnotationSha256": "6cf4775ee7e8cac72c119409d6c2db5b2e3f2d4a068eb7a3ab5e9b446a25612b",
+    "doubleCodingSha256": "33c4f3807e7bb4e23dcd2ea0c7a77685ca7bed62047a4e5c655a037d842508a9",
+    "adjudicationSha256": "d2a995deb7bd3bd447d8f48dec460dac74a23d6890e5c3db2adfe3d113aa352d",
+    "reviewNotesSha256": "e2c711c8bc54de09cc18dee842caf254da66270ee1cffd2d914784ea36031121",
+    "audit": {
+      "sampleSize": 144,
+      "selection": "每區依來源雜湊與原始列序排序取 12 則；獨立判讀不提供初判標籤",
+      "initialAgreement": {
+        "themes": 107,
+        "stance": 131,
+        "clarity": 142
+      },
+      "disagreementRows": 46,
+      "adjudicatedRows": 46,
+      "changedRows": 875,
+      "consistencyReviewedRows": 2663,
+      "decisionRecords": 883,
+      "scope": "一致數是抽樣的初判一致性，不是分類正確率；分歧經回讀裁決，未獨立複核全部留言。"
+    }
+  }
 }
