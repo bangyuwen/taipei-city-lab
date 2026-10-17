@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "analysisDate": "2026-10-17",
+  "source": {
+    "name": "Pasted text.txt",
+    "sha256": "bc4d005ce9a9c4d97341204da5a576badc85c80e8ff4266e73f227ab89089851",
+    "frame": "這份資料是台北市意見回饋中篩出的垃圾相關訊息。分析單位是一則留言；比例只描述這批留言，不代表全體意見回饋或台北市民意。",
+    "collectionPeriod": null,
+    "recruitment": null,
+    "selectionRules": null,
+    "allFeedbackCount": null
+  },
+  "records": 2663,
+  "quality": {
+    "uniqueIds": 2663,
+    "missingCells": 0,
+    "multilineRecords": 232,
+    "duplicateTextGroups": 8,
+    "duplicateTextExtraRows": 10
+  },
+  "districts": {
+    "松山": 233,
+    "信義": 216,
+    "大安": 492,
+    "中山": 354,
+    "中正": 211,
+    "大同": 195,
+    "萬華": 241,
+    "文山": 135,
+    "南港": 82,
+    "內湖": 155,
+    "士林": 210,
+    "北投": 139
+  },
+  "moods": {
+    "在意": 275,
+    "生氣": 1095,
+    "擔心": 533,
+    "無奈": 625,
+    "希望改變": 103,
+    "肯定": 32
+  },
+  "originalTopics": {
+    "環境": 2360,
+    "市政": 32,
+    "交通": 50,
+    "城市修繕": 89,
+    "觀光": 40,
+    "其他": 69,
+    "體育": 1,
+    "育兒": 3,
+    "教育": 7,
+    "公共安全": 4,
+    "長照": 1,
+    "治安": 1,
+    "食安": 5,
+    "文化": 1
+  },
+  "indicators": [
+    {
+      "id": "bins",
+      "label": "垃圾桶／清潔箱",
+      "terms": [
+        "垃圾桶",
+        "垃圾筒",
+        "清潔箱"
+      ],
+      "count": 1831
+    },
+    {
+      "id": "truck",
+      "label": "垃圾車",
+      "terms": [
+        "垃圾車"
+      ],
+      "count": 204
+    },
+    {
+      "id": "household",
+      "label": "家戶垃圾",
+      "terms": [
+        "家庭垃圾",
+        "家戶垃圾",
+        "居家垃圾",
+        "家用垃圾"
+      ],
+      "count": 205
+    },
+    {
+      "id": "dropoff",
+      "label": "定點／彈性投放",
+      "terms": [
+        "定點",
+        "固定地點",
+        "24小時",
+        "二十四小時",
+        "隨時丟",
+        "隨時倒"
+      ],
+      "count": 52
+    },
+    {
+      "id": "litter",
+      "label": "亂丟／隨地丟棄",
+      "terms": [
+        "亂丟",
+        "亂扔",
+        "隨地",
+        "隨手丟",
+        "隨手扔"
+      ],
+      "count": 230
+    },
+    {
+      "id": "pests",
+      "label": "鼠蟲／異味",
+      "terms": [
+        "老鼠",
+        "鼠患",
+        "蟑螂",
+        "蚊蟲",
+        "惡臭",
+        "臭味",
+        "異味"
+      ],
+      "count": 203
+    },
+    {
+      "id": "cigarettes",
+      "label": "菸蒂／菸頭",
+      "terms": [
+        "菸蒂",
+        "煙蒂",
+        "菸頭",
+        "煙頭"
+      ],
+      "count": 53
+    },
+    {
+      "id": "recycling",
+      "label": "回收／廚餘",
+      "terms": [
+        "回收",
+        "廚餘"
+      ],
+      "count": 195
+    }
+  ],
+  "noIndicatorMatch": 377,
+  "binAndTruck": 47
+}
