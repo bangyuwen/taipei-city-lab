@@ -124,6 +124,89 @@ def render_references(index_text, catalog, literature):
     return index_text
 
 
+
+PLAN_SECTIONS = {
+    '建議執行基準': ('scope', '規模與完成條件'),
+    '前十天先取得能執行的承接安排': ('owners', '前十天的決定'),
+    '百日時程與階段成果': ('schedule', '階段成果'),
+    '選點與設備規格一起確認': ('sites', '選點與規格'),
+    '採購要有，而且從第一天開始準備': ('procurement', '沿用與採購'),
+    '清運能力決定能設多少，也決定每天花多少': ('operations', '清運與排班'),
+    '人員訓練以獨立作業能力驗收': ('training', '人員訓練'),
+    '預算用完整服務成本核定': ('budget', '完整預算'),
+    '我們可以做的和外部必須承接的事項': ('responsibilities', '我方與市府分工'),
+    '現場驗證與第 100 天交付': ('acceptance', '驗收與交接'),
+    '異常決策不留到最後一天': ('risks', '延誤與缺口處理'),
+}
+PLAN_LINKS = {
+    '../service-strategy-2026-10-15/README.md': '#implementation-heading',
+    '../budget-2026-10-15/README.md': '#budget-heading',
+    '../budget-2026-10-15/inputs.json': '#budget-heading',
+}
+
+
+def plan_inline(text):
+    """Keep the plan's source links readable without publishing attachments."""
+    for target in re.findall(r'\[[^\]]+\]\(([^\s)]+)\)', text):
+        if target in PLAN_LINKS:
+            text = text.replace('](' + target + ')', '](' + PLAN_LINKS[target] + ')')
+        elif not target.startswith('https://'):
+            raise ValueError(f'Unmapped public plan link: {target}')
+    rendered = inline_markdown(text)
+    return re.sub(r'\[([^\]]+)\]\((#[a-z-]+)\)', r'<a href="\2">\1</a>', rendered)
+
+
+def render_hundred_day_plan(index_text, markdown):
+    """Render the reviewed plan's paragraphs and tables from its single source."""
+    lines = markdown.strip().splitlines()
+    assert lines[0].startswith('# '), 'Missing plan title'
+    title = html.escape(lines[0][2:])
+    body, seen = [], []
+    section = '百日計畫'
+    blocks = re.split(r'\n\s*\n', '\n'.join(lines[1:]).strip())
+    for block in blocks:
+        heading = re.fullmatch(r'\*\*([^*]+)\*\*', block)
+        if heading:
+            section = heading[1]
+            slug, _ = PLAN_SECTIONS[section]
+            seen.append(section)
+            body.append(f'<h3 id="plan-{slug}" tabindex="-1">{html.escape(section)}</h3>')
+        elif block.startswith('|'):
+            rows = [[cell.strip() for cell in line.strip().strip('|').split('|')]
+                    for line in block.splitlines()]
+            headers, separator, *records = rows
+            assert all(re.fullmatch(r':?-+:?', cell) for cell in separator), 'Invalid plan table'
+            assert all(len(row) == len(headers) for row in rows), 'Uneven plan table'
+            columns = ''.join(f'<th scope="col" role="columnheader">{plan_inline(label)}</th>' for label in headers)
+            rendered_rows = []
+            for row in records:
+                cells = ''.join(f'<td role="cell"><span class="plan-cell-label" aria-hidden="true">{html.escape(label)}</span>{plan_inline(cell)}</td>'
+                                for label, cell in zip(headers, row))
+                rendered_rows.append(f'<tr role="row">{cells}</tr>')
+            body.append('<table class="plan-table" role="table">'
+                        f'<caption class="visually-hidden">{html.escape(section)}</caption>'
+                        f'<thead role="rowgroup"><tr role="row">{columns}</tr></thead>'
+                        '<tbody role="rowgroup">' + ''.join(rendered_rows) + '</tbody></table>')
+        else:
+            assert not re.match(r'^(?:#|[-+] |\d+\. )', block), 'Unsupported plan block'
+            body.append('<p>' + plan_inline(block.replace('\n', ' ')) + '</p>')
+    assert seen == list(PLAN_SECTIONS), 'Plan sections changed; update public navigation'
+    contents = ''.join(f'<a href="#plan-{slug}">{html.escape(label)}</a>'
+                       for slug, label in PLAN_SECTIONS.values())
+    rendered = (f'<header class="research-page-heading"><h2 id="plan-heading">{title}</h2>'
+                '<p class="research-update">規劃提案 · 尚未啟動；點位、經費、採購與營運承接仍待確認。</p></header>'
+                '<div class="plan-reading-layout"><nav class="plan-contents" aria-label="百日計畫章節">'
+                + contents + '</nav><div class="plan-body">' + '\n'.join(body) + '</div></div>')
+    marker = 'hundred-day-plan'
+    before = index_text.split(f'<!-- {marker}-start -->')[0]
+    assert re.findall(r'<section\b[^>]*\bid="(panel-[^"]+)"', before)[-1] == 'panel-plan'
+    updated, count = re.subn(f'<!-- {marker}-start -->.*?<!-- {marker}-end -->',
+                            lambda _: f'<!-- {marker}-start -->\n{rendered}\n<!-- {marker}-end -->',
+                            index_text, flags=re.S)
+    assert count == 1, 'Missing public plan marker'
+    return updated
+
+
 def main():
     canonical = ROOT.parent.parent / 'topics/bins/research'
     docs = {name: (ROOT / 'data/research' / name).read_text() for name in DOCS}
@@ -152,6 +235,7 @@ def main():
     text = index.read_text()
     catalog = json.loads((ROOT / 'research/reference-guide-2026-10-16/catalog.json').read_text())
     text = render_references(text, catalog, literature)
+    text = render_hundred_day_plan(text, (ROOT / 'research/hundred-day-plan-2026-10-17/README.md').read_text())
     index.write_text(text)
 
     # Preserve the original relative paths so lineage checks work after extraction.

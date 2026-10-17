@@ -92,3 +92,11 @@ test('the main landmark fragment keeps the active route',()=>{
   assert.equal(pageFromHash('#main'),'research');
   assert.equal(pageFromHash('#main',null),'research');
 });
+
+test('hundred-day plan and its source links open the owning readable panel', () => {
+  for(const hash of ['#plan','#plan-heading','#plan-schedule','#plan-budget','#plan-responsibilities','#plan-acceptance'])assert.equal(pageFromHash(hash),'plan');
+  for(const hash of ['#budget-heading','#implementation-heading'])assert.equal(pageFromHash(hash),'materials');
+  assert.equal(pageFromHash('#main','plan'),'plan');
+  assert.equal(pageFromHash('#planning'),'research');
+  assert.equal(pageFromHash('#reference-L01'),'sources');
+});

@@ -22,12 +22,14 @@ export function csvForPoints(points, dataset) {
     ...points.map(p=>[...context,p.id,p.district,p.address,p.rawX??p.x,p.rawY??p.y,p.quality])].map(r=>r.map(safe).join(',')).join('\r\n')+'\r\n';
 }
 export const historyPages=['map','comparison','history','siting'];
-export const allowedPages=[...historyPages,'countries','design','research','sources','materials'];
+export const allowedPages=[...historyPages,'countries','design','research','sources','materials','plan'];
 export function pageFromHash(hash,currentPage='research') {
   const page=hash.replace(/^#/,'');
   if(page==='main'&&allowedPages.includes(currentPage))return currentPage;
   if(allowedPages.includes(page))return page;
   if(/^reference-[LP]\d{2}$/.test(page)||/^source-/.test(page)||/^research-(?:literature|papers|paper-records|full-bibliography|practices|practice-records|operating-sources|audit)/.test(page))return 'sources';
+  if(/^plan-/.test(page))return 'plan';
+  if(['budget-heading','implementation-heading'].includes(page))return 'materials';
   if(/^conclusion-/.test(page))return 'research';
   if(/^research-(?:materials|candidates|field|budget|paid|execution)/.test(page))return 'materials';
   if(/^t1-/.test(page))return 'design';
