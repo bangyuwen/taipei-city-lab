@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
-import {filterPoints,filterVenuePoints,recordStats,csvForPoints,pageFromHash} from '../dist/data-utils.js';
+import {filterPoints,filterVenuePoints,recordStats,csvForPoints,pageFromHash,historyPages,allowedPages} from '../dist/data-utils.js';
 
 const catalog=JSON.parse(await readFile(new URL('../dist/data/datasets.json',import.meta.url)));
 
@@ -142,4 +142,14 @@ test('public venue data covers twelve districts and preserves coarse coordinates
   assert.match(coarse.quality,/約略位置.*不是.*桶位或入口/);
   assert.match(d.availabilityNote,/開放時間.*接收規則.*待確認/);
   assert.match(d.note,/保留重複名稱及座標.*不代表.*不同場所/);
+});
+
+test('candidate streets remain addressable outside the history group',()=>{
+  assert.equal(historyPages.includes('siting'),false);
+  assert.equal(allowedPages.includes('siting'),true);
+  assert.equal(pageFromHash('#siting'),'siting');
+  for(const page of ['map','comparison','history']){
+    assert.equal(historyPages.includes(page),true);
+    assert.equal(pageFromHash('#'+page),page);
+  }
 });
