@@ -10,7 +10,7 @@ const {chromium}=await import(modulePath?pathToFileURL(resolve(modulePath)).href
 const browser=await chromium.launch({headless:true,args:['--no-sandbox'],...(process.env.CHROME_PATH?{executablePath:resolve(process.env.CHROME_PATH)}:{})});
 const baseURL=new URL(process.env.REDESIGN_QA_URL||'http://127.0.0.1:4174/');
 const errors=[],screens=[],measurements=[];
-const historyPages=['map','comparison','history','siting'];
+const historyPages=['map','comparison','history'];
 const widths=[320,390,720,1440];
 const captureScreens=!process.argv.includes('--functional-only');
 await mkdir(qa,{recursive:true});
@@ -43,6 +43,9 @@ async function nav(page,target){
   if(historyPages.includes(target)){
     await primary(page,'history');
     if(target!=='history')await page.locator(`.history-subnav [data-page="${target}"]`).click();
+  }else if(target==='siting'){
+    await primary(page,'research');
+    await page.locator('#research-navigation [data-page="siting"]').click();
   }else if(['research','countries'].includes(target))await primary(page,target);
   else if(target==='design'){
     await primary(page,'research');
