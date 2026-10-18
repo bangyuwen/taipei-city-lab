@@ -829,17 +829,21 @@ def render_with_detail(data, distribution, research):
     access = runpy.run_path(str(ROOT / 'scripts/feedback_access.py'))
     detail = access['load'](research, data)
     detail_html, detail_markdown = access['render'](detail, heat_colors)
+    removal = runpy.run_path(str(ROOT / 'scripts/feedback_removal.py'))
+    removal_data, comparisons = removal['load'](research, detail)
+    removal_html, _ = removal['render'](removal_data, comparisons, heat_colors)
+    detail_html += '\n' + removal_html
     anchor = '<h4 id="feedback-district-details" tabindex="-1">'
     if content.count(anchor) != 1:
         raise ValueError('Expected one district details destination')
     content = content.replace(anchor, detail_html + '\n' + anchor)
     content = content.replace('<a href="#feedback-district-details">各區詳解</a>',
-                              '<a href="#feedback-access">六種困難細分</a><a href="#feedback-district-details">各區詳解</a>')
+                              '<a href="#feedback-access">六種困難細分</a><a href="#feedback-removal">撤除地點與後果</a><a href="#feedback-district-details">各區詳解</a>')
     markdown = markdown.replace('### 十二區問題與改善方向',
                                 '### 桶位留言的六種困難細分\n\n' + access['narrative'](detail) +
-                                '\n\n[細分類、十二區情境與立場分析](../feedback-access-2026-10-18/README.md)\n\n### 十二區問題與改善方向', 1)
+                                '\n\n[細分類、十二區情境與立場分析](../feedback-access-2026-10-18/README.md)\n\n[撤除地點、後果、訴求與官方紀錄比對](../feedback-removal-2026-10-18/README.md)\n\n### 十二區問題與改善方向', 1)
     homepage = home_summary(data, distribution)
-    homepage = homepage.replace('<h4 id="district-service-heading"', access['home'](detail) + '\n<h4 id="district-service-heading"', 1)
+    homepage = homepage.replace('<h4 id="district-service-heading"', access['home'](detail) + removal['home'](removal_data) + '\n<h4 id="district-service-heading"', 1)
     return markdown, content, homepage, detail_markdown
 
 
@@ -868,6 +872,11 @@ def main():
     distribution = load_distribution(data)
     markdown, content, homepage, detail_markdown = render_with_detail(data, distribution, folder.parent)
     (folder.parent / 'feedback-access-2026-10-18/README.md').write_text(detail_markdown)
+    removal = runpy.run_path(str(ROOT / 'scripts/feedback_removal.py'))
+    access_summary = json.loads((folder.parent / 'feedback-access-2026-10-18/summary.json').read_text())
+    removal_data, comparisons = removal['load'](folder.parent, access_summary)
+    _, removal_markdown = removal['render'](removal_data, comparisons, heat_colors)
+    (folder.parent / 'feedback-removal-2026-10-18/README.md').write_text(removal_markdown)
     (folder.parent / DISTRIBUTION_FOLDER / 'README.md').write_text(distribution_report(data, distribution))
     index = ROOT / 'dist/index.html'
     page, count = re.subn(r'<!-- feedback-analysis-start -->.*?<!-- feedback-analysis-end -->',

@@ -1,0 +1,67 @@
+{
+  "checkedDateTaipei": "2026-10-18",
+  "sources": [
+    {
+      "file": "evidence/wanhua-2025-08.pdf",
+      "url": "https://www-ws.gov.taipei/001/Upload/319/relfile/41485/9351155/bd9456d9-10f6-4ec6-865f-53cad0140f32.pdf",
+      "checkedAt": "2026-10-18T03:46:25.951902+00:00",
+      "status": 200,
+      "contentType": "application/pdf",
+      "bytes": 1367267,
+      "sha256": "2d554fbb85a47ea6f022642c5829052cdd5595edd2578ccc15592515bcdd2321",
+      "finalUrl": "https://www-ws.gov.taipei/001/Upload/319/relfile/41485/9351155/bd9456d9-10f6-4ec6-865f-53cad0140f32.pdf"
+    },
+    {
+      "file": "evidence/wanhua-2025-06.pdf",
+      "url": "https://www-ws.gov.taipei/001/Upload/319/relfile/41485/9351155/de67ec49-cac6-469b-b77b-78ef88fde09b.pdf",
+      "checkedAt": "2026-10-18T03:46:25.952339+00:00",
+      "status": 200,
+      "contentType": "application/pdf",
+      "bytes": 421315,
+      "sha256": "e85ffadade605c1c4bd05e1dff8c616c770bb8ec1af2a35731ec97f8dd0469b7",
+      "finalUrl": "https://www-ws.gov.taipei/001/Upload/319/relfile/41485/9351155/de67ec49-cac6-469b-b77b-78ef88fde09b.pdf"
+    },
+    {
+      "file": "evidence/dep-policy-2026-08-10.html",
+      "url": "https://www.gov.taipei/News_Content.aspx?n=F0DDAF49B89E9413&s=798A998A29BE46CD&sms=72544237BBE4C5F6",
+      "checkedAt": "2026-10-18T03:46:25.952515+00:00",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 206196,
+      "sha256": "ff98ee07edb7fe0ec1d6782f68ad2986acd8f16e59e7cabcfce2aeb23852a3ab",
+      "finalUrl": "https://www.gov.taipei/News_Content.aspx?n=F0DDAF49B89E9413&s=798A998A29BE46CD&sms=72544237BBE4C5F6"
+    },
+    {
+      "file": "evidence/dep-application-2026-07-20.html",
+      "url": "https://www.dep.gov.taipei/News_Content.aspx?n=ACEFA960B5A4ACD7&s=B90A10FBBF73521B",
+      "checkedAt": "2026-10-18T03:46:25.952650+00:00",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 101334,
+      "sha256": "75269542f7259fcd2badbe83b5f705fd1b17daab950b22047243a1f16a6b72b0",
+      "finalUrl": "https://www.dep.gov.taipei/News_Content.aspx?n=ACEFA960B5A4ACD7&s=B90A10FBBF73521B"
+    },
+    {
+      "file": "../source-recovery-2026-10-15/raw/official-download.csv",
+      "url": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=267d550f-c6ec-46e0-b8af-fd5a464eb098",
+      "checkedAt": "2026-10-18T03:46:25.952792+00:00",
+      "status": 200,
+      "contentType": "text/csv;charset=BIG-5",
+      "bytes": 63540,
+      "sha256": "ff3cf5528c057958f89871aa5300fc633b02d0f7b37131ab29d5ddc2f8e2370d",
+      "finalUrl": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=267d550f-c6ec-46e0-b8af-fd5a464eb098",
+      "note": "Fresh bytes equal the retained canonical source; reuse that preserved file."
+    },
+    {
+      "file": "../source-recovery-2026-10-15/raw/official-tourist.csv",
+      "url": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=2030d728-9597-437d-81a4-cf2a44c7f114",
+      "checkedAt": "2026-10-18T03:46:25.952924+00:00",
+      "status": 200,
+      "contentType": "text/csv;charset=BIG-5",
+      "bytes": 5396,
+      "sha256": "47b1ddfb4f0ab4d5e57afab538f71da3d41d22e59c984bdd9c10b4248223b066",
+      "finalUrl": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=2030d728-9597-437d-81a4-cf2a44c7f114",
+      "note": "Fresh bytes equal the retained canonical source; reuse that preserved file."
+    }
+  ]
+}
