@@ -39,9 +39,11 @@ try{
     await page.locator('#panel-design a[href="#siting"]').click();
     const frame=await ready(page);
     assert.equal(overlayRequests,1);
-    assert.equal(await page.locator('.history-subnav [data-page="siting"]').getAttribute('aria-current'),'page');
+    assert.equal(await page.locator('#research-navigation [data-page="siting"]').getAttribute('aria-current'),'page');
     assert.equal(await page.locator('[data-section="history"]').getAttribute('aria-current'),null);
-    assert.equal(await page.locator('[data-section="history"]').getAttribute('data-section-active'),'');
+    assert.equal(await page.locator('[data-section="history"]').getAttribute('data-section-active'),null);
+    assert.equal(await page.locator('#history-navigation').isVisible(),false);
+    assert.equal(await page.locator('#site-navigation [data-page="research"]').getAttribute('data-section-active'),'');
     assert.equal(await frame.locator('.top').isVisible(),false);
     assert.equal(await frame.locator('#shortlist button').count(),10);
     assert.equal(await frame.locator('.priority-marker').count(),10);
@@ -136,7 +138,7 @@ try{
     await page.waitForTimeout(150);
     await bounds(page,frame);
     assert.notEqual(await page.locator('#siting-frame').evaluate(e=>e.style.height),oldHeight);
-    await page.locator('.history-subnav [data-page="history"]').click();
+    await page.locator('#panel-siting a[href="#map"]').click();
     await page.goBack();
     await page.locator('#panel-siting').waitFor({state:'visible'});
     assert.equal(await frame.locator('#priority-filter').inputValue(),'hold');

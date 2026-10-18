@@ -6,7 +6,7 @@
 
 ## 閱讀入口與資訊歸屬
 
-2026-10-17 起主導覽為「研究結論／台北的變化／各地做法」。根網址先讀現況摘要，再讀三項研究判斷；地圖、清冊比較、數量與政策歷程、候選街段留在台北證據的二級導覽。既有 `#map`、`#comparison`、`#history`、`#siting` 深連結與資料版本 query 保持有效。
+2026-10-17 起主導覽為「研究結果／台北的變化／各地做法」。根網址先讀現況摘要，再讀三項研究判斷；地圖、清冊比較、數量與政策歷程留在台北證據的二級導覽；候選街道與研究結論並列於研究結果的二級導覽。既有 `#map`、`#comparison`、`#history`、`#siting` 深連結與資料版本 query 保持有效。
 
 - `#research`：先呈現有日期的公開紀錄、研究判讀、尚缺的現場確認與未來提案，再列三項建議、成立條件、未知及直接引用。`#current-evidence-heading` 可直達現況摘要。
 - `#countries`：單一國家案例選單、預設實拍，在同一影像區切換 3D 示意。照片、署名、地點對應限制、證據及成本直接呈現；`?country=japan#countries` 與 `#country-japan` 可直接指定案例。
@@ -22,7 +22,7 @@
 
 - 2015、2022、2024、2026 四個年份、六份位置資料切換；2024、2026 預設採新主版本，原缺頁版與示範區版仍可選取。
 - 點位地圖預設使用 CARTO Positron 淡色底圖，右上方可切換原 OpenStreetMap 街道底圖；CARTO 連線失敗時自動使用淡色街道備援，點位、篩選與目前視角不變。
-- 「台北的變化」整合歷程、分布、清冊差異與候選街段，以二級導覽切換；原有 `#map`、`#comparison`、`#history` 深連結保持有效。
+- 「台北的變化」整合歷程、分布與清冊差異，以二級導覽切換；原有 `#map`、`#comparison`、`#history` 深連結保持有效。
 - 「各國垃圾桶」以 `#countries` 獨立呈現十二國實物照片、桶型、滿度感測、清運與成本案例；圖說標示拍攝地點、日期及與案例的對應限制，照片、功能與價格各自附來源；付費服務與台北方案仍在「研究判斷」，兩頁互相連結。
 - 有來源的撤除時間線，區分政策理由、官方存量與具日期的撤除個案。
 - 用途設計體驗：街角隨手投、回收分流、高使用量管理與家戶收受；角色、投放規則、滿載／離線與清運流程各有操作回饋，3D 反映設備狀態。
@@ -159,7 +159,7 @@ The metadata lives in `dist/country-model-data.js`; geometry lives in `dist/coun
 
 ## 設點與歷史疊圖
 
-「垃圾桶歷史 → 設點疊圖」（`#siting`）把 425 組條件式寬度候選街段與 2015、2022、2024 年 5 月缺頁版、2024 年 10 月封存版及 2026 年 9 月主檔疊圖。設計頁亦有入口。圖層與行政區／地址篩選可獨立操作，點擊圖形或鍵盤清單可查看來源。跨年缺列不等於撤除，候選街段不代表核准設點。寬度單位暫按公尺解讀，現場及管理權責仍待查核。
+「研究結果 → 候選街道」（`#siting`）把 425 組條件式寬度候選街段與 2015、2022、2024 年 5 月缺頁版、2024 年 10 月封存版及 2026 年 9 月主檔疊圖。設計頁亦有入口。圖層與行政區／地址篩選可獨立操作，點擊圖形或鍵盤清單可查看來源。跨年缺列不等於撤除，候選街段不代表核准設點。寬度單位暫按公尺解讀，現場及管理權責仍待查核。
 
 公開的 `siting-overlay.html` 只內嵌瀏覽所需的點位、街段圖形與來源說明。來源 CSV／GeoJSON、完整盤點清單、重建輸入與溯源檔不加入公開資產清單。`data/siting-overlay.json` 保存這次研究的展示快照，`data/siting-overlay.provenance.json` 只記錄此保存快照的雜湊、內容數量及研究出處；這兩檔留在私有原始碼。完整上游輸入與原始溯源紀錄保留在 monorepo 的 `topics/bins/research/siting-inventory-2026-10-17/` 及其引用來源，不包含在獨立 Sites 原始碼。本網站可重建保存快照的展示頁，不能從本站檔案重做完整上游盤點。
 
@@ -171,7 +171,7 @@ Use `--functional-only` with `check-redesign-browser.mjs` or `check-browser.py` 
 
 ### Desktop assessments for ten retained sites
 
-The siting overlay and printable `field-checklist.html` now present desktop-only judgments from the same curated `data/field-priorities.json`. The historical path remains addressable. The old field-visit P1/P2 assignments are replaced by two explicit dimensions: addition-evaluation priority (one review, five lower, four hold) and evidence confidence (seven medium, three low). Confidence describes consistency of the saved evidence, not field accuracy or a probability. Shilin deliberately combines medium confidence with hold priority: consistent scene/record evidence does not establish spatial feasibility.
+The siting overlay and printable `field-checklist.html` now present desktop-only judgments from the same curated `data/field-priorities.json`. The existing `#siting` path remains addressable under Research results. The old field-visit P1/P2 assignments are replaced by two explicit dimensions: addition-evaluation priority (one review, five lower, four hold) and evidence confidence (seven medium, three low). Confidence describes consistency of the saved evidence, not field accuracy or a probability. Shilin deliberately combines medium confidence with hold priority: consistent scene/record evidence does not establish spatial feasibility.
 
 Each map marker, shortlist entry, popup and printable sheet identifies both dimensions. Details explain the priority and confidence reasons, retained evidence, limits and current recommendation. The source snapshot remains dated 2026-10-17; no new observations, demand measurements, weighted score or citywide ranking were created. The 425 polygons and five historical snapshots remain unchanged. Private research inputs and attachments remain excluded from the 56-file public allowlist.
 

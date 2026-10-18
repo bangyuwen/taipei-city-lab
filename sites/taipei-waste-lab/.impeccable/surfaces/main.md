@@ -29,7 +29,7 @@ Keep one shared media area below the selected country's strategy, defaulting to 
 
 ## Information ownership
 
-Research conclusions own recommendations and their conditions, not duplicated literature records. Taipei pages own historical data, policy events and unverified siting evidence. Country cases own real equipment and service comparisons. The secondary sources page owns each full reference once, reading scope and comparison methods. Execution materials own estimates, candidate records and unexecuted field protocols. The T1 concept and guided design demonstrations remain a secondary route linked from the relevant recommendations; illustrations never become evidence of actual outcomes.
+Research conclusions own recommendations and their conditions, not duplicated literature records. Taipei pages own historical data and policy events. Research results own the conclusions and candidate-streets tabs; candidate streets retain historical evidence links and remain unverified desktop recommendations. Country cases own real equipment and service comparisons. The secondary sources page owns each full reference once, reading scope and comparison methods. Execution materials own estimates, candidate records and unexecuted field protocols. The T1 concept and guided design demonstrations remain a secondary route linked from the relevant recommendations; illustrations never become evidence of actual outcomes.
 
 
 ## Verification 2026-10-17
