@@ -177,7 +177,8 @@ assert detail_markdown==Path('research/feedback-access-2026-10-18/README.md').re
 assert markdown==(folder/'README.md').read_text()==Path('dist/research/feedback-2026-10-17/README.md').read_text()
 assert content in Path('dist/index.html').read_text()
 assert content.count('data-theme=')==84
-assert content.count('class="feedback-bar-track"')==7
+assert m['render'](data,m['load_distribution'](data))[1].count('class="feedback-bar-track"')==7
+assert content.count('class="feedback-bar-track"')==22
 assert '不使用關鍵字規則分類' in content and '比例不能相加' in content
 assert '不是分類正確率' in content and '收集期間' in content
 assert '已撤回' in content and '其餘各區' in content
@@ -205,9 +206,9 @@ from pathlib import Path
 with tempfile.TemporaryDirectory() as directory:
  root=Path(directory)
  (root/'scripts').mkdir();(root/'dist').mkdir()
- for name in ('analyze-feedback.py','feedback_access.py'):
+ for name in ('analyze-feedback.py','feedback_access.py','feedback_removal.py'):
   shutil.copy(Path('scripts')/name,root/'scripts'/name)
- for name in ['feedback-access-2026-10-18','feedback-2026-10-17','feedback-distribution-2026-10-18','bin-coverage-2026-10-18','source-recovery-2026-10-15']:
+ for name in ['feedback-removal-2026-10-18','feedback-access-2026-10-18','feedback-2026-10-17','feedback-distribution-2026-10-18','bin-coverage-2026-10-18','source-recovery-2026-10-15']:
   shutil.copytree(Path('research')/name,root/'research'/name)
  shutil.copy('dist/index.html',root/'dist/index.html')
  result=subprocess.run([sys.executable,'scripts/analyze-feedback.py'],cwd=root,capture_output=True,text=True)

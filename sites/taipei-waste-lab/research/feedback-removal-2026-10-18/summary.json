@@ -1,0 +1,466 @@
+{
+  "schemaVersion": 1,
+  "analysisDate": "2026-10-18",
+  "overall": {
+    "selectedRecords": 913,
+    "statuses": {
+      "reported": 661,
+      "restore_only": 236,
+      "anticipated": 15,
+      "unclear": 1
+    },
+    "effects": {
+      "E1": 206,
+      "E2": 154,
+      "E3": 98,
+      "E4": 105,
+      "E5": 23,
+      "E6": 98,
+      "E7": 20
+    },
+    "requests": {
+      "R1": 397,
+      "R2": 70,
+      "R3": 26,
+      "R4": 56,
+      "R5": 39,
+      "R6": 106,
+      "R7": 36,
+      "R8": 2
+    },
+    "noEffect": 390,
+    "noRequest": 331,
+    "namedPlace": 333,
+    "statedTime": 35,
+    "placeAndTime": 27
+  },
+  "districts": {
+    "松山": {
+      "selectedRecords": 97,
+      "statuses": {
+        "reported": 63,
+        "restore_only": 28,
+        "anticipated": 6,
+        "unclear": 0
+      },
+      "effects": {
+        "E1": 25,
+        "E2": 13,
+        "E3": 9,
+        "E4": 10,
+        "E5": 5,
+        "E6": 7,
+        "E7": 3
+      },
+      "requests": {
+        "R1": 49,
+        "R2": 10,
+        "R3": 2,
+        "R4": 5,
+        "R5": 11,
+        "R6": 8,
+        "R7": 1,
+        "R8": 0
+      },
+      "noEffect": 46,
+      "noRequest": 33,
+      "namedPlace": 24,
+      "statedTime": 2,
+      "placeAndTime": 1
+    },
+    "信義": {
+      "selectedRecords": 63,
+      "statuses": {
+        "reported": 49,
+        "restore_only": 12,
+        "anticipated": 2,
+        "unclear": 0
+      },
+      "effects": {
+        "E1": 9,
+        "E2": 12,
+        "E3": 7,
+        "E4": 4,
+        "E5": 3,
+        "E6": 6,
+        "E7": 6
+      },
+      "requests": {
+        "R1": 26,
+        "R2": 7,
+        "R3": 3,
+        "R4": 3,
+        "R5": 1,
+        "R6": 5,
+        "R7": 6,
+        "R8": 1
+      },
+      "noEffect": 29,
+      "noRequest": 19,
+      "namedPlace": 20,
+      "statedTime": 2,
+      "placeAndTime": 2
+    },
+    "大安": {
+      "selectedRecords": 223,
+      "statuses": {
+        "reported": 166,
+        "restore_only": 56,
+        "anticipated": 1,
+        "unclear": 0
+      },
+      "effects": {
+        "E1": 58,
+        "E2": 36,
+        "E3": 27,
+        "E4": 33,
+        "E5": 5,
+        "E6": 21,
+        "E7": 5
+      },
+      "requests": {
+        "R1": 106,
+        "R2": 11,
+        "R3": 5,
+        "R4": 13,
+        "R5": 6,
+        "R6": 30,
+        "R7": 11,
+        "R8": 1
+      },
+      "noEffect": 86,
+      "noRequest": 68,
+      "namedPlace": 90,
+      "statedTime": 8,
+      "placeAndTime": 7
+    },
+    "中山": {
+      "selectedRecords": 139,
+      "statuses": {
+        "reported": 102,
+        "restore_only": 36,
+        "anticipated": 1,
+        "unclear": 0
+      },
+      "effects": {
+        "E1": 31,
+        "E2": 24,
+        "E3": 12,
+        "E4": 19,
+        "E5": 3,
+        "E6": 12,
+        "E7": 1
+      },
+      "requests": {
+        "R1": 57,
+        "R2": 14,
+        "R3": 10,
+        "R4": 7,
+        "R5": 7,
+        "R6": 19,
+        "R7": 3,
+        "R8": 0
+      },
+      "noEffect": 64,
+      "noRequest": 48,
+      "namedPlace": 55,
+      "statedTime": 5,
+      "placeAndTime": 4
+    },
+    "中正": {
+      "selectedRecords": 61,
+      "statuses": {
+        "reported": 36,
+        "restore_only": 22,
+        "anticipated": 3,
+        "unclear": 0
+      },
+      "effects": {
+        "E1": 10,
+        "E2": 5,
+        "E3": 8,
+        "E4": 6,
+        "E5": 2,
+        "E6": 6,
+        "E7": 1
+      },
+      "requests": {
+        "R1": 28,
+        "R2": 4,
+        "R3": 0,
+        "R4": 4,
+        "R5": 4,
+        "R6": 3,
+        "R7": 2,
+        "R8": 0
+      },
+      "noEffect": 30,
+      "noRequest": 27,
+      "namedPlace": 22,
+      "statedTime": 1,
+      "placeAndTime": 0
+    },
+    "大同": {
+      "selectedRecords": 80,
+      "statuses": {
+        "reported": 64,
+        "restore_only": 16,
+        "anticipated": 0,
+        "unclear": 0
+      },
+      "effects": {
+        "E1": 25,
+        "E2": 18,
+        "E3": 11,
+        "E4": 14,
+        "E5": 1,
+        "E6": 12,
+        "E7": 2
+      },
+      "requests": {
+        "R1": 32,
+        "R2": 5,
+        "R3": 1,
+        "R4": 6,
+        "R5": 2,
+        "R6": 8,
+        "R7": 1,
+        "R8": 0
+      },
+      "noEffect": 24,
+      "noRequest": 36,
+      "namedPlace": 30,
+      "statedTime": 4,
+      "placeAndTime": 3
+    },
+    "萬華": {
+      "selectedRecords": 43,
+      "statuses": {
+        "reported": 30,
+        "restore_only": 13,
+        "anticipated": 0,
+        "unclear": 0
+      },
+      "effects": {
+        "E1": 7,
+        "E2": 11,
+        "E3": 6,
+        "E4": 5,
+        "E5": 1,
+        "E6": 5,
+        "E7": 1
+      },
+      "requests": {
+        "R1": 17,
+        "R2": 4,
+        "R3": 3,
+        "R4": 1,
+        "R5": 1,
+        "R6": 6,
+        "R7": 1,
+        "R8": 0
+      },
+      "noEffect": 18,
+      "noRequest": 15,
+      "namedPlace": 19,
+      "statedTime": 6,
+      "placeAndTime": 4
+    },
+    "文山": {
+      "selectedRecords": 28,
+      "statuses": {
+        "reported": 21,
+        "restore_only": 6,
+        "anticipated": 0,
+        "unclear": 1
+      },
+      "effects": {
+        "E1": 4,
+        "E2": 7,
+        "E3": 2,
+        "E4": 2,
+        "E5": 0,
+        "E6": 4,
+        "E7": 0
+      },
+      "requests": {
+        "R1": 11,
+        "R2": 1,
+        "R3": 1,
+        "R4": 1,
+        "R5": 0,
+        "R6": 2,
+        "R7": 1,
+        "R8": 0
+      },
+      "noEffect": 12,
+      "noRequest": 14,
+      "namedPlace": 5,
+      "statedTime": 0,
+      "placeAndTime": 0
+    },
+    "南港": {
+      "selectedRecords": 29,
+      "statuses": {
+        "reported": 21,
+        "restore_only": 8,
+        "anticipated": 0,
+        "unclear": 0
+      },
+      "effects": {
+        "E1": 10,
+        "E2": 6,
+        "E3": 2,
+        "E4": 2,
+        "E5": 1,
+        "E6": 3,
+        "E7": 0
+      },
+      "requests": {
+        "R1": 12,
+        "R2": 3,
+        "R3": 0,
+        "R4": 2,
+        "R5": 4,
+        "R6": 2,
+        "R7": 1,
+        "R8": 0
+      },
+      "noEffect": 9,
+      "noRequest": 11,
+      "namedPlace": 11,
+      "statedTime": 1,
+      "placeAndTime": 1
+    },
+    "內湖": {
+      "selectedRecords": 49,
+      "statuses": {
+        "reported": 36,
+        "restore_only": 11,
+        "anticipated": 2,
+        "unclear": 0
+      },
+      "effects": {
+        "E1": 6,
+        "E2": 5,
+        "E3": 5,
+        "E4": 4,
+        "E5": 2,
+        "E6": 9,
+        "E7": 0
+      },
+      "requests": {
+        "R1": 20,
+        "R2": 4,
+        "R3": 1,
+        "R4": 4,
+        "R5": 2,
+        "R6": 10,
+        "R7": 3,
+        "R8": 0
+      },
+      "noEffect": 25,
+      "noRequest": 17,
+      "namedPlace": 16,
+      "statedTime": 1,
+      "placeAndTime": 0
+    },
+    "士林": {
+      "selectedRecords": 55,
+      "statuses": {
+        "reported": 40,
+        "restore_only": 15,
+        "anticipated": 0,
+        "unclear": 0
+      },
+      "effects": {
+        "E1": 13,
+        "E2": 9,
+        "E3": 7,
+        "E4": 5,
+        "E5": 0,
+        "E6": 7,
+        "E7": 0
+      },
+      "requests": {
+        "R1": 20,
+        "R2": 4,
+        "R3": 0,
+        "R4": 7,
+        "R5": 1,
+        "R6": 6,
+        "R7": 3,
+        "R8": 0
+      },
+      "noEffect": 24,
+      "noRequest": 24,
+      "namedPlace": 21,
+      "statedTime": 4,
+      "placeAndTime": 4
+    },
+    "北投": {
+      "selectedRecords": 46,
+      "statuses": {
+        "reported": 33,
+        "restore_only": 13,
+        "anticipated": 0,
+        "unclear": 0
+      },
+      "effects": {
+        "E1": 8,
+        "E2": 8,
+        "E3": 2,
+        "E4": 1,
+        "E5": 0,
+        "E6": 6,
+        "E7": 1
+      },
+      "requests": {
+        "R1": 19,
+        "R2": 3,
+        "R3": 0,
+        "R4": 3,
+        "R5": 0,
+        "R6": 7,
+        "R7": 3,
+        "R8": 0
+      },
+      "noEffect": 23,
+      "noRequest": 19,
+      "namedPlace": 20,
+      "statedTime": 1,
+      "placeAndTime": 1
+    }
+  },
+  "places": [],
+  "audit": {
+    "sampleSize": 144,
+    "initialAgreement": {
+      "places": 131,
+      "time": 143,
+      "status": 137,
+      "effects": 119,
+      "requests": 130
+    },
+    "disagreementRows": 51,
+    "adjudicatedRows": 51,
+    "changedRows": 48,
+    "decisionRecords": 74
+  },
+  "source": {
+    "sourceSha256": "bc4d005ce9a9c4d97341204da5a576badc85c80e8ff4266e73f227ab89089851",
+    "accessFinalSha256": "436905b20c6d9b8b895e9e9c7afe494dc99d951e4f0cacbe9af5494e095a4892",
+    "accessSummarySha256": "0d59f29efea052174a5909170c7c8053440f25eeee72e611a7037e42a0fcc7ee",
+    "protocolSha256": "1f2c0ad1aa57c46862fe993bcf42e306c46a16dd0f8070e117f50a7c3ca99f74",
+    "initialSha256": "c358a55bb4d3404bca0558c488f389f9bbf5cbab3520f72e2f6ecc1dabf107ee",
+    "secondarySha256": "53012236de42b05ba617fc443345b8267857b2a8a07543b347161907679cf461",
+    "finalSha256": "4bc2506b1cc9fe791d89cf85e5da3c113a30c6340a6fb3658e4f6e48e044a1cc",
+    "manifestSha256": "2c5c82d4fde17e4454c417a6161215e411fe3abbb86f43dcd8b5252f4c604fd0",
+    "decisionsSha256": "fd0f560d1a94a3eead114623303c9ca38f77fcbdf1879d58ee9573512e4b04a3",
+    "placeAssignmentsSha256": "e34ca743201d7a6f66463755a96082fc0d5875a94c071eac7723a391b88cffec",
+    "comparisonsSha256": "bcf4dc67c1ad5c1a8c7077d18fe2fbf6b8412c56977ffbab4b8dce8be9778903",
+    "adjudicationNotesSha256": "820e0f91c1981306bb3efca1d9b963af7f6d5f2050375cc5743e8b5329a62556",
+    "sourceCheckSha256": "8163c7b01afaf0a568a067a7a3712d34668488fbd9de4c1a5a2b70b69e91fb39"
+  },
+  "privacyNotice": "個別留言與可重建個人內容已因隱私移除。"
+}

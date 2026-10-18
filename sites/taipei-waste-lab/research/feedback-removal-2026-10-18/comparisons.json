@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "checkedDate": "2026-10-18",
+  "sources": {
+    "street": {
+      "path": "source-recovery-2026-10-15/raw/official-download.csv",
+      "sha256": "ff3cf5528c057958f89871aa5300fc633b02d0f7b37131ab29d5ddc2f8e2370d",
+      "format": "csv",
+      "encoding": "big5",
+      "rows": 681,
+      "asOf": "2026-09-30",
+      "url": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=267d550f-c6ec-46e0-b8af-fd5a464eb098"
+    },
+    "venue": {
+      "path": "source-recovery-2026-10-15/raw/official-tourist.csv",
+      "sha256": "47b1ddfb4f0ab4d5e57afab538f71da3d41d22e59c984bdd9c10b4248223b066",
+      "format": "csv",
+      "encoding": "big5",
+      "rows": 130,
+      "asOf": "2026-08-18",
+      "url": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=2030d728-9597-437d-81a4-cf2a44c7f114"
+    },
+    "history2024": {
+      "path": "source-recovery-2026-10-15/taipei-bins-2024-10-18-archive-utc.csv",
+      "sha256": "bb34f092da73d663b49eb0a55d98fe8864377a3dfcc1b103f04affdca4ca6cdb",
+      "format": "csv",
+      "encoding": "utf-8-sig",
+      "rows": 1971,
+      "asOf": "2024-10-18 UTC archive",
+      "url": "https://web.archive.org/web/20241018211732id_/https://data.taipei/api/dataset/a835f3ba-7f50-4b0d-91a6-9df128632d1c/resource/267d550f-c6ec-46e0-b8af-fd5a464eb098/download"
+    },
+    "wanhuaAugust": {
+      "path": "feedback-removal-2026-10-18/evidence/wanhua-2025-08.pdf",
+      "sha256": "2d554fbb85a47ea6f022642c5829052cdd5595edd2578ccc15592515bcdd2321",
+      "format": "pdf",
+      "url": "https://www-ws.gov.taipei/001/Upload/319/relfile/41485/9351155/bd9456d9-10f6-4ec6-865f-53cad0140f32.pdf",
+      "checkedAt": "2026-10-18T03:46:25.951902+00:00"
+    },
+    "wanhuaJune": {
+      "path": "feedback-removal-2026-10-18/evidence/wanhua-2025-06.pdf",
+      "sha256": "e85ffadade605c1c4bd05e1dff8c616c770bb8ec1af2a35731ec97f8dd0469b7",
+      "format": "pdf",
+      "url": "https://www-ws.gov.taipei/001/Upload/319/relfile/41485/9351155/de67ec49-cac6-469b-b77b-78ef88fde09b.pdf",
+      "checkedAt": "2026-10-18T03:46:25.952339+00:00"
+    },
+    "policy": {
+      "path": "feedback-removal-2026-10-18/evidence/dep-policy-2026-08-10.html",
+      "sha256": "ff98ee07edb7fe0ec1d6782f68ad2986acd8f16e59e7cabcfce2aeb23852a3ab",
+      "format": "html",
+      "url": "https://www.gov.taipei/News_Content.aspx?n=F0DDAF49B89E9413&s=798A998A29BE46CD&sms=72544237BBE4C5F6",
+      "checkedAt": "2026-10-18T03:46:25.952515+00:00"
+    },
+    "application": {
+      "path": "feedback-removal-2026-10-18/evidence/dep-application-2026-07-20.html",
+      "sha256": "75269542f7259fcd2badbe83b5f705fd1b17daab950b22047243a1f16a6b72b0",
+      "format": "html",
+      "url": "https://www.dep.gov.taipei/News_Content.aspx?n=ACEFA960B5A4ACD7&s=B90A10FBBF73521B",
+      "checkedAt": "2026-10-18T03:46:25.952650+00:00"
+    }
+  },
+  "places": [],
+  "featuredPlaces": [],
+  "events": [
+    {
+      "id": "wanhua-qingcao-2025-07-11",
+      "source": "wanhuaAugust",
+      "page": 1,
+      "date": "2025-07-11",
+      "title": "官方記錄：西園路二段青草公園兩側，2025-07-11撤除",
+      "account": "萬華區2025年8月29日區務會議記錄，環保局回覆西園路二段青草公園兩側清潔箱已在7月11日撤除。原案提到公車站清潔箱滿溢，要求加強巡收。",
+      "limit": "文件證實行政機關記錄這項處置；沒有逐桶編號、座標或撤除後效果。原案稱和平青草園，回覆稱青草公園，名稱仍須核對。這批留言未提供可與此事件相接的同點與日期。"
+    },
+    {
+      "id": "wanhua-police-2025-08-01",
+      "source": "wanhuaAugust",
+      "page": 1,
+      "date": "2025-08-01",
+      "title": "官方記錄：和平西路三段派出所旁，2025-08-01撤除",
+      "account": "同份8月29日會議記錄的回覆另列和平西路三段派出所旁清潔箱，已於8月1日撤除；原案以康定派出所旁作為滿溢例子。",
+      "limit": "兩個地點的處置日期不同，不能合成一次全區撤桶。會議列的10月31日是預定完成日欄，不是撤除日期；本研究沒有核實同一桶位或後續環境成效。"
+    }
+  ],
+  "context": [
+    {
+      "source": "wanhuaJune",
+      "label": "2025-06-30會議原件，第2頁",
+      "text": "更早的6月30日會議已記錄康定派出所旁滿溢。清潔隊回覆加強巡收，並說明當時週三、週日沒有夜間巡收；主席要求繼續列管。這提供「先清運處理、後有撤除回覆」的行政脈絡，不能推為現在的班表，也不能證實撤除的完整決策原因。"
+    },
+    {
+      "source": "policy",
+      "label": "環保局2026-08-10說明",
+      "text": "環保局公開說明將家戶混投、髒亂及地方需求納入移除評估；這是政策背景，不能自動當成每一則留言所指地點的撤除原因。"
+    },
+    {
+      "source": "application",
+      "label": "環保局清潔箱申請流程",
+      "text": "公開申請流程可作後續查詢入口，但流程網頁沒有本輪各地的逐案撤移工單。仍需逐點取得處置日期、設施類型、負責機關、原因和替代投放安排。"
+    }
+  ],
+  "examples": [],
+  "nextSteps": [
+    {
+      "title": "補上可核對的地點與時間",
+      "text": "優先把站名補到出口與道路側，把公園補到內外圍、入口與路線；回查留言日期，再核對前後照片、桶號及撤移工單。這是資料查核順序，不是缺桶程度排名。"
+    },
+    {
+      "title": "同時看原點、替代點與垃圾去向",
+      "text": "同一時段走過原路線，記錄距離、可見性、開放時間、桶滿程度及替代場所是否接受投放；分開觀察車籃、花圃與人行道垃圾，避免只移動問題。"
+    },
+    {
+      "title": "依困難測試改善，保留管理條件",
+      "text": "確認路線缺口後才評估恢復或重配；替代點滿溢則檢查容量、巡收和混投；設備難用則查開口與操作。每項都需觀察改善前後，尚未執行或證明有效。"
+    }
+  ],
+  "privacyNotice": "個別留言與可重建個人內容已因隱私移除。"
+}
