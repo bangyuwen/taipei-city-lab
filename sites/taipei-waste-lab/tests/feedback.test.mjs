@@ -255,3 +255,64 @@ assert content.index('id="feedback-cross"') < content.index('id="feedback-signal
 assert '<details class="feedback-codebook district-full-data">' in content
 assert '十二區問題與改善方向' in markdown
 `));
+
+test('visible heat matrix retains all district denominators and links to explanations below', () => python(String.raw`
+import json,runpy
+from pathlib import Path
+from html.parser import HTMLParser
+m=runpy.run_path('scripts/analyze-feedback.py')
+d=json.loads(Path('research/feedback-2026-10-17/summary.json').read_text())
+class Matrix(HTMLParser):
+ def __init__(self):super().__init__();self.details=0;self.matrix=False;self.cells={};self.current=None;self.links=[];self.ids=set();self.headers=[]
+ def handle_starttag(self,tag,attrs):
+  a=dict(attrs)
+  if tag=='details':self.details+=1
+  if 'id' in a:self.ids.add(a['id'])
+  if tag=='table' and a.get('class')=='feedback-matrix':
+   assert self.details==0,'Main comparison must not be collapsed';self.matrix=True
+  if self.matrix and tag=='th':self.headers.append(a.get('scope'))
+  if self.matrix and tag=='a':self.links.append(a['href'])
+  if 'data-theme' in a:
+   self.current=(a['data-district'],a['data-theme']);self.cells[self.current]={'style':a['style'],'text':''}
+ def handle_data(self,text):
+  if self.current:self.cells[self.current]['text']+=text
+ def handle_endtag(self,tag):
+  if tag=='td':self.current=None
+  if tag=='table':self.matrix=False
+  if tag=='details':self.details-=1
+md,parts=m['render_districts'](d,m['load_distribution'](d));body='\n'.join(parts)
+p=Matrix();p.feed(body)
+assert len(p.cells)==84 and p.headers==['col']*8+['row']*12
+assert len(p.links)==12 and all(url[1:] in p.ids for url in p.links)
+for district,n in d['districts'].items():
+ for theme,count in d['districtAnalysis'][district]['themes'].items():
+  cell=p.cells[district,theme]
+  assert cell['text']==f'{count/n*100:.1f}%{count}／{n} 則'
+assert body.index('class="feedback-matrix"')<body.index('id="feedback-district-details"')<body.index('data-profile=')
+assert body.index('data-profile=')<body.index('district-full-data')
+_,page=m['render'](d,m['load_distribution'](d))
+assert page.index('id="feedback-cross"')<page.index('id="feedback-findings"')
+assert '不是問題嚴重程度' in body and '比例不能相加' in body
+assert '全表固定為 0–100%' in '\n'.join(md)
+`));
+
+test('one percentage color scale stays monotonic, denominator-independent and readable', () => python(String.raw`
+import math,runpy
+m=runpy.run_path('scripts/analyze-feedback.py')
+def rgb(code):return [int(code[i:i+2],16)/255 for i in (1,3,5)]
+def luminance(code):
+ values=[x/12.92 if x<=.04045 else ((x+.055)/1.055)**2.4 for x in rgb(code)]
+ return sum(a*b for a,b in zip(values,[.2126,.7152,.0722]))
+previous=2
+for step in range(1001):
+ background,ink=m['heat_colors'](step/1000)
+ light=luminance(background);foreground=luminance(ink)
+ assert light<=previous;previous=light
+ assert (max(light,foreground)+.05)/(min(light,foreground)+.05)>=4.5
+assert m['heat_colors'](41/82)==m['heat_colors'](246/492)
+assert m['heat_colors'](0)!=m['heat_colors'](1)
+for bad in [-.001,1.001,math.nan,math.inf]:
+ try:m['heat_colors'](bad)
+ except ValueError:pass
+ else:raise AssertionError('Out-of-range share accepted')
+`));
