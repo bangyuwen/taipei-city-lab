@@ -1,5 +1,5 @@
 /* Feedback reading stays within the existing research design. */
-.feedback-page{max-width:920px;margin:0 auto}
+.feedback-page{max-width:1200px;margin:0 auto}
 .feedback-scope{font-size:16px;line-height:1.9;max-width:74ch;margin:0 0 24px}
 .feedback-contents{display:flex;gap:4px 24px;flex-wrap:wrap;border-block:1px solid var(--line);padding:10px 0}
 .feedback-page a{color:var(--green);text-underline-offset:4px}
@@ -98,23 +98,32 @@
  .problem-loop li+li:after{left:21px;top:-8px;transform:rotate(135deg)}
 }
 
-/* District cross-tabs keep one shared 0–100% scale and readable values. */
+/* One shared percentage scale, explicit values and native table semantics. */
 .feedback-matrix-scroll,.feedback-comparison-scroll{max-width:100%;overflow-x:auto;margin:24px 0;scroll-margin-top:96px}
-.feedback-matrix-scroll:focus-visible,.feedback-comparison-scroll:focus-visible{outline:3px solid #bd5c16;outline-offset:3px}
-.feedback-matrix{border-collapse:separate;border-spacing:0;table-layout:fixed;width:100%;min-width:900px;font-size:16px;font-variant-numeric:tabular-nums}
+.feedback-matrix-scroll:focus-visible,.feedback-comparison-scroll:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.feedback-matrix{border-collapse:separate;border-spacing:3px;table-layout:fixed;width:100%;min-width:900px;font-size:16px;font-variant-numeric:tabular-nums}
 .feedback-matrix caption{text-align:left;color:var(--muted);font-size:14px;line-height:1.8;padding:0 0 12px}
-.feedback-matrix th,.feedback-matrix td{position:relative;text-align:center;padding:14px 8px;border-bottom:1px solid var(--line);line-height:1.6;min-width:92px}
-.feedback-matrix thead th{font-size:14px;font-weight:600;vertical-align:bottom}
-.feedback-matrix th:first-child{position:sticky;left:0;z-index:1;min-width:102px;text-align:left;background:var(--paper);border-right:1px solid var(--line)}
-.feedback-matrix tbody th{font-weight:600}
-.feedback-matrix small,.feedback-matrix td>span{display:block;font-size:14px;font-weight:400;color:var(--muted)}
-.feedback-matrix td strong{font-size:16px;font-weight:550;display:block}
-.feedback-matrix td i{position:absolute;left:0;bottom:2px;height:3px;background:var(--green);opacity:.65;pointer-events:none}
+.feedback-matrix th,.feedback-matrix td{text-align:center;padding:12px 8px;line-height:1.6}
+.feedback-matrix thead th{font-size:15px;font-weight:600;vertical-align:bottom;background:var(--paper);border-bottom:1px solid var(--line)}
+.feedback-matrix th:first-child{position:sticky;left:0;z-index:1;width:108px;text-align:left;background:var(--paper);border-right:1px solid var(--line)}
+.feedback-matrix tbody th{font-weight:600;border-bottom:1px solid var(--line);padding-block:4px}
+.feedback-matrix tbody th a{display:inline-flex;align-items:center;min-height:44px}
+.feedback-matrix small{display:block;font-size:14px;font-weight:400;color:var(--muted)}
+.feedback-matrix td{background:var(--heat-bg);color:var(--heat-ink)}
+.feedback-matrix td>span{display:block;font-size:13px;font-weight:400;white-space:nowrap}
+.feedback-matrix td strong{font-size:19px;font-weight:650;display:block}
+.feedback-heat-legend{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:14px;margin:20px 0 12px}
+.feedback-heat-legend ol{display:flex;list-style:none;margin:0;padding:0;gap:3px;font-variant-numeric:tabular-nums}
+.feedback-heat-legend li{min-width:48px;padding:4px 8px;text-align:center;background:var(--heat-bg);color:var(--heat-ink)}
 .feedback-cross-heading{font-size:20px;line-height:1.6;margin:32px 0 16px}
+#feedback-district-details{font-size:24px;line-height:1.6;margin:40px 0 16px;scroll-margin-top:24px}
 .feedback-comparison{min-width:650px;max-width:none;margin:0}
 .feedback-comparison td{white-space:nowrap}
-.feedback-section .feedback-scroll-hint{font-size:14px;color:var(--muted)}
-@media(max-width:959px){#feedback-cross{scroll-margin-top:96px}}
+.feedback-section .feedback-scroll-hint{font-size:14px;color:var(--muted);margin-bottom:12px}
+.district-matrix-return{display:inline-flex;align-items:center;min-height:44px;font-size:14px;margin-top:12px}
+.district-name h4{scroll-margin-top:24px}
+@media(max-width:959px){#feedback-cross,#feedback-district-details,.district-name h4{scroll-margin-top:96px}}
+@media(forced-colors:active){.feedback-matrix td,.feedback-heat-legend li{border:1px solid CanvasText}}
 
 /* District reading diagram: evidence leads to explicitly untested directions. */
 .district-common{padding:20px 24px;background:var(--light);margin:24px 0}
