@@ -80,7 +80,7 @@ def point(row, index, key):
             'quality': '通過座標粗篩，尚未逐點核實' if plottable else '座標待核對，保留原始紀錄'}
 
 def venue_leads(research):
-    """Publish the requested venue subset without adding it to street inventories."""
+    """Publish the retained venue list without adding it to street inventories."""
     receipt_bytes = (research / 'bin-coverage-2026-10-18/source-check.json').read_bytes()
     assessments = json.loads((research / 'feedback-distribution-2026-10-18/assessments.json').read_text())
     if hashlib.sha256(receipt_bytes).hexdigest() != assessments['coverageSha256']:
@@ -93,19 +93,17 @@ def venue_leads(research):
     rows = list(csv.DictReader(io.StringIO(raw.decode('cp950'))))
     points = []
     for index, row in enumerate(rows):
-        if row['行政區'] not in ('北投區', '南港區'):
-            continue
         p = point(row, index, 'venue')
         if not p['plottable']:
             raise ValueError('Venue coordinate outside existing map bounds')
         p['quality'] = '場域約略位置；不是已核實桶位或入口'
         points.append(p)
-    if len(rows) != 130 or collections.Counter(p['district'] for p in points) != {'北投區': 10, '南港區': 5}:
-        raise ValueError('Venue scope changed; review the requested fifteen leads')
-    return {'label': '北投、南港場域線索', 'source': source['url'], 'sourceSha256': source['sha256'],
+    if len(points) != 130 or {p['district'] for p in points} != set(DISTRICTS):
+        raise ValueError('Venue scope changed; review the retained twelve-district list')
+    return {'label': '12 區場域線索', 'source': source['url'], 'sourceSha256': source['sha256'],
             'sourceUpdatedAt': receipt['venueSourceUpdatedAt'], 'checkedDate': receipt['checkedDateTaipei'],
-            'districts': ['北投區', '南港區'], 'rows': len(points), 'points': points,
-            'note': '僅收錄本次北投與南港的十五處線索，不是完整場域清冊；其他區未納入此圖層。',
+            'districts': DISTRICTS, 'rows': len(points), 'points': points,
+            'note': '收錄保存官方清單的 130 筆場域線索，涵蓋 12 區；保留重複名稱及座標，不代表 130 個不同場所、全市完整清冊或已核實桶位。',
             'coordinateNote': '沿用原檔粗略座標，未重新定位；不是桶位、入口或可步行到達性的證明。',
             'availabilityNote': '開放時間、接收規則、實際桶況與管理責任均待確認。'}
 
