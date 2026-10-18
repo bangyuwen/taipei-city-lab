@@ -108,7 +108,7 @@ async function checkSkipLink(page){
 async function checkCountryReader(page){
   await page.locator('#panel-countries.country-reading-ready').waitFor();
   assert.equal(await page.locator('#country-reader-select').count(),1);
-  assert.equal(await page.locator('#country-reader-select option').count(),12);
+  assert.equal(await page.locator('#country-reader-select option').count(),14);
   assert.equal(await page.locator('.country-case:visible').count(),1);
   assert.equal(await page.locator('#country-viewer').getAttribute('data-media'),'photo');
   assert.equal(await page.locator('#country-viewer .country-photo-column').isVisible(),true);
@@ -117,11 +117,22 @@ async function checkCountryReader(page){
   // check-country-browser.mjs and check-country-play-browser.mjs.
   assert.equal(await page.locator('#country-viewer .country-viewer-media > div').count(),2);
   assert.equal(await page.locator('.country-return,.country-model-open').count(),0);
-  await page.selectOption('#country-reader-select','korea');
-  assert.equal(await page.locator('.country-case:visible h4').getAttribute('id'),'country-korea');
+  const selectCountry=async id=>{
+    const entry=page.locator(`.country-index [data-country-target="country-${id}"]`);
+    if(await entry.isVisible())await entry.click();
+    else await page.selectOption('#country-reader-select',id);
+  };
+  await selectCountry('korea');
+  assert.equal(await page.locator('.country-case:visible > h3').getAttribute('id'),'country-korea');
   assert.equal(await page.locator('#country-viewer').getAttribute('data-media'),'photo');
   assert.equal(await page.locator('.country-case:visible').count(),1);
-  await page.selectOption('#country-reader-select','us');
+  for(const id of ['hong-kong','uruguay']){
+    await selectCountry(id);
+    assert.equal(await page.locator('#country-viewer').count(),0);
+    assert.equal(await page.locator('.country-case:visible .strategy-flow li').count(),4);
+    assert.equal(await page.locator('.country-case:visible .strategy-media-absence').count(),1);
+  }
+  await selectCountry('us');
 }
 async function checkDesign(page){
   await page.waitForFunction(()=>document.querySelector('#design-options')?.options.length===4);
@@ -283,6 +294,6 @@ try{
   await retryContext.close();
 
   assert.deepEqual(errors,[]);
-  const report={status:'passed',widths,breakpoints:[639,640,959,960],screenshots:captureScreens?'captured':'skipped',screens,measurements,checks:'three primary entrances, research default, cited conclusions, secondary routes, current-page navigation semantics, keyboard skip preserves route/query/filter state and focuses main, reference hash focus, lazy candidate tools, single dataset selector, single photo-first country reader, guided design, navigation focus, map state/back, overflow, comparison empty/retry, photo fallback, static homepage on data failure, no downloads'};
+  const report={status:'passed',widths,breakpoints:[639,640,959,960],screenshots:captureScreens?'captured':'skipped',screens,measurements,checks:'three primary entrances, research default, cited conclusions, secondary routes, current-page navigation semantics, keyboard skip preserves route/query/filter state and focuses main, reference hash focus, lazy candidate tools, single dataset selector, strategy-first country reader with optional media, guided design, navigation focus, map state/back, overflow, comparison empty/retry, photo fallback, static homepage on data failure, no downloads'};
   await writeFile(resolve(qa,'redesign-report.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));
 }finally{await browser.close()}
