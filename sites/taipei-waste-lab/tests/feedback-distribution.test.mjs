@@ -130,7 +130,7 @@ class HomeParser(HTMLParser):
   if 'data-service-district' in a:self.rows.append(a['data-service-district'])
   if tag=='a' and '#map' in a.get('href',''):self.maps.append(parse_qs(urlparse(a['href']).query))
 joined=m['load_distribution'](data)
-home=m['home_summary'](data,joined)
+_,_,home,_=m['render_with_detail'](data,joined,research)
 parser=HomeParser();parser.feed(home)
 assert parser.rows==list(data['districts']) and len(parser.maps)==12
 for district,query in zip(parser.rows,parser.maps):
@@ -140,7 +140,7 @@ for district,query in zip(parser.rows,parser.maps):
 assert '街頭位置 0 列' in home and '另有場域 10 筆' in home
 assert '街頭位置 4 列' in home and '另有場域 5 筆' in home
 assert '120 組不同座標' in home and '不能當作 130 個不同場所或垃圾桶' in home
-assert '未改動逐則標籤或統計' in home and '不是新一輪全量獨立重標' in home
+assert '未改動逐則標籤或統計' in home and '並非本次桶位細分標註' in home
 assert home in Path('dist/index.html').read_text()
 report=m['distribution_report'](data,joined)
 detail='\n'.join(m['render_district_diagram'](data,joined)[1])

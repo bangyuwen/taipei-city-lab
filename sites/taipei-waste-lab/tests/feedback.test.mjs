@@ -172,7 +172,8 @@ assert sum(data['stances'].values())==2663
 assert data['semantic']['audit']['sampleSize']==144
 assert hashlib.sha256((folder/'semantic-protocol.md').read_bytes()).hexdigest()==data['semantic']['protocolSha256']
 for key in ('districts','moods','originalTopics'):assert sum(data[key].values())==2663
-markdown,content=m['render'](data,m['load_distribution'](data))
+markdown,content,_,detail_markdown=m['render_with_detail'](data,m['load_distribution'](data),folder.parent)
+assert detail_markdown==Path('research/feedback-access-2026-10-18/README.md').read_text()
 assert markdown==(folder/'README.md').read_text()==Path('dist/research/feedback-2026-10-17/README.md').read_text()
 assert content in Path('dist/index.html').read_text()
 assert content.count('data-theme=')==84
@@ -193,6 +194,7 @@ with tempfile.TemporaryDirectory() as directory:
  assert not (root/'out/private-feedback.jsonl').exists()
 with zipfile.ZipFile('dist/research/research-execution-2026-10-15.zip') as bundle:
  assert 'scripts/analyze-feedback.py' in bundle.namelist()
+ assert 'scripts/feedback_access.py' in bundle.namelist()
  assert any(name.endswith('feedback-2026-10-17/semantic-protocol.md') for name in bundle.namelist())
  assert not any('private' in name or name.endswith(('.tsv','.jsonl')) for name in bundle.namelist())
 `));
@@ -203,8 +205,9 @@ from pathlib import Path
 with tempfile.TemporaryDirectory() as directory:
  root=Path(directory)
  (root/'scripts').mkdir();(root/'dist').mkdir()
- shutil.copy('scripts/analyze-feedback.py',root/'scripts/analyze-feedback.py')
- for name in ['feedback-2026-10-17','feedback-distribution-2026-10-18','bin-coverage-2026-10-18','source-recovery-2026-10-15']:
+ for name in ('analyze-feedback.py','feedback_access.py'):
+  shutil.copy(Path('scripts')/name,root/'scripts'/name)
+ for name in ['feedback-access-2026-10-18','feedback-2026-10-17','feedback-distribution-2026-10-18','bin-coverage-2026-10-18','source-recovery-2026-10-15']:
   shutil.copytree(Path('research')/name,root/'research'/name)
  shutil.copy('dist/index.html',root/'dist/index.html')
  result=subprocess.run([sys.executable,'scripts/analyze-feedback.py'],cwd=root,capture_output=True,text=True)
