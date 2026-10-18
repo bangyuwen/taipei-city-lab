@@ -80,6 +80,8 @@ joined=m['load_distribution'](data)
 expected={'松山':7,'信義':18,'大安':18,'中山':16,'中正':16,'大同':14,'萬華':3,'文山':9,'南港':5,'內湖':7,'士林':7,'北投':10}
 assert {d:len(v) for d,v in joined['venues'].items()}==expected
 assert sum(map(len,joined['venues'].values()))==130
+venue_rows=list(csv.DictReader((research/'source-recovery-2026-10-15/raw/official-tourist.csv').read_text(encoding='cp950').splitlines()))
+assert len({(float(r['經度']),float(r['緯度'])) for r in venue_rows})==120
 assert joined['coverage']['addedVerifiedStreetRows']==0
 assert joined['bins']['北投']['rows']==0 and joined['bins']['南港']['rows']==4
 text='\n'.join(m['render_district_diagram'](data,joined)[1])
@@ -116,4 +118,45 @@ with tempfile.TemporaryDirectory() as directory:
  venue=target/'source-recovery-2026-10-15/raw/official-tourist.csv'
  venue.write_bytes(venue.read_bytes()+b'\n')
  fails(lambda:m['load_distribution'](data,target),'Coverage source no longer matches')
+`));
+
+test('homepage preserves district evidence, source units and map destinations', () => python(setup + String.raw`
+from html.parser import HTMLParser
+from urllib.parse import parse_qs,urlparse
+class HomeParser(HTMLParser):
+ def __init__(self):super().__init__();self.rows=[];self.maps=[]
+ def handle_starttag(self,tag,attrs):
+  a=dict(attrs)
+  if 'data-service-district' in a:self.rows.append(a['data-service-district'])
+  if tag=='a' and '#map' in a.get('href',''):self.maps.append(parse_qs(urlparse(a['href']).query))
+joined=m['load_distribution'](data)
+home=m['home_summary'](data,joined)
+parser=HomeParser();parser.feed(home)
+assert parser.rows==list(data['districts']) and len(parser.maps)==12
+for district,query in zip(parser.rows,parser.maps):
+ assert query=={'year':['2026-main'],'district':[district+'區']}
+ for k in ('reading','interpretation','next','check'):
+  assert joined['assessments']['districts'][district][k] in home
+assert '街頭位置 0 列' in home and '另有場域 10 筆' in home
+assert '街頭位置 4 列' in home and '另有場域 5 筆' in home
+assert '120 組不同座標' in home and '不能當作 130 個不同場所或垃圾桶' in home
+assert '未改動逐則標籤或統計' in home and '不是新一輪全量獨立重標' in home
+assert home in Path('dist/index.html').read_text()
+report=m['distribution_report'](data,joined)
+detail='\n'.join(m['render_district_diagram'](data,joined)[1])
+for a in joined['assessments']['districts'].values():
+ assert a['check'] in report and a['check'] in detail
+`));
+
+test('missing district discrimination fails before a homepage can be generated', () => python(setup + String.raw`
+with tempfile.TemporaryDirectory() as directory:
+ target=Path(directory)
+ for name in ('feedback-2026-10-17','feedback-distribution-2026-10-18','bin-coverage-2026-10-18','source-recovery-2026-10-15'):
+  shutil.copytree(research/name,target/name)
+ p=target/'feedback-distribution-2026-10-18/assessments.json'
+ a=json.loads(p.read_text());a['districts']['北投']['check']=' '
+ p.write_text(json.dumps(a,ensure_ascii=False))
+ fails(lambda:m['load_distribution'](data,target),'Missing conditional district interpretation')
+ a['districts']['北投'].pop('check');p.write_text(json.dumps(a,ensure_ascii=False))
+ fails(lambda:m['load_distribution'](data,target),'Missing conditional district interpretation')
 `));

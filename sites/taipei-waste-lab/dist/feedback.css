@@ -183,3 +183,37 @@
 .coverage-focus-item summary{cursor:pointer;min-height:44px;line-height:1.8;padding:8px 0}
 .coverage-focus-item ul{padding-left:24px;line-height:1.9}
 @media(max-width:799px){.coverage-focus{grid-template-columns:1fr;gap:16px}}
+
+/* Homepage district synthesis: source units, interpretation and next observation. */
+.service-lead{font-size:20px;font-weight:600;line-height:1.8}
+.service-reasoning{margin:24px 0 36px;border-top:2px solid var(--ink)}
+.service-reasoning>div{display:grid;grid-template-columns:1fr 1.8fr;gap:24px;padding:16px 0;border-bottom:1px solid var(--line)}
+.service-reasoning dt{font-weight:600}
+.service-reasoning dd{margin:0}
+#district-service-heading{font-size:24px;line-height:1.6;margin:32px 0 12px}
+.service-headings,.district-service-row{display:grid;grid-template-columns:minmax(130px,.7fr) minmax(0,1.65fr) minmax(0,1.8fr);gap:28px}
+.service-headings{color:var(--muted);font-size:14px;padding:16px 0;border-bottom:2px solid var(--ink)}
+.district-service-list{list-style:none;margin:0;padding:0;font-variant-numeric:tabular-nums}
+.district-service-row{padding:24px 0;border-bottom:1px solid var(--line)}
+.district-service-row h5{font-family:var(--sans);font-size:18px;line-height:1.7;margin:0 0 8px}
+.service-district h5{font-size:22px}
+.service-district span{display:block;font-size:14px;color:var(--muted);line-height:1.8}
+.service-district a{display:inline-flex;align-items:center;min-height:44px;font-size:14px}
+.service-reading p,.service-next p{font-size:16px;line-height:1.85;margin:0}
+.service-next p+p{margin-top:12px}
+.service-next strong{display:block;font-size:14px;color:var(--green)}
+.service-method{margin-top:24px}
+@media(max-width:1199px){
+ .service-headings{display:none}
+ .district-service-row{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:16px 24px}
+ .service-district{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:baseline;gap:0 16px}
+ .service-district h5{margin:0}
+}
+@media(max-width:599px){
+ .service-reasoning>div,.district-service-row{grid-template-columns:minmax(0,1fr);gap:12px}
+ .service-reasoning>div{gap:4px}
+ .service-district{gap:0 12px}
+ .service-district h5{flex-basis:100%}
+ .service-next{padding-top:12px;border-top:1px dashed var(--line)}
+ .service-lead{font-size:18px}
+}

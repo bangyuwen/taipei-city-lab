@@ -361,9 +361,13 @@ def district_comparison(data, district, key):
 DISTRIBUTION_FOLDER = 'feedback-distribution-2026-10-18'
 COVERAGE_FOLDER = 'bin-coverage-2026-10-18'
 DISTRIBUTION_TITLE = '先確認能在哪裡投放，再分清缺桶或服務問題'
-DISTRIBUTION_CONCLUSION = ('對照語意回饋、街頭位置與場域清單後，仍沒有一區能直接判定實際缺桶。較可支持的是查核方向：'
-    '松山、大安、大同先查投放可達性；萬華先查清掃與巡收；文山先拆開家戶收運與行人桶；'
-    '內湖、士林的配置與制度管理一起查。北投先核對撤除與場域可用性，南港先查路徑與場域接收條件；信義、中山、中正保留多種解釋。')
+DISTRIBUTION_CONCLUSION = ('現有資料較支持分區查核方向，還不能確認哪區實際缺桶。松山、大安、大同較偏投放可達性；'
+    '萬華先查清掃與維護；文山要另外處理家戶收運。信義、中山、中正、內湖、士林有混合問題；'
+    '北投與南港先核實清冊及場域可用條件，再分清配置、清運或管理。')
+DISTRIBUTION_UPDATE = ('本輪沿用同一批 681 列街頭位置與 130 筆場域紀錄。上一版交叉分析已使用全 12 區場域清單，'
+    '這次補齊的是地圖呈現，並重新閱讀語意判讀以細化查核方向；沒有新增已核實桶位，也未改動逐則標籤或統計。')
+VENUE_BOUNDARY = ('130 筆場域紀錄對應 120 組不同座標，含重複名稱或座標，不能當作 130 個不同場所或垃圾桶。'
+    '場所名稱只提供查核入口，開放、接收種類與實際桶況仍待確認。')
 
 
 def load_distribution(data, research=None):
@@ -410,7 +414,7 @@ def load_distribution(data, research=None):
     for item in assessments['districts'].values():
         if not item['evidence'] or len(set(item['evidence'])) != len(item['evidence']) or any(k not in ('more', *THEMES) for k in item['evidence']):
             raise ValueError('Invalid semantic evidence selection')
-        if any(not isinstance(item[k], str) or not item[k].strip() for k in ('reading', 'interpretation', 'next')):
+        if any(not isinstance(item.get(k), str) or not item[k].strip() for k in ('reading', 'interpretation', 'next', 'check')):
             raise ValueError('Missing conditional district interpretation')
     coverage, venues = load_coverage(research, rows, assessments)
     return {'source': receipt, 'assessments': assessments, 'bins': bins, 'coverage': coverage, 'venues': venues}
@@ -476,13 +480,14 @@ def distribution_intro(distribution):
         count = distribution['bins'][district]['rows']
         map_url = '?' + urlencode({'year': '2026-main', 'district': district + '區'}) + '#map'
         focus.append(f'<article class="coverage-focus-item"><h5>{district}｜{reading}</h5>'
-                     f'<p><strong>街頭位置 {count} 列</strong>；另有<strong>場域線索 {len(names)} 處</strong><br>兩種單位不同，不相加成桶數。</p>'
-                     f'<details><summary>查看 {len(names)} 處場域名稱</summary><ul>'
+                     f'<p><strong>街頭位置 {count} 列</strong>；另有<strong>場域線索 {len(names)} 筆</strong><br>兩種單位不同，不相加成桶數。</p>'
+                     f'<details><summary>查看 {len(names)} 筆場域名稱</summary><ul>'
                      + ''.join(f'<li>{html.escape(name)}</li>' for name in names) + f'</ul></details><a href="{html.escape(map_url)}">在地圖分開看街頭紀錄與場域線索</a></article>')
     return f'''<div class="distribution-overview"><h4>{DISTRIBUTION_TITLE}</h4><p>{DISTRIBUTION_CONCLUSION}</p>
 <p>{description}</p>
-<p><strong>本次沒有補入新的已核實街頭位置。</strong>完整 API、CSV 與官方查詢地圖的 {s["rows"]} 列位置一致；三個介面互相吻合，不等於三次獨立盤點。</p>
-<p>另納入 {c["venueSourceUpdatedAt"][:10]} 更新的官方場域清單，共 130 處。它提供捷運站、景點與商場等查核線索，沒有逐桶位置、現況、開放時段或接收規則，不能直接當成可用投放點。</p>
+<p>{DISTRIBUTION_UPDATE}</p>
+<p><strong>來源複查沒有補入新的已核實街頭位置。</strong>完整 API、CSV 與官方查詢地圖的 {s["rows"]} 列位置一致；三個介面互相吻合，不等於三次獨立盤點。</p>
+<p>另納入 {c["venueSourceUpdatedAt"][:10]} 更新的官方場域清單，共 130 筆紀錄。{VENUE_BOUNDARY} 它提供捷運站、景點與商場等查核線索，沒有逐桶位置、現況、開放時段或接收規則，不能直接當成可用投放點。</p>
 <div class="coverage-focus">{''.join(focus)}</div>
 <p><strong>北投零列的原因仍待核實。</strong>2026-08-14 議會答覆提到調整期間可能移除，但沒有確認北投全區撤除。因此修正上一版「清單缺口」的說法：撤除、未收錄與跨機關設施都需分開核對。</p>
 <details class="feedback-codebook"><summary>這次比對能說明什麼？</summary><p>{boundary}「偏向增設／恢復／保留」含保留既有設施的方向，並非每則都在描述桶數不足；它也不能與維護或管理主題當成互斥票數。</p><p>2024 年歷史快照曾列北投 98 列、南港 94 列，日期不同，不能回填現況。狗便袋及公園設施也需確認類型與管理機關，不能直接加算。</p></details>
@@ -500,18 +505,18 @@ def distribution_report(data, distribution):
           f'- 分布：官方 {s["sourceUpdatedAt"]} 更新的主檔，{s["checkedDateTaipei"]} 重下載仍為 {s["rows"]} 列；原始位元組及各列均與保存檔一致。',
           '- 只按行政區欄位一對一連結彙總；留言標記尚未確認為居住地或事件所在地，不能作逐點距離比對。回饋與設施也未建立同期間關係。',
           '- 公開清單列數不是完整現場存量；不以零列當零設施，不把同座標列去重成實體桶，也不把其他年份、294 列中心子集、場所清單或候選街段加算為現況街頭位置。',
-          '- 「偏向增設／恢復／保留桶」包含維持既有設施，不等於已核實不足；C 維護、G 管理及其他主題各自計數，不相加，也不是互斥選項。',
+          '- 「偏向增設／恢復／保留桶」包含維持既有設施，不等於已核實不足。C 包含一般街道清掃，不全是桶的清運；G 包含費率、政策與陳情，不全是營運失靈。主題各自計數，不相加，也不是互斥選項。',
           '- 不計算留言／桶比、人口密度、步行覆蓋或不足分數。沒有足以支持它們的完整清冊、事件位置、日期、路徑、人流與使用量。',
           '- 下表為 AI 協助提出的有條件研究判讀，並非新的逐則分類、統計檢定、政策效果或設點優先序，仍需人類與現場核對。', '',
-          '## 本次補充資料', '',
-          '完整 API、CSV 與官方查詢地圖的 681 列位置一致，新增已核實街頭位置為 0。另納入官方 130 處場域線索；名稱不是逐桶位置，時段、接收規則與可用性待核實。兩種紀錄不相加。', '',
-          '北投 0 列不能直接定性為漏資料：2026-08-14 議會答覆提到可能移除，但未確認全區撤除。北投另有 10 處場域，南港另有 5 處；先核實它們與日常路徑的關係。', '',
+          '## 這次更新了什麼', '', DISTRIBUTION_UPDATE, '', VENUE_BOUNDARY, '',
+          '完整 API、CSV 與官方查詢地圖的 681 列位置一致，新增已核實街頭位置為 0。另有官方 130 筆場域線索，兩種紀錄不相加。', '',
+          '北投 0 列不能直接定性為漏資料：2026-08-14 議會答覆提到可能移除，但未確認全區撤除。北投另有 10 筆場域紀錄，南港另有 5 筆；先核實它們與日常路徑的關係。', '',
           '[完整補查紀錄、12 區場域與來源](../bin-coverage-2026-10-18/README.md)。', '',
-          '## 十二區對照', '', '| 行政區 | 本檔留言 | 公開位置列／可繪製列 | 場域線索（處，另計） | 分開閱讀的語意證據 | 合併判讀與下一步 |', '| --- | ---: | ---: | ---: | --- | --- |']
+          '## 十二區對照', '', '| 行政區 | 本檔留言 | 公開位置列／可繪製列 | 場域線索（筆，另計） | 分開閱讀的語意證據 | 合併判讀與下一步 |', '| --- | ---: | ---: | ---: | --- | --- |']
     for d,n in data['districts'].items():
         a = distribution['assessments']['districts'][d]
         evidence = '；'.join(distribution_evidence(data,d,a['evidence']))
-        md += [f'| {d} | {n} | {bins[d]["rows"]}／{bins[d]["plottable"]} | {len(distribution["venues"][d])} | {evidence} | **{a["reading"]}**。{a["interpretation"]} 下一步：{a["next"]} |']
+        md += [f'| {d} | {n} | {bins[d]["rows"]}／{bins[d]["plottable"]} | {len(distribution["venues"][d])} | {evidence} | **{a["reading"]}**。{a["interpretation"]} 下一步：{a["next"]} 分辨依據：{a["check"]} |']
     md += ['', f'核對總數：{sum(x["rows"] for x in bins.values())} 位置列、{sum(x["plottable"] for x in bins.values())} 列通過既有座標粗篩、{sum(data["districts"].values())} 則回饋；沒有因缺列或座標異常移除留言。座標粗篩不是現場核實。', '',
            '## 什麼證據能分清原因', '',
            '| 待判斷問題 | 需要補的證據 | 會改變判斷的觀察 |', '| --- | --- | --- |',
@@ -563,7 +568,7 @@ def render_district_diagram(data, distribution=None):
           '| --- | --- | --- | --- |']
     if distribution:
         direction_note = '合併判讀同時讀取公開位置列與語意結果，屬於待驗證的研究解釋，不是缺桶診斷或設點優先序。'
-        md = ['### 十二區問題與改善方向', '', intro, '', direction_note, '', DISTRIBUTION_CONCLUSION, '', '[完整位置與回饋對照及來源](../feedback-distribution-2026-10-18/README.md)', '', '| 行政區（本檔則數） | 街頭位置列／場域處數（不相加） | 區內常談議題 | 相對差異（本區 vs 其餘各區） | 合併判讀 · 待驗證 |', '| --- | ---: | --- | --- | --- |']
+        md = ['### 十二區問題與改善方向', '', intro, '', direction_note, '', DISTRIBUTION_CONCLUSION, '', '[完整位置與回饋對照及來源](../feedback-distribution-2026-10-18/README.md)', '', '| 行政區（本檔則數） | 街頭位置列／場域紀錄筆數（不相加） | 區內常談議題 | 相對差異（本區 vs 其餘各區） | 合併判讀 · 待驗證 |', '| --- | ---: | --- | --- | --- |']
     page = [distribution_intro(distribution) if distribution else '', f'<p class="feedback-note">{esc(intro)}</p>',
             '' if distribution else '<div class="district-common"><strong>共通方向：投放便利與周邊負擔一起看</strong><p>桶位與便利在各區都有被提到，但談到桶不等於支持增設。先核對實際路徑、桶況與清運條件，再比較位置、指引或服務調整。</p></div>',
             f'<p id="district-directions-note" class="feedback-note">{esc(direction_note)}</p>',
@@ -576,7 +581,7 @@ def render_district_diagram(data, distribution=None):
             group = distribution['bins'][district]
             url = '?' + urlencode({'year':'2026-main','district':district+'區'}) + '#map'
             label = '主檔未列本區' if group['rows'] == 0 else f'公開清單 {group["rows"]} 列'
-            distribution_label = f'<div class="district-bin-count" data-bin-rows="{group["rows"]}"><strong>{label}</strong><span>不等於現場桶數</span><span data-venue-count="{len(distribution["venues"][district])}">另有場域線索 {len(distribution["venues"][district])} 處</span><span>可用條件待核實</span><a href="{esc(url)}">查看公開地圖</a></div>'
+            distribution_label = f'<div class="district-bin-count" data-bin-rows="{group["rows"]}"><strong>{label}</strong><span>不等於現場桶數</span><span data-venue-count="{len(distribution["venues"][district])}">另有場域線索 {len(distribution["venues"][district])} 筆</span><span>可用條件待核實</span><a href="{esc(url)}">查看公開地圖</a></div>'
         top, contrast = district_profile(data, district)
         issues = '；'.join(f'{THEMES[k][0]} {counts[k]}／{n}（{percent(counts[k],n)}）' for k in top) or '無可歸類議題'
         page += [f'<li class="district-row" data-profile="{esc(district)}"><div class="district-name"><h4>{esc(district)}</h4><span>本檔 {n:,} 則</span>{distribution_label}</div>',
@@ -607,8 +612,8 @@ def render_district_diagram(data, distribution=None):
             evidence = distribution_evidence(data, district, a['evidence'])
             page += ['<div class="district-direction district-assessment"><span class="district-mobile-label">合併判讀 · 待驗證</span>',
                      f'<h5>{esc(a["reading"])}</h5><ul class="district-joined-evidence">' + ''.join(f'<li>{esc(text)}</li>' for text in evidence) + '</ul>',
-                     f'<p>{esc(a["interpretation"])}</p><p><strong>下一步</strong>{esc(a["next"])}</p>']
-            direction = f'{a["reading"]}：{a["interpretation"]} 下一步：{a["next"]}'
+                     f'<p>{esc(a["interpretation"])}</p><p><strong>下一步</strong>{esc(a["next"])}</p><p><strong>分辨依據</strong>{esc(a["check"])}</p>']
+            direction = f'{a["reading"]}：{a["interpretation"]} 下一步：{a["next"]} 分辨依據：{a["check"]}'
         else:
             page += ['<div class="district-direction"><span class="district-mobile-label">改善方向 · 待驗證</span>']
             page += [f'<p><strong>先查</strong>{esc(check)}</p><p><strong>再試</strong>{esc(trial)}</p>' if contrast else f'<p>{direction}</p>']
@@ -691,9 +696,36 @@ def semantic_findings(data):
 
 
 def home_summary(data, distribution=None):
-    return ((f'<p>{html.escape(DISTRIBUTION_CONCLUSION)}</p>' if distribution else '') + ''.join(f'<p>{html.escape(text)}</p>' for text in semantic_findings(data)) +
-            '<p>已由子代理逐則區分問題、訴求與公共桶立場。先前由關鍵字推論北投、內湖與萬華問題的結論已撤回；現在應以語意交叉表重新閱讀，並由研究者複核。現場時間、地點與服務條件仍待確認，不能推出設點或改善優先序。</p>'
-            '<p class="feedback-report-entry"><a href="#feedback-findings">閱讀完整分析與圖解</a> · <a href="#feedback-cross">看十二區問題與改善圖解</a></p>')
+    esc = html.escape
+    if not distribution:
+        return ''.join(f'<p>{esc(text)}</p>' for text in semantic_findings(data))
+    page = [f'<p class="service-lead">{esc(DISTRIBUTION_CONCLUSION)}</p>',
+            '<p>「找不到可用的桶」可能是位置不順路、入口難辨識、場域不開放，也可能是已有桶卻滿溢。清單多了場所，並不能直接排除這些問題。</p>',
+            '<dl class="service-reasoning" aria-label="分清原因的查核路徑">'
+            '<div><dt>路徑上沒有可用投放點</dt><dd>先查位置、開放與接收條件，再比較配置或指引。</dd></div>'
+            '<div><dt>已有桶，卻常滿或周邊髒亂</dt><dd>查投放負荷、實際清運與清掃；清掃問題不一定出在桶。</dd></div>'
+            '<div><dt>規則、時段或處理回應受阻</dt><dd>查接收規則與責任；家戶垃圾車時段另作服務問題處理。</dd></div></dl>',
+            '<h4 id="district-service-heading" tabindex="-1">十二區，先查哪一種問題？</h4>',
+            '<p class="feedback-note" id="district-service-note">以下是有條件的研究判讀，不是缺桶判定或改善排名。分母為本檔各區全部留言，主題可重疊；行政區標記、事件地點與日期尚未逐則核實。街頭位置列與場域紀錄分開列示，不相加成桶數。</p>',
+            '<div class="service-headings" aria-hidden="true"><span>資料範圍</span><span>目前較支持的查核方向</span><span>下一步如何分清原因</span></div>',
+            '<ul class="district-service-list" aria-labelledby="district-service-heading" aria-describedby="district-service-note">']
+    for district, n in data['districts'].items():
+        a = distribution['assessments']['districts'][district]
+        bins, venues = distribution['bins'][district]['rows'], len(distribution['venues'][district])
+        url = '?' + urlencode({'year': '2026-main', 'district': district + '區'}) + '#map'
+        page += [f'<li class="district-service-row" data-service-district="{esc(district)}">'
+                 f'<div class="service-district"><h5>{esc(district)}</h5><span>本檔 {n} 則留言</span>'
+                 f'<span>街頭位置 {bins} 列</span><span>另有場域 {venues} 筆</span>'
+                 f'<a href="{esc(url)}">看{esc(district)}分布</a></div>'
+                 f'<div class="service-reading"><h5>{esc(a["reading"])}</h5><p>{esc(a["interpretation"])}</p></div>'
+                 f'<div class="service-next"><p><strong>先核對</strong>{esc(a["next"])}</p>'
+                 f'<p><strong>分辨依據</strong>{esc(a["check"])}</p></div></li>']
+    page += ['</ul>', '<details id="service-method" class="feedback-codebook service-method"><summary>資料補齊後，判讀改變了什麼？</summary>',
+             f'<p>{esc(DISTRIBUTION_UPDATE)}</p><p>{esc(VENUE_BOUNDARY)}</p>',
+             '<p>本輪由兩個子代理分區回讀全部既有語意短意旨，並以部分原始留言核對情境與反例；沿用原有標註，不是新一輪全量獨立重標。C 類含街道清掃，G 類含制度、費率與陳情，不能直接等同桶的清運或管理失靈。「增設／恢復／保留」也不全是缺桶訴求。</p>',
+             '<p>下一步要補有日期的現存及撤除清冊、場域開放與接收條件，再把可確認時間地點的回饋對到路徑、桶況與服務紀錄。沒有這些證據，不能推出各區需要增設多少桶。</p></details>',
+             '<p class="feedback-report-entry"><a href="#feedback-cross">看各區語意數據與完整判讀</a> · <a href="#feedback-method">判讀方法與限制</a></p>']
+    return '\n'.join(page)
 
 
 def render(data, distribution=None):
