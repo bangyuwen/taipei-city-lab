@@ -574,7 +574,7 @@ def render_district_diagram(data, distribution=None):
             f'<p id="district-directions-note" class="feedback-note">{esc(direction_note)}</p>',
             '<div class="district-column-headings" aria-hidden="true"><span>行政區標記</span><span>區內常談議題</span><span>相對其他區的差異</span><span>' + ('合併判讀' if distribution else '改善方向') + ' · 待驗證</span></div>',
             '<ol class="district-diagram" aria-label="十二區問題、差異與改善方向" aria-describedby="district-directions-note">']
-    for district, n in data['districts'].items():
+    for row_number, (district, n) in enumerate(data['districts'].items(), 1):
         counts = data['districtAnalysis'][district]['themes']
         distribution_label = ''
         if distribution:
@@ -584,7 +584,7 @@ def render_district_diagram(data, distribution=None):
             distribution_label = f'<div class="district-bin-count" data-bin-rows="{group["rows"]}"><strong>{label}</strong><span>不等於現場桶數</span><span data-venue-count="{len(distribution["venues"][district])}">另有場域線索 {len(distribution["venues"][district])} 筆</span><span>可用條件待核實</span><a href="{esc(url)}">查看公開地圖</a></div>'
         top, contrast = district_profile(data, district)
         issues = '；'.join(f'{THEMES[k][0]} {counts[k]}／{n}（{percent(counts[k],n)}）' for k in top) or '無可歸類議題'
-        page += [f'<li class="district-row" data-profile="{esc(district)}"><div class="district-name"><h4>{esc(district)}</h4><span>本檔 {n:,} 則</span>{distribution_label}</div>',
+        page += [f'<li class="district-row" data-profile="{esc(district)}"><div class="district-name"><h4 id="feedback-district-{row_number}" tabindex="-1">{esc(district)}</h4><span>本檔 {n:,} 則</span>{distribution_label}</div>',
                  '<div class="district-issues"><span class="district-mobile-label">區內常談議題</span><ul>']
         for key in top:
             pct = percent(counts[key], n)
@@ -617,7 +617,7 @@ def render_district_diagram(data, distribution=None):
         else:
             page += ['<div class="district-direction"><span class="district-mobile-label">改善方向 · 待驗證</span>']
             page += [f'<p><strong>先查</strong>{esc(check)}</p><p><strong>再試</strong>{esc(trial)}</p>' if contrast else f'<p>{direction}</p>']
-        page += ['</div></li>']
+        page += ['<a class="district-matrix-return" href="#feedback-cross">回到十二區比較表</a></div></li>']
         distribution_cell = f'{distribution["bins"][district]["rows"]}／{len(distribution["venues"][district])} | ' if distribution else ''
         md += [f'| {district}（{n}） | {distribution_cell}{issues} | {comparison} | {direction} |']
     page += ['</ol>']
@@ -625,31 +625,54 @@ def render_district_diagram(data, distribution=None):
     return md, page
 
 
+def heat_colors(share):
+    """One continuous 0–100% scale; choose readable text from actual luminance."""
+    if not 0 <= share <= 1:
+        raise ValueError('Heatmap share outside 0–100%')
+    rgb = tuple(round(a + (b - a) * share) for a, b in zip((242, 246, 247), (22, 86, 106)))
+    linear = [v / 255 / 12.92 if v / 255 <= 0.04045 else ((v / 255 + 0.055) / 1.055) ** 2.4 for v in rgb]
+    luminance = sum(v * weight for v, weight in zip(linear, (0.2126, 0.7152, 0.0722)))
+    ink = '#000000' if (luminance + 0.05) / 0.05 >= 1.05 / (luminance + 0.05) else '#ffffff'
+    return '#' + ''.join(f'{v:02x}' for v in rgb), ink
+
+
 def render_districts(data, distribution=None):
     validate(data)
     esc = html.escape
-    title = '語意回饋 × 公開位置：十二區的查核方向' if distribution else '十二區留言：主要問題、相對差異與改善方向'
-    framing = ('以下數字來自逐則語意判讀。分母是該行政區標記在本檔的全部留言，'
-               '包含資訊不足與其他內容；行政區尚未確認為事件所在地或居住地。'
-               '一則可以談多個問題或訴求，橫列比例不能相加；描述、預期風險與改善訴求都可能被納入，並非核實事件數。')
+    title = '各區留言主題占比：十二區 × 七類問題'
+    framing = ('分母是該行政區標記在本檔的全部留言，包含資訊不足與其他內容。'
+               '一則可談多個問題，比例不能相加；顏色表示留言組成，不是問題嚴重程度、人口發生率或缺桶程度。'
+               '行政區尚未確認為事件所在地或居住地，事件日期也未核實。')
     diagram_md, diagram_page = render_district_diagram(data, distribution)
-    md = [f'## {title}', '', framing, '', *diagram_md, '### 完整七類數據與比較方法', '', '| 行政區（則數） | ' + ' | '.join(x['label'] for x in data['themes']) + ' |',
+    md = [f'## {title}', '', framing, '',
+          '比較表每格以區內占比呈現，網頁色階全表固定為 0–100%，不按區或主題各自縮放。各區判讀與改善方向接在比較表下方。', '',
+          '| 行政區（則數） | ' + ' | '.join(x['label'] for x in data['themes']) + ' |',
           '| --- | ' + ' | '.join(['---:'] * len(THEMES)) + ' |']
     page = [f'<section class="feedback-section feedback-cross" aria-labelledby="feedback-cross"><h3 id="feedback-cross" tabindex="-1">{title}</h3><p>{esc(framing)}</p>',
-            *diagram_page, '<details class="feedback-codebook district-full-data"><summary>查看完整七類數據與比較方法</summary>',
-            '<p id="feedback-cross-method" class="feedback-note">數字為則數與區內比例；細條皆以 0–100% 為同一尺度。窄螢幕可左右捲動，行政區欄固定；鍵盤聚焦後可用方向鍵。</p>',
-            '<div class="feedback-matrix-scroll" role="region" aria-label="十二區語意問題交叉表，可左右捲動" tabindex="0" aria-describedby="feedback-cross-method"><table class="feedback-matrix"><caption>行政區 × 七類問題與訴求 · AI 語意判讀</caption><thead><tr><th scope="col">行政區<br>本檔則數</th>']
+            '<p id="feedback-cross-method" class="feedback-note">每格上方是占比，下方是則數／該區全部留言。色階固定 0–100%，各欄與各區使用同一尺度；0% 表示本檔未標到此主題，不代表現場沒有問題。</p>',
+            '<div class="feedback-heat-legend" aria-label="全表共用色階，留言占比從 0% 到 100%"><span>留言占比</span><ol>']
+    for value in (0, 25, 50, 75, 100):
+        background, ink = heat_colors(value / 100)
+        page += [f'<li style="--heat-bg:{background};--heat-ink:{ink}">{value}%</li>']
+    page += ['</ol></div>', '<p class="feedback-scroll-hint" id="feedback-matrix-help">可左右捲動看完整七類；行政區欄固定，鍵盤聚焦表格區後可用方向鍵。點區名閱讀下方判讀。</p>',
+             '<div class="feedback-matrix-scroll" role="region" aria-label="十二區七類問題比較表，可左右捲動" tabindex="0" aria-describedby="feedback-cross-method feedback-matrix-help"><table class="feedback-matrix"><caption>各區留言主題占比 · AI 語意判讀；只描述本批篩選留言</caption><thead><tr><th scope="col">行政區<br>本檔則數</th>']
     page += [f'<th scope="col">{esc(item["label"])}</th>' for item in data['themes']]
     page += ['</tr></thead><tbody>']
-    for district, n in data['districts'].items():
+    for row_number, (district, n) in enumerate(data['districts'].items(), 1):
         counts = data['districtAnalysis'][district]['themes']
         md += [f'| {district}（{n}） | ' + ' | '.join(f'{counts[k]}（{percent(counts[k], n)}）' for k in THEMES) + ' |']
-        page += [f'<tr><th scope="row">{esc(district)}<small>{n:,} 則</small></th>']
+        page += [f'<tr><th scope="row"><a href="#feedback-district-{row_number}" aria-label="{esc(district)}：閱讀判讀與改善方向">{esc(district)}</a><small>{n:,} 則</small></th>']
         for key in THEMES:
             count, pct = counts[key], percent(counts[key], n)
-            page += [f'<td data-district="{esc(district)}" data-theme="{key}"><strong>{count} 則</strong><span>{pct}</span><i aria-hidden="true" style="width:{pct}"></i></td>']
+            background, ink = heat_colors(count / n)
+            page += [f'<td data-district="{esc(district)}" data-theme="{key}" style="--heat-bg:{background};--heat-ink:{ink}"><strong>{pct}</strong><span>{count}／{n} 則</span></td>']
         page += ['</tr>']
-    page += ['</tbody></table></div>']
+    page += ['</tbody></table></div>',
+             '<h4 id="feedback-district-details" tabindex="-1">各區判讀與改善方向</h4>',
+             '<p>下方把語意線索與街頭、場域紀錄分開對照，說明目前較支持的查核方向及下一步。這些是待驗證的解釋，不能由色深直接決定增桶、清運或管理措施。</p>',
+             *diagram_page,
+             '<details class="feedback-codebook district-full-data"><summary>查看相對差異的計算與判讀限制</summary>']
+    md += ['', *diagram_md, '### 相對差異的計算與判讀限制', '']
     if len(data['districts']) > 1:
         note = ('為方便逐區閱讀，下表列出每區相對「其餘各區合併留言」比例差最大的正向對照；'
                 '依未四捨五入的百分點差選取，同差時按分類順序。這是探索性摘要，並非顯著性檢定或改善優先序。'
@@ -742,16 +765,17 @@ def render(data, distribution=None):
                   f'因分類界線出現差異，三位原判讀代理再依補充裁決說明回讀全部 {audit["consistencyReviewedRows"]:,} 則；最終有 {audit["changedRows"]} 則分類、立場或明確度改變。'
                   '上述一致數仍是修正前的初判一致性，不是分類正確率，也不是全部留言均由兩位獨立代理複核；補充說明在看到分歧後形成，最終仍需人類研究者確認。')
     correction = '方法修正：原先的關鍵字命中統計已退出本頁問題分析。先前據此解釋北投、內湖、萬華問題的段落已撤回；以下數字只由逐則語意標註加總。'
+    cross_md, cross_page = render_districts(data, distribution)
     md = [f'# {REPORT_TITLE}', '', f'分析整理日：{data["analysisDate"]}（非收集日期）', '', SCOPE, '', correction, '',
-          f'## {REPORT_JUDGMENT}', '']
+          *cross_md, f'## {REPORT_JUDGMENT}', '']
     page = [f'<header class="research-page-heading"><h2 id="feedback-heading">{REPORT_TITLE}</h2><p>逐則理解 {total:,} 則留言，再比較各區問題與訴求。</p><p class="research-update">整理於 {data["analysisDate"]}；收集期間未提供。</p></header>',
             f'<p class="feedback-scope">{esc(SCOPE)}</p><p class="feedback-note">{esc(correction)}</p>',
-            '<nav class="feedback-contents" aria-label="留言分析章節"><a href="#feedback-findings">研究判斷</a><a href="#feedback-cross">十二區圖解</a><a href="#feedback-stances">設桶立場</a><a href="#feedback-mechanisms">原因與反例</a><a href="#feedback-method">方法與限制</a></nav>',
+            '<nav class="feedback-contents" aria-label="留言分析章節"><a href="#feedback-cross">十二區比較表</a><a href="#feedback-district-details">各區詳解</a><a href="#feedback-findings">整體判讀</a><a href="#feedback-stances">設桶立場</a><a href="#feedback-mechanisms">原因與反例</a><a href="#feedback-method">方法與限制</a></nav>',
+            *cross_page,
             f'<section class="feedback-section" aria-labelledby="feedback-findings"><h3 id="feedback-findings" tabindex="-1">{REPORT_JUDGMENT}</h3>']
     for paragraph in [*semantic_findings(data), *REPORT_INTRO]:
         md += [paragraph, '']; page += [f'<p>{esc(paragraph)}</p>']
     page += ['</section>']
-    cross_md, cross_page = render_districts(data, distribution); md += cross_md; page += cross_page
     # Preserve earlier anchor destinations while replacing word-hit content.
     page += ['<section class="feedback-section feedback-appendix" aria-labelledby="feedback-signals"><h3 id="feedback-signals" tabindex="-1">逐則語意判讀：談及的問題與訴求</h3>', f'<p>{esc(METHOD)}</p>']
     md += ['## 逐則語意判讀：談及的問題與訴求', '', METHOD, '', table_markdown([(x['label'], x['count']) for x in data['themes']], total), '']
