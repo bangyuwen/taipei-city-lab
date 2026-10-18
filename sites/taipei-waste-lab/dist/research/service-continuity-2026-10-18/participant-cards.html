@@ -1,0 +1,266 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>投放資訊演練</title></head><body style="margin:12px"><style>
+    .disposal-continuity{color-scheme:light dark;--dc-surface:light-dark(#ffffff,#192923);--dc-text:light-dark(#20382e,#eef6f0);--dc-muted:light-dark(#52675c,#b7cbbf);--dc-line:light-dark(#c8d6cd,#43594d);--dc-soft:light-dark(#eef4ef,#253c30);--dc-brand:light-dark(#215c40,#a5d9b7);--dc-on-brand:light-dark(#ffffff,#142d1f);--dc-warning:light-dark(#80501e,#f1c18b);--dc-warning-bg:light-dark(#fff4e6,#403021);font:16px/1.6 system-ui,-apple-system,"Noto Sans TC",sans-serif;color:var(--dc-text);background:transparent;max-width:680px;margin:0 auto;overflow-wrap:anywhere}
+    .disposal-continuity[data-theme="light"],[data-theme="light"] .disposal-continuity{color-scheme:light}
+    .disposal-continuity[data-theme="dark"],[data-theme="dark"] .disposal-continuity{color-scheme:dark}
+    .disposal-continuity *{box-sizing:border-box}
+    .disposal-continuity .dc-moderator{padding:12px 0 18px;color:var(--dc-muted)}
+    .disposal-continuity .dc-control-title{margin:0 0 8px;font-size:14px;font-weight:600}
+    .disposal-continuity .dc-controls{display:flex;flex-wrap:wrap;align-items:end;gap:12px}
+    .disposal-continuity label{display:grid;gap:4px;font-size:14px;flex:1 1 200px}
+    .disposal-continuity select{font:inherit;min-height:44px;width:100%;padding:8px 10px;border:1px solid var(--dc-line);border-radius:6px;background:var(--dc-surface);color:var(--dc-text)}
+    .disposal-continuity .dc-modes{display:flex;gap:6px;flex-wrap:wrap}
+    .disposal-continuity button{font:inherit;min-height:44px;padding:9px 14px;border:1px solid var(--dc-line);border-radius:6px;background:var(--dc-surface);color:var(--dc-text)}
+    .disposal-continuity button[aria-pressed="true"],.disposal-continuity .dc-primary{background:var(--dc-brand);color:var(--dc-on-brand);border-color:var(--dc-brand)}
+    .disposal-continuity button:focus-visible,.disposal-continuity select:focus-visible{outline:3px solid var(--dc-brand);outline-offset:3px}
+    .disposal-continuity .dc-card{background:var(--dc-surface);border:1px solid var(--dc-line);border-radius:12px;max-width:440px;margin:0 auto;padding:22px}
+    .disposal-continuity .dc-demo{font-size:13px;color:var(--dc-warning);background:var(--dc-warning-bg);padding:9px 11px;margin:0 0 18px;border-radius:4px}
+    .disposal-continuity .dc-eyebrow{font-size:13px;letter-spacing:.06em;color:var(--dc-muted);margin:0 0 5px}
+    .disposal-continuity h2{font-size:24px;line-height:1.35;font-weight:650;margin:0 0 14px}
+    .disposal-continuity h3{font-size:18px;line-height:1.5;font-weight:600;margin:0 0 8px}
+    .disposal-continuity p{margin:0 0 10px}
+    .disposal-continuity .dc-old{padding-bottom:16px;border-bottom:1px solid var(--dc-line);margin-bottom:18px}
+    .disposal-continuity .dc-small{font-size:16px;color:var(--dc-muted)}
+    .disposal-continuity .dc-status{font-size:14px;font-weight:600;color:var(--dc-brand);margin:0 0 4px}
+    .disposal-continuity .dc-next{padding:14px;background:var(--dc-soft);border-radius:6px;margin-bottom:14px}
+    .disposal-continuity .dc-next.is-unavailable{background:var(--dc-warning-bg)}
+    .disposal-continuity .dc-next.is-unavailable .dc-status{color:var(--dc-warning)}
+    .disposal-continuity dl{margin:0;display:grid;grid-template-columns:4.5em minmax(0,1fr);gap:7px 9px;font-size:16px}
+    .disposal-continuity dt{color:var(--dc-muted)}
+    .disposal-continuity dd{margin:0}
+    .disposal-continuity .dc-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+    .disposal-continuity .dc-route{margin-top:14px;padding-top:14px;border-top:1px solid var(--dc-line)}
+    .disposal-continuity ol{padding-left:24px;margin:6px 0 10px}
+    .disposal-continuity li+li{margin-top:7px}
+    .disposal-continuity [hidden]{display:none!important}
+    .disposal-continuity .dc-footer{margin:16px 0 0;padding-top:12px;border-top:1px solid var(--dc-line);font-size:13px;color:var(--dc-muted)}
+    .disposal-continuity[data-view="paper"] .dc-card{max-width:600px;border-radius:0}
+    .disposal-continuity[data-view="paper"] .dc-route-toggle{display:none}
+    .disposal-continuity[data-view="paper"] .dc-paper-note{display:block}
+    .disposal-continuity .dc-paper-note{display:none}
+    .disposal-continuity .dc-all-points{margin-top:18px;padding-top:12px;border-top:1px solid var(--dc-line)}
+    .disposal-continuity summary{min-height:44px;padding:8px 0;font-weight:600}
+    .disposal-continuity .dc-facts{font-size:16px;line-height:1.6}
+    .disposal-continuity[data-material="M0"] .dc-eyebrow,.disposal-continuity[data-material="M0"] .dc-card>h2,.disposal-continuity[data-material="M0"] .dc-old{display:none}
+    @media(max-width:360px){.disposal-continuity .dc-card{padding:16px}.disposal-continuity h2{font-size:22px}.disposal-continuity .dc-controls{gap:10px}}
+    @media print{.disposal-continuity .dc-moderator,.disposal-continuity .dc-actions{display:none!important}.disposal-continuity .dc-card{max-width:none;border-radius:0}.disposal-continuity .dc-route{display:block!important}.disposal-continuity details>*{display:block!important}}
+
+@page{size:A4;margin:12mm}body{margin:0!important}.print-card{break-before:page}.print-card:first-child{break-before:auto}.card-id{font:12px system-ui;margin:0 0 8px;color:#444}.disposal-continuity{max-width:none;color-scheme:light}.disposal-continuity[data-view="paper"] .dc-card{max-width:none}.disposal-continuity .dc-next,.disposal-continuity dl,.disposal-continuity li,.disposal-continuity p{break-inside:avoid}.disposal-continuity .dc-all-points{break-before:page}.dc-all-points:before{content:'所有點位資料（接續同一張卡）';display:block;font:13px system-ui}.disposal-continuity summary{display:none}.dc-actions{display:none!important}</style><section class="print-card" data-card="S1-M0-X"><div class="card-id">材料 0.1.0 · S1-M0-X</div><div class="disposal-continuity" data-view="paper" data-material="M0"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 A 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：10:00｜持有物品：空杯、包裝紙</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><div class="dc-facts"><p>桌面演練。所有地點、距離與時段都是虛構。現在 10:00，手上有空杯與包裝紙。</p><p>原點 A 因位置調整，從今天 09:00 起停用，不能留下垃圾。</p><p>點位 B 從 A 步行 120 公尺，開放 06:00–22:00，現在開放，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 A 沿同側人行道往「演練・青葉亭」，經過「演練・方形花台」後直行到 B；無階梯，不需過馬路。</p><p>點位 C 從 A 步行 260 公尺，演練設定為 24 小時開放，現在開放，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 A 沿同側人行道往「演練・青葉亭」，於「演練・圓形花台」左轉，沿平面步道到 C；無階梯，不需過馬路。</p><p>以上資訊於 09:50 核對，本次有效期間 09:50–10:30。若現場關閉、滿溢或無法通行，保留垃圾，不留在現場，重新確認服務。</p></div></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S1-M0-Y"><div class="card-id">材料 0.1.0 · S1-M0-Y</div><div class="disposal-continuity" data-view="paper" data-material="M0"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 D 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：10:00｜持有物品：空杯、包裝紙</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><div class="dc-facts"><p>桌面演練。所有地點、距離與時段都是虛構。現在 10:00，手上有空杯與包裝紙。</p><p>原點 D 因位置調整，從今天 09:00 起停用，不能留下垃圾。</p><p>點位 E 從 D 步行 120 公尺，開放 06:00–22:00，現在開放，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 D 沿同側人行道往「演練・白石亭」，經過「演練・長形花台」後直行到 E；無階梯，不需過馬路。</p><p>點位 F 從 D 步行 260 公尺，演練設定為 24 小時開放，現在開放，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 D 沿同側人行道往「演練・白石亭」，於「演練・三角花台」左轉，沿平面步道到 F；無階梯，不需過馬路。</p><p>以上資訊於 09:50 核對，本次有效期間 09:50–10:30。若現場關閉、滿溢或無法通行，保留垃圾，不留在現場，重新確認服務。</p></div></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S1-M1-X"><div class="card-id">材料 0.1.0 · S1-M1-X</div><div class="disposal-continuity" data-view="paper" data-material="M1"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 A 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：10:00｜持有物品：空杯、包裝紙</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><section class="dc-next"><p class="dc-status">目前適用 · 演練已核對</p><h3>下一處：點位 B · 步行 120 公尺</h3><dl><dt>開放時間</dt><dd>06:00–22:00</dd><dt>可投放</dt><dd>空杯、包裝紙（演練用物品）</dd><dt>不收受</dt><dd>家戶整袋垃圾</dd><dt>通行條件</dt><dd>同側平面步道、無階梯、不需過馬路</dd></dl></section><dl><dt>核對時間</dt><dd>演練 09:50</dd><dt>有效期間</dt><dd>演練 09:50–10:30</dd></dl><section class="dc-route"><h3>前往點位 B 的步行指引</h3><p class="dc-small">以下全為演練路線與虛構地標。</p><ol><li>從原點位 A，沿同側人行道往「演練・青葉亭」前進。</li><li>經過「演練・方形花台」後直行，到達點位 B；全程 120 公尺，無階梯、不需過馬路。</li></ol><p class="dc-small">若現場關閉、滿溢或無法通行，請保留垃圾，不留在現場，並重新確認服務資訊。</p></section><section class="dc-all-points"><p class="card-id">材料 0.1.0 · S1-M1-X · 接續頁（與前頁一起交付）</p><div class="dc-facts"><p>桌面演練。所有地點、距離與時段都是虛構。現在 10:00，手上有空杯與包裝紙。</p><p>原點 A 因位置調整，從今天 09:00 起停用，不能留下垃圾。</p><p>點位 B 從 A 步行 120 公尺，開放 06:00–22:00，現在開放，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 A 沿同側人行道往「演練・青葉亭」，經過「演練・方形花台」後直行到 B；無階梯，不需過馬路。</p><p>點位 C 從 A 步行 260 公尺，演練設定為 24 小時開放，現在開放，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 A 沿同側人行道往「演練・青葉亭」，於「演練・圓形花台」左轉，沿平面步道到 C；無階梯，不需過馬路。</p><p>以上資訊於 09:50 核對，本次有效期間 09:50–10:30。若現場關閉、滿溢或無法通行，保留垃圾，不留在現場，重新確認服務。</p></div></section></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S1-M1-Y"><div class="card-id">材料 0.1.0 · S1-M1-Y</div><div class="disposal-continuity" data-view="paper" data-material="M1"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 D 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：10:00｜持有物品：空杯、包裝紙</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><section class="dc-next"><p class="dc-status">目前適用 · 演練已核對</p><h3>下一處：點位 E · 步行 120 公尺</h3><dl><dt>開放時間</dt><dd>06:00–22:00</dd><dt>可投放</dt><dd>空杯、包裝紙（演練用物品）</dd><dt>不收受</dt><dd>家戶整袋垃圾</dd><dt>通行條件</dt><dd>同側平面步道、無階梯、不需過馬路</dd></dl></section><dl><dt>核對時間</dt><dd>演練 09:50</dd><dt>有效期間</dt><dd>演練 09:50–10:30</dd></dl><section class="dc-route"><h3>前往點位 E 的步行指引</h3><p class="dc-small">以下全為演練路線與虛構地標。</p><ol><li>從原點位 D，沿同側人行道往「演練・白石亭」前進。</li><li>經過「演練・長形花台」後直行，到達點位 E；全程 120 公尺，無階梯、不需過馬路。</li></ol><p class="dc-small">若現場關閉、滿溢或無法通行，請保留垃圾，不留在現場，並重新確認服務資訊。</p></section><section class="dc-all-points"><p class="card-id">材料 0.1.0 · S1-M1-Y · 接續頁（與前頁一起交付）</p><div class="dc-facts"><p>桌面演練。所有地點、距離與時段都是虛構。現在 10:00，手上有空杯與包裝紙。</p><p>原點 D 因位置調整，從今天 09:00 起停用，不能留下垃圾。</p><p>點位 E 從 D 步行 120 公尺，開放 06:00–22:00，現在開放，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 D 沿同側人行道往「演練・白石亭」，經過「演練・長形花台」後直行到 E；無階梯，不需過馬路。</p><p>點位 F 從 D 步行 260 公尺，演練設定為 24 小時開放，現在開放，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 D 沿同側人行道往「演練・白石亭」，於「演練・三角花台」左轉，沿平面步道到 F；無階梯，不需過馬路。</p><p>以上資訊於 09:50 核對，本次有效期間 09:50–10:30。若現場關閉、滿溢或無法通行，保留垃圾，不留在現場，重新確認服務。</p></div></section></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S2-M0-X"><div class="card-id">材料 0.1.0 · S2-M0-X</div><div class="disposal-continuity" data-view="paper" data-material="M0"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 A 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：22:10｜持有物品：空杯、包裝紙</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><div class="dc-facts"><p>桌面演練。所有地點、距離與時段都是虛構。現在 22:10，手上有空杯與包裝紙。</p><p>原點 A 因位置調整，從今天 09:00 起停用，不能留下垃圾。</p><p>點位 B 從 A 步行 120 公尺，開放 06:00–22:00，現在已關閉，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 A 沿同側人行道往「演練・青葉亭」，經過「演練・方形花台」後直行到 B；無階梯，不需過馬路。</p><p>點位 C 從 A 步行 260 公尺，演練設定為 24 小時開放，現在開放，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 A 沿同側人行道往「演練・青葉亭」，於「演練・圓形花台」左轉，沿平面步道到 C；無階梯，不需過馬路。</p><p>以上資訊於 22:00 核對，本次有效期間 22:00–22:40。若現場關閉、滿溢或無法通行，保留垃圾，不留在現場，重新確認服務。</p></div></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S2-M0-Y"><div class="card-id">材料 0.1.0 · S2-M0-Y</div><div class="disposal-continuity" data-view="paper" data-material="M0"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 D 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：22:10｜持有物品：空杯、包裝紙</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><div class="dc-facts"><p>桌面演練。所有地點、距離與時段都是虛構。現在 22:10，手上有空杯與包裝紙。</p><p>原點 D 因位置調整，從今天 09:00 起停用，不能留下垃圾。</p><p>點位 E 從 D 步行 120 公尺，開放 06:00–22:00，現在已關閉，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 D 沿同側人行道往「演練・白石亭」，經過「演練・長形花台」後直行到 E；無階梯，不需過馬路。</p><p>點位 F 從 D 步行 260 公尺，演練設定為 24 小時開放，現在開放，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 D 沿同側人行道往「演練・白石亭」，於「演練・三角花台」左轉，沿平面步道到 F；無階梯，不需過馬路。</p><p>以上資訊於 22:00 核對，本次有效期間 22:00–22:40。若現場關閉、滿溢或無法通行，保留垃圾，不留在現場，重新確認服務。</p></div></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S2-M1-X"><div class="card-id">材料 0.1.0 · S2-M1-X</div><div class="disposal-continuity" data-view="paper" data-material="M1"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 A 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：22:10｜持有物品：空杯、包裝紙</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><p class="dc-small">點位 B 已於演練時間 22:00 關閉，現在不適用。</p><section class="dc-next"><p class="dc-status">目前適用 · 演練已核對</p><h3>下一處：點位 C · 步行 260 公尺</h3><dl><dt>開放時間</dt><dd>24 小時（演練）</dd><dt>可投放</dt><dd>空杯、包裝紙（演練用物品）</dd><dt>不收受</dt><dd>家戶整袋垃圾</dd><dt>通行條件</dt><dd>同側平面步道、無階梯、不需過馬路</dd></dl></section><dl><dt>核對時間</dt><dd>演練 22:00</dd><dt>有效期間</dt><dd>演練 22:00–22:40</dd></dl><section class="dc-route"><h3>前往點位 C 的步行指引</h3><p class="dc-small">以下全為演練路線與虛構地標。</p><ol><li>從原點位 A，沿同側人行道往「演練・青葉亭」前進。</li><li>於「演練・圓形花台」左轉，沿平面步道到達點位 C；全程 260 公尺，無階梯、不需過馬路。</li></ol><p class="dc-small">若現場關閉、滿溢或無法通行，請保留垃圾，不留在現場，並重新確認服務資訊。</p></section><section class="dc-all-points"><p class="card-id">材料 0.1.0 · S2-M1-X · 接續頁（與前頁一起交付）</p><div class="dc-facts"><p>桌面演練。所有地點、距離與時段都是虛構。現在 22:10，手上有空杯與包裝紙。</p><p>原點 A 因位置調整，從今天 09:00 起停用，不能留下垃圾。</p><p>點位 B 從 A 步行 120 公尺，開放 06:00–22:00，現在已關閉，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 A 沿同側人行道往「演練・青葉亭」，經過「演練・方形花台」後直行到 B；無階梯，不需過馬路。</p><p>點位 C 從 A 步行 260 公尺，演練設定為 24 小時開放，現在開放，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 A 沿同側人行道往「演練・青葉亭」，於「演練・圓形花台」左轉，沿平面步道到 C；無階梯，不需過馬路。</p><p>以上資訊於 22:00 核對，本次有效期間 22:00–22:40。若現場關閉、滿溢或無法通行，保留垃圾，不留在現場，重新確認服務。</p></div></section></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S2-M1-Y"><div class="card-id">材料 0.1.0 · S2-M1-Y</div><div class="disposal-continuity" data-view="paper" data-material="M1"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 D 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：22:10｜持有物品：空杯、包裝紙</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><p class="dc-small">點位 E 已於演練時間 22:00 關閉，現在不適用。</p><section class="dc-next"><p class="dc-status">目前適用 · 演練已核對</p><h3>下一處：點位 F · 步行 260 公尺</h3><dl><dt>開放時間</dt><dd>24 小時（演練）</dd><dt>可投放</dt><dd>空杯、包裝紙（演練用物品）</dd><dt>不收受</dt><dd>家戶整袋垃圾</dd><dt>通行條件</dt><dd>同側平面步道、無階梯、不需過馬路</dd></dl></section><dl><dt>核對時間</dt><dd>演練 22:00</dd><dt>有效期間</dt><dd>演練 22:00–22:40</dd></dl><section class="dc-route"><h3>前往點位 F 的步行指引</h3><p class="dc-small">以下全為演練路線與虛構地標。</p><ol><li>從原點位 D，沿同側人行道往「演練・白石亭」前進。</li><li>於「演練・三角花台」左轉，沿平面步道到達點位 F；全程 260 公尺，無階梯、不需過馬路。</li></ol><p class="dc-small">若現場關閉、滿溢或無法通行，請保留垃圾，不留在現場，並重新確認服務資訊。</p></section><section class="dc-all-points"><p class="card-id">材料 0.1.0 · S2-M1-Y · 接續頁（與前頁一起交付）</p><div class="dc-facts"><p>桌面演練。所有地點、距離與時段都是虛構。現在 22:10，手上有空杯與包裝紙。</p><p>原點 D 因位置調整，從今天 09:00 起停用，不能留下垃圾。</p><p>點位 E 從 D 步行 120 公尺，開放 06:00–22:00，現在已關閉，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 D 沿同側人行道往「演練・白石亭」，經過「演練・長形花台」後直行到 E；無階梯，不需過馬路。</p><p>點位 F 從 D 步行 260 公尺，演練設定為 24 小時開放，現在開放，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 D 沿同側人行道往「演練・白石亭」，於「演練・三角花台」左轉，沿平面步道到 F；無階梯，不需過馬路。</p><p>以上資訊於 22:00 核對，本次有效期間 22:00–22:40。若現場關閉、滿溢或無法通行，保留垃圾，不留在現場，重新確認服務。</p></div></section></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S3-M1-X"><div class="card-id">材料 0.1.0 · S3-M1-X</div><div class="disposal-continuity" data-view="paper" data-material="M1"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 A 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：10:00｜持有物品：空杯、包裝紙</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><section class="dc-next"><p class="dc-status">目前適用 · 演練已核對</p><h3>下一處：點位 B · 步行 120 公尺</h3><dl><dt>開放時間</dt><dd>06:00–22:00</dd><dt>可投放</dt><dd>空杯、包裝紙（演練用物品）</dd><dt>不收受</dt><dd>家戶整袋垃圾</dd><dt>通行條件</dt><dd>同側平面步道、無階梯、不需過馬路</dd></dl></section><dl><dt>核對時間</dt><dd>演練 09:50</dd><dt>有效期間</dt><dd>演練 09:50–10:30</dd></dl><section class="dc-route"><h3>前往點位 B 的步行指引</h3><p class="dc-small">以下全為演練路線與虛構地標。</p><ol><li>從原點位 A，沿同側人行道往「演練・青葉亭」前進。</li><li>經過「演練・方形花台」後直行，到達點位 B；全程 120 公尺，無階梯、不需過馬路。</li></ol><p class="dc-small">若現場關閉、滿溢或無法通行，請保留垃圾，不留在現場，並重新確認服務資訊。</p></section></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S3-M1-X-overflow"><div class="card-id">材料 0.1.0 · S3-M1-X-overflow</div><div class="disposal-continuity" data-view="paper" data-material="M1"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 A 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：10:00｜持有物品：空杯、包裝紙</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><p class="dc-small">點位 B 已在本次演練改為滿溢，停止推薦；此操作沒有送出通報。</p><p class="dc-small">紙本演練：以下為取得 B 滿溢資訊後，另行更新的告示內容。</p><section class="dc-next"><p class="dc-status">目前適用 · 演練已核對</p><h3>從目前點位 B 再走 140 公尺至 C（自 A 累計 260 公尺）</h3><dl><dt>開放時間</dt><dd>24 小時（演練）</dd><dt>可投放</dt><dd>空杯、包裝紙（演練用物品）</dd><dt>不收受</dt><dd>家戶整袋垃圾</dd><dt>通行條件</dt><dd>同側平面步道、無階梯、不需過馬路</dd></dl></section><dl><dt>核對時間</dt><dd>演練 09:50</dd><dt>有效期間</dt><dd>演練 09:50–10:30</dd></dl><section class="dc-route"><h3>前往點位 C 的步行指引</h3><p class="dc-small">以下全為演練路線與虛構地標。</p><ol><li>從目前點位 B，沿同側平面步道往「演練・圓形花台」前進，不需返回 A。</li><li>於「演練・圓形花台」左轉，到達點位 C；從 B 再走 140 公尺，無階梯、不需過馬路（自 A 累計 260 公尺）。</li></ol><p class="dc-small">若現場關閉、滿溢或無法通行，請保留垃圾，不留在現場，並重新確認服務資訊。</p></section></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S3-M1-Y"><div class="card-id">材料 0.1.0 · S3-M1-Y</div><div class="disposal-continuity" data-view="paper" data-material="M1"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 D 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：10:00｜持有物品：空杯、包裝紙</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><section class="dc-next"><p class="dc-status">目前適用 · 演練已核對</p><h3>下一處：點位 E · 步行 120 公尺</h3><dl><dt>開放時間</dt><dd>06:00–22:00</dd><dt>可投放</dt><dd>空杯、包裝紙（演練用物品）</dd><dt>不收受</dt><dd>家戶整袋垃圾</dd><dt>通行條件</dt><dd>同側平面步道、無階梯、不需過馬路</dd></dl></section><dl><dt>核對時間</dt><dd>演練 09:50</dd><dt>有效期間</dt><dd>演練 09:50–10:30</dd></dl><section class="dc-route"><h3>前往點位 E 的步行指引</h3><p class="dc-small">以下全為演練路線與虛構地標。</p><ol><li>從原點位 D，沿同側人行道往「演練・白石亭」前進。</li><li>經過「演練・長形花台」後直行，到達點位 E；全程 120 公尺，無階梯、不需過馬路。</li></ol><p class="dc-small">若現場關閉、滿溢或無法通行，請保留垃圾，不留在現場，並重新確認服務資訊。</p></section></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S3-M1-Y-overflow"><div class="card-id">材料 0.1.0 · S3-M1-Y-overflow</div><div class="disposal-continuity" data-view="paper" data-material="M1"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 D 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：10:00｜持有物品：空杯、包裝紙</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><p class="dc-small">點位 E 已在本次演練改為滿溢，停止推薦；此操作沒有送出通報。</p><p class="dc-small">紙本演練：以下為取得 E 滿溢資訊後，另行更新的告示內容。</p><section class="dc-next"><p class="dc-status">目前適用 · 演練已核對</p><h3>從目前點位 E 再走 140 公尺至 F（自 D 累計 260 公尺）</h3><dl><dt>開放時間</dt><dd>24 小時（演練）</dd><dt>可投放</dt><dd>空杯、包裝紙（演練用物品）</dd><dt>不收受</dt><dd>家戶整袋垃圾</dd><dt>通行條件</dt><dd>同側平面步道、無階梯、不需過馬路</dd></dl></section><dl><dt>核對時間</dt><dd>演練 09:50</dd><dt>有效期間</dt><dd>演練 09:50–10:30</dd></dl><section class="dc-route"><h3>前往點位 F 的步行指引</h3><p class="dc-small">以下全為演練路線與虛構地標。</p><ol><li>從目前點位 E，沿同側平面步道往「演練・三角花台」前進，不需返回 D。</li><li>於「演練・三角花台」左轉，到達點位 F；從 E 再走 140 公尺，無階梯、不需過馬路（自 D 累計 260 公尺）。</li></ol><p class="dc-small">若現場關閉、滿溢或無法通行，請保留垃圾，不留在現場，並重新確認服務資訊。</p></section></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S4-M1-X"><div class="card-id">材料 0.1.0 · S4-M1-X</div><div class="disposal-continuity" data-view="paper" data-material="M1"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 A 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：10:00｜持有物品：家戶整袋垃圾</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><section class="dc-next is-unavailable"><p class="dc-status">物品不符合收受範圍</p><h3>本卡沒有已核實的家戶接收去處</h3><p>點位 B、C 僅收受行人隨手垃圾（本次演練：空杯、包裝紙），不收家戶整袋垃圾。</p><p><strong>請保留垃圾，先確認家戶收運服務，不留在現場。</strong></p></section><dl><dt>核對時間</dt><dd>演練 09:50</dd><dt>有效期間</dt><dd>演練 09:50–10:30</dd></dl></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S4-M1-Y"><div class="card-id">材料 0.1.0 · S4-M1-Y</div><div class="disposal-continuity" data-view="paper" data-material="M1"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 D 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：10:00｜持有物品：家戶整袋垃圾</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><section class="dc-next is-unavailable"><p class="dc-status">物品不符合收受範圍</p><h3>本卡沒有已核實的家戶接收去處</h3><p>點位 E、F 僅收受行人隨手垃圾（本次演練：空杯、包裝紙），不收家戶整袋垃圾。</p><p><strong>請保留垃圾，先確認家戶收運服務，不留在現場。</strong></p></section><dl><dt>核對時間</dt><dd>演練 09:50</dd><dt>有效期間</dt><dd>演練 09:50–10:30</dd></dl></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S5-M1-X"><div class="card-id">材料 0.1.0 · S5-M1-X</div><div class="disposal-continuity" data-view="paper" data-material="M1"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 A 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：10:00｜持有物品：空杯、包裝紙｜通行需求：無階梯路線</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><p class="dc-small">點位 B 距離 120 公尺，但該路線有階梯，不符合本次無階梯需求。</p><section class="dc-next"><p class="dc-status">目前適用 · 演練已核對</p><h3>下一處：點位 C · 步行 260 公尺</h3><dl><dt>開放時間</dt><dd>24 小時（演練）</dd><dt>可投放</dt><dd>空杯、包裝紙（演練用物品）</dd><dt>不收受</dt><dd>家戶整袋垃圾</dd><dt>通行條件</dt><dd>同側平面步道、無階梯、不需過馬路</dd></dl></section><dl><dt>核對時間</dt><dd>演練 09:50</dd><dt>有效期間</dt><dd>演練 09:50–10:30</dd></dl><section class="dc-route"><h3>前往點位 C 的步行指引</h3><p class="dc-small">以下全為演練路線與虛構地標。</p><ol><li>從原點位 A，沿同側人行道往「演練・青葉亭」前進。</li><li>於「演練・圓形花台」左轉，沿平面步道到達點位 C；全程 260 公尺，無階梯、不需過馬路。</li></ol><p class="dc-small">這是演練路線條件描述，不表示符合法定無障礙標準。</p><p class="dc-small">若現場關閉、滿溢或無法通行，請保留垃圾，不留在現場，並重新確認服務資訊。</p></section></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S5-M1-Y"><div class="card-id">材料 0.1.0 · S5-M1-Y</div><div class="disposal-continuity" data-view="paper" data-material="M1"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 D 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：10:00｜持有物品：空杯、包裝紙｜通行需求：無階梯路線</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><p class="dc-small">點位 E 距離 120 公尺，但該路線有階梯，不符合本次無階梯需求。</p><section class="dc-next"><p class="dc-status">目前適用 · 演練已核對</p><h3>下一處：點位 F · 步行 260 公尺</h3><dl><dt>開放時間</dt><dd>24 小時（演練）</dd><dt>可投放</dt><dd>空杯、包裝紙（演練用物品）</dd><dt>不收受</dt><dd>家戶整袋垃圾</dd><dt>通行條件</dt><dd>同側平面步道、無階梯、不需過馬路</dd></dl></section><dl><dt>核對時間</dt><dd>演練 09:50</dd><dt>有效期間</dt><dd>演練 09:50–10:30</dd></dl><section class="dc-route"><h3>前往點位 F 的步行指引</h3><p class="dc-small">以下全為演練路線與虛構地標。</p><ol><li>從原點位 D，沿同側人行道往「演練・白石亭」前進。</li><li>於「演練・三角花台」左轉，沿平面步道到達點位 F；全程 260 公尺，無階梯、不需過馬路。</li></ol><p class="dc-small">這是演練路線條件描述，不表示符合法定無障礙標準。</p><p class="dc-small">若現場關閉、滿溢或無法通行，請保留垃圾，不留在現場，並重新確認服務資訊。</p></section></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S6-M1-X"><div class="card-id">材料 0.1.0 · S6-M1-X</div><div class="disposal-continuity" data-view="paper" data-material="M1"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 A 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：10:00｜持有物品：空杯、包裝紙</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><section class="dc-next is-unavailable"><p class="dc-status">資訊已逾時</p><h3>替代點位狀態尚未確認</h3><p>上次核對的點位 B、C 資訊已失效；現在是否開放、是否可收受及路線是否可通行，均未確認。</p><p><strong>請保留垃圾並查證；取得有效資訊前，不要依本卡前往替代點位，也不留在現場。</strong></p></section><dl><dt>核對時間</dt><dd>演練 08:20</dd><dt>有效期間</dt><dd>演練 08:20–09:00（已失效）</dd></dl></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S6-M1-Y"><div class="card-id">材料 0.1.0 · S6-M1-Y</div><div class="disposal-continuity" data-view="paper" data-material="M1"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 D 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：10:00｜持有物品：空杯、包裝紙</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><section class="dc-next is-unavailable"><p class="dc-status">資訊已逾時</p><h3>替代點位狀態尚未確認</h3><p>上次核對的點位 E、F 資訊已失效；現在是否開放、是否可收受及路線是否可通行，均未確認。</p><p><strong>請保留垃圾並查證；取得有效資訊前，不要依本卡前往替代點位，也不留在現場。</strong></p></section><dl><dt>核對時間</dt><dd>演練 08:20</dd><dt>有效期間</dt><dd>演練 08:20–09:00（已失效）</dd></dl></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S7-M1-X"><div class="card-id">材料 0.1.0 · S7-M1-X</div><div class="disposal-continuity" data-view="paper" data-material="M1"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 A 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：10:00｜持有物品：空杯、包裝紙</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><section class="dc-next is-unavailable"><p class="dc-status">目前無可用替代服務</p><h3>現在無法完成投放服務</h3><p>本次演練已確認：點位 B 關閉、點位 C 滿溢，均不可投放；目前沒有已核實的可用去處。</p><p><strong>請保留垃圾，不留在現場。先查證實際管理單位與聯絡方式，再聯繫確認後續服務。</strong></p></section><dl><dt>核對時間</dt><dd>演練 09:50</dd><dt>有效期間</dt><dd>演練 09:50–10:30</dd></dl></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section>
+<section class="print-card" data-card="S7-M1-Y"><div class="card-id">材料 0.1.0 · S7-M1-Y</div><div class="disposal-continuity" data-view="paper" data-material="M1"><article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 D 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small">演練現在時間：10:00｜持有物品：空杯、包裝紙</p>
+    </div>
+    <div aria-live="polite" aria-atomic="true"><section class="dc-next is-unavailable"><p class="dc-status">目前無可用替代服務</p><h3>現在無法完成投放服務</h3><p>本次演練已確認：點位 E 關閉、點位 F 滿溢，均不可投放；目前沒有已核實的可用去處。</p><p><strong>請保留垃圾，不留在現場。先查證實際管理單位與聯絡方式，再聯繫確認後續服務。</strong></p></section><dl><dt>核對時間</dt><dd>演練 09:50</dd><dt>有效期間</dt><dd>演練 09:50–10:30</dd></dl></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article></div></section></body></html>

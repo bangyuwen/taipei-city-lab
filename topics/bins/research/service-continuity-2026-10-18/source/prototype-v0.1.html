@@ -1,0 +1,189 @@
+<div id="disposal-continuity" lang="zh-Hant" data-view="mobile">
+  <style>
+    #disposal-continuity{color-scheme:light dark;--dc-surface:light-dark(#ffffff,#192923);--dc-text:light-dark(#20382e,#eef6f0);--dc-muted:light-dark(#52675c,#b7cbbf);--dc-line:light-dark(#c8d6cd,#43594d);--dc-soft:light-dark(#eef4ef,#253c30);--dc-brand:light-dark(#215c40,#a5d9b7);--dc-on-brand:light-dark(#ffffff,#142d1f);--dc-warning:light-dark(#80501e,#f1c18b);--dc-warning-bg:light-dark(#fff4e6,#403021);font:16px/1.6 system-ui,-apple-system,"Noto Sans TC",sans-serif;color:var(--dc-text);background:transparent;max-width:680px;margin:0 auto;overflow-wrap:anywhere}
+    #disposal-continuity[data-theme="light"],[data-theme="light"] #disposal-continuity{color-scheme:light}
+    #disposal-continuity[data-theme="dark"],[data-theme="dark"] #disposal-continuity{color-scheme:dark}
+    #disposal-continuity *{box-sizing:border-box}
+    #disposal-continuity .dc-moderator{padding:12px 0 18px;color:var(--dc-muted)}
+    #disposal-continuity .dc-control-title{margin:0 0 8px;font-size:14px;font-weight:600}
+    #disposal-continuity .dc-controls{display:flex;flex-wrap:wrap;align-items:end;gap:12px}
+    #disposal-continuity label{display:grid;gap:4px;font-size:14px;flex:1 1 200px}
+    #disposal-continuity select{font:inherit;min-height:44px;width:100%;padding:8px 10px;border:1px solid var(--dc-line);border-radius:6px;background:var(--dc-surface);color:var(--dc-text)}
+    #disposal-continuity .dc-modes{display:flex;gap:6px;flex-wrap:wrap}
+    #disposal-continuity button{font:inherit;min-height:44px;padding:9px 14px;border:1px solid var(--dc-line);border-radius:6px;background:var(--dc-surface);color:var(--dc-text)}
+    #disposal-continuity button[aria-pressed="true"],#disposal-continuity .dc-primary{background:var(--dc-brand);color:var(--dc-on-brand);border-color:var(--dc-brand)}
+    #disposal-continuity button:focus-visible,#disposal-continuity select:focus-visible{outline:3px solid var(--dc-brand);outline-offset:3px}
+    #disposal-continuity .dc-card{background:var(--dc-surface);border:1px solid var(--dc-line);border-radius:12px;max-width:440px;margin:0 auto;padding:22px}
+    #disposal-continuity .dc-demo{font-size:13px;color:var(--dc-warning);background:var(--dc-warning-bg);padding:9px 11px;margin:0 0 18px;border-radius:4px}
+    #disposal-continuity .dc-eyebrow{font-size:13px;letter-spacing:.06em;color:var(--dc-muted);margin:0 0 5px}
+    #disposal-continuity h2{font-size:24px;line-height:1.35;font-weight:650;margin:0 0 14px}
+    #disposal-continuity h3{font-size:18px;line-height:1.5;font-weight:600;margin:0 0 8px}
+    #disposal-continuity p{margin:0 0 10px}
+    #disposal-continuity .dc-old{padding-bottom:16px;border-bottom:1px solid var(--dc-line);margin-bottom:18px}
+    #disposal-continuity .dc-small{font-size:16px;color:var(--dc-muted)}
+    #disposal-continuity .dc-status{font-size:14px;font-weight:600;color:var(--dc-brand);margin:0 0 4px}
+    #disposal-continuity .dc-next{padding:14px;background:var(--dc-soft);border-radius:6px;margin-bottom:14px}
+    #disposal-continuity .dc-next.is-unavailable{background:var(--dc-warning-bg)}
+    #disposal-continuity .dc-next.is-unavailable .dc-status{color:var(--dc-warning)}
+    #disposal-continuity dl{margin:0;display:grid;grid-template-columns:4.5em minmax(0,1fr);gap:7px 9px;font-size:16px}
+    #disposal-continuity dt{color:var(--dc-muted)}
+    #disposal-continuity dd{margin:0}
+    #disposal-continuity .dc-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+    #disposal-continuity .dc-route{margin-top:14px;padding-top:14px;border-top:1px solid var(--dc-line)}
+    #disposal-continuity ol{padding-left:24px;margin:6px 0 10px}
+    #disposal-continuity li+li{margin-top:7px}
+    #disposal-continuity [hidden]{display:none!important}
+    #disposal-continuity .dc-footer{margin:16px 0 0;padding-top:12px;border-top:1px solid var(--dc-line);font-size:13px;color:var(--dc-muted)}
+    #disposal-continuity[data-view="paper"] .dc-card{max-width:600px;border-radius:0}
+    #disposal-continuity[data-view="paper"] .dc-route-toggle{display:none}
+    #disposal-continuity[data-view="paper"] .dc-paper-note{display:block}
+    #disposal-continuity .dc-paper-note{display:none}
+    #disposal-continuity .dc-all-points{margin-top:18px;padding-top:12px;border-top:1px solid var(--dc-line)}
+    #disposal-continuity summary{min-height:44px;padding:8px 0;font-weight:600}
+    #disposal-continuity .dc-facts{font-size:16px;line-height:1.6}
+    #disposal-continuity[data-material="M0"] .dc-eyebrow,#disposal-continuity[data-material="M0"] .dc-card>h2,#disposal-continuity[data-material="M0"] .dc-old{display:none}
+    @media(max-width:360px){#disposal-continuity .dc-card{padding:16px}#disposal-continuity h2{font-size:22px}#disposal-continuity .dc-controls{gap:10px}}
+    @media print{#disposal-continuity .dc-moderator,#disposal-continuity .dc-actions{display:none!important}#disposal-continuity .dc-card{max-width:none;border-radius:0}#disposal-continuity .dc-route{display:block!important}#disposal-continuity details>*{display:block!important}}
+  </style>
+  <section class="dc-moderator" aria-label="研究者演練控制">
+    <p class="dc-control-title">研究者操作區 · 不屬於市民告示</p>
+    <div class="dc-controls">
+      <label for="dc-scenario">演練情境
+        <select id="dc-scenario" class="cursor-interaction">
+          <option value="S1">位置調整</option>
+          <option value="S2">時段切換</option>
+          <option value="S3">到場狀態改變</option>
+          <option value="S4">物品不符</option>
+          <option value="S5">通行需求</option>
+          <option value="S6">資訊逾時</option>
+          <option value="S7">替代服務中斷</option>
+        </select>
+      </label>
+      <label for="dc-material">研究材料
+        <select id="dc-material" class="cursor-interaction"><option value="M1">M1 銜接卡</option><option value="M0">M0 文字清單</option></select>
+      </label>
+      <label for="dc-landmarks">地標版本
+        <select id="dc-landmarks" class="cursor-interaction"><option value="X">X</option><option value="Y">Y</option></select>
+      </label>
+      <div class="dc-modes" role="group" aria-label="呈現方式">
+        <button type="button" class="cursor-interaction" id="dc-mobile" aria-pressed="true">手機卡</button>
+        <button type="button" class="cursor-interaction" id="dc-paper" aria-pressed="false">紙本告示</button>
+      </div>
+    </div>
+  </section>
+  <article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h2>原點位 A 已停用</h2>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small" id="dc-context"></p>
+    </div>
+    <div id="dc-result" aria-live="polite" aria-atomic="true"></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article>
+  <script>
+    (function(){
+      const root=document.getElementById('disposal-continuity');
+      if(!root)return;
+      const scenario=root.querySelector('#dc-scenario');
+      const result=root.querySelector('#dc-result');
+      const context=root.querySelector('#dc-context');
+      const mobile=root.querySelector('#dc-mobile');
+      const paper=root.querySelector('#dc-paper');
+      const material=root.querySelector('#dc-material');
+      const landmarks=root.querySelector('#dc-landmarks');
+      let state={scenario:'S1',view:'mobile',material:'M1',landmarks:'X',routeOpen:false,overflow:false};
+      const labelSets={X:{A:'A',B:'B',C:'C',青葉亭:'青葉亭',方形花台:'方形花台',圓形花台:'圓形花台'},Y:{A:'D',B:'E',C:'F',青葉亭:'白石亭',方形花台:'長形花台',圓形花台:'三角花台'}};
+      function applyLabels(){
+        const labels=labelSets[state.landmarks];
+        const walker=document.createTreeWalker(root.querySelector('.dc-card'),NodeFilter.SHOW_TEXT);
+        let node;
+        while((node=walker.nextNode()))node.nodeValue=node.nodeValue.replace(/\b[ABC]\b|青葉亭|方形花台|圓形花台/g,key=>labels[key]);
+      }
+      function fullFacts(s){
+        const evening=s==='S2';
+        return [
+          '桌面演練。所有地點、距離與時段都是虛構。現在 '+(evening?'22:10':'10:00')+'，手上有空杯與包裝紙。',
+          '原點 A 因位置調整，從今天 09:00 起停用，不能留下垃圾。',
+          '點位 B 從 A 步行 120 公尺，開放 06:00–22:00，'+(evening?'現在已關閉':'現在開放')+'，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 A 沿同側人行道往「演練・青葉亭」，經過「演練・方形花台」後直行到 B；無階梯，不需過馬路。',
+          '點位 C 從 A 步行 260 公尺，演練設定為 24 小時開放，現在開放，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 A 沿同側人行道往「演練・青葉亭」，於「演練・圓形花台」左轉，沿平面步道到 C；無階梯，不需過馬路。',
+          '以上資訊於 '+(evening?'22:00':'09:50')+' 核對，本次有效期間 '+(evening?'22:00–22:40':'09:50–10:30')+'。若現場關閉、滿溢或無法通行，保留垃圾，不留在現場，重新確認服務。'
+        ].map(text=>'<p>'+text+'</p>').join('');
+      }
+      const routes={
+        B:['從原點位 A，沿同側人行道往「演練・青葉亭」前進。','經過「演練・方形花台」後直行，到達點位 B；全程 120 公尺，無階梯、不需過馬路。'],
+        C:['從原點位 A，沿同側人行道往「演練・青葉亭」前進。','於「演練・圓形花台」左轉，沿平面步道到達點位 C；全程 260 公尺，無階梯、不需過馬路。'],
+        BC:['從目前點位 B，沿同側平面步道往「演練・圓形花台」前進，不需返回 A。','於「演練・圓形花台」左轉，到達點位 C；從 B 再走 140 公尺，無階梯、不需過馬路（自 A 累計 260 公尺）。']
+      };
+      function save(){
+        try{if(window.openai&&typeof window.openai.setWidgetState==='function')Promise.resolve(window.openai.setWidgetState({modelContent:{scenario:state.scenario,representation:state.view,material:state.material,landmarks:state.landmarks},privateContent:{routeOpen:state.routeOpen,overflow:state.overflow}})).catch(function(){});}catch(e){}
+      }
+      function restore(snapshot){
+        if(!snapshot||!snapshot.modelContent)return;
+        const m=snapshot.modelContent,p=snapshot.privateContent||{};
+        if(!Array.from(scenario.options).some(o=>o.value===m.scenario))return;
+        state={scenario:m.scenario,view:m.representation==='paper'?'paper':'mobile',material:['S1','S2'].includes(m.scenario)&&m.material==='M0'?'M0':'M1',landmarks:m.landmarks==='Y'?'Y':'X',routeOpen:p.routeOpen===true,overflow:m.scenario==='S3'&&p.overflow===true};
+      }
+      function render(){
+        const s=state.scenario;
+        const comparison=['S1','S2'].includes(s);
+        if(!comparison)state.material='M1';
+        material.querySelector('option[value="M0"]').disabled=!comparison;
+        material.value=state.material;landmarks.value=state.landmarks;root.dataset.material=state.material;
+        root.querySelector('.dc-card>h2').textContent='原點位 A 已停用';
+        scenario.value=s;root.dataset.view=state.view;
+        mobile.setAttribute('aria-pressed',String(state.view==='mobile'));
+        paper.setAttribute('aria-pressed',String(state.view==='paper'));
+        const evening=s==='S2';
+        const expired=s==='S6';
+        const checked=evening?'22:00':expired?'08:20':'09:50';
+        const validity=evening?'22:00–22:40':expired?'08:20–09:00（已失效）':'09:50–10:30';
+        context.textContent='演練現在時間：'+(evening?'22:10':'10:00')+'｜持有物品：'+(s==='S4'?'家戶整袋垃圾':'空杯、包裝紙')+(s==='S5'?'｜通行需求：無階梯路線':'');
+        if(state.material==='M0'){
+          result.innerHTML='<div class="dc-facts">'+fullFacts(s)+'</div>';
+          applyLabels();return;
+        }
+        const blocked=['S4','S6','S7'].includes(s);
+        let point=(s==='S2'||s==='S5'||(s==='S3'&&state.overflow))?'C':'B';
+        let pre='';
+        if(s==='S2')pre='<p class="dc-small">點位 B 已於演練時間 22:00 關閉，現在不適用。</p>';
+        if(s==='S5')pre='<p class="dc-small">點位 B 距離 120 公尺，但該路線有階梯，不符合本次無階梯需求。</p>';
+        if(s==='S3'&&state.overflow)pre='<p class="dc-small">點位 B 已在本次演練改為滿溢，停止推薦；此操作沒有送出通報。</p>';
+        const stamp='<dl><dt>核對時間</dt><dd>演練 '+checked+'</dd><dt>有效期間</dt><dd>演練 '+validity+'</dd></dl>';
+        if(blocked){
+          const messages={
+            S4:['物品不符合收受範圍','本卡沒有已核實的家戶接收去處','點位 B、C 僅收受行人隨手垃圾（本次演練：空杯、包裝紙），不收家戶整袋垃圾。','請保留垃圾，先確認家戶收運服務，不留在現場。'],
+            S6:['資訊已逾時','替代點位狀態尚未確認','上次核對的點位 B、C 資訊已失效；現在是否開放、是否可收受及路線是否可通行，均未確認。','請保留垃圾並查證；取得有效資訊前，不要依本卡前往替代點位，也不留在現場。'],
+            S7:['目前無可用替代服務','現在無法完成投放服務','本次演練已確認：點位 B 關閉、點位 C 滿溢，均不可投放；目前沒有已核實的可用去處。','請保留垃圾，不留在現場。先查證實際管理單位與聯絡方式，再聯繫確認後續服務。']
+          };
+          const m=messages[s];
+          result.innerHTML='<section class="dc-next is-unavailable"><p class="dc-status">'+m[0]+'</p><h3>'+m[1]+'</h3><p>'+m[2]+'</p><p><strong>'+m[3]+'</strong></p></section>'+stamp;
+          applyLabels();
+          return;
+        }
+        const distance=point==='B'?'120':'260';
+        const fromB=s==='S3'&&state.overflow;
+        const nextHeading=fromB?'從目前點位 B 再走 140 公尺至 C（自 A 累計 260 公尺）':'下一處：點位 '+point+' · 步行 '+distance+' 公尺';
+        if(fromB&&state.view==='paper')pre+='<p class="dc-small">紙本演練：以下為取得 B 滿溢資訊後，另行更新的告示內容。</p>';
+        const hours=point==='B'?'06:00–22:00':'24 小時（演練）';
+        const routeVisible=state.routeOpen||state.view==='paper';
+        result.innerHTML=pre+'<section class="dc-next"><p class="dc-status">目前適用 · 演練已核對</p><h3>'+nextHeading+'</h3><dl><dt>開放時間</dt><dd>'+hours+'</dd><dt>可投放</dt><dd>空杯、包裝紙（演練用物品）</dd><dt>不收受</dt><dd>家戶整袋垃圾</dd><dt>通行條件</dt><dd>同側平面步道、無階梯、不需過馬路</dd></dl></section>'+stamp+'<div class="dc-actions"><button type="button" class="dc-primary dc-route-toggle cursor-interaction" id="dc-route-toggle" aria-controls="dc-route" aria-expanded="'+routeVisible+'">'+(routeVisible?'收起路線':'查看路線')+'</button>'+(s==='S3'&&!state.overflow?'<button type="button" class="cursor-interaction" id="dc-overflow">遇到滿溢（演練）</button>':'')+'</div><section id="dc-route" class="dc-route" '+(routeVisible?'':'hidden')+'><h3>前往點位 '+point+' 的步行指引</h3><p class="dc-small">以下全為演練路線與虛構地標。</p><ol>'+routes[fromB?'BC':point].map(t=>'<li>'+t+'</li>').join('')+'</ol>'+(s==='S5'?'<p class="dc-small">這是演練路線條件描述，不表示符合法定無障礙標準。</p>':'')+'<p class="dc-small">若現場關閉、滿溢或無法通行，請保留垃圾，不留在現場，並重新確認服務資訊。</p></section>';
+        const toggle=root.querySelector('#dc-route-toggle');
+        if(comparison)result.insertAdjacentHTML('beforeend','<details id="dc-all-points" class="dc-all-points" '+(state.view==='paper'?'open':'')+'><summary class="cursor-interaction">所有點位資料</summary><div class="dc-facts">'+fullFacts(s)+'</div></details>');
+        applyLabels();
+        if(toggle)toggle.addEventListener('click',function(){state.routeOpen=!state.routeOpen;render();root.querySelector('#dc-route-toggle').focus();save();});
+        const overflow=root.querySelector('#dc-overflow');
+        if(overflow)overflow.addEventListener('click',function(){state.overflow=true;state.routeOpen=false;render();root.querySelector('#dc-route-toggle').focus();save();});
+      }
+      scenario.addEventListener('change',function(){state.scenario=scenario.value;state.routeOpen=false;state.overflow=false;render();save();});
+      material.addEventListener('change',function(){state.material=material.value;state.routeOpen=false;state.overflow=false;render();save();});
+      landmarks.addEventListener('change',function(){state.landmarks=landmarks.value;render();save();});
+      mobile.addEventListener('click',function(){state.view='mobile';render();save();});
+      paper.addEventListener('click',function(){state.view='paper';render();save();});
+      try{if(window.openai)restore(window.openai.widgetState);}catch(e){}
+      window.addEventListener('openai:set_globals',function(event){if(event.detail&&event.detail.globals&&event.detail.globals.widgetState){restore(event.detail.globals.widgetState);render();}});
+      render();
+    })();
+  </script>
+</div>

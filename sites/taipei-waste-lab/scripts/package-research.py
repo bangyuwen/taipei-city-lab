@@ -209,6 +209,21 @@ def render_hundred_day_plan(index_text, markdown):
     return updated
 
 
+def render_service_continuity(index_text):
+    """Render a public, fictional demonstration from the retained research source."""
+    source = ROOT / 'research/service-continuity-2026-10-18'
+    summary = (source / 'public-summary.html').read_text()
+    prototype = (source / 'source/prototype-v0.1.html').read_text()
+    # Keep the frozen participant source intact; adapt heading depth for this page.
+    prototype = prototype.replace('h2', 'h4').replace('h3', 'h5')
+    rendered = summary.replace('{{prototype}}', prototype)
+    updated, count = re.subn(r'<!-- service-continuity-start -->.*?<!-- service-continuity-end -->',
+                            lambda _: '<!-- service-continuity-start -->\n' + rendered + '\n<!-- service-continuity-end -->',
+                            index_text, flags=re.S)
+    assert count == 1, 'Missing service-continuity marker'
+    return updated
+
+
 def main():
     subprocess.run([sys.executable, str(ROOT / 'scripts/analyze-feedback.py')], check=True)
     canonical = ROOT.parent.parent / 'topics/bins/research'
@@ -239,6 +254,7 @@ def main():
     catalog = json.loads((ROOT / 'research/reference-guide-2026-10-16/catalog.json').read_text())
     text = render_references(text, catalog, literature)
     text = render_hundred_day_plan(text, (ROOT / 'research/hundred-day-plan-2026-10-17/README.md').read_text())
+    text = render_service_continuity(text)
     index.write_text(text)
 
     # Preserve the original relative paths so lineage checks work after extraction.
