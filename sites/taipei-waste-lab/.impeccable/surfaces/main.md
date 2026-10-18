@@ -8,8 +8,8 @@ User authorizes a coherent redesign and direct implementation; this direction is
 
 THESIS: A public research index connects a saved location to its source, comparison and service implications. The first screen starts the task instead of a large declaration.
 OWN-WORLD: Library open-shelf indexing lends deep petrol navigation, cool white pages, pale blue selections, tabular data and a precise selected-row marker. Standard web controls remain familiar.
-STORY: Start with three research judgments, follow each to dated Taipei evidence or a relevant overseas case, and inspect concept designs only in the context of a proposed service. Primary navigation is 研究結論 / 台北的變化 / 各地做法; sources and execution materials are secondary destinations.
-FIRST VIEWPORT: Keep the existing petrol rail and cool paper identity. The root URL opens a concise reading page with three research judgments. Taipei pages share one contextual navigation row and a single dataset selector. Country pages show one case at a time with a photo-first shared media area. On phones the rail becomes an expandable menu.
+STORY: Start with three research judgments, follow each to dated Taipei evidence or a relevant overseas case, and inspect concept designs only in the context of a proposed service. Primary navigation is 研究結論 / 台北的變化 / 各國垃圾桶; sources and execution materials are secondary destinations.
+FIRST VIEWPORT: Keep the existing petrol rail and cool paper identity. The root URL opens a concise reading page with three research judgments. Taipei pages share one contextual navigation row and a single dataset selector. Country pages lead with full strategies for 14 countries and regions, including four-step flows, city evidence, sources, and limits; the 12 existing photo and 3D supplements follow the strategy. A sticky country index serves wide screens, and a native country select serves smaller screens. Hong Kong and Uruguay have strategy evidence without matching media. On phones the main rail becomes an expandable menu.
 FORM: Grounded candidate 6, public library open-shelf index. Seed e6fca0a4, assigned index 6. Other candidates considered: public information signage, municipal statistical yearbook, river wayfinding, transit service notices, museum collection labels, and community notice boards. The chosen library system supplies type, palette, density and selected-entry emphasis only.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
@@ -25,7 +25,7 @@ Keep six datasets, 1971 archived rows and 681 official rows; missing rows are no
 
 ## Country model motion
 
-Keep one shared media area per selected case, defaulting to the real photo and explicitly marking Australia's missing embedded photo. Authored Three.js meshes remain supplementary illustrations. Offer one play/pause/replay control, reset and accessible zoom; remove preset-view menus, turntable, timeline, quizzes and layered disclosures. Inactive, hidden and offscreen scenes stop drawing. Reduced motion uses static completion. Keep all twelve photo/source limitations visible and label inferred movement; no sound, measured mechanism or performance claims.
+Keep one shared media area below the selected country's strategy, defaulting to the real photo and explicitly marking Australia's missing embedded photo. Authored Three.js meshes remain supplementary illustrations. Offer one play/pause/replay control, reset and accessible zoom; remove preset-view menus, turntable, timeline, quizzes and layered disclosures. Inactive, hidden and offscreen scenes stop drawing. Reduced motion uses static completion. Keep all twelve photo/source limitations visible and label inferred movement; no sound, measured mechanism or performance claims.
 
 ## Information ownership
 
