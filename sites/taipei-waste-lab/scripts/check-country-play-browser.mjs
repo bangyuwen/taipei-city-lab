@@ -9,7 +9,12 @@ const qa=fileURLToPath(new URL('../.impeccable/review/',import.meta.url));
 const errors=[],results=[];await mkdir(qa,{recursive:true});
 const state=page=>page.locator('.country-model-controls').getAttribute('data-state');
 async function loaded(page){await page.waitForFunction(()=>document.querySelector('.country-model-controls')?.hidden===false&&document.querySelector('.country-model-status')?.textContent==='')}
-async function openCase(page,id){await page.selectOption('#country-reader-select',id);await page.click('[data-mode="model"]');await loaded(page)}
+async function openCase(page,id){
+  const entry=page.locator(`.country-index [data-country-target="country-${id}"]`);
+  if(await entry.isVisible())await entry.click();
+  else await page.selectOption('#country-reader-select',id);
+  await page.click('[data-mode="model"]');await loaded(page);
+}
 async function stable(page){
   await page.waitForTimeout(100);const before=await page.evaluate(()=>window.countryDraws);await page.waitForTimeout(180);
   assert.equal(await page.evaluate(()=>window.countryDraws),before,'No country draw calls while inactive or resting');
