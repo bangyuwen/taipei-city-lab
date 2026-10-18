@@ -44,22 +44,27 @@
     <div id="load-status" class="load-status" role="status" hidden>正在載入保存的位置資料…</div>
 
     <section id="panel-map" class="page-panel" aria-labelledby="map-heading" hidden>
-      <div class="section-heading"><div><h2 id="map-heading">找當時的垃圾箱位置</h2></div><p>切換資料版本，查看有保存紀錄的位置。</p></div>
+      <div class="section-heading"><div><h2 id="map-heading">找當時的垃圾箱位置</h2></div><p>切換資料版本，查看保存位置；2026 主檔另附北投、南港場域線索。</p></div>
       <div class="dataset-meta"><div><span id="dataset-date"></span><a id="dataset-source" target="_blank" rel="noopener noreferrer">原始來源 ↗</a><a href="#sources">完整來源與限制</a></div><p id="dataset-completeness" role="status"></p></div>
       <div class="map-layout">
         <section class="map-filter-fields" aria-label="篩選位置"><div class="filter-heading"><h3>找一個位置</h3><button id="reset-filters" class="quiet-button" type="button">清除篩選</button></div>
           <div id="dataset-version-field" class="dataset-version-field"><label for="dataset-version">資料版本</label><select id="dataset-version" disabled><option>正在載入版本…</option></select></div>
           <label for="district">行政區</label><select id="district"><option value="">全部行政區</option></select>
-          <label for="search">地址或路名</label><div class="search-input"><input id="search" type="search" placeholder="例如：中山北路" maxlength="100" autocomplete="off"></div>
-          </section>
-        <div class="map-column"><div class="map-topline"><span id="map-legend">保存位置</span><div class="map-tools"><button id="fit-map" type="button">顯示搜尋範圍 </button><label for="map-basemap">底圖<select id="map-basemap"><option value="light">簡潔</option><option value="street">街道</option></select></label></div></div>
+          <label for="search">地址、路名或場域名稱</label><div class="search-input"><input id="search" type="search" placeholder="例如：中山北路" maxlength="100" autocomplete="off"></div>
+          <div id="venue-layer" class="venue-layer" hidden>
+            <label for="show-venues"><input id="show-venues" type="checkbox" checked disabled aria-describedby="venue-layer-note">顯示北投、南港場域線索</label>
+            <p id="venue-layer-note">菱形是場域約略位置，不是已核實桶位或入口。開放時間、接收規則與桶況待確認。</p>
+            <p><span id="venue-date"></span><br><a id="venue-source" target="_blank" rel="noopener noreferrer">官方場域清單 ↗</a></p>
+          </div></section>
+        <div class="map-column"><div class="map-topline"><div class="map-legends"><span id="map-legend">保存位置</span><span id="venue-legend" hidden>場域線索・約略位置</span></div><div class="map-tools"><button id="fit-map" type="button">顯示搜尋範圍 </button><label for="map-basemap">底圖<select id="map-basemap"><option value="light">簡潔</option><option value="street">街道</option></select></label></div></div>
           <div id="map" role="region" aria-label="垃圾箱位置地圖"></div>
           <p id="map-status" class="map-status" role="status"></p>
           <div class="map-bottomline"><span id="map-caption">地圖只顯示可繪製的保存位置。</span><span>點擊位置查看地址</span></div>
         </div>
         <section class="map-results" aria-label="位置清單"><div class="result-summary" aria-live="polite"><strong id="result-count">—</strong><span>筆保存紀錄</span><small id="result-map-count"></small></div>
           <div id="point-list" class="point-list" aria-label="搜尋結果"></div>
-          <button id="load-more" class="load-more" type="button" hidden>顯示更多位置</button></section>
+          <button id="load-more" class="load-more" type="button" hidden>顯示更多位置</button>
+          <section id="venue-results" class="venue-results" aria-labelledby="venue-heading" hidden><h3 id="venue-heading">場域線索 <span id="venue-count">0</span> 處</h3><p id="venue-status" role="status"></p><div id="venue-list" class="point-list" aria-label="場域線索清單"></div></section></section>
 
       </div>
       <section class="district-details" aria-labelledby="district-distribution-heading"><h3 id="district-distribution-heading">這份資料的行政區分布</h3><div class="district-explanation">這裡統計保存資料列，不是已核實的全市垃圾箱存量。沒有保存紀錄的行政區，不代表當地沒有垃圾箱。</div><div id="district-table"></div></section>
@@ -455,7 +460,7 @@
 <p>採用 2026-09-30 更新的官方主檔，於 2026-10-18 重新下載核對，全部 681 列與保存檔一致。這是位置列，不是已核實的全市桶數；原調查日期與全市完整性未知。</p>
 <p><strong>本次沒有補入新的已核實街頭位置。</strong>完整 API、CSV 與官方查詢地圖的 681 列位置一致；三個介面互相吻合，不等於三次獨立盤點。</p>
 <p>另納入 2026-08-18 更新的官方場域清單，共 130 處。它提供捷運站、景點與商場等查核線索，沒有逐桶位置、現況、開放時段或接收規則，不能直接當成可用投放點。</p>
-<div class="coverage-focus"><article class="coverage-focus-item"><h5>北投｜先核對撤除紀錄與場域可用性</h5><p><strong>街頭位置 0 列</strong>；另有<strong>場域線索 10 處</strong><br>兩種單位不同，不相加成桶數。</p><details><summary>查看 10 處場域名稱</summary><ul><li>新北投捷運站</li><li>石牌捷運站</li><li>關渡自然公園</li><li>關渡捷運站</li><li>前山花鐘</li><li>北投捷運站</li><li>奇岩捷運站</li><li>唭哩岸捷運站</li><li>明德捷運站</li><li>忠義捷運站</li></ul></details></article><article class="coverage-focus-item"><h5>南港｜先查步行銜接、開放與接收規則</h5><p><strong>街頭位置 4 列</strong>；另有<strong>場域線索 5 處</strong><br>兩種單位不同，不相加成桶數。</p><details><summary>查看 5 處場域名稱</summary><ul><li>昆陽捷運站</li><li>南港捷運站</li><li>南港軟體園區捷運站</li><li>南港LALAPORT</li><li>南港展覽館捷運站</li></ul></details></article></div>
+<div class="coverage-focus"><article class="coverage-focus-item"><h5>北投｜先核對撤除紀錄與場域可用性</h5><p><strong>街頭位置 0 列</strong>；另有<strong>場域線索 10 處</strong><br>兩種單位不同，不相加成桶數。</p><details><summary>查看 10 處場域名稱</summary><ul><li>新北投捷運站</li><li>石牌捷運站</li><li>關渡自然公園</li><li>關渡捷運站</li><li>前山花鐘</li><li>北投捷運站</li><li>奇岩捷運站</li><li>唭哩岸捷運站</li><li>明德捷運站</li><li>忠義捷運站</li></ul></details><a href="?year=2026-main&amp;district=%E5%8C%97%E6%8A%95%E5%8D%80#map">在地圖分開看街頭紀錄與場域線索</a></article><article class="coverage-focus-item"><h5>南港｜先查步行銜接、開放與接收規則</h5><p><strong>街頭位置 4 列</strong>；另有<strong>場域線索 5 處</strong><br>兩種單位不同，不相加成桶數。</p><details><summary>查看 5 處場域名稱</summary><ul><li>昆陽捷運站</li><li>南港捷運站</li><li>南港軟體園區捷運站</li><li>南港LALAPORT</li><li>南港展覽館捷運站</li></ul></details><a href="?year=2026-main&amp;district=%E5%8D%97%E6%B8%AF%E5%8D%80#map">在地圖分開看街頭紀錄與場域線索</a></article></div>
 <p><strong>北投零列的原因仍待核實。</strong>2026-08-14 議會答覆提到調整期間可能移除，但沒有確認北投全區撤除。因此修正上一版「清單缺口」的說法：撤除、未收錄與跨機關設施都需分開核對。</p>
 <details class="feedback-codebook"><summary>這次比對能說明什麼？</summary><p>僅依行政區標記對照，沒有把留言配到某個垃圾桶。回饋的日期及事件位置未核實，因此沒有計算每桶留言數、步行覆蓋率或缺桶排名。不同問題可出現在同一則，比例不能相加。「偏向增設／恢復／保留」含保留既有設施的方向，並非每則都在描述桶數不足；它也不能與維護或管理主題當成互斥票數。</p><p>2024 年歷史快照曾列北投 98 列、南港 94 列，日期不同，不能回填現況。狗便袋及公園設施也需確認類型與管理機關，不能直接加算。</p></details>
 <p><a href="https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c" target="_blank" rel="noopener noreferrer">官方位置與場域清單</a> · <a href="https://www.dep-trash-can.gov.taipei/" target="_blank" rel="noopener noreferrer">官方查詢地圖</a> · <a href="https://gaz.tcc.gov.tw/topic-list/h-rr/123E9F693438E26896182BE431BB8C04/info.html" target="_blank" rel="noopener noreferrer">議會逐字稿來源</a> · <a href="#feedback-method">語意判讀方法與限制</a></p></div>

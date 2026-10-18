@@ -474,10 +474,11 @@ def distribution_intro(distribution):
     for district, reading in [('北投', '先核對撤除紀錄與場域可用性'), ('南港', '先查步行銜接、開放與接收規則')]:
         names = distribution['venues'][district]
         count = distribution['bins'][district]['rows']
+        map_url = '?' + urlencode({'year': '2026-main', 'district': district + '區'}) + '#map'
         focus.append(f'<article class="coverage-focus-item"><h5>{district}｜{reading}</h5>'
                      f'<p><strong>街頭位置 {count} 列</strong>；另有<strong>場域線索 {len(names)} 處</strong><br>兩種單位不同，不相加成桶數。</p>'
                      f'<details><summary>查看 {len(names)} 處場域名稱</summary><ul>'
-                     + ''.join(f'<li>{html.escape(name)}</li>' for name in names) + '</ul></details></article>')
+                     + ''.join(f'<li>{html.escape(name)}</li>' for name in names) + f'</ul></details><a href="{html.escape(map_url)}">在地圖分開看街頭紀錄與場域線索</a></article>')
     return f'''<div class="distribution-overview"><h4>{DISTRIBUTION_TITLE}</h4><p>{DISTRIBUTION_CONCLUSION}</p>
 <p>{description}</p>
 <p><strong>本次沒有補入新的已核實街頭位置。</strong>完整 API、CSV 與官方查詢地圖的 {s["rows"]} 列位置一致；三個介面互相吻合，不等於三次獨立盤點。</p>

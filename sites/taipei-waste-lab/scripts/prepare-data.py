@@ -2,6 +2,7 @@
 import collections
 import csv
 import hashlib
+import io
 import json
 import shutil
 import subprocess
@@ -77,6 +78,37 @@ def point(row, index, key):
             'x': x, 'y': y, 'plottable': plottable,
             'rawX': row['經度'], 'rawY': row['緯度'],
             'quality': '通過座標粗篩，尚未逐點核實' if plottable else '座標待核對，保留原始紀錄'}
+
+def venue_leads(research):
+    """Publish the requested venue subset without adding it to street inventories."""
+    receipt_bytes = (research / 'bin-coverage-2026-10-18/source-check.json').read_bytes()
+    assessments = json.loads((research / 'feedback-distribution-2026-10-18/assessments.json').read_text())
+    if hashlib.sha256(receipt_bytes).hexdigest() != assessments['coverageSha256']:
+        raise ValueError('Venue coverage evidence changed; repeat source verification')
+    receipt = json.loads(receipt_bytes)
+    source = next(s for s in receipt['sources'] if s['retainedPath'].endswith('/official-tourist.csv'))
+    raw = (research / source['retainedPath']).read_bytes()
+    if source['status'] != 200 or hashlib.sha256(raw).hexdigest() != source['sha256']:
+        raise ValueError('Venue source hash mismatch')
+    rows = list(csv.DictReader(io.StringIO(raw.decode('cp950'))))
+    points = []
+    for index, row in enumerate(rows):
+        if row['行政區'] not in ('北投區', '南港區'):
+            continue
+        p = point(row, index, 'venue')
+        if not p['plottable']:
+            raise ValueError('Venue coordinate outside existing map bounds')
+        p['quality'] = '場域約略位置；不是已核實桶位或入口'
+        points.append(p)
+    if len(rows) != 130 or collections.Counter(p['district'] for p in points) != {'北投區': 10, '南港區': 5}:
+        raise ValueError('Venue scope changed; review the requested fifteen leads')
+    return {'label': '北投、南港場域線索', 'source': source['url'], 'sourceSha256': source['sha256'],
+            'sourceUpdatedAt': receipt['venueSourceUpdatedAt'], 'checkedDate': receipt['checkedDateTaipei'],
+            'districts': ['北投區', '南港區'], 'rows': len(points), 'points': points,
+            'note': '僅收錄本次北投與南港的十五處線索，不是完整場域清冊；其他區未納入此圖層。',
+            'coordinateNote': '沿用原檔粗略座標，未重新定位；不是桶位、入口或可步行到達性的證明。',
+            'availabilityNote': '開放時間、接收規則、實際桶況與管理責任均待確認。'}
+
 
 def main():
     prepare_sources()
@@ -160,7 +192,7 @@ def main():
                            'districts': {d: counts.get(d, 0) for d in DISTRICTS},
                            'sha256': hashlib.sha256(path.read_bytes()).hexdigest(), 'points': points})
         datasets.append(definition)
-    payload = {'updatedAt': '2026-10-15', 'districtOrder': DISTRICTS, 'datasets': datasets,
+    payload = {'updatedAt': '2026-10-18', 'venueLeads': venue_leads(ROOT / 'research'), 'districtOrder': DISTRICTS, 'datasets': datasets,
                'officialSource': OFFICIAL,
                'identityNote': '各列 id 僅供本站操作，不是官方箱號，不可跨年識別同一垃圾箱。'}
     (DEST / 'datasets.json').write_text(json.dumps(payload, ensure_ascii=False, separators=(',', ':')) + '\n')

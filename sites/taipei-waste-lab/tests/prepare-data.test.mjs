@@ -98,3 +98,27 @@ for (const monorepo of [true, false]) {
     }
   });
 }
+
+
+test('venue generator matches retained rows and rejects source drift before returning a new layer',()=>{
+  const code=String.raw`
+import csv,io,json,runpy,tempfile,shutil
+from pathlib import Path
+m=runpy.run_path('scripts/prepare-data.py');research=Path('research')
+d=m['venue_leads'](research)
+raw=(research/'source-recovery-2026-10-15/raw/official-tourist.csv').read_bytes()
+rows=[r for r in csv.DictReader(io.StringIO(raw.decode('cp950'))) if r['行政區'] in ('北投區','南港區')]
+assert [(p['district'],p['address'],p['rawX'],p['rawY']) for p in d['points']]==[(r['行政區'],r['地址'],r['經度'],r['緯度']) for r in rows]
+with tempfile.TemporaryDirectory() as directory:
+ target=Path(directory)
+ for name in ['bin-coverage-2026-10-18','feedback-distribution-2026-10-18','source-recovery-2026-10-15']:
+  shutil.copytree(research/name,target/name)
+ source=target/'source-recovery-2026-10-15/raw/official-tourist.csv'
+ source.write_bytes(raw+b'\n')
+ try:m['venue_leads'](target)
+ except ValueError as e:assert 'Venue source hash mismatch' in str(e)
+ else:raise AssertionError('Changed venue source was accepted')
+`;
+  const result=spawnSync(process.env.PYTHON_BIN||'python3',['-c',code],{cwd:site,encoding:'utf8'});
+  assert.equal(result.status,0,result.stderr||result.stdout);
+});

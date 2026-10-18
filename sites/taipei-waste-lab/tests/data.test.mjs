@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
-import {filterPoints,recordStats,csvForPoints,pageFromHash} from '../dist/data-utils.js';
+import {filterPoints,filterVenuePoints,recordStats,csvForPoints,pageFromHash} from '../dist/data-utils.js';
 
 const catalog=JSON.parse(await readFile(new URL('../dist/data/datasets.json',import.meta.url)));
 
@@ -99,4 +99,37 @@ test('hundred-day plan and its source links open the owning readable panel', () 
   assert.equal(pageFromHash('#main','plan'),'plan');
   assert.equal(pageFromHash('#planning'),'research');
   assert.equal(pageFromHash('#reference-L01'),'sources');
+});
+
+
+test('venue leads stay separate from street inventories and obey year, toggle and search scope',()=>{
+  const before=JSON.stringify(catalog.datasets),state={year:'2026-main'};
+  assert.equal(filterVenuePoints(catalog,state).length,15);
+  assert.equal(filterVenuePoints(catalog,{...state,district:'北投區'}).length,10);
+  assert.equal(filterVenuePoints(catalog,{...state,district:'南港區'}).length,5);
+  assert.equal(filterVenuePoints(catalog,{...state,district:'大安區'}).length,0);
+  assert.equal(filterVenuePoints(catalog,{...state,district:'北投區',search:'新 北 投'}).length,1);
+  assert.equal(filterVenuePoints(catalog,{...state,district:'南港區',search:'ＬＡＬＡＰＯＲＴ'}).length,1);
+  assert.equal(filterVenuePoints(catalog,{...state,search:'未收錄的場域'}).length,0);
+  assert.equal(filterVenuePoints(catalog,{...state,showVenues:false}).length,0);
+  for(const d of catalog.datasets.filter(d=>d.key!=='2026-main'))assert.equal(filterVenuePoints(catalog,{year:d.key}).length,0);
+  const current=catalog.datasets.find(d=>d.key==='2026-main');
+  assert.equal(filterPoints(current,{district:'北投區'}).length,0);
+  assert.equal(filterPoints(current,{district:'南港區'}).length,4);
+  assert.equal(JSON.stringify(catalog.datasets),before);
+  assert.ok(!csvForPoints(current.points,current).includes('venue-row-'));
+});
+
+test('public venue data preserves coarse source coordinates and exposes only the requested subset',()=>{
+  const d=catalog.venueLeads;
+  assert.equal(d.rows,15);assert.equal(new Set(d.points.map(p=>p.id)).size,15);
+  assert.equal(d.sourceSha256,'47b1ddfb4f0ab4d5e57afab538f71da3d41d22e59c984bdd9c10b4248223b066');
+  assert.equal(d.sourceUpdatedAt,'2026-08-18 16:27:22');
+  assert.ok(d.points.every(p=>['北投區','南港區'].includes(p.district)&&p.plottable));
+  const coarse=d.points.find(p=>p.address==='南港LALAPORT');
+  assert.equal(coarse.rawX,'121.6');assert.equal(coarse.x,121.6);
+  assert.equal(coarse.rawY,'25.05');assert.equal(coarse.y,25.05);
+  assert.match(coarse.quality,/約略位置.*不是.*桶位或入口/);
+  assert.match(d.availabilityNote,/開放時間.*接收規則.*待確認/);
+  assert.match(d.note,/其他區未納入/);
 });

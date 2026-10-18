@@ -1,11 +1,11 @@
 import {annualCounts,events} from './history.js';
-import {filterPoints,recordStats,pageFromHash,allowedPages,historyPages,escapeHTML as esc} from './data-utils.js';
+import {filterPoints,filterVenuePoints,recordStats,pageFromHash,allowedPages,historyPages,escapeHTML as esc} from './data-utils.js';
 
 const $=id=>document.getElementById(id),num=n=>new Intl.NumberFormat('zh-TW',{maximumFractionDigits:1}).format(n);
 const colors={'2015':'#986838','2022':'#30694e','2024':'#396e88','2026':'#244d43'};
-let catalog,map,L,layers,markers=new Map(),filtered=[],shown=40,currentPage=null,lastHash;
+let catalog,map,L,layers,venueLayers,markers=new Map(),venueMarkers=new Map(),venueFiltered=[],filtered=[],shown=40,currentPage=null,lastHash;
 let basemap;
-let state={year:'2015',district:'',search:''},mapStarting=false;
+let state={year:'2015',district:'',search:'',showVenues:true},mapStarting=false;
 let designExperience,designLoading;
 let comparisonLoading;
 let sitingExperience,sitingLoading;
@@ -76,6 +76,7 @@ function readURL(){
   state.year=catalog.datasets.some(d=>d.key===year)?year:'2015';
   state.district=catalog.districtOrder.includes(district)?district:'';
   state.search=(url.searchParams.get('q')??'').slice(0,100);
+  state.showVenues=url.searchParams.get('venues')!=='0';
   $('district').value=state.district;$('search').value=state.search;
 }
 function syncURL(){
@@ -84,6 +85,7 @@ function syncURL(){
   for(const [key,value] of [['district',state.district],['q',state.search]]){
     if(value)url.searchParams.set(key,value);else url.searchParams.delete(key);
   }
+  if(state.showVenues)url.searchParams.delete('venues');else url.searchParams.set('venues','0');
   history.replaceState(null,'',url);
 }
 function dataset(){return catalog.datasets.find(d=>d.key===state.year)}
@@ -157,12 +159,27 @@ function renderDistricts(d){
   $('district-table').innerHTML='<div class="district-grid">'+catalog.districtOrder.map(name=>`<div class="district-cell"><span>${name}</span><strong>${num(d.districts[name])} 筆</strong><div class="bar" aria-hidden="true"><span style="width:${100*d.districts[name]/max}%"></span></div></div>`).join('')+'</div>';
 }
 function renderResults(){
-  filtered=filterPoints(dataset(),state);const stats=recordStats(filtered);
+  filtered=filterPoints(dataset(),state);venueFiltered=filterVenuePoints(catalog,state);const stats=recordStats(filtered);
   $('result-count').textContent=num(stats.rows);
   $('result-map-count').textContent=`${num(stats.mapRows)} 筆可繪製${stats.rows>stats.mapRows?'・'+num(stats.rows-stats.mapRows)+' 筆座標待核對':''}`;
   $('map-caption').textContent=`${num(stats.mapRows)} 筆可繪製紀錄；相同座標保留。`;
-  renderList();
+  renderVenues();renderList();
   if(map)renderMap();else if(currentPage==='map')ensureMap();
+}
+function renderVenues(){
+  const visible=state.year==='2026-main',data=catalog.venueLeads;
+  $('venue-layer').hidden=!visible;$('venue-results').hidden=!visible;
+  $('venue-legend').hidden=!visible||!state.showVenues;
+  $('show-venues').checked=state.showVenues;
+  $('venue-count').textContent=num(venueFiltered.length);
+  $('venue-source').href=data.source;
+  $('venue-date').textContent=`來源更新 ${data.sourceUpdatedAt.slice(0,10)}；${data.checkedDate} 複查`;
+  $('venue-status').textContent=!state.showVenues?'場域圖層已隱藏。':
+    venueFiltered.length?'場域處數與街頭列數分開閱讀，不能相加。':
+    state.district&&!data.districts.includes(state.district)?'本圖層只整理北投、南港；其他區未納入，不代表沒有場域。':'沒有符合篩選的場域線索；不代表沒有可用投放點。';
+  $('venue-list').innerHTML=venueFiltered.map(p=>`<div class="point-row venue-row"><button type="button" data-venue="${esc(p.id)}"><span>${esc(p.address)}</span><small>${esc(p.district)} · 約略位置，待核實</small></button></div>`).join('');
+  for(const button of $('venue-list').querySelectorAll('[data-venue]'))button.addEventListener('click',()=>focusVenue(button.dataset.venue));
+  if(visible&&state.showVenues)$('map-caption').textContent+=` 另顯示 ${num(venueFiltered.length)} 處場域約略位置；不是已核實桶位。`;
 }
 function renderList(){
   const d=dataset();
@@ -182,33 +199,29 @@ async function ensureMap(){
     L=await import('./vendor/leaflet/leaflet-src.esm.js');
     map=L.map('map',{preferCanvas:true,scrollWheelZoom:false}).setView([25.045,121.535],12);
     setBasemap();
-    layers=L.layerGroup().addTo(map);renderMap();
+    layers=L.layerGroup().addTo(map);venueLayers=L.layerGroup().addTo(map);renderMap();
   }catch(error){
     $('map-status').textContent='地圖暫時無法載入；仍可搜尋位置與查看清單。';
     console.error('Map initialization failed:',error.message);
   }finally{mapStarting=false}
 }
-function setBasemap(fallback=false){
+function setBasemap(){
   if(!map)return;
   const light=$('map-basemap').value==='light';
-  const carto=light&&!fallback;
   if(basemap){basemap.off('tileerror load');map.removeLayer(basemap)}
-  $('map-status').textContent=fallback?'簡潔底圖暫時無法載入，已改用淡色街道底圖。':'';
-  const attribution='&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors';
-  const tiles=L.tileLayer(carto?'https://basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png':'https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+  $('map-status').textContent='';
+  const tiles=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
     maxZoom:19,keepBuffer:1,updateWhenIdle:true,
-    className:light&&!carto?'map-tiles-muted':'',opacity:light&&!carto?.55:1,
-    attribution:attribution+(carto?' &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener noreferrer">CARTO</a>':'')
+    className:light?'map-tiles-muted':'',opacity:light?.55:1,
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors'
   });
   basemap=tiles;
   let failures=0;
   tiles.on('tileerror',()=>{
-    if(basemap!==tiles)return;
-    if(carto){setBasemap(true);return}
-    if(++failures>=4)$('map-status').textContent='底圖連線暫時不穩；位置與清單仍可查詢。';
+    if(basemap===tiles&&++failures>=4)$('map-status').textContent='底圖連線暫時不穩；位置與清單仍可查詢。';
   });
   tiles.on('load',()=>{
-    if(basemap===tiles&&!failures&&!fallback)$('map-status').textContent='';
+    if(basemap===tiles&&!failures)$('map-status').textContent='';
   });
   tiles.addTo(map);
 }
@@ -217,11 +230,31 @@ function popup(p){
   strong.textContent=p.district;addr.textContent=p.address||'地址未記錄';small.textContent=dataset().label+'・保存位置';
   el.append(strong,addr,small);return el;
 }
+function venuePopup(p){
+  const el=document.createElement('div');el.className='venue-popup';
+  const title=document.createElement('strong');title.textContent=p.address;
+  const note=document.createElement('p');note.textContent=p.district+' · '+p.quality;
+  const coordinates=document.createElement('p');coordinates.textContent=`原檔座標：${p.rawY}, ${p.rawX}。${catalog.venueLeads.coordinateNote}`;
+  const status=document.createElement('p');status.textContent=catalog.venueLeads.availabilityNote;
+  const source=document.createElement('a');source.href=catalog.venueLeads.source;source.target='_blank';source.rel='noopener noreferrer';source.textContent=`官方場域清單（${catalog.venueLeads.sourceUpdatedAt.slice(0,10)}）`;
+  el.append(title,note,coordinates,status,source);return el;
+}
+async function focusVenue(id){
+  if(!map)await ensureMap();
+  const p=venueFiltered.find(p=>p.id===id),marker=venueMarkers.get(id);
+  if(map&&p){map.setView([p.y,p.x],15,{animate:false});marker?.openPopup()}
+}
 function renderMap(){
-  layers.clearLayers();markers=new Map();
+  layers.clearLayers();venueLayers.clearLayers();markers=new Map();venueMarkers=new Map();
   for(const p of filtered.filter(p=>p.plottable)){
     const marker=L.circleMarker([p.y,p.x],{radius:4,weight:1,color:colors[dataset().year],fillColor:colors[dataset().year],fillOpacity:.7}).bindPopup(()=>popup(p)).addTo(layers);
     markers.set(p.id,marker);
+  }
+  for(const p of venueFiltered){
+    const label=p.address+'・場域約略位置，待核實';
+    const icon=L.divIcon({className:'venue-marker',html:'<span aria-hidden="true"></span>',iconSize:[28,28],iconAnchor:[14,14]});
+    const marker=L.marker([p.y,p.x],{icon,title:label,keyboard:true}).bindPopup(()=>venuePopup(p),{maxWidth:220,maxHeight:180,autoPanPaddingTopLeft:[5,110]}).addTo(venueLayers);
+    marker.getElement()?.setAttribute('aria-label',label);venueMarkers.set(p.id,marker);
   }
   fitMap();
 }
@@ -231,7 +264,7 @@ function fitMap(allCoordinates=false){
     map.setView([25.055,121.54],12,{animate:false});
     return;
   }
-  const points=filtered.filter(p=>p.plottable);
+  const points=[...filtered.filter(p=>p.plottable),...venueFiltered];
   if(points.length)map.fitBounds(L.latLngBounds(points.map(p=>[p.y,p.x])),{padding:[24,24],maxZoom:16,animate:false});
 }
 async function focusPoint(id){
@@ -310,7 +343,7 @@ async function start(){
     }
     panel();
   });
-  for(const id of ['dataset-version','district','search','reset-filters','fit-map'])$(id).disabled=true;
+  for(const id of ['dataset-version','district','search','reset-filters','fit-map','show-venues'])$(id).disabled=true;
   $('source-cards').innerHTML='<p role="status">正在載入六份保存版本的來源與範圍…</p>';
   panel();
   try{
@@ -320,13 +353,14 @@ async function start(){
     for(const district of catalog.districtOrder){const o=document.createElement('option');o.value=district;o.textContent=district;$('district').append(o)}
     readURL();renderVersions();renderSources();renderDataset();
     $('dataset-version').addEventListener('change',e=>{state.year=e.target.value;syncURL();renderDataset()});
-    for(const id of ['dataset-version','district','search','reset-filters','fit-map'])$(id).disabled=false;
+    for(const id of ['dataset-version','district','search','reset-filters','fit-map','show-venues'])$(id).disabled=false;
     $('load-status').hidden=true;panel();
     const anchor=document.getElementById(location.hash.slice(1));
     if(!allowedPages.includes(location.hash.slice(1))&&anchor?.closest('.page-panel')?.id===`panel-${currentPage}`)anchor.scrollIntoView({block:'start',behavior:'instant'});
     $('district').addEventListener('change',e=>{state.district=e.target.value;shown=40;syncURL();renderResults()});
     $('search').addEventListener('input',e=>{state.search=e.target.value;shown=40;syncURL();renderResults()});
     $('reset-filters').addEventListener('click',()=>{state.district='';state.search='';$('district').value='';$('search').value='';shown=40;syncURL();renderResults()});
+    $('show-venues').addEventListener('change',e=>{state.showVenues=e.target.checked;syncURL();renderResults()});
     $('load-more').addEventListener('click',()=>{shown+=40;renderList()});
     $('fit-map').addEventListener('click',()=>fitMap(true));
   }catch(error){
