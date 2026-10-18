@@ -6,6 +6,11 @@ export function filterPoints(dataset, {district='',search=''}={}) {
   return dataset.points.filter(p=>(!district||p.district===district)
     && (!q||normalizeSearch(p.district+p.address).includes(q)));
 }
+// A venue is a separate evidence unit, never another street-inventory row.
+export function filterVenuePoints(catalog,{year='',showVenues=true,district='',search=''}={}) {
+  return year==='2026-main'&&showVenues&&catalog.venueLeads
+    ?filterPoints(catalog.venueLeads,{district,search}):[];
+}
 export function recordStats(points) {
   return {rows:points.length,mapRows:points.filter(p=>p.plottable).length,
     coordinates:new Set(points.filter(p=>p.x!==null&&p.y!==null).map(p=>`${p.x},${p.y}`)).size};
