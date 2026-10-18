@@ -6,6 +6,7 @@ import html
 import io
 import json
 import re
+import runpy
 from urllib.parse import urlencode
 from collections import Counter
 from pathlib import Path
@@ -745,7 +746,7 @@ def home_summary(data, distribution=None):
                  f'<p><strong>分辨依據</strong>{esc(a["check"])}</p></div></li>']
     page += ['</ul>', '<details id="service-method" class="feedback-codebook service-method"><summary>資料補齊後，判讀改變了什麼？</summary>',
              f'<p>{esc(DISTRIBUTION_UPDATE)}</p><p>{esc(VENUE_BOUNDARY)}</p>',
-             '<p>本輪由兩個子代理分區回讀全部既有語意短意旨，並以部分原始留言核對情境與反例；沿用原有標註，不是新一輪全量獨立重標。C 類含街道清掃，G 類含制度、費率與陳情，不能直接等同桶的清運或管理失靈。「增設／恢復／保留」也不全是缺桶訴求。</p>',
+             '<p>前次分布對照由兩個子代理分區回讀全部既有語意短意旨，並以部分原始留言核對情境與反例；沿用原有標註，並非本次桶位細分標註。C 類含街道清掃，G 類含制度、費率與陳情，不能直接等同桶的清運或管理失靈。「增設／恢復／保留」也不全是缺桶訴求。</p>',
              '<p>下一步要補有日期的現存及撤除清冊、場域開放與接收條件，再把可確認時間地點的回饋對到路徑、桶況與服務紀錄。沒有這些證據，不能推出各區需要增設多少桶。</p></details>',
              '<p class="feedback-report-entry"><a href="#feedback-cross">看各區語意數據與完整判讀</a> · <a href="#feedback-method">判讀方法與限制</a></p>']
     return '\n'.join(page)
@@ -823,6 +824,25 @@ def render(data, distribution=None):
     return '\n'.join(md), '\n'.join(page)
 
 
+def render_with_detail(data, distribution, research):
+    markdown, content = render(data, distribution)
+    access = runpy.run_path(str(ROOT / 'scripts/feedback_access.py'))
+    detail = access['load'](research, data)
+    detail_html, detail_markdown = access['render'](detail, heat_colors)
+    anchor = '<h4 id="feedback-district-details" tabindex="-1">'
+    if content.count(anchor) != 1:
+        raise ValueError('Expected one district details destination')
+    content = content.replace(anchor, detail_html + '\n' + anchor)
+    content = content.replace('<a href="#feedback-district-details">各區詳解</a>',
+                              '<a href="#feedback-access">六種困難細分</a><a href="#feedback-district-details">各區詳解</a>')
+    markdown = markdown.replace('### 十二區問題與改善方向',
+                                '### 桶位留言的六種困難細分\n\n' + access['narrative'](detail) +
+                                '\n\n[細分類、十二區情境與立場分析](../feedback-access-2026-10-18/README.md)\n\n### 十二區問題與改善方向', 1)
+    homepage = home_summary(data, distribution)
+    homepage = homepage.replace('<h4 id="district-service-heading"', access['home'](detail) + '\n<h4 id="district-service-heading"', 1)
+    return markdown, content, homepage, detail_markdown
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('input', 'annotations', 'initial', 'double-coded', 'resolutions', 'protocol', 'manifest'):
@@ -846,14 +866,15 @@ def main():
     if hashlib.sha256((folder / 'semantic-adjudication-notes.md').read_bytes()).hexdigest() != data['semantic']['reviewNotesSha256']:
         raise ValueError('Saved summary does not match the retained adjudication notes')
     distribution = load_distribution(data)
-    markdown, content = render(data, distribution)
+    markdown, content, homepage, detail_markdown = render_with_detail(data, distribution, folder.parent)
+    (folder.parent / 'feedback-access-2026-10-18/README.md').write_text(detail_markdown)
     (folder.parent / DISTRIBUTION_FOLDER / 'README.md').write_text(distribution_report(data, distribution))
     index = ROOT / 'dist/index.html'
     page, count = re.subn(r'<!-- feedback-analysis-start -->.*?<!-- feedback-analysis-end -->',
                          lambda _: '<!-- feedback-analysis-start -->\n' + content + '\n<!-- feedback-analysis-end -->', index.read_text(), flags=re.S)
     if count != 1: raise ValueError('Expected one feedback panel marker')
     page, count = re.subn(r'<!-- feedback-problem-map-start -->.*?<!-- feedback-problem-map-end -->',
-                         lambda _: '<!-- feedback-problem-map-start -->\n' + home_summary(data, distribution) + '\n<!-- feedback-problem-map-end -->', page, flags=re.S)
+                         lambda _: '<!-- feedback-problem-map-start -->\n' + homepage + '\n<!-- feedback-problem-map-end -->', page, flags=re.S)
     if count != 1: raise ValueError('Expected one homepage summary marker')
     if all(inputs): summary_path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
     (folder / 'README.md').write_text(markdown)

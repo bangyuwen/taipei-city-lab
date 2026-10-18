@@ -226,3 +226,33 @@
  .service-next{padding-top:12px;border-top:1px dashed var(--line)}
  .service-lead{font-size:18px}
 }
+
+/* Nested access analysis keeps its denominator visible beside every district. */
+.feedback-access{margin-block:40px;padding-top:8px;border-top:1px solid var(--line)}
+.feedback-access h4{font-size:24px;line-height:1.6;margin:24px 0 16px}
+.feedback-access h5{font-size:20px;line-height:1.6;margin:32px 0 16px}
+.feedback-access-scroll{max-width:100%;overflow-x:auto;margin:24px 0;scroll-margin-top:96px}
+.feedback-access-scroll:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.feedback-access-table{border-collapse:separate;border-spacing:3px;table-layout:fixed;width:100%;min-width:900px;font-size:16px;font-variant-numeric:tabular-nums}
+.feedback-access-table caption{text-align:left;color:var(--muted);font-size:14px;line-height:1.8;padding-bottom:12px}
+.feedback-access-table th,.feedback-access-table td{text-align:center;padding:12px 8px;line-height:1.6}
+.feedback-access-table thead th{font-size:15px;font-weight:600;vertical-align:bottom;background:var(--paper);border-bottom:1px solid var(--line)}
+.feedback-access-table th:first-child{position:sticky;left:0;z-index:1;width:120px;text-align:left;background:var(--paper);border-right:1px solid var(--line)}
+.feedback-access-table tbody th{border-bottom:1px solid var(--line);padding-block:4px}
+.feedback-access-table tbody th a{display:inline-flex;align-items:center;min-height:44px}
+.feedback-access-table small{display:block;font-size:14px;font-weight:400;color:var(--muted)}
+.feedback-access-table td{background:var(--heat-bg);color:var(--heat-ink)}
+.feedback-access-table td strong{display:block;font-size:19px;font-weight:650}
+.feedback-access-table td span{display:block;font-size:13px;white-space:nowrap}
+.feedback-access-readings{margin:24px 0}
+.feedback-access-readings>div{display:grid;grid-template-columns:100px minmax(0,1fr);gap:24px;border-top:1px solid var(--line);padding:24px 0}
+.feedback-access-readings dt{font-size:20px;font-weight:650;scroll-margin-top:24px}
+.feedback-access-readings dd{margin:0}
+.feedback-access-readings dd p:first-child{margin-top:0}
+.feedback-access-readings a,.home-access-reading>a{display:inline-flex;align-items:center;min-height:44px}
+.home-access-reading{border-block:1px solid var(--line);padding:24px 0;margin:32px 0}
+.home-access-reading h4{margin-top:0}
+#feedback-access,#feedback-access-readings{scroll-margin-top:24px}
+@media(max-width:959px){#feedback-access,#feedback-access-readings,.feedback-access-readings dt{scroll-margin-top:96px}}
+@media(max-width:600px){.feedback-access-readings>div{grid-template-columns:1fr;gap:8px}}
+@media(forced-colors:active){.feedback-access-table td{border:1px solid CanvasText}}
