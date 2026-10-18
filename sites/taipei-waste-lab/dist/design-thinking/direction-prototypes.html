@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>四方向概念草模</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="prototype-header">
+<a id="back" href="index.html#prototype">← 四方向研究工作頁</a>
+<p class="eyebrow">Concept storyboard · v1</p>
+<h1 id="title">四方向概念草模</h1>
+<p class="lead">比較不同條件下的選擇與未知。這是依評論發想的虛構劇本，不是重演某位留言者的經驗。</p>
+<div class="notice">
+<strong>沒有真實案件、接手單位、車次或作業派遣。</strong>
+<p>模擬原型，尚未經真人驗證。本輪只有既有評論，操作不能記為已取得當事人回饋。家戶本期不做。</p>
+</div>
+<nav class="nav" aria-label="四方向草模">
+<a href="direction-prototypes.html?direction=P01">車籃</a>
+<a href="direction-prototypes.html?direction=P02">搭車前</a>
+<a href="prototype.html?variant=B&amp;task=T01">行人</a>
+<a href="direction-prototypes.html?direction=P04">清潔</a>
+</nav>
+</header>
+<main class="prototype-main">
+<section aria-labelledby="scenario-heading">
+<h2 id="scenario-heading">選一個情境</h2>
+<label for="scenario">虛構情境</label>
+<select id="scenario">
+</select>
+<p class="eyebrow" id="task-code">
+</p>
+<h3 id="case-title">
+</h3>
+<p class="lead" id="scene">
+</p>
+<div class="card">
+<h3>這個劇本提供的條件</h3>
+<dl id="facts">
+</dl>
+</div>
+</section>
+<section aria-labelledby="choices-heading">
+<h2 id="choices-heading">你會怎麼判斷下一步？</h2>
+<p class="quiet">選項不是推薦做法，也沒有標準答案。請保留缺少的資訊與其他可能做法。</p>
+<div id="choices" role="group" aria-label="可能的下一步">
+</div>
+<label for="reason">理由、缺少的資訊或其他做法（可留空）</label>
+<textarea id="reason" placeholder="不要補入未提供的真實人物、時間或處理結果。">
+</textarea>
+<div class="actions">
+<button type="button" class="primary" id="record" disabled>記錄這個選擇</button>
+<span id="selection" class="quiet" aria-live="polite">尚未選擇</span>
+</div>
+<div id="result" class="result" hidden tabindex="-1">
+</div>
+</section>
+<details>
+<summary>本頁暫存紀錄</summary>
+<p>選擇只存在本頁記憶體，重新整理或離開會清除，不傳送或保存到伺服器。這些是桌面或身分未確認的互動，不能直接列入參與者資料。</p>
+<p id="record-count" aria-live="polite">目前 0 筆。</p>
+<div id="log" class="stack" style="margin-top:16px">
+</div>
+</details>
+<p class="quiet">本頁不連網、不追蹤、不使用定位。請勿輸入姓名或聯絡資訊。</p>
+</main>
+<footer class="prototype-main">選擇與理解 ≠ 真實服務有效。<a href="index.html#test">查看後續驗證界線</a>
+</footer>
+<script src="direction-data.js">
+</script>
+<script src="direction-prototypes.js">
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>下一步怎麼做？｜投放情境草模</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="prototype-header">
+<a href="index.html#prototype">← 研究工作頁</a>
+<p class="eyebrow">Concept trial · v0</p>
+<h1>手上有垃圾，<br>下一步怎麼做？</h1>
+<p class="lead">這是虛構情境的概念試用。請依畫面決定下一步，也可以選擇暫不前往。</p>
+<div class="notice">
+<strong>所有地點、距離、狀態與收受條件都是測試劇本。</strong>
+<p>模擬原型，尚未經真人驗證。沒有真實導航或投放服務；選擇不會送出到任何單位。家戶本期不做。</p>
+</div>
+</header>
+<main class="prototype-main">
+<details class="no-print" id="setup">
+<summary>研究設定：版本與情境</summary>
+<div class="controls">
+<div>
+<label for="variant">資訊版本</label>
+<select id="variant">
+<option value="A">A · 只有位置</option>
+<option value="B">B · 位置與使用條件</option>
+</select>
+</div>
+<div>
+<label for="scenario">測試情境</label>
+<select id="scenario">
+<option value="T01">T01 · 一般包裝</option>
+<option value="T02">T02 · 近點封閉</option>
+<option value="T03">T03 · 物品條件不同</option>
+<option value="T04">T04 · 狀態不明</option>
+<option value="T05">T05 · 行程限制</option>
+</select>
+</div>
+</div>
+<p class="quiet">主持人宜在受試者看到畫面前設定。A 和 B 使用相同地點與劇本，只改變揭露資訊。切換會清除尚未記錄的選擇；已記錄的試用保留在本頁記憶體。</p>
+</details>
+<section aria-labelledby="task-heading">
+<p class="eyebrow" id="task-code">
+</p>
+<h2 id="task-heading">你的情境</h2>
+<p id="task-text" class="lead">
+</p>
+<p class="quiet">請說出你在看什麼、想怎麼做，以及還缺什麼資訊。沒有必須前往的答案。</p>
+<div id="choices" role="group" aria-label="下一步選項">
+</div>
+<button type="button" id="hold" class="choice" aria-pressed="false">
+<span class="choice-title">先不前往任何一處</span>
+<span class="choice-info">我還需要資訊，或目前沒有適合我的選項。</span>
+</button>
+</section>
+<section aria-labelledby="record-heading">
+<h2 id="record-heading">留下你的想法</h2>
+<label for="reason">做這個決定時，你考慮了什麼？還缺什麼？（可留空）</label>
+<textarea id="reason" placeholder="照實寫，包括不確定、不需要這些資訊，或其他做法。">
+</textarea>
+<div class="actions">
+<button type="button" class="primary" id="record" disabled>記錄這次選擇</button>
+<span id="selection" class="quiet" aria-live="polite">尚未選擇</span>
+</div>
+<div id="result" class="result" tabindex="-1" hidden>
+</div>
+</section>
+<details class="no-print">
+<summary>本頁暫存紀錄</summary>
+<p>這裡只記錄試用選擇與自述。身份與參與資格未經確認，不能直接當成已完成的使用者驗證。重新整理或離開會清除；不傳送或保存到伺服器。</p>
+<p id="record-count" aria-live="polite">本頁已記錄 0 次試用。</p>
+<div id="log" class="stack" style="margin-top:16px">
+</div>
+</details>
+<p class="quiet">本頁不連網、不追蹤、不使用定位。不要輸入姓名、聯絡方式或住家地址。</p>
+</main>
+<footer class="prototype-main">試用選擇 ≠ 實際投放成功。<a href="index.html#test">查看測試規程與判讀界線</a>
+</footer>
+<script src="prototype.js">
+</script>
+</body>
+</html>
