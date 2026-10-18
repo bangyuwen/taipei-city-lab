@@ -1,0 +1,55 @@
+{
+  "material_bundle": "0.1.0",
+  "protocol_version": "0.1",
+  "date": "2026-10-18",
+  "technical_status": "HISTORICAL_PASS",
+  "human_study_status": "NOT_STARTED",
+  "human_participants_tested": 0,
+  "field_tasks_completed": 0,
+  "frozen_source_sha256": "b5441b14486c65926532c2ae20da26c3d8b2cb1960cb4d23331452bf4c242439",
+  "checks": {
+    "valid_mobile_cards": 20,
+    "invalid_mobile_card_inputs": 3,
+    "facilitator_dom_pages": 26,
+    "external_requests": 0,
+    "script_errors": 0,
+    "runtime_failures": [],
+    "planned_participant_slots": 12,
+    "planned_tasks": 108,
+    "all_measurement_fields_null": true,
+    "schedule_matches_facilitator_cards": true,
+    "counterbalancing_matches_protocol": true,
+    "participant_pdf_pages": 24,
+    "facilitator_pdf_pages": 26,
+    "pdf_text_and_page_numbers": "PASS",
+    "pdf_visual_inspection": "All pages rendered and visually inspected; representative pages inspected at full resolution. Final output has no observed clipping or overlaps."
+  },
+  "verification_ownership": {
+    "independent_verifier": "Authored browser checks; verified planned data, schedule balance, card order, PDF text and page numbers.",
+    "parent": "Executed the independent browser script with local Chrome; rendered and visually inspected final PDF files."
+  },
+  "environment": {
+    "browser": "Google Chrome on macOS with a temporary profile",
+    "node": "Node.js runtime; exact version not recorded",
+    "python": "Python 3 runtime; exact version not recorded",
+    "external_network": "Blocked during authoring and browser verification"
+  },
+  "evidence": [
+    "build-receipt.json",
+    "source/prototype-v0.1.html",
+    "participant-mobile.html",
+    "participant-cards.html",
+    "facilitator-sheets.html",
+    "planned-sessions.json",
+    "output/pdf/participant-cards.pdf",
+    "output/pdf/facilitator-sheets.pdf"
+  ],
+  "limitations": [
+    "No recruitment, consent, human pretest or formal usability study has occurred.",
+    "No physical smartphone session, field route verification or service trial has occurred.",
+    "Material fingerprints freeze this deliverable; they do not establish formal study registration or management approval.",
+    "The scoring calibration cases are hypothetical examples, not empirical outcomes.",
+    "Detailed QA scripts, browser logs, and rendered screenshots were omitted from the portable research pack; this file preserves their historical summary only."
+  ],
+  "validation_type": "historical_source_pack_receipt"
+}

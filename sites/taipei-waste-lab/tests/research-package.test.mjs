@@ -89,7 +89,10 @@ class Layout(HTMLParser):
 
 layout=Layout(); layout.feed(Path('dist/index.html').read_text())
 home=layout.panels['panel-research']; materials=layout.panels['panel-materials']
-assert home['details']==1 and 'service-method' in home['ids'] and home['articles']==3
+assert home['details']==4 and 'service-method' in home['ids'] and home['articles']==4
+assert {'service-continuity','service-insight','service-prototype','service-scenarios','service-measures','disposal-continuity'}<=home['ids']
+assert '服務成效尚未驗證' in ''.join(home['text'])
+assert '正式桌面測試 0/12 人（0/108 任務）' in ''.join(home['text'])
 assert all(key in home['ids'] for key in ['conclusion-siting','conclusion-collection','conclusion-household'])
 assert {'#siting','#history','#countries','#design','#sources','#materials'}<=home['links']
 assert len(layout.references)==17 and set(layout.references.values())=={'panel-sources'}
