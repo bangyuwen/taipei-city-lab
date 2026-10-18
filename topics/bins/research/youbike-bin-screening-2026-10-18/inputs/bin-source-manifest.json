@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "observed_date": "2026-10-15",
+  "timezone": "Asia/Taipei",
+  "assembled_at": "2026-10-15T00:57:44.408286+00:00",
+  "dataset_url": "https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c",
+  "dataset_id": "a835f3ba-7f50-4b0d-91a6-9df128632d1c",
+  "resource_id": "267d550f-c6ec-46e0-b8af-fd5a464eb098",
+  "license": "Government Data Open License, version 1; original government records preserved via official downloads and Internet Archive.",
+  "snapshots": [
+    {
+      "file": "taipei-bins-2024-10-18-archive-utc.csv",
+      "raw_file": "raw/2024-10-18-official-archive.csv",
+      "capture_utc": "2024-10-18T21:17:32Z",
+      "capture_taipei": "2024-10-19T05:17:32+08:00",
+      "survey_date": null,
+      "source_updated_at": null,
+      "complete_archived_response": true,
+      "citywide_inventory_complete": null,
+      "archive_cdx": "raw/archive-cdx-download.json",
+      "note": "A separate October 2024 archived response, not a completion of the May 2024 API snapshot."
+    },
+    {
+      "file": "taipei-bins-2026-09-30-published.csv",
+      "raw_file": "raw/official-download.csv",
+      "source_updated_at_literal": "2026-09-30 15:55:35",
+      "downloaded_date": "2026-10-15",
+      "survey_date": null,
+      "complete_download": true,
+      "citywide_inventory_complete": null,
+      "note": "All rows of the current official main CSV, with no study-area filter; current API also returns 681 rows. This does not verify physical inventory completeness."
+    },
+    {
+      "file": "taipei-bin-venues-2026-08-18.csv",
+      "raw_file": "raw/official-tourist.csv",
+      "source_updated_at_literal": "2026-08-18 16:27:22",
+      "downloaded_date": "2026-10-15",
+      "grain": "One listed venue; notes state a number of places. Not one row per street cleaning box.",
+      "citywide_inventory_complete": null,
+      "note": "Keep separate from the street-box main file; no addition or deduplication as equivalent bins."
+    }
+  ],
+  "historical_may_2024": {
+    "preserved_rows": 1000,
+    "reported_total_rows": 1991,
+    "missing_rows": 991,
+    "missing_rows_recovered": 0,
+    "same_date_full_snapshot_found": false,
+    "original_source_commit": "82475ba3659e1c2320efc87dcdfb5685aff015a0",
+    "original_import_date": "2024-05-14",
+    "note": "No 2024 captures returned for the queried current or older API prefix; exact second-page availability lookup returned no capture. These scoped searches do not prove the data are unavailable elsewhere."
+  },
+  "transformations": [
+    "Decode original CSV bytes with cp950 strictly.",
+    "Re-encode CSV as UTF-8 with BOM; retain column order, row order, all original values and duplicate coordinates.",
+    "Do not repair or drop invalid coordinates.",
+    "Do not combine snapshots or infer removal events."
+  ],
+  "files": {
+    "raw/2024-08-05-techtarian.html": {
+      "bytes": 225836,
+      "sha256": "7da18f8eef2f0233f97e40bee9d094590c898ebdca0d2066535030da99902381"
+    },
+    "raw/2024-10-18-official-archive.csv": {
+      "bytes": 184116,
+      "sha256": "fa9b8f5d6f1805ee7f58b081178b9967ccae3a7d7b71f4e62c8ecd2adc19147d"
+    },
+    "raw/2024-original.json": {
+      "bytes": 290046,
+      "sha256": "43ac03adcd09ecac7e9981a7bb107ca819794d0d9f3e7fd8aa05912866046811"
+    },
+    "raw/api-offset-0.json": {
+      "bytes": 196408,
+      "sha256": "8eaea29e277be00073bc7b3805eb0ef463ea6f130b45e01769b5066aa515d3c1"
+    },
+    "raw/api-offset-1000.json": {
+      "bytes": 74,
+      "sha256": "0c5948ce4363aed883c20b3c86e89dd40acb1513ff72cdcbc0c0cc0a53e31583"
+    },
+    "raw/api-offset-2000.json": {
+      "bytes": 74,
+      "sha256": "9030b6ebca30c9de11ccf7f4acbe7cd1aac1e3fff70dbc1c4b8bc6d0b7cb7a5d"
+    },
+    "raw/archive-available.json": {
+      "bytes": 177,
+      "sha256": "58f8d6816f43d5ef3dd0a0eb1f9ee1c5eca7c1ac16eee22f56286f06f81cfca2"
+    },
+    "raw/archive-cdx-catalog.json": {
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    "raw/archive-cdx-download.json": {
+      "bytes": 403,
+      "sha256": "f0abec59e25c7b219a4ee9566ddf7081a3b952b345627961fee318a487efd4a9"
+    },
+    "raw/archive-cdx-opendata.json": {
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    "raw/archive-cdx-techtarian-data.json": {
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    "raw/archive-cdx-techtarian.json": {
+      "bytes": 444,
+      "sha256": "43c1d17c55e2624c36875db37013c09786bbc6411101be8946352e5bd9dd9ad6"
+    },
+    "raw/archive-cdx.json": {
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    "raw/catalog-parsed.json": {
+      "bytes": 4657,
+      "sha256": "2bfa20803e1e847459bc3609e04b03702aa6a06514174fcca4ef93f44bef3d56"
+    },
+    "raw/catalog.html": {
+      "bytes": 87258,
+      "sha256": "e6ab900ab0d0bef04ae3458b8016f2c719f2a0c9cc7fd1c6f43e20a7f2f85fb9"
+    },
+    "raw/github-commits.json": {
+      "bytes": 3001,
+      "sha256": "6fcee6114e3cc6757873d8bfdec39aae9263d04dfae31690a7f0e831a46e94cf"
+    },
+    "raw/github-jojoclt-tree.json": {
+      "bytes": 47088,
+      "sha256": "a3c9989745aa0bd10397c825f0b592854dc8ecad8094bab8a2d2b792368a9203"
+    },
+    "raw/github-original-tree.json": {
+      "bytes": 5116,
+      "sha256": "2a025e0da972f797c968f4359adf603729011949ae4d1450edb83cba223751f0"
+    },
+    "raw/github-riddleling-tree.json": {
+      "bytes": 26820,
+      "sha256": "064468b1793a6e62bfd57986110e9873d167360124501f2027b28c3e434eb208"
+    },
+    "raw/github-search-chinese.json": {
+      "bytes": 10736,
+      "sha256": "9ff45d22d83e57b3f2db6bc5283ae381add67725fbaf6fef91b8575ba0b0d766"
+    },
+    "raw/github-search.json": {
+      "bytes": 15695,
+      "sha256": "ca8ea37869d772a9e47359bfd33eefda06fbf7979fe1642948d9083f1a49231c"
+    },
+    "raw/github-wlmaplab-tree.json": {
+      "bytes": 17113,
+      "sha256": "a0cb35b5512ca93a5dce1ffdcc61fd485a0af5c359c741e09c12f43d5036bbf2"
+    },
+    "raw/official-download.csv": {
+      "bytes": 63540,
+      "sha256": "ff3cf5528c057958f89871aa5300fc633b02d0f7b37131ab29d5ddc2f8e2370d"
+    },
+    "raw/official-tourist.csv": {
+      "bytes": 5396,
+      "sha256": "47b1ddfb4f0ab4d5e57afab538f71da3d41d22e59c984bdd9c10b4248223b066"
+    },
+    "raw/requests.json": {
+      "bytes": 14029,
+      "sha256": "ea09a5c01b4941c1872257b9e273488bbf7d419aad4083de2dfce29806337254"
+    },
+    "taipei-bin-venues-2026-08-18.csv": {
+      "bytes": 6675,
+      "sha256": "e63606bca5da810114f4352d38c0a5f13f0be85ee7959c307ad8c9df56d1ce72"
+    },
+    "taipei-bins-2024-10-18-archive-utc.csv": {
+      "bytes": 243970,
+      "sha256": "bb34f092da73d663b49eb0a55d98fe8864377a3dfcc1b103f04affdca4ca6cdb"
+    },
+    "taipei-bins-2026-09-30-published.csv": {
+      "bytes": 84118,
+      "sha256": "38b4af06dc0d57a38cc1361079fed8963632be746f5033638dec1001c072fda1"
+    }
+  }
+}

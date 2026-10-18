@@ -1,0 +1,5 @@
+# Retain exact input and output bytes for the offline provenance checks.
+inputs/** -text whitespace=cr-at-eol
+# The retained HTTP response ends with the protocol's empty separator line.
+inputs/youbike-http-headers.txt -text whitespace=cr-at-eol,-blank-at-eof
+results/*.csv -text whitespace=cr-at-eol

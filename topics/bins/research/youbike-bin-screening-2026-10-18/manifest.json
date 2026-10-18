@@ -1,0 +1,40 @@
+{
+  "task_date": "2026-10-18",
+  "timezone": "Asia/Taipei",
+  "youbike_download_completed_utc": "2026-10-18T08:30:10.972057+00:00",
+  "youbike_catalog": "https://data.gov.tw/dataset/137993",
+  "youbike_url": "https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json",
+  "copied_bin_inputs": {
+    "bins-2026.csv": "taipei-bins-2026-09-30-published.csv",
+    "bins-2024.csv": "taipei-bins-2024-10-18-archive-utc.csv",
+    "venues.csv": "taipei-bin-venues-2026-08-18.csv",
+    "bin-source-manifest.json": "manifest.json"
+  },
+  "files": {
+    "bin-source-manifest.json": {
+      "bytes": 6989,
+      "sha256": "b0e6ffd4467e8c969265e52590fa7c27e3b64477fa2bf28361f907e08175fb06"
+    },
+    "bins-2024.csv": {
+      "bytes": 243970,
+      "sha256": "bb34f092da73d663b49eb0a55d98fe8864377a3dfcc1b103f04affdca4ca6cdb"
+    },
+    "bins-2026.csv": {
+      "bytes": 84118,
+      "sha256": "38b4af06dc0d57a38cc1361079fed8963632be746f5033638dec1001c072fda1"
+    },
+    "venues.csv": {
+      "bytes": 6675,
+      "sha256": "e63606bca5da810114f4352d38c0a5f13f0be85ee7959c307ad8c9df56d1ce72"
+    },
+    "youbike-http-headers.txt": {
+      "bytes": 445,
+      "sha256": "6b2f2c1a7a5be9280c9ab90c281c9cbffb622e3ffd7c4acbe69a2039706aa3bb"
+    },
+    "youbike.json": {
+      "bytes": 953864,
+      "sha256": "37cc4b32dfa5ae7dad0328701808df6d76860d86e08794b3af72773ca6ed9585"
+    }
+  },
+  "protocol_sha256": "9f6e2312ad31e850bbf4d2420b5e8aa1a45fdfe27e5a0c95c646feaac0144094"
+}
