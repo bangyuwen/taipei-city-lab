@@ -175,11 +175,11 @@ function renderVenues(){
   $('venue-source').href=data.source;
   $('venue-date').textContent=`來源更新 ${data.sourceUpdatedAt.slice(0,10)}；${data.checkedDate} 複查`;
   $('venue-status').textContent=!state.showVenues?'場域圖層已隱藏。':
-    venueFiltered.length?'場域處數與街頭列數分開閱讀，不能相加。':
-    state.district&&!data.districts.includes(state.district)?'本圖層只整理北投、南港；其他區未納入，不代表沒有場域。':'沒有符合篩選的場域線索；不代表沒有可用投放點。';
+    venueFiltered.length?'場域線索與街頭紀錄分開計數，不能相加；重複名稱及座標保留。':
+    '沒有符合篩選的場域線索；不代表沒有可用投放點。';
   $('venue-list').innerHTML=venueFiltered.map(p=>`<div class="point-row venue-row"><button type="button" data-venue="${esc(p.id)}"><span>${esc(p.address)}</span><small>${esc(p.district)} · 約略位置，待核實</small></button></div>`).join('');
   for(const button of $('venue-list').querySelectorAll('[data-venue]'))button.addEventListener('click',()=>focusVenue(button.dataset.venue));
-  if(visible&&state.showVenues)$('map-caption').textContent+=` 另顯示 ${num(venueFiltered.length)} 處場域約略位置；不是已核實桶位。`;
+  if(visible&&state.showVenues)$('map-caption').textContent+=` 另顯示 ${num(venueFiltered.length)} 筆場域線索（約略位置）；不是已核實桶位。`;
 }
 function renderList(){
   const d=dataset();
