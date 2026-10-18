@@ -134,13 +134,13 @@ components:
 
 ## Overview
 
-The 2026-10-17 information architecture puts three reader journeys in the primary rail: 研究結論 (the default page), 台北的變化, and 各地做法. Sources/methods and execution materials are secondary links. Recommendations, dated observations and authored concepts have distinct content homes and direct evidence links. The country reader displays one case at a time; photo and 3D share a media area. Guided design demonstrations replace the parameter workbench. These changes retain the petrol/paper identity and the existing type and interaction tokens.
+The 2026-10-17 information architecture puts three reader journeys in the primary rail: 研究結論 (the default page), 台北的變化, and 各國垃圾桶. Sources/methods and execution materials are secondary links. Recommendations, dated observations and authored concepts have distinct content homes and direct evidence links. The country reader leads with the selected country's strategy, operating flow, city evidence, sources, and limits; photo and 3D remain supplementary media for twelve cases. The browser covers fourteen countries and regions. Guided design demonstrations replace the parameter workbench. These changes retain the petrol/paper identity and the existing type and interaction tokens.
 
 **Creative North Star: "The Open-Shelf Research Index"**
 
 The site borrows the clarity of a public library index: a deep petrol rail anchors cool paper pages, and pale blue marks the selected entry. Short rows, aligned counts, quiet rules, and familiar web controls carry dense public information without turning research into promotional cards.
 
-Residents and researchers move from a dated record or place to its source, comparison, and service implications. The map starts with its location task; evidence pages use a continuous reading column with limits beside the claims they qualify. Four purpose choices and twelve photo-backed country cases remain distinct, with each real image kept beside its caption, credit, and license. Costs, observed results, and local interpretation stay separate.
+Residents and researchers move from a dated record or place to its source, comparison, and service implications. The map starts with its location task; evidence pages use a continuous reading column with limits beside the claims they qualify. Four purpose choices remain distinct from the fourteen country strategies. Twelve photo-backed equipment supplements keep each real image beside its caption, credit, and license. Costs, observed results, and local interpretation stay separate.
 
 **Key Characteristics:**
 
@@ -202,7 +202,7 @@ On wide screens a fixed 224px rail anchors the page. It narrows to 200px at 1199
 
 The map workspace uses a 280px filter and result column beside a map that spans the second column; the left column narrows to 250px with the rail. At 639px and below, filters, map, and results stack in that order. The four-version strip keeps four columns on desktop.
 
-Long research pages pair a sticky contents rail with a 76ch reading body, then collapse to a contents block above the article on phones. Comparison and country pages retain their own table and photo layouts while using the same rail, control, and reading styles.
+Long research pages pair a sticky contents rail with a 76ch reading body, then collapse to a contents block above the article on phones. On wide screens, the country page pairs a roughly 190px sticky country index with a 76ch strategy column. Below 1160px, a native country select replaces the index list. The comparison follows the country browser and becomes labeled rows on narrow screens; the existing photo and 3D supplements stay below the strategy content.
 
 ## Elevation & Depth
 
@@ -234,7 +234,7 @@ The desktop rail is fixed, petrol, and vertically stacked. Links use 16px text a
 ### Signature Components
 - **Version strip:** Four aligned dataset choices lead with count and coverage; the active choice uses a pale fill and green underline.
 - **Map workspace:** Filters and results sit beside the map on desktop and return to filter → map → results order on phones. The default CARTO Positron basemap keeps geographic detail quiet behind the dated point colors; a labeled native select offers the original street map. If CARTO fails, a desaturated street layer at 55% opacity preserves the map with a visible fallback notice. Basemap changes retain the current view, records, and filters.
-- **Country case:** Each of the twelve photo-backed examples keeps its image, caption, credit, and license with the evidence.
+- **Country strategy:** Fourteen country and region entries lead with a four-step flow, expanded city facts, sources, and limits. Twelve equipment media supplements retain their photo, caption, credit, and license below the strategy.
 - **Evidence note:** Warm fill and contrasting text keep a coverage or source limit attached to the relevant record.
 
 ## Do's and Don'ts
@@ -254,9 +254,9 @@ The desktop rail is fixed, petrol, and vertically stacked. Links use 16px text a
 
 ## Country discovery and parts
 
-The country page leads with one selected case, its real photograph and complete provenance, and the existing use, collection, and evidence fields. A purpose-grouped index selects the case on desktop; a native grouped select serves narrower screens. Reading and play share one country selection. Keep all twelve static articles available when the country module cannot load. Costs and local interpretation remain in a labeled disclosure; comparison, Taipei scenarios, and research context follow as optional reading.
+The country page shows one selected country at a time and leads with its strategy. Keep the four-step operating flow, optional 0–100% chart, expanded city cases with eight shared facts, source lists, and warm-tinted limitation rows together in the reading column. The index covers fourteen countries and regions, including Hong Kong and Uruguay; those two have no matching media. Twelve photo and 3D supplements follow the strategy and keep their provenance with the relevant equipment case. On wide screens, use a roughly 190px sticky index with a 76ch content column; on smaller screens, show the native country select. Place the cross-country comparison below the browser and convert its cells into labeled rows at phone widths without changing table semantics. Keep the equipment media optional and preserve its source, cost, and model limitations.
 
-The shared Three.js renderer loads only when the visitor opens the selected case's play disclosure. Keep direct part selection with labeled button alternatives, deterministic seeking, and reduced-motion/offscreen suspension. Closing the disclosure suspends rendering; switching country ends the old guide. Preserve the photo comparison, full caption, credit, license, and case limitations inside play. Advanced camera controls stay in a native disclosure. Source labels retain date and coverage text on narrow layouts; never normalize currencies or turn unknown costs into numbers.
+The shared Three.js renderer loads only when the visitor selects 3D in a country's media supplement. Keep direct part selection with labeled button alternatives, deterministic seeking, and reduced-motion/offscreen suspension. Switching country ends the old guide. Preserve the photo, full caption, credit, license, and case limitations in the supplement. Source labels retain date and coverage text on narrow layouts; never normalize currencies or turn unknown costs into numbers.
 
 ## T1 physical proposal
 
