@@ -1,0 +1,415 @@
+[
+  {
+    "id": "us",
+    "name": "美國",
+    "scope": "紐約行人籃網絡 · 舊金山設備汰換",
+    "thesis": "先把行人輕量垃圾與家戶、商業垃圾的服務邊界說清楚，再沿可服務的清運路線布點。桶型試用要同時納入清潔、換袋、維修與承包人員操作；原型設計費、量產採購價和後續部署各有不同口徑。",
+    "summary": "紐約把行人籃放在商業或混合使用街區、交通節點及既有清運路線，並限制不適合的新增申請區位。舊金山2022年在52處比較六款公共桶並收集使用者與營運回饋；2026年的首批量產桶仍在製造、維護和操作測試階段。3D外觀只協助辨認入口與維修部件，不代表街道清潔成效。",
+    "comparison": {
+      "placement": "紐約以商業街角、混合街區與交通節點為主",
+      "collection": "接既有標準路線；逐桶班次未公開",
+      "responsibility": "市府服務公用桶，沿街物業另負周邊清潔",
+      "separation": "行人輕量垃圾；家戶與商業垃圾不得投入",
+      "evidence": "配置邊界可核，清潔因果與完整成本未公開"
+    },
+    "flow": {
+      "title": "紐約市DSNY行人垃圾籃：配置、服務與回報",
+      "steps": [
+        {
+          "label": "界定收受物",
+          "text": "公共籃只供行人投放輕量垃圾；家戶與商業垃圾不得投入。"
+        },
+        {
+          "label": "沿路線布點",
+          "text": "一般設於商業或混合使用區、交通節點及標準清運路線。"
+        },
+        {
+          "label": "篩選新增位置",
+          "text": "DSNY不受理以住宅或工業為主的街道，也不受理街廓中段。"
+        },
+        {
+          "label": "回報異常",
+          "text": "民眾可回報遺失、滿溢或錯投；逐桶清空班次與垃圾後端去向未列。"
+        }
+      ],
+      "note": "官方資料確認用途與配置規則；桶體照片或3D模型只能輔助辨認，不證明清潔效果。",
+      "sourceIds": [
+        "nyc-dsny-baskets"
+      ]
+    },
+    "cases": [
+      {
+        "id": "nyc-litter-baskets",
+        "title": "紐約市行人垃圾籃：把用途、街角與清運路線綁在一起",
+        "place": "美國紐約市",
+        "period": "DSNY現行公開規則；查閱日期2026-10-18",
+        "status": "用途、申請條件與回報入口可核；逐點班次及因果評估未公開",
+        "problem": "公共籃服務行人輕量垃圾；家戶袋或店家垃圾混入會占用行人容量，也會把其他廢棄物需求錯算成街桶需求。",
+        "placement": "沿標準清運路線，通常放在商業或混合使用街區、交通樞紐；不受理多為住宅或工業的街道及街廓中段申請。",
+        "operation": "DSNY清空公共籃並接受缺失、滿溢與錯投回報；公開頁沒有列出各桶固定頻率，不能由標準路線推定逐點班次。",
+        "responsibility": "DSNY負責行人公共籃服務；鄰接建物物業也須維持周邊人行道與路溝清潔，兩種責任的服務對象不同。",
+        "finance": "官方頁未列單桶採購價、逐點清運費或完整維修成本；垃圾違規罰款是執法資訊，不能當成服務成本。",
+        "separation": "公用籃收行人輕量垃圾及綁袋犬糞；家戶垃圾與商業垃圾明文不得投入，且可回報這類錯用。",
+        "result": "資料能確認設點門檻、收受用途與民眾回報方式；沒有同口徑前後或對照數據可量化街道垃圾變化。",
+        "limits": "不受理設點代表不符合公開的服務路線或區位條件，不表示該處沒有行人需求；投放量也可能受滿溢與錯用影響。",
+        "sourceIds": [
+          "nyc-dsny-baskets"
+        ]
+      },
+      {
+        "id": "sf-trash-can-procurement",
+        "title": "舊金山Slim Silhouette：分開讀2022試用與2026採購測試",
+        "place": "美國舊金山市",
+        "period": "2022-07至09街頭試用；2026-03公布採購與首批測試進度",
+        "status": "2022年六款試用報告完成；2026年3月首10座交測並預期其後部署，10月進度未核得更新",
+        "problem": "舊桶材質、鎖具與鉸鏈老化且難以維修；翻找、清洗及回收物交換也需納入規格，採購問題不只是外觀選擇。",
+        "placement": "2022年將六款桶分兩輪放到52處試用；2026年首10座先檢查製造規格、耐久、維護與操作員使用情形。",
+        "operation": "市府列每月蒸氣清洗及既有桶維修工作；新桶測試檢查製造符合度、耐用性、維修便利與清潔作業可用性。",
+        "responsibility": "Public Works管理公用桶與採購；2022試用納入承包清運者、清潔團體、商家與市府作業人員回饋。",
+        "finance": "2026年3,000座以上採購基礎單價為US$1,591（桶US$1,495加內桶US$96）；另列可能變動的US$158關稅，未列安裝費。此口徑不同於2022原型設計與試製費。",
+        "separation": "候選桶需容納32加侖帶輪內桶並支援回收物交換；實際分類品質與後端再生量未由外觀或試用意見確認。",
+        "result": "2022年街頭試用後選出Slim Silhouette；2026首批10座仍在檢驗製造、耐久、維護與操作，尚無新桶街頭清潔結果。",
+        "limits": "2022年使用者意見及多項規格評選不是垃圾減量隨機試驗；2026報價、測試與預計供貨能力均不等於全市已換裝或淨效益。",
+        "sourceIds": [
+          "sf-pilot-2022",
+          "sf-procurement-2026"
+        ]
+      }
+    ],
+    "takeaways": [
+      "台北若設街桶，先劃清行人輕量垃圾與家戶、商業收運邊界；公開設點條件及滿溢、錯投、周邊清掃的回報入口。",
+      "採購前讓清潔隊、清運者和一般使用者在滿載、清洗、換袋、維修等情境試用；分列原型工程費、量產單價、內桶、關稅與部署成本。",
+      "可用3D呈現入口、帶輪內桶與人行空間的操作取捨；設備成效仍須靠現地清潔、工時、故障與成本紀錄判讀。"
+    ],
+    "sources": [
+      {
+        "id": "nyc-dsny-baskets",
+        "label": "紐約DSNY行人垃圾籃服務、配置條件與回報說明",
+        "url": "https://www.nyc.gov/site/dsny/what-we-do/cleaning/litter-baskets.page",
+        "date": "查閱2026-10-18",
+        "kind": "市政服務規則"
+      },
+      {
+        "id": "sf-pilot-2022",
+        "label": "舊金山Public Works六款垃圾桶、52處街頭試用與營運回饋報告",
+        "url": "https://sfpublicworks.org/sites/default/files/12.22.22%20PRESS%20RELEASE%20Public%20Works%20moves%20forward%20with%20trash%20can%20design.pdf",
+        "date": "2022-11-15",
+        "kind": "市府試用報告"
+      },
+      {
+        "id": "sf-procurement-2026",
+        "label": "舊金山Public Works 2026垃圾桶採購單價與首批測試進度",
+        "url": "https://media.api.sf.gov/documents/Public_Works_Refuse_Rate_Board_presentation_3.13.26_final.pdf",
+        "date": "2026-03-13",
+        "kind": "採購與測試簡報"
+      }
+    ]
+  },
+  {
+    "id": "australia",
+    "name": "澳洲",
+    "scope": "墨爾本商業巷道共用收運與監測",
+    "thesis": "墨爾本將一部分商業巷道服務由各店自置垃圾桶，轉為街區共用壓縮站與回收站，並用資料試點觀察錯投、滿載、傾倒和通道阻塞。比較時要把商業收運與行人隨手垃圾分開，不能把撤除的巷道私桶數寫成公共街桶減量。",
+    "summary": "市府2015–18計畫記錄四座巷道壓縮桶和六處共用回收站由約400家商家與居民使用，並記載唐人街與Hardware Lane區移除260座存放於公共空間的垃圾桶；這些是商業服務整併數據。2021年Bullens Lane再試用既有CCTV影像分析與SMS通知，追蹤設施使用、錯置、傾倒和阻塞。2025–26預算另列市中心商業收運車年度許可費，不是共用壓縮桶或行人垃圾桶單價；服務結果與全生命週期節省仍未由對照評估確認。",
+    "comparison": {
+      "placement": "CBD商業巷道共用站，非一般行人街桶",
+      "collection": "市府／承包服務；資料通知滿載及阻塞",
+      "responsibility": "商家與居民共用，市府和Citywide參與試點",
+      "separation": "一般商業垃圾壓縮站與附近共同回收站",
+      "evidence": "計畫與試點記錄可核，淨清潔效果未證"
+    },
+    "flow": {
+      "title": "墨爾本Bullens Lane：巷道設施資料如何通知營運",
+      "steps": [
+        {
+          "label": "商家與居民使用",
+          "text": "共用巷道壓縮設施及附近回收站，服務市中心商業街區。"
+        },
+        {
+          "label": "影像分析觀察",
+          "text": "試點估計使用次數、日投放量、尖峰時段、故障及錯誤棄置。"
+        },
+        {
+          "label": "識別現場事件",
+          "text": "系統記錄垃圾傾倒與車輛阻塞，判斷何時需要清空或處理。"
+        },
+        {
+          "label": "通知承包服務",
+          "text": "SMS告知市府廢棄物服務承包商；實際節省的車次、工時與費用未量出。"
+        }
+      ],
+      "note": "這是巷道商業服務試點，不是行人垃圾桶網絡；3D或流程圖只說明服務分工，不能代替成效評估。",
+      "sourceIds": [
+        "melbourne-bullens-pilot"
+      ]
+    },
+    "cases": [
+      {
+        "id": "melbourne-communal-laneway-service",
+        "title": "墨爾本市中心巷道：以共用壓縮站和回收站整合街區收運",
+        "place": "澳洲維多利亞州墨爾本市中心",
+        "period": "壓縮桶2013–2015年安裝；2015–2018計畫記錄營運",
+        "status": "市府歷史計畫記錄四座壓縮桶與六座回收站；未作為2026現況盤點",
+        "problem": "多家商戶在狹窄巷道存放私有垃圾桶，由不同業者多次派車，造成交通、異味、溢滿與回收服務不足。",
+        "placement": "Kirks Lane、Bullens Lane、Lacey Place與Caledonian Lane設四座壓縮桶；附近六處回收站組成街區共用服務。",
+        "operation": "2015–18計畫記載約400家商家與居民使用；市府稱設施區內溢滿桶與公共空間存桶減少，但未提供同期對照。",
+        "responsibility": "市府計畫持續營運四座壓縮桶及六處回收站，商家與居民共用；擴點決策要求社區參與和公共利益檢驗。",
+        "finance": "歷史計畫估每座壓縮桶每年AUD$160,000，含租賃、監測、清潔、清運與處置；新增桶另估AUD$100,000安裝費，非2026報價。",
+        "separation": "壓縮站承接街區一般垃圾，鄰近回收站補上共同回收服務；服務對象是商家與居民，不是所有路過行人的小型街桶。",
+        "result": "計畫記錄唐人街及Hardware Lane區移除260座存放在公共空間的垃圾桶；這是商業服務重整，不是公共行人垃圾桶撤除數。",
+        "limits": "數量、成本和成效來自2015–18市府計畫；沒有後續同口徑評估，不能推為2026仍在運作的規模或因果節省。",
+        "sourceIds": [
+          "melbourne-communal-plan"
+        ]
+      },
+      {
+        "id": "melbourne-bullens-pilot",
+        "title": "Bullens Lane影像分析試點：觀察設施使用、滿載與巷道阻塞",
+        "place": "澳洲墨爾本市Bullens Lane",
+        "period": "2021-07啟動；頁面規劃於2022–2023擴至四條巷道",
+        "status": "市府記錄試點啟動及擴點計畫；尚未找到全期效益或最終評估",
+        "problem": "窄巷道需要知道共用壓縮設施是否符合使用者需求，以及錯投、故障、亂倒垃圾或車輛阻塞何時發生。",
+        "placement": "試點在Bullens Lane沿用既有CCTV與邊緣分析設備，後續規劃Kirks Lane、Lacey Place等四處擴點。",
+        "operation": "影像分析統計設施使用、不可用時間、傾倒與阻塞；偵測到需清空或巷道事件時，以SMS通知服務承包商。",
+        "responsibility": "City of Melbourne與Citywide作為市府及合約服務提供者使用試點資料；頁面未逐項交代清潔隊、商家或承包商的全部工時責任。",
+        "finance": "試點頁未公布攝影與分析服務完整成本；2025–26預算另列商業收運車年許可費AUD$5,500，並非本試點或行人桶成本。",
+        "separation": "影像監測對象是共用壓縮站、回收桶及巷道活動；公開資料沒有把它描述成市政行人垃圾桶滿度感測網。",
+        "result": "市府將試點用於觀察使用量、尖峰、清運配合、設備故障與傾倒；頁面沒有提供清潔度或車次減少的量化結果。",
+        "limits": "感測到活動或傳送通知只證明監測流程存在，不能證明巷道更乾淨、垃圾回收更多或營運費下降。",
+        "sourceIds": [
+          "melbourne-bullens-pilot",
+          "melbourne-permit-2025"
+        ]
+      }
+    ],
+    "takeaways": [
+      "若台北問題是商業巷道多家私桶、車輛頻繁進出，才比較街區共用站；不要把商業垃圾整併方案直接套到行人公共垃圾桶。",
+      "影像資料可協助辨認使用時段、錯投、故障與阻塞；仍須量測影像營運成本、實際清運工時和街道垃圾，未驗證前不記節省。",
+      "先確認共用服務的收受對象、回收去向、費用分攤與撤點替代方式，再用3D展示設施和巷道操作；模型不代表已驗證的現場效益。"
+    ],
+    "sources": [
+      {
+        "id": "melbourne-communal-plan",
+        "label": "City of Melbourne《Waste and Resource Recovery Plan 2015–18》，共用壓縮桶與回收站計畫",
+        "url": "https://participate.melbourne.vic.gov.au/application/files/5614/4400/0207/Waste_and_Resource_Recovery_Plan_2015-18.pdf",
+        "date": "2015–2018計畫",
+        "kind": "市府營運計畫"
+      },
+      {
+        "id": "melbourne-bullens-pilot",
+        "label": "City of Melbourne Bullens Lane巷道廢棄物影像分析試點",
+        "url": "https://participate.melbourne.vic.gov.au/emerging-tech-testbed/bullens-lane",
+        "date": "2021-07啟動；查閱2026-10-18",
+        "kind": "市府試點紀錄"
+      },
+      {
+        "id": "melbourne-permit-2025",
+        "label": "City of Melbourne市中心商業收運許可及費用制度說明",
+        "url": "https://participate.melbourne.vic.gov.au/waste-collector-permit-fee/project-overview",
+        "date": "2025–2026預算制度；查閱2026-10-18",
+        "kind": "市府商業收運規則"
+      }
+    ]
+  },
+  {
+    "id": "south-africa",
+    "name": "南非",
+    "scope": "開普敦高人流設點 · 混投與撤桶經驗",
+    "thesis": "在購物區和公共運輸主路等高人流位置設小型行人桶，同時明確排除家戶和商業垃圾，並承諾每日清空。市府另記錄其他點位因家庭、商家垃圾混投而持續溢滿並遭撤除；公告沒有證明這項做法改善全市清潔或排水。",
+    "summary": "開普敦市2022年公告在Site C Plaza周邊三條街設置28座綠色垃圾桶，供薯片袋、飲料容器等行人小垃圾，並由當地清潔隊每日清空。公告同時回顧其他地區曾因家戶及商業垃圾倒入而溢滿、投訴並撤桶。住戶與商家另有市政或合格服務提供者的廢棄物服務；安裝與撤除都不能推成需求消失或全市因果效果。",
+    "comparison": {
+      "placement": "購物區及大眾運輸主路等高人流處",
+      "collection": "Site C公告每日清空；其他點班次未知",
+      "responsibility": "市府清潔隊清空，家戶與商家另安排收運",
+      "separation": "行人小型垃圾；不收家戶或商業廢棄物",
+      "evidence": "公告記錄設點與溢滿撤除理由，無成效對照"
+    },
+    "flow": {
+      "title": "Cape Town Site C Plaza：高人流行人垃圾桶的服務鏈",
+      "steps": [
+        {
+          "label": "選擇服務地點",
+          "text": "購物中心周邊及通往大眾運輸的高人流步道。"
+        },
+        {
+          "label": "限定收受品項",
+          "text": "桶供薯片袋、飲料容器等小型隨手垃圾；不收家戶或商業垃圾。"
+        },
+        {
+          "label": "安排現場清空",
+          "text": "市府公告稱由當地清潔隊每日清空，桶身印有反亂丟訊息。"
+        },
+        {
+          "label": "處理替代垃圾流",
+          "text": "住戶走市政收運；商家依規定安排廢棄物管理，撤桶後替代去處未逐點記錄。"
+        }
+      ],
+      "note": "公告希望減少排水溝阻塞，但沒有後續排水或清潔量測；3D外觀只能補充桶型辨識。",
+      "sourceIds": [
+        "capetown-high-footfall-bins",
+        "capetown-residential-service",
+        "capetown-business-service"
+      ]
+    },
+    "cases": [
+      {
+        "id": "capetown-site-c-plaza",
+        "title": "Site C Plaza：購物與轉乘人流周邊設行人小型垃圾桶",
+        "place": "南非開普敦市Site C Plaza／Ikwezi Park周邊",
+        "period": "2022-12-07市府公告",
+        "status": "公告稱當日安裝並列28座及逐街數；逐點完成盤點未另行核實",
+        "problem": "服務對象是購物中心周邊行人產生的薯片袋、飲料包裝等隨手垃圾，不是附近住戶或店家的日常垃圾。",
+        "placement": "公告分布為Solomon Tshuku街12座、iDada街12座、Maphongwana街4座，合計28座，沿購物中心周邊道路設置。",
+        "operation": "市府公告說當地清潔隊每日清空，桶身印反亂丟訊息；公告沒有提供逐桶滿溢、維修或街道清掃指標。",
+        "responsibility": "市府清潔隊負責行人桶的日清；住戶用市政家庭垃圾服務，商家須有符合規定的廢棄物管理計畫。",
+        "finance": "設置公告未列桶體採購價、袋材、每日清運費、維修或汰換費，無法由設置數計出經常營運成本。",
+        "separation": "綠色行人桶供薯片袋、飲料容器及類似小垃圾；市府明確說它不供家戶垃圾或商業垃圾處置。",
+        "result": "公告提供28座及三街分配、每日清空承諾；減少雨季排水堵塞只是市府期待，未有後續水溝或洪水成效資料。",
+        "limits": "同篇公告以已安裝及將安裝描述桶數，未獨立確認逐點完工；缺撤前後垃圾、滿溢、降雨和排水對照。",
+        "sourceIds": [
+          "capetown-high-footfall-bins",
+          "capetown-residential-service",
+          "capetown-business-service"
+        ]
+      },
+      {
+        "id": "capetown-misuse-removal",
+        "title": "其他開普敦點位：家戶與商家混投使行人桶溢滿並被撤除",
+        "place": "開普敦市其他地區；公告未列明確地址",
+        "period": "市府於2022-12公告中回顧；事件日期未提供",
+        "status": "行政公告記錄的既往問題與撤除理由；未列點位清單或撤桶數",
+        "problem": "市府說其他地區行人綠桶曾被周邊家庭或商家用來倒入非行人垃圾，造成持續溢滿與投訴，最後撤掉部分垃圾桶。",
+        "placement": "沒有公布撤桶位置與排序；市府說行人桶適用於購物區及通往交通設施的繁忙路線。",
+        "operation": "公開紀錄只有混投、持續溢滿、投訴及撤除的行政理由；沒有說明撤除後是否改頻清運、增設替代站或復設。",
+        "responsibility": "家庭可用每週市政收運；商業物業可申請市政服務或使用合格私人業者，不能以公用行人桶替代。",
+        "finance": "公開資料未列錯投清理、撤桶、替代收運或執法成本；無法判斷撤除是否降低總支出或只轉移工作。",
+        "separation": "混投造成服務對象錯置：家戶與店家垃圾應走各自合法收運，公共行人桶只處理小型隨手垃圾。",
+        "result": "這份公告證明市府曾以持續溢滿和投訴說明其他點的撤桶原因；不能推為撤桶後垃圾量下降。",
+        "limits": "沒有撤桶日期、地址、數量、撤前後測量、鄰街轉移或替代點資料；不得推論開普敦全市已撤桶或低需求。",
+        "sourceIds": [
+          "capetown-high-footfall-bins",
+          "capetown-residential-service",
+          "capetown-business-service"
+        ]
+      }
+    ],
+    "takeaways": [
+      "台北在高人流步道設行人桶時，應明示家戶與商業垃圾不收，並同步指定各類垃圾合法去處及負責清空的班隊。",
+      "若混投或溢滿持續，先比較加密清運、收受限制、移位與撤除；撤點前後同時檢查替代點和鄰街，不能把撤除次序當成需求排序。",
+      "可把桶外觀作3D補充；排水、路面清潔與撤除成效須用雨季前後和固定街段資料驗證，不能把市府預期寫成已發生成果。"
+    ],
+    "sources": [
+      {
+        "id": "capetown-high-footfall-bins",
+        "label": "開普敦市Site C Plaza行人垃圾桶設置及既往錯用、撤除說明",
+        "url": "https://www.capetown.gov.za/media-and-news/ikwezi-park-to-shine-with-new-public-litter-bins/",
+        "date": "2022-12-07",
+        "kind": "市府行政公告"
+      },
+      {
+        "id": "capetown-residential-service",
+        "label": "開普敦市Waste Services Department住戶垃圾服務與市政職責說明",
+        "url": "https://www.capetown.gov.za/departments/waste-services-department",
+        "date": "查閱2026-10-18",
+        "kind": "市政服務說明"
+      },
+      {
+        "id": "capetown-business-service",
+        "label": "開普敦市商業廢棄物收運：市政服務或合格私人服務提供者",
+        "url": "https://www.capetown.gov.za/work-and-business/commercial-utility-services/commercial-solid-waste-services/commercial-solid-waste-collection-services/",
+        "date": "查閱2026-10-18",
+        "kind": "商業收運規則"
+      }
+    ]
+  },
+  {
+    "id": "uruguay",
+    "name": "烏拉圭",
+    "scope": "蒙特維多36座廣場的撤桶隨機試驗",
+    "thesis": "蒙特維多在容易被翻找、錯置垃圾的部分廣場試行撤桶，並由市府描述以持續清潔與公民合作配合。配對隨機研究顯示，樣本廣場內垃圾密度下降，但民眾對廣場清潔的感受沒有顯著變化，且基礎設施評價略降；鄰街轉移與可移植性未知。",
+    "summary": "研究涵蓋市中心B、C兩個市鎮中36座原有垃圾桶的小、中型廣場，先配對相似廣場，再於每對內隨機撤除一處，另一處保留。研究員在2022年基線及2022–23追蹤期間每處三次拍照計數和訪問使用者；撤桶組廣場內每平方公尺垃圾件數估計下降43.5%，主觀清潔評分未顯著改變。這不是全市撤桶成效，也沒有量鄰近街道的垃圾轉移。",
+    "comparison": {
+      "placement": "只在市中心兩市鎮的小、中型廣場試驗",
+      "collection": "撤桶配合持續清潔；清掃班次未公布",
+      "responsibility": "市府移除並維持廣場管理，研究者量測",
+      "separation": "撤除廣場小桶；家庭及外圍收運未納入試驗",
+      "evidence": "36廣場配對隨機試驗；鄰街外溢與長期未知"
+    },
+    "flow": {
+      "title": "蒙特維多廣場撤桶試驗：從配對分派到分開讀兩種結果",
+      "steps": [
+        {
+          "label": "選定樣本",
+          "text": "中心區兩市鎮60座合格廣場中，36座原有垃圾桶而納入研究。"
+        },
+        {
+          "label": "配對後隨機",
+          "text": "依廣場特徵配成18對，每對隨機撤除一座的垃圾桶，另一座保留。"
+        },
+        {
+          "label": "重複量測",
+          "text": "撤桶前後拍照計數每平方公尺垃圾，並訪問廣場使用者的清潔感受。"
+        },
+        {
+          "label": "分開報告",
+          "text": "樣本廣場垃圾件數下降約43.5%；清潔感受未顯著改變，鄰街外溢未測。"
+        }
+      ],
+      "note": "這是特定廣場的撤除隨機試驗；桶型照片或3D模型不能代表鄰街、其他公共空間或台北效果。",
+      "sourceIds": [
+        "montevideo-rct-paper",
+        "montevideo-city-evaluation"
+      ]
+    },
+    "cases": [
+      {
+        "id": "montevideo-plaza-removal-rct",
+        "title": "蒙特維多36座廣場：配對隨機測試撤除公用垃圾桶",
+        "place": "烏拉圭蒙特維多市中心B、C兩個市鎮",
+        "period": "2022-06至09基線；2022-11至2023-01追蹤；2025發表",
+        "status": "配對隨機現地試驗完成；研究限36座原有垃圾桶的廣場",
+        "problem": "市府觀察部分廣場垃圾桶常被翻找或錯置垃圾，並希望測試撤除是否減少散落與成堆垃圾；該機制是政策背景，不是單獨驗證的原因。",
+        "placement": "從中心區B、C兩市鎮60座合格小、中型廣場中，選出36座有垃圾桶者；按面積、基線垃圾等特徵配成18對。",
+        "operation": "每對內隨機指定一座撤桶、一座保留；前後每座廣場各訪查三次，拍照計數垃圾並訪問使用者。",
+        "responsibility": "Intendencia與研究團隊共同設計試驗；市府移除處置組廣場垃圾桶，研究者及觀察員負責計量與使用者問卷。",
+        "finance": "論文與市府摘要未公布撤桶、持續清潔、搬運及替代服務的全成本，也沒有計算市府淨節省或居民額外負擔。",
+        "separation": "介入是移除廣場內小型垃圾桶；研究描述民眾可把垃圾帶回家或投至城市其他容器，但沒有測量後續垃圾流。",
+        "result": "論文估計處置組廣場內每平方公尺垃圾件數下降43.5%（市府摘要概稱40%）；主觀清潔感無顯著改變，基礎設施品質評價略降且僅達10%顯著水準。",
+        "limits": "結果只適用兩市鎮的小、中型廣場與短期觀察；研究沒有測量鄰街垃圾轉移、長期效果、替代投放可及性或台北可移植性。",
+        "sourceIds": [
+          "montevideo-rct-paper",
+          "montevideo-city-evaluation",
+          "montevideo-green-strategy"
+        ]
+      }
+    ],
+    "takeaways": [
+      "若台北某類廣場持續發生翻找和垃圾堆積，可用配對、隨機保留對照的小試辦，分別量廣場內垃圾件數、清潔感受和基礎設施評價。",
+      "43.5%是蒙特維多樣本廣場的垃圾件數估計，不能直接套到台北；先納入商圈、人行道和家戶投放服務差異，並量鄰街外溢。",
+      "若評估撤桶，須把替代投放距離、持續清潔工時、弱勢使用者負擔和垃圾後端去向納入；3D只展示場景，不替代對照證據。"
+    ],
+    "sources": [
+      {
+        "id": "montevideo-rct-paper",
+        "label": "Piñeiro-Rodríguez等人《Intervening public spaces by subtraction》作者接受稿及隨機試驗",
+        "url": "https://pure.manchester.ac.uk/ws/portalfiles/portal/361973089/Intervening_public_spaces_by_subtraction.pdf",
+        "date": "2025；Cities 161, 105913",
+        "kind": "隨機試驗／作者接受稿"
+      },
+      {
+        "id": "montevideo-city-evaluation",
+        "label": "蒙特維多市府撤除廣場垃圾桶影響評估頁及研究附件",
+        "url": "https://montevideo.gub.uy/noticias/medio-ambiente-y-sostenibilidad/evaluacion-de-impacto-sobre-retiro-de-papeleras",
+        "date": "2023-08-31",
+        "kind": "市府研究公告"
+      },
+      {
+        "id": "montevideo-green-strategy",
+        "label": "蒙特維多市府Montevideo más verde策略頁，列公共空間撤桶措施",
+        "url": "https://montevideo.gub.uy/montevideo-mas-verde",
+        "date": "2020–2025策略；查閱2026-10-18",
+        "kind": "市府策略說明"
+      }
+    ]
+  }
+]

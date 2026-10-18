@@ -1,12 +1,54 @@
-# 全球公共垃圾箱設計與治理比較及台北應用
+# 全球公共垃圾桶策略：設點、清運、責任與台北應用
 
-保存日期：2026-10-15（Asia/Taipei）。本文件為[研究筆記](https://chatgpt.com/space/page_418311708eac8191b144adb2b79dcba0)的 repo 副本，保留案例、證據限制、台北應用建議與原始來源。
+初版保存：2026-10-15；策略補查：2026-10-18（Asia/Taipei）。本文件由[研究筆記](https://chatgpt.com/space/page_418311708eac8191b144adb2b79dcba0)的 repo 副本延伸；本次補查寫入此檔；公開網站的各國策略頁另由 `research/country-strategies/` 資料產生，不表示原 Page 已同步。
 
 相關研究：[垃圾箱減少的研究脈絡](bin-reduction.md)、[歷史分布與撤除紀錄](bin-removal-history.md)。
 
-資料截至2026年10月15日，涵蓋五大洲13個國家與地區的16個案例。比較重點是公共垃圾箱的設計、配置、撤除、回收與維護制度。
+原有案例表保留截至2026年10月15日整理的五大洲13個國家與地區、16個案例。本次補查優先比較服務策略，另加入英格蘭的清潔管理準則。城市、行政區及國家層級分開標示；澀谷的規則不能代表全日本，紐約的配置也不能代表全美國。
 
-公共垃圾箱的成效取決於桶型、位置、清運、維護與合法替代投放如何配合。台北宜先改善易投、易清、易修與責任分工，再用現場數據驗證壓縮、感測或撤除的必要性。
+比較主軸是「垃圾由誰產生、在哪裡投放、誰收走、如何持續維持乾淨」。桶型、照片與3D用來說明其中的操作取捨。台北需要先決定服務範圍、收運與責任，再選設備，並用現場數據驗證增設、遷移、壓縮或撤除是否有效。
+
+## 2026-10-18 策略補查
+
+### 用同一組問題搜尋與比較
+
+| 比較面向 | 每個案例要回答的問題 |
+|---|---|
+| 問題與服務對象 | 要處理行人隨手垃圾、外帶包裝、家戶袋裝垃圾，還是特定回收物？ |
+| 設點與撤點 | 依人流、活動時段、投放量、回報、路線或污染調整？撤點後由何處承接？ |
+| 清運與維護 | 誰巡查、何時清空、誰洗桶修桶？滿溢、夜間與故障如何處理？ |
+| 責任與財源 | 政府、店家、商圈、承包商各負責什麼？一次性補助之後誰付經常費？ |
+| 分流與源頭管理 | 家戶及商業垃圾是否另有可靠收運？店家、押金回收或社區回收如何配合？ |
+| 成效與代價 | 街道垃圾、滿溢時間、投放可及性、回收品質、全部工時與成本如何變化？ |
+| 證據與退出 | 是規定、執行紀錄、前後比較，還是有對照的研究？何時調整或恢復原服務？ |
+
+### 已核對的策略與責任
+
+下表是對官方做法的歸納；「台北如何用」是研究判斷，未經台北試辦驗證。資料沒有交代的清運頻率、預算或成效，保留未知。
+
+| 地區／策略 | 做法、責任與服務邊界 | 證據能說明什麼 |
+|---|---|---|
+| **新加坡：依需求調整桶位，搭配熱點治理** | NEA優先在公車站、繁忙人行道等處設桶，依現場評估與回報增移，並衡量清空所需資源；熱點另結合巡查、宣導與執法。[S21](https://www.nea.gov.sg/media/readers-letters/index/there-are-more-than-10-000-trash-cans-across-the-island)[S25](https://www.nea.gov.sg/media/news/advisories/index/2025-year-in-review--nea-steps-up-cleanliness-efforts-with-enhanced-partnerships-and-enforcement) | 2026年回顧報告稱熱點六個月垃圾件數降40%；是管理組合的官方觀測，未交代可分離桶位效果的對照，不能當成多設桶或某種桶型的效果。 |
+| **日本澀谷指定區域：由販售者承接外帶垃圾** | 受規範店家須在顧客容易使用的位置設容器，定期收運、清潔並防滿溢；區方巡查。責任限自售飲食衍生垃圾，不能視為接受所有垃圾的公共桶網。[S09](https://www.city.shibuya.tokyo.jp/kankyo/machi-seiso/seiso/shibuyaku_gomibako_rule.html) | 10月1日公告的設置率91%是執行情形，不是街道垃圾減量率；區方公共桶仍列為年度推進工作，未據此認定已建成。 |
+| **美國紐約：按服務對象、街角與既有路線設桶** | DSNY服務行人輕量垃圾，桶位以商業／混合使用街角、交通節點及清運路線為主；不受理以住宅、工業為主或街廓中段的設桶申請。家戶與營業垃圾不能投入行人桶；可回報滿溢、遺失及混入。[S26](https://www.nyc.gov/site/dsny/what-we-do/cleaning/litter-baskets.page) | 能確認配置條件與管理入口；本來源未提供各點班次或政策的清潔因果效果。不能把未設點直接解讀為沒有行人需要。 |
+| **印度Indore：以到戶收運取代家戶路邊集置** | IMC以分區路線、分類收集車與GPS監控承接家戶垃圾，逐步取消社區集中收集桶；官方案例同時記載行人小型垃圾桶。財源包含使用者費與市政資源；2021資料不能當作2026費率。[S28](https://www.niti.gov.in/sites/default/files/2021-12/Waste-Wise-Cities.pdf) | 「bin-free」指取消沿路儲存垃圾的集置方式，不能翻成全市無行人桶。100%到戶覆蓋等數據源自IMC案例資料，未隔離撤桶、每日收運、分類與清掃各自的效果。 |
+| **荷蘭阿姆斯特丹：讓押金瓶罐取用與一般垃圾分開** | 針對翻桶取押金瓶罐的問題，市府採自閉門與獨立瓶罐托盤，讓回收者可不開桶取物；2026年9月宣布部署200桶，優先常被打開及繁忙地點，觀察周邊清潔後再決定替換。[S29](https://www.amsterdam.nl/nieuws/nieuwsoverzicht/200-nieuwe-afvalbakken/) | 目標10月底完成，不能在10月18日算全數已部署。4月試驗的83%對38%是桶門關閉率，未直接量出街道垃圾減少多少。[S15](https://www.amsterdam.nl/bestuur-organisatie/pers/persberichten/persberichten-nieuws-hester-buren/aangepaste-prullenbak-zorgt-minder/) |
+| **丹麥哥本哈根：先驗證智慧清運，再認列節省** | 市府回顧2018–2023感測清運計畫，承認預算已扣、效率效益卻未實現；2025新案規劃16桶一對一替換，建立基線並保留恢復原桶條件。[S06](https://www.kk.dk/sites/default/files/agenda/83c5755d-bc0a-49e1-b04f-869a658fcdf6/48a7f707-43e3-4d42-a322-3581c4926820-bilag-2.pdf) | 能確認舊案失敗回顧與新案設計；本輪未找到新試點完成評估，不能把預估少清運、減碳或節省當成果。 |
+| **香港：將低量、受污染的路邊回收轉接社區系統** | 環保署先試增容、滿溢QR回報與用途宣導，檢討後自2022年6月撤減市區路邊回收桶，並引導至住宅回收設施及「綠在區區」。[S11](https://www.wastereduction.gov.hk/en-hk/waste-reduction-programme/kerbside-recycling-bin) | 約800套於2022年底基本撤完，是回收服務重組；不是一般行人垃圾桶全面撤除。官方說明品質與數量問題，未提供同口徑撤前後成效或居民步行負擔。 |
+| **英國北愛爾蘭Belfast：縮減分類選項，再檢查回收品質與經常費** | 市府與Hubbub合作，25座雙流箱改收一般垃圾／瓶罐，配合宣導與成分稽核。試辦費由Hubbub承擔；2024報告仍在評估擴大後的長期收運及成本。[S07](https://minutes.belfastcity.gov.uk/mgAi.aspx?ID=76080) | 五日稽核的瓶罐捕獲與回收側重量組成是不同指標。能送後續處理也不等於全部完成再生；新增設備資金不代表經常營運費已解決。 |
+| **英格蘭：以街道清潔標準管理服務** | 2026年準則以人車活動強度與安全限制區分管理區域，訂出清潔等級及不合格後的恢復期限，供責任單位依循；鼓勵持續監測、按需要配置資源。[S27](https://www.gov.uk/government/publications/code-of-practice-on-litter-and-refuse/code-of-practice-on-litter-and-refuse) | 這是適用英格蘭的管理準則，不是全英國統一桶距規定，也不是已量得的減量成效；可借鏡服務標準與回應責任。 |
+
+### 台北如何用這些策略
+
+以下是比較後的建議，並非台北已實施或已證實的成果。
+
+1. **高人流街段採「桶位＋班次」一起管理。** 參考新加坡的現場調整與紐約的路線條件，先核對尖峰投放、滿溢時段、步行可及性和清運能力，再決定增設、移位或調班。
+2. **外帶垃圾建立店家與商圈責任。** 參考澀谷承接自售包裝的做法，先談清楚收受範圍、營業時間、共用站與打烊後服務；不能把店家桶直接算成全天可用的公共服務。
+3. **撤點前確認垃圾有可用去處。** Indore以到戶收運承接家戶垃圾，香港以社區系統承接部分回收服務；兩者的服務對象不同。台北須核對替代服務的種類、距離和時段，撤後同時量原點與鄰街，避免只把垃圾轉移。
+4. **以服務結果驗收。** 參考英格蘭的清潔標準與Belfast的成分稽核，記錄路面垃圾、滿溢持續時間、回收拒收、巡收清洗維修總工時與經常費。桶數、倒桶次數或設備採購量不足以代表成效。
+5. **按問題選設備，並保留修正條件。** 若主要問題是押金物翻找，可參考阿姆斯特丹分開取用的做法；若主要問題是容量與派工，才比較感測或壓縮。哥本哈根的經驗提醒，實際節省尚未驗證前不應預先扣除清運資源。
+
+本次補查於2026-10-18核讀上述官方頁面；各案的事件年份仍按原文標示。NEA的40%與下方原案例表的36%分屬不同期間的回顧，不能相減當作進步幅度。舊案例表未逐項重做現況盤點。
 
 ## 主要判斷
 
@@ -172,3 +214,13 @@ Belfast五日稽核中的約85%，分母是兩槽找到的塑膠瓶；43.8%則�
 - [S23 法國內政部國會答覆，1997-08-25](https://questions.assemblee-nationale.fr/q11/11-1036QE.htm)
 
 - [S24 阿姆斯特丹市府局部調整，2025-09-17](https://www.amsterdam.nl/bestuur-organisatie/pers/persberichten/persberichten-nieuws-hester-buren/prullenbakkenoffensief-afvaloverlast/)
+
+- [S25 新加坡NEA 2025年清潔治理回顧，2026-03-25](https://www.nea.gov.sg/media/news/advisories/index/2025-year-in-review--nea-steps-up-cleanliness-efforts-with-enhanced-partnerships-and-enforcement)
+
+- [S26 紐約DSNY行人垃圾桶配置與服務規則，頁面未標發布日；查閱2026-10-18](https://www.nyc.gov/site/dsny/what-we-do/cleaning/litter-baskets.page)
+
+- [S27 英格蘭Defra《Code of practice on litter and refuse》，更新2026-03-10，重點核讀第1、4–7節](https://www.gov.uk/government/publications/code-of-practice-on-litter-and-refuse/code-of-practice-on-litter-and-refuse)
+
+- [S28 印度NITI Aayog／CSE《Waste-Wise Cities》，2021-12，核讀Indore案例；部分指標來源為IMC](https://www.niti.gov.in/sites/default/files/2021-12/Waste-Wise-Cities.pdf)
+
+- [S29 阿姆斯特丹市府200座新垃圾桶部署公告，2026-09-28](https://www.amsterdam.nl/nieuws/nieuwsoverzicht/200-nieuwe-afvalbakken/)
