@@ -1,0 +1,32 @@
+{
+  "checked_at_utc": "2026-10-18T08:34:41.020785+00:00",
+  "command": "python3 analyze.py",
+  "scope": "Fixed offline inputs and six purposive cases only; no website changes or field validation",
+  "reproducible_output_hashes": true,
+  "output_sha256": {
+    "cases.csv": "d1f276e44d6d3730df57a29b384a5aa7e589f8764b0d028c11d2659f4a505903",
+    "districts.csv": "58347b29346912bcf0dedb2a4e57ec1e40a38c9ba36dbba7959f90d4f6c05290",
+    "invalid-records.csv": "376870b64003937603253c27c8339fb4ceadd4dfd97f19f1458bdfe05acc331d",
+    "sensitivity.csv": "adcad23ec03122c8da8d348fbdf51d65cf75bf8fa9bd516ca2e3e5f3496aed66",
+    "stations.csv": "0a261ea9a76f521da2b24500dd1022bee7f19448c10c0e6e46e94a5d36f4ec47",
+    "summary.json": "12237d442e15cf67b4d938a480ec43fd771b4eb7930d06a500a1d3fd3fb93a69"
+  },
+  "analyze_py_sha256": "a2ddfded9ccc0dcaa886fc7195953227d786bfc79a375b75f36215746cc4483a",
+  "protocol_sha256": "9f6e2312ad31e850bbf4d2420b5e8aa1a45fdfe27e5a0c95c646feaac0144094",
+  "checks": [
+    "Input bytes and SHA-256 match manifest and retained source provenance",
+    "Unique station IDs and station/active/inactive count reconciliation",
+    "Radius counts monotonic; unique coordinate counts do not exceed source row counts",
+    "Source-area strata reconcile; 64 active NTU-campus-labelled stations remain separate",
+    "Six named cases have six unique station IDs",
+    "All result bytes identical on rerun",
+    "Independent spherical-cosine distance check on six nearest-bin pairs"
+  ],
+  "max_distance_formula_difference_m": 5.192855601876545e-05,
+  "status": "PASS",
+  "not_checked": [
+    "Field presence, walking distance, route barriers and opening hours",
+    "Ownership, sidewalk clearance, maintenance agreement",
+    "Usage volume, litter, collection cost or causal improvement"
+  ]
+}
