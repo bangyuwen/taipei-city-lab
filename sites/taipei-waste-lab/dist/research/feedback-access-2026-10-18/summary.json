@@ -1,0 +1,460 @@
+{
+  "schemaVersion": 1,
+  "analysisDate": "2026-10-18",
+  "allRecords": 2663,
+  "overall": {
+    "selectedRecords": 1737,
+    "difficulties": {
+      "D1": 390,
+      "D2": 460,
+      "D3": 913,
+      "D4": 41,
+      "D5": 78,
+      "D6": 15
+    },
+    "contexts": {
+      "X1": 252,
+      "X2": 282,
+      "X3": 138,
+      "X4": 75,
+      "X5": 30,
+      "X6": 5,
+      "X7": 32
+    },
+    "stances": {
+      "more": 1531,
+      "less": 29,
+      "conditional": 23,
+      "mixed": 22,
+      "unspecified": 126,
+      "none": 6
+    },
+    "noDifficulty": 125,
+    "noContext": 1082,
+    "unclear": 55,
+    "priorStanceChanged": 199
+  },
+  "districts": {
+    "松山": {
+      "allRecords": 233,
+      "selectedRecords": 169,
+      "difficulties": {
+        "D1": 29,
+        "D2": 48,
+        "D3": 97,
+        "D4": 3,
+        "D5": 11,
+        "D6": 2
+      },
+      "contexts": {
+        "X1": 25,
+        "X2": 25,
+        "X3": 9,
+        "X4": 6,
+        "X5": 3,
+        "X6": 0,
+        "X7": 4
+      },
+      "stances": {
+        "more": 152,
+        "less": 3,
+        "conditional": 0,
+        "mixed": 2,
+        "unspecified": 11,
+        "none": 1
+      },
+      "noDifficulty": 14,
+      "noContext": 114,
+      "unclear": 1,
+      "priorStanceChanged": 21
+    },
+    "信義": {
+      "allRecords": 216,
+      "selectedRecords": 145,
+      "difficulties": {
+        "D1": 38,
+        "D2": 39,
+        "D3": 63,
+        "D4": 2,
+        "D5": 10,
+        "D6": 2
+      },
+      "contexts": {
+        "X1": 15,
+        "X2": 26,
+        "X3": 6,
+        "X4": 4,
+        "X5": 2,
+        "X6": 1,
+        "X7": 3
+      },
+      "stances": {
+        "more": 131,
+        "less": 2,
+        "conditional": 1,
+        "mixed": 1,
+        "unspecified": 10,
+        "none": 0
+      },
+      "noDifficulty": 10,
+      "noContext": 96,
+      "unclear": 3,
+      "priorStanceChanged": 15
+    },
+    "大安": {
+      "allRecords": 492,
+      "selectedRecords": 368,
+      "difficulties": {
+        "D1": 73,
+        "D2": 93,
+        "D3": 223,
+        "D4": 9,
+        "D5": 13,
+        "D6": 9
+      },
+      "contexts": {
+        "X1": 53,
+        "X2": 41,
+        "X3": 20,
+        "X4": 18,
+        "X5": 8,
+        "X6": 0,
+        "X7": 8
+      },
+      "stances": {
+        "more": 333,
+        "less": 5,
+        "conditional": 3,
+        "mixed": 2,
+        "unspecified": 23,
+        "none": 2
+      },
+      "noDifficulty": 23,
+      "noContext": 248,
+      "unclear": 6,
+      "priorStanceChanged": 39
+    },
+    "中山": {
+      "allRecords": 354,
+      "selectedRecords": 249,
+      "difficulties": {
+        "D1": 60,
+        "D2": 54,
+        "D3": 139,
+        "D4": 6,
+        "D5": 8,
+        "D6": 0
+      },
+      "contexts": {
+        "X1": 53,
+        "X2": 35,
+        "X3": 21,
+        "X4": 10,
+        "X5": 3,
+        "X6": 2,
+        "X7": 0
+      },
+      "stances": {
+        "more": 222,
+        "less": 3,
+        "conditional": 1,
+        "mixed": 6,
+        "unspecified": 17,
+        "none": 0
+      },
+      "noDifficulty": 17,
+      "noContext": 149,
+      "unclear": 13,
+      "priorStanceChanged": 33
+    },
+    "中正": {
+      "allRecords": 211,
+      "selectedRecords": 127,
+      "difficulties": {
+        "D1": 32,
+        "D2": 31,
+        "D3": 61,
+        "D4": 3,
+        "D5": 8,
+        "D6": 0
+      },
+      "contexts": {
+        "X1": 15,
+        "X2": 20,
+        "X3": 3,
+        "X4": 3,
+        "X5": 1,
+        "X6": 0,
+        "X7": 1
+      },
+      "stances": {
+        "more": 111,
+        "less": 5,
+        "conditional": 2,
+        "mixed": 1,
+        "unspecified": 8,
+        "none": 0
+      },
+      "noDifficulty": 8,
+      "noContext": 86,
+      "unclear": 6,
+      "priorStanceChanged": 18
+    },
+    "大同": {
+      "allRecords": 195,
+      "selectedRecords": 143,
+      "difficulties": {
+        "D1": 29,
+        "D2": 42,
+        "D3": 80,
+        "D4": 2,
+        "D5": 4,
+        "D6": 0
+      },
+      "contexts": {
+        "X1": 25,
+        "X2": 36,
+        "X3": 8,
+        "X4": 10,
+        "X5": 2,
+        "X6": 0,
+        "X7": 1
+      },
+      "stances": {
+        "more": 123,
+        "less": 0,
+        "conditional": 3,
+        "mixed": 2,
+        "unspecified": 15,
+        "none": 0
+      },
+      "noDifficulty": 9,
+      "noContext": 77,
+      "unclear": 10,
+      "priorStanceChanged": 17
+    },
+    "萬華": {
+      "allRecords": 241,
+      "selectedRecords": 106,
+      "difficulties": {
+        "D1": 28,
+        "D2": 32,
+        "D3": 43,
+        "D4": 2,
+        "D5": 3,
+        "D6": 0
+      },
+      "contexts": {
+        "X1": 9,
+        "X2": 35,
+        "X3": 15,
+        "X4": 5,
+        "X5": 3,
+        "X6": 0,
+        "X7": 1
+      },
+      "stances": {
+        "more": 92,
+        "less": 1,
+        "conditional": 1,
+        "mixed": 0,
+        "unspecified": 12,
+        "none": 0
+      },
+      "noDifficulty": 13,
+      "noContext": 53,
+      "unclear": 3,
+      "priorStanceChanged": 9
+    },
+    "文山": {
+      "allRecords": 135,
+      "selectedRecords": 73,
+      "difficulties": {
+        "D1": 18,
+        "D2": 22,
+        "D3": 28,
+        "D4": 1,
+        "D5": 2,
+        "D6": 1
+      },
+      "contexts": {
+        "X1": 12,
+        "X2": 10,
+        "X3": 7,
+        "X4": 2,
+        "X5": 1,
+        "X6": 0,
+        "X7": 4
+      },
+      "stances": {
+        "more": 58,
+        "less": 3,
+        "conditional": 3,
+        "mixed": 1,
+        "unspecified": 6,
+        "none": 2
+      },
+      "noDifficulty": 10,
+      "noContext": 42,
+      "unclear": 4,
+      "priorStanceChanged": 10
+    },
+    "南港": {
+      "allRecords": 82,
+      "selectedRecords": 53,
+      "difficulties": {
+        "D1": 10,
+        "D2": 21,
+        "D3": 29,
+        "D4": 3,
+        "D5": 4,
+        "D6": 0
+      },
+      "contexts": {
+        "X1": 10,
+        "X2": 6,
+        "X3": 4,
+        "X4": 3,
+        "X5": 0,
+        "X6": 1,
+        "X7": 0
+      },
+      "stances": {
+        "more": 47,
+        "less": 1,
+        "conditional": 3,
+        "mixed": 0,
+        "unspecified": 2,
+        "none": 0
+      },
+      "noDifficulty": 1,
+      "noContext": 32,
+      "unclear": 1,
+      "priorStanceChanged": 8
+    },
+    "內湖": {
+      "allRecords": 155,
+      "selectedRecords": 104,
+      "difficulties": {
+        "D1": 28,
+        "D2": 14,
+        "D3": 49,
+        "D4": 2,
+        "D5": 14,
+        "D6": 1
+      },
+      "contexts": {
+        "X1": 14,
+        "X2": 8,
+        "X3": 10,
+        "X4": 4,
+        "X5": 2,
+        "X6": 0,
+        "X7": 3
+      },
+      "stances": {
+        "more": 83,
+        "less": 4,
+        "conditional": 2,
+        "mixed": 4,
+        "unspecified": 11,
+        "none": 0
+      },
+      "noDifficulty": 7,
+      "noContext": 72,
+      "unclear": 3,
+      "priorStanceChanged": 11
+    },
+    "士林": {
+      "allRecords": 210,
+      "selectedRecords": 126,
+      "difficulties": {
+        "D1": 31,
+        "D2": 42,
+        "D3": 55,
+        "D4": 5,
+        "D5": 1,
+        "D6": 0
+      },
+      "contexts": {
+        "X1": 14,
+        "X2": 34,
+        "X3": 21,
+        "X4": 6,
+        "X5": 4,
+        "X6": 1,
+        "X7": 5
+      },
+      "stances": {
+        "more": 114,
+        "less": 2,
+        "conditional": 2,
+        "mixed": 3,
+        "unspecified": 4,
+        "none": 1
+      },
+      "noDifficulty": 9,
+      "noContext": 65,
+      "unclear": 4,
+      "priorStanceChanged": 9
+    },
+    "北投": {
+      "allRecords": 139,
+      "selectedRecords": 74,
+      "difficulties": {
+        "D1": 14,
+        "D2": 22,
+        "D3": 46,
+        "D4": 3,
+        "D5": 0,
+        "D6": 0
+      },
+      "contexts": {
+        "X1": 7,
+        "X2": 6,
+        "X3": 14,
+        "X4": 4,
+        "X5": 1,
+        "X6": 0,
+        "X7": 2
+      },
+      "stances": {
+        "more": 65,
+        "less": 0,
+        "conditional": 2,
+        "mixed": 0,
+        "unspecified": 7,
+        "none": 0
+      },
+      "noDifficulty": 4,
+      "noContext": 48,
+      "unclear": 1,
+      "priorStanceChanged": 9
+    }
+  },
+  "audit": {
+    "sampleSize": 144,
+    "initialAgreement": {
+      "difficulties": 126,
+      "contexts": 136,
+      "stance": 136,
+      "clarity": 138
+    },
+    "disagreementRows": 33,
+    "adjudicatedRows": 33,
+    "changedRows": 20,
+    "decisionRecords": 33
+  },
+  "source": {
+    "sourceSha256": "bc4d005ce9a9c4d97341204da5a576badc85c80e8ff4266e73f227ab89089851",
+    "priorAnnotationSha256": "ec89ab1a194d4a661226526f62ba22263e0bde88a6f887a0b2a93c1d5289066d",
+    "priorSummarySha256": "8ce178c3d42c16eb7141b34c7cd345705c51498fe4304a3aa8235f97e937f9b2",
+    "protocolSha256": "083778fc3eb17bd3fd51c5076b2602903eee656adc78f4f6aee3265b7246a617",
+    "initialSha256": "847cf642557277e27c965c233b5403ac99d4512440f9f88e846048eb8ed7adcd",
+    "secondarySha256": "19763bff9ef0ba738f73afbc06c1fc8173745eb84946f761acf1a06c72970165",
+    "finalSha256": "436905b20c6d9b8b895e9e9c7afe494dc99d951e4f0cacbe9af5494e095a4892",
+    "manifestSha256": "5ff37f79d459d975da08b2cadd7ceec41ae70b8c9acd52f9c7f810cdf0a8ddfe",
+    "decisionsSha256": "c52d229ae0a1c5f32a799e8786233a0b56dfd804eb5c22174cb28da1f65acb21",
+    "adjudicationNotesSha256": "884b63ad6d5dc7b77768431fe4477df19be08f1d58e2c900136d52bea3bed07a"
+  }
+}
