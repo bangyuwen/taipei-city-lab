@@ -1,0 +1,76 @@
+{
+  "material_bundle": "0.1.0",
+  "protocol_version": "0.1",
+  "status": "materials_fixed_human_study_not_started",
+  "created_at": "2026-10-18T04:21:33.240880+00:00",
+  "source_provenance": {
+    "source_repository_relative_path": "sites/taipei-waste-lab/research/service-continuity-2026-10-18/",
+    "frozen_prototype": "source/prototype-v0.1.html",
+    "frozen_prototype_sha256": "b5441b14486c65926532c2ae20da26c3d8b2cb1960cb4d23331452bf4c242439"
+  },
+  "manifest_scope": "Retained private research-pack files; excludes this manifest and parent-owned public-summary.html.",
+  "manifest_generated_at": "2026-10-18T05:00:15.258762+00:00",
+  "files": {
+    "README.md": {
+      "sha256": "8ca61442b4407168460a458395d89056eaea019c25f704c87c1b1b8a470394f7",
+      "bytes": 21655
+    },
+    "build-receipt.json": {
+      "sha256": "1aaec2c5126770f05591cb29aebfa799a3604378ed9ff48c0d4af8a0f764def5",
+      "bytes": 416
+    },
+    "build-test-pack.cjs": {
+      "sha256": "8516f802d0be7a13c966bcb221e457ad9dd41cd73402df698d6c9457f5ae2e30",
+      "bytes": 11126
+    },
+    "execution-status.md": {
+      "sha256": "ddb5baac1f8288872f560618baf34ed9238165157a6ec04e984053c861801fde",
+      "bytes": 5385
+    },
+    "facilitator-sheets.html": {
+      "sha256": "4a7e211af00c72e53fd326ce528878dec398d1e0704c970f0455b70e9982a965",
+      "bytes": 130598
+    },
+    "inspect-pdf.py": {
+      "sha256": "13e61defc304dfda7ca4f5e372ed506fdb8458eb792fd69a06edcff26d82b892",
+      "bytes": 1787
+    },
+    "output/pdf/facilitator-sheets.pdf": {
+      "sha256": "a866ae9e1edb94f48d422d493de4338e27d3eb2ce3b45d35766de39e6a332f86",
+      "bytes": 1075160
+    },
+    "output/pdf/participant-cards.pdf": {
+      "sha256": "17f2d69b324614503b135eb2e60b89121c84bfbd5b207fb4832d1ac3c429073a",
+      "bytes": 806588
+    },
+    "participant-cards.html": {
+      "sha256": "8322d5bdc6b08ded932303201767ab6fd3d1c6362aa3d40e1a559cd57f3d703a",
+      "bytes": 46416
+    },
+    "participant-mobile.html": {
+      "sha256": "03593aea1c82a4d9de490883e36fa1f94539dd6a31842634e6ef5a76f1bf26be",
+      "bytes": 19212
+    },
+    "planned-sessions.json": {
+      "sha256": "e4f724eb264d87affeea59782a1ace434ae987cf739b331cecf57f2012f62e9d",
+      "bytes": 53064
+    },
+    "source/prototype-v0.1.html": {
+      "sha256": "b5441b14486c65926532c2ae20da26c3d8b2cb1960cb4d23331452bf4c242439",
+      "bytes": 17800
+    },
+    "start.html": {
+      "sha256": "b00c21dd5a8cfd5ce055aff12815fe668ea3f08d58438b64d7d0ccd827306d9c",
+      "bytes": 14010
+    },
+    "test-kit.md": {
+      "sha256": "1ccd9fd36bfa2fa988bbb7980081b2b38e84293c8597a24c83abe937f506e811",
+      "bytes": 8959
+    },
+    "validation.json": {
+      "sha256": "4350d6b91428f017401171f4ecddcb53feb2766465c938a9280b9404d5d6a5ce",
+      "bytes": 2506
+    }
+  },
+  "integration_note": "Trailing whitespace normalized in facilitator-sheets.html and participant-cards.html; frozen prototype and PDF bytes unchanged."
+}

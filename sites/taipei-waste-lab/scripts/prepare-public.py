@@ -9,7 +9,7 @@ ASSETS = (
     'design-ui.js', 'design-model.js', 'bin-scene.js', 'design.css',
     'images/design/t1-front.svg', 'images/design/t1-section.svg',
     'country-ui.js', 'country-comparison.js', 'country-stories.js', 'country-scene.js', 'country-model-data.js', 'country-models.js', 'country.css',
-    'research-ui.js', 'research.css', 'feedback.css', 'fonts/city-serif.woff', 'fonts/OFL.txt',
+    'research-ui.js', 'service-continuity.css', 'research.css', 'feedback.css', 'fonts/city-serif.woff', 'fonts/OFL.txt',
     'vendor/three/three.module.js', 'vendor/three/three.core.js',
     'vendor/three/OrbitControls.js', 'vendor/three/LICENSE',
     'vendor/leaflet/leaflet-src.esm.js', 'vendor/leaflet/leaflet.css',
