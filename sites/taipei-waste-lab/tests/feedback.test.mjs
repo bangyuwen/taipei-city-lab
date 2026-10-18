@@ -183,7 +183,7 @@ assert '不使用關鍵字規則分類' in content and '比例不能相加' in c
 assert '不是分類正確率' in content and '收集期間' in content
 assert '已撤回' in content and '其餘各區' in content
 for body in (json.dumps(data),markdown,content):assert not re.search(r'HK-\d+|"meaning"|"r"\s*:',body)
-public=runpy.run_path('scripts/prepare-public.py');assert len(public['ASSETS'])==57
+public=runpy.run_path('scripts/prepare-public.py');assert len(public['ASSETS'])==58 and 'service-continuity.css' in public['ASSETS']
 assert not any(name.endswith(('summary.json','.tsv','.md','.jsonl')) for name in public['ASSETS'])
 with tempfile.TemporaryDirectory() as directory:
  root=Path(directory).resolve()
