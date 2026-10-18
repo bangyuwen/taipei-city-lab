@@ -97,7 +97,7 @@ h1 span { display: block; font: 500 19px/1.6 var(--sans); margin-top: 8px; lette
 .map-results { grid-row: 2; padding: 0 22px 22px; }
 .map-topline, .map-bottomline { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 16px; color: var(--muted); font-size: 13px; }
 .map-topline { border-bottom: 1px solid var(--line); color: var(--green); flex-wrap: wrap; }
-.map-topline>span:before { content: ''; display: inline-block; width: 9px; height: 9px; background: var(--point-color,var(--green)); border-radius: 50%; margin-right: 8px; }
+.map-legends #map-legend:before { content: ''; display: inline-block; width: 9px; height: 9px; background: var(--point-color,var(--green)); border-radius: 50%; margin-right: 8px; }
 .map-topline button { border: 0; background: none; color: var(--green); min-height: 44px; padding: 6px; font-size: 13px; }
 .map-tools { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin-left: auto; }
 .map-tools label { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
@@ -343,3 +343,21 @@ main { padding-top: 32px; }
 .footer-links a { display: inline-flex; align-items: center; min-height: 44px; }
 @media(max-width:959px) { main { padding-top: 24px; } [id] { scroll-margin-top: 120px; } }
 @media(max-width:639px) { .history-subnav { gap: 6px 18px; } .history-subnav a { min-height: 44px; } .source-table-wrap { margin-top: 16px; } }
+
+/* Separate venue evidence from the dated street inventory. */
+.map-legends{display:flex;gap:8px 20px;flex-wrap:wrap;align-items:center}
+#venue-legend::before,.venue-marker span{display:inline-block;width:12px;height:12px;border:2px solid #734917;background:#fff0d9;transform:rotate(45deg)}
+#venue-legend::before{content:"";margin-right:10px}
+.venue-marker{display:flex;align-items:center;justify-content:center;background:transparent;border:0}
+.venue-marker span{width:16px;height:16px;border-width:3px;box-sizing:border-box}
+.venue-layer{margin-top:16px;padding-top:4px;border-top:1px solid var(--line)}
+.venue-layer label{display:flex;align-items:center;gap:10px;min-height:44px;font-weight:650}
+.venue-layer input{width:20px;height:20px;min-height:20px;padding:0;flex:none;accent-color:#734917}
+.venue-layer p,.venue-results>p{font-size:13px;line-height:1.8;color:var(--muted);margin:8px 0}
+.venue-layer a{display:inline-flex;align-items:center;min-height:32px}
+.venue-results{margin-top:20px;border-top:1px solid var(--line);padding-top:16px}
+.venue-results h3{font-size:17px;margin:0;line-height:1.7}
+.venue-results h3 span{font-variant-numeric:tabular-nums}
+.venue-results .point-list:empty{min-height:0}
+.venue-popup p{line-height:1.7;margin:8px 0}
+.venue-popup a{display:inline-block;min-height:32px}
