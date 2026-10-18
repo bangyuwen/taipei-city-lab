@@ -1,29 +1,31 @@
 # 台北垃圾箱研究
 
-依資料判斷台北行人專用清潔箱的設置、清運與家戶垃圾分流，並保留早期分布與撤除歷程。這是獨立的靜態站，資料與程式都由本站提供。
+本期聚焦台北行人專用清潔箱的設置、清運與維護。家戶服務不列入百日工作、預算及驗收；相關研究與早期分布、撤除歷程保留作背景。這是獨立的靜態站，資料與程式都由本站提供。
 
 網站：[台北垃圾箱研究](https://taipei-waste-lab.bangyuwen.chatgpt.site)。網站程式與部署產物位於 `sites/taipei-waste-lab/`；本題資料、模型與研究入口見[垃圾箱題目目錄](../../topics/bins/README.md)。Sites 部署使用本站自己的 Git 與 `.openai/hosting.json`。
 
 ## 閱讀入口與資訊歸屬
 
-2026-10-17 起主導覽為「研究結果／台北的變化／各地做法」。根網址先讀現況摘要，再讀三項研究判斷；地圖、清冊比較、數量與政策歷程留在台北證據的二級導覽；候選街道與研究結論並列於研究結果的二級導覽。既有 `#map`、`#comparison`、`#history`、`#siting` 深連結與資料版本 query 保持有效。
+2026-10-19 更新研究首頁。主導覽保留「研究結果／台北的變化／各國垃圾桶」；研究結果內提供「研究摘要／MVP 規格與證據」。候選街道移至研究與執行材料，避免被讀成已選定方案。既有 `#map`、`#comparison`、`#history`、`#siting` 深連結與資料版本 query 保持有效。
 
-- `#research`：先呈現有日期的公開紀錄、研究判讀、尚缺的現場確認與未來提案，再列三項建議、成立條件、未知及直接引用。`#current-evidence-heading` 可直達現況摘要。
+- `#research`：給第一次進站的讀者，先呈現已接受的黑客松主線：行人投放。YouBike 與搭車前為使用情境；管理端先做異常與處理紀錄。往下提供 MVP 流程、三種驗收情境、證據與反例、本期取捨和深入閱讀。範圍已定，原型尚未開發、效果待驗證，家戶本期不做。
 - `#countries`：單一國家案例選單、預設實拍，在同一影像區切換 3D 示意。照片、署名、地點對應限制、證據及成本直接呈現；`?country=japan#countries` 與 `#country-japan` 可直接指定案例。
-- `#design`：從研究建議進入的 T1 概念與四種用途引導示範。固定尺寸和示例，以投放／清運流程取代自訂參數。
+- `#definition`：單層執行結論、PRD v0.2 畫面與驗收規格、28 則公開評論摘要、75 段判讀摘要、D01–D14 決策與改寫紀錄。PRD v0.1 及當時不做紀錄封存於同頁；D14 取代「先不放解法」的現行限制。內容直接顯示，證據與決策可逐段回查；原始全文與逐則分析保留於私人研究資料。
+- `design-thinking/index.html` 與 `prd/index.html`：保留舊網址與錨點，轉到上述單頁的對應內容。`#t1-process-heading`、`#t1-problems-heading`、`#t1-thinking-heading` 仍可使用。
+- `#design`：既有 T1 概念與四種用途引導示範，從材料頁的舊研究判讀進入。固定尺寸與示例不代表本期已選定方案或實測結果。
 - `#sources`：六份清冊來源、13 篇文獻、4 則實務與比較方法。每則完整紀錄只維護一份，`#reference-L01` 等引用可直接定位。
-- `#materials`：次要的預算、費率、桌面候選及尚未執行的現勘協定。來源與執行材料由頁尾進入。
+- `#materials`：保留舊研究判讀、公開位置資料摘要、分區長表、模擬原型與未執行測試計畫，以及原有預算、費率、候選街道與現勘協定。由首頁深入閱讀或頁尾進入；`#conclusion-siting`、`#current-evidence-heading`、`#problem-map-heading`、`#service-prototype` 等舊錨點直接開啟對應材料。
 
 模型資料、照片原檔、T1 提案、候選疊圖與公開附件界線保留。以下為各題內容與原資料脈絡。
 
 目前保留：
 
-- 「研究判斷」：位置、清運方式、家戶與商家垃圾分流的建議、來源與限制；先閱讀判斷，再選用現勘工具。
+- 「既有研究判讀」：原有配置、清運與維護建議移至材料頁供回查；家戶分流仍標為本期不推進。這些材料供回查；本期採用範圍以 PRD v0.2 為準。
 
 - 2015、2022、2024、2026 四個年份、六份位置資料切換；2024、2026 預設採新主版本，原缺頁版與示範區版仍可選取。
 - 點位地圖預設使用 CARTO Positron 淡色底圖，右上方可切換原 OpenStreetMap 街道底圖；CARTO 連線失敗時自動使用淡色街道備援，點位、篩選與目前視角不變。
 - 「台北的變化」整合歷程、分布與清冊差異，以二級導覽切換；原有 `#map`、`#comparison`、`#history` 深連結保持有效。
-- 「各國垃圾桶」以 `#countries` 獨立呈現十二國實物照片、桶型、滿度感測、清運與成本案例；圖說標示拍攝地點、日期及與案例的對應限制，照片、功能與價格各自附來源；付費服務與台北方案仍在「研究判斷」，兩頁互相連結。
+- 「各國垃圾桶」以 `#countries` 獨立呈現十二國實物照片、桶型、滿度感測、清運與成本案例；圖說標示拍攝地點、日期及與案例的對應限制，照片、功能與價格各自附來源；付費服務與台北方案保留於材料頁的舊研究判讀，既有引用連結仍可回查。
 - 有來源的撤除時間線，區分政策理由、官方存量與具日期的撤除個案。
 - 用途設計體驗：街角隨手投、回收分流、高使用量管理與家戶收受；角色、投放規則、滿載／離線與清運流程各有操作回饋，3D 反映設備狀態。
 - 各版本日期、完整性、原始來源與頁面研究說明。
@@ -49,13 +51,13 @@
 
 2026 舊版中心示範框為經度 121.51–121.57、緯度 25.02–25.08。原始重疊及異常座標全數保留，粗篩未通過者不繪製；原 CSV、各版 provenance、補查原始檔及離線匯出工具保留在私人專案，不隨公開站發布。
 
-分享連結的 `year=2024`、`year=2026` 保留原舊版意義；新主版本為 `year=2024-archive`、`year=2026-main`。六份版本合併為一個選單；地圖初始選取 2015，網站首頁為研究結論。
+分享連結的 `year=2024`、`year=2026` 保留原舊版意義；新主版本為 `year=2024-archive`、`year=2026-main`。六份版本合併為一個選單；地圖初始選取 2015，網站首頁為研究摘要。
 
 ## 研究筆記
 
 - [服務預算概估](research/budget-2026-10-15/README.md)：30 處／180 日及 100 處／365 日的設備、清運與家戶分流費用；保留假設、公式、來源與 CSV。由 `python3 scripts/estimate-budget.py` 重算，再以 `python3 scripts/package-research.py` 更新私人離線研究包；發布前須執行完整 `npm run prepare-data`。
 
-- [配置、清運與家戶垃圾分流的資料判斷](research/service-strategy-2026-10-15/README.md)：本次決策文件，分開事實、建議與未知效果。入口 `#research`。
+- [配置、清運與家戶垃圾分流的資料判斷](research/service-strategy-2026-10-15/README.md)：既有判讀文件，分開事實、建議與未知效果。入口 `#conclusion-siting`，位於材料頁。
 
 研究正文集中於[本題文件目錄](../../topics/bins/docs/README.md)，新版研究包的唯一編輯來源為 `topics/bins/research/`（[來源維護說明](../../topics/bins/research-source.md)）；本站 `research/` 是獨立網站副本。修改正文後，執行 `npm run prepare-data` 會更新 `data/research/` 的獨立原始碼副本及 `dist/research/` 的私人離線產物，請勿直接修改這兩份衍生副本。
 
@@ -71,7 +73,7 @@
 
 - [公共垃圾箱研究文獻與應用筆記](research/literature-2026-10-15/README.md)：保存 13 篇相關論文的書目、來源、查閱範圍、專案用途與證據限制，涵蓋撤桶、設計、選址及跨版座標配對。
 - [公共垃圾箱研究與試辦計畫](research/research-plan-2026-10-15/README.md)：資料查核、街段診斷、量測協定、試辦設計、人力估算及階段完成條件。
-- [研究執行成果與現場包](research/execution-2026-10-15/README.md)：桌面查核成果、18 個候選錨點、48 個預排訪次及 30 個任務槽、診斷卡與試辦協定。入口 `#research`。
+- [研究執行成果與現場包](research/execution-2026-10-15/README.md)：桌面查核成果、18 個候選錨點、48 個預排訪次及 30 個任務槽、診斷卡與試辦協定。入口 `#research-candidates-heading`，位於材料頁。
 
 ## 公開瀏覽與附件範圍
 
@@ -100,9 +102,9 @@ npm run preview
 
 `python scripts/check-design-browser.py` 使用 Node.js Playwright 驗證四種用途的訪客與清運流程、分流與家戶確認、滿載／感測離線／清運操作、固定規格與鍵盤操作、1440／720／390／320 px 版面、減少動態效果、位置資料 503 與 WebGL 失效時的文字流程。執行前請將已建置網站提供在 `http://127.0.0.1:4177/#design`；可用 `DESIGN_QA_URL` 覆寫網址、`PLAYWRIGHT_MODULE` 指定 Playwright 模組、`CHROME_PATH` 指定 Chrome。OpenStreetMap 圖磚由本機測試回傳 1×1 PNG；桌機四種用途、手機高使用量及 WebGL 備援截圖與 `design-browser-results.json` 寫入忽略的 `qa/`。Three.js 0.180.0 與 OrbitControls 自行託管，按需載入，版本與檔案雜湊見 `dist/vendor/three/manifest.json`。3D 體驗不依賴位置資料請求成功。
 
-概念設計入口為 `#design`，從研究建議進入。四款均為本站概念；選用途後，依固定投放／清運步驟查看分流、滿載、感測離線與家戶確認的示意，尺寸與物件不另提供自訂。WebGL 失效時文字流程仍可完整操作。沒有實際感測、身分辨識、付款或成效預測；假設見[用途體驗文件](../../topics/bins/docs/bin-design.md)。
+概念設計入口為 `#design`，從材料頁的舊研究判讀進入。四款均為本站概念；選用途後，依固定投放／清運步驟查看分流、滿載、感測離線與家戶確認的示意，尺寸與物件不另提供自訂。WebGL 失效時文字流程仍可完整操作。沒有實際感測、身分辨識、付款或成效預測；假設見[用途體驗文件](../../topics/bins/docs/bin-design.md)。
 
-研究入口 `#research` 為首頁「研究結論」，依序呈現三項判斷、成立條件、未知與直接引用；完整文獻／實務移至 `#sources`，預算／執行材料移至 `#materials`。每筆分開呈現方法、來源結果、本站解讀及限制；綜合建議可跳回其依據。內容由 `topics/bins/research/reference-guide-2026-10-16/catalog.json` 經 `package-research.py` 產生，公開頁直接含有正文，不依賴候選 JSON 載入。原有 13 篇完整書目、18 個候選、費率、估算及未執行的現勘協定均保留，可展開追查；沒有新增下載入口或公開附件。
+研究入口 `#research` 是人工整理的五段摘要，對照目前問題定義與 E01–E28，不由舊研究綜合建議覆寫。原有三項判讀保留於 `#materials` 的 `#research-synthesis`，由 `topics/bins/research/reference-guide-2026-10-16/catalog.json` 經 `package-research.py` 產生；生成器固定將該段放在材料頁。完整文獻／實務留在 `#sources`，每筆分開呈現方法、來源結果、本站解讀及限制。原有 13 篇完整書目、18 個候選、費率、估算及未執行的現勘協定均保留，沒有新增下載入口或公開附件。
 
 版本比較 `#comparison` 共用行政區與地址範圍，範圍摘要、五類組數及距離分布隨之連動。分類選擇只縮小結果清單，不改寫範圍分母。預設顯示全部分類；同址座標差距納入同一清單排序，不另重複前十名。完整全市行政區表放在清單之後直接閱讀，明示不受篩選影響；完整配對及距離方法歸來源頁。追加結果、距離延遲載入及從來源地圖返回會保留已展開證據；主資料與距離資料各有重試入口。
 
@@ -159,7 +161,7 @@ The metadata lives in `dist/country-model-data.js`; geometry lives in `dist/coun
 
 ## 設點與歷史疊圖
 
-「研究結果 → 候選街道」（`#siting`）把 425 組條件式寬度候選街段與 2015、2022、2024 年 5 月缺頁版、2024 年 10 月封存版及 2026 年 9 月主檔疊圖。設計頁亦有入口。圖層與行政區／地址篩選可獨立操作，點擊圖形或鍵盤清單可查看來源。跨年缺列不等於撤除，候選街段不代表核准設點。寬度單位暫按公尺解讀，現場及管理權責仍待查核。
+「研究與執行材料 → 候選街道」（`#siting`）把 425 組條件式寬度候選街段與 2015、2022、2024 年 5 月缺頁版、2024 年 10 月封存版及 2026 年 9 月主檔疊圖。設計頁亦有入口。圖層與行政區／地址篩選可獨立操作，點擊圖形或鍵盤清單可查看來源。跨年缺列不等於撤除，候選街段不代表核准設點。寬度單位暫按公尺解讀，現場及管理權責仍待查核。
 
 公開的 `siting-overlay.html` 只內嵌瀏覽所需的點位、街段圖形與來源說明。來源 CSV／GeoJSON、完整盤點清單、重建輸入與溯源檔不加入公開資產清單。`data/siting-overlay.json` 保存這次研究的展示快照，`data/siting-overlay.provenance.json` 只記錄此保存快照的雜湊、內容數量及研究出處；這兩檔留在私有原始碼。完整上游輸入與原始溯源紀錄保留在 monorepo 的 `topics/bins/research/siting-inventory-2026-10-17/` 及其引用來源，不包含在獨立 Sites 原始碼。本網站可重建保存快照的展示頁，不能從本站檔案重做完整上游盤點。
 
@@ -179,8 +181,21 @@ The existing map priority filter uses the new categories and retains its distric
 
 ## 百日計畫
 
-`#plan` 提供完整的百日建置與營運交接提案，研究首頁與頁尾皆有入口。`package-research.py` 由 canonical `topics/bins/research/hundred-day-plan-2026-10-17/README.md`（獨立 checkout 使用 `research/` 副本）產生正文、章節連結與表格。第 100 天須完成設備、人員與實際服務驗收；30 處、備援、預算及權責仍待承接單位確認。舊估算與 180 日營運材料保留並註明與百日建置的關係。僅公開 HTML 正文，不公開 Markdown、參數附件或離線 ZIP。
+`#plan` 提供完整的百日建置與營運交接提案，研究與執行材料及頁尾皆有入口。`package-research.py` 由 canonical `topics/bins/research/hundred-day-plan-2026-10-17/README.md`（獨立 checkout 使用 `research/` 副本）產生正文、章節連結與表格。第 100 天須完成行人服務的設備、人員與實際服務驗收；家戶服務不列入本期工作、預算或驗收。30 處、備援、預算及權責仍待承接單位確認。舊估算與 180 日營運材料保留並註明與百日建置的關係。僅公開 HTML 正文，不公開 Markdown、參數附件或離線 ZIP。
 
-## Current evidence summary
+## Preserved location evidence summary
 
-The research homepage presents the dated 2026 public location records and 2025 annual statistics before the existing recommendations. The summary uses the retained 2026-10-15 source recovery and source audit under `topics/bins/research/`; it is not a live inventory. Record counts, statistical units, source dates and unresolved coverage stay together. Field confirmation and the unstarted hundred-day proposal have separate labels. The summary is maintained in `dist/index.html` outside generated research markers, so the existing package rebuild preserves it. No route, runtime asset or public attachment was added.
+The materials page retains the dated 2026 public location records and 2025 annual statistics at `#current-evidence-heading`. The homepage now leads with the current problem conclusions and their comment evidence; it links to the preserved records for deeper reading. The summary uses the retained 2026-10-15 source recovery and source audit under `topics/bins/research/`; it is not a live inventory. Record counts, statistical units, source dates and unresolved coverage stay together. Field confirmation and the unstarted hundred-day proposal have separate labels. The summary is maintained in `dist/index.html` outside generated research markers, so the existing package rebuild preserves it. No route, runtime asset or public attachment was added.
+
+### Problem definition audit
+
+`#definition-audit-heading` records the 2026-10-18 retrospective analysis summary.
+The canonical public record is authored in `dist/index.html`: five grouping logs,
+four original-to-draft problem explanations, six attributed user decisions, and
+28 anonymized evidence paraphrases with bidirectional links. E identifiers are
+stable lookup keys, not frequency or priority ranks. Original comments and the
+E-to-source-row crosswalk remain in the private research workspace; do not add
+them to the public asset allowlist. Publication does not confirm the hypotheses.
+
+Run `scripts/check-definition-browser.mjs` against a prepared local preview to
+check deep links, evidence round trips, attribution counts and mobile bounds.
