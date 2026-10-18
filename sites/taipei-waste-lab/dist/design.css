@@ -161,3 +161,152 @@
  .t1-process-after .t1-process-list{padding-left:20px}
 }
 @media(max-width:360px){.design-viewport{height:300px}.design-heading h2{font-size:26px}}
+
+/* Problem definition is a reading page, separate from the retained T1 concept. */
+.definition-panel{max-width:88ch;padding-top:32px;padding-bottom:40px}
+.definition-header h2{font-family:var(--sans);font-size:clamp(26px,3vw,36px);line-height:1.5;letter-spacing:-.025em;margin-bottom:16px;text-wrap:balance}
+.definition-header>p{max-width:76ch}
+.definition-status{display:inline-block;padding:5px 12px;background:var(--warning);color:var(--amber);font-size:14px;font-weight:650;border-radius:3px}
+.definition-evidence{color:var(--muted);font-size:14px;line-height:1.9}
+.definition-nav{display:flex;flex-wrap:wrap;gap:8px 24px;border-block:1px solid var(--line);padding:10px 0;margin:28px 0}
+.definition-nav a{display:inline-flex;align-items:center;min-height:44px;font-size:15px}
+.definition-panel>section{margin-top:40px}
+.definition-panel h3{font-family:var(--sans);font-size:24px;line-height:1.5;margin:0 0 16px}
+.definition-panel h4{font-family:var(--sans);font-size:19px;line-height:1.6;margin:0 0 12px}
+.definition-core{padding:24px;background:var(--light);border-left:3px solid var(--green)}
+.definition-core>p:not(.definition-evidence){font-size:19px;line-height:1.9}
+.definition-core p:last-child,.definition-scope p:last-child{margin-bottom:0}
+.definition-needs,.definition-problems{padding-left:26px;margin:0}
+.definition-needs>li,.definition-problems>li{padding:22px 0 18px 10px;border-top:1px solid var(--line)}
+.definition-needs>li::marker,.definition-problems>li::marker{color:var(--green);font-weight:650}
+.definition-needs p,.definition-problems p{margin-bottom:10px;line-height:1.9}
+.definition-original{font-size:13px;color:var(--muted);letter-spacing:.02em}
+.definition-unknown{font-size:15px;color:var(--muted)}
+.definition-scope{padding:24px;border:1px solid var(--line);background:var(--white)}
+.definition-next{border-top:1px solid var(--line);padding-top:28px}
+@media(max-width:600px){.definition-panel{padding-top:24px}.definition-core,.definition-scope{padding:18px}.definition-panel h3{font-size:22px}.definition-panel h4{font-size:18px}.definition-needs,.definition-problems{padding-left:22px}.definition-needs>li,.definition-problems>li{padding-left:4px}}
+
+/* The audit keeps evidence, interpretation and decisions visibly distinct. */
+.definition-trace-link{font-size:14px;margin-top:16px}
+.definition-change-log{border-left:2px solid var(--line);padding-left:18px;margin-top:20px;font-size:15px}
+.definition-owner{font-size:13px;line-height:1.8;color:var(--green);font-weight:650;letter-spacing:.02em;margin-bottom:8px}
+.definition-audit{border-top:2px solid var(--green);padding-top:28px}
+.definition-audit>h4{margin-top:36px}
+.definition-audit p{line-height:1.9}
+.definition-legend{margin:24px 0;padding:18px 22px;background:var(--light)}
+.definition-legend>div{display:grid;grid-template-columns:8em minmax(0,1fr);gap:12px;margin:10px 0}
+.definition-legend dt{font-weight:650}.definition-legend dd{margin:0}
+.definition-decisions>article,.definition-group-log,.definition-evidence-list>article{border-top:1px solid var(--line);padding:24px 0}
+.definition-decisions blockquote{margin:12px 0;padding-left:18px;border-left:2px solid var(--line);color:var(--muted);font-size:15px;line-height:1.9}
+.definition-analyst{background:var(--light);padding:20px 24px;margin:12px 0 36px}
+.definition-analyst p:last-child{margin-bottom:0}
+.definition-evidence-index{display:flex;flex-wrap:wrap;gap:6px 20px;margin:20px 0}
+.definition-evidence-index a{display:inline-flex;align-items:center;min-height:44px;font-variant-numeric:tabular-nums}
+.definition-evidence-list>article p{font-size:15px}
+.definition-panel [id^="definition-"]{scroll-margin-top:150px}
+@media(max-width:600px){.definition-legend{padding:14px 16px}.definition-legend>div{grid-template-columns:1fr;gap:3px;margin:14px 0}.definition-analyst{padding:16px}.definition-change-log{padding-left:12px}.definition-panel [id^="definition-"]{scroll-margin-top:180px}}
+
+/* Evidence stays current and discoverable; older definitions are explicitly optional. */
+.definition-panel>.definition-nav{margin:24px 0;gap:4px 20px}
+.definition-disclosure{border:0;border-block:1px solid var(--line);border-radius:0;background:transparent;margin:32px 0;padding:0}
+.definition-disclosure>summary{padding:20px 0;min-height:44px;font-size:18px;font-weight:650;cursor:pointer}
+.definition-disclosure>section{margin:24px 0}
+.definition-disclosure[open]>summary{margin-bottom:16px}
+.definition-record{margin:0;border:0;border-radius:0;background:transparent;padding:0}
+.definition-record>summary{padding:20px 0;min-height:44px;cursor:pointer}
+.definition-record>summary .definition-owner{margin:0 0 4px;display:block;font-size:13px}
+.definition-record>summary h4{display:inline;font-size:18px;line-height:1.65;margin:0}
+.definition-record[open]>summary{margin-bottom:12px}
+.definition-record>p{max-width:74ch}
+.definition-decisions>article,.definition-group-log,.definition-evidence-list>article{padding:0}
+.definition-record details{border:0;border-block:1px solid var(--line);border-radius:0;padding:16px 0;margin:24px 0;background:transparent}
+.definition-record details>summary{min-height:44px;padding:8px 0;cursor:pointer}
+.definition-reading-help{font-size:15px;color:var(--muted)}
+.definition-evidence-index{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;margin:24px 0}
+.definition-evidence-index a{display:grid;grid-template-columns:2.8em minmax(0,1fr);gap:8px;align-items:baseline;padding:12px 0;min-height:44px;border-bottom:1px solid var(--line);font-size:14px;text-decoration:none}
+.definition-evidence-index a span{font-size:15px;line-height:1.6}
+.definition-evidence-index a:hover span{text-decoration:underline;text-underline-offset:3px}
+.definition-panel summary:focus-visible{outline:3px solid var(--copper,#bd5c16);outline-offset:4px}
+@media(max-width:600px){.definition-evidence-index{grid-template-columns:1fr}.definition-record>summary h4{font-size:18px}.definition-disclosure>summary{font-size:17px}}
+.definition-panel [id^="definition-"],.definition-panel [id^="t1-"]{scroll-margin-top:24px}
+@media(max-width:959px){.definition-panel [id^="definition-"],.definition-panel [id^="t1-"]{scroll-margin-top:104px}}
+.definition-verdict{padding:24px;background:var(--light);margin:20px 0 28px}
+.definition-verdict>p:first-of-type{font-size:20px;line-height:1.7}
+.definition-verdict p:last-child{margin-bottom:0}
+@media(max-width:600px){.definition-verdict{padding:20px 16px}.definition-verdict>p:first-of-type{font-size:18px}}
+
+/* The definition entry leads with the four accepted research questions. */
+.definition-panel .definition-conclusions{max-width:76ch;padding:16px 0 24px}
+.definition-panel .definition-conclusions>h3{margin:0 0 8px}
+.definition-panel .convergence-status{margin:0;font-size:15px;color:var(--warning-ink,#734917);font-weight:650}
+.definition-panel .convergence-list{list-style:none;padding:0;margin:16px 0 20px}
+.definition-panel .convergence-list>li{border-top:1px solid var(--rule-line,#c6d6dc);padding:14px 0;margin:0}
+.definition-panel .convergence-list h4{font-size:19px;line-height:1.5;margin:0 0 4px}
+.definition-panel .convergence-list p{font-size:17px;line-height:1.65;margin:0}
+.definition-panel .convergence-list a{display:inline-block;padding:4px 0;text-underline-offset:4px}
+.definition-panel .convergence-boundary{font-size:16px;line-height:1.75}
+.definition-panel .convergence-scope{display:grid;grid-template-columns:9em minmax(0,1fr);gap:12px 20px;margin:20px 0}
+.definition-panel .convergence-scope dt{font-weight:700}
+.definition-panel .convergence-scope dt,.definition-panel .convergence-scope dd{margin:0;font-size:16px;line-height:1.75}
+@media(max-width:650px){
+ .definition-panel .convergence-list>li{padding:10px 0}
+ .definition-panel .convergence-list h4{font-size:18px}
+ .definition-panel .convergence-list p{font-size:16px}
+ .definition-panel .convergence-scope{grid-template-columns:1fr;gap:4px}
+ .definition-panel .convergence-scope dd{margin-bottom:12px}
+}
+
+/* One reading surface: conclusions first, then definitions, PRD and traceable records. */
+.definition-flat{max-width:88ch}
+.definition-flat .definition-header h2{font-size:28px;line-height:1.45;margin:0 0 12px}
+.definition-flat .definition-conclusions{margin-top:24px;padding-top:0;padding-bottom:0;max-width:none}
+.definition-flat .definition-conclusions>h3{font-size:26px;line-height:1.5;margin-bottom:12px;text-wrap:balance}
+.definition-flat .definition-conclusions>h3>span{display:inline-block}
+.definition-flat .definition-thesis{font-size:18px;line-height:1.8;margin:0 0 16px}
+.definition-flat .convergence-list{margin:16px 0}
+.definition-flat .convergence-list>li{padding:12px 0}
+.definition-flat .convergence-list h4{font-size:18px;line-height:1.5;margin-bottom:4px}
+.definition-flat .convergence-list p{font-size:16px;line-height:1.7}
+.definition-flat .definition-topic{border-top:1px solid var(--line);padding-top:28px}
+.definition-flat .definition-topic h3{font-size:24px}
+.definition-flat .definition-problem-statement{font-size:18px;line-height:1.9}
+.definition-flat p{max-width:76ch}
+.definition-flat .definition-record-label{font-size:15px;color:var(--muted);font-weight:650;margin:20px 0 12px}
+.definition-flat .definition-record>h4 .definition-owner,.definition-flat .definition-decisions>article>h4 .definition-owner{display:block;margin-bottom:4px}
+.definition-flat .definition-decisions>article,.definition-flat .definition-evidence-list>article,.definition-flat .definition-group-log{padding:24px 0}
+.definition-flat .definition-record>h4{margin-bottom:12px;font-size:19px}
+.definition-flat .definition-record p{font-size:16px}
+.definition-flat .definition-disclosure{margin:24px 0;border:0}
+.definition-flat .definition-core,.definition-flat .definition-scope,.definition-flat .definition-analyst{background:none;border:0;padding:0}
+.definition-flat .definition-change-log{border:0;padding:0}
+.definition-flat .definition-evidence-index{display:flex;gap:4px 16px;margin:24px 0}
+.definition-flat .definition-evidence-index a{display:inline-flex;gap:6px;min-height:44px;border:0;padding:6px 0}
+.definition-flat .definition-evidence-index a span{display:none}
+.definition-flat #definition-prd>section{padding:28px 0;border-top:1px solid var(--line)}
+.definition-flat #definition-prd h4{font-size:20px;margin-bottom:16px}
+.definition-flat table{width:100%;border-collapse:collapse;font-size:16px;margin:20px 0 24px}
+.definition-flat th,.definition-flat td{text-align:left;vertical-align:top;padding:14px 16px;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+.definition-flat th{background:var(--light);font-weight:650}
+.definition-flat th:first-child{width:25%}
+.definition-flat .definition-evidence{font-size:14px}
+.definition-flat .definition-legend{padding:16px 0;background:none}
+.definition-flat .definition-decisions blockquote{border-left-width:1px}
+.definition-flat .card{border:0;padding:20px 0;background:none;box-shadow:none}
+.definition-flat .grid{display:block}
+.definition-flat .card dt{font-weight:650;margin-top:12px}
+.definition-flat .card dd{margin:4px 0 12px}
+@media(max-width:600px){
+ .definition-flat .definition-header h2{font-size:24px}
+ .definition-flat .definition-conclusions>h3{font-size:23px}
+ .definition-flat .definition-thesis{font-size:16px}
+ .definition-flat .definition-topic h3{font-size:21px}
+ .definition-flat .convergence-list>li{padding:10px 0}
+ .definition-flat .definition-problem-statement{font-size:17px}
+ .definition-flat table,.definition-flat tbody,.definition-flat tr,.definition-flat td{display:block}
+ .definition-flat thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+ .definition-flat tr{padding:14px 0;border-bottom:1px solid var(--line)}
+ .definition-flat td{padding:6px 0;border:0}
+ .definition-flat td::before{content:attr(data-label);display:block;color:var(--muted);font-size:14px;font-weight:650}
+ .definition-flat td:first-child{font-weight:650}
+}
+@media print{.definition-flat .definition-nav{display:none}.definition-flat .definition-topic{break-inside:auto}.definition-flat h3,.definition-flat h4{break-after:avoid}}

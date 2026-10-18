@@ -39,7 +39,7 @@ try{
     await page.locator('#panel-design a[href="#siting"]').click();
     const frame=await ready(page);
     assert.equal(overlayRequests,1);
-    assert.equal(await page.locator('#research-navigation [data-page="siting"]').getAttribute('aria-current'),'page');
+    assert.equal(await page.locator('#panel-materials [data-page="siting"]').getAttribute('aria-current'),'page');
     assert.equal(await page.locator('[data-section="history"]').getAttribute('aria-current'),null);
     assert.equal(await page.locator('[data-section="history"]').getAttribute('data-section-active'),null);
     assert.equal(await page.locator('#history-navigation').isVisible(),false);
