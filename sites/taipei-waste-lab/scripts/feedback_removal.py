@@ -349,7 +349,7 @@ def render(data, comparisons, heat_colors):
     md += ['', '## 方法、稽核與限制', '', method, '',
            '有時間或地點不等於可定位事件。只有恢復要求不自行視為已發生撤除；用途與目的不自動當已發生困難。泛稱不便與具體困難互斥。比較、來源、影響位置及垃圾轉移處不能混用。', '',
            '[凍結規約](protocol.md)、[裁決與事後邊界](adjudication.md)、[彙總](summary.json)、[人工來源比對](comparisons.json)、[來源取得收據](source-check.json)、[額外定向檢索紀錄](source-search.md)。', '',
-           '## 重建', '', '原文與逐則判斷保留在私有資料夾；程式只驗證與加總，不從文字推論分類。保留完整輸入後在網站目錄執行：', '',
+           '## 頁面重建與私有重算的界線', '', '公開版本與離線研究包只支援從已保存彙總重建頁面，無法單獨重做或獨立稽核逐則語意分析。原文、逐則判斷及裁決已封存在資料持有人的本地私有檔案；尚未建立其他維護者可取用的遠端備份。指紋僅供持有原檔者核對，不能取代輸入。', '', '一般頁面重建在網站目錄執行 `python scripts/package-research.py`。只有持有完整私有封存資料並解壓後，才可執行下列分析重算；`/private/removal-coding` 是待替換的示例路徑：', '',
            '```sh', 'python scripts/feedback_removal.py --private-dir /private/removal-coding', 'python scripts/package-research.py', '```', '',
            '一般建置只讀取保存的彙總與人工比對，不需要公開原文或重跑語意判讀。', '', '## 來源指紋', '', *[f'- {key}: `{value}`' for key,value in data['source'].items()]]
     return '\n'.join(page), '\n'.join(md)
