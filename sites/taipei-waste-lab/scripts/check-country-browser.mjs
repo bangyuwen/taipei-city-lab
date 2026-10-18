@@ -9,7 +9,7 @@ const qa=fileURLToPath(new URL('../.impeccable/review/',import.meta.url));
 const ids=['japan','uk','denmark','us','finland','korea','france','netherlands','singapore','india','australia','south-africa'];
 const errors=[],results=[];await mkdir(qa,{recursive:true});
 const urlFor=(id='us')=>{const url=new URL(base);url.searchParams.set('country',id);url.hash='countries';return url.href};
-async function ready(page){await page.locator('.country-reading-ready').waitFor();await page.locator('#country-reader-select').waitFor()}
+async function ready(page){await page.locator('.country-reading-ready').waitFor();await page.locator('#country-reader-select').waitFor({state:'attached'})}
 async function loaded(page){
   await page.waitForFunction(()=>{
     const controls=document.querySelector('.country-model-controls');
@@ -18,14 +18,16 @@ async function loaded(page){
 }
 async function model(page){await page.click('[data-mode="model"]');await loaded(page)}
 async function readCase(page,id){
-  await page.selectOption('#country-reader-select',id);
+  const entry=page.locator(`.country-index [data-country-target="country-${id}"]`);
+  if(await entry.isVisible())await entry.click();
+  else await page.selectOption('#country-reader-select',id);
   await page.waitForFunction(id=>document.querySelector(`.country-case[aria-labelledby="country-${id}"]`)?.parentElement.hidden===false,id);
 }
 async function bounds(page){assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Page must not overflow')}
 async function sourcePhotos(page){
   return page.evaluate(async()=>{
     const source=new DOMParser().parseFromString(await (await fetch(location.pathname)).text(),'text/html');
-    return Object.fromEntries([...source.querySelectorAll('.country-case')].map(article=>{
+    return Object.fromEntries([...source.querySelectorAll('.country-case[data-media-case="true"]')].map(article=>{
       const figure=article.querySelector('.country-photo');
       return [article.getAttribute('aria-labelledby').replace('country-',''),{caption:figure.querySelector('figcaption').textContent,links:[...figure.querySelectorAll('a')].map(link=>link.getAttribute('href')),image:figure.querySelector('img')?.getAttribute('src')||null}];
     }));
@@ -50,10 +52,12 @@ try{
     await page.goto(urlFor());await ready(page);const photos=await sourcePhotos(page);
     assert.equal(requests.some(request=>request.includes('/vendor/three/')),false,'Photo-first reading keeps Three lazy');
     assert.equal(await page.locator('#panel-countries select').count(),1);
-    assert.equal(await page.locator('#country-reader-select option').count(),12);
+    assert.equal(await page.locator('#country-reader-select option').count(),14);
     assert.equal(await page.locator('#country-reader-select optgroup').count(),3);
     assert.equal(await page.locator('#panel-countries details').count(),0,'Case reading needs no disclosures');
-    assert.equal(await page.locator('.country-index,.country-return,.country-model-open,.country-guide,.country-question,.country-part-buttons,#country-play-progress,[data-view],[data-play="rotate"],#country-comparison').count(),0);
+    assert.equal(await page.locator('.country-return,.country-model-open,.country-guide,.country-question,.country-part-buttons,#country-play-progress,[data-view],[data-play="rotate"],#country-comparison').count(),0);
+    assert.equal(await page.locator('.country-index').isVisible(),width>=1160);
+    assert.equal(await page.locator('#country-reader-select').isVisible(),width<1160);
     await model(page);const original=await page.locator('.country-model-stage canvas').elementHandle();
     for(const id of width===1440?ids:['japan','india','australia']){
       await readCase(page,id);await bounds(page);
@@ -68,6 +72,14 @@ try{
       assert.equal(await page.locator('.country-model-controls > button').count(),4);
       assert.equal(await original.evaluate(canvas=>canvas===document.querySelector('.country-model-stage canvas')),true,'Reuse one canvas across all cases');
       assert.ok(await page.locator('.country-model-limitation').innerText());
+    }
+    for(const id of ['hong-kong','uruguay']){
+      await readCase(page,id);await bounds(page);
+      const article=page.locator('.country-case:visible');
+      assert.equal(await article.locator('.strategy-flow li').count(),4);
+      assert.ok(await article.locator('.strategy-sources').innerText());
+      assert.equal(await article.locator('.strategy-media-absence').count(),1);
+      assert.equal(await page.locator('#country-viewer').count(),0);
     }
     await readCase(page,'japan');await model(page);
     const canvas=page.locator('.country-model-stage canvas');await canvas.focus();
@@ -95,7 +107,7 @@ try{
     if([1440,390].includes(width)){
       await readCase(page,'us');await page.screenshot({path:resolve(qa,`country-clean-${width}.png`),fullPage:true});
     }
-    results.push({width,countries:width===1440?12:3,photoFirst:true,keyboard:true,reuse:true});await context.close();
+    results.push({width,countries:width===1440?14:5,mediaCases:width===1440?12:3,strategyFirst:true,keyboard:true,reuse:true});await context.close();
   }
   // GPU failure leaves the selected case's photographs, limitations and costs readable.
   const fallback=await browser.newPage();
@@ -117,5 +129,5 @@ try{
   await delayed.click('[data-mode="photo"]');release();await delayed.waitForFunction(()=>document.querySelector('.country-model-stage canvas'));
   assert.equal(await delayed.locator('#country-viewer').getAttribute('data-media'),'photo');assert.equal(await delayed.locator('.country-model-visual').isVisible(),false);await delayed.close();
   assert.deepEqual(errors,[]);await writeFile(resolve(qa,'country-browser.json'),JSON.stringify({results,errors,fallback:true,networkRetry:true,hiddenDuringLoad:true},null,2));
-  console.log('Country browser checks passed: one selector, 12 photo-first cases, complete attribution and costs, 4 widths, keyboard/zoom, renderer reuse, context loss and lazy-loading fallbacks.');
+  console.log('Country browser checks passed: 14 strategy entries, 12 photo supplements, desktop index/mobile select, complete attribution and costs, 4 widths, keyboard/zoom, renderer reuse, context loss and lazy-loading fallbacks.');
 }finally{await browser.close()}

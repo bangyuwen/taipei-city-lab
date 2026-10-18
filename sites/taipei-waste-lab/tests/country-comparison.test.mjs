@@ -24,10 +24,11 @@ const countryGroups = {
   household: ["country-finland", "country-korea", "country-india"]
 };
 
-test("comparison IDs match the twelve country case articles in requested order", async () => {
+test("comparison IDs match the twelve preserved equipment supplements", async () => {
   const html = await readFile(indexPath, "utf8");
   const articleTags = [...html.matchAll(/<article\b[^>]*>/g)]
     .map(([tag]) => tag)
+    .filter((tag) => /data-media-case="true"/.test(tag))
     .filter((tag) => /\bclass="[^"]*\bcountry-case\b[^"]*"/.test(tag));
   const articleIds = articleTags.map((tag) =>
     tag.match(/\baria-labelledby="([^"]+)"/)?.[1]
