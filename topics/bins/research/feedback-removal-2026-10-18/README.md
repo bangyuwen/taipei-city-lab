@@ -300,9 +300,11 @@
 
 [凍結規約](protocol.md)、[裁決與事後邊界](adjudication.md)、[彙總](summary.json)、[人工來源比對](comparisons.json)、[來源取得收據](source-check.json)、[額外定向檢索紀錄](source-search.md)。
 
-## 重建
+## 頁面重建與私有重算的界線
 
-原文與逐則判斷保留在私有資料夾；程式只驗證與加總，不從文字推論分類。保留完整輸入後在網站目錄執行：
+公開版本與離線研究包只支援從已保存彙總重建頁面，無法單獨重做或獨立稽核逐則語意分析。原文、逐則判斷及裁決已封存在資料持有人的本地私有檔案；尚未建立其他維護者可取用的遠端備份。指紋僅供持有原檔者核對，不能取代輸入。
+
+一般頁面重建在網站目錄執行 `python scripts/package-research.py`。只有持有完整私有封存資料並解壓後，才可執行下列分析重算；`/private/removal-coding` 是待替換的示例路徑：
 
 ```sh
 python scripts/feedback_removal.py --private-dir /private/removal-coding
