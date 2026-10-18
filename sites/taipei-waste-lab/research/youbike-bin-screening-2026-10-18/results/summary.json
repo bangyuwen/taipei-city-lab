@@ -1,0 +1,171 @@
+{
+  "station_rows": 1821,
+  "active_valid_stations": 1790,
+  "act_values": {
+    "1": 1790,
+    "0": 31
+  },
+  "source_update_times": [
+    "2026-10-18 16:28:52"
+  ],
+  "inputs": {
+    "bins2026": {
+      "raw_rows": 681,
+      "valid_coordinate_rows": 680,
+      "unique_valid_coordinates": 679
+    },
+    "bins2024": {
+      "raw_rows": 1971,
+      "valid_coordinate_rows": 1969,
+      "unique_valid_coordinates": 1959
+    },
+    "venues": {
+      "raw_rows": 130,
+      "valid_coordinate_rows": 130,
+      "unique_valid_coordinates": 120
+    }
+  },
+  "lanes": {
+    "場所服務與街道可達性查核": 314,
+    "現有資料不足": 1205,
+    "既有街道紀錄查核": 271
+  },
+  "sensitivity": [
+    {
+      "bin_radius_m": 50,
+      "venue_radius_m": 100,
+      "既有街道紀錄查核": 132,
+      "場所服務與街道可達性查核": 104,
+      "現有資料不足": 1554,
+      "denominator": 1790
+    },
+    {
+      "bin_radius_m": 50,
+      "venue_radius_m": 250,
+      "既有街道紀錄查核": 132,
+      "場所服務與街道可達性查核": 379,
+      "現有資料不足": 1279,
+      "denominator": 1790
+    },
+    {
+      "bin_radius_m": 50,
+      "venue_radius_m": 400,
+      "既有街道紀錄查核": 132,
+      "場所服務與街道可達性查核": 706,
+      "現有資料不足": 952,
+      "denominator": 1790
+    },
+    {
+      "bin_radius_m": 100,
+      "venue_radius_m": 100,
+      "既有街道紀錄查核": 271,
+      "場所服務與街道可達性查核": 84,
+      "現有資料不足": 1435,
+      "denominator": 1790
+    },
+    {
+      "bin_radius_m": 100,
+      "venue_radius_m": 250,
+      "既有街道紀錄查核": 271,
+      "場所服務與街道可達性查核": 314,
+      "現有資料不足": 1205,
+      "denominator": 1790
+    },
+    {
+      "bin_radius_m": 100,
+      "venue_radius_m": 400,
+      "既有街道紀錄查核": 271,
+      "場所服務與街道可達性查核": 621,
+      "現有資料不足": 898,
+      "denominator": 1790
+    },
+    {
+      "bin_radius_m": 150,
+      "venue_radius_m": 100,
+      "既有街道紀錄查核": 376,
+      "場所服務與街道可達性查核": 73,
+      "現有資料不足": 1341,
+      "denominator": 1790
+    },
+    {
+      "bin_radius_m": 150,
+      "venue_radius_m": 250,
+      "既有街道紀錄查核": 376,
+      "場所服務與街道可達性查核": 277,
+      "現有資料不足": 1137,
+      "denominator": 1790
+    },
+    {
+      "bin_radius_m": 150,
+      "venue_radius_m": 400,
+      "既有街道紀錄查核": 376,
+      "場所服務與街道可達性查核": 562,
+      "現有資料不足": 852,
+      "denominator": 1790
+    }
+  ],
+  "distance_cross_checks": [
+    {
+      "anchor": "西門捷運站",
+      "haversine_m": 79.41035017210736,
+      "spherical_cosine_m": 79.41029824355134,
+      "difference_m": 5.192855601876545e-05
+    },
+    {
+      "anchor": "公館捷運站",
+      "haversine_m": 40.89472254761229,
+      "spherical_cosine_m": 40.894750159555265,
+      "difference_m": 2.761194297562497e-05
+    },
+    {
+      "anchor": "龍山寺捷運站",
+      "haversine_m": 771.5362634471606,
+      "spherical_cosine_m": 771.5362641906783,
+      "difference_m": 7.435176030412549e-07
+    },
+    {
+      "anchor": "101站/世貿捷運站",
+      "haversine_m": 74.0868366174074,
+      "spherical_cosine_m": 74.08682772556543,
+      "difference_m": 8.8918419720585e-06
+    },
+    {
+      "anchor": "新北投捷運站",
+      "haversine_m": 3136.493821852214,
+      "spherical_cosine_m": 3136.4938221339653,
+      "difference_m": 2.8175145416753367e-07
+    },
+    {
+      "anchor": "南港捷運站",
+      "haversine_m": 1270.387704594125,
+      "spherical_cosine_m": 1270.3877015947703,
+      "difference_m": 2.9993545922479825e-06
+    }
+  ],
+  "invalid_rows": 3,
+  "limitations": [
+    "Straight-line coordinate distances, not walking routes or same-side access",
+    "Different source dates; street-bin citywide coverage is unverified",
+    "Venue rows are service leads, not individual bins or measured demand",
+    "No usage, garbage, sidewalk clearance, cost or causal-effect measurements",
+    "Six fixed purposive cases are not a representative sample"
+  ],
+  "source_area_strata": {
+    "臺大公館校區": {
+      "active_valid_stations": 64,
+      "lanes": {
+        "現有資料不足": 57,
+        "既有街道紀錄查核": 2,
+        "場所服務與街道可達性查核": 5
+      }
+    },
+    "其他來源區域": {
+      "active_valid_stations": 1726,
+      "lanes": {
+        "場所服務與街道可達性查核": 309,
+        "現有資料不足": 1148,
+        "既有街道紀錄查核": 269
+      }
+    }
+  }
+}
