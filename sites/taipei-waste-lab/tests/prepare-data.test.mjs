@@ -107,7 +107,9 @@ from pathlib import Path
 m=runpy.run_path('scripts/prepare-data.py');research=Path('research')
 d=m['venue_leads'](research)
 raw=(research/'source-recovery-2026-10-15/raw/official-tourist.csv').read_bytes()
-rows=[r for r in csv.DictReader(io.StringIO(raw.decode('cp950'))) if r['行政區'] in ('北投區','南港區')]
+rows=list(csv.DictReader(io.StringIO(raw.decode('cp950'))))
+assert len(rows)==130
+assert [p['id'] for p in d['points']]==[f'venue-row-{i+1}' for i in range(len(rows))]
 assert [(p['district'],p['address'],p['rawX'],p['rawY']) for p in d['points']]==[(r['行政區'],r['地址'],r['經度'],r['緯度']) for r in rows]
 with tempfile.TemporaryDirectory() as directory:
  target=Path(directory)

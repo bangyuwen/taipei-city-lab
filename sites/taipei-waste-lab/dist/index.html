@@ -44,7 +44,7 @@
     <div id="load-status" class="load-status" role="status" hidden>正在載入保存的位置資料…</div>
 
     <section id="panel-map" class="page-panel" aria-labelledby="map-heading" hidden>
-      <div class="section-heading"><div><h2 id="map-heading">找當時的垃圾箱位置</h2></div><p>切換資料版本，查看保存位置；2026 主檔另附北投、南港場域線索。</p></div>
+      <div class="section-heading"><div><h2 id="map-heading">找當時的垃圾箱位置</h2></div><p>切換資料版本，查看保存位置；2026 主檔另附 12 區、130 筆場域線索。</p></div>
       <div class="dataset-meta"><div><span id="dataset-date"></span><a id="dataset-source" target="_blank" rel="noopener noreferrer">原始來源 ↗</a><a href="#sources">完整來源與限制</a></div><p id="dataset-completeness" role="status"></p></div>
       <div class="map-layout">
         <section class="map-filter-fields" aria-label="篩選位置"><div class="filter-heading"><h3>找一個位置</h3><button id="reset-filters" class="quiet-button" type="button">清除篩選</button></div>
@@ -52,8 +52,8 @@
           <label for="district">行政區</label><select id="district"><option value="">全部行政區</option></select>
           <label for="search">地址、路名或場域名稱</label><div class="search-input"><input id="search" type="search" placeholder="例如：中山北路" maxlength="100" autocomplete="off"></div>
           <div id="venue-layer" class="venue-layer" hidden>
-            <label for="show-venues"><input id="show-venues" type="checkbox" checked disabled aria-describedby="venue-layer-note">顯示北投、南港場域線索</label>
-            <p id="venue-layer-note">菱形是場域約略位置，不是已核實桶位或入口。開放時間、接收規則與桶況待確認。</p>
+            <label for="show-venues"><input id="show-venues" type="checkbox" checked disabled aria-describedby="venue-layer-note">顯示 12 區場域線索</label>
+            <p id="venue-layer-note">菱形是場域約略位置，不是已核實桶位或入口。同座標線索可能重疊，可從清單逐筆查看；開放時間、接收規則與桶況待確認。</p>
             <p><span id="venue-date"></span><br><a id="venue-source" target="_blank" rel="noopener noreferrer">官方場域清單 ↗</a></p>
           </div></section>
         <div class="map-column"><div class="map-topline"><div class="map-legends"><span id="map-legend">保存位置</span><span id="venue-legend" hidden>場域線索・約略位置</span></div><div class="map-tools"><button id="fit-map" type="button">顯示搜尋範圍 </button><label for="map-basemap">底圖<select id="map-basemap"><option value="light">簡潔</option><option value="street">街道</option></select></label></div></div>
@@ -64,7 +64,7 @@
         <section class="map-results" aria-label="位置清單"><div class="result-summary" aria-live="polite"><strong id="result-count">—</strong><span>筆保存紀錄</span><small id="result-map-count"></small></div>
           <div id="point-list" class="point-list" aria-label="搜尋結果"></div>
           <button id="load-more" class="load-more" type="button" hidden>顯示更多位置</button>
-          <section id="venue-results" class="venue-results" aria-labelledby="venue-heading" hidden><h3 id="venue-heading">場域線索 <span id="venue-count">0</span> 處</h3><p id="venue-status" role="status"></p><div id="venue-list" class="point-list" aria-label="場域線索清單"></div></section></section>
+          <section id="venue-results" class="venue-results" aria-labelledby="venue-heading" hidden><h3 id="venue-heading">場域線索 <span id="venue-count">0</span> 筆</h3><p id="venue-status" role="status"></p><div id="venue-list" class="point-list" aria-label="場域線索清單"></div></section></section>
 
       </div>
       <section class="district-details" aria-labelledby="district-distribution-heading"><h3 id="district-distribution-heading">這份資料的行政區分布</h3><div class="district-explanation">這裡統計保存資料列，不是已核實的全市垃圾箱存量。沒有保存紀錄的行政區，不代表當地沒有垃圾箱。</div><div id="district-table"></div></section>

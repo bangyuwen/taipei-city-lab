@@ -104,12 +104,19 @@ test('hundred-day plan and its source links open the owning readable panel', () 
 
 test('venue leads stay separate from street inventories and obey year, toggle and search scope',()=>{
   const before=JSON.stringify(catalog.datasets),state={year:'2026-main'};
-  assert.equal(filterVenuePoints(catalog,state).length,15);
-  assert.equal(filterVenuePoints(catalog,{...state,district:'北投區'}).length,10);
-  assert.equal(filterVenuePoints(catalog,{...state,district:'南港區'}).length,5);
-  assert.equal(filterVenuePoints(catalog,{...state,district:'大安區'}).length,0);
+  assert.equal(filterVenuePoints(catalog,state).length,130);
+  const counts={'中正區':16,'大同區':14,'中山區':16,'松山區':7,'大安區':18,'萬華區':3,'信義區':18,'士林區':7,'北投區':10,'內湖區':7,'南港區':5,'文山區':9};
+  for(const [district,count] of Object.entries(counts)){
+    const points=filterVenuePoints(catalog,{...state,district});
+    assert.equal(points.length,count,district);
+    assert.ok(points.every(p=>p.district===district));
+  }
+  assert.equal(filterVenuePoints(catalog,{...state,district:'未收錄區'}).length,0);
   assert.equal(filterVenuePoints(catalog,{...state,district:'北投區',search:'新 北 投'}).length,1);
   assert.equal(filterVenuePoints(catalog,{...state,district:'南港區',search:'ＬＡＬＡＰＯＲＴ'}).length,1);
+  assert.equal(filterVenuePoints(catalog,{...state,district:'大安區',search:'國父紀念館'}).length,1);
+  assert.equal(filterVenuePoints(catalog,{...state,district:'信義區',search:'國父紀念館'}).length,2);
+  assert.equal(filterVenuePoints(catalog,{...state,district:'大安區',search:'ＬＡＬＡＰＯＲＴ'}).length,0);
   assert.equal(filterVenuePoints(catalog,{...state,search:'未收錄的場域'}).length,0);
   assert.equal(filterVenuePoints(catalog,{...state,showVenues:false}).length,0);
   for(const d of catalog.datasets.filter(d=>d.key!=='2026-main'))assert.equal(filterVenuePoints(catalog,{year:d.key}).length,0);
@@ -120,16 +127,19 @@ test('venue leads stay separate from street inventories and obey year, toggle an
   assert.ok(!csvForPoints(current.points,current).includes('venue-row-'));
 });
 
-test('public venue data preserves coarse source coordinates and exposes only the requested subset',()=>{
+test('public venue data covers twelve districts and preserves coarse coordinates and overlapping rows',()=>{
   const d=catalog.venueLeads;
-  assert.equal(d.rows,15);assert.equal(new Set(d.points.map(p=>p.id)).size,15);
+  assert.equal(d.rows,130);assert.equal(new Set(d.points.map(p=>p.id)).size,130);
+  assert.equal(new Set(d.points.map(p=>`${p.x},${p.y}`)).size,120);
+  assert.deepEqual(d.districts,catalog.districtOrder);
+  assert.deepEqual([...new Set(d.points.map(p=>p.district))].sort(),[...catalog.districtOrder].sort());
   assert.equal(d.sourceSha256,'47b1ddfb4f0ab4d5e57afab538f71da3d41d22e59c984bdd9c10b4248223b066');
   assert.equal(d.sourceUpdatedAt,'2026-08-18 16:27:22');
-  assert.ok(d.points.every(p=>['北投區','南港區'].includes(p.district)&&p.plottable));
+  assert.ok(d.points.every(p=>p.plottable));
   const coarse=d.points.find(p=>p.address==='南港LALAPORT');
   assert.equal(coarse.rawX,'121.6');assert.equal(coarse.x,121.6);
   assert.equal(coarse.rawY,'25.05');assert.equal(coarse.y,25.05);
   assert.match(coarse.quality,/約略位置.*不是.*桶位或入口/);
   assert.match(d.availabilityNote,/開放時間.*接收規則.*待確認/);
-  assert.match(d.note,/其他區未納入/);
+  assert.match(d.note,/保留重複名稱及座標.*不代表.*不同場所/);
 });
