@@ -45,11 +45,13 @@ async function nav(page,target){
     if(target!=='history')await page.locator(`.history-subnav [data-page="${target}"]`).click();
   }else if(target==='siting'){
     await primary(page,'research');
-    await page.locator('#research-navigation [data-page="siting"]').click();
+    await page.locator('footer a[href="#materials"]').click();
+    await page.locator('#panel-materials [data-page="siting"]').click();
   }else if(['research','countries'].includes(target))await primary(page,target);
   else if(target==='design'){
     await primary(page,'research');
-    await page.locator('#panel-research a[href="#design"]').first().click();
+    await page.locator('footer a[href="#materials"]').click();
+    await page.locator('#panel-materials a[href="#design"]').first().click();
   }else await page.locator(`footer a[href="#${target}"]`).click();
   const panel=page.locator(`#panel-${target}`);
   await panel.waitFor({state:'visible'});
@@ -65,12 +67,10 @@ async function ready(page,hash=''){
 async function checkHome(page){
   assert.equal(await page.locator('#panel-research').isVisible(),true);
   assert.equal(await page.locator('#panel-research details').count(),0);
-  assert.equal(await page.locator('#research-synthesis > .research-synthesis-item').count(),3);
-  assert.match(await page.locator('#panel-research').innerText(),/尚無台北試辦成效/);
-  for(const article of await page.locator('#research-synthesis > article').all()){
-    assert.match(await article.innerText(),/成立條件/);
-    assert.match(await article.innerText(),/仍未知/);
-  }
+  assert.equal(await page.locator('#research-overview-conclusions > article').count(),3);
+  assert.match(await page.locator('#panel-research').innerText(),/尚未進行真人研究/);
+  assert.equal(await page.locator('#panel-research #service-prototype,#panel-research #conclusion-household').count(),0);
+  assert.equal(await page.locator('#panel-materials #research-synthesis > article').count(),3);
   assert.deepEqual(await page.locator('#site-navigation a').evaluateAll(links=>links.map(link=>link.hash)),['#research','#history','#countries']);
   assert.equal(await page.locator('#site-navigation [data-page="research"]').getAttribute('aria-current'),'page');
   assert.equal(await page.locator('#history-navigation').isVisible(),false);
@@ -184,7 +184,8 @@ async function checkMapState(page){
 async function checkReferences(page){
   for(const id of ['reference-L02','reference-P02']){
     await nav(page,'research');
-    await page.locator(`#panel-research a[href="#${id}"]`).first().click();
+    await page.locator('footer a[href="#materials"]').click();
+    await page.locator(`#panel-materials a[href="#${id}"]`).first().click();
     await page.locator('#panel-sources').waitFor({state:'visible'});
     await focused(page,id);
     assert.equal(await page.locator(`#${id}`).isVisible(),true);
@@ -216,7 +217,10 @@ try{
     page.on('request',request=>{if(/(?:research-ui\.js|desk-results\.json)(?:\?|$)/.test(request.url()))candidateRequests.push(request.url())});
     await ready(page);assert.equal(new URL(page.url()).hash,'');await checkHome(page);
     assert.deepEqual(candidateRequests,[],'Candidate tools must not load with the homepage');
-    for(const target of ['research','map','comparison','history','siting','countries','design','materials','sources']){
+    let materialsVisited=false;
+    for(const target of ['research','map','comparison','history','countries','siting','design','materials','sources']){
+      // Siting and design navigation now passes through the materials entry.
+      if(['siting','design','materials'].includes(target))materialsVisited=true;
       if(target!=='research')await nav(page,target);
       await checkCurrentNavigation(page,target);
       if(target==='comparison')await page.locator('#comparison-content:not([hidden])').waitFor();
@@ -226,7 +230,7 @@ try{
         await page.locator('#research-context:not([disabled])').waitFor({state:'attached'});
         assert.equal(await page.locator('.research-candidate').count(),18);
         assert.ok(candidateRequests.some(request=>request.includes('desk-results.json')));
-      }else if(!['sources'].includes(target))assert.deepEqual(candidateRequests,[],`${target} must not load candidate tools`);
+      }else if(!materialsVisited)assert.deepEqual(candidateRequests,[],`${target} must not load candidate tools`);
       await checkBounds(page,`${width}/${target}`);await screenshot(page,width,target);
       measurements.push({width,target,body:await page.locator('body').evaluate(element=>getComputedStyle(element).fontSize)});
     }
@@ -250,6 +254,13 @@ try{
       assert.equal(await page.locator('#site-menu-toggle').getAttribute('aria-expanded'),'false');await focused(page,'site-menu-toggle');
     }
     await context.close();
+  }
+  // Direct visits still preserve lazy loading without passing through materials.
+  for(const target of ['siting','definition']){
+    const context=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'});
+    const page=await context.newPage();await observe(page,`direct/${target}`);
+    const requests=[];page.on('request',request=>{if(/(?:research-ui\.js|desk-results\.json)(?:\?|$)/.test(request.url()))requests.push(request.url())});
+    await ready(page,target);assert.deepEqual(requests,[],`${target} direct visit must not load candidate tools`);await context.close();
   }
   for(const width of [639,640,959,960]){
     const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'});

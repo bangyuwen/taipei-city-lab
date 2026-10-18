@@ -108,7 +108,7 @@ function panel(){
       const anchor=!allowedPages.includes(location.hash.slice(1))&&target?.closest('.page-panel')?.id===`panel-${currentPage}`?target:null;
       const mainTarget=target?.id==='main'?target:null;
       const heading=mainTarget||anchor||document.querySelector(`#panel-${currentPage} h2`);
-      for(let parent=heading?.parentElement;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;
+      for(let parent=heading;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;
       heading?.setAttribute('tabindex','-1');
       if(previousPage||anchor||mainTarget)heading?.focus({preventScroll:true});
       if(mainTarget||anchor)heading.scrollIntoView({block:'start',behavior:'instant'});
@@ -117,12 +117,12 @@ function panel(){
   }
   const inHistory=historyPages.includes(currentPage);
   $('history-navigation').hidden=!inHistory;
-  $('research-navigation').hidden=!['research','siting'].includes(currentPage);
+  $('research-navigation').hidden=!['research','siting','design','definition'].includes(currentPage);
   const historyLink=document.querySelector('[data-section="history"]');
   historyLink.toggleAttribute('data-section-active',inHistory);
   if(currentPage==='history')historyLink.setAttribute('aria-current','page');else historyLink.removeAttribute('aria-current');
   const researchLink=document.querySelector('#site-navigation [data-page="research"]');
-  researchLink.toggleAttribute('data-section-active',['research','siting','design','materials','plan','feedback'].includes(currentPage));
+  researchLink.toggleAttribute('data-section-active',['research','siting','design','definition','materials','plan','feedback'].includes(currentPage));
   for(const p of allowedPages)if($(`panel-${p}`))$(`panel-${p}`).hidden=p!==currentPage;
   $('load-status').hidden=Boolean(catalog)||currentPage!=='map';
   document.body.classList.toggle('design-mode',currentPage==='design');
@@ -337,6 +337,13 @@ async function start(){
   $('siting-retry').addEventListener('click',()=>sitingExperience?sitingExperience.reload():ensureSiting());
   $('map-basemap').addEventListener('change',()=>setBasemap());
   window.addEventListener('hashchange',panel);
+  $('panel-definition').addEventListener('click',event=>{
+    const link=event.target.closest('a[href^="#"]');
+    if(!link||link.hash!==location.hash||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+    const target=$(link.hash.slice(1));
+    if(!target||!$('panel-definition').contains(target))return;
+    target.setAttribute('tabindex','-1');target.focus({preventScroll:true});target.scrollIntoView({block:'start',behavior:'instant'});
+  });
   window.addEventListener('popstate',()=>{
     if(catalog){
       const before=JSON.stringify(state);readURL();

@@ -27,7 +27,7 @@ export function csvForPoints(points, dataset) {
     ...points.map(p=>[...context,p.id,p.district,p.address,p.rawX??p.x,p.rawY??p.y,p.quality])].map(r=>r.map(safe).join(',')).join('\r\n')+'\r\n';
 }
 export const historyPages=['map','comparison','history'];
-export const allowedPages=[...historyPages,'siting','countries','design','research','sources','materials','plan','feedback'];
+export const allowedPages=[...historyPages,'siting','countries','design','definition','research','sources','materials','plan','feedback'];
 export function pageFromHash(hash,currentPage='research') {
   const page=hash.replace(/^#/,'');
   if(page==='main'&&allowedPages.includes(currentPage))return currentPage;
@@ -36,8 +36,10 @@ export function pageFromHash(hash,currentPage='research') {
   if(/^feedback-/.test(page))return 'feedback';
   if(/^plan-/.test(page))return 'plan';
   if(['budget-heading','implementation-heading'].includes(page))return 'materials';
-  if(/^conclusion-/.test(page))return 'research';
+  // Retained research links now open their dated material, not the current summary.
+  if(/^(?:conclusion-|service-|dc-|district-service-)/.test(page)||['research-synthesis','current-evidence-heading','problem-map-heading','disposal-continuity'].includes(page))return 'materials';
   if(/^research-(?:materials|candidates|field|budget|paid|execution)/.test(page))return 'materials';
+  if(/^definition-/.test(page)||['t1-process-heading','t1-problems-heading','t1-thinking-heading'].includes(page))return 'definition';
   if(/^t1-/.test(page))return 'design';
   if(/^country-/.test(page))return 'countries';
   return 'research';

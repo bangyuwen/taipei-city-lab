@@ -87,7 +87,7 @@ const publicHTML=await readFile(resolve(publicRoot,'index.html'),'utf8');
 if(/\bdownload(?:\s|=|>)/i.test(publicHTML)||/id=["'](?:export-csv|comparison-export|comparison-district-export)["']/.test(publicHTML))throw Error('Public download control remains');
 const districtMapLinks=new Set(catalog.districtOrder.map(district=>`?${new URLSearchParams({year:'2026-main',district})}#map`));
 for(const [,href] of publicHTML.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)){
-  if(!/^(?:https?:|#)/i.test(href)&&href!=='siting-overlay.html'&&!districtMapLinks.has(href.replaceAll('&amp;','&')))throw Error(`Local public attachment link: ${href}`);
+  if(!/^(?:https?:|#)/i.test(href)&&href!=='siting-overlay.html'&&!['design-thinking/index.html','prd/index.html'].includes(href.split('#')[0])&&!districtMapLinks.has(href.replaceAll('&amp;','&')))throw Error(`Local public attachment link: ${href}`);
 }
 for(const name of ['app.js','comparison-ui.js']){
   const code=await readFile(resolve(publicRoot,name),'utf8');

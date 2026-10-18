@@ -39,6 +39,12 @@ test('public staging removes stale attachments, preserves originals and copies o
   const names=await files(join(root,'out'));
   assert.ok(names.includes('siting-overlay.html'));
   assert.ok(names.includes('siting-ui.js'));
+  for(const name of ['index.html','style.css','reading.js'])assert.ok(names.includes('design-thinking/'+name));
+  for(const name of ['prototype.html','prototype.js','direction-prototypes.html','direction-prototypes.js','direction-data.js']) {
+    assert.ok(!names.includes('design-thinking/'+name), 'retired prototype is not public');
+    assert.ok((await readFile(join(root,'dist/design-thinking',name))).length, 'prototype source remains preserved');
+  }
+  assert.ok(!names.some(name=>/records|source\.tsv|evidence-reading|verification|cycle\.json/.test(name)));
   assert.ok(!names.some(name=>/inventory|siting-overlay\.(json|provenance)/.test(name)));
   assert.ok(!names.some(name=>/\.(?:zip|csv|geojson|md)$/.test(name)));
   assert.deepEqual(names.filter(name=>name.endsWith('.json')).sort(),[

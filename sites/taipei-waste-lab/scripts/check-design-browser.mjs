@@ -125,8 +125,8 @@ async function proposal(page){
   const fixed=await page.locator('.t1-specs').innerText();
   await select(page,'household');
   assert.equal(await page.locator('.t1-specs').innerText(),fixed,'service concepts do not rewrite fixed T1 proposal');
-  await page.locator('[data-design-jump="t1-process-heading"]').click();
-  assert.equal(await page.evaluate(()=>document.activeElement.id),'t1-process-heading');
+  await page.locator('[data-design-jump="t1-product-process-heading"]').click();
+  assert.equal(await page.evaluate(()=>document.activeElement.id),'t1-product-process-heading');
   await textContains(page,'.t1-process-status','尚未定案');
 }
 async function keyboard(page,{webglFailure=false}={}){

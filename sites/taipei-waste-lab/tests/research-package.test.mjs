@@ -44,7 +44,7 @@ with tempfile.TemporaryDirectory() as directory:
  assert not '<details' in literature
  for number in range(1,14):
   assert page.count(f'id="reference-L{number:02}"')==1
- for marker,owner in [('research-synthesis','panel-research'),('research-paper-records','panel-sources'),('research-literature','panel-sources'),('research-practice-records','panel-sources')]:
+ for marker,owner in [('research-synthesis','panel-materials'),('research-paper-records','panel-sources'),('research-literature','panel-sources'),('research-practice-records','panel-sources')]:
   assert page.count(f'<!-- {marker}-start -->')==1
   before=page.split(f'<!-- {marker}-start -->')[0]
   assert re.findall(r'<section\b[^>]*\bid="(panel-[^"]+)"',before)[-1]==owner
@@ -89,12 +89,16 @@ class Layout(HTMLParser):
 
 layout=Layout(); layout.feed(Path('dist/index.html').read_text())
 home=layout.panels['panel-research']; materials=layout.panels['panel-materials']
-assert home['details']==4 and 'service-method' in home['ids'] and home['articles']==4
-assert {'service-continuity','service-insight','service-prototype','service-scenarios','service-measures','disposal-continuity'}<=home['ids']
-assert '服務成效尚未驗證' in ''.join(home['text'])
-assert '正式桌面測試 0/12 人（0/108 任務）' in ''.join(home['text'])
-assert all(key in home['ids'] for key in ['conclusion-siting','conclusion-collection','conclusion-household'])
-assert {'#siting','#history','#countries','#design','#sources','#materials'}<=home['links']
+assert home['details']==0 and home['articles']==6
+assert {'research-overview-conclusions','research-overview-evidence','research-overview-scope','research-overview-unknowns','research-overview-reading'}<=home['ids']
+assert not {'service-prototype','conclusion-household','budget-heading','problem-map-heading'} & home['ids']
+assert {'service-continuity','service-insight','service-prototype','service-scenarios','service-measures','disposal-continuity','current-evidence-heading','problem-map-heading'}<=materials['ids']
+assert '服務成效尚未驗證' in ''.join(materials['text'])
+assert '正式桌面測試 0/12 人（0/108 任務）' in ''.join(materials['text'])
+assert all(key in materials['ids'] for key in ['conclusion-siting','conclusion-collection','conclusion-household'])
+assert {'#definition-evidence-heading','#definition-not-doing-heading','#definition-decisions-heading','#feedback','#map','#research-audit-heading','#research-materials-previous-heading'}<=home['links']
+assert '家戶本期不做' in ''.join(home['text']) and '尚未進行真人研究' in ''.join(home['text'])
+assert '行人投放，含搭車前情境' in ''.join(home['text'])
 assert len(layout.references)==17 and set(layout.references.values())=={'panel-sources'}
 assert layout.panels['panel-sources']['details']==0
 for key in ['budget-heading','paid-disposal-heading','implementation-heading','research-field-tools','research-candidates','research-context','research-district','research-exclusions']:
@@ -138,7 +142,7 @@ for href in p.links:
  if href.startswith('#plan-'): assert href[1:] in p.ids,href
 assert len(p.ids)==12
 assert '尚未啟動' in plan and '仍待確認' in plan
-assert 'href="#plan"' in page.split('id="panel-research"')[1].split('id="panel-plan"')[0]
+assert 'href="#plan"' in page.split('id="panel-materials"')[1].split('id="panel-sources"')[0]
 assert 'href="#plan"' in page.split('<footer>')[1]
 assert '180 日是各點從開放日起的營運期' in page
 assert '原估約 250 萬元不是新計畫上限' in page
@@ -149,4 +153,21 @@ except ValueError: pass
 else: raise AssertionError('Unmapped local attachment accepted')
 `],{cwd:new URL('../',import.meta.url),encoding:'utf8'});
   assert.equal(result.status,0,result.stderr||result.stdout);
+});
+
+
+test('research generators preserve the current summary and render into the dated materials', () => {
+ const result=spawnSync(process.env.PYTHON_BIN||'python3',['-c',String.raw`
+import json,runpy
+from pathlib import Path
+m=runpy.run_path('scripts/package-research.py')
+page=Path('dist/index.html').read_text()
+home=lambda s:s.split('<section id="panel-research"')[1].split('<section id="panel-feedback"')[0]
+rendered=m['render_references'](page,json.loads(Path('research/reference-guide-2026-10-16/catalog.json').read_text()),Path('research/literature-2026-10-15/README.md').read_text())
+rendered=m['render_service_continuity'](rendered)
+assert home(rendered)==home(page)
+assert rendered.index('<section id="panel-materials"')<rendered.index('<!-- research-synthesis-start -->')
+assert rendered.index('<section id="panel-materials"')<rendered.index('<!-- service-continuity-start -->')
+`],{cwd:new URL('../',import.meta.url),encoding:'utf8'});
+ assert.equal(result.status,0,result.stderr||result.stdout);
 });

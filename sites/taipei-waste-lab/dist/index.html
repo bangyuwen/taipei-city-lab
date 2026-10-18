@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#123d49">
-  <meta name="description" content="依資料比較台北垃圾箱設置、清運與家戶垃圾分流，保留歷史清冊、版本差異與證據限制。">
+  <meta name="description" content="本期聚焦台北行人垃圾投放、公共垃圾桶配置、清運與維護；家戶服務不列入百日目標，歷史紀錄與研究背景保留。">
   <title>台北垃圾箱研究｜研究結論、台北的變化與各地做法</title>
   <link rel="icon" href="mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
@@ -43,8 +43,8 @@
 
     <div id="research-navigation" class="history-navigation" hidden>
       <nav class="history-subnav" aria-label="研究結果">
-        <a href="#research" data-page="research">研究結論</a>
-        <a href="#siting" data-page="siting">候選街道</a>
+        <a href="#research" data-page="research">研究摘要</a>
+        <a href="#t1-process-heading" data-page="definition">MVP 規格與證據</a>
       </nav>
     </div>
 
@@ -120,12 +120,407 @@
       <iframe id="siting-frame" title="候選街段與歷史清潔箱互動疊圖" data-src="siting-overlay.html" loading="lazy"></iframe>
     </section>
 
+    <section id="panel-definition" class="page-panel definition-panel definition-flat" aria-labelledby="t1-process-heading" hidden><header class="definition-header"><h2 id="t1-process-heading" tabindex="-1">設計思考：黑客松執行版</h2></header><section aria-labelledby="definition-evidence-heading" class="definition-conclusions">
+<h3 id="definition-evidence-heading" tabindex="-1">執行結論：主攻行人投放</h3>
+<p class="definition-status">進入 MVP 原型階段 · 效果待驗證 · 家戶本期不做</p>
+<p class="definition-thesis"><strong>工作問題：</strong>外出持有少量垃圾的人，缺乏足夠資訊判斷沿途哪個投放點適合使用；遇到不可用的點時，也缺少清楚的下一步。</p>
+<p>這是本期採用的工作假設。把找點、異常回報、替代點與處理紀錄串起來，以一條可操作流程驗收。<strong>規格已更新，MVP 尚未開發，尚未經真人驗證。</strong></p>
+<p class="hackathon-entry"><a href="#definition-prd-heading">直接看 MVP 規格與驗收</a></p>
+<ol class="convergence-list">
+<li id="definition-current-P03"><h4><a href="#definition-focus-P03">核心｜行人找投放處</a></h4><p>先做查找與條件判讀，不先認定桶數不足。</p></li>
+<li id="definition-current-P01"><h4><a href="#definition-focus-P01">情境｜YouBike 車籃協助者</a></h4><p>自願協助後沿用投放流程，不另做一套產品。</p></li>
+<li id="definition-current-P02"><h4><a href="#definition-focus-P02">情境｜搭車前併入行人題</a></h4><p>保留行程限制的判讀，暫不另立乘車產品。</p></li>
+<li id="definition-current-P04"><h4><a href="#definition-focus-P04">管理端｜異常與處理紀錄</a></h4><p>先讓回報與處理時間可回查，不做排班最佳化。</p></li>
+</ol><p class="definition-evidence">使用者已接受這項黑客松取捨，見 <a href="#definition-decision-D14">D14</a>。資訊能否改善投放、管理端是否願意採用，仍待測試；不以選例數宣稱哪一題最普遍。</p></section><nav class="definition-nav" aria-label="本頁閱讀目錄"><a href="#definition-prd-heading">MVP 規格</a><a href="#definition-prd-validation">驗收條件</a><a href="#definition-not-doing-heading">決策不做</a><a href="#definition-focus-P01">研究依據</a><a href="#definition-evidence-index-heading">評論證據</a><a href="#definition-decisions-heading">決策紀錄</a><a href="#definition-history-heading">改寫歷史</a></nav><section aria-labelledby="definition-prd-heading" id="definition-prd"><h3 id="definition-prd-heading" tabindex="-1">PRD v0.2：行人投放 MVP</h3><p class="definition-evidence">2026-10-19 · 黑客松執行規格 · 範圍已確認，原型待開發，成效待驗證</p><section id="definition-prd-basis" aria-labelledby="definition-prd-basis-heading"><h4 id="definition-prd-basis-heading">目標與工作假設</h4><p><strong>產品目標：</strong>讓外出持有少量垃圾的人，判斷沿途投放選項；遇到不可用的點時，有明確的回報與下一步。以三分鐘可展示的完整流程交付。</p><p><strong>決策理由：</strong>P01 與 P02 可以共用 P03 的投放流程；P04 先收斂成異常與處理紀錄。這是黑客松範圍取捨，不是評論頻率或已證實成效的排名。</p><p><strong>設計假設：</strong>提供位置、收受條件、資料時間、異常與替代資訊，能幫助判斷下一步。既有評論支持困難情境，尚不能證明資訊就是主要原因或這套介面有效。</p><p>細讀材料為 E01–E28，取自篩選後的 2,663 則垃圾相關訊息；28 則是選例，不代表全市民意。<a href="#definition-evidence-index-heading">回查證據</a> · <a href="#definition-decision-D14">本次決策</a></p></section><section id="definition-prd-needs" aria-labelledby="definition-prd-needs-heading"><h4 id="definition-prd-needs-heading">畫面、操作與結果</h4><table><thead><tr><th>畫面</th><th>使用者操作</th><th>必須呈現的結果</th></tr></thead><tbody><tr><td data-label="畫面">1. 情境與物品</td><td data-label="使用者操作">選一般步行／YouBike 協助後／搭車前；選物品類型與起點。</td><td data-label="必須呈現的結果">僅處理行人少量垃圾；未選齊提示缺少項目。家戶需求顯示本期不支援。</td></tr><tr><td data-label="畫面">2. 投放點清單與詳情</td><td data-label="使用者操作">查看候選點並選取一個。</td><td data-label="必須呈現的結果">位置、可收與不收物、時段、資料時間、狀態來源。未知欄位明示未知；不把清冊列有位置等同現在可用。</td></tr><tr><td data-label="畫面">3. 到場結果與替代點</td><td data-label="使用者操作">選「模擬投放完成」或「遇到滿溢／停用」；異常時選替代點。</td><td data-label="必須呈現的結果">完成、異常、無合適選項三種結果分開。不可用的點不繼續推薦；沒有匹配選項時清楚說明並保留返回查找入口。</td></tr><tr><td data-label="畫面">4. 異常回報</td><td data-label="使用者操作">確認點位、異常類型，送出模擬回報。</td><td data-label="必須呈現的結果">產生同一筆回報編號、時間與待處理狀態；明示只在展示版留存，未送交市府。送出失敗保留內容，不顯示成功。</td></tr><tr><td data-label="畫面">5. 管理端處理紀錄</td><td data-label="使用者操作">查看回報，記錄處理中／已處理、時間與處理說明。</td><td data-label="必須呈現的結果">保留原回報和每次更新；使用者端可回查同一筆紀錄。結案不自動宣稱投放點恢復可用，另列狀態確認時間與來源。</td></tr></tbody></table><p><strong>展示邊界：</strong>第一版在同一展示工作階段切換使用者與管理角色；管理畫面為模擬，不是公開維運後台。不在這版蒐集姓名、電話或照片，也不承諾跨裝置同步與實際派工。</p><p><strong>共用流程：</strong>選情境與物品 → 查候選點及條件 → 記錄到場結果 → 異常回報與替代點 → 管理端更新 → 回查處理紀錄。四個方向不各自開一套流程。</p></section><section id="definition-prd-data" aria-labelledby="definition-prd-data-heading"><h4 id="definition-prd-data-heading">資料與狀態規則</h4><table><thead><tr><th>資料</th><th>第一版規則</th></tr></thead><tbody><tr><td data-label="資料">公開位置資料</td><td data-label="第一版規則">可引用本站保存清冊的位置、版本與來源；只作位置背景，沒有核實收受條件或桶況時顯示未知。</td></tr><tr><td data-label="資料">展示用投放點</td><td data-label="第一版規則">以明確標示的模擬點位完成三種腳本；可收物、時段、滿溢與處理狀態均標示模擬，不把設定套到真實點位當現況。</td></tr><tr><td data-label="資料">狀態來源</td><td data-label="第一版規則">實際資料、未知、模擬三類分開呈現。保留來源與時間；過期或未知狀態不能稱「目前可用」。</td></tr><tr><td data-label="資料">回報與處理</td><td data-label="第一版規則">區分待處理／處理中／已處理；這是回報進度，不等同投放點可用性。新回報不覆寫舊清理紀錄。</td></tr><tr><td data-label="資料">結果</td><td data-label="第一版規則">模擬完成、未完成、未知分開計數；沒有合適去處時正確停止，不算投放成功。</td></tr></tbody></table></section><section id="definition-prd-validation" aria-labelledby="definition-prd-validation-heading"><h4 id="definition-prd-validation-heading">三種情境與驗收條件</h4><table><thead><tr><th>情境</th><th>驗收腳本</th><th>通過條件</th></tr></thead><tbody><tr><td data-label="情境">A 正常投放</td><td data-label="驗收腳本">選一般步行與物品 → 查點 → 讀條件 → 選擇相符點 → 模擬完成。</td><td data-label="通過條件">畫面給出一致的相符條件與來源；完整到達結果頁，標為模擬完成。</td></tr><tr><td data-label="情境">B 到場不可用</td><td data-label="驗收腳本">以 YouBike 協助後或搭車前情境進入 → 選點 → 揭露滿溢／停用 → 回報 → 選替代點 → 管理端更新 → 使用者回查。</td><td data-label="通過條件">原點停止推薦；同一回報編號的狀態與歷程一致。管理端結案不把未確認桶況改成可用。</td></tr><tr><td data-label="情境">C 沒有合適去處</td><td data-label="驗收腳本">設定不符收受條件、停用或無已核實選項 → 查找。</td><td data-label="通過條件">明示沒有已核實的合適選項，可返回修改條件；不顯示投放完成，不把未知點當可用推薦。</td></tr></tbody></table><p><strong>作品完成門檻：</strong>A、B、C 全部走通；其中 B 可在三分鐘內展示完整主線。桌面與手機可操作，沒有斷鏈或阻擋操作的錯誤；新一輪演示可重設模擬紀錄。</p><p><strong>真人測試：</strong>目前未執行。使用相同三種腳本，逐次記錄能否自行選出相符選項、辨識未知／不可用，以及回查處理結果；記錄卡點，不以開發者操作代替真人通過。</p><p><strong>停止與修正：</strong>出現未知被顯示可用、模擬回報被當成正式通報、結案被當成恢復可用，或無選項仍顯示完成，視為驗收失敗，修正後才展示。</p></section><section id="definition-prd-measures" aria-labelledby="definition-prd-measures-heading"><h4 id="definition-prd-measures-heading">展示通過與服務有效分開計算</h4><table><thead><tr><th>判斷</th><th>口徑</th></tr></thead><tbody><tr><td data-label="判斷">流程可操作</td><td data-label="口徑">A／B／C 各記通過、失敗及原因；展示時間只衡量 B 的完整演示。現在均為未執行。</td></tr><tr><td data-label="判斷">人是否看懂</td><td data-label="口徑">每次真人任務記正確選擇、錯誤、需提示、停止與耗時；列實際人數和任務分母，不捏造通過率。</td></tr><tr><td data-label="判斷">實際投放是否改善</td><td data-label="口徑">需要現場核對與比較資料。沒有真實投放結果，不宣稱降低垃圾量、縮短清運時間或改善成功率。</td></tr></tbody></table></section><section id="definition-prd-next" aria-labelledby="definition-prd-next-heading"><h4 id="definition-prd-next-heading">開發順序與交付物</h4><ol><li><strong>先完成使用者主線：</strong>以模擬資料做情境、物品、查點、條件與結果畫面，走通 A 與 C。</li><li><strong>再接異常到管理端：</strong>做回報、替代點、處理紀錄與回查，走通 B。</li><li><strong>最後驗收與展示：</strong>執行三種腳本、檢查手機版與資料標示，完成三分鐘展示稿。</li></ol><p><strong>交付物：</strong>可操作的展示原型、三種驗收紀錄、三分鐘展示稿。本次已交付網站上的 PRD v0.2；以上開發與測試尚未執行，不列為已完成。</p><p>先不擴題。時程、人力與現場承接另行安排；不把這份規格寫成正式市政部署或百日成效承諾。</p></section><section id="definition-prd-risks" aria-labelledby="definition-prd-risks-heading"><h4 id="definition-prd-risks-heading">待驗證事項與退路</h4><ul><li><strong>資訊可能不是主要障礙：</strong>如果使用者讀懂仍無法投放，記錄原因，修正主流程；不直接推導需要增桶。</li><li><strong>位置資料不等於即時服務：</strong>缺條件或狀態時維持未知，展示測試使用明示模擬。</li><li><strong>管理端尚無第一手驗證：</strong>處理紀錄是設計提案，未承諾清潔人員採用、派工或服務時限。</li></ul><p>這些限制用來設計測試，不再作為停止原型開發的前提。<a href="#definition-not-doing-heading">本期不做項目</a>保持有效。</p></section><section id="definition-prd-decisions" aria-labelledby="definition-prd-decisions-heading"><h4 id="definition-prd-decisions-heading">決策歸屬與版本</h4><p><strong>使用者已接受：</strong>主攻行人投放，YouBike 與搭車前為情境，管理端先做異常與處理紀錄；三種情境及三分鐘展示作交付方向，家戶與硬體／排班最佳化等項目本期不做。見 <a href="#definition-decision-D14">D14</a>。</p><p><strong>分析者具體化：</strong>本版的五個畫面、欄位、狀態與失敗處理，是把已接受方向落成開發規格；不是新增訪談結果，也不代表使用者逐欄決策。</p><p>v0.2 取代 v0.1「先不放解法」的現行限制。<a href="#definition-prd-v01-heading">v0.1 原文</a>、<a href="#definition-decisions-heading">D01–D14</a> 及 <a href="#definition-evidence-index-heading">E01–E28</a> 保留回查。</p></section></section><p class="definition-evidence" id="definition-research-basis"><strong>以下為 D12 階段的四題研究依據。</strong>原問題與反例保留，供查核產品假設；本期優先序、功能與驗收以 <a href="#definition-prd-heading">PRD v0.2</a> 為準。</p><section aria-labelledby="definition-focus-P01" class="definition-topic"><h3 id="definition-focus-P01" tabindex="-1">保留｜車籃協助者的後續投放</h3><p class="definition-problem-statement"><strong>問題定義 · 待驗證稿：</strong>願意協助處理 YouBike 車籃垃圾的人，需要完成垃圾移出後的投放；目前有主動繞路投放的個人自述，其他「無法幫丟」的具體卡點仍不清楚。</p><p><strong>本輪研究界線：</strong>以願意協助者為研究對象。暫放一般借車影響、垃圾來源與缺桶因果；E05 的意願也未確認。</p><p><a href="#definition-evidence-E06">E06</a> 自述主動挑有垃圾的車並繞路投放；<a href="#definition-evidence-E05">E05</a> 表示無法幫丟。這支持研究協助處理的過程，但 E05 的意願、嘗試與原因仍不清楚。</p><p>E06 限制了「所有清理都是被迫」的概括，卻不能證明沒有負擔。<a href="#definition-evidence-E16">E16</a> 是私人自行車；<a href="#definition-evidence-E17">E17</a> 是家人轉述。它們不能補成同一件 YouBike 事件，也不能確認缺桶的因果。一般借車影響與垃圾來源暫放。</p><p class="definition-evidence"><strong>D12 已確認的研究問題：</strong>願意協助處理車籃垃圾的人，完成投放時遇到什麼阻礙？</p><p id="definition-youbike-verdict" class="definition-evidence"><a id="definition-youbike-verdict-heading" href="#definition-workbook-P01-claims-heading">車籃的六項證據判斷</a></p></section><section aria-labelledby="definition-focus-P02" class="definition-topic"><h3 id="definition-focus-P02" tabindex="-1">併入行人題｜搭車前的投放情境</h3><p class="definition-problem-statement"><strong>問題定義 · 待驗證稿：</strong>轉運站上車前飲食的人，需要在乘車行程中處理垃圾；目前只有情境線索，尚未證明這與一般行人投放是不同問題。</p><p><strong>本輪研究界線：</strong>先作為 P03 的子情境。只有確認乘車特有的限制，才重新評估是否獨立；不預設趕車，也不擴大到所有公車乘客。</p><p><a href="#definition-evidence-E14">E14</a> 明示轉運站、上車前飲食與吃完沒得丟，但沒有確認是本人事件，也未交代完整行程與結局。</p><p><a href="#definition-evidence-E15">E15</a> 的三個站牌是步行描述，沒有乘車意圖；<a href="#definition-evidence-E04">E04</a> 是站旁桶滿。兩者不能增加上車前的案例數。暫不認定趕車，也不擴大到所有市區公車乘客；若沒有獨特限制，維持為 P03 的子情境。</p><p class="definition-evidence"><strong>D12 已確認的研究問題：</strong>轉運站上車前飲食的人，能否在搭車行程中完成垃圾投放？</p><p><a href="#definition-focus-P03">往下看行人投放的主問題</a></p></section><section aria-labelledby="definition-focus-P03" class="definition-topic"><h3 id="definition-focus-P03" tabindex="-1">保留｜消費後找不到可用投放處</h3><p class="definition-problem-statement"><strong>問題定義 · 待驗證稿：</strong>外出消費後仍持有垃圾的人，需要沿途找到當下可用的投放處；現有評論分別出現未找到，以及找到卻封閉的情境，最後處理結果仍待查。</p><p><strong>本輪研究界線：</strong>聚焦消費後的途中投放。分開查尋找過程與設施當時狀態，不把不同人的片段合成同一旅程。</p><p><a href="#definition-evidence-E01">E01</a> 自述消費後仍持有垃圾、未找到桶；<a href="#definition-evidence-E15">E15</a> 自述步行持有與未找到，但沒有交代垃圾來源；<a href="#definition-evidence-E03">E03</a> 則是找到卻封閉。三者支持不同片段，不能合成同一人的旅程。</p><p>未找到不等於沿路沒有設施，也不代表整趟都未完成投放。<a href="#definition-evidence-E18">E18</a> 的反對設桶立場不否定行人經驗；<a href="#definition-evidence-E25">E25</a> 的個人亂丟自述不能推出普遍因果。桶數不足與行程影響仍待確認。</p><p class="definition-evidence"><strong>D12 已確認的研究問題：</strong>外出消費後持有垃圾的人，沿途為何未能找到當下可用的投放處？</p></section><section aria-labelledby="definition-focus-P04" class="definition-topic"><h3 id="definition-focus-P04" tabindex="-1">改寫｜分清未清與清後再累積</h3><p class="definition-problem-statement"><strong>問題定義 · 待驗證稿：</strong>使用反覆髒亂公共地點的人，需要空間維持可用；目前看到的髒亂，尚不能區分是持續未清，還是清理後再累積。</p><p><strong>本輪研究界線：</strong>先還原同一地點的發現、清理、再發現時序。缺少作業端資料時，不指定排班、人力或效率為原因。</p><p><a href="#definition-evidence-E08">E08</a> 質疑污染未清，<a href="#definition-evidence-E09">E09</a> 描述剛清完又滿，<a href="#definition-evidence-E13">E13</a> 說反映後仍看到垃圾。這是不同留言的狀態主張，並非同一地點的連續觀察紀錄。</p><p>E08 不能量出滯留時間；E09 的間隔及垃圾來源未核實；E13 不能證明中間沒有處理。<a href="#definition-evidence-E19">E19</a> 的肯定與 <a href="#definition-evidence-E20">E20</a> 的條件式建議，也不能證明人力或效率問題。本輪先分清未清與再累積，不診斷排班錯誤。</p><p class="definition-evidence"><strong>D12 已確認的研究問題：</strong>同一公共地點反覆出現垃圾，哪些是持續未清，哪些是清後再累積？</p></section><section aria-labelledby="definition-not-doing-heading"><h3 id="definition-not-doing-heading" tabindex="-1">決策不做：集中完成這一條流程</h3><table><thead><tr><th>項目</th><th>本期取捨與理由</th></tr></thead><tbody><tr><td data-label="項目">家戶收運與收受服務</td><td data-label="本期取捨與理由">本期不做；不是百日首要目標，保留需求紀錄。</td></tr><tr><td data-label="項目">新增硬體、全市最佳配置</td><td data-label="本期取捨與理由">MVP 不做；先驗收資訊與操作流程，不承諾增桶或移桶。</td></tr><tr><td data-label="項目">自動排班、人力與效率最佳化</td><td data-label="本期取捨與理由">第一版不做；管理端只記錄異常與處理，沒有作業資料支持最佳化。</td></tr><tr><td data-label="項目">即時感測、市府通報系統串接</td><td data-label="本期取捨與理由">展示版不做；桶況與回報使用明示模擬，不宣稱已接政府或實際維運。</td></tr><tr><td data-label="項目">獨立的 YouBike 或乘車產品</td><td data-label="本期取捨與理由">不另開產品線；兩者共用行人投放主線，不要求下一位借車者負責清理。</td></tr><tr><td data-label="項目">擴充研究題目與功能</td><td data-label="本期取捨與理由">本輪停止擴題；三種驗收情境完成前不加新功能。</td></tr></tbody></table><p><strong>已結束的限制：</strong>「先不放解法」屬 D12 階段。依 <a href="#definition-decision-D14">D14</a> 進入 MVP 規格與原型；舊決策和 <a href="#definition-prd-v01-heading">PRD v0.1</a> 保留回查。</p><p id="definition-scope-heading" tabindex="-1"><strong>家戶本期不做。</strong>家戶收運與收受服務不列入這一百天的工作、預算及驗收；不安排選點、詢價或試辦。重啟時間未定。</p></section><section aria-labelledby="definition-evidence-index-heading"><h3 id="definition-evidence-index-heading" tabindex="-1">評論證據：28 則摘要與逐段判讀</h3><p class="definition-reading-help">全部直接列在本頁。E 編號是去識別改寫摘要，S 編號是逐段判讀；不是逐字引文，也不是已核實的現況。</p><div class="definition-disclosure"><p class="definition-record-label">資料與判讀規則 · 樣本、推論與限制</p><h4 id="definition-method-heading" tabindex="-1">資料與判讀規則</h4><p>基礎資料是先前篩選的 2,663 則垃圾相關留言，逐則分析使用 27 個可複選的框架。五個需求群是後續的質性歸納，沒有把 27 個框架自動轉成五個互斥分類，也沒有算出各群在全體市民中的比例。原資料的重複列、不明內容與範圍外需求仍保留。</p><p>本次選出 28 則，用來展示每個問題的支持、反例與邊界，不是全部相關留言，也不是隨機抽樣或支持票數。E 編號對應一則保留留言；「反例」包括不同立場、不同情境及限制推論的材料，不代表已驗證的因果反證。</p><p>公開頁僅呈現去識別的改寫摘要，沒有把摘要冒充逐字引文。E 編號可在此頁往返分群與問題；研究者另有同一編號到私人原文列序、逐則分析及來源指紋的對照。公開讀者可核對本頁的摘要與推論關係，不能在此讀取原始全文。事件日期、地點、來源歸因與頻率仍未實地核實。</p><dl class="definition-legend">
+          <div><dt>留言陳述</dt><dd>留言者所說的經驗、立場或因果主張；未必是已核實現況。</dd></div>
+          <div><dt>使用者已決策</dt><dd>由本研究委託者在對話中明確指定的範圍與工作方式，列為 D01–D13；本輪採用的四題與不做界線見 D12。</dd></div>
+          <div><dt>分析者推論</dt><dd>由 AI 分析者提出的需求群、證據判讀與成因解釋，仍待驗證；D12 確認採用四句工作定義作研究範圍，不代表確認事實。</dd></div>
+          <div><dt>待驗證</dt><dd>尚缺原始情境、角色或現場資料支持，不能升格為已知原因或執行決策。</dd></div>
+        </dl><p class="definition-evidence">細讀後修正：E05 卡點未知；E14 經驗來源未知；E24 前句有歧義；E27、E28 不能自動接成已發生行為；E08 不足以推算精確持續時間。下列摘要與逐段判讀保留這些限制。</p></div><div class="definition-evidence-index">
+<a href="#definition-evidence-E01">E01<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E02">E02<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E03">E03<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E04">E04<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E05">E05<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E06">E06<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E07">E07<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E08">E08<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E09">E09<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E10">E10<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E11">E11<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E12">E12<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E13">E13<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E14">E14<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E15">E15<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E16">E16<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E17">E17<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E18">E18<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E19">E19<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E20">E20<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E21">E21<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E22">E22<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E23">E23<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E24">E24<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E25">E25<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E26">E26<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E27">E27<span>個別留言與可重建個人內容已因隱私移除。</span></a> <a href="#definition-evidence-E28">E28<span>個別留言與可重建個人內容已因隱私移除。</span></a>
+</div><div class="definition-evidence-list">
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E01"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E01-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E01-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E01-S3" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E01-S4" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-1">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P03">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P02">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P03">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E02"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E02-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E02-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E02-S3" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-1">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P03">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E03"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E03-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E03-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-1">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-group-2">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P03">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P03">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E04"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E04-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E04-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E04-S3" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-2">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P02">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P02">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E05"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E05-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E05-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-3">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P01">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P01">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E06"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E06-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E06-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E06-S3" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-3">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P01">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P01">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E07"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E07-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E07-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E07-S3" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E07-S4" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-3">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E08"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E08-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E08-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-4">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P04">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P04">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E09"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E09-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E09-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-2">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-group-4">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-group-5">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P04">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P04">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E10"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E10-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E10-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E10-S3" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-4">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P04">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P04">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E11"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E11-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E11-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E11-S3" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-4">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-group-5">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P04">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P04">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E12"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E12-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E12-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E12-S3" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-5">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E13"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E13-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E13-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E13-S3" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-5">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P04">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E14"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E14-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E14-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E14-S3" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-1">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P02">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P02">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E15"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E15-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E15-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-1">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P02">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P03">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P02">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P03">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E16"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E16-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E16-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E16-S3" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-3">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P01">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P01">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E17"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E17-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E17-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-3">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P01">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P01">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E18"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E18-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E18-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-1">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-group-2">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-group-3">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P03">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P03">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E19"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E19-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-4">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P04">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P04">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E20"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E20-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E20-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-4">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P04">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P04">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E21"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E21-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E21-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E21-S3" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E21-S4" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-1">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P03">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-decision-D01">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E22"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E22-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E22-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-1">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-group-5">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P03">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-decision-D01">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E23"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E23-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E23-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E23-S3" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-2">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P03">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P03">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E24"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E24-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E24-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-2">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P03">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P03">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E25"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E25-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E25-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E25-S3" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P03">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P03">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E26"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E26-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E26-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E26-S3" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-4">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P01">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P04">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P01">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P04">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E27"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E27-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E27-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E27-S3" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-3">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-focus-P01">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P01">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-evidence-E28"><h4><span class="definition-owner">個別留言與可重建個人內容已因隱私移除。</span>個別留言與可重建個人內容已因隱私移除。</h4><p>個別留言與可重建個人內容已因隱私移除。</p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><div><p class="definition-record-label">個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E28-S1" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E28-S2" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p><p id="definition-evidence-E28-S3" tabindex="-1"><strong>個別留言與可重建個人內容已因隱私移除。</strong>個別留言與可重建個人內容已因隱私移除。</p></div><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-group-1">個別留言與可重建個人內容已因隱私移除。</a>個別留言與可重建個人內容已因隱私移除。<a href="#definition-group-3">個別留言與可重建個人內容已因隱私移除。</a></p><p><strong>個別留言與可重建個人內容已因隱私移除。</strong><a href="#definition-focus-P03">個別留言與可重建個人內容已因隱私移除。</a></p></div></article>
+</div><div class="claim-check" aria-labelledby="definition-workbook-P01-claims-heading">
+<h3 id="definition-workbook-P01-claims-heading">逐項核對：證據能支持到哪裡？</h3>
+<ol class="claim-list">
+<li id="definition-workbook-P01-claim-1"><h4>車籃有遺留垃圾：可保留為留言陳述</h4><p><strong>支持：</strong><a href="#definition-evidence-E27-S1">E27-S1</a> 描述車籃中的飲料罐與濕紙。</p><p><strong>限制：</strong>未核對地點、時段、數量及物品來源；不能推成所有車籃的現況。</p></li>
+<li id="definition-workbook-P01-claim-2"><h4>有人主動處理並繞路：可保留個人自述</h4><p><strong>支持：</strong><a href="#definition-evidence-E06-S1">E06-S1</a> 自述主動挑有垃圾的車；<a href="#definition-evidence-E06-S2">E06-S2</a> 明說繞去投放。</p><p><strong>反例作用：</strong>這限制了「遇到垃圾就被迫清理」的概括。主動選車不代表沒有負擔，但負擔、動機及多花的時間都未交代。</p></li>
+<li id="definition-workbook-P01-claim-3"><h4>有人說無法幫丟：陳述成立，卡點未知</h4><p><strong>支持：</strong><a href="#definition-evidence-E05-S2">E05-S2</a> 表示無法幫忙處理。</p><p><strong>限制：</strong>沒有說是否曾嘗試，也沒說卡在接觸、時間、投放去處或其他條件；不能改寫成「已清理卻找不到桶」。</p></li>
+<li id="definition-workbook-P01-claim-4"><h4>垃圾妨礙借車或置物：仍是分析假設</h4><p><strong>支持到哪裡：</strong><a href="#definition-evidence-E27-S1">E27-S1</a> 說有垃圾，沒有說借用失敗或無法置物。</p><p><strong>邊界：</strong><a href="#definition-evidence-E06-S1">E06-S1</a> 反而主動選這類車；這不否定其他人可能受影響，但足以提醒我們不能先替所有人設定同一困難。</p></li>
+<li id="definition-workbook-P01-claim-5"><h4>缺桶造成車籃垃圾：目前不能作成因果結論</h4><p><strong>線索：</strong><a href="#definition-evidence-E05-S1">E05-S1</a> 提出增桶訴求；<a href="#definition-evidence-E06-S3">E06-S3</a> 並列桶變少與車籃變髒的感受。</p><p><strong>反例與資料邊界：</strong><a href="#definition-evidence-E16">E16</a> 談的是個人自行車；<a href="#definition-evidence-E17">E17</a> 是兩位家人的不同轉述。它們不能補成同一地點、同一事件的因果證據；也沒有證明「缺桶不是原因」。</p></li>
+<li id="definition-workbook-P01-claim-6"><h4>應由清潔人員處理：是期待，還不是已確認權責</h4><p><strong>支持：</strong><a href="#definition-evidence-E26-S3">E26-S3</a> 希望清潔人員協助。</p><p><strong>限制：</strong>沒有正式作業範圍、契約或工作者資料；不能據此判定怠職、故意不理或制度已有缺口。</p></li>
+</ol>
+<p class="quiet">本次核對 E05、E06、E16、E17、E26、E27。這些是選出的評論證據與邊界，不能當成發生率、支持票數或已驗證需求。</p>
+</div></section><section aria-labelledby="definition-decisions-heading"><h3 id="definition-decisions-heading" tabindex="-1">決策紀錄：你的決策與分析者整理分開</h3><p class="definition-evidence">引文保留研究委託者的原指示；分析者提出的問題改寫不冒充已驗證事實。D01–D13 保留當時原文；其中「本輪」是歷史階段。D14 接受黑客松主線並恢復方案與原型推進；現行範圍以 PRD v0.2 為準。</p><div class="definition-decisions">
+<article tabindex="-1"><div class="definition-record" id="definition-decision-D01"><h4><span class="definition-owner">D01 · 使用者已決策</span>本期不做家戶服務</h4><blockquote>這階段我們不做家戶，因為他不是首要問題，一百天內不是首要目標</blockquote><p><strong>本次執行邊界：</strong>本期不推進家戶收運與收受服務；保留需求紀錄。何時重新納入尚未決定。</p><p><strong>相關評論邊界：</strong><a href="#definition-evidence-E21">E21</a>、<a href="#definition-evidence-E22">E22</a></p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-decision-D02"><h4><span class="definition-owner">D02 · 使用者已決策</span>保留決策不做紀錄</h4><blockquote>你要備注我們決策不做的東西</blockquote><p><strong>本次執行邊界：</strong>不做的項目與理由不能隨頁面改版消失；未列為本期目標不等於否定需求。</p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-decision-D03"><h4><span class="definition-owner">D03 · 使用者已決策</span>先整批逐則整理，再一起討論</h4><blockquote>先把整批評論逐則整理，再一起看</blockquote><p><strong>本次執行邊界：</strong>以保留的 2,663 則逐則分析作為討論基礎。這不等於逐則已有第二人複核或需求已獲受訪者確認。</p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-decision-D04"><h4><span class="definition-owner">D04 · 使用者已決策</span>先定義問題，不放解法</h4><blockquote>我們一起看這批評論，先歸納主要需求和問題群，再對照原本四個方向，看看問題定義要怎麼調整，先不要跳到解法。</blockquote><p><strong>本次執行邊界：</strong>本紀錄僅處理需求、反例、問題改寫與待驗證事項；留言原有建議只作脈絡，不轉為方案。</p><p><strong>後續變更：</strong>以上是前階段指示。使用者後來要求完整設計思考，並確認四方向與評論資料範圍；本輪模擬原型依 D08–D11 推進，原假設仍未驗證。</p><p><strong>本輪更新：</strong>以上保留為歷史指示；2026-10-19 依 <a href="#definition-decision-D12">D12</a> 採用四題收斂稿，本輪先不放解法。</p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-decision-D05"><h4><span class="definition-owner">D05 · 使用者已決策</span>五群與四題以待驗證草稿發布</h4><blockquote>把這五個需求群和調整後的四個問題定義更新到網站，標示為待驗證的草稿，家戶本期不做，先不要放解法。</blockquote><p><strong>本次執行邊界：</strong>授權發布草稿；不代表已確認分群正確、成因成立、排序或執行方案。</p><p><strong>後續變更：</strong>以上是前階段指示。使用者後來要求完整設計思考，並確認四方向與評論資料範圍；本輪模擬原型依 D08–D11 推進，原假設仍未驗證。</p><p><strong>本輪更新：</strong>以上保留為歷史指示；2026-10-19 依 <a href="#definition-decision-D12">D12</a> 採用四題收斂稿，本輪先不放解法。</p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-decision-D06"><h4><span class="definition-owner">D06 · 使用者已決策</span>補齊證據與決策歸屬</h4><blockquote>把這條分析與決策紀錄補完整並更新到網站，讓評論證據、分群理由、反例和問題改寫都能回查，也要區分我的決策跟你的推論，先不要放解法。</blockquote><p><strong>本次執行邊界：</strong>以本次對話與保留資料補記；每個歸納可回查支持、限制與相反材料。</p><p><strong>後續變更：</strong>以上是前階段指示。使用者後來要求完整設計思考，並確認四方向與評論資料範圍；本輪模擬原型依 D08–D11 推進，原假設仍未驗證。</p><p><strong>本輪更新：</strong>以上保留為歷史指示；2026-10-19 依 <a href="#definition-decision-D12">D12</a> 採用四題收斂稿，本輪先不放解法。</p></div></article>
+<article tabindex="-1"><div class="definition-record" id="definition-decision-D07"><h4><span class="definition-owner">D07 · 使用者已決策</span>細讀範圍確認</h4><blockquote>目前紀錄的 E01–E28</blockquote><p><strong>本輪邊界：</strong>E 編號範圍為目前選出的 28 則，不冒充全部 2,663 則都已接受新一輪細讀。</p><a href="#definition-decisions-heading">回四方向工作版決策紀錄</a></div></article><article tabindex="-1"><div class="definition-record" id="definition-decision-D08"><h4><span class="definition-owner">D08 · 使用者已決策</span>推進完整設計思考</h4><blockquote>做完整 design thinking</blockquote><p><strong>本輪邊界：</strong>本輪可進入發想、原型與測試準備；尚未選定方案或取得真人成效。</p><a href="#definition-decisions-heading">回四方向工作版決策紀錄</a><p><strong>本輪更新：</strong>以上保留為歷史指示；2026-10-19 依 <a href="#definition-decision-D12">D12</a> 採用四題收斂稿，本輪先不放解法。</p></div></article><article tabindex="-1"><div class="definition-record" id="definition-decision-D09"><h4><span class="definition-owner">D09 · 使用者已決策</span>四方向一起推進</h4><blockquote>原本四個方向一起推進</blockquote><p><strong>本輪邊界：</strong>四方向各自補上證據、假設、概念、草模與驗證規程。</p><a href="#definition-decisions-heading">回四方向工作版決策紀錄</a><p><strong>本輪更新：</strong>以上保留為歷史指示；2026-10-19 依 <a href="#definition-decision-D12">D12</a> 採用四題收斂稿，本輪先不放解法。</p></div></article><article tabindex="-1"><div class="definition-record" id="definition-decision-D10"><h4><span class="definition-owner">D10 · 使用者已決策</span>現階段只有評論</h4><blockquote>目前只有既有評論</blockquote><p><strong>本輪邊界：</strong>沒有真實訪談、現場觀察或參與者測試。桌面對照不是獨立驗證。</p><a href="#definition-decisions-heading">回四方向工作版決策紀錄</a></div></article><article tabindex="-1"><div class="definition-record" id="definition-decision-D11"><h4><span class="definition-owner">D11 · 使用者已決策</span>發布四方向工作版</h4><blockquote>把這份四方向設計思考工作版更新到網站，保留評論證據和決策紀錄的回查連結，清楚標示原型是模擬、尚未經真人驗證，家戶本期不做。</blockquote><p><strong>本輪邊界：</strong>公開摘要、原型及決策可以互相回查；原始評論全文維持私人。發布不代表確認假設或採用解法。</p><a href="#definition-decisions-heading">回四方向工作版決策紀錄</a><p><strong>本輪更新：</strong>以上保留為歷史指示；2026-10-19 依 <a href="#definition-decision-D12">D12</a> 採用四題收斂稿，本輪先不放解法。</p></div></article><article tabindex="-1"><div class="definition-record" id="definition-decision-D12"><h4><span class="definition-owner">D12 · 使用者已決策 · 2026-10-19</span>採用四題收斂稿，本輪先不放解法</h4><blockquote>就照這樣收斂，更新到網站，把四個問題的結論放最前面，讓我一眼看懂。保留證據回查和決策不做紀錄，標示待驗證，家戶本期不做，先不要放解法。</blockquote><p><strong>採用的工作定義：</strong></p><ol><li><strong>YouBike 車籃：協助處理</strong>：願意協助處理車籃垃圾的人，完成投放時遇到什麼阻礙？</li><li><strong>搭車前：行程銜接</strong>：轉運站上車前飲食的人，能否在搭車行程中完成垃圾投放？</li><li><strong>行人：途中投放</strong>：外出消費後持有垃圾的人，沿途為何未能找到當下可用的投放處？</li><li><strong>清潔：反覆髒亂</strong>：同一公共地點反覆出現垃圾，哪些是持續未清，哪些是清後再累積？</li></ol><p><strong>確認的取捨：</strong>搭車前先作為行人投放的子情境；車籃暫放一般借車影響與垃圾來源；清潔暫放排班、人力與效率診斷。不新增需求群，家戶本期不做。</p><p><strong>決策與推論分開：</strong>使用者確認研究範圍與呈現方式。分析者對證據、成因、影響與代表性的判讀，仍待驗證；確認草稿不代表確認事實。四題之間的優先序未定。</p><p><strong>取代的現行範圍：</strong>D08–D11 曾推進發想與模擬草模；本輪依此指示回到問題定義，先不展示解法或原型。先前草模仍為模擬、尚未經真人驗證，完整舊版保留於版本與私人研究紀錄。</p><p><a href="#definition-decisions-heading">工作版的決策不做紀錄</a> · <a href="#definition-evidence-heading">回四題結論</a></p></div></article><p><strong>仍待驗證：</strong>需求群的分合、具體障礙、成因、影響及普遍性。D12 確認的是工作定義與本輪取捨，沒有把評論推論升格為現況。</p><p><strong>D12 當時未決：</strong>優先序與恢復解法探索已在 D14 更新；原因的重要性與家戶重啟仍未決。</p><article id="definition-decision-D13" tabindex="-1"><h4><span class="definition-owner">D13 · 使用者已決策</span>單層閱讀，直接呈現問題結論</h4><blockquote>設計思考頁面整理成單層頁面就好，你也要把問題收斂定義好，現在我看不太出來你的結論</blockquote><p><strong>本次執行：</strong>結論、問題定義、PRD、評論與決策整合在同一頁，移除多層展開。原四方向保留；將 P02 是 P03 子情境的關係寫成三個研究主題，沒有新增驗證結果或優先序。</p><p><strong>分析者整理：</strong>頁首的保留、併入與改寫結論，以及四句陳述式問題定義，是依 D12 範圍整理的待驗證稿；不是使用者對成因或需求成立的背書。</p></article><article id="definition-decision-D14" tabindex="-1"><h4><span class="definition-owner">D14 · 使用者接受提案 · 2026-10-19</span>轉入黑客松執行，主攻行人投放</h4><blockquote>我們需要繼續推進 這是黑客松<br>不要給我一堆沒結論的</blockquote><p><strong>分析者提出的取捨：</strong>行人投放為主線；YouBike 與搭車前為使用情境；管理端先做異常與處理紀錄。MVP 串起查找、條件判讀、異常回報、替代點與處理回查；用三種腳本與三分鐘展示驗收。</p><p><strong>使用者對上述提案的回覆：</strong></p><blockquote>好 改完</blockquote><p><strong>本次執行：</strong>更新首頁、問題定義與 PRD v0.2，明確列出已接受範圍、開發順序、驗收與本期不做事項。「先不放解法」不再是現行限制；D01 的家戶界線持續有效。</p><p><strong>歸屬與界線：</strong>五個畫面及其欄位、狀態與錯誤處理是分析者依提案具體化的規格。使用者接受方向，不代表驗證問題成因或服務成效；本次未完成 MVP 開發或真人測試。</p><p><a href="#definition-prd-heading">查看現行 PRD</a> · <a href="#definition-not-doing-heading">現行決策不做紀錄</a></p></article></div><div class="definition-analyst"><p><strong>已決策：</strong>D14 確認行人投放為開發主線與本期取捨。D01–D13 是保留的歷史決策，並未刪除。</p><p><strong>仍屬分析者推論：</strong>需求群分合、成因、影響與資訊介入是否有效。本版畫面、資料與狀態規格是設計具體化，尚無真人測試支持。</p><p><strong>尚未決定：</strong>人力、實際日程、現場承接與家戶何時重啟；不影響依已定規格推進模擬原型。</p></div></section><section aria-labelledby="definition-history-heading"><h3 id="definition-history-heading" tabindex="-1">改寫歷史：供回查，不作本輪結論</h3><p id="definition-audit-heading" tabindex="-1">以下保留前階段需求群、問題草稿與分群依據。它們已被本頁前方的收斂稿取代；保留歷史不代表重新納入本期。</p><div class="definition-disclosure"><p class="definition-record-label">前階段問題草稿 · 保留改寫歷史</p><section class="definition-core" aria-labelledby="definition-core-heading">
+        <h3 id="definition-core-heading" tabindex="-1">前階段總問題草稿 · 保留歷史</h3>
+        <p>人在台北外出活動時，哪些情境讓隨身垃圾無法被妥善投放？這些困難如何影響原本行程，並把負擔轉移給其他使用者、周邊住戶、店家與清潔工作者？</p>
+        <p class="definition-evidence">分析者推論：以外出投放為主問題，YouBike 與搭車前是重點情境；公共空間的清潔維持是另一個待釐清面向。這個關係仍可隨新證據調整。<a href="#definition-decisions-heading">查看決策與推論的區分</a>。</p>
+      </section><section aria-labelledby="definition-needs-heading">
+        <h3 id="definition-needs-heading" tabindex="-1">前階段五個需求群</h3><p><a href="#definition-workbook-define">查看細讀後修訂的需求群與四方向關係</a>。</p>
+        <p class="definition-evidence">以下需求是由留言推導的假設。提到桶少、髒亂或負擔，還不能直接確認原因。</p>
+        <ol class="definition-needs">
+          <li id="definition-need-1" tabindex="-1"><h4>外出行程中能完成投放</h4><p><strong>留言線索：</strong>消費後持續拿著包裝，或撿起寵物排泄物後找不到合適去處。</p><p><strong>待定義的問題：</strong>使用者在什麼時刻產生垃圾，又在哪個環節無法完成投放？</p><p class="definition-trace-link"><a href="#definition-group-1">N01：查看證據、分群理由與反例</a></p></li>
+          <li id="definition-need-2" tabindex="-1"><h4>找到的設施確實能用</h4><p><strong>留言線索：</strong>找到投放處後，仍遇到封閉、滿溢、髒污或操作困難。</p><p><strong>待定義的問題：</strong>哪些條件讓看得見的設施，在需要投放時仍無法使用？</p><p class="definition-trace-link"><a href="#definition-group-2">N02：查看證據、分群理由與反例</a></p></li>
+          <li id="definition-need-3" tabindex="-1"><h4>不必承擔他人留下的垃圾</h4><p><strong>留言線索：</strong>車籃使用者清理後還需繞路投放；店家或住戶反覆處理門口垃圾。</p><p><strong>待定義的問題：</strong>垃圾如何把接觸、搬運與清理負擔轉移給下一位使用者或周邊的人？</p><p class="definition-trace-link"><a href="#definition-group-3">N03：查看證據、分群理由與反例</a></p></li>
+          <li id="definition-need-4" tabindex="-1"><h4>公共空間能持續保持可用</h4><p><strong>留言線索：</strong>留言質疑明顯污染未清、部分角落未清，或不同場所的清潔責任不清。</p><p><strong>待定義的問題：</strong>是清理時機、範圍、交接，還是清完後快速再累積，造成持續髒亂？</p><p class="definition-trace-link"><a href="#definition-group-4">N04：查看證據、分群理由與反例</a></p></li>
+          <li id="definition-need-5" tabindex="-1"><h4>知道服務怎麼變、問題由誰接手</h4><p><strong>留言線索：</strong>不清楚桶位變動的理由與替代去處，或反映後仍反覆遇到同樣問題。</p><p><strong>待定義的問題：</strong>使用者是否理解服務變動，並知道問題由誰接收、如何獲得回應？</p><p class="definition-trace-link"><a href="#definition-group-5">N05：查看證據、分群理由與反例</a></p></li>
+        </ol>
+        <p class="definition-evidence">要求增桶與反對設桶的意見都保留。兩種立場可能都在要求公共空間可用，但承受困難的人不同；這仍是待確認的解讀。</p>
+      </section><section aria-labelledby="t1-problems-heading">
+        <p class="definition-evidence">以下保留前階段改寫歷史；<a href="#definition-evidence-heading">最新四方向問題陳述與限制見工作版</a>，尚未經真人驗證。</p><h3 id="t1-problems-heading" tabindex="-1">調整後的四個問題定義</h3>
+        <p class="definition-evidence">四項都是待驗證草稿。分開寫出使用情境、困難與未確認事項，避免先把可能成因當成問題本身。</p>
+        <ol class="definition-problems">
+          <li><article id="definition-problem-1" tabindex="-1"><p class="definition-original">原方向 01 · YouBike 籃子裡面的垃圾</p><h4>取用車籃時，遭遇他人留下的垃圾與清理負擔</h4><p><strong>問題草稿：</strong>使用者取用 YouBike 時遇到車籃垃圾，影響置物與使用；若自行清理，還需承擔接觸垃圾及尋找投放處的負擔。</p><p class="definition-unknown"><strong>待確認：</strong>誰留下垃圾、何時發生、如何影響使用，以及清理如何被接手。不能先認定是附近缺桶造成；個人自行車案例另行辨識。</p><div class="definition-change-log"><p class="definition-owner">P01 · 原方向由使用者提出；以下改寫為分析者推論</p><p><strong>改寫理由：</strong>從「物件裡有垃圾」改寫為人在取用、清理與後續投放時承受的困難，讓問題有角色與任務可核對。置物受阻及影響程度仍是分析假設，未由每則留言直接證實。</p><p><strong>支持線索：</strong><a href="#definition-evidence-E05">E05</a>、<a href="#definition-evidence-E06">E06</a>、<a href="#definition-evidence-E27">E27</a>、<a href="#definition-evidence-E26">E26</a></p><p><strong>反例與邊界：</strong><a href="#definition-evidence-E16">E16</a>、<a href="#definition-evidence-E17">E17</a>。個人車籃分開；第二手轉述保留標記；垃圾來源、缺桶因果及清理責任未確認。</p><p><strong>對照需求群：</strong><a href="#definition-group-3">N03</a>、<a href="#definition-group-4">N04</a></p></div></article></li>
+          <li><article id="definition-problem-2" tabindex="-1"><p class="definition-original">原方向 02 · 搭公車前丟垃圾</p><h4>上車前產生的隨身垃圾，無法在搭車行程中完成投放</h4><p><strong>問題草稿：</strong>部分乘客在上車前飲食後，無法完成隨身垃圾投放。需要釐清投放任務與搭車行程在哪裡無法銜接。</p><p class="definition-unknown"><strong>待確認：</strong>實際垃圾種類、可用時間、動線與後續行為。本批有明確提到上車前的經驗，但候車區髒亂、桶滿、路過站牌是其他情境，不能全部併入。</p><div class="definition-change-log"><p class="definition-owner">P02 · 原方向由使用者提出；以下改寫為分析者推論</p><p><strong>改寫理由：</strong>保留原本「搭車前」的關注，依明確提及上車前飲食的留言，把任務寫成搭車行程中的投放。這項直接線索來自轉運／跨城市搭車情境，不能直接擴大為所有市區公車乘客。</p><p><strong>支持線索：</strong><a href="#definition-evidence-E14">E14</a></p><p><strong>反例與邊界：</strong><a href="#definition-evidence-E15">E15</a>、<a href="#definition-evidence-E04">E04</a>。路過站牌、候車區髒亂與站旁桶滿另行辨識；目前無法確認普遍性，也不預設使用者一定趕時間。</p><p><strong>對照需求群：</strong><a href="#definition-group-1">N01</a></p></div></article></li>
+          <li><article id="definition-problem-3" tabindex="-1"><p class="definition-original">原方向 03 · 行人個別留言與可重建個人內容已因隱私移除。</p><h4>外出途中難以找到、抵達或使用合適的投放處</h4><p><strong>問題草稿：</strong>行人在外出途中，難以找到、抵達或使用合適的投放處，因而持續攜帶垃圾或改變行程。</p><p class="definition-unknown"><strong>待確認：</strong>找不到可能是沒有、看不見、太遠，或找到卻不能用；不能直接等同桶數不足，也不能據此確認亂丟的原因。</p><div class="definition-change-log"><p class="definition-owner">P03 · 原方向由使用者提出；以下改寫為分析者推論</p><p><strong>改寫理由：</strong>從「找不到桶」擴大成找得到、抵達得了、使用得了三個待查環節，容納找到卻封閉或難用的案例。這是問題範圍的拆解，不是已找到三項根因。</p><p><strong>支持線索：</strong><a href="#definition-evidence-E01">E01</a>、<a href="#definition-evidence-E15">E15</a>、<a href="#definition-evidence-E03">E03</a>、<a href="#definition-evidence-E23">E23</a>、<a href="#definition-evidence-E24">E24</a></p><p><strong>反例與邊界：</strong><a href="#definition-evidence-E18">E18</a>、<a href="#definition-evidence-E25">E25</a>、<a href="#definition-evidence-E21">E21</a>、<a href="#definition-evidence-E22">E22</a>。找不到不等於數量不足；一人的亂丟自述不證明普遍因果。家戶部分仍排除，周邊負擔也須一起看。</p><p><strong>對照需求群：</strong><a href="#definition-group-1">N01</a>、<a href="#definition-group-2">N02</a>、<a href="#definition-group-3">N03</a>、<a href="#definition-group-5">N05</a></p></div></article></li>
+          <li><article id="definition-problem-4" tabindex="-1"><p class="definition-original">原方向 04 · 清潔人員清潔時間跟順序</p><h4>垃圾未被及時清除，或清除後快速再累積</h4><p><strong>問題草稿：</strong>街道、垃圾桶及相關場域的垃圾未能及時被清除，或清除後快速再累積，使空間持續受到影響。</p><p class="definition-unknown"><strong>待確認：</strong>時間與順序只是待查因素，也可能涉及清掃範圍、工作條件或責任交接。市民評論不足以代替清潔人員的作業經驗；未看到清掃也不代表沒有作業。</p><div class="definition-change-log"><p class="definition-owner">P04 · 原方向由使用者提出；以下改寫為分析者推論</p><p><strong>改寫理由：</strong>原方向先指定了時間與順序，容易把尚未確認的原因放進問題。改從未清或反覆再累積的空間狀態出發，再區分時機、範圍、交接與再累積。</p><p><strong>支持線索：</strong><a href="#definition-evidence-E08">E08</a>、<a href="#definition-evidence-E09">E09</a>、<a href="#definition-evidence-E10">E10</a>、<a href="#definition-evidence-E11">E11</a>、<a href="#definition-evidence-E26">E26</a></p><p><strong>反例與邊界：</strong><a href="#definition-evidence-E19">E19</a>、<a href="#definition-evidence-E20">E20</a>。這是市民留言形成的草稿，並非清潔人員需求訪談；沒有看到作業、感覺較慢或提出假設，均不能直接判定人員失職或人力不足。</p><p><strong>對照需求群：</strong><a href="#definition-group-2">N02</a>、<a href="#definition-group-3">N03</a>、<a href="#definition-group-4">N04</a>、<a href="#definition-group-5">N05</a></p></div></article></li>
+        </ol>
+      </section></div><h4 id="definition-groups-heading" tabindex="-1">五群為什麼這樣分</h4><article class="definition-group-log" tabindex="-1"><div class="definition-record" id="definition-group-1"><h4><span class="definition-owner">N01 · 分析者推論 · 待驗證</span>外出行程中能完成投放</h4><p><strong>支持線索：</strong><a href="#definition-evidence-E01">E01</a>、<a href="#definition-evidence-E02">E02</a>、<a href="#definition-evidence-E14">E14</a>、<a href="#definition-evidence-E15">E15</a></p><p><strong>合在一起的理由：</strong>以「正在進行的活動中，無法完成垃圾投放」作為共同需求，而非以夜市、公園、站牌等場所分類。這讓不同情境中的攜帶負擔可以對照；垃圾種類與合法收受條件仍分開保留。</p><p><strong>與其他群的界線：</strong>與 N02 分開：這裡看整段行程的任務是否完成；N02 看抵達設施後是否能用。同一則可以同時屬於兩群。家戶追車不是本期外出投放；混合留言只拆分相關段落。</p><p><strong>反例與不同聲音：</strong><a href="#definition-evidence-E03">E03</a>、<a href="#definition-evidence-E18">E18</a>、<a href="#definition-evidence-E21">E21</a>、<a href="#definition-evidence-E22">E22</a>、<a href="#definition-evidence-E28">E28</a>。住宅周邊的反對聲音提醒我們，方便投放與周邊負擔可能衝突；志願撿拾物也不一定能當隨身垃圾處理。這一群不能直接改寫成「所有地方都缺桶」。</p><p><strong>仍缺的證據：</strong>還缺實際行程、垃圾種類、攜帶時間與收受條件；若主要障礙發生在找到設施之後，該情境應同時對照 N02。</p><p><strong>對照問題：</strong><a href="#definition-problem-2">P02</a>、<a href="#definition-problem-3">P03</a></p><a href="#definition-need-1">回需求群摘要</a></div></article><article class="definition-group-log" tabindex="-1"><div class="definition-record" id="definition-group-2"><h4><span class="definition-owner">N02 · 分析者推論 · 待驗證</span>找到的設施確實能用</h4><p><strong>支持線索：</strong><a href="#definition-evidence-E03">E03</a>、<a href="#definition-evidence-E04">E04</a>、<a href="#definition-evidence-E23">E23</a>、<a href="#definition-evidence-E24">E24</a></p><p><strong>合在一起的理由：</strong>把封閉、滿溢、髒污與接觸困難放在一起，是因為它們都可能發生在「已找到投放處」之後。這是使用條件的歸納，不是確認所有案例都有同一個原因。</p><p><strong>與其他群的界線：</strong>與 N01 的尋找、抵達問題分開，也與 N04 的維持作業分開：N02 描述當下能否投放，N04 追問狀態為何持續或反覆出現。滿溢案例可以連到兩群。</p><p><strong>反例與不同聲音：</strong><a href="#definition-evidence-E09">E09</a>、<a href="#definition-evidence-E18">E18</a>。有桶卻要求移除的意見，以及剛清完又滿的描述，都限制了「只要有桶就能用」或「桶滿就是沒清」的判斷。也不能把不方便等同已造成傷害。</p><p><strong>仍缺的證據：</strong>封閉原因、滿溢時段、操作條件與污染後果均未確認；不同障礙可能需要再拆群，但目前沒有足夠證據排序。</p><p><strong>對照問題：</strong><a href="#definition-problem-3">P03</a>、<a href="#definition-problem-4">P04</a></p><a href="#definition-need-2">回需求群摘要</a></div></article><article class="definition-group-log" tabindex="-1"><div class="definition-record" id="definition-group-3"><h4><span class="definition-owner">N03 · 分析者推論 · 待驗證</span>不必承擔他人留下的垃圾</h4><p><strong>支持線索：</strong><a href="#definition-evidence-E05">E05</a>、<a href="#definition-evidence-E06">E06</a>、<a href="#definition-evidence-E07">E07</a>、<a href="#definition-evidence-E27">E27</a></p><p><strong>合在一起的理由：</strong>以「垃圾造成原持有人以外的人接觸、搬運或清理」串起車籃、店門口與周邊負擔。這是分析者對角色與負擔轉移的解讀，未認定垃圾是誰留下的。</p><p><strong>與其他群的界線：</strong>與 N04 分開：N03 看誰額外承擔工作，N04 看空間狀態如何維持。車籃使用者、店家、住戶與正式清潔人員不是同一種角色，仍須分別核對。</p><p><strong>反例與不同聲音：</strong><a href="#definition-evidence-E16">E16</a>、<a href="#definition-evidence-E17">E17</a>、<a href="#definition-evidence-E18">E18</a>、<a href="#definition-evidence-E28">E28</a>。有人主動挑有垃圾的車來清理，並非都放棄使用；個人自行車不是 YouBike，家人轉述也不是本人目擊。不能將所有不滿都解讀成相同使用行為。</p><p><strong>仍缺的證據：</strong>各角色的接觸、耗時、繞路與使用受阻程度尚未量得；目前也無清潔人員直接訪談，不能代替其需求發言。</p><p><strong>對照問題：</strong><a href="#definition-problem-1">P01</a>、<a href="#definition-problem-3">P03</a>、<a href="#definition-problem-4">P04</a></p><a href="#definition-need-3">回需求群摘要</a></div></article><article class="definition-group-log" tabindex="-1"><div class="definition-record" id="definition-group-4"><h4><span class="definition-owner">N04 · 分析者推論 · 待驗證</span>公共空間能持續保持可用</h4><p><strong>支持線索：</strong><a href="#definition-evidence-E08">E08</a>、<a href="#definition-evidence-E09">E09</a>、<a href="#definition-evidence-E10">E10</a>、<a href="#definition-evidence-E11">E11</a>、<a href="#definition-evidence-E26">E26</a></p><p><strong>合在一起的理由：</strong>把未清、角落遺漏、清後再累積與責任交接放在同一群，是因為它們都關乎可用狀態能否維持。它們是不同待查機制，不是已證實的共同根因。</p><p><strong>與其他群的界線：</strong>與 N02 的當次使用分開；與 N05 的知情、反映與回應分開。場地交接可同時涉及實際清潔責任及民眾是否知道由誰接手。</p><p><strong>反例與不同聲音：</strong><a href="#definition-evidence-E19">E19</a>、<a href="#definition-evidence-E20">E20</a>。有肯定清潔人員的聲音，也有「若人不夠」的條件建議。它們不能被加工成排班錯誤或人力不足的證據；清過又滿也不等於完全未清。</p><p><strong>仍缺的證據：</strong>需核對污染與作業時間、範圍、再累積及責任資料。只憑市民觀感，還不能判定人員效率、頻率不足或排序錯誤。</p><p><strong>對照問題：</strong><a href="#definition-problem-1">P01</a>、<a href="#definition-problem-4">P04</a></p><a href="#definition-need-4">回需求群摘要</a></div></article><article class="definition-group-log" tabindex="-1"><div class="definition-record" id="definition-group-5"><h4><span class="definition-owner">N05 · 分析者推論 · 待驗證</span>知道服務怎麼變、問題由誰接手</h4><p><strong>支持線索：</strong><a href="#definition-evidence-E12">E12</a>、<a href="#definition-evidence-E13">E13</a>、<a href="#definition-evidence-E11">E11</a></p><p><strong>合在一起的理由：</strong>桶位變動不清楚、反映後仍有問題、場地責任不明，都包含「資訊或回應能否銜接」的需求線索。這一群保留制度互動的經驗，避免全部解讀為桶位或清掃問題。</p><p><strong>與其他群的界線：</strong>與 N04 分開：知道由誰處理和實際是否清乾淨是兩件事。N05 是跨四方向的待查維度，目前證據不足以新增為第五個已確認問題。</p><p><strong>反例與不同聲音：</strong><a href="#definition-evidence-E09">E09</a>、<a href="#definition-evidence-E22">E22</a>。反映後又看到垃圾，也可能涉及清理後再累積，不能推定完全沒處理。未收到撤桶說明，不代表完全無公告；混合訴求也不代表使用者已選定某種服務。</p><p><strong>仍缺的證據：</strong>尚缺公告、案件受理與回覆、處理時間及現場結果的對照；資訊問題與實際服務問題可能同時存在，不能互相取代。</p><p><strong>對照問題：</strong><a href="#definition-problem-3">P03</a>、<a href="#definition-problem-4">P04</a></p><a href="#definition-need-5">回需求群摘要</a></div></article><div class="common-reading" id="definition-workbook-define"><h4 id="definition-workbook-define-heading">歷史需求群：保留回查，不再擴充分群</h4><div class="common-content">
+
+<p>這五群是跨方向的需求假設，不是已確認洞察；同一則評論可對照多個方向，不重複計成人數。</p>
+<div class="grid">
+<article class="card" id="definition-workbook-N01">
+<span class="badge">N01</span>
+<h3>在外出活動中處理手上的垃圾</h3>
+<dl>
+<dt>線索</dt>
+<dd>E01、E15 支持持有與未找到的敘述。</dd>
+<dt>調整</dt>
+<dd>暫保留需求假設；是否必須立刻投放、實際影響及結局待查。</dd>
+</dl>
+<p class="refs">回查：<a href="#definition-evidence-E01">E01</a>
+<a href="#definition-evidence-E02">E02</a>
+<a href="#definition-evidence-E14">E14</a>
+<a href="#definition-evidence-E15">E15</a>
+<a href="#definition-evidence-E28">E28</a>
+</p>
+</article>
+<article class="card" id="definition-workbook-N02">
+<span class="badge">N02</span>
+<h3>辨認設施當時是否適合使用</h3>
+<dl>
+<dt>線索</dt>
+<dd>封閉、髒滿及接觸外框是不同線索。</dd>
+<dt>調整</dt>
+<dd>拆開可用狀態、收受條件與操作，不視為一種根因。</dd>
+</dl>
+<p class="refs">回查：<a href="#definition-evidence-E03">E03</a>
+<a href="#definition-evidence-E23">E23</a>
+<a href="#definition-evidence-E24">E24</a>
+</p>
+</article>
+<article class="card" id="definition-workbook-N03">
+<span class="badge">N03</span>
+<h3>理解他人遺留物如何影響下一位</h3>
+<dl>
+<dt>線索</dt>
+<dd>E06 自述主動清理與繞路；E07 自述店家清理。</dd>
+<dt>調整</dt>
+<dd>不再把所有清理都寫成被迫承擔；E05 卡點未知，E16 是私人自行車。</dd>
+</dl>
+<p class="refs">回查：<a href="#definition-evidence-E05">E05</a>
+<a href="#definition-evidence-E06">E06</a>
+<a href="#definition-evidence-E07">E07</a>
+<a href="#definition-evidence-E16">E16</a>
+<a href="#definition-evidence-E17">E17</a>
+<a href="#definition-evidence-E26">E26</a>
+<a href="#definition-evidence-E27">E27</a>
+</p>
+</article>
+<article class="card" id="definition-workbook-N04">
+<span class="badge">N04</span>
+<h3>理解公共空間為何反覆或局部髒亂</h3>
+<dl>
+<dt>線索</dt>
+<dd>有髒亂狀態、清後再滿、角落與接手的陳述。</dd>
+<dt>調整</dt>
+<dd>不能直接命名為清潔人員的排程需求；缺第一手工作過程。</dd>
+</dl>
+<p class="refs">回查：<a href="#definition-evidence-E04">E04</a>
+<a href="#definition-evidence-E08">E08</a>
+<a href="#definition-evidence-E09">E09</a>
+<a href="#definition-evidence-E10">E10</a>
+<a href="#definition-evidence-E11">E11</a>
+<a href="#definition-evidence-E13">E13</a>
+<a href="#definition-evidence-E19">E19</a>
+<a href="#definition-evidence-E20">E20</a>
+</p>
+</article>
+<article class="card" id="definition-workbook-N05">
+<span class="badge">N05</span>
+<h3>理解服務變動與反映後的處理</h3>
+<dl>
+<dt>線索</dt>
+<dd>E12 有變動與說明的抱怨；E13 有反映後仍髒亂。</dd>
+<dt>調整</dt>
+<dd>未證實完全沒有通知、沒有處理或沒有承辦者。</dd>
+</dl>
+<p class="refs">回查：<a href="#definition-evidence-E12">E12</a>
+<a href="#definition-evidence-E13">E13</a>
+</p>
+</article>
+</div>
+<p>目前四題的關係已依 D12 收斂：P02 先作為 P03 的子情境；P01 聚焦協助處理，P04 聚焦反覆髒亂。五個需求群保留為分析歷史，不新增分群，也不據此認定共同成因。</p>
+<p>家戶邊界：E21 不納入本期家戶服務；E22 的家戶與路邊部分分開保留。提及疑似家用垃圾的公共空間現象，不等於啟動家戶收運方案。</p>
+<p class="refs">回查：<a href="#definition-evidence-E21">E21</a>
+<a href="#definition-evidence-E22">E22</a>
+<a href="#definition-evidence-E09">E09</a>
+<a href="#definition-evidence-E18">E18</a>
+</p>
+</div></div><div class="reading-detail" id="definition-workbook-P01-definition-history"><p class="definition-record-label">上一版問題定義與收斂理由</p><p>以下是收斂前的分析者草稿，已由本輪工作定義取代，保留供回查。</p><blockquote>在 YouBike 借用情境中，車籃遺留物何時會影響使用？遇到的人實際如何處理；若想協助卻未做到，卡在哪一步？</blockquote><p>從所有遇到車籃垃圾的人，收窄到願意協助者的投放過程。這是研究對象的取捨，不代表 E05 的意願已確認，也不預設每位協助者都遇到阻礙。</p><p><a href="#definition-problem-1">更早的問題改寫紀錄</a></p></div><div class="reading-detail" id="definition-workbook-P02-definition-history"><p class="definition-record-label">上一版問題定義與收斂理由</p><p>以下是收斂前的分析者草稿，已由本輪工作定義取代，保留供回查。</p><blockquote>在搭車前飲食的人，是否因可用投放機會與實際行程條件而受阻，需要具體事件確認；目前保留搭車前情境，不先認定趕車或所有站點都相同。</blockquote><p>保留上車前情境，但先歸在 P03 行人投放之下。這是目前的研究安排，尚未證實兩者的困難完全相同。</p><p><a href="#definition-problem-2">更早的問題改寫紀錄</a></p></div><div class="reading-detail" id="definition-workbook-P03-definition-history"><p class="definition-record-label">上一版問題定義與收斂理由</p><p>以下是收斂前的分析者草稿，已由本輪工作定義取代，保留供回查。</p><blockquote>外出消費後仍持有垃圾且未找到去處的人，可能需要在行程中辨認並使用合適的交付機會；我們要先釐清障礙是資訊、實際服務缺口、使用條件，還是當事人並未感到明顯影響。</blockquote><p>從尋找、抵達、操作等所有可能障礙，收窄到外出消費後沿途未能找到當下可用的投放處。其他情境保留為邊界資料，不新增需求群。</p><p><a href="#definition-problem-3">更早的問題改寫紀錄</a></p></div><div class="reading-detail" id="definition-workbook-P04-definition-history"><p class="definition-record-label">上一版問題定義與收斂理由</p><p>以下是收斂前的分析者草稿，已由本輪工作定義取代，保留供回查。</p><blockquote>公共空間反覆或局部髒亂時，先辨認累積、清理、再累積和交接的實際過程，找出誰受到什麼影響；排程、人力及設備是競爭解釋，不是已知根因。</blockquote><p>從預設清潔時間與順序有問題，改為先辨認反覆髒亂的過程。未清與再累積是起始區分，不宣稱已涵蓋所有成因；仍須確認是否為同一地點。</p><p><a href="#definition-problem-4">更早的問題改寫紀錄</a></p></div><div class="common-reading" id="definition-workbook-sources"><h4 id="definition-workbook-sources-heading">來源與回查</h4><div class="common-content">
+
+<p>方法來源提供原則；證據判讀與問題改寫由分析者整理，四題研究範圍已由使用者確認，實際需求仍待驗證。</p>
+<ul>
+<li>
+<a href="https://dschool.stanford.edu/tools/design-thinking-bootleg">Stanford d.school · Design Thinking Bootleg</a>
+<p>以同理、定義、發想、原型與測試作為可往返的工作模式；本頁狀態不是官方評分。</p>
+</li>
+<li>
+<a href="https://www.designkit.org/methods/create-insight-statements.html">IDEO.org · Create Insight Statements</a>
+<p>主題需要再提煉成洞察；本頁候選洞察仍需研究確認。</p>
+</li>
+<li>
+<a href="https://www.designkit.org/methods/get-feedback.html">IDEO.org · Get Feedback</a>
+<p>用原型向相關使用者取得真實回饋，保留負面意見並用於修訂。</p>
+</li>
+</ul>
+<p>E01–E28 選自 2,663 則篩選後評論，不是代表性抽樣。本頁 E 編號連到公開去識別摘要，S 編號連到逐段判讀摘要；摘要不是逐字引文。原始全文、私人列序及完整分析仍保留於私人研究資料。</p>
+<p>
+<a href="#definition-evidence-index-heading">公開評論證據索引</a> · <a href="#definition-decisions-heading">使用者決策紀錄</a> · <a href="#definition-scope-heading">家戶本期不做</a>
+</p>
+</div></div></section><section aria-label="歷史 PRD 與不做紀錄"><p class="definition-evidence"><strong>以下為封存原文，已由 v0.2 取代。</strong>其中「本輪」「尚未決策」「先不放解法」描述的是 D12 階段，不是目前開發限制。</p><section aria-labelledby="definition-prd-v01-heading" id="definition-prd-v01"><h3 id="definition-prd-v01-heading" tabindex="-1">歷史 PRD v0.1：問題定義階段</h3><p class="definition-evidence">問題定義版 v0.1 · 併入本頁閱讀。候選需求、衡量方式與驗證規劃仍是草稿，尚未成為執行承諾。</p><section id="definition-prd-v01-basis" aria-labelledby="definition-prd-v01-basis-heading">
+<h4 id="definition-prd-v01-basis-heading">目標與資料基礎</h4><p>本 PRD 定義台北街頭垃圾處理服務的四個研究問題，供產品與研究協作成員對齊目標對象、範圍、證據及後續判斷條件。目前以既有評論為基礎，尚未形成可直接交付工程開發的功能規格。</p>
+<p>本版沿用 <a href="#definition-decision-D12">D12 收斂決策</a> 與<a href="#definition-evidence-heading">網站四題結論</a>。下文的候選需求、衡量方式與後續工作，是本 PRD 整理的規劃草稿；尚未設定執行人力、時程、預算或成效承諾。</p>
+
+<p>本階段要得到能回查、能被證據修正的問題定義，釐清誰在什麼情境遇到障礙、實際做了什麼，以及是否造成值得改善的影響。</p>
+<ul>
+<li><p>確認困難發生在哪個環節，不先把缺桶、趕車、排程或人力當成原因。</p>
+</li>
+<li><p>區分相同問題的不同情境，避免為每個場景各立一個產品。</p>
+</li>
+<li><p>同時保留順利完成、沒有明顯困擾及不同立場的材料，作為收窄或撤回問題的依據。</p>
+</li>
+</ul>
+<p>資料來源是篩選後的 2,663 則垃圾相關評論；目前細讀範圍為 E01–E28。這 28 則是選例，不能代表全體市民，也不能用提及次數推算需求比例或優先序。目前沒有新增真人訪談、現場觀察或參與者測試。參見 <a href="#definition-decision-D07">D07 細讀範圍</a>、<a href="#definition-decision-D10">D10 資料條件</a> 與<a href="#definition-evidence-index-heading">評論證據索引</a>。</p>
+</section><section id="definition-prd-v01-needs" aria-labelledby="definition-prd-v01-needs-heading">
+<h4 id="definition-prd-v01-needs-heading">目標對象與候選需求</h4>
+<p>以下是待驗證的使用者需求，不是已承諾的產品能力。</p>
+<table>
+<thead>
+<tr>
+<th>方向與對象</th>
+<th>希望達成的結果</th>
+<th>需要先確認的條件</th>
+</tr>
+</thead>
+<tbody><tr>
+<td data-label="方向與對象">P01 願意協助處理 YouBike 車籃垃圾的人</td>
+<td data-label="希望達成的結果">在自願範圍內完成處理與投放</td>
+<td data-label="需要先確認的條件">是否有意願、是否嘗試、實際卡點；不將清理責任默認交給下一位借車者</td>
+</tr>
+<tr>
+<td data-label="方向與對象">P02 轉運站上車前飲食的人</td>
+<td data-label="希望達成的結果">在乘車行程中處理飲食後的垃圾</td>
+<td data-label="需要先確認的條件">真實行程與結局，以及是否存在不同於一般步行的限制</td>
+</tr>
+<tr>
+<td data-label="方向與對象">P03 外出消費後仍持有垃圾的人</td>
+<td data-label="希望達成的結果">沿途找到當下可用的投放處</td>
+<td data-label="需要先確認的條件">尋找方式、現場可用狀態、垃圾種類與最後處理結果</td>
+</tr>
+<tr>
+<td data-label="方向與對象">P04 使用反覆髒亂公共地點的人</td>
+<td data-label="希望達成的結果">公共空間的污染得到處理，且可維持使用</td>
+<td data-label="需要先確認的條件">是否同一地點、清理前後狀態及實際影響</td>
+</tr>
+</tbody></table>
+<p>清理、管理與交接人員是 P04 的必要研究對象；目前沒有其第一手作業資料，不能把外部評論改寫成清潔人員已確認的需求。</p>
+</section><section id="definition-prd-v01-validation" aria-labelledby="definition-prd-v01-validation-heading">
+<h4 id="definition-prd-v01-validation-heading">問題驗證條件</h4>
+<p>以下為驗證規劃草稿，目前尚未排程或執行。只有既有評論時，先完成證據整理；缺少的經過與結果維持未知。</p>
+<table>
+<thead>
+<tr>
+<th>方向</th>
+<th>要取得的事件資訊</th>
+<th>何時應調整定義</th>
+</tr>
+</thead>
+<tbody><tr>
+<td data-label="方向">P01</td>
+<td data-label="要取得的事件資訊">分開記錄意願、是否動手、處理順序、投放結果與當事人說的影響；同時保留能順利處理的案例</td>
+<td data-label="何時應調整定義">若主要沒有協助意願，不能把拒絕處理當成投放障礙；若沒有值得改善的影響，重估此焦點</td>
+</tr>
+<tr>
+<td data-label="方向">P02</td>
+<td data-label="要取得的事件資訊">還原飲食、準備上車、尋找與最後處理；比較一般步行情境</td>
+<td data-label="何時應調整定義">未確認乘車特有限制時，維持在 P03 之下；不能只因發生在站旁就獨立</td>
+</tr>
+<tr>
+<td data-label="方向">P03</td>
+<td data-label="要取得的事件資訊">還原原定路線、垃圾來源、尋找過程、當時可用狀態與最終處理</td>
+<td data-label="何時應調整定義">若主要問題發生在其他環節，依新證據改寫，不擴張「找不到」去包住所有困難</td>
+</tr>
+<tr>
+<td data-label="方向">P04</td>
+<td data-label="要取得的事件資訊">對齊同一地點的發現、清理、再發現時間與範圍；補作業端資料</td>
+<td data-label="何時應調整定義">無法判定是否清過時保持未知；若是清後再累積，不能寫成完全未清</td>
+</tr>
+</tbody></table>
+<p>每個新案例應分開保存原始陳述、可核對事實、分析解讀和相反材料。不同人的片段不能拼成同一旅程；新受訪者的回答不能補寫成 E01 等原留言者的回答。</p>
+</section><section id="definition-prd-v01-measures" aria-labelledby="definition-prd-v01-measures-heading">
+<h4 id="definition-prd-v01-measures-heading">衡量方式草稿</h4>
+<p>目前沒有基準值或成效目標。以下是取得真實資料後的觀察口徑，不能以留言數或模擬操作代替。</p>
+<table>
+<thead>
+<tr>
+<th>觀察項目</th>
+<th>建議口徑</th>
+<th>適用範圍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td data-label="觀察項目">投放結果</td>
+<td data-label="建議口徑">結局分為已完成、未完成、未知；完成須有實際投放及收受條件可核對的資料。若計算比例，以結局可判定事件為分母，另列未知數</td>
+<td data-label="適用範圍">P01 至 P03</td>
+</tr>
+<tr>
+<td data-label="觀察項目">行程或行動影響</td>
+<td data-label="建議口徑">對照原定與實際路線、時間及行動；沒有改變也記錄。僅聽到「找不到」不能補成繞路或誤車</td>
+<td data-label="適用範圍">P01 至 P03</td>
+</tr>
+<tr>
+<td data-label="觀察項目">同地點清理時序</td>
+<td data-label="建議口徑">記錄發現、可確認的清理與再發現時間及範圍；無法核對的區段列未知</td>
+<td data-label="適用範圍">P04</td>
+</tr>
+<tr>
+<td data-label="觀察項目">當事人在意的影響</td>
+<td data-label="建議口徑">保留具體後果及當事人的描述，包括無明顯困擾；不代替其評分</td>
+<td data-label="適用範圍">四個方向</td>
+</tr>
+</tbody></table>
+<p>個案結果只能描述所取得的案例。要推估普遍性、比較地點或設定改善目標，仍須另定抽樣與比較方式。</p>
+</section><section id="definition-prd-v01-next" aria-labelledby="definition-prd-v01-next-heading">
+<h4 id="definition-prd-v01-next-heading">交付內容與下一階段條件</h4>
+<p>本版交付四句工作定義、角色與候選需求、支持及反例、已決定不做的範圍，以及待補的證據條件。這些內容可用於研究與範圍對齊。</p>
+<p>建議下一階段先交付「問題驗證紀錄」：逐題記錄可支持的困難、反例、實際影響與保留／改寫／合併／暫停的理由。若仍只有評論，可以完成桌面核對，但不能宣稱已完成真人驗證。</p>
+<p>進入解法探索前，應有足以指向具體困難與影響的證據，並由研究委託者重新確認工作範圍。尚未滿足時，保留或修訂問題定義。功能清單、技術架構、介面、採購與營運承諾，留待該階段再定義。</p>
+<p>本版未配置百日各階段的天數、人力或預算；「家戶非百日首要目標」不等於四題都已承諾在百日內開發上線。</p>
+</section><section id="definition-prd-v01-risks" aria-labelledby="definition-prd-v01-risks-heading">
+<h4 id="definition-prd-v01-risks-heading">風險與待決事項</h4>
+<ul>
+<li><p><strong>選例偏差：</strong>目前資料不能代表所有市民；不以評論數決定四題優先序。</p>
+</li>
+<li><p><strong>原因誤判：</strong>缺桶、趕車、排程與人力都是待查解釋；不能據此設定功能或責任。</p>
+</li>
+<li><p><strong>角色資料不足：</strong>P04 缺作業端資料；P01 的協助意願也不能由每則評論推定。</p>
+</li>
+<li><p><strong>研究依賴：</strong>若後續取得訪談、現場觀察或作業紀錄，須另記來源及日期，保留原評論不被改寫。</p>
+</li>
+</ul>
+<p>四題優先序、研究執行者、可取得的參與資料、場域、時程與預算，尚待決定。這些未決項目不改變已確認的四題範圍與家戶界線。</p>
+</section><section id="definition-prd-v01-decisions" aria-labelledby="definition-prd-v01-decisions-heading">
+<h4 id="definition-prd-v01-decisions-heading">決策歸屬與版本紀錄</h4>
+<table>
+<thead>
+<tr>
+<th>類型</th>
+<th>目前狀態</th>
+</tr>
+</thead>
+<tbody><tr>
+<td data-label="類型">使用者已決策</td>
+<td data-label="目前狀態">採用四題工作定義；P02 先作為 P03 子情境；保留證據及不做紀錄；家戶本期不做；先不放解法</td>
+</tr>
+<tr>
+<td data-label="類型">分析者整理且待驗證</td>
+<td data-label="目前狀態">候選需求、證據可支持的範圍、反例作用與問題成因</td>
+</tr>
+<tr>
+<td data-label="類型">本 PRD 新增規劃草稿</td>
+<td data-label="目前狀態">驗證條件、衡量口徑及後續交付安排，尚未成為執行承諾</td>
+</tr>
+<tr>
+<td data-label="類型">尚未決策</td>
+<td data-label="目前狀態">優先序、執行資源、何時恢復解法探索與家戶何時重啟</td>
+</tr>
+</tbody></table>
+<p>2026-10-19 建立版本 0.1，依 D12 與網站 v71 的已確認範圍編寫。後續改寫須保留變更原因、支持與反例，以及由誰作成決策。</p>
+<p><a href="#definition-evidence-heading">四題工作版</a> · <a href="#definition-evidence-index-heading">評論證據索引</a> · <a href="#definition-decisions-heading">歷次決策</a> · <a href="#definition-decision-D12">D12 原指示</a></p>
+</section></section><section aria-labelledby="definition-prd-v01-definition-not-doing-heading"><h3 id="definition-prd-v01-definition-not-doing-heading" tabindex="-1">決策不做：本輪到這裡為止</h3><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>本輪界線與理由</th>
+</tr>
+</thead>
+<tbody><tr>
+<td data-label="項目">家戶收運與收受服務</td>
+<td data-label="本輪界線與理由">本期不做。不是百日首要目標；保留需求，重啟時間未定</td>
+</tr>
+<tr>
+<td data-label="項目">一般借車影響與車籃垃圾來源</td>
+<td data-label="本輪界線與理由">暫放。P01 聚焦願意協助者的投放過程</td>
+</tr>
+<tr>
+<td data-label="項目">獨立的乘車問題</td>
+<td data-label="本輪界線與理由">暫不成立為獨立研究題。P02 先作為 P03 子情境，確認獨特限制後再檢視</td>
+</tr>
+<tr>
+<td data-label="項目">排班、人力與效率診斷</td>
+<td data-label="本輪界線與理由">暫放。現有評論不足以指定 P04 的成因</td>
+</tr>
+<tr>
+<td data-label="項目">新增需求群</td>
+<td data-label="本輪界線與理由">本輪不擴充；原五群保留作回查資料</td>
+</tr>
+<tr>
+<td data-label="項目">解法與原型</td>
+<td data-label="本輪界線與理由">本輪不提出或展示。先前草模為模擬，尚未經真人驗證</td>
+</tr>
+</tbody></table><p>不做與暫放是本期範圍決策，不表示需求不存在，也不表示相關原因已被排除。公共空間評論中對「家用垃圾」的來源主張可保留為線索，但不能因此把家戶服務重新納入。<a href="#definition-decision-D01">D01 家戶界線</a> · <a href="#definition-decision-D12">D12 收斂決策</a> · <a href="#definition-prd-v01-definition-not-doing-heading">決策不做紀錄</a></p><p id="definition-prd-v01-definition-scope-heading" tabindex="-1"><strong>家戶本期不做。</strong>家戶收運與收受服務不是這一百天的首要目標；不安排家戶選點、詢價或試辦。重啟時間未定。</p></section></section><section aria-labelledby="t1-thinking-heading"><h3 id="t1-thinking-heading" tabindex="-1">目前進度：規格完成，進入原型</h3><p id="definition-cycle-heading" tabindex="-1">評論整理與本期取捨已完成，PRD v0.2 已發布。下一項工作是依規格開發可操作 MVP，驗收 A／B／C 三種情境；原型開發、真人測試與現場驗證目前均未完成。</p><p>舊原型仍是模擬參考，沒有被重新標為驗證成果。<a href="#definition-prd-next">看開發順序與交付物</a>。</p></section></section>
+
     <section id="panel-design" class="page-panel design-panel" aria-labelledby="design-heading" hidden>
       <p class="page-context"><a href="#research">研究結論</a><span>方案的概念示意</span></p>
       <div class="design-heading"><h2 id="design-heading">台北街角桶 T1：<span>從投放想到清運。</span></h2><p>為台北街頭與商圈設計。收下行人隨手產生的小垃圾，把遮雨、辨識與清運一起做好。</p><p class="design-concept-note">T1 候選概念 · 尚未定案或打樣，尺寸、容量與性能均待驗證。</p></div>
       <div class="t1-intro">
         <p><strong>48 × 42 × 110 cm</strong> 的窄身外形，搭配內縮投入口、可換外板與前方移出的帶輪內桶。先把每天的投放和清潔做好，再評估是否需要感測。</p>
-        <div class="t1-reading-links"><button type="button" data-design-jump="t1-specification">看外觀與尺寸</button><button type="button" data-design-jump="t1-process-heading">看設計流程</button><a href="#siting">查看設點條件</a></div>
+        <div class="t1-reading-links"><button type="button" data-design-jump="t1-specification">看外觀與尺寸</button><button type="button" data-design-jump="t1-product-process-heading">看設計流程</button><a href="#siting">查看設點條件</a></div>
       </div>
       <div class="design-purpose-picker"><label for="design-options">比較服務用途</label><select id="design-options" aria-describedby="design-purpose-note"><option value="street">街角隨手投</option></select><p id="design-purpose-note">街角隨手投呈現 T1；其餘三種是獨立概念。</p></div>
       <div class="design-purpose-summary"><h3 id="design-name">街角隨手投</h3><p id="design-description"></p></div>
@@ -184,8 +579,8 @@
           <p class="t1-source-note">來源核對：2026-10-16。<a href="https://laws.gov.taipei/Law/LawSearch/LawArticleContent/FL076512" target="_blank" rel="noopener noreferrer">舊行人專用清潔箱管理維護 SOP</a>已於 2022-08-24 停止適用，沒有把其舊清潔頻率當作現行要求。<a href="https://www.dep.gov.taipei/News_Content.aspx?n=ACEFA960B5A4ACD7&amp;s=84EC6A2E88CC22ED&amp;sms=87415A8B9CE81B16" target="_blank" rel="noopener noreferrer">家戶垃圾禁投說明</a>及<a href="https://www.dep.gov.taipei/News_Content.aspx?n=ACEFA960B5A4ACD7&amp;s=B58711D230F0D78B&amp;sms=87415A8B9CE81B16" target="_blank" rel="noopener noreferrer">滿溢通報與巡收說明</a>保留官方連結供核對。</p>
         </div></section>
       </section>
-      <section class="t1-process" aria-labelledby="t1-process-heading">
-        <h3 id="t1-process-heading" tabindex="-1">從需求到打樣，一步步做出設計。</h3>
+      <section class="t1-process" aria-labelledby="t1-product-process-heading">
+        <h3 id="t1-product-process-heading" tabindex="-1">產品設計與打樣：既有規劃</h3>
         <p class="t1-process-intro">先弄清楚誰要用、垃圾往哪裡去，再比較做法、完成圖面，用樣機找問題。每一步都留下成果與選擇理由，才能知道下一步該做什麼。</p>
         <p class="t1-process-status"><strong>目前：已有研究資料、完整設計計劃與 T1 候選概念。</strong>需求仍須整理，同需求方案比較尚未完成；T1 尚未定案。完整圖面、操作樣機與金屬原型都是後續交付。</p>
         <ol class="t1-process-list">
@@ -390,311 +785,63 @@
   <p class="related-reading">把海外案例接回本地條件：<a href="#research">閱讀台北研究結論</a>。</p>
 </section>
 
-    <section id="panel-research" class="page-panel research-page" aria-labelledby="research-heading">
-      <header class="research-page-heading"><h2 id="research-heading">研究結論</h2><p>結合公開紀錄與垃圾相關意見回饋，分開看行人投放、維護與家戶收運，再決定要查證什麼。</p><p class="research-update">研究判斷更新：2026-10-18 · 已納入本批回饋與公開位置對照，尚無現場驗證或台北試辦成效。</p></header>
-      <p class="plan-entry"><a href="#service-continuity">投放服務銜接：原型與驗證計畫</a><span>七種互動情境、觀察指標與停止門檻；真人測試尚未開始。</span></p>
-      <section class="current-evidence" aria-labelledby="current-evidence-heading">
-        <h3 id="current-evidence-heading" tabindex="-1">台北垃圾桶現況：目前能確認什麼？</h3>
-        <p>保存資料提供位置與年度統計，本批回饋補充使用困擾；今天全市有多少桶、各點是否可用，仍待機關與現場確認。</p>
-        <p class="current-evidence-date">現況整理：2026-10-18 · 位置主檔複查日 2026-10-18；其他公開資料查核日 2026-10-15。回饋分析日 2026-10-17，收集期間未知。非即時現場盤點。</p>
-        <dl class="current-records">
-          <div><dt>公開位置紀錄</dt><dd><strong>2026 主檔：681 筆位置列，680 筆可繪圖。</strong><span class="current-record-date">來源更新 2026-09-30；本站下載 2026-10-15，2026-10-18 重下載 CSV 核對一致。原調查日期未知。</span>2026-10-15 查核時，CSV 與 API 的列數、內容一致；同次查核的目錄另標 2,009 筆，計數差異尚未釐清。<a href="https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c" target="_blank" rel="noopener noreferrer">官方清潔箱資料集</a></dd></div>
-          <div><dt>另列場域線索</dt><dd><strong>130 筆紀錄，涵蓋 12 區；對應 120 組不同座標。</strong><span class="current-record-date">來源更新 2026-08-18；本站複查與地圖整理 2026-10-18。</span>含重複名稱或座標，不能當成 130 個不同場所或垃圾桶。捷運站、商場及景點的開放、接收種類與桶況仍待確認；地圖已與街頭位置分層標示。<a href="#map">分開查看兩種紀錄</a></dd></div>
-          <div><dt>官方年度統計</dt><dd><strong>2025 年：1,682 個行人專用清潔箱。</strong><span class="current-record-date">統計年度 2025；本站取得 2026-10-15。</span>單位是「個」，未與位置列逐箱連結，不能拿來補齊 2026 清冊。<a href="https://data.taipei/dataset/detail?id=a6838eac-4f04-48d8-bf17-9d0fd9886f57" target="_blank" rel="noopener noreferrer">官方環境衛生年度統計</a></dd></div>
-          <div><dt>垃圾相關回饋</dt><dd><strong>2,663 則台北市意見回饋中的垃圾相關訊息。</strong><span class="current-record-date">研究團隊提供；2026-10-17 分析整理，非留言發生日期。</span>有人反映找桶與配合垃圾車的困難，也有人擔心滿溢、鼠蟲或反對住宅附近設桶。這是經篩選的留言子集，不代表全市民意；已逐則辨識公共桶立場，但不能推算全市支持率。<a href="#feedback">閱讀語意分析、方法與限制</a></dd></div>
-        </dl>
-        <p class="current-evidence-limit">主檔北投區 0 列、南港區 4 列，只能說明檔案涵蓋範圍。缺列不代表現場沒有桶；跨年列數差也不能當成撤除量。</p>
-        <dl class="current-boundaries">
-          <div><dt>已補上的線索</dt><dd>12 區場域線索已完整上圖，與街頭位置分開標示；原有交叉分析已使用這 130 筆紀錄。本輪分區回讀語意判讀，更新各區配置、清掃清運、管理與家戶服務的查核方向。地圖補齊不等於新增桶位，也沒有新增已驗證的需求點。</dd></div>
-          <div><dt>目前資料缺口</dt><dd>回饋的收集期間、招募方式、篩選規則與完整母體未提供，逐則時間與事件位置未完整核實。目前只完成行政區層級對照。681 列街頭位置的完整性仍未知，北投零列與南港四列的涵蓋原因待核實；130 筆場域紀錄缺開放及接收條件。實際路徑、桶況、負荷、清掃巡收及管理責任也未核實，無法把留言逐點連到設施或判定缺桶。</dd></div>
-          <div><dt>下一步</dt><dd>先補有日期的現存及撤除清冊，核實場域開放、接收與責任；再選能確認時間地點的回饋，沿同一路徑記錄找桶、投放成敗、桶況與清掃巡收。家戶另查垃圾車時段及合法替代管道。依下方各區的分辨依據建立基準後，再比較配置、指引、收運或管理調整。本站尚未完成現勘、使用者任務或試辦。</dd></div>
-          <div><dt>未來提案</dt><dd>百日計畫尚未啟動。點位與經費未核定；採購、建置、訓練及交接均不能列為本站已完成成果。</dd></div>
-        </dl>
-        <nav class="research-related-paths" aria-label="現況延伸閱讀"><a href="#map">查看保存位置</a><a href="#research-audit-heading">查來源與資料缺口</a><a href="#conclusion-siting">閱讀三項研究判斷</a></nav>
+    <section id="panel-research" class="page-panel research-page research-overview" aria-labelledby="research-heading">
+      <header class="research-overview-header">
+        <h2 id="research-heading"><span>黑客松主攻：</span><span>讓行人找到投放去處</span></h2>
+        <p class="hackathon-thesis">把找點、遇到不可用、回報與處理紀錄，串成一條能展示的流程。</p>
+        <p class="research-overview-status">方向已確認，進入 MVP 原型階段<br>效果待驗證 · 尚未進行真人研究 · 家戶本期不做</p>
+        <p class="hackathon-entry"><a href="#definition-prd-heading">看 MVP 規格與驗收</a> · <a href="#definition-decision-D14">回查這次決策</a></p>
+      </header>
+      <section id="research-overview-conclusions" class="research-overview-conclusions" aria-label="四方向在 MVP 的定位">
+        <article aria-labelledby="research-overview-pedestrian"><h3 id="research-overview-pedestrian">主線｜行人投放，含搭車前情境</h3><p>讓外出持有少量垃圾的人，判斷沿途哪裡適合投放。</p><a href="#research-overview-evidence-pedestrian">看支持證據與反例</a></article>
+        <article aria-labelledby="research-overview-youbike"><h3 id="research-overview-youbike">情境｜YouBike 車籃協助者</h3><p>願意協助清理的人，沿用同一條後續投放流程。</p><a href="#research-overview-evidence-youbike">看支持證據與反例</a></article>
+        <article aria-labelledby="research-overview-cleaning"><h3 id="research-overview-cleaning">管理端｜異常與處理紀錄</h3><p>記錄滿溢、停用與處理狀態；第一版不做自動排班。</p><a href="#research-overview-evidence-cleaning">看支持證據與反例</a></article>
       </section>
-      <section class="feedback-section home-problem-map" aria-labelledby="problem-map-heading">
-        <h3 id="problem-map-heading" tabindex="-1">十二區對照：較像投放問題，還是服務需要改善？</h3>
-<!-- feedback-problem-map-start -->
-<p class="service-lead">現有資料較支持分區查核方向，還不能確認哪區實際缺桶。松山、大安、大同較偏投放可達性；萬華先查清掃與維護；文山要另外處理家戶收運。信義、中山、中正、內湖、士林有混合問題；北投與南港先核實清冊及場域可用條件，再分清配置、清運或管理。</p>
-<p>「找不到可用的桶」可能是位置不順路、入口難辨識、場域不開放，也可能是已有桶卻滿溢。清單多了場所，並不能直接排除這些問題。</p>
-<dl class="service-reasoning" aria-label="分清原因的查核路徑"><div><dt>路徑上沒有可用投放點</dt><dd>先查位置、開放與接收條件，再比較配置或指引。</dd></div><div><dt>已有桶，卻常滿或周邊髒亂</dt><dd>查投放負荷、實際清運與清掃；清掃問題不一定出在桶。</dd></div><div><dt>規則、時段或處理回應受阻</dt><dd>查接收規則與責任；家戶垃圾車時段另作服務問題處理。</dd></div></dl>
-<div class="home-access-reading"><h4>把「垃圾桶不夠」拆開看</h4><p>重新細讀 1,737 則桶位相關留言，泛稱不足／增設有 390 則；具體困難以撤除／變動 913 則最多。12 區最多的具體困難都包含「撤除／變動」。各區差異需再看其他困難與明示情境的組合，不能解讀成每區各有一個完全不同的主因。</p><p>這是既有桶位留言的細分，仍不能確認實際缺桶。下一步需核實路線、變動時間、尖峰桶況與使用情境。</p><a href="#feedback-access">看十二區六種困難、情境與立場</a></div><div class="home-access-reading"><h4>撤除回饋指向「原來順路的投放點」</h4><p>細讀913則撤除／變動留言，206則提到找桶、繞路或攜帶，154則描述或擔心垃圾轉移亂丟，397則要求恢復或保留。另有390則未明說後果。</p><p>現有街頭與場域清冊提供地點線索，仍缺留言日期和逐點撤移紀錄。先查外圍與內部、站外與站內、替代路線及維護負荷，再判斷恢復、重配或加強清運。</p><a href="#feedback-removal">看地點、困難、改善訴求與官方紀錄比對</a></div>
-<h4 id="district-service-heading" tabindex="-1">十二區，先查哪一種問題？</h4>
-<p class="feedback-note" id="district-service-note">以下是有條件的研究判讀，不是缺桶判定或改善排名。分母為本檔各區全部留言，主題可重疊；行政區標記、事件地點與日期尚未逐則核實。街頭位置列與場域紀錄分開列示，不相加成桶數。</p>
-<div class="service-headings" aria-hidden="true"><span>資料範圍</span><span>目前較支持的查核方向</span><span>下一步如何分清原因</span></div>
-<ul class="district-service-list" aria-labelledby="district-service-heading" aria-describedby="district-service-note">
-<li class="district-service-row" data-service-district="松山"><div class="service-district"><h5>松山</h5><span>本檔 233 則留言</span><span>街頭位置 55 列</span><span>另有場域 7 筆</span><a href="?year=2026-main&amp;district=%E6%9D%BE%E5%B1%B1%E5%8D%80#map">看松山分布</a></div><div class="service-reading"><h5>較偏投放可達性</h5><p>找桶、恢復或保留桶的訴求較突出。場域清單增加可查的場所，仍不能證明日常路徑有可用的投放點。</p></div><div class="service-next"><p><strong>先核對</strong>沿步行與轉乘路徑核對可見性、開放及接收條件，同點記錄滿溢與清掃。</p><p><strong>分辨依據</strong>路徑缺少投放點才考慮配置；找到桶卻常滿，先查巡收與垃圾來源。</p></div></li>
-<li class="district-service-row" data-service-district="信義"><div class="service-district"><h5>信義</h5><span>本檔 216 則留言</span><span>街頭位置 60 列</span><span>另有場域 18 筆</span><a href="?year=2026-main&amp;district=%E4%BF%A1%E7%BE%A9%E5%8D%80#map">看信義分布</a></div><div class="service-reading"><h5>投放為主，清掃維護一起查</h5><p>投放便利線索最多，清掃維護與管理回應也常出現。商場或站點被列入清單，不代表能隨時接收沿途垃圾。</p></div><div class="service-next"><p><strong>先核對</strong>同一路徑核對街頭及場域的開放、接收、找桶距離，另記桶況與清掃巡收。</p><p><strong>分辨依據</strong>找不到可用點再查配置；已有可達的桶卻滿溢，先查負荷與巡收。</p></div></li>
-<li class="district-service-row" data-service-district="大安"><div class="service-district"><h5>大安</h5><span>本檔 492 則留言</span><span>街頭位置 47 列</span><span>另有場域 18 筆</span><a href="?year=2026-main&amp;district=%E5%A4%A7%E5%AE%89%E5%8D%80#map">看大安分布</a></div><div class="service-reading"><h5>較偏投放可達性</h5><p>找桶及增設、恢復或保留的方向較突出。街頭位置與場域紀錄提供查核起點，不能當成完整服務範圍。</p></div><div class="service-next"><p><strong>先核對</strong>沿日常步行路徑核實可用點、開放時段與指引，同時記錄滿溢或阻塞。</p><p><strong>分辨依據</strong>位置遠與入口不清要分開；已找到卻不能投放，轉查維護或接收條件。</p></div></li>
-<li class="district-service-row" data-service-district="中山"><div class="service-district"><h5>中山</h5><span>本檔 354 則留言</span><span>街頭位置 50 列</span><span>另有場域 16 筆</span><a href="?year=2026-main&amp;district=%E4%B8%AD%E5%B1%B1%E5%8D%80#map">看中山分布</a></div><div class="service-reading"><h5>投放為主，維護與管理並查</h5><p>投放便利線索較多，也有滿溢、巷弄清掃與陳情回應問題。街頭與場域紀錄無法分清哪個環節失效。</p></div><div class="service-next"><p><strong>先核對</strong>同一路徑記錄投放成敗、桶況、巡收及陳情處理，另記一般街面清掃。</p><p><strong>分辨依據</strong>找不到、找到卻不能投、街面未清，應分別查配置、維護和清掃責任。</p></div></li>
-<li class="district-service-row" data-service-district="中正"><div class="service-district"><h5>中正</h5><span>本檔 211 則留言</span><span>街頭位置 83 列</span><span>另有場域 16 筆</span><a href="?year=2026-main&amp;district=%E4%B8%AD%E6%AD%A3%E5%8D%80#map">看中正分布</a></div><div class="service-reading"><h5>投放、家戶服務與分類分開查</h5><p>投放便利線索最多，也有清掃、家戶收運及分類接收問題；街頭與場域清單無法回答各類垃圾的去處。</p></div><div class="service-next"><p><strong>先核對</strong>分行人小垃圾、家戶垃圾與回收，核對各自合法去處、時段及接收規則。</p><p><strong>分辨依據</strong>行人路徑缺少投放點才查桶位；趕不上車或被拒收，分別查家戶服務與接收規則。</p></div></li>
-<li class="district-service-row" data-service-district="大同"><div class="service-district"><h5>大同</h5><span>本檔 195 則留言</span><span>街頭位置 22 列</span><span>另有場域 14 筆</span><a href="?year=2026-main&amp;district=%E5%A4%A7%E5%90%8C%E5%8D%80#map">看大同分布</a></div><div class="service-reading"><h5>較偏投放可達性</h5><p>投放與增設、恢復或保留訴求較突出；場域紀錄仍須核實能否進入、投放，不能抵銷街頭路段的疑問。</p></div><div class="service-next"><p><strong>先核對</strong>補核列管清冊，再沿實際步行路徑查位置、開放與可用性，同時記錄清潔。</p><p><strong>分辨依據</strong>沒有順路可用點才支持配置缺口；有點但未開放或滿溢，應查服務條件。</p></div></li>
-<li class="district-service-row" data-service-district="萬華"><div class="service-district"><h5>萬華</h5><span>本檔 241 則留言</span><span>街頭位置 82 列</span><span>另有場域 3 筆</span><a href="?year=2026-main&amp;district=%E8%90%AC%E8%8F%AF%E5%8D%80#map">看萬華分布</a></div><div class="service-reading"><h5>清掃維護線索較強，投放仍要查</h5><p>清掃維護 110 則，與投放便利 106 則接近；管理回應也有線索。不能據此說桶已足夠，或整區只需加強清運。</p></div><div class="service-next"><p><strong>先核對</strong>分開記錄桶旁滿溢、一般街面清掃、垃圾來源與巡收，並核實可用投放路徑。</p><p><strong>分辨依據</strong>有桶反覆滿溢才追清運與負荷；空桶旁仍髒亂要查來源，路徑缺少投放點另查配置。</p></div></li>
-<li class="district-service-row" data-service-district="文山"><div class="service-district"><h5>文山</h5><span>本檔 135 則留言</span><span>街頭位置 51 列</span><span>另有場域 9 筆</span><a href="?year=2026-main&amp;district=%E6%96%87%E5%B1%B1%E5%8D%80#map">看文山分布</a></div><div class="service-reading"><h5>投放之外，家戶收運另成一題</h5><p>投放便利仍是最多的主題；家戶收運 25／135 則，占比在本檔各區最高。場域紀錄不能直接當成家戶代收點。</p></div><div class="service-next"><p><strong>先核對</strong>行人路徑查可用點；家戶另核對作息、垃圾車時間與合法替代管道。</p><p><strong>分辨依據</strong>錯過垃圾車應比較時段或代收服務，不能轉成街頭增桶需求。</p></div></li>
-<li class="district-service-row" data-service-district="南港"><div class="service-district"><h5>南港</h5><span>本檔 82 則留言</span><span>街頭位置 4 列</span><span>另有場域 5 筆</span><a href="?year=2026-main&amp;district=%E5%8D%97%E6%B8%AF%E5%8D%80#map">看南港分布</a></div><div class="service-reading"><h5>先查投放路徑與場域可用性</h5><p>街頭四列集中經貿周邊，另五筆場域紀錄不能代表全區服務；留言兼有投放、滿溢、混投與管理情境。</p></div><div class="service-next"><p><strong>先核對</strong>補核區內清冊，查街頭與場域的步行銜接、開放、接收條件及桶況。</p><p><strong>分辨依據</strong>無合法順路去處才支持配置缺口；有桶常滿或混投，轉查巡收和垃圾來源。</p></div></li>
-<li class="district-service-row" data-service-district="內湖"><div class="service-district"><h5>內湖</h5><span>本檔 155 則留言</span><span>街頭位置 85 列</span><span>另有場域 7 筆</span><a href="?year=2026-main&amp;district=%E5%85%A7%E6%B9%96%E5%8D%80#map">看內湖分布</a></div><div class="service-reading"><h5>配置與接收規則、管理並查</h5><p>投放便利是主要線索；另有滿桶、分類資訊不清與反對增設的意見，不能只用桶位多寡解釋。</p></div><div class="service-next"><p><strong>先核對</strong>沿路記錄找桶與投放成敗，核對場域時段、分類指引、接收規則及巡收。</p><p><strong>分辨依據</strong>有桶卻滿溢先查清運；規則不一先查接收與資訊；路徑缺少投放點再比較配置。</p></div></li>
-<li class="district-service-row" data-service-district="士林"><div class="service-district"><h5>士林</h5><span>本檔 210 則留言</span><span>街頭位置 142 列</span><span>另有場域 7 筆</span><a href="?year=2026-main&amp;district=%E5%A3%AB%E6%9E%97%E5%8D%80#map">看士林分布</a></div><div class="service-reading"><h5>投放配置與清掃、管理並查</h5><p>街頭列數在本檔最多，投放訴求仍常出現；巷弄清掃與管理回應也有線索，列數多不等於服務完整。</p></div><div class="service-next"><p><strong>先核對</strong>沿活動路徑查可達與可用性，對照桶旁巡收、巷弄清掃和陳情紀錄。</p><p><strong>分辨依據</strong>缺少順路投放點與街面未清是不同問題；不能以清冊列數排除任一種。</p></div></li>
-<li class="district-service-row" data-service-district="北投"><div class="service-district"><h5>北投</h5><span>本檔 139 則留言</span><span>街頭位置 0 列</span><span>另有場域 10 筆</span><a href="?year=2026-main&amp;district=%E5%8C%97%E6%8A%95%E5%8D%80#map">看北投分布</a></div><div class="service-reading"><h5>投放與管理有線索，清冊先核實</h5><p>街頭主檔零列，另十筆場域紀錄；不能判為零設施或全區撤除。投放、管理與家戶收運仍須分開查。</p></div><div class="service-next"><p><strong>先核對</strong>核對有日期的現存與撤除清冊，再查場域開放、接收及路徑；家戶服務另查。</p><p><strong>分辨依據</strong>先確認哪些服務仍存在；可進入卻不接收，屬服務條件問題，不能由零列判缺桶。</p></div></li>
-</ul>
-<details id="service-method" class="feedback-codebook service-method"><summary>資料補齊後，判讀改變了什麼？</summary>
-<p>本輪沿用同一批 681 列街頭位置與 130 筆場域紀錄。上一版交叉分析已使用全 12 區場域清單，這次補齊的是地圖呈現，並重新閱讀語意判讀以細化查核方向；沒有新增已核實桶位，也未改動逐則標籤或統計。</p><p>130 筆場域紀錄對應 120 組不同座標，含重複名稱或座標，不能當作 130 個不同場所或垃圾桶。場所名稱只提供查核入口，開放、接收種類與實際桶況仍待確認。</p>
-<p>前次分布對照由兩個子代理分區回讀全部既有語意短意旨，並以部分原始留言核對情境與反例；沿用原有標註，並非本次桶位細分標註。C 類含街道清掃，G 類含制度、費率與陳情，不能直接等同桶的清運或管理失靈。「增設／恢復／保留」也不全是缺桶訴求。</p>
-<p>下一步要補有日期的現存及撤除清冊、場域開放與接收條件，再把可確認時間地點的回饋對到路徑、桶況與服務紀錄。沒有這些證據，不能推出各區需要增設多少桶。</p></details>
-<p class="feedback-report-entry"><a href="#feedback-cross">看各區語意數據與完整判讀</a> · <a href="#feedback-method">判讀方法與限制</a></p>
-<!-- feedback-problem-map-end -->
+      <p class="research-overview-note">依黑客松交付範圍作出的優先取捨，不代表問題發生率排名。資訊是否足以改善投放仍是設計假設。更新：2026-10-19。</p>
+      <nav class="research-overview-nav" aria-label="研究摘要段落"><a href="#research-overview-mvp">做出什麼</a><a href="#research-overview-unknowns">怎樣算完成</a><a href="#research-overview-evidence">證據與反例</a><a href="#research-overview-scope">決策不做</a><a href="#research-overview-reading">深入閱讀</a></nav>
+      <section class="research-overview-section" aria-labelledby="research-overview-mvp"><h3 id="research-overview-mvp">MVP：一條能操作到底的流程</h3>
+        <ol class="hackathon-flow"><li>選擇情境、垃圾類型與起點。</li><li>查看附近投放點、收受條件、資料日期與狀態。</li><li>遇到滿溢或停用時回報，查看替代點。</li><li>管理端更新處理紀錄，使用者看到最新紀錄。</li></ol>
+        <p><strong>這次完成的是執行規格。</strong>新版 MVP 尚未開發、尚未實測；既有地圖是位置資料，舊原型是模擬材料。展示版的回報與處理均須標示模擬，不會送交市府。</p>
+        <p><a href="#definition-prd-needs">看畫面與操作規格</a></p>
       </section>
-      <div id="research-synthesis" class="research-conclusions"><p class="related-reading">以下三項判斷已納入<a href="#feedback">本批回饋分析</a>。留言提供待查證的情境，文獻提供研究與方案比較的參考；兩者都不能代替台北現場證據。</p>
-<!-- research-synthesis-start -->
-<article class="research-synthesis-item" aria-labelledby="conclusion-siting"><h3 id="conclusion-siting" tabindex="-1">配置與服務缺口：位置看順路與可用，不靠桶數下結論</h3><p>本批回饋有人反映外出時難找垃圾桶，也有人反對住宅附近設桶。這讓配置研究更需要區分使用情境；本次僅量化這批留言的語意立場，不能當成全市支持率；海外撤桶試驗也不能作為台北全市增撤的通則。</p><p><strong>可以先做：</strong>先把回饋中的行走、轉乘與活動情境整理成查核問題；能確認地點與時段的，再對照保存位置與服務條件。保留增設、重配與維持選項，不按留言件數決定設點。</p><p><strong>成立條件：</strong>需確認實際步行路徑、通行空間、服務時段與清運責任；清冊少列不能當作服務不足。</p><p class="research-unknown"><strong>仍未知：</strong>已有使用困擾的留言線索，但逐則時間與事件位置未完整核實；各點需求、桶況與通行阻礙仍待查，也不能由清冊差異認定撤除或遷移。</p><p><strong>如何確認有用：</strong>若後續進行現場驗證，同時看找桶耗時、是否能正常投放、通行空間、街面垃圾及鄰街變化；先建立基準，再比較配置調整。</p><div class="research-synthesis-sources"><span>文獻與實務依據</span><a href="#reference-L02" data-research-target="reference-L02" aria-label="L02 · 撤桶後，廣場真的比較乾淨嗎？" title="L02 · 撤桶後，廣場真的比較乾淨嗎？">L02</a><a href="#reference-L03" data-research-target="reference-L03" aria-label="L03 · 桶體設計如何影響實際使用？" title="L03 · 桶體設計如何影響實際使用？">L03</a><a href="#reference-L04" data-research-target="reference-L04" aria-label="L04 · 沿步行路徑，還是偏離動線？" title="L04 · 沿步行路徑，還是偏離動線？">L04</a><a href="#reference-L05" data-research-target="reference-L05" aria-label="L05 · 用路網比較增設、重配與減少" title="L05 · 用路網比較增設、重配與減少">L05</a><a href="#reference-L11" data-research-target="reference-L11" aria-label="L11 · 垃圾桶可用性與亂丟行為有何關係？" title="L11 · 垃圾桶可用性與亂丟行為有何關係？">L11</a></div><div class="research-related-paths"><a href="#feedback-findings">對照本批回饋與限制</a><a href="#siting">看台北的分布與差異</a><a href="#countries">比較各地設置做法</a></div></article>
-<article class="research-synthesis-item" aria-labelledby="conclusion-collection"><h3 id="conclusion-collection" tabindex="-1">清運與維護：有桶也要能維護，再評估設備</h3><p>本批回饋同時出現希望恢復垃圾桶，以及擔心滿溢、鼠蟲與家戶垃圾混入的意見。設點與維護需要一起評估；這些陳述尚未經現場確認，也不證明撤桶造成髒亂。</p><p><strong>可以先做：</strong>先整理可定位的滿溢與髒亂場景，核對管理者、巡收與清洗班次、容量及異常處理。能確認調班與維護能力後，再比較感測或壓縮方案的完整成本。</p><p><strong>成立條件：</strong>基本巡收、接單與故障備援須有人承接；感測方案需要實際調班能力。</p><p class="research-unknown"><strong>仍未知：</strong>尚無可連結留言場景的巡收、滿溢、清洗與工時紀錄，也未驗證垃圾來源；海外設備規格與本批回饋都不是台北營運成效。</p><p><strong>如何確認有用：</strong>若未來試辦，同步記錄滿溢持續時間、桶旁與鄰街垃圾、出車倒桶及總工時；比較固定巡收與額外設備，事先約定調整或停止條件。</p><div class="research-synthesis-sources"><span>文獻與實務依據</span><a href="#reference-P01" data-research-target="reference-P01" aria-label="P01 · 紐約：先劃清行人箱的服務範圍" title="P01 · 紐約：先劃清行人箱的服務範圍">P01</a><a href="#reference-P02" data-research-target="reference-P02" aria-label="P02 · 哥本哈根：智慧桶也需要驗證與退場條件" title="P02 · 哥本哈根：智慧桶也需要驗證與退場條件">P02</a></div><div class="research-related-paths"><a href="#feedback-findings">對照本批回饋與限制</a><a href="#history">看台北的歷程與紀錄</a><a href="#countries">比較各地清運做法</a></div></article>
-<article class="research-synthesis-item" aria-labelledby="conclusion-household"><h3 id="conclusion-household" tabindex="-1">家戶垃圾分流：先釐清家戶收運時段，再比較分流方案</h3><p>本批回饋出現上班、輪班或照顧安排難以配合垃圾車的情境，與外出時找不到桶是不同服務問題。應分別查核家戶合法去處與行人投放便利；不能把留言當成付費站的支持率。</p><p><strong>可以先做：</strong>先整理垃圾車與既有合法收受點的時段、可達性及使用條件，對照留言情境。確認缺口後，再比較資訊改善、時段或收受點調整及付費站等選項，保留免費行人基本服務。</p><p><strong>成立條件：</strong>先確認合法投放管道的時段與可達性，再比較費率、清運、維修及停機替代；保留免費行人基本服務。</p><p class="research-unknown"><strong>仍未知：</strong>留言揭露時段不便的情境，但未核實各戶可用的合法管道，也未量化混入來源、方案接受度或成效；付費或改入口是否有效仍未知。</p><p><strong>如何確認有用：</strong>日後先比較是否能在可用時段完成合法投放、所需時間與繞行；再看桶外及鄰街堆置。若評估付費站，另查付款、維修與停機替代，不以交易量代替成效。</p><div class="research-synthesis-sources"><span>文獻與實務依據</span><a href="#reference-L01" data-research-target="reference-L01" aria-label="L01 · 政策說明能改變態度，但不等於街道變乾淨" title="L01 · 政策說明能改變態度，但不等於街道變乾淨">L01</a><a href="#reference-P01" data-research-target="reference-P01" aria-label="P01 · 紐約：先劃清行人箱的服務範圍" title="P01 · 紐約：先劃清行人箱的服務範圍">P01</a><a href="#reference-P03" data-research-target="reference-P03" aria-label="P03 · 韓國：RFID 把家戶辨識、秤重與計費接起來" title="P03 · 韓國：RFID 把家戶辨識、秤重與計費接起來">P03</a><a href="#reference-P04" data-research-target="reference-P04" aria-label="P04 · 台北：家戶垃圾已有另一條收運路徑" title="P04 · 台北：家戶垃圾已有另一條收運路徑">P04</a></div><div class="research-related-paths"><a href="#feedback-findings">對照本批回饋與限制</a><a href="#countries">比較家戶收運案例</a><a href="#design">看方案的概念示意</a></div></article>
-<!-- research-synthesis-end --></div>
-<!-- service-continuity-start -->
-<section id="service-continuity" class="service-continuity" aria-labelledby="service-continuity-heading">
-  <header><h3 id="service-continuity-heading" tabindex="-1">投放服務銜接：原點不能用，下一步怎麼辦？</h3><p class="service-lead">先讓人知道哪裡能收、何時能去、怎麼走；沒有可靠去處時，也要清楚說明停止與查證。</p></header>
-  <p class="service-status"><strong>目前成果：原型與驗證計畫已備妥，服務成效尚未驗證。</strong>主持預試 0/2 人、正式桌面測試 0/12 人（0/108 任務）、現場測試 0/12 任務。分母是預定工作量，尚未招募或開始。</p>
-  <nav class="service-contents" aria-label="投放服務銜接研究內容"><a href="#service-insight">問題洞察</a><a href="#service-prototype">操作原型</a><a href="#service-scenarios">七種測試情境</a><a href="#service-measures">指標與決策門檻</a></nav>
-  <h4 id="service-insight" tabindex="-1">從留言線索，到可驗證的假設</h4>
-  <p>在經篩選的 2,663 則垃圾相關訊息中，語意整理標出 1,737 則可及性相關回饋，其中 913 則帶有撤除或變更的敘述。這些是留言分類，不是已核實的撤桶事件或全市民意；原事件時間與位置仍待確認。<a href="#feedback">查看回饋分析與限制</a></p>
-  <p><strong>設計推論：</strong>困擾可能發生在原有去處改變後，不知道如何接續服務。這不直接決定要增桶、撤桶或採用特定設備。先比較「相同事實的文字清單」與「按情境編排的銜接卡」，驗證資訊是否改善決策，再檢查現場是否真的有人承接。</p>
-  <ol class="service-flow" aria-label="待驗證的服務流程"><li>辨認原點狀態</li><li>核對物品、時段與通行條件</li><li>前往已核實的替代點</li><li>到場再確認，完成投放或安全停止</li></ol>
-  <p>知道下一步、保留垃圾等待確認、實際完成投放，是三種不同結果。<strong>資訊清楚，仍可能沒有可用服務。</strong>這也是現場階段要查的問題。</p>
-  <h4 id="service-prototype" tabindex="-1">操作原型：手機卡與紙本告示</h4>
-  <p>展開後可切換七種情境；S1、S2 可比較 M0 文字清單與 M1 銜接卡。兩者提供相同事實，M0 是研究材料，不是市府現行告示。所有點位、距離、時段及地標都是虛構，不能用於實際投放。</p>
-  <details class="service-prototype-demo"><summary>展開互動演練</summary><p class="service-demo-note">這裡展示原型功能，不收集答案，也不計入真人研究。S3 可按「遇到滿溢」模擬抵達後改道；此操作不會送出通報。</p>
-<div id="disposal-continuity" lang="zh-Hant" data-view="mobile">
-  <style>
-    #disposal-continuity{color-scheme:light dark;--dc-surface:light-dark(#ffffff,#192923);--dc-text:light-dark(#20382e,#eef6f0);--dc-muted:light-dark(#52675c,#b7cbbf);--dc-line:light-dark(#c8d6cd,#43594d);--dc-soft:light-dark(#eef4ef,#253c30);--dc-brand:light-dark(#215c40,#a5d9b7);--dc-on-brand:light-dark(#ffffff,#142d1f);--dc-warning:light-dark(#80501e,#f1c18b);--dc-warning-bg:light-dark(#fff4e6,#403021);font:16px/1.6 system-ui,-apple-system,"Noto Sans TC",sans-serif;color:var(--dc-text);background:transparent;max-width:680px;margin:0 auto;overflow-wrap:anywhere}
-    #disposal-continuity[data-theme="light"],[data-theme="light"] #disposal-continuity{color-scheme:light}
-    #disposal-continuity[data-theme="dark"],[data-theme="dark"] #disposal-continuity{color-scheme:dark}
-    #disposal-continuity *{box-sizing:border-box}
-    #disposal-continuity .dc-moderator{padding:12px 0 18px;color:var(--dc-muted)}
-    #disposal-continuity .dc-control-title{margin:0 0 8px;font-size:14px;font-weight:600}
-    #disposal-continuity .dc-controls{display:flex;flex-wrap:wrap;align-items:end;gap:12px}
-    #disposal-continuity label{display:grid;gap:4px;font-size:14px;flex:1 1 200px}
-    #disposal-continuity select{font:inherit;min-height:44px;width:100%;padding:8px 10px;border:1px solid var(--dc-line);border-radius:6px;background:var(--dc-surface);color:var(--dc-text)}
-    #disposal-continuity .dc-modes{display:flex;gap:6px;flex-wrap:wrap}
-    #disposal-continuity button{font:inherit;min-height:44px;padding:9px 14px;border:1px solid var(--dc-line);border-radius:6px;background:var(--dc-surface);color:var(--dc-text)}
-    #disposal-continuity button[aria-pressed="true"],#disposal-continuity .dc-primary{background:var(--dc-brand);color:var(--dc-on-brand);border-color:var(--dc-brand)}
-    #disposal-continuity button:focus-visible,#disposal-continuity select:focus-visible{outline:3px solid var(--dc-brand);outline-offset:3px}
-    #disposal-continuity .dc-card{background:var(--dc-surface);border:1px solid var(--dc-line);border-radius:12px;max-width:440px;margin:0 auto;padding:22px}
-    #disposal-continuity .dc-demo{font-size:13px;color:var(--dc-warning);background:var(--dc-warning-bg);padding:9px 11px;margin:0 0 18px;border-radius:4px}
-    #disposal-continuity .dc-eyebrow{font-size:13px;letter-spacing:.06em;color:var(--dc-muted);margin:0 0 5px}
-    #disposal-continuity h4{font-size:24px;line-height:1.35;font-weight:650;margin:0 0 14px}
-    #disposal-continuity h5{font-size:18px;line-height:1.5;font-weight:600;margin:0 0 8px}
-    #disposal-continuity p{margin:0 0 10px}
-    #disposal-continuity .dc-old{padding-bottom:16px;border-bottom:1px solid var(--dc-line);margin-bottom:18px}
-    #disposal-continuity .dc-small{font-size:16px;color:var(--dc-muted)}
-    #disposal-continuity .dc-status{font-size:14px;font-weight:600;color:var(--dc-brand);margin:0 0 4px}
-    #disposal-continuity .dc-next{padding:14px;background:var(--dc-soft);border-radius:6px;margin-bottom:14px}
-    #disposal-continuity .dc-next.is-unavailable{background:var(--dc-warning-bg)}
-    #disposal-continuity .dc-next.is-unavailable .dc-status{color:var(--dc-warning)}
-    #disposal-continuity dl{margin:0;display:grid;grid-template-columns:4.5em minmax(0,1fr);gap:7px 9px;font-size:16px}
-    #disposal-continuity dt{color:var(--dc-muted)}
-    #disposal-continuity dd{margin:0}
-    #disposal-continuity .dc-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-    #disposal-continuity .dc-route{margin-top:14px;padding-top:14px;border-top:1px solid var(--dc-line)}
-    #disposal-continuity ol{padding-left:24px;margin:6px 0 10px}
-    #disposal-continuity li+li{margin-top:7px}
-    #disposal-continuity [hidden]{display:none!important}
-    #disposal-continuity .dc-footer{margin:16px 0 0;padding-top:12px;border-top:1px solid var(--dc-line);font-size:13px;color:var(--dc-muted)}
-    #disposal-continuity[data-view="paper"] .dc-card{max-width:600px;border-radius:0}
-    #disposal-continuity[data-view="paper"] .dc-route-toggle{display:none}
-    #disposal-continuity[data-view="paper"] .dc-paper-note{display:block}
-    #disposal-continuity .dc-paper-note{display:none}
-    #disposal-continuity .dc-all-points{margin-top:18px;padding-top:12px;border-top:1px solid var(--dc-line)}
-    #disposal-continuity summary{min-height:44px;padding:8px 0;font-weight:600}
-    #disposal-continuity .dc-facts{font-size:16px;line-height:1.6}
-    #disposal-continuity[data-material="M0"] .dc-eyebrow,#disposal-continuity[data-material="M0"] .dc-card>h4,#disposal-continuity[data-material="M0"] .dc-old{display:none}
-    @media(max-width:360px){#disposal-continuity .dc-card{padding:16px}#disposal-continuity h4{font-size:22px}#disposal-continuity .dc-controls{gap:10px}}
-    @media print{#disposal-continuity .dc-moderator,#disposal-continuity .dc-actions{display:none!important}#disposal-continuity .dc-card{max-width:none;border-radius:0}#disposal-continuity .dc-route{display:block!important}#disposal-continuity details>*{display:block!important}}
-  </style>
-  <section class="dc-moderator" aria-label="研究者演練控制">
-    <p class="dc-control-title">研究者操作區 · 不屬於市民告示</p>
-    <div class="dc-controls">
-      <label for="dc-scenario">演練情境
-        <select id="dc-scenario" class="cursor-interaction">
-          <option value="S1">位置調整</option>
-          <option value="S2">時段切換</option>
-          <option value="S3">到場狀態改變</option>
-          <option value="S4">物品不符</option>
-          <option value="S5">通行需求</option>
-          <option value="S6">資訊逾時</option>
-          <option value="S7">替代服務中斷</option>
-        </select>
-      </label>
-      <label for="dc-material">研究材料
-        <select id="dc-material" class="cursor-interaction"><option value="M1">M1 銜接卡</option><option value="M0">M0 文字清單</option></select>
-      </label>
-      <label for="dc-landmarks">地標版本
-        <select id="dc-landmarks" class="cursor-interaction"><option value="X">X</option><option value="Y">Y</option></select>
-      </label>
-      <div class="dc-modes" role="group" aria-label="呈現方式">
-        <button type="button" class="cursor-interaction" id="dc-mobile" aria-pressed="true">手機卡</button>
-        <button type="button" class="cursor-interaction" id="dc-paper" aria-pressed="false">紙本告示</button>
-      </div>
-    </div>
-  </section>
-  <article class="dc-card" aria-label="投放服務銜接演練告示">
-    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
-    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
-    <h4>原點位 A 已停用</h4>
-    <div class="dc-old">
-      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
-      <p class="dc-small" id="dc-context"></p>
-    </div>
-    <div id="dc-result" aria-live="polite" aria-atomic="true"></div>
-    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
-  </article>
-  <script>
-    (function(){
-      const root=document.getElementById('disposal-continuity');
-      if(!root)return;
-      const scenario=root.querySelector('#dc-scenario');
-      const result=root.querySelector('#dc-result');
-      const context=root.querySelector('#dc-context');
-      const mobile=root.querySelector('#dc-mobile');
-      const paper=root.querySelector('#dc-paper');
-      const material=root.querySelector('#dc-material');
-      const landmarks=root.querySelector('#dc-landmarks');
-      let state={scenario:'S1',view:'mobile',material:'M1',landmarks:'X',routeOpen:false,overflow:false};
-      const labelSets={X:{A:'A',B:'B',C:'C',青葉亭:'青葉亭',方形花台:'方形花台',圓形花台:'圓形花台'},Y:{A:'D',B:'E',C:'F',青葉亭:'白石亭',方形花台:'長形花台',圓形花台:'三角花台'}};
-      function applyLabels(){
-        const labels=labelSets[state.landmarks];
-        const walker=document.createTreeWalker(root.querySelector('.dc-card'),NodeFilter.SHOW_TEXT);
-        let node;
-        while((node=walker.nextNode()))node.nodeValue=node.nodeValue.replace(/\b[ABC]\b|青葉亭|方形花台|圓形花台/g,key=>labels[key]);
-      }
-      function fullFacts(s){
-        const evening=s==='S2';
-        return [
-          '桌面演練。所有地點、距離與時段都是虛構。現在 '+(evening?'22:10':'10:00')+'，手上有空杯與包裝紙。',
-          '原點 A 因位置調整，從今天 09:00 起停用，不能留下垃圾。',
-          '點位 B 從 A 步行 120 公尺，開放 06:00–22:00，'+(evening?'現在已關閉':'現在開放')+'，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 A 沿同側人行道往「演練・青葉亭」，經過「演練・方形花台」後直行到 B；無階梯，不需過馬路。',
-          '點位 C 從 A 步行 260 公尺，演練設定為 24 小時開放，現在開放，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 A 沿同側人行道往「演練・青葉亭」，於「演練・圓形花台」左轉，沿平面步道到 C；無階梯，不需過馬路。',
-          '以上資訊於 '+(evening?'22:00':'09:50')+' 核對，本次有效期間 '+(evening?'22:00–22:40':'09:50–10:30')+'。若現場關閉、滿溢或無法通行，保留垃圾，不留在現場，重新確認服務。'
-        ].map(text=>'<p>'+text+'</p>').join('');
-      }
-      const routes={
-        B:['從原點位 A，沿同側人行道往「演練・青葉亭」前進。','經過「演練・方形花台」後直行，到達點位 B；全程 120 公尺，無階梯、不需過馬路。'],
-        C:['從原點位 A，沿同側人行道往「演練・青葉亭」前進。','於「演練・圓形花台」左轉，沿平面步道到達點位 C；全程 260 公尺，無階梯、不需過馬路。'],
-        BC:['從目前點位 B，沿同側平面步道往「演練・圓形花台」前進，不需返回 A。','於「演練・圓形花台」左轉，到達點位 C；從 B 再走 140 公尺，無階梯、不需過馬路（自 A 累計 260 公尺）。']
-      };
-      function save(){
-        try{if(window.openai&&typeof window.openai.setWidgetState==='function')Promise.resolve(window.openai.setWidgetState({modelContent:{scenario:state.scenario,representation:state.view,material:state.material,landmarks:state.landmarks},privateContent:{routeOpen:state.routeOpen,overflow:state.overflow}})).catch(function(){});}catch(e){}
-      }
-      function restore(snapshot){
-        if(!snapshot||!snapshot.modelContent)return;
-        const m=snapshot.modelContent,p=snapshot.privateContent||{};
-        if(!Array.from(scenario.options).some(o=>o.value===m.scenario))return;
-        state={scenario:m.scenario,view:m.representation==='paper'?'paper':'mobile',material:['S1','S2'].includes(m.scenario)&&m.material==='M0'?'M0':'M1',landmarks:m.landmarks==='Y'?'Y':'X',routeOpen:p.routeOpen===true,overflow:m.scenario==='S3'&&p.overflow===true};
-      }
-      function render(){
-        const s=state.scenario;
-        const comparison=['S1','S2'].includes(s);
-        if(!comparison)state.material='M1';
-        material.querySelector('option[value="M0"]').disabled=!comparison;
-        material.value=state.material;landmarks.value=state.landmarks;root.dataset.material=state.material;
-        root.querySelector('.dc-card>h4').textContent='原點位 A 已停用';
-        scenario.value=s;root.dataset.view=state.view;
-        mobile.setAttribute('aria-pressed',String(state.view==='mobile'));
-        paper.setAttribute('aria-pressed',String(state.view==='paper'));
-        const evening=s==='S2';
-        const expired=s==='S6';
-        const checked=evening?'22:00':expired?'08:20':'09:50';
-        const validity=evening?'22:00–22:40':expired?'08:20–09:00（已失效）':'09:50–10:30';
-        context.textContent='演練現在時間：'+(evening?'22:10':'10:00')+'｜持有物品：'+(s==='S4'?'家戶整袋垃圾':'空杯、包裝紙')+(s==='S5'?'｜通行需求：無階梯路線':'');
-        if(state.material==='M0'){
-          result.innerHTML='<div class="dc-facts">'+fullFacts(s)+'</div>';
-          applyLabels();return;
-        }
-        const blocked=['S4','S6','S7'].includes(s);
-        let point=(s==='S2'||s==='S5'||(s==='S3'&&state.overflow))?'C':'B';
-        let pre='';
-        if(s==='S2')pre='<p class="dc-small">點位 B 已於演練時間 22:00 關閉，現在不適用。</p>';
-        if(s==='S5')pre='<p class="dc-small">點位 B 距離 120 公尺，但該路線有階梯，不符合本次無階梯需求。</p>';
-        if(s==='S3'&&state.overflow)pre='<p class="dc-small">點位 B 已在本次演練改為滿溢，停止推薦；此操作沒有送出通報。</p>';
-        const stamp='<dl><dt>核對時間</dt><dd>演練 '+checked+'</dd><dt>有效期間</dt><dd>演練 '+validity+'</dd></dl>';
-        if(blocked){
-          const messages={
-            S4:['物品不符合收受範圍','本卡沒有已核實的家戶接收去處','點位 B、C 僅收受行人隨手垃圾（本次演練：空杯、包裝紙），不收家戶整袋垃圾。','請保留垃圾，先確認家戶收運服務，不留在現場。'],
-            S6:['資訊已逾時','替代點位狀態尚未確認','上次核對的點位 B、C 資訊已失效；現在是否開放、是否可收受及路線是否可通行，均未確認。','請保留垃圾並查證；取得有效資訊前，不要依本卡前往替代點位，也不留在現場。'],
-            S7:['目前無可用替代服務','現在無法完成投放服務','本次演練已確認：點位 B 關閉、點位 C 滿溢，均不可投放；目前沒有已核實的可用去處。','請保留垃圾，不留在現場。先查證實際管理單位與聯絡方式，再聯繫確認後續服務。']
-          };
-          const m=messages[s];
-          result.innerHTML='<section class="dc-next is-unavailable"><p class="dc-status">'+m[0]+'</p><h5>'+m[1]+'</h5><p>'+m[2]+'</p><p><strong>'+m[3]+'</strong></p></section>'+stamp;
-          applyLabels();
-          return;
-        }
-        const distance=point==='B'?'120':'260';
-        const fromB=s==='S3'&&state.overflow;
-        const nextHeading=fromB?'從目前點位 B 再走 140 公尺至 C（自 A 累計 260 公尺）':'下一處：點位 '+point+' · 步行 '+distance+' 公尺';
-        if(fromB&&state.view==='paper')pre+='<p class="dc-small">紙本演練：以下為取得 B 滿溢資訊後，另行更新的告示內容。</p>';
-        const hours=point==='B'?'06:00–22:00':'24 小時（演練）';
-        const routeVisible=state.routeOpen||state.view==='paper';
-        result.innerHTML=pre+'<section class="dc-next"><p class="dc-status">目前適用 · 演練已核對</p><h5>'+nextHeading+'</h5><dl><dt>開放時間</dt><dd>'+hours+'</dd><dt>可投放</dt><dd>空杯、包裝紙（演練用物品）</dd><dt>不收受</dt><dd>家戶整袋垃圾</dd><dt>通行條件</dt><dd>同側平面步道、無階梯、不需過馬路</dd></dl></section>'+stamp+'<div class="dc-actions"><button type="button" class="dc-primary dc-route-toggle cursor-interaction" id="dc-route-toggle" aria-controls="dc-route" aria-expanded="'+routeVisible+'">'+(routeVisible?'收起路線':'查看路線')+'</button>'+(s==='S3'&&!state.overflow?'<button type="button" class="cursor-interaction" id="dc-overflow">遇到滿溢（演練）</button>':'')+'</div><section id="dc-route" class="dc-route" '+(routeVisible?'':'hidden')+'><h5>前往點位 '+point+' 的步行指引</h5><p class="dc-small">以下全為演練路線與虛構地標。</p><ol>'+routes[fromB?'BC':point].map(t=>'<li>'+t+'</li>').join('')+'</ol>'+(s==='S5'?'<p class="dc-small">這是演練路線條件描述，不表示符合法定無障礙標準。</p>':'')+'<p class="dc-small">若現場關閉、滿溢或無法通行，請保留垃圾，不留在現場，並重新確認服務資訊。</p></section>';
-        const toggle=root.querySelector('#dc-route-toggle');
-        if(comparison)result.insertAdjacentHTML('beforeend','<details id="dc-all-points" class="dc-all-points" '+(state.view==='paper'?'open':'')+'><summary class="cursor-interaction">所有點位資料</summary><div class="dc-facts">'+fullFacts(s)+'</div></details>');
-        applyLabels();
-        if(toggle)toggle.addEventListener('click',function(){state.routeOpen=!state.routeOpen;render();root.querySelector('#dc-route-toggle').focus();save();});
-        const overflow=root.querySelector('#dc-overflow');
-        if(overflow)overflow.addEventListener('click',function(){state.overflow=true;state.routeOpen=false;render();root.querySelector('#dc-route-toggle').focus();save();});
-      }
-      scenario.addEventListener('change',function(){state.scenario=scenario.value;state.routeOpen=false;state.overflow=false;render();save();});
-      material.addEventListener('change',function(){state.material=material.value;state.routeOpen=false;state.overflow=false;render();save();});
-      landmarks.addEventListener('change',function(){state.landmarks=landmarks.value;render();save();});
-      mobile.addEventListener('click',function(){state.view='mobile';render();save();});
-      paper.addEventListener('click',function(){state.view='paper';render();save();});
-      try{if(window.openai)restore(window.openai.widgetState);}catch(e){}
-      window.addEventListener('openai:set_globals',function(event){if(event.detail&&event.detail.globals&&event.detail.globals.widgetState){restore(event.detail.globals.widgetState);render();}});
-      render();
-    })();
-  </script>
-</div>
+      <section class="research-overview-section" aria-labelledby="research-overview-unknowns"><h3 id="research-overview-unknowns">驗收三種情境，再談成效</h3>
+        <dl class="research-overview-facts"><div><dt>正常投放</dt><dd>辨識相符的投放條件，走完模擬投放流程。</dd></div><div><dt>到場不可用</dt><dd>回報異常、查看替代點，管理端留下處理紀錄。</dd></div><div><dt>沒有合適去處</dt><dd>明示目前沒有已核實的合適選項，不把未知狀態包裝成可用。</dd></div></dl>
+        <p><strong>交付門檻：</strong>三種腳本全部走通；三分鐘可展示一條完整流程。真人測試與街道改善成效另行記錄，模擬通過不代表實際投放成功。</p><p><a href="#definition-prd-validation">查看逐項驗收條件</a></p>
+      </section>
+      <section class="research-overview-section" aria-labelledby="research-overview-evidence">
+        <h3 id="research-overview-evidence">結論的依據</h3>
+        <p>本輪逐則回查 E01–E28，共 28 則評論；原始分析範圍是經篩選的 2,663 則垃圾相關訊息。兩者都不代表全市民意，也不能用來推算問題發生率。</p>
+        <article class="research-overview-evidence" aria-labelledby="research-overview-evidence-youbike">
+          <h4 id="research-overview-evidence-youbike">車籃：有協助行為，其他卡點仍未知</h4>
+          <p><strong>支持：</strong><a href="#definition-evidence-E06">E06</a> 自述主動挑有垃圾的車並繞路投放；<a href="#definition-evidence-E05">E05</a> 說無法幫丟。</p>
+          <p><strong>反例與界線：</strong>不能把所有清理都說成被迫；主動協助也不等於沒有負擔。E05 的意願、嘗試與原因仍不清楚。</p>
+          <a href="#definition-focus-P01">回查完整問題定義與證據判斷</a>
+        </article>
+        <article class="research-overview-evidence" aria-labelledby="research-overview-evidence-pedestrian">
+          <h4 id="research-overview-evidence-pedestrian">行人：未找到與已封閉是不同情境</h4>
+          <p><strong>支持：</strong><a href="#definition-evidence-E01">E01</a> 說消費後持有垃圾、未找到桶；<a href="#definition-evidence-E03">E03</a> 說找到卻封閉。</p>
+          <p><strong>反例與界線：</strong>未找到不等於沿路沒有桶，也不等於整趟未完成投放。搭車前的 <a href="#definition-evidence-E14">E14</a> 線索尚未確認乘車特有限制，因此先作為子情境。</p>
+          <a href="#definition-focus-P03">回查行人題與證據判斷</a> · <a href="#definition-focus-P02">回查搭車前子情境</a>
+        </article>
+        <article class="research-overview-evidence" aria-labelledby="research-overview-evidence-cleaning">
+          <h4 id="research-overview-evidence-cleaning">髒亂：狀態描述還不是清潔時序</h4>
+          <p><strong>支持：</strong><a href="#definition-evidence-E08">E08</a> 質疑未清、<a href="#definition-evidence-E09">E09</a> 說剛清完又滿、<a href="#definition-evidence-E13">E13</a> 說反映後仍看到垃圾。</p>
+          <p><strong>反例與界線：</strong>這是不同留言，不能接成同一地點的連續紀錄；仍看到垃圾，也不能證明中間沒有處理。</p>
+          <a href="#definition-focus-P04">回查完整問題定義與證據判斷</a>
+        </article>
+      </section>
 
-  </details>
-  <h4 id="service-scenarios" tabindex="-1">七種情境，要觀察什麼？</h4>
-  <div class="service-table-wrap" role="region" aria-label="七種測試情境" tabindex="0"><table><caption>虛構桌面情境；跨情境同時納入紙本、低數位與通行需求。</caption><thead><tr><th scope="col">情境</th><th scope="col">預期行動</th><th scope="col">觀察重點</th></tr></thead><tbody>
-    <tr><th scope="row">S1 位置調整</th><td>A 停用；選當時適用的 B 或 C，說出路線。</td><td>原點狀態、物品、路線是否理解。</td></tr>
-    <tr><th scope="row">S2 時段切換</th><td>22:10 不選已於 22:00 關閉的 B，改選 C。</td><td>是否只選最近點，忽略時段。</td></tr>
-    <tr><th scope="row">S3 到場變化</th><td>得知 B 滿溢後，不留置；從 B 改往 C 或說明無法續行。</td><td>改道起點 B、再走 140 公尺；自 A 累計 260 公尺。是否誤認已通報。</td></tr>
-    <tr><th scope="row">S4 物品不符</th><td>家戶整袋垃圾不投入 B、C；保留並查家戶服務。</td><td>能否辨認收受邊界。</td></tr>
-    <tr><th scope="row">S5 通行需求</th><td>需要無階梯路線時，選較遠但適用的 C。</td><td>是否用距離取代通行條件；不等同法定無障礙認證。</td></tr>
-    <tr><th scope="row">S6 資訊逾時</th><td>資訊已於 09:00 失效；10:00 保留垃圾並查證。</td><td>過期時不再導引前往替代點。</td></tr>
-    <tr><th scope="row">S7 替代中斷</th><td>B 關閉、C 滿溢；承認無可靠去處，保留並確認。</td><td>安全停止不能記作投放完成。</td></tr>
-  </tbody></table></div>
-  <h4 id="service-measures" tabindex="-1">先固定指標，再決定繼續、修改或停止</h4>
-  <p>協定 0.1，2026-10-18。以下數字是本輪小規模驗證的<strong>提案門檻</strong>，不是法規、既有服務標準或全市成效保證。正式招募前須確認並凍結；不能看結果後調低。</p>
-  <dl class="service-metrics">
-    <div><dt>獨立正確決策</dt><dd>桌面 60 秒內、無提示，作出該情境適用的決策。逐情境列出正確次數／全部已啟動任務。</dd></div>
-    <div><dt>真實投放完成</dt><dd>現場 15 分鐘內、無提示或代投，完成被允許的投放。走讀或安全停止另列，不算完成。</dd></div>
-    <div><dt>決策與行走成本</dt><dd>記決策秒數、現場分鐘與公尺。桌面錯誤、提示或超時在比較中記 60 秒，原始時長另留；不能只比較成功者。</dd></div>
-    <div><dt>錯誤導引與維護負擔</dt><dd>逐次核對卡片與現況；觀察固定範圍的散落物、堆置、滿溢、阻塞，另記核查、換卡、處置及額外清潔的人分鐘。</dd></div>
-  </dl>
-  <p>啟動後失敗、退出或未知都保留在對應分母；未開始不補零。招募配額或必要紀錄不完整，不能判定通過。</p>
-  <details class="service-protocol"><summary>第一階段：12 人桌面測試，什麼情況才繼續？</summary>
-    <p>先做 2 位同事主持預試，不納入正式樣本。正式 12 人：街區熟悉／不熟悉各 6 人，紙本／手機各 6 人；低數位與通行需求各至少 4 人，可重疊。每人 9 個任務，共 108 次任務，不是 108 人。</p>
-    <p>S1、S2 每人各做 M0、M1，共 48 個核心任務；S3–S7 各做 M1，共 60 次。不同地標版本及先後順序事前平衡，先做核心比較，再輪替例外題序。</p>
-    <ol><li>M1 的 S1、S2 各至少 11/12 正確，合計至少 22/24；S3、S5 各至少 11/12。S3 從揭露滿溢後重新計時。</li><li>S4、S6、S7 各 12/12 正確停止；全輪零關鍵錯誤。</li><li>紙本、手機的核心任務各至少 11/12；低數位與通行需求群體各至少 87.5%。各群報實際人數與任務分母，不能靠總平均補足。</li><li>M1 成功數不低於 M0，且淨多至少 3 次正確；或兩者均至少 22/24 時，配對時間改善中位數至少 20%。M0 先看與 M1 先看的兩組，在採用的增益指標都必須為正。</li></ol>
-    <p>配對時間改善＝（M0 秒數－M1 秒數）÷ M0 秒數，每人同情境配對；最小記 1 秒，錯誤、提示、超時用 60 秒。達到可理解門檻卻沒有增益，先簡化或停止，不自動擴大。</p>
-    <p><strong>暫停本版本：</strong>出現一次關鍵錯誤，或同一根因讓兩位參與者卡住。關鍵錯誤指確認留下垃圾、錯投家戶垃圾、使用失效／關閉點，或選明示不符合通行需求的路線；口頭探索後自行修正不算。修正後用新版本、新一輪資料驗證。</p>
-  </details>
-  <details class="service-protocol"><summary>第二階段：現場服務如何驗證，何時停止？</summary>
-    <p>桌面門檻全部通過後，先核實真實原點變動、合法可用替代點、路線與管理承接。每窗前 15 分鐘內、每次出發前再查狀態；卡片最長有效 15 分鐘，或提早至關閉時刻。無回覆窗口就不開始。</p>
-    <p>另招募未參加桌面的 12 人，3 個 60 分鐘窗口、每窗 4 人。低數位及通行需求各至少 4 人；只用參與者本來就有且可接收的日常物品，不製造垃圾。首次啟動後 14 日內結束；最多 4 位替補僅補尚未開始的缺席者，不能替換失敗。</p>
-    <p><strong>成功須全部成立：</strong>至少 11/12 在 15 分鐘內獨立投放，每窗至少 3/4；兩需求群體各至少 75%；零關鍵錯誤、零停止事件；資訊與現況一致；每窗額外營運負擔不超過 10 人分鐘，且無未安排加班或無人承接。</p>
-    <p>前一週同類日與鐘點做 3 個基線窗口，測試做 3 個窗口。A、B、C 固定範圍各於 0、15、30、45、60 分鐘附近巡查，記實際量測時間；紀錄不齊不判通過。天候或活動不可比時，不把差值解釋為介入效果。</p>
-    <ul><li><strong>結束當次任務：</strong>到 15 分鐘、走到 500 公尺、需要提示或感到不適；已啟動任務保留在分母。</li><li><strong>暫停現場測試：</strong>關閉、滿溢、拒收、資訊不符或窗口無回應；任一點相對對應基線的散落物增量達 5 件且連續兩次巡查，或每窗額外營運超過 10 人分鐘。</li><li><strong>立即停止：</strong>危險、通行受阻或關鍵錯誤。記錄原因、處置與版本；不能為了湊滿樣本繼續。</li></ul>
-    <p>通過只支持這條路徑、這三個時段的小規模可行性；不證明長期改善、因果效果或全市部署可行。</p>
-  </details>
-  <h4>下一個可執行關卡</h4>
-  <p>已備妥主持腳本、獨立手機卡、24 頁參與者列印卡、26 頁主持表，以及 12 個預排槽位的 108 個任務。原型與材料已做技術檢查；這些檢查不代表民眾看得懂或現場能完成服務。研究紀錄與測試附件保留於內部材料。</p>
-  <p>下一步是指定研究負責人、主持與記錄者，進行 2 人主持預試，再固定正式版本及招募。現場路徑、管理同意、聯絡窗口與基線仍待取得。<strong>目前沒有可報告的真人成功率或環境改善結果。</strong></p>
-</section>
-
-<!-- service-continuity-end -->
-      <p class="plan-entry"><a href="#plan">閱讀百日計畫</a><span>規劃提案・尚未啟動；從設備與人員準備，到清運及正式交接。</span></p>
-      <p class="research-reading-note research-home-note">清冊、海外研究與實務各有範圍；本批回饋只代表這份留言檔，不提供全市支持率或因果證明。現場狀態與未取得的營運資料仍待確認。完整引用見<a href="#sources">來源與方法</a>；成本假設與後續試辦規劃見<a href="#materials">預算與執行材料</a>。</p>
+      <section class="research-overview-section" aria-labelledby="research-overview-scope"><h3 id="research-overview-scope">本期做與不做</h3>
+        <dl class="research-overview-facts"><div><dt>做</dt><dd>投放點查找與條件判讀、異常回報、替代點、處理紀錄。</dd></div><div><dt>家戶本期不做</dt><dd>家戶收運、收受點與付費站不列入這一百天的工作、預算與驗收。</dd></div><div><dt>第一版不做</dt><dd>新增硬體、自動排班、全市最佳配置與即時滿溢感測；也不把車籃清理責任交給下一位借車者。</dd></div></dl>
+        <p><a href="#definition-not-doing-heading">查看決策不做紀錄</a> · <a href="#definition-decisions-heading">回查使用者決策與分析者推論</a></p>
+      </section>
+      <section class="research-overview-section" aria-labelledby="research-overview-reading"><h3 id="research-overview-reading">深入閱讀</h3><ul class="research-overview-reading">
+        <li><a href="#definition-evidence-heading">執行結論與 PRD</a><p>核心問題、四方向定位、畫面操作、驗收與開發順序。</p></li>
+        <li><a href="#feedback">評論與分區分析</a><p>本批回饋的主題、十二區差異與限制。</p></li>
+        <li><a href="#map">保存的位置資料</a><p>資料日期與來源可查，不是即時桶況或完整現場盤點。</p></li>
+        <li><a href="#research-audit-heading">來源、方法與資料缺口</a><p>保留原始判讀邊界，與開發決策分開閱讀。</p></li>
+        <li><a href="#research-materials-previous-heading">既有研究與執行材料</a><p>舊判讀、候選街道與模擬原型供參考；本期採用範圍以新版 PRD 為準。</p></li>
+      </ul></section>
     </section>
 
     <section id="panel-feedback" class="page-panel research-page feedback-page" aria-labelledby="feedback-heading" hidden>
@@ -1998,12 +2145,16 @@
     <section id="panel-plan" class="page-panel research-page plan-page" aria-labelledby="plan-heading" hidden>
       <!-- hundred-day-plan-start -->
 <header class="research-page-heading"><h2 id="plan-heading">台北公共垃圾桶百日建置與營運交接計畫</h2><p class="research-update">規劃提案 · 尚未啟動；點位、經費、採購與營運承接仍待確認。</p></header><div class="plan-reading-layout"><nav class="plan-contents" aria-label="百日計畫章節"><a href="#plan-scope">規模與完成條件</a><a href="#plan-owners">前十天的決定</a><a href="#plan-schedule">階段成果</a><a href="#plan-sites">選點與規格</a><a href="#plan-procurement">沿用、採購與工期</a><a href="#plan-operations">清運與排班</a><a href="#plan-training">人員訓練</a><a href="#plan-budget">完整預算</a><a href="#plan-responsibilities">我方與市府分工</a><a href="#plan-acceptance">驗收與交接</a><a href="#plan-risks">延誤與缺口處理</a></nav><div class="plan-body"><p>規劃日期：2026-10-17。對象為提案團隊、市府主責單位及營運承接者。第 1 天從約定專案啟動日開始，以日曆天計算；協調、採購、交貨及假日均計入，不因外部等待重新起算。</p>
+<p>2026-10-18 範圍決定：<strong>這一百天聚焦行人垃圾投放、公共垃圾桶配置、清運與維護；家戶服務不納入本期工作、預算或驗收目標。</strong> 家戶不是本階段的首要問題，因此不安排家戶收運調整、收受點盤點與擴充、分流宣導、付費站評估或試辦，也不以完成家戶方案作為行人服務的前提。既有家戶研究與回饋保留作背景，後續是否啟動另行決定。</p>
+<p><strong>決策不做紀錄（2026-10-18）。</strong> 本次明確決定「這階段不做家戶」，原因是家戶不是本階段的首要問題，也不是一百天內的首要目標。下表記錄這項決策涵蓋的工作與保留事項；這是專案優先順序的決定，未判定家戶問題不存在或已解決。</p>
+<table class="plan-table" role="table"><caption class="visually-hidden">百日計畫</caption><thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">決策涵蓋項目</th><th scope="col" role="columnheader">本期不做的工作</th><th scope="col" role="columnheader">原因與保留事項</th></tr></thead><tbody role="rowgroup"><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">決策涵蓋項目</span>家戶收運與收受服務</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">本期不做的工作</span>不安排收運時段或路線調整，也不盤點、增設或擴充家戶收受點。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">原因與保留事項</span>家戶服務不列為百日優先目標；既有資料保留作背景，本案不改動既有家戶服務。</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">決策涵蓋項目</span>家戶分流配套</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">本期不做的工作</span>不另建家戶投放資訊，不啟動家戶分流宣導或專項巡查，也不編列這些工作的經費。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">原因與保留事項</span>本期資源集中於行人投放、配置、清運與維護；現場非收受物仍依既有異常管道記錄與通報。</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">決策涵蓋項目</span>家戶付費收受站</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">本期不做的工作</span>原提案的 1–2 處選項不推進，不安排評估、選點、業者接洽、詢價或試辦。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">原因與保留事項</span>這項選項服務家戶需求，不屬本期優先範圍；保留原研究、假設與限制，不列入採購或驗收承諾。</td></tr></tbody></table>
+<p>以上決策適用本期一百天，後續是否重啟須另作明確決定，沒有自動排入第 101 天或下一期。後續新增、撤回或改變「不做」決策時，在此保留日期、項目、理由、適用階段及變更依據；尚未評估、尚未核定或不列為必要前提的事項，不自行記成已決策不做。</p>
 <p><strong>第 100 天的成果是約定點位已設好、正班與替班人員能獨立作業、清運及維修實際運作，並完成營運接管。</strong> 這個成果同時需要設備、場地、人力、經費和權責到位。百日計畫應以整項服務驗收，單有桶體、採購決標或訓練簽到都不足以結案。</p>
 <h3 id="plan-scope" tabindex="-1">建議執行基準</h3>
 <p>以原<a href="#implementation-heading">服務策略</a>的 <strong>30 處服務點、首期 180 個營運日</strong>作為本次規劃基準；第 10 天由出資及承接單位採認數量。原研究的六條街段是診斷樣本，不是部署規模的依據。30 處也不是已核定數量，任何縮減都須明列變更，不能自行改成六處仍稱原案完成。</p>
 <table class="plan-table" role="table"><caption class="visually-hidden">建議執行基準</caption><thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">項目</th><th scope="col" role="columnheader">建議安排</th><th scope="col" role="columnheader">決定時需要的證據</th></tr></thead><tbody role="rowgroup"><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">項目</span>服務範圍</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">建議安排</span>30 處集中在可由明確營運單位承接的區域；按實際需求選點，依路線實走決定分組。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">決定時需要的證據</span>需求與場地清單、清運路線、可排班人車。不能因行政區平均分配而增加無法承接的路程。</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">項目</span>設備</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">建議安排</span>暫按每處一組一般垃圾與回收雙分類設備，30 組部署；另預留三組相容備援。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">決定時需要的證據</span>分類與後端收運一致；容量、規格、備援數量和調度時間由營運者確認。三組是估價假設，不是最適比例。</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">項目</span>取得方式</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">建議安排</span>可用舊桶沿用，不足部分新購；新舊設備使用同一套必要功能與安全要求。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">決定時需要的證據</span>逐件檢查、管理者同意、可到位日期及修繕費。未確認的庫存不抵扣採購需求。</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">項目</span>執行模式</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">建議安排</span>提案預設由市府指定單位負責採購、資產與常態營運；我們負責方案整合、進度、訓練安排及交付查核。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">決定時需要的證據</span>具名委託人、付款人、採購契約當事人、資產管理者、營運者及各自承接紀錄。</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">項目</span>首期營運</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">建議安排</span>每點從實際開放日起編足 180 日服務，包含試運轉；百日交接後繼續履行剩餘服務。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">決定時需要的證據</span>完整班表、人車、經費、耗材、維修和備援。首期結束前 30 日決定續行安排，不能屆期才處理。</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">項目</span>驗收</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">建議安排</span>核定點位全部可用、全數實際作業人員通過考核、每點連續 14 日服務驗證、後續營運承接。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">決定時需要的證據</span>14 日是本案建議的初期驗證期間，涵蓋平日與週末；不代表全年或所有季節需求已驗證。</td></tr></tbody></table>
 <p><strong>部署點數、新設點數與新購桶數分開報。</strong> 30 處服務點可以包含新增及既有點整備，但要分列；原地換新桶不算新增服務點，倉庫備援也不算。淨新增服務點須扣除同案造成的原點關閉，搬走舊桶時不能留下未承接的服務缺口。既有點也須完成約定整備、標示、勤務及驗證，不能只列入清冊就算交付。</p>
-<p>標準設備、簡易安裝、現有資訊管道和可調度人車是百日方案的優先選擇。全新桶型開模、未驗證的智慧功能、大型土建、新車交付、全市普設及家戶垃圾收運制度改造，均不作為本案完成的必要前提；需要時另立工期與預算。</p>
+<p>標準設備、簡易安裝、現有資訊管道和可調度人車是百日方案的優先選擇。全新桶型開模、未驗證的智慧功能、大型土建、新車交付及全市普設，均不作為本案完成的必要前提；需要時另立工期與預算。家戶服務依本期範圍決定暫不推進。</p>
 <h3 id="plan-owners" tabindex="-1">前十天先取得能執行的承接安排</h3>
 <p>第 3 天以前指定一名整案負責人，對規模、經費、時程與變更作最後決定。我方至少安排專案統籌、現場整合、教材與紀錄三項角色；可兼任，但第 10 天須列明可投入工時。市府另指定能協調場地、採購及營運的主責窗口。</p>
 <table class="plan-table" role="table"><caption class="visually-hidden">前十天先取得能執行的承接安排</caption><thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">第 10 天要決定的事項</th><th scope="col" role="columnheader">我們準備的內容</th><th scope="col" role="columnheader">市府或出資及承接單位必須決定</th></tr></thead><tbody role="rowgroup"><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">第 10 天要決定的事項</span>做哪些服務</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">我們準備的內容</span>30 處目標、候選位置、需求理由、新增與既有整備的分類、備選位置。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">市府或出資及承接單位必須決定</span>採認目標數量及服務區域，指定場地協調者；正式逐點許可最遲第 20 天完成。</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">第 10 天要決定的事項</span>誰買、誰付、誰持有</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">我們準備的內容</span>完整採購需求、費用項目、資產與保固交接草案。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">市府或出資及承接單位必須決定</span>指定採購及付款主體、適用程序、經費來源與資產承接者。</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">第 10 天要決定的事項</span>舊桶有多少能用</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">我們準備的內容</span>設備盤點表、照片、規格、狀況、修繕或調度需求。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">市府或出資及承接單位必須決定</span>逐件確認本案使用權、到位日及原處服務安排。第 20 天形成可採購的最終缺口。</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">第 10 天要決定的事項</span>誰負責每日服務</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">我們準備的內容</span>初步路線、服務工作量、訓練與替班需求。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">市府或出資及承接單位必須決定</span>確認營運單位、人車取得方式、首期服務經費；第 20 天形成可執行班表。</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">第 10 天要決定的事項</span>百天能否成立</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">我們準備的內容</span>場地、採購、供貨、安裝、訓練及驗收的依賴時程。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">市府或出資及承接單位必須決定</span>確認程序與供應條件可支持目標；不足時由整案負責人決定補資源或調整承諾。</td></tr></tbody></table>
@@ -2045,17 +2196,18 @@
 <h3 id="plan-budget" tabindex="-1">預算用完整服務成本核定</h3>
 <p>預算分為一次性建置、首期營運及預備金，另分清「新增現金支出」和「已由既有預算承接的資源」。每項均記錄數量、含稅報價或估算依據、付款者、費用期間及是否包含在其他契約；未估項保留待估，不填零。</p>
 <p>完整範圍包括設備與小修、配送安裝與拆舊復原、標示、備品及存放、清運人車、洗桶與周邊清潔、耗材、維修、替班、異常勤務、實機訓練、試運轉查核、專案統籌和交接。既有圖文、教育及協調預留須核對涵蓋範圍，避免與供應商或我方費用重複計價。</p>
-<p><strong>原先約 250 萬元不能直接當作本次上限。</strong> 以下沿用 2026-10-15 原模型單價，只作規模與沿用量的成本情境；沒有同規格報價，且部分工作尚未定價。假設 30 處、三組備援、一路線、每日一輪、兩人車組、180 日、六月維護、二十六週及一個固定支援單位。</p>
-<table class="plan-table" role="table"><caption class="visually-hidden">預算用完整服務成本核定</caption><thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">已定價範圍，新臺幣元</th><th scope="col" role="columnheader">低情境</th><th scope="col" role="columnheader">基準情境</th><th scope="col" role="columnheader">高情境</th></tr></thead><tbody role="rowgroup"><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">已定價範圍，新臺幣元</span>33 組全新的一次性費用</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">低情境</span>550,000</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">基準情境</span>965,000</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">高情境</span>1,690,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">已定價範圍，新臺幣元</span>30 處首期 180 日營運</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">低情境</span>849,400</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">基準情境</span>1,560,300</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">高情境</span>2,792,400</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">已定價範圍，新臺幣元</span>上述兩項加 15% 預備金</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">低情境</span><strong>1,609,310</strong></td><td role="cell"><span class="plan-cell-label" aria-hidden="true">基準情境</span><strong>2,904,095</strong></td><td role="cell"><span class="plan-cell-label" aria-hidden="true">高情境</span><strong>5,154,760</strong></td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">已定價範圍，新臺幣元</span>假設 20 組原地沿用、13 組新購的一次性費用</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">低情境</span>290,000</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">基準情境</span>525,000</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">高情境</span>910,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">已定價範圍，新臺幣元</span>該沿用情境加同額營運費及 15% 預備金</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">低情境</span><strong>1,310,310</strong></td><td role="cell"><span class="plan-cell-label" aria-hidden="true">基準情境</span><strong>2,398,095</strong></td><td role="cell"><span class="plan-cell-label" aria-hidden="true">高情境</span><strong>4,257,760</strong></td></tr></tbody></table>
+<p><strong>原先約 250 萬元不能直接當作本次上限。</strong> 以下沿用 2026-10-15 原模型單價，移除家戶合法收受資訊與熱點勸導巡查，並將尚未拆分家戶工作的記錄協調費移至待估。只計目前可辨識的行人服務項目；沒有同規格報價，尚非完整專案總預算。假設 30 處、三組備援、一路線、每日一輪、兩人車組、180 日、六月維護及一個固定支援單位。標示、排班、教育與交接的單價暫沿用，工作內容限行人服務，定案前仍須核對報價。</p>
+<table class="plan-table" role="table"><caption class="visually-hidden">預算用完整服務成本核定</caption><thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">已定價範圍，新臺幣元</th><th scope="col" role="columnheader">低情境</th><th scope="col" role="columnheader">基準情境</th><th scope="col" role="columnheader">高情境</th></tr></thead><tbody role="rowgroup"><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">已定價範圍，新臺幣元</span>33 組全新的一次性費用</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">低情境</span>520,000</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">基準情境</span>905,000</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">高情境</span>1,590,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">已定價範圍，新臺幣元</span>30 處首期 180 日營運，不含待估管理費</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">低情境</span>783,000</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">基準情境</span>1,406,700</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">高情境</span>2,530,800</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">已定價範圍，新臺幣元</span>上述兩項加 15% 預備金</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">低情境</span><strong>1,498,450</strong></td><td role="cell"><span class="plan-cell-label" aria-hidden="true">基準情境</span><strong>2,658,455</strong></td><td role="cell"><span class="plan-cell-label" aria-hidden="true">高情境</span><strong>4,738,920</strong></td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">已定價範圍，新臺幣元</span>假設 20 組原地沿用、13 組新購的一次性費用</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">低情境</span>260,000</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">基準情境</span>465,000</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">高情境</span>810,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">已定價範圍，新臺幣元</span>該沿用情境加同額營運費及 15% 預備金</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">低情境</span><strong>1,199,450</strong></td><td role="cell"><span class="plan-cell-label" aria-hidden="true">基準情境</span><strong>2,152,455</strong></td><td role="cell"><span class="plan-cell-label" aria-hidden="true">高情境</span><strong>3,841,920</strong></td></tr></tbody></table>
 <p>全新情境只安裝 30 組，三組備援不增加服務點或每日清運；沿用情境假設 20 組原地小修、10 組新部署及三組新購備援，只按 10 組計安裝。若沿用設備須移動、重新固定或大修，另估費用。未確認沿用量時，用全新情境保留設備需求，再以盤點與報價更新；這不等於批准按概估下單。</p>
 <p>基準明細及重算方式如下：</p>
-<table class="plan-table" role="table"><caption class="visually-hidden">預算用完整服務成本核定</caption><thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">費用</th><th scope="col" role="columnheader">33 組全新情境的基準算式</th><th scope="col" role="columnheader">金額</th></tr></thead><tbody role="rowgroup"><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>桶組及內桶</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>33 × 20,000</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>660,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>配送與簡易安裝</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>30 × 4,000</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>120,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>分類與投放標示</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>30 × 1,500</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>45,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>合法投放資訊</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>原模型一個支援單位</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>60,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>路線、教育及交接</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>原模型一個支援單位</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>80,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>巡收人力</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>5.5 小時 × 180 日 × 2 人 × 450</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>891,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>車輛使用</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>5.5 小時 × 180 日 × 350</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>346,500</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>另行洗桶</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>30 處 × 6 月 × 300</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>54,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>換袋與清潔耗材</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>30 處 × 180 日 × 1 輪 × 8</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>43,200</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>零件維修預留</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>30 處 × 6 月 × 100</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>18,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>末端處理分攤暫額</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>30 處 × 180 日 × 10</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>54,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>熱點勸導與主管機關巡查預留</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>26 週 × 8 人時 × 450</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>93,600</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>記錄、資訊更新與協調</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>6 月 × 10,000</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>60,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>已定價小計</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>一次性 965,000 ＋ 營運 1,560,300</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>2,525,300</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>預備金</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>已定價小計 × 15%</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>378,795</td></tr></tbody></table>
+<table class="plan-table" role="table"><caption class="visually-hidden">預算用完整服務成本核定</caption><thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">費用</th><th scope="col" role="columnheader">33 組全新情境的基準算式</th><th scope="col" role="columnheader">金額</th></tr></thead><tbody role="rowgroup"><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>桶組及內桶</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>33 × 20,000</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>660,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>配送與簡易安裝</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>30 × 4,000</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>120,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>分類與投放標示</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>30 × 1,500</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>45,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>路線、教育及交接</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>原模型一個支援單位</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>80,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>巡收人力</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>5.5 小時 × 180 日 × 2 人 × 450</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>891,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>車輛使用</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>5.5 小時 × 180 日 × 350</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>346,500</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>另行洗桶</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>30 處 × 6 月 × 300</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>54,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>換袋與清潔耗材</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>30 處 × 180 日 × 1 輪 × 8</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>43,200</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>零件維修預留</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>30 處 × 6 月 × 100</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>18,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>末端處理分攤暫額</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>30 處 × 180 日 × 10</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>54,000</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>行人服務記錄、資訊更新與協調</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>按本期實際工作另估，未計入下列小計</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>待估，非零成本</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>已定價小計</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>一次性 905,000 ＋ 營運 1,406,700</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>2,311,700</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">費用</span>預備金</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">33 組全新情境的基準算式</span>已定價小計 × 15%</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">金額</span>346,755</td></tr></tbody></table>
 <p>每日車組工時＝30 處 × 每處八分鐘 ÷ 60 ＋ 一路線 × 出入場及卸料 1.5 小時＝5.5 小時。原模型八分鐘包含作業與短距離移動，沒有逐段實測交通時間；低、高情境分別為四及八小時。增加清運輪次會同步增加人車與相應耗材，不能只改桶數。180 日含試運轉，不再重複加一筆相同的日常清運。<a href="#budget-heading">原模型及參數</a> <a href="#budget-heading">參數檔</a></p>
-<p>原模型的圖文、教育、巡查及協調費是工作預留，須按本案實際範圍刪減、替換或補足；93,600 元巡查費不代表市府已承諾每週八人時執法。尚未確定涵蓋的完整專案管理、實機補訓及重測、拆舊復原、備援運送存放與檢查、額外異常勤務、替代人車及專程複驗，須在第 20 天完成估價和承接。15% 預備金不能代替這些未估工作。</p>
+<p>重算差額可由原參數核對：低／基準／高情境的一次性費各扣合法收受資訊 30,000／60,000／100,000 元；營運費各扣原 26 週熱點勸導巡查 36,400／93,600／171,600 元，以及未拆分的六個月記錄協調費 30,000／60,000／90,000 元，再重算 15% 預備金。移至待估的行人服務管理工作仍須履行，不能把表內差額宣稱為已節省經費。</p>
+<p>行人服務記錄與協調、尚未確定涵蓋的完整專案管理、實機補訓及重測、拆舊復原、備援運送存放與檢查、額外異常勤務、替代人車及專程複驗，須在第 20 天完成估價和承接。家戶工作不轉列到這些項目；15% 預備金不能代替未估工作。</p>
 <h3 id="plan-responsibilities" tabindex="-1">我們可以做的和外部必須承接的事項</h3>
 <table class="plan-table" role="table"><caption class="visually-hidden">我們可以做的和外部必須承接的事項</caption><thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader">事項</th><th scope="col" role="columnheader">我們可自行完成</th><th scope="col" role="columnheader">市府或有權管理者必須配合</th><th scope="col" role="columnheader">供應商或受託營運者交付</th></tr></thead><tbody role="rowgroup"><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">事項</span>選點</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">我們可自行完成</span>公開資料整理、公共空間踏查、需求理由、配置與備選方案。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">市府或有權管理者必須配合</span>開放所需場地資料、核准設置、協調管理權及施工。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">供應商或受託營運者交付</span>提供安裝條件與作業空間要求。</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">事項</span>盤點與採購準備</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">我們可自行完成</span>盤點格式、規格草案、數量與費用比較、採購及驗收需求。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">市府或有權管理者必須配合</span>確認庫存使用權、預算、採購主體與程序；依契約作正式驗收及付款。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">供應商或受託營運者交付</span>提供可履行的供應條件、報價及交期；依約交付。</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">事項</span>安裝</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">我們可自行完成</span>整合排程、核對現場與規格、記錄和追蹤缺失。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">市府或有權管理者必須配合</span>提供許可與場地條件、確認資產歸屬及原有服務安排。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">供應商或受託營運者交付</span>實際施工、固定、測試、修復及文件。</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">事項</span>人員訓練</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">我們可自行完成</span>編教材、安排課程、製作考核表、記錄與追蹤補訓。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">市府或有權管理者必須配合</span>派出實際作業者及替班、安排受訓工時；營運主管確認能力。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">供應商或受託營運者交付</span>設備教學、維修示範，營運者帶領路線及勤務實作。</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">事項</span>日常營運</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">我們可自行完成</span>整理日誌、現場查核、追蹤異常與服務表現。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">市府或有權管理者必須配合</span>承接派班、清運和公權力事項；確認首期及後續經費。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">供應商或受託營運者交付</span>履行承包範圍的清運、清潔、維修及備援。</td></tr><tr role="row"><td role="cell"><span class="plan-cell-label" aria-hidden="true">事項</span>資訊及交接</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">我們可自行完成</span>製作投放指引、沿用既有地圖及反映管道、彙整資產與操作文件。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">市府或有權管理者必須配合</span>核實服務資訊、指定接管者與反映案件承辦者。</td><td role="cell"><span class="plan-cell-label" aria-hidden="true">供應商或受託營運者交付</span>提供設備清冊、保固、備品、鑰匙和維修紀錄。</td></tr></tbody></table>
 <p>「我們可自行完成」指不需代行市府權限的工作；現場盤點、實機教學等仍依必要的場地與設備使用安排執行。我方若另獲明確委託承辦採購或營運，將權責和費用列入契約，不能由排程表自動推定已有授權。</p>
-<p>行人投放指引要有收受種類、分類、服務位置與反映方式；家戶或商業垃圾另提供經核實的合法處理資訊。重複違規的認定與執法由主管機關處理，我們負責記錄與改善建議。使用既有資訊管道即可，不另把新資訊系統列為開放條件。</p>
+<p>行人投放指引要有收受種類、分類、服務位置與反映方式，並標明不收家戶及商業垃圾。本期不另建家戶收運資訊、不安排家戶專項巡查；現場非收受物或桶旁堆置仍依既有異常處理管道記錄與通報，來源不明就保留未知。違規認定與執法由主管機關依既有職責處理。使用既有資訊管道即可，不另把新資訊系統列為開放條件。</p>
 <h3 id="plan-acceptance" tabindex="-1">現場驗證與第 100 天交付</h3>
 <p>使用五份相連的工作紀錄即可管理：點位設備表、採購費用表、人員訓練表、每日服務異常表、驗收交接表。每筆連回點位、責任人、時間和證據；公開資訊與實際開放狀態一致。</p>
 <p>每天記錄排定及實際清運、滿溢、桶旁垃圾、設備故障、未執行原因、處置和恢復時間。每週對照原規劃更新完成數量、剩餘採購、人車工時、未結缺失及費用預測。問題出現後按服務卡處理，不以清空桶內就推論周邊已乾淨。</p>
@@ -2069,9 +2221,9 @@
     </section>
 
     <section id="panel-materials" class="page-panel research-page research-materials-page" aria-labelledby="research-materials-heading" hidden>
-      <header class="research-page-heading"><h2 id="research-materials-heading" tabindex="-1">預算與執行材料</h2><p>本頁保留 2026-10-15 的原始估算與試辦材料，尚未選點、詢價或啟動試辦。新的建置時程、備援設備與完整成本請看<a href="#plan">百日計畫</a>；原估約 250 萬元不是新計畫上限。</p><p class="research-update">全部單價與工時仍是假設；18 個桌面候選、六條街段與現勘表單均未產生現場結果。</p></header>
+      <header class="research-page-heading"><h2 id="research-materials-heading" tabindex="-1">研究與執行材料</h2><p class="research-archive-note">這裡保留先前的研究與規劃，不作為本期承諾。<a href="#research">回到目前結論</a></p><nav class="research-overview-nav" aria-label="研究材料入口"><a href="#research-materials-previous-heading">舊判讀與原型</a><a href="#siting" data-page="siting">候選街道（未現勘）</a><a href="#budget-heading">原始估算</a><a href="#plan">百日計畫（未啟動）</a></nav><p>本頁保留 2026-10-15 的原始估算與試辦材料，尚未選點、詢價或啟動試辦。新的建置時程、備援設備與完整成本請看<a href="#plan">百日計畫</a>；原估約 250 萬元不是新計畫上限。</p><p class="research-update">全部單價與工時仍是假設；18 個桌面候選、六條街段與現勘表單均未產生現場結果。</p></header>
       <section class="research-section service-budget" aria-labelledby="budget-heading">
-        <h3 id="budget-heading">預算：先以 30 處、半年 250 萬元規劃。</h3>
+        <p class="plan-version-note">本區保留含家戶配套的原估算。本期排除家戶工作，已知成本與待估管理費請見<a href="#plan-budget">百日預算</a>；原合計不作本期承諾。</p><h3 id="budget-heading">預算：先以 30 處、半年 250 萬元規劃。</h3>
         <p>經費要同時支應設備、持續清運與家戶分流。以下是 2026-10-15 的<strong>規劃概估，全部單價與工時仍是假設</strong>，不是報價或市府核定預算；250 萬元接近基準，不是最高成本保證。</p>
         <div class="comparison-table-wrap" role="region" tabindex="0" aria-label="預算規模比較，可左右捲動"><table class="research-stage-table"><caption>新臺幣；低、高為成本情境，非信賴區間</caption><thead><tr><th scope="col">服務規模</th><th scope="col">一次性<br>基準</th><th scope="col">該期營運<br>基準</th><th scope="col">15% 預備金<br>基準</th><th scope="col">基準合計</th><th scope="col">低至高合計<br>均含預備金</th></tr></thead><tbody>
 <!-- budget-rows-start -->
@@ -2083,11 +2235,11 @@
         <details class="service-evidence"><summary>怎麼算、哪些費用尚未包含？</summary><p>每日車組工時＝（處數 × 每處 6／8／12 分鐘 ÷ 60 ＋ 路線數 × 每路線 1／1.5／2 小時）× 輪數。30 處為 1 路線、100 處為 4 路線；每車組 2 人含駕駛，再分別計人力與既有車輛使用成本。</p><p>完整文件列出全部單價、公式、每日 2 輪敏感度及續年度營運費。這是資源成本；現有人車若可承接，追加現金可能較少，但須確認不排擠原服務。沒有預扣罰款、回收收入或尚未證實的節省。</p><p>未含新車、土建、智慧桶、監視器、整條街掃街、家戶收受點擴充或新建末端設施。各項若有需要須另估，15% 預備金不涵蓋新增範圍。每日 1 輪是估價假設，不代表各點已足夠。</p><p>參考來源：<a href="https://ssl.metro.taipei/metroepmgt/inquiry-detail.aspx?CaseNo=C09A06879" target="_blank" rel="noopener noreferrer">2020 台北捷運桶組預算</a>、<a href="https://www.dep.gov.taipei/News_Content.aspx?n=CB6D5C560DE4D2DD&amp;s=FDC07E2872A7FD42" target="_blank" rel="noopener noreferrer">2026 短期清潔津貼公告</a>。兩者均非本案戶外設備或完整車組服務報價；費率是本案另設的規劃預留。</p></details>
       </section>
       <section class="research-section paid-disposal service-response" aria-labelledby="paid-disposal-heading">
-        <h3 id="paid-disposal-heading">付費垃圾桶：優先補足家戶投放時段。</h3>
-        <p><strong>我們建議保留免費行人基本服務，另比較按量付費的家戶收受站。</strong>付費、感測與清運是三件要配合的事；收費可以分攤成本，但不能直接證明家戶違規減少。</p>
+        <h3 id="paid-disposal-heading">家戶付費收受：本期不推進。</h3>
+        <p><strong>本期聚焦行人基本服務；以下家戶收受案例與費用保留作研究背景，不安排評估、詢價或試辦。</strong>付費、感測與清運是三件要配合的事；收費可以分攤成本，但不能直接證明家戶違規減少。</p>
         <div class="comparison-table-wrap" role="region" tabindex="0" aria-label="四種付費模式比較，可左右捲動"><table class="research-stage-table"><caption>表格可左右捲動。以下為本案方案比較，非已實施的新收費制度。</caption><thead><tr><th scope="col">誰付費</th><th scope="col">服務用途</th><th scope="col">我們的判斷</th></tr></thead><tbody>
           <tr><th scope="row">行人逐次付費</th><td>杯盒等小件垃圾每次或按量付費。</td><td>支付增加門檻，須留意桶外及鄰街轉移；暫不建議全市行人箱採用。</td></tr>
-          <tr><th scope="row">家戶按量投放</th><td>額外的收受站，補足不便配合垃圾車的時段。</td><td>值得納入比較；同時檢查可負擔費率、可達性、停機替代及清運責任。</td></tr>
+          <tr><th scope="row">家戶按量投放</th><td>額外的收受站，補足不便配合垃圾車的時段。</td><td>本期不推進；後續若另行啟動，才比較費率、可達性、停機替代與清運責任。</td></tr>
           <tr><th scope="row">社區住戶計費</th><td>廚餘或其他指定垃圾按量／管理費收運。</td><td>適合明確住戶與管理責任；刷卡門禁不一定等於逐次收費。</td></tr>
           <tr><th scope="row">商家契約清運</th><td>商家／商圈按約定垃圾量、班次及服務付費。</td><td>承接營業垃圾及打烊後清運，與向路人收費分開。</td></tr>
         </tbody></table></div>
@@ -2097,13 +2249,13 @@
       </section>
       <section class="research-section implementation-plan" aria-labelledby="implementation-heading">
         <h3 id="implementation-heading">目前先做公開資料研究，保留落地路徑。</h3><p class="plan-version-note">以下為 2026-10-15 原服務策略。建置與交接改以<a href="#plan-schedule">百日階段成果</a>閱讀；180 日是各點從開放日起的營運期，包含試運轉，並非另加在百日後。</p>
-        <p>目前以公開清冊、官方紀錄、論文與海外案例，整理位置差異、桶型、清運、家戶分流及預算。現勘列為後續選項，不是本輪研究的前置要求；未取得的現場狀態與營運資料維持未知。</p>
-        <div class="implementation-scope"><p><strong>後續營運情境：30 處、180 個服務日，規劃約 250 萬元。</strong>準備期另估 4–6 週；180 天從服務開始計算。感測器與付費站另行報價、編列經費。</p></div>
+        <p>目前以公開清冊、官方紀錄、論文與海外案例，整理行人投放的位置差異、桶型、清運及維護預算。家戶研究保留作背景，本期不推進。現勘列為後續選項，不是本輪研究的前置要求；未取得的現場狀態與營運資料維持未知。</p>
+        <div class="implementation-scope"><p><strong>原營運情境：30 處、180 個服務日，約 250 萬元含本期已排除工作。</strong>準備期另估 4–6 週；180 天從服務開始計算。本期費用改依百日計畫重算，行人服務管理費仍待估；家戶付費站不安排報價或編列。</p></div>
         <p><strong>目前交付：</strong>可追溯的資料比較、服務與設備判斷、預算假設及待確認事項。以下時程僅供日後決定試辦並取得合作時使用；尚未選定 30 處、詢價或啟動現勘與營運。</p>
         <ol class="implementation-timeline" aria-label="取得合作後才適用的準備與營運順序">
           <li><p class="implementation-time">準備期<br><strong>另估 4–6 週</strong></p><div><h4>先定服務範圍與承接者</h4><p>從現有資料找同一車組可服務的候選點，確認現場、通行與收運條件。逐點寫明管理者、班次、垃圾去處及故障聯絡；場地與收運安排確定後才設置。</p></div></li>
           <li><p class="implementation-time">服務第 1–30 天</p><div><h4>把基本清運與紀錄做好</h4><p>開始前盡量保留原有紀錄，營運後記錄滿溢、桶外垃圾與工時；急迫清潔問題立即處理。落實巡收、清洗與合法投放導引，先調整反覆滿溢的班次。</p></div></li>
-          <li><p class="implementation-time">服務第 31–90 天</p><div><h4>按缺口加入設備或付費服務</h4><p>有調度空間的點才加滿度感測；調班後仍容量不足，再比較增容或壓縮。另比較 1–2 處家戶付費站的合作方案，完成經費與營運條件才啟用；數量是提案，並非採購承諾。</p></div></li>
+          <li><p class="implementation-time">服務第 31–90 天</p><div><h4>按行人服務缺口評估設備</h4><p>有調度空間的點才加滿度感測；調班後仍容量不足，再比較增容或壓縮。原 1–2 處家戶付費站選項不列入本期，不安排合作洽詢或啟用。</p></div></li>
           <li><p class="implementation-time">服務第 91–180 天</p><div><h4>看整區結果，決定是否擴大</h4><p>比較相近星期、時段與鄰近街段，記錄天氣、活動及各項調整日期。檢查便利、清潔、故障與總成本，再決定保留、調整或停止額外服務；基本合法投放管道持續保留。</p></div></li>
         </ol>
         <p class="service-outcomes"><strong>誰來承接：</strong>主管機關與場地管理者確認設置及服務條件；清潔隊或受託業者負責收運、清洗與維修；研究團隊整理選點依據、成本與成果。這是未來試辦的建議分工；目前只做公開資料研究，尚無合作承諾。</p>
@@ -2115,8 +2267,8 @@
         </ol></details>
         <details class="service-evidence"><summary>感測器與付費站，分別在什麼條件下加入？</summary>
           <p><strong>滿度感測：</strong>讀值 → 通知 → 接單 → 清運 → 完成紀錄。承接者必須能調整班次；失聯回到人工巡查，衛生所需的固定清運仍保留。滿度不能辨識家戶來源。</p>
-          <p><strong>付費家戶站：</strong>先對照垃圾車與限時收受點，確認距離或時段缺口，再比較既有業者合作、租用與自購的全部費用。保留免費行人箱及可用的合法替代管道，約定收費、交易失敗、退款、滿載與停機處理；商家垃圾另訂清運責任。</p>
-          <p><strong>預算界線：</strong>基本方案基準為 232.9 萬元，原估已含 15% 預備金，建議編列約 250 萬元；未含感測、付費站、支付、土建與補助。若全路線每日由一輪增至兩輪，原模型約為 380.2 萬元；一輪只是估價假設，不代表足夠。業者收取的費用不直接抵減市府預算。</p>
+          <p><strong>家戶服務範圍：</strong>收運調整、收受點與付費站不列入本期工作、預算或驗收；既有案例與費用只作背景。現場非收受物仍依既有異常管道記錄與通報，不另啟動家戶專案。</p>
+          <p><strong>原估算界線：</strong>原方案基準為 232.9 萬元、討論額約 250 萬元，含家戶配套及 15% 預備金，不能當作本期預算；未含感測、付費站、支付、土建與補助。若全路線每日由一輪增至兩輪，原模型約為 380.2 萬元；一輪只是估價假設，不代表足夠。業者收取的費用不直接抵減市府預算。</p>
         </details>
         <details class="service-evidence"><summary>怎樣驗收，什麼情況應調整或停止擴大？</summary>
           <ul><li><strong>清潔：</strong>用相同範圍及時段，記錄滿溢觀察次數／有效觀察次數、桶外垃圾與鄰街變化；缺測另列，不當成零事件。</li><li><strong>服務：</strong>追蹤按約完成的巡收與異常處理比例、停機時間、付款失敗及替代管道可用性。</li><li><strong>成本：</strong>計入設備、工時、維護、支付與額外清掃；分開呈現服務總成本、業者收支和市府現金支出。</li></ul>
@@ -2147,6 +2299,318 @@
       </section>
       </section>
       <p class="related-reading"><a href="#research">回研究結論</a> · <a href="#sources">查來源與方法</a></p>
+
+      <section class="research-archive" aria-labelledby="research-materials-previous-heading">
+        <header><h3 id="research-materials-previous-heading">既有研究判讀與原型（2026-10-18）</h3>
+        <p class="research-archive-note">以下保留當時的資料判讀、分區查核方向與模擬原型，供回查；不是本期已選定的解法，也沒有真人驗證結果。目前收斂範圍請看<a href="#research">研究摘要</a>及<a href="#definition-evidence-heading">完整問題定義與證據</a>。</p></header>
+        <nav class="research-overview-nav" aria-label="既有研究材料段落"><a href="#conclusion-siting">舊研究判讀</a><a href="#current-evidence-heading">資料與限制</a><a href="#problem-map-heading">分區判讀</a><a href="#service-continuity-heading">舊原型與測試計畫</a></nav>
+      <div id="research-synthesis" class="research-conclusions">
+<!-- research-synthesis-start -->
+<article class="research-synthesis-item" aria-labelledby="conclusion-siting"><h3 id="conclusion-siting" tabindex="-1">配置與服務缺口：位置看順路與可用，不靠桶數下結論</h3><p>本批回饋有人反映外出時難找垃圾桶，也有人反對住宅附近設桶。這讓配置研究更需要區分使用情境；本次僅量化這批留言的語意立場，不能當成全市支持率；海外撤桶試驗也不能作為台北全市增撤的通則。</p><p><strong>可以先做：</strong>先把回饋中的行走、轉乘與活動情境整理成查核問題；能確認地點與時段的，再對照保存位置與服務條件。保留增設、重配與維持選項，不按留言件數決定設點。</p><p><strong>成立條件：</strong>需確認實際步行路徑、通行空間、服務時段與清運責任；清冊少列不能當作服務不足。</p><p class="research-unknown"><strong>仍未知：</strong>已有使用困擾的留言線索，但逐則時間與事件位置未完整核實；各點需求、桶況與通行阻礙仍待查，也不能由清冊差異認定撤除或遷移。</p><p><strong>如何確認有用：</strong>若後續進行現場驗證，同時看找桶耗時、是否能正常投放、通行空間、街面垃圾及鄰街變化；先建立基準，再比較配置調整。</p><div class="research-synthesis-sources"><span>文獻與實務依據</span><a href="#reference-L02" data-research-target="reference-L02" aria-label="L02 · 撤桶後，廣場真的比較乾淨嗎？" title="L02 · 撤桶後，廣場真的比較乾淨嗎？">L02</a><a href="#reference-L03" data-research-target="reference-L03" aria-label="L03 · 桶體設計如何影響實際使用？" title="L03 · 桶體設計如何影響實際使用？">L03</a><a href="#reference-L04" data-research-target="reference-L04" aria-label="L04 · 沿步行路徑，還是偏離動線？" title="L04 · 沿步行路徑，還是偏離動線？">L04</a><a href="#reference-L05" data-research-target="reference-L05" aria-label="L05 · 用路網比較增設、重配與減少" title="L05 · 用路網比較增設、重配與減少">L05</a><a href="#reference-L11" data-research-target="reference-L11" aria-label="L11 · 垃圾桶可用性與亂丟行為有何關係？" title="L11 · 垃圾桶可用性與亂丟行為有何關係？">L11</a></div><div class="research-related-paths"><a href="#feedback-findings">對照本批回饋與限制</a><a href="#siting">看台北的分布與差異</a><a href="#countries">比較各地設置做法</a></div></article>
+<article class="research-synthesis-item" aria-labelledby="conclusion-collection"><h3 id="conclusion-collection" tabindex="-1">清運與維護：有桶也要能維護，再評估設備</h3><p>本批回饋同時出現希望恢復垃圾桶，以及擔心滿溢、鼠蟲與家戶垃圾混入的意見。設點與維護需要一起評估；這些陳述尚未經現場確認，也不證明撤桶造成髒亂。</p><p><strong>可以先做：</strong>先整理可定位的滿溢與髒亂場景，核對管理者、巡收與清洗班次、容量及異常處理。能確認調班與維護能力後，再比較感測或壓縮方案的完整成本。</p><p><strong>成立條件：</strong>基本巡收、接單與故障備援須有人承接；感測方案需要實際調班能力。</p><p class="research-unknown"><strong>仍未知：</strong>尚無可連結留言場景的巡收、滿溢、清洗與工時紀錄，也未驗證垃圾來源；海外設備規格與本批回饋都不是台北營運成效。</p><p><strong>如何確認有用：</strong>若未來試辦，同步記錄滿溢持續時間、桶旁與鄰街垃圾、出車倒桶及總工時；比較固定巡收與額外設備，事先約定調整或停止條件。</p><div class="research-synthesis-sources"><span>文獻與實務依據</span><a href="#reference-P01" data-research-target="reference-P01" aria-label="P01 · 紐約：先劃清行人箱的服務範圍" title="P01 · 紐約：先劃清行人箱的服務範圍">P01</a><a href="#reference-P02" data-research-target="reference-P02" aria-label="P02 · 哥本哈根：智慧桶也需要驗證與退場條件" title="P02 · 哥本哈根：智慧桶也需要驗證與退場條件">P02</a></div><div class="research-related-paths"><a href="#feedback-findings">對照本批回饋與限制</a><a href="#history">看台北的歷程與紀錄</a><a href="#countries">比較各地清運做法</a></div></article>
+<article class="research-synthesis-item" aria-labelledby="conclusion-household"><h3 id="conclusion-household" tabindex="-1">家戶垃圾分流：保留問題紀錄，本期不推進</h3><p>本批回饋出現上班、輪班或照顧安排難以配合垃圾車的情境，與外出時找不到桶是不同服務問題。家戶不是這一百天的首要目標；相關回饋保留作背景，不能當成街頭增桶需求或付費站支持率。</p><p><strong>可以先做：</strong>這一百天集中處理行人投放、公共垃圾桶配置、清運與維護。家戶收運、分流資訊、收受點與付費站不列入本期工作、預算或驗收；不安排家戶選點、詢價或試辦。</p><p><strong>成立條件：</strong>本期聚焦行人服務；家戶研究與回饋保留作背景，後續是否啟動另行決定。</p><p class="research-unknown"><strong>仍未知：</strong>留言揭露時段不便的情境，但未核實各戶可用的合法管道，也未量化混入來源、方案接受度或成效；付費或改入口是否有效仍未知。</p><p><strong>如何確認有用：</strong>家戶議題是否啟動留待後續另行決定。本期只依行人服務的設備、人員、清運與維護條件驗收，不以家戶服務改善作為完成條件。</p><div class="research-synthesis-sources"><span>文獻與實務依據</span><a href="#reference-L01" data-research-target="reference-L01" aria-label="L01 · 政策說明能改變態度，但不等於街道變乾淨" title="L01 · 政策說明能改變態度，但不等於街道變乾淨">L01</a><a href="#reference-P01" data-research-target="reference-P01" aria-label="P01 · 紐約：先劃清行人箱的服務範圍" title="P01 · 紐約：先劃清行人箱的服務範圍">P01</a><a href="#reference-P03" data-research-target="reference-P03" aria-label="P03 · 韓國：RFID 把家戶辨識、秤重與計費接起來" title="P03 · 韓國：RFID 把家戶辨識、秤重與計費接起來">P03</a><a href="#reference-P04" data-research-target="reference-P04" aria-label="P04 · 台北：家戶垃圾已有另一條收運路徑" title="P04 · 台北：家戶垃圾已有另一條收運路徑">P04</a></div><div class="research-related-paths"><a href="#feedback-findings">對照本批回饋與限制</a><a href="#countries">比較家戶收運案例</a><a href="#design">看方案的概念示意</a></div></article>
+<!-- research-synthesis-end -->
+<p class="related-reading">以下三項判斷已納入<a href="#feedback">本批回饋分析</a>。留言提供待查證的情境，文獻提供研究與方案比較的參考；兩者都不能代替台北現場證據。</p>
+</div>
+      <section class="current-evidence" aria-labelledby="current-evidence-heading">
+        <h3 id="current-evidence-heading" tabindex="-1">目前證據與限制</h3>
+        <p>保存資料提供位置與年度統計，本批回饋補充使用困擾；今天全市有多少桶、各點是否可用，仍待機關與現場確認。</p>
+        <p class="current-evidence-date">現況整理：2026-10-18 · 位置主檔複查日 2026-10-18；其他公開資料查核日 2026-10-15。回饋分析日 2026-10-17，收集期間未知。非即時現場盤點。</p>
+        <dl class="current-records">
+          <div><dt>公開位置紀錄</dt><dd><strong>2026 主檔：681 筆位置列，680 筆可繪圖。</strong><span class="current-record-date">來源更新 2026-09-30；本站下載 2026-10-15，2026-10-18 重下載 CSV 核對一致。原調查日期未知。</span>2026-10-15 查核時，CSV 與 API 的列數、內容一致；同次查核的目錄另標 2,009 筆，計數差異尚未釐清。<a href="https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c" target="_blank" rel="noopener noreferrer">官方清潔箱資料集</a></dd></div>
+          <div><dt>另列場域線索</dt><dd><strong>130 筆紀錄，涵蓋 12 區；對應 120 組不同座標。</strong><span class="current-record-date">來源更新 2026-08-18；本站複查與地圖整理 2026-10-18。</span>含重複名稱或座標，不能當成 130 個不同場所或垃圾桶。捷運站、商場及景點的開放、接收種類與桶況仍待確認；地圖已與街頭位置分層標示。<a href="#map">分開查看兩種紀錄</a></dd></div>
+          <div><dt>官方年度統計</dt><dd><strong>2025 年：1,682 個行人專用清潔箱。</strong><span class="current-record-date">統計年度 2025；本站取得 2026-10-15。</span>單位是「個」，未與位置列逐箱連結，不能拿來補齊 2026 清冊。<a href="https://data.taipei/dataset/detail?id=a6838eac-4f04-48d8-bf17-9d0fd9886f57" target="_blank" rel="noopener noreferrer">官方環境衛生年度統計</a></dd></div>
+          <div><dt>垃圾相關回饋</dt><dd><strong>2,663 則台北市意見回饋中的垃圾相關訊息。</strong><span class="current-record-date">研究團隊提供；2026-10-17 分析整理，非留言發生日期。</span>有人反映找桶與配合垃圾車的困難，也有人擔心滿溢、鼠蟲或反對住宅附近設桶。這是經篩選的留言子集，不代表全市民意；已逐則辨識公共桶立場，但不能推算全市支持率。<a href="#feedback">閱讀語意分析、方法與限制</a></dd></div>
+        </dl>
+        <p class="current-evidence-limit">主檔北投區 0 列、南港區 4 列，只能說明檔案涵蓋範圍。缺列不代表現場沒有桶；跨年列數差也不能當成撤除量。</p>
+        <dl class="current-boundaries">
+          <div><dt>已補上的線索</dt><dd>12 區場域線索已完整上圖，與街頭位置分開標示；原有交叉分析已使用這 130 筆紀錄。本輪分區回讀語意判讀，更新各區配置、清掃清運、管理與家戶服務的查核方向。地圖補齊不等於新增桶位，也沒有新增已驗證的需求點。</dd></div>
+          <div><dt>目前資料缺口</dt><dd>回饋的收集期間、招募方式、篩選規則與完整母體未提供，逐則時間與事件位置未完整核實。目前只完成行政區層級對照。681 列街頭位置的完整性仍未知，北投零列與南港四列的涵蓋原因待核實；130 筆場域紀錄缺開放及接收條件。實際路徑、桶況、負荷、清掃巡收及管理責任也未核實，無法把留言逐點連到設施或判定缺桶。</dd></div>
+          <div><dt>下一步</dt><dd>先補有日期的現存及撤除清冊，核實場域開放、接收與責任；再選能確認時間地點的回饋，沿同一路徑記錄找桶、投放成敗、桶況與清掃巡收。家戶垃圾車時段及合法替代管道留待後續另議，本期不安排查核。依下方各區的分辨依據建立基準後，再比較配置、指引、收運或管理調整。本站尚未完成現勘、使用者任務或試辦。</dd></div>
+          <div><dt>未來提案</dt><dd>百日計畫尚未啟動。點位與經費未核定；採購、建置、訓練及交接均不能列為本站已完成成果。</dd></div>
+        </dl>
+        <nav class="research-related-paths" aria-label="現況延伸閱讀"><a href="#map">查看保存位置</a><a href="#research-audit-heading">查來源與資料缺口</a><a href="#conclusion-siting">閱讀三項研究判斷</a></nav>
+      </section>
+      <section class="feedback-section home-problem-map" aria-labelledby="problem-map-heading">
+        <h3 id="problem-map-heading" tabindex="-1">回饋與分區判讀</h3>
+        <p class="research-section-lead">十二區對照：較像投放問題，還是服務需要改善？</p>
+<!-- feedback-problem-map-start -->
+<p class="service-lead">現有資料較支持分區查核方向，還不能確認哪區實際缺桶。松山、大安、大同較偏投放可達性；萬華先查清掃與維護；文山要另外處理家戶收運。信義、中山、中正、內湖、士林有混合問題；北投與南港先核實清冊及場域可用條件，再分清配置、清運或管理。</p>
+<p>「找不到可用的桶」可能是位置不順路、入口難辨識、場域不開放，也可能是已有桶卻滿溢。清單多了場所，並不能直接排除這些問題。</p>
+<dl class="service-reasoning" aria-label="分清原因的查核路徑"><div><dt>路徑上沒有可用投放點</dt><dd>先查位置、開放與接收條件，再比較配置或指引。</dd></div><div><dt>已有桶，卻常滿或周邊髒亂</dt><dd>查投放負荷、實際清運與清掃；清掃問題不一定出在桶。</dd></div><div><dt>規則、時段或處理回應受阻</dt><dd>查接收規則與責任；家戶垃圾車時段另作服務問題處理。</dd></div></dl>
+<div class="home-access-reading"><h4>把「垃圾桶不夠」拆開看</h4><p>重新細讀 1,737 則桶位相關留言，泛稱不足／增設有 390 則；具體困難以撤除／變動 913 則最多。12 區最多的具體困難都包含「撤除／變動」。各區差異需再看其他困難與明示情境的組合，不能解讀成每區各有一個完全不同的主因。</p><p>這是既有桶位留言的細分，仍不能確認實際缺桶。下一步需核實路線、變動時間、尖峰桶況與使用情境。</p><a href="#feedback-access">看十二區六種困難、情境與立場</a></div><div class="home-access-reading"><h4>撤除回饋指向「原來順路的投放點」</h4><p>細讀913則撤除／變動留言，206則提到找桶、繞路或攜帶，154則描述或擔心垃圾轉移亂丟，397則要求恢復或保留。另有390則未明說後果。</p><p>現有街頭與場域清冊提供地點線索，仍缺留言日期和逐點撤移紀錄。先查外圍與內部、站外與站內、替代路線及維護負荷，再判斷恢復、重配或加強清運。</p><a href="#feedback-removal">看地點、困難、改善訴求與官方紀錄比對</a></div>
+<h4 id="district-service-heading" tabindex="-1">十二區，先查哪一種問題？</h4>
+<p class="feedback-note" id="district-service-note">以下是有條件的研究判讀，不是缺桶判定或改善排名。分母為本檔各區全部留言，主題可重疊；行政區標記、事件地點與日期尚未逐則核實。街頭位置列與場域紀錄分開列示，不相加成桶數。</p>
+<div class="service-headings" aria-hidden="true"><span>資料範圍</span><span>目前較支持的查核方向</span><span>下一步如何分清原因</span></div>
+<ul class="district-service-list" aria-labelledby="district-service-heading" aria-describedby="district-service-note">
+<li class="district-service-row" data-service-district="松山"><div class="service-district"><h5>松山</h5><span>本檔 233 則留言</span><span>街頭位置 55 列</span><span>另有場域 7 筆</span><a href="?year=2026-main&amp;district=%E6%9D%BE%E5%B1%B1%E5%8D%80#map">看松山分布</a></div><div class="service-reading"><h5>較偏投放可達性</h5><p>找桶、恢復或保留桶的訴求較突出。場域清單增加可查的場所，仍不能證明日常路徑有可用的投放點。</p></div><div class="service-next"><p><strong>先核對</strong>沿步行與轉乘路徑核對可見性、開放及接收條件，同點記錄滿溢與清掃。</p><p><strong>分辨依據</strong>路徑缺少投放點才考慮配置；找到桶卻常滿，先查巡收與垃圾來源。</p></div></li>
+<li class="district-service-row" data-service-district="信義"><div class="service-district"><h5>信義</h5><span>本檔 216 則留言</span><span>街頭位置 60 列</span><span>另有場域 18 筆</span><a href="?year=2026-main&amp;district=%E4%BF%A1%E7%BE%A9%E5%8D%80#map">看信義分布</a></div><div class="service-reading"><h5>投放為主，清掃維護一起查</h5><p>投放便利線索最多，清掃維護與管理回應也常出現。商場或站點被列入清單，不代表能隨時接收沿途垃圾。</p></div><div class="service-next"><p><strong>先核對</strong>同一路徑核對街頭及場域的開放、接收、找桶距離，另記桶況與清掃巡收。</p><p><strong>分辨依據</strong>找不到可用點再查配置；已有可達的桶卻滿溢，先查負荷與巡收。</p></div></li>
+<li class="district-service-row" data-service-district="大安"><div class="service-district"><h5>大安</h5><span>本檔 492 則留言</span><span>街頭位置 47 列</span><span>另有場域 18 筆</span><a href="?year=2026-main&amp;district=%E5%A4%A7%E5%AE%89%E5%8D%80#map">看大安分布</a></div><div class="service-reading"><h5>較偏投放可達性</h5><p>找桶及增設、恢復或保留的方向較突出。街頭位置與場域紀錄提供查核起點，不能當成完整服務範圍。</p></div><div class="service-next"><p><strong>先核對</strong>沿日常步行路徑核實可用點、開放時段與指引，同時記錄滿溢或阻塞。</p><p><strong>分辨依據</strong>位置遠與入口不清要分開；已找到卻不能投放，轉查維護或接收條件。</p></div></li>
+<li class="district-service-row" data-service-district="中山"><div class="service-district"><h5>中山</h5><span>本檔 354 則留言</span><span>街頭位置 50 列</span><span>另有場域 16 筆</span><a href="?year=2026-main&amp;district=%E4%B8%AD%E5%B1%B1%E5%8D%80#map">看中山分布</a></div><div class="service-reading"><h5>投放為主，維護與管理並查</h5><p>投放便利線索較多，也有滿溢、巷弄清掃與陳情回應問題。街頭與場域紀錄無法分清哪個環節失效。</p></div><div class="service-next"><p><strong>先核對</strong>同一路徑記錄投放成敗、桶況、巡收及陳情處理，另記一般街面清掃。</p><p><strong>分辨依據</strong>找不到、找到卻不能投、街面未清，應分別查配置、維護和清掃責任。</p></div></li>
+<li class="district-service-row" data-service-district="中正"><div class="service-district"><h5>中正</h5><span>本檔 211 則留言</span><span>街頭位置 83 列</span><span>另有場域 16 筆</span><a href="?year=2026-main&amp;district=%E4%B8%AD%E6%AD%A3%E5%8D%80#map">看中正分布</a></div><div class="service-reading"><h5>投放、家戶服務與分類分開查</h5><p>投放便利線索最多，也有清掃、家戶收運及分類接收問題；街頭與場域清單無法回答各類垃圾的去處。</p></div><div class="service-next"><p><strong>先核對</strong>分行人小垃圾、家戶垃圾與回收，核對各自合法去處、時段及接收規則。</p><p><strong>分辨依據</strong>行人路徑缺少投放點才查桶位；趕不上車或被拒收，分別查家戶服務與接收規則。</p></div></li>
+<li class="district-service-row" data-service-district="大同"><div class="service-district"><h5>大同</h5><span>本檔 195 則留言</span><span>街頭位置 22 列</span><span>另有場域 14 筆</span><a href="?year=2026-main&amp;district=%E5%A4%A7%E5%90%8C%E5%8D%80#map">看大同分布</a></div><div class="service-reading"><h5>較偏投放可達性</h5><p>投放與增設、恢復或保留訴求較突出；場域紀錄仍須核實能否進入、投放，不能抵銷街頭路段的疑問。</p></div><div class="service-next"><p><strong>先核對</strong>補核列管清冊，再沿實際步行路徑查位置、開放與可用性，同時記錄清潔。</p><p><strong>分辨依據</strong>沒有順路可用點才支持配置缺口；有點但未開放或滿溢，應查服務條件。</p></div></li>
+<li class="district-service-row" data-service-district="萬華"><div class="service-district"><h5>萬華</h5><span>本檔 241 則留言</span><span>街頭位置 82 列</span><span>另有場域 3 筆</span><a href="?year=2026-main&amp;district=%E8%90%AC%E8%8F%AF%E5%8D%80#map">看萬華分布</a></div><div class="service-reading"><h5>清掃維護線索較強，投放仍要查</h5><p>清掃維護 110 則，與投放便利 106 則接近；管理回應也有線索。不能據此說桶已足夠，或整區只需加強清運。</p></div><div class="service-next"><p><strong>先核對</strong>分開記錄桶旁滿溢、一般街面清掃、垃圾來源與巡收，並核實可用投放路徑。</p><p><strong>分辨依據</strong>有桶反覆滿溢才追清運與負荷；空桶旁仍髒亂要查來源，路徑缺少投放點另查配置。</p></div></li>
+<li class="district-service-row" data-service-district="文山"><div class="service-district"><h5>文山</h5><span>本檔 135 則留言</span><span>街頭位置 51 列</span><span>另有場域 9 筆</span><a href="?year=2026-main&amp;district=%E6%96%87%E5%B1%B1%E5%8D%80#map">看文山分布</a></div><div class="service-reading"><h5>投放之外，家戶收運另成一題</h5><p>投放便利仍是最多的主題；家戶收運 25／135 則，占比在本檔各區最高。場域紀錄不能直接當成家戶代收點。</p></div><div class="service-next"><p><strong>先核對</strong>行人路徑查可用點；家戶另核對作息、垃圾車時間與合法替代管道。</p><p><strong>分辨依據</strong>錯過垃圾車應比較時段或代收服務，不能轉成街頭增桶需求。</p></div></li>
+<li class="district-service-row" data-service-district="南港"><div class="service-district"><h5>南港</h5><span>本檔 82 則留言</span><span>街頭位置 4 列</span><span>另有場域 5 筆</span><a href="?year=2026-main&amp;district=%E5%8D%97%E6%B8%AF%E5%8D%80#map">看南港分布</a></div><div class="service-reading"><h5>先查投放路徑與場域可用性</h5><p>街頭四列集中經貿周邊，另五筆場域紀錄不能代表全區服務；留言兼有投放、滿溢、混投與管理情境。</p></div><div class="service-next"><p><strong>先核對</strong>補核區內清冊，查街頭與場域的步行銜接、開放、接收條件及桶況。</p><p><strong>分辨依據</strong>無合法順路去處才支持配置缺口；有桶常滿或混投，轉查巡收和垃圾來源。</p></div></li>
+<li class="district-service-row" data-service-district="內湖"><div class="service-district"><h5>內湖</h5><span>本檔 155 則留言</span><span>街頭位置 85 列</span><span>另有場域 7 筆</span><a href="?year=2026-main&amp;district=%E5%85%A7%E6%B9%96%E5%8D%80#map">看內湖分布</a></div><div class="service-reading"><h5>配置與接收規則、管理並查</h5><p>投放便利是主要線索；另有滿桶、分類資訊不清與反對增設的意見，不能只用桶位多寡解釋。</p></div><div class="service-next"><p><strong>先核對</strong>沿路記錄找桶與投放成敗，核對場域時段、分類指引、接收規則及巡收。</p><p><strong>分辨依據</strong>有桶卻滿溢先查清運；規則不一先查接收與資訊；路徑缺少投放點再比較配置。</p></div></li>
+<li class="district-service-row" data-service-district="士林"><div class="service-district"><h5>士林</h5><span>本檔 210 則留言</span><span>街頭位置 142 列</span><span>另有場域 7 筆</span><a href="?year=2026-main&amp;district=%E5%A3%AB%E6%9E%97%E5%8D%80#map">看士林分布</a></div><div class="service-reading"><h5>投放配置與清掃、管理並查</h5><p>街頭列數在本檔最多，投放訴求仍常出現；巷弄清掃與管理回應也有線索，列數多不等於服務完整。</p></div><div class="service-next"><p><strong>先核對</strong>沿活動路徑查可達與可用性，對照桶旁巡收、巷弄清掃和陳情紀錄。</p><p><strong>分辨依據</strong>缺少順路投放點與街面未清是不同問題；不能以清冊列數排除任一種。</p></div></li>
+<li class="district-service-row" data-service-district="北投"><div class="service-district"><h5>北投</h5><span>本檔 139 則留言</span><span>街頭位置 0 列</span><span>另有場域 10 筆</span><a href="?year=2026-main&amp;district=%E5%8C%97%E6%8A%95%E5%8D%80#map">看北投分布</a></div><div class="service-reading"><h5>投放與管理有線索，清冊先核實</h5><p>街頭主檔零列，另十筆場域紀錄；不能判為零設施或全區撤除。投放、管理與家戶收運仍須分開查。</p></div><div class="service-next"><p><strong>先核對</strong>核對有日期的現存與撤除清冊，再查場域開放、接收及路徑；家戶服務另查。</p><p><strong>分辨依據</strong>先確認哪些服務仍存在；可進入卻不接收，屬服務條件問題，不能由零列判缺桶。</p></div></li>
+</ul>
+<details id="service-method" class="feedback-codebook service-method"><summary>資料補齊後，判讀改變了什麼？</summary>
+<p>本輪沿用同一批 681 列街頭位置與 130 筆場域紀錄。上一版交叉分析已使用全 12 區場域清單，這次補齊的是地圖呈現，並重新閱讀語意判讀以細化查核方向；沒有新增已核實桶位，也未改動逐則標籤或統計。</p><p>130 筆場域紀錄對應 120 組不同座標，含重複名稱或座標，不能當作 130 個不同場所或垃圾桶。場所名稱只提供查核入口，開放、接收種類與實際桶況仍待確認。</p>
+<p>前次分布對照由兩個子代理分區回讀全部既有語意短意旨，並以部分原始留言核對情境與反例；沿用原有標註，並非本次桶位細分標註。C 類含街道清掃，G 類含制度、費率與陳情，不能直接等同桶的清運或管理失靈。「增設／恢復／保留」也不全是缺桶訴求。</p>
+<p>下一步要補有日期的現存及撤除清冊、場域開放與接收條件，再把可確認時間地點的回饋對到路徑、桶況與服務紀錄。沒有這些證據，不能推出各區需要增設多少桶。</p></details>
+<p class="feedback-report-entry"><a href="#feedback-cross">看各區語意數據與完整判讀</a> · <a href="#feedback-method">判讀方法與限制</a></p>
+<!-- feedback-problem-map-end -->
+      </section>
+      <p class="plan-entry"><a href="#service-continuity">下一步驗證：投放服務銜接</a><span>七種互動情境、觀察指標與停止門檻；真人測試尚未開始。</span></p>
+<!-- service-continuity-start -->
+<section id="service-continuity" class="service-continuity" aria-labelledby="service-continuity-heading">
+  <header><h3 id="service-continuity-heading" tabindex="-1">投放服務銜接：原點不能用，下一步怎麼辦？</h3><p class="service-lead">先讓人知道哪裡能收、何時能去、怎麼走；沒有可靠去處時，也要清楚說明停止與查證。</p></header>
+  <p class="service-status"><strong>目前成果：原型與驗證計畫已備妥，服務成效尚未驗證。</strong>主持預試 0/2 人、正式桌面測試 0/12 人（0/108 任務）、現場測試 0/12 任務。分母是預定工作量，尚未招募或開始。</p>
+  <nav class="service-contents" aria-label="投放服務銜接研究內容"><a href="#service-insight">問題洞察</a><a href="#service-prototype">操作原型</a><a href="#service-scenarios">七種測試情境</a><a href="#service-measures">指標與決策門檻</a></nav>
+  <h4 id="service-insight" tabindex="-1">從留言線索，到可驗證的假設</h4>
+  <p>在經篩選的 2,663 則垃圾相關訊息中，語意整理標出 1,737 則可及性相關回饋，其中 913 則帶有撤除或變更的敘述。這些是留言分類，不是已核實的撤桶事件或全市民意；原事件時間與位置仍待確認。<a href="#feedback">查看回饋分析與限制</a></p>
+  <p><strong>設計推論：</strong>困擾可能發生在原有去處改變後，不知道如何接續服務。這不直接決定要增桶、撤桶或採用特定設備。先比較「相同事實的文字清單」與「按情境編排的銜接卡」，驗證資訊是否改善決策，再檢查現場是否真的有人承接。</p>
+  <ol class="service-flow" aria-label="待驗證的服務流程"><li>辨認原點狀態</li><li>核對物品、時段與通行條件</li><li>前往已核實的替代點</li><li>到場再確認，完成投放或安全停止</li></ol>
+  <p>知道下一步、保留垃圾等待確認、實際完成投放，是三種不同結果。<strong>資訊清楚，仍可能沒有可用服務。</strong>這也是現場階段要查的問題。</p>
+  <h4 id="service-prototype" tabindex="-1">操作原型：手機卡與紙本告示</h4>
+  <p>展開後可切換七種情境；S1、S2 可比較 M0 文字清單與 M1 銜接卡。兩者提供相同事實，M0 是研究材料，不是市府現行告示。所有點位、距離、時段及地標都是虛構，不能用於實際投放。</p>
+  <details class="service-prototype-demo"><summary>展開互動演練</summary><p class="service-demo-note">這裡展示原型功能，不收集答案，也不計入真人研究。S3 可按「遇到滿溢」模擬抵達後改道；此操作不會送出通報。</p>
+<div id="disposal-continuity" lang="zh-Hant" data-view="mobile">
+  <style>
+    #disposal-continuity{color-scheme:light dark;--dc-surface:light-dark(#ffffff,#192923);--dc-text:light-dark(#20382e,#eef6f0);--dc-muted:light-dark(#52675c,#b7cbbf);--dc-line:light-dark(#c8d6cd,#43594d);--dc-soft:light-dark(#eef4ef,#253c30);--dc-brand:light-dark(#215c40,#a5d9b7);--dc-on-brand:light-dark(#ffffff,#142d1f);--dc-warning:light-dark(#80501e,#f1c18b);--dc-warning-bg:light-dark(#fff4e6,#403021);font:16px/1.6 system-ui,-apple-system,"Noto Sans TC",sans-serif;color:var(--dc-text);background:transparent;max-width:680px;margin:0 auto;overflow-wrap:anywhere}
+    #disposal-continuity[data-theme="light"],[data-theme="light"] #disposal-continuity{color-scheme:light}
+    #disposal-continuity[data-theme="dark"],[data-theme="dark"] #disposal-continuity{color-scheme:dark}
+    #disposal-continuity *{box-sizing:border-box}
+    #disposal-continuity .dc-moderator{padding:12px 0 18px;color:var(--dc-muted)}
+    #disposal-continuity .dc-control-title{margin:0 0 8px;font-size:14px;font-weight:600}
+    #disposal-continuity .dc-controls{display:flex;flex-wrap:wrap;align-items:end;gap:12px}
+    #disposal-continuity label{display:grid;gap:4px;font-size:14px;flex:1 1 200px}
+    #disposal-continuity select{font:inherit;min-height:44px;width:100%;padding:8px 10px;border:1px solid var(--dc-line);border-radius:6px;background:var(--dc-surface);color:var(--dc-text)}
+    #disposal-continuity .dc-modes{display:flex;gap:6px;flex-wrap:wrap}
+    #disposal-continuity button{font:inherit;min-height:44px;padding:9px 14px;border:1px solid var(--dc-line);border-radius:6px;background:var(--dc-surface);color:var(--dc-text)}
+    #disposal-continuity button[aria-pressed="true"],#disposal-continuity .dc-primary{background:var(--dc-brand);color:var(--dc-on-brand);border-color:var(--dc-brand)}
+    #disposal-continuity button:focus-visible,#disposal-continuity select:focus-visible{outline:3px solid var(--dc-brand);outline-offset:3px}
+    #disposal-continuity .dc-card{background:var(--dc-surface);border:1px solid var(--dc-line);border-radius:12px;max-width:440px;margin:0 auto;padding:22px}
+    #disposal-continuity .dc-demo{font-size:13px;color:var(--dc-warning);background:var(--dc-warning-bg);padding:9px 11px;margin:0 0 18px;border-radius:4px}
+    #disposal-continuity .dc-eyebrow{font-size:13px;letter-spacing:.06em;color:var(--dc-muted);margin:0 0 5px}
+    #disposal-continuity h4{font-size:24px;line-height:1.35;font-weight:650;margin:0 0 14px}
+    #disposal-continuity h5{font-size:18px;line-height:1.5;font-weight:600;margin:0 0 8px}
+    #disposal-continuity p{margin:0 0 10px}
+    #disposal-continuity .dc-old{padding-bottom:16px;border-bottom:1px solid var(--dc-line);margin-bottom:18px}
+    #disposal-continuity .dc-small{font-size:16px;color:var(--dc-muted)}
+    #disposal-continuity .dc-status{font-size:14px;font-weight:600;color:var(--dc-brand);margin:0 0 4px}
+    #disposal-continuity .dc-next{padding:14px;background:var(--dc-soft);border-radius:6px;margin-bottom:14px}
+    #disposal-continuity .dc-next.is-unavailable{background:var(--dc-warning-bg)}
+    #disposal-continuity .dc-next.is-unavailable .dc-status{color:var(--dc-warning)}
+    #disposal-continuity dl{margin:0;display:grid;grid-template-columns:4.5em minmax(0,1fr);gap:7px 9px;font-size:16px}
+    #disposal-continuity dt{color:var(--dc-muted)}
+    #disposal-continuity dd{margin:0}
+    #disposal-continuity .dc-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+    #disposal-continuity .dc-route{margin-top:14px;padding-top:14px;border-top:1px solid var(--dc-line)}
+    #disposal-continuity ol{padding-left:24px;margin:6px 0 10px}
+    #disposal-continuity li+li{margin-top:7px}
+    #disposal-continuity [hidden]{display:none!important}
+    #disposal-continuity .dc-footer{margin:16px 0 0;padding-top:12px;border-top:1px solid var(--dc-line);font-size:13px;color:var(--dc-muted)}
+    #disposal-continuity[data-view="paper"] .dc-card{max-width:600px;border-radius:0}
+    #disposal-continuity[data-view="paper"] .dc-route-toggle{display:none}
+    #disposal-continuity[data-view="paper"] .dc-paper-note{display:block}
+    #disposal-continuity .dc-paper-note{display:none}
+    #disposal-continuity .dc-all-points{margin-top:18px;padding-top:12px;border-top:1px solid var(--dc-line)}
+    #disposal-continuity summary{min-height:44px;padding:8px 0;font-weight:600}
+    #disposal-continuity .dc-facts{font-size:16px;line-height:1.6}
+    #disposal-continuity[data-material="M0"] .dc-eyebrow,#disposal-continuity[data-material="M0"] .dc-card>h4,#disposal-continuity[data-material="M0"] .dc-old{display:none}
+    @media(max-width:360px){#disposal-continuity .dc-card{padding:16px}#disposal-continuity h4{font-size:22px}#disposal-continuity .dc-controls{gap:10px}}
+    @media print{#disposal-continuity .dc-moderator,#disposal-continuity .dc-actions{display:none!important}#disposal-continuity .dc-card{max-width:none;border-radius:0}#disposal-continuity .dc-route{display:block!important}#disposal-continuity details>*{display:block!important}}
+  </style>
+  <section class="dc-moderator" aria-label="研究者演練控制">
+    <p class="dc-control-title">研究者操作區 · 不屬於市民告示</p>
+    <div class="dc-controls">
+      <label for="dc-scenario">演練情境
+        <select id="dc-scenario" class="cursor-interaction">
+          <option value="S1">位置調整</option>
+          <option value="S2">時段切換</option>
+          <option value="S3">到場狀態改變</option>
+          <option value="S4">物品不符</option>
+          <option value="S5">通行需求</option>
+          <option value="S6">資訊逾時</option>
+          <option value="S7">替代服務中斷</option>
+        </select>
+      </label>
+      <label for="dc-material">研究材料
+        <select id="dc-material" class="cursor-interaction"><option value="M1">M1 銜接卡</option><option value="M0">M0 文字清單</option></select>
+      </label>
+      <label for="dc-landmarks">地標版本
+        <select id="dc-landmarks" class="cursor-interaction"><option value="X">X</option><option value="Y">Y</option></select>
+      </label>
+      <div class="dc-modes" role="group" aria-label="呈現方式">
+        <button type="button" class="cursor-interaction" id="dc-mobile" aria-pressed="true">手機卡</button>
+        <button type="button" class="cursor-interaction" id="dc-paper" aria-pressed="false">紙本告示</button>
+      </div>
+    </div>
+  </section>
+  <article class="dc-card" aria-label="投放服務銜接演練告示">
+    <p class="dc-demo">桌面演練｜所有點位、距離與時段均為虛構</p>
+    <p class="dc-eyebrow">投放服務銜接 · 演練告示</p>
+    <h4>原點位 A 已停用</h4>
+    <div class="dc-old">
+      <p>因位置調整，自演練時間 <strong>09:00</strong> 起停止收受。請勿在此留下垃圾。</p>
+      <p class="dc-small" id="dc-context"></p>
+    </div>
+    <div id="dc-result" aria-live="polite" aria-atomic="true"></div>
+    <p class="dc-footer">所有開放時間、收受條件與步行指引僅供本次演練，不代表現行政策或真實服務。演練地標皆為虛構。</p>
+  </article>
+  <script>
+    (function(){
+      const root=document.getElementById('disposal-continuity');
+      if(!root)return;
+      const scenario=root.querySelector('#dc-scenario');
+      const result=root.querySelector('#dc-result');
+      const context=root.querySelector('#dc-context');
+      const mobile=root.querySelector('#dc-mobile');
+      const paper=root.querySelector('#dc-paper');
+      const material=root.querySelector('#dc-material');
+      const landmarks=root.querySelector('#dc-landmarks');
+      let state={scenario:'S1',view:'mobile',material:'M1',landmarks:'X',routeOpen:false,overflow:false};
+      const labelSets={X:{A:'A',B:'B',C:'C',青葉亭:'青葉亭',方形花台:'方形花台',圓形花台:'圓形花台'},Y:{A:'D',B:'E',C:'F',青葉亭:'白石亭',方形花台:'長形花台',圓形花台:'三角花台'}};
+      function applyLabels(){
+        const labels=labelSets[state.landmarks];
+        const walker=document.createTreeWalker(root.querySelector('.dc-card'),NodeFilter.SHOW_TEXT);
+        let node;
+        while((node=walker.nextNode()))node.nodeValue=node.nodeValue.replace(/\b[ABC]\b|青葉亭|方形花台|圓形花台/g,key=>labels[key]);
+      }
+      function fullFacts(s){
+        const evening=s==='S2';
+        return [
+          '桌面演練。所有地點、距離與時段都是虛構。現在 '+(evening?'22:10':'10:00')+'，手上有空杯與包裝紙。',
+          '原點 A 因位置調整，從今天 09:00 起停用，不能留下垃圾。',
+          '點位 B 從 A 步行 120 公尺，開放 06:00–22:00，'+(evening?'現在已關閉':'現在開放')+'，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 A 沿同側人行道往「演練・青葉亭」，經過「演練・方形花台」後直行到 B；無階梯，不需過馬路。',
+          '點位 C 從 A 步行 260 公尺，演練設定為 24 小時開放，現在開放，收空杯與包裝紙，不收家戶整袋垃圾。路線：從 A 沿同側人行道往「演練・青葉亭」，於「演練・圓形花台」左轉，沿平面步道到 C；無階梯，不需過馬路。',
+          '以上資訊於 '+(evening?'22:00':'09:50')+' 核對，本次有效期間 '+(evening?'22:00–22:40':'09:50–10:30')+'。若現場關閉、滿溢或無法通行，保留垃圾，不留在現場，重新確認服務。'
+        ].map(text=>'<p>'+text+'</p>').join('');
+      }
+      const routes={
+        B:['從原點位 A，沿同側人行道往「演練・青葉亭」前進。','經過「演練・方形花台」後直行，到達點位 B；全程 120 公尺，無階梯、不需過馬路。'],
+        C:['從原點位 A，沿同側人行道往「演練・青葉亭」前進。','於「演練・圓形花台」左轉，沿平面步道到達點位 C；全程 260 公尺，無階梯、不需過馬路。'],
+        BC:['從目前點位 B，沿同側平面步道往「演練・圓形花台」前進，不需返回 A。','於「演練・圓形花台」左轉，到達點位 C；從 B 再走 140 公尺，無階梯、不需過馬路（自 A 累計 260 公尺）。']
+      };
+      function save(){
+        try{if(window.openai&&typeof window.openai.setWidgetState==='function')Promise.resolve(window.openai.setWidgetState({modelContent:{scenario:state.scenario,representation:state.view,material:state.material,landmarks:state.landmarks},privateContent:{routeOpen:state.routeOpen,overflow:state.overflow}})).catch(function(){});}catch(e){}
+      }
+      function restore(snapshot){
+        if(!snapshot||!snapshot.modelContent)return;
+        const m=snapshot.modelContent,p=snapshot.privateContent||{};
+        if(!Array.from(scenario.options).some(o=>o.value===m.scenario))return;
+        state={scenario:m.scenario,view:m.representation==='paper'?'paper':'mobile',material:['S1','S2'].includes(m.scenario)&&m.material==='M0'?'M0':'M1',landmarks:m.landmarks==='Y'?'Y':'X',routeOpen:p.routeOpen===true,overflow:m.scenario==='S3'&&p.overflow===true};
+      }
+      function render(){
+        const s=state.scenario;
+        const comparison=['S1','S2'].includes(s);
+        if(!comparison)state.material='M1';
+        material.querySelector('option[value="M0"]').disabled=!comparison;
+        material.value=state.material;landmarks.value=state.landmarks;root.dataset.material=state.material;
+        root.querySelector('.dc-card>h4').textContent='原點位 A 已停用';
+        scenario.value=s;root.dataset.view=state.view;
+        mobile.setAttribute('aria-pressed',String(state.view==='mobile'));
+        paper.setAttribute('aria-pressed',String(state.view==='paper'));
+        const evening=s==='S2';
+        const expired=s==='S6';
+        const checked=evening?'22:00':expired?'08:20':'09:50';
+        const validity=evening?'22:00–22:40':expired?'08:20–09:00（已失效）':'09:50–10:30';
+        context.textContent='演練現在時間：'+(evening?'22:10':'10:00')+'｜持有物品：'+(s==='S4'?'家戶整袋垃圾':'空杯、包裝紙')+(s==='S5'?'｜通行需求：無階梯路線':'');
+        if(state.material==='M0'){
+          result.innerHTML='<div class="dc-facts">'+fullFacts(s)+'</div>';
+          applyLabels();return;
+        }
+        const blocked=['S4','S6','S7'].includes(s);
+        let point=(s==='S2'||s==='S5'||(s==='S3'&&state.overflow))?'C':'B';
+        let pre='';
+        if(s==='S2')pre='<p class="dc-small">點位 B 已於演練時間 22:00 關閉，現在不適用。</p>';
+        if(s==='S5')pre='<p class="dc-small">點位 B 距離 120 公尺，但該路線有階梯，不符合本次無階梯需求。</p>';
+        if(s==='S3'&&state.overflow)pre='<p class="dc-small">點位 B 已在本次演練改為滿溢，停止推薦；此操作沒有送出通報。</p>';
+        const stamp='<dl><dt>核對時間</dt><dd>演練 '+checked+'</dd><dt>有效期間</dt><dd>演練 '+validity+'</dd></dl>';
+        if(blocked){
+          const messages={
+            S4:['物品不符合收受範圍','本卡沒有已核實的家戶接收去處','點位 B、C 僅收受行人隨手垃圾（本次演練：空杯、包裝紙），不收家戶整袋垃圾。','請保留垃圾，先確認家戶收運服務，不留在現場。'],
+            S6:['資訊已逾時','替代點位狀態尚未確認','上次核對的點位 B、C 資訊已失效；現在是否開放、是否可收受及路線是否可通行，均未確認。','請保留垃圾並查證；取得有效資訊前，不要依本卡前往替代點位，也不留在現場。'],
+            S7:['目前無可用替代服務','現在無法完成投放服務','本次演練已確認：點位 B 關閉、點位 C 滿溢，均不可投放；目前沒有已核實的可用去處。','請保留垃圾，不留在現場。先查證實際管理單位與聯絡方式，再聯繫確認後續服務。']
+          };
+          const m=messages[s];
+          result.innerHTML='<section class="dc-next is-unavailable"><p class="dc-status">'+m[0]+'</p><h5>'+m[1]+'</h5><p>'+m[2]+'</p><p><strong>'+m[3]+'</strong></p></section>'+stamp;
+          applyLabels();
+          return;
+        }
+        const distance=point==='B'?'120':'260';
+        const fromB=s==='S3'&&state.overflow;
+        const nextHeading=fromB?'從目前點位 B 再走 140 公尺至 C（自 A 累計 260 公尺）':'下一處：點位 '+point+' · 步行 '+distance+' 公尺';
+        if(fromB&&state.view==='paper')pre+='<p class="dc-small">紙本演練：以下為取得 B 滿溢資訊後，另行更新的告示內容。</p>';
+        const hours=point==='B'?'06:00–22:00':'24 小時（演練）';
+        const routeVisible=state.routeOpen||state.view==='paper';
+        result.innerHTML=pre+'<section class="dc-next"><p class="dc-status">目前適用 · 演練已核對</p><h5>'+nextHeading+'</h5><dl><dt>開放時間</dt><dd>'+hours+'</dd><dt>可投放</dt><dd>空杯、包裝紙（演練用物品）</dd><dt>不收受</dt><dd>家戶整袋垃圾</dd><dt>通行條件</dt><dd>同側平面步道、無階梯、不需過馬路</dd></dl></section>'+stamp+'<div class="dc-actions"><button type="button" class="dc-primary dc-route-toggle cursor-interaction" id="dc-route-toggle" aria-controls="dc-route" aria-expanded="'+routeVisible+'">'+(routeVisible?'收起路線':'查看路線')+'</button>'+(s==='S3'&&!state.overflow?'<button type="button" class="cursor-interaction" id="dc-overflow">遇到滿溢（演練）</button>':'')+'</div><section id="dc-route" class="dc-route" '+(routeVisible?'':'hidden')+'><h5>前往點位 '+point+' 的步行指引</h5><p class="dc-small">以下全為演練路線與虛構地標。</p><ol>'+routes[fromB?'BC':point].map(t=>'<li>'+t+'</li>').join('')+'</ol>'+(s==='S5'?'<p class="dc-small">這是演練路線條件描述，不表示符合法定無障礙標準。</p>':'')+'<p class="dc-small">若現場關閉、滿溢或無法通行，請保留垃圾，不留在現場，並重新確認服務資訊。</p></section>';
+        const toggle=root.querySelector('#dc-route-toggle');
+        if(comparison)result.insertAdjacentHTML('beforeend','<details id="dc-all-points" class="dc-all-points" '+(state.view==='paper'?'open':'')+'><summary class="cursor-interaction">所有點位資料</summary><div class="dc-facts">'+fullFacts(s)+'</div></details>');
+        applyLabels();
+        if(toggle)toggle.addEventListener('click',function(){state.routeOpen=!state.routeOpen;render();root.querySelector('#dc-route-toggle').focus();save();});
+        const overflow=root.querySelector('#dc-overflow');
+        if(overflow)overflow.addEventListener('click',function(){state.overflow=true;state.routeOpen=false;render();root.querySelector('#dc-route-toggle').focus();save();});
+      }
+      scenario.addEventListener('change',function(){state.scenario=scenario.value;state.routeOpen=false;state.overflow=false;render();save();});
+      material.addEventListener('change',function(){state.material=material.value;state.routeOpen=false;state.overflow=false;render();save();});
+      landmarks.addEventListener('change',function(){state.landmarks=landmarks.value;render();save();});
+      mobile.addEventListener('click',function(){state.view='mobile';render();save();});
+      paper.addEventListener('click',function(){state.view='paper';render();save();});
+      try{if(window.openai)restore(window.openai.widgetState);}catch(e){}
+      window.addEventListener('openai:set_globals',function(event){if(event.detail&&event.detail.globals&&event.detail.globals.widgetState){restore(event.detail.globals.widgetState);render();}});
+      render();
+    })();
+  </script>
+</div>
+
+  </details>
+  <h4 id="service-scenarios" tabindex="-1">七種情境，要觀察什麼？</h4>
+  <div class="service-table-wrap" role="region" aria-label="七種測試情境" tabindex="0"><table><caption>虛構桌面情境；跨情境同時納入紙本、低數位與通行需求。</caption><thead><tr><th scope="col">情境</th><th scope="col">預期行動</th><th scope="col">觀察重點</th></tr></thead><tbody>
+    <tr><th scope="row">S1 位置調整</th><td>A 停用；選當時適用的 B 或 C，說出路線。</td><td>原點狀態、物品、路線是否理解。</td></tr>
+    <tr><th scope="row">S2 時段切換</th><td>22:10 不選已於 22:00 關閉的 B，改選 C。</td><td>是否只選最近點，忽略時段。</td></tr>
+    <tr><th scope="row">S3 到場變化</th><td>得知 B 滿溢後，不留置；從 B 改往 C 或說明無法續行。</td><td>改道起點 B、再走 140 公尺；自 A 累計 260 公尺。是否誤認已通報。</td></tr>
+    <tr><th scope="row">S4 物品不符</th><td>家戶整袋垃圾不投入 B、C；保留並查家戶服務。</td><td>能否辨認收受邊界。</td></tr>
+    <tr><th scope="row">S5 通行需求</th><td>需要無階梯路線時，選較遠但適用的 C。</td><td>是否用距離取代通行條件；不等同法定無障礙認證。</td></tr>
+    <tr><th scope="row">S6 資訊逾時</th><td>資訊已於 09:00 失效；10:00 保留垃圾並查證。</td><td>過期時不再導引前往替代點。</td></tr>
+    <tr><th scope="row">S7 替代中斷</th><td>B 關閉、C 滿溢；承認無可靠去處，保留並確認。</td><td>安全停止不能記作投放完成。</td></tr>
+  </tbody></table></div>
+  <h4 id="service-measures" tabindex="-1">先固定指標，再決定繼續、修改或停止</h4>
+  <p>協定 0.1，2026-10-18。以下數字是本輪小規模驗證的<strong>提案門檻</strong>，不是法規、既有服務標準或全市成效保證。正式招募前須確認並凍結；不能看結果後調低。</p>
+  <dl class="service-metrics">
+    <div><dt>獨立正確決策</dt><dd>桌面 60 秒內、無提示，作出該情境適用的決策。逐情境列出正確次數／全部已啟動任務。</dd></div>
+    <div><dt>真實投放完成</dt><dd>現場 15 分鐘內、無提示或代投，完成被允許的投放。走讀或安全停止另列，不算完成。</dd></div>
+    <div><dt>決策與行走成本</dt><dd>記決策秒數、現場分鐘與公尺。桌面錯誤、提示或超時在比較中記 60 秒，原始時長另留；不能只比較成功者。</dd></div>
+    <div><dt>錯誤導引與維護負擔</dt><dd>逐次核對卡片與現況；觀察固定範圍的散落物、堆置、滿溢、阻塞，另記核查、換卡、處置及額外清潔的人分鐘。</dd></div>
+  </dl>
+  <p>啟動後失敗、退出或未知都保留在對應分母；未開始不補零。招募配額或必要紀錄不完整，不能判定通過。</p>
+  <details class="service-protocol"><summary>第一階段：12 人桌面測試，什麼情況才繼續？</summary>
+    <p>先做 2 位同事主持預試，不納入正式樣本。正式 12 人：街區熟悉／不熟悉各 6 人，紙本／手機各 6 人；低數位與通行需求各至少 4 人，可重疊。每人 9 個任務，共 108 次任務，不是 108 人。</p>
+    <p>S1、S2 每人各做 M0、M1，共 48 個核心任務；S3–S7 各做 M1，共 60 次。不同地標版本及先後順序事前平衡，先做核心比較，再輪替例外題序。</p>
+    <ol><li>M1 的 S1、S2 各至少 11/12 正確，合計至少 22/24；S3、S5 各至少 11/12。S3 從揭露滿溢後重新計時。</li><li>S4、S6、S7 各 12/12 正確停止；全輪零關鍵錯誤。</li><li>紙本、手機的核心任務各至少 11/12；低數位與通行需求群體各至少 87.5%。各群報實際人數與任務分母，不能靠總平均補足。</li><li>M1 成功數不低於 M0，且淨多至少 3 次正確；或兩者均至少 22/24 時，配對時間改善中位數至少 20%。M0 先看與 M1 先看的兩組，在採用的增益指標都必須為正。</li></ol>
+    <p>配對時間改善＝（M0 秒數－M1 秒數）÷ M0 秒數，每人同情境配對；最小記 1 秒，錯誤、提示、超時用 60 秒。達到可理解門檻卻沒有增益，先簡化或停止，不自動擴大。</p>
+    <p><strong>暫停本版本：</strong>出現一次關鍵錯誤，或同一根因讓兩位參與者卡住。關鍵錯誤指確認留下垃圾、錯投家戶垃圾、使用失效／關閉點，或選明示不符合通行需求的路線；口頭探索後自行修正不算。修正後用新版本、新一輪資料驗證。</p>
+  </details>
+  <details class="service-protocol"><summary>第二階段：現場服務如何驗證，何時停止？</summary>
+    <p>桌面門檻全部通過後，先核實真實原點變動、合法可用替代點、路線與管理承接。每窗前 15 分鐘內、每次出發前再查狀態；卡片最長有效 15 分鐘，或提早至關閉時刻。無回覆窗口就不開始。</p>
+    <p>另招募未參加桌面的 12 人，3 個 60 分鐘窗口、每窗 4 人。低數位及通行需求各至少 4 人；只用參與者本來就有且可接收的日常物品，不製造垃圾。首次啟動後 14 日內結束；最多 4 位替補僅補尚未開始的缺席者，不能替換失敗。</p>
+    <p><strong>成功須全部成立：</strong>至少 11/12 在 15 分鐘內獨立投放，每窗至少 3/4；兩需求群體各至少 75%；零關鍵錯誤、零停止事件；資訊與現況一致；每窗額外營運負擔不超過 10 人分鐘，且無未安排加班或無人承接。</p>
+    <p>前一週同類日與鐘點做 3 個基線窗口，測試做 3 個窗口。A、B、C 固定範圍各於 0、15、30、45、60 分鐘附近巡查，記實際量測時間；紀錄不齊不判通過。天候或活動不可比時，不把差值解釋為介入效果。</p>
+    <ul><li><strong>結束當次任務：</strong>到 15 分鐘、走到 500 公尺、需要提示或感到不適；已啟動任務保留在分母。</li><li><strong>暫停現場測試：</strong>關閉、滿溢、拒收、資訊不符或窗口無回應；任一點相對對應基線的散落物增量達 5 件且連續兩次巡查，或每窗額外營運超過 10 人分鐘。</li><li><strong>立即停止：</strong>危險、通行受阻或關鍵錯誤。記錄原因、處置與版本；不能為了湊滿樣本繼續。</li></ul>
+    <p>通過只支持這條路徑、這三個時段的小規模可行性；不證明長期改善、因果效果或全市部署可行。</p>
+  </details>
+  <h4>下一個可執行關卡</h4>
+  <p>已備妥主持腳本、獨立手機卡、24 頁參與者列印卡、26 頁主持表，以及 12 個預排槽位的 108 個任務。原型與材料已做技術檢查；這些檢查不代表民眾看得懂或現場能完成服務。研究紀錄與測試附件保留於內部材料。</p>
+  <p>下一步是指定研究負責人、主持與記錄者，進行 2 人主持預試，再固定正式版本及招募。現場路徑、管理同意、聯絡窗口與基線仍待取得。<strong>目前沒有可報告的真人成功率或環境改善結果。</strong></p>
+</section>
+
+<!-- service-continuity-end -->
+      <p class="plan-entry"><a href="#plan">閱讀百日計畫</a><span>規劃提案・尚未啟動；從設備與人員準備，到清運及正式交接。</span></p>
+      <p class="research-reading-note research-home-note">清冊、海外研究與實務各有範圍；本批回饋只代表這份留言檔，不提供全市支持率或因果證明。現場狀態與未取得的營運資料仍待確認。完整引用見<a href="#sources">來源與方法</a>；成本假設與後續試辦規劃見<a href="#materials">預算與執行材料</a>。</p>
+      </section>
     </section>
 
     <section id="panel-sources" class="page-panel research-page research-sources-page" aria-labelledby="sources-heading" hidden>
@@ -2224,8 +2688,8 @@
 <section id="source-comparison-method" class="source-method" tabindex="-1"><h3>兩版清冊的配對方法</h3><ol><li>用「行政區＋完整地址」比對。僅統一全半形、空白與「臺／台」，保留門牌、方向與標點，不用鄰近座標猜同一桶。</li><li>先按地址和座標欄位作逐列配對；數值格式如小數尾零視為相同。相同欄位也不能證明是同一個實體垃圾箱；原本無效的座標仍保留。</li><li>只有原始地址群組兩版都各一筆時，才列為「同址座標不同」。同址多筆的剩餘列都標為未能配對，不強行連接，也不把它們列成未再出現的地址。</li><li>某個完整地址在另一版完全找不到，才列為「未再出現」或「只在 2026 出現」。地址改寫仍可能漏配；這兩類不能當成撤除或新設。</li></ol><p>本次僅比較 1,971 筆封存版與 681 筆官方主檔。舊有 2024 年 5 月缺頁版、2026 示範區均保留在地圖，不參與這次比較。需有箱號、異動日期或現場證據，才能確認撤除、遷移或新設。</p></section>
 <section id="source-coordinate-distance-method" class="source-method" tabindex="-1"><h3>座標差距的計算方法</h3><p>使用 Haversine 公式，以半徑 6,371,000 公尺的球面計算兩組經緯度之間的最短表面距離。未計入道路、地形、橢球修正或座標基準轉換；兩版的實際定位精度未核實。</p><p>有效的全球經緯度都參與計算；超出台北粗篩範圍者標示待核對。任一座標無法解析或超出全球經緯度範圍時，保留該對並標為無法計算，不填成 0，也不列入距離統計。小於 0.1 公尺的差距以「&lt;0.1 公尺」顯示。</p><p>同址不保證是同一個實體箱。距離大不等於遷移，距離小也不能直接認定只是精度修正；仍需異動紀錄、座標作業說明或現場證據。</p><div class="source-method-link"><a href="https://www.movable-type.co.uk/scripts/latlong.html" target="_blank" rel="noopener noreferrer">Haversine 計算方法 ↗</a></div></section>
     </section>
-    <noscript><p>互動地圖需要 JavaScript，請啟用後查看地圖與篩選結果。</p></noscript>
+    <noscript><style>#panel-definition:has(:target){display:block!important}body:has(#panel-definition :target) .page-panel:not(#panel-definition){display:none!important}</style><p>互動地圖需要 JavaScript；設計思考的文字與證據仍可直接閱讀。</p></noscript>
   </main>
-  <footer><div><strong>台北垃圾箱研究</strong><span>研究設置、清運與家戶垃圾分流。</span><nav class="footer-links" aria-label="研究補充"><a href="#feedback" data-page="feedback">垃圾相關回饋</a><a href="#plan" data-page="plan">百日計畫</a><a href="#sources" data-page="sources">來源與方法</a><a href="#materials" data-page="materials">預算與執行材料</a></nav></div><p>公開資料研究，尚無台北試辦成效。<br>位置、價格與紀錄依各來源日期判讀。</p></footer>
+  <footer><div><strong>台北垃圾箱研究</strong><span>本期聚焦行人投放、配置、清運與維護。</span><nav class="footer-links" aria-label="研究補充"><a href="#feedback" data-page="feedback">垃圾相關回饋</a><a href="#plan" data-page="plan">百日計畫</a><a href="#sources" data-page="sources">來源與方法</a><a href="#materials" data-page="materials">研究與執行材料</a></nav></div><p>公開資料研究，尚無台北試辦成效。<br>位置、價格與紀錄依各來源日期判讀。</p></footer>
 </body>
 </html>

@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / 'dist'
 DOCS = ('bin-reduction.md', 'bin-removal-history.md', 'global-bin-practices.md', 'bin-design.md')
 MARKER_OWNERS = {
-    'research-synthesis': 'panel-research',
+    'research-synthesis': 'panel-materials',
     'research-paper-records': 'panel-sources',
     'research-literature': 'panel-sources',
     'research-practice-records': 'panel-sources',
@@ -93,7 +93,7 @@ def render_references(index_text, catalog, literature):
          '尚無可連結留言場景的巡收、滿溢、清洗與工時紀錄，也未驗證垃圾來源；海外設備規格與本批回饋都不是台北營運成效。',
          [('feedback-findings', '對照本批回饋與限制'), ('history', '看台北的歷程與紀錄'), ('countries', '比較各地清運做法')]),
         ('household', '家戶垃圾分流',
-         '先確認合法投放管道的時段與可達性，再比較費率、清運、維修及停機替代；保留免費行人基本服務。',
+         '本期聚焦行人服務；家戶研究與回饋保留作背景，後續是否啟動另行決定。',
          '留言揭露時段不便的情境，但未核實各戶可用的合法管道，也未量化混入來源、方案接受度或成效；付費或改入口是否有效仍未知。',
          [('feedback-findings', '對照本批回饋與限制'), ('countries', '比較家戶收運案例'), ('design', '看方案的概念示意')])
     ]
