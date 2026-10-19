@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "raw_rows_independently_counted": 7596992,
+  "candidate_endpoints_reconciled": 5,
+  "max_nearest_distance_difference_m": 0.004750159555264588,
+  "date_gap_reproduced": true,
+  "radius_and_date_sensitivity": "same five stations",
+  "source_archive_sha256": "91216f4493e7b103b7c162fa1649946261a0a55486ed6bda4c45f86ac53ea312",
+  "result_sha256": "43b85e16711b520527ac87e34f64d52b7e1bc9b30d847ce0f86b1644a891e7b5",
+  "quality_sha256": "662091ef438c2ee10b7010da583eff65b8a589478a98da4e2e024339c078e36b",
+  "excludes": "No field validation, no source completeness guarantee, no causality or agency consent."
+}

@@ -80,7 +80,10 @@ test('reader entry and evidence links resolve to their owning pages',()=>{
   for(const hash of ['', '#', '#research', '#unknown'])assert.equal(pageFromHash(hash),'research');
   for(const hash of ['#reference-L01','#reference-L13','#reference-P04','#research-literature-heading','#source-comparison-method','#research-audit-heading','#research-papers-heading'])assert.equal(pageFromHash(hash),'sources');
   for(const hash of ['#materials','#research-materials-heading','#research-candidates-heading'])assert.equal(pageFromHash(hash),'materials');
-  for(const hash of ['#definition','#definition-needs-heading','#definition-scope-heading','#t1-process-heading','#t1-problems-heading','#t1-thinking-heading'])assert.equal(pageFromHash(hash),'definition');
+  for(const hash of ['#definition','#definition-needs-heading','#t1-problems-heading'])assert.equal(pageFromHash(hash),'definition');
+  for(const hash of ['#ideas','#definition-scope-heading','#t1-process-heading','#definition-prd-risks-heading'])assert.equal(pageFromHash(hash),'ideas');
+  for(const hash of ['#analysis','#hotspot-heading','#citywide-area-12','#definition-evidence-E06-S2'])assert.equal(pageFromHash(hash),'analysis');
+  for(const hash of ['#hotspot-government','#hotspot-times','#definition-prd-heading','#t1-thinking-heading'])assert.equal(pageFromHash(hash),'plan');
   for(const hash of ['#design','#t1-specification','#t1-product-process-heading'])assert.equal(pageFromHash(hash),'design');
   assert.equal(pageFromHash('#country-japan'),'countries');
 });
@@ -157,6 +160,9 @@ test('candidate streets remain addressable outside the history group',()=>{
 
 test('retained research fragments open their materials while summary and definition remain current',()=>{
   for(const hash of ['#research-synthesis','#conclusion-siting','#conclusion-collection','#conclusion-household','#current-evidence-heading','#problem-map-heading','#district-service-heading','#district-service-note','#service-method','#service-continuity-heading','#service-prototype','#service-scenarios','#service-measures','#disposal-continuity','#dc-scenario'])assert.equal(pageFromHash(hash),'materials',hash);
-  for(const hash of ['#research-overview-conclusions','#research-overview-evidence','#research-overview-scope','#research-overview-unknowns','#research-overview-reading'])assert.equal(pageFromHash(hash),'research',hash);
-  assert.equal(pageFromHash('#definition-evidence-heading'),'definition');
+  for(const hash of ['#research-overview-conclusions','#research-overview-reading'])assert.equal(pageFromHash(hash),'research',hash);
+  assert.equal(pageFromHash('#research-overview-evidence'),'analysis');
+  assert.equal(pageFromHash('#research-overview-scope'),'ideas');
+  assert.equal(pageFromHash('#research-overview-unknowns'),'plan');
+  assert.equal(pageFromHash('#definition-evidence-heading'),'ideas');
 });

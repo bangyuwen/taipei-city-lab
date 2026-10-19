@@ -6,12 +6,15 @@
 
 ## 閱讀入口與資訊歸屬
 
-2026-10-19 更新研究首頁。主導覽保留「研究結果／台北的變化／各國垃圾桶」；研究結果內提供「研究摘要／MVP 規格與證據」。候選街道移至研究與執行材料，避免被讀成已選定方案。既有 `#map`、`#comparison`、`#history`、`#siting` 深連結與資料版本 query 保持有效。
+2026-10-19 將研究流程拆成「研究總覽／分析／發想／計劃」。各頁保留對應證據與前後導覽，歷史決策另行封存。既有錨點、`#map`、`#comparison`、`#history`、`#siting` 與資料版本 query 保持有效。
 
-- `#research`：給第一次進站的讀者，先呈現已接受的黑客松主線：行人投放。YouBike 與搭車前為使用情境；管理端先做異常與處理紀錄。往下提供 MVP 流程、三種驗收情境、證據與反例、本期取捨和深入閱讀。範圍已定，原型尚未開發、效果待驗證，家戶本期不做。
+- `#research`：研究總覽，提供分析、發想、計劃三個入口與目前完成狀態。
+- `#analysis`：全臺北市12區熱點分析、全部1,821站的資料界線、12區首輪36處與校區另3處、問題定義與28則公開評論摘要。公館保留為局部案例，實地垃圾需求仍待查核。
+- `#ideas`：已採納的配置比較方向、A現況／B資訊改善／C等總量移位三方案、未來構想與本期不做項目。
+- `#plan`：政府工作包、12區與校區查核時段、跨機關交接、PRD v0.4及驗收條件。機關承諾、配置工具及成效仍待驗證；原百日計畫標為歷史材料。
 - `#countries`：單一國家案例選單、預設實拍，在同一影像區切換 3D 示意。照片、署名、地點對應限制、證據及成本直接呈現；`?country=japan#countries` 與 `#country-japan` 可直接指定案例。
-- `#definition`：單層執行結論、PRD v0.2 畫面與驗收規格、28 則公開評論摘要、75 段判讀摘要、D01–D14 決策與改寫紀錄。PRD v0.1 及當時不做紀錄封存於同頁；D14 取代「先不放解法」的現行限制。內容直接顯示，證據與決策可逐段回查；原始全文與逐則分析保留於私人研究資料。
-- `design-thinking/index.html` 與 `prd/index.html`：保留舊網址與錨點，轉到上述單頁的對應內容。`#t1-process-heading`、`#t1-problems-heading`、`#t1-thinking-heading` 仍可使用。
+- `#definition`：D01–D18決策與改寫紀錄，以及PRD v0.1／v0.2封存。原始全文與逐則分析保留於私人研究資料。
+- `design-thinking/index.html` 與 `prd/index.html`：保留舊網址與錨點，轉至分析、發想或計劃中的對應內容。
 - `#design`：既有 T1 概念與四種用途引導示範，從材料頁的舊研究判讀進入。固定尺寸與示例不代表本期已選定方案或實測結果。
 - `#sources`：六份清冊來源、13 篇文獻、4 則實務與比較方法。每則完整紀錄只維護一份，`#reference-L01` 等引用可直接定位。
 - `#materials`：保留舊研究判讀、公開位置資料摘要、分區長表、模擬原型與未執行測試計畫，以及原有預算、費率、候選街道與現勘協定。由首頁深入閱讀或頁尾進入；`#conclusion-siting`、`#current-evidence-heading`、`#problem-map-heading`、`#service-prototype` 等舊錨點直接開啟對應材料。
@@ -20,7 +23,7 @@
 
 目前保留：
 
-- 「既有研究判讀」：原有配置、清運與維護建議移至材料頁供回查；家戶分流仍標為本期不推進。這些材料供回查；本期採用範圍以 PRD v0.2 為準。
+- 「既有研究判讀」：原有配置、清運與維護建議移至材料頁供回查；家戶分流仍標為本期不推進。這些材料供回查；本期採用範圍以 PRD v0.4 為準。
 
 - 2015、2022、2024、2026 四個年份、六份位置資料切換；2024、2026 預設採新主版本，原缺頁版與示範區版仍可選取。
 - 點位地圖預設使用 CARTO Positron 淡色底圖，右上方可切換原 OpenStreetMap 街道底圖；CARTO 連線失敗時自動使用淡色街道備援，點位、篩選與目前視角不變。
@@ -104,7 +107,7 @@ npm run preview
 
 概念設計入口為 `#design`，從材料頁的舊研究判讀進入。四款均為本站概念；選用途後，依固定投放／清運步驟查看分流、滿載、感測離線與家戶確認的示意，尺寸與物件不另提供自訂。WebGL 失效時文字流程仍可完整操作。沒有實際感測、身分辨識、付款或成效預測；假設見[用途體驗文件](../../topics/bins/docs/bin-design.md)。
 
-研究入口 `#research` 是人工整理的五段摘要，對照目前問題定義與 E01–E28，不由舊研究綜合建議覆寫。原有三項判讀保留於 `#materials` 的 `#research-synthesis`，由 `topics/bins/research/reference-guide-2026-10-16/catalog.json` 經 `package-research.py` 產生；生成器固定將該段放在材料頁。完整文獻／實務留在 `#sources`，每筆分開呈現方法、來源結果、本站解讀及限制。原有 13 篇完整書目、18 個候選、費率、估算及未執行的現勘協定均保留，沒有新增下載入口或公開附件。
+研究入口 `#research` 是三頁流程總覽。全市分析與 E01–E28 位於 `#analysis`，方案方向位於 `#ideas`，分工與驗收位於 `#plan`；不由舊研究綜合建議覆寫。原有三項判讀保留於 `#materials` 的 `#research-synthesis`，由 `topics/bins/research/reference-guide-2026-10-16/catalog.json` 經 `package-research.py` 產生；生成器固定將該段放在材料頁。完整文獻／實務留在 `#sources`，每筆分開呈現方法、來源結果、本站解讀及限制。原有 13 篇完整書目、18 個候選、費率、估算及未執行的現勘協定均保留，沒有新增下載入口或公開附件。
 
 版本比較 `#comparison` 共用行政區與地址範圍，範圍摘要、五類組數及距離分布隨之連動。分類選擇只縮小結果清單，不改寫範圍分母。預設顯示全部分類；同址座標差距納入同一清單排序，不另重複前十名。完整全市行政區表放在清單之後直接閱讀，明示不受篩選影響；完整配對及距離方法歸來源頁。追加結果、距離延遲載入及從來源地圖返回會保留已展開證據；主資料與距離資料各有重試入口。
 
@@ -199,3 +202,7 @@ them to the public asset allowlist. Publication does not confirm the hypotheses.
 
 Run `scripts/check-definition-browser.mjs` against a prepared local preview to
 check deep links, evidence round trips, attribution counts and mobile bounds.
+
+先前局部案例（已由D18更正為全市範圍）：`research/gongguan-hotspots-2026-10-19/README.md`，含可重跑 notebook、完整來源／結果、五處觀察錨點、政府分工與交接方案。公開摘要位於 `#hotspot-heading`；原始附件仍不公開。
+
+範圍修正：使用者要求全臺北市規劃，D18取代公館單一生活圈作為研究邊界。全市成果：`research/taipei-citywide-2026-10-19/README.md`，Notebook、全站表與12區政府分工均保留；公館舊版只作歷史案例。
