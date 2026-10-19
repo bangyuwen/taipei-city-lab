@@ -193,15 +193,22 @@ def render_hundred_day_plan(index_text, markdown):
             assert not re.match(r'^(?:#|[-+] |\d+\. )', block), 'Unsupported plan block'
             body.append('<p>' + plan_inline(block.replace('\n', ' ')) + '</p>')
     assert seen == list(PLAN_SECTIONS), 'Plan sections changed; update public navigation'
-    contents = ''.join(f'<a href="#plan-{slug}">{html.escape(label)}</a>'
-                       for slug, label in PLAN_SECTIONS.values())
-    rendered = (f'<header class="research-page-heading"><h3 id="plan-archive-heading">歷史提案：{title}</h3>'
-                '<p class="research-update">規劃提案 · 尚未啟動；點位、經費、採購與營運承接仍待確認。</p></header>'
-                '<div class="plan-reading-layout"><nav class="plan-contents" aria-label="百日計畫章節">'
-                + contents + '</nav><div class="plan-body">' + '\n'.join(body) + '</div></div>')
+    # Historical chapters have their own reader, separate from the current plan.
+    chapters=[]; current=[]; current_id='intro'; current_title='提案概覽'
+    for block in body:
+        match=re.match(r'<h3 id="plan-([^"]+)"[^>]*>(.*?)</h3>',block)
+        if match:
+            if current: chapters.append((current_id,current_title,''.join(current)))
+            current_id,current_title=match[1],match[2];current=[]
+        current.append(block)
+    if current:chapters.append((current_id,current_title,''.join(current)))
+    items=''.join(f'<article class="reader-item" id="reader-archive-{key}" data-reader-item="{html.escape(label,quote=True)}">{content}</article>' for key,label,content in chapters)
+    links=''.join(f'<a href="#reader-archive-{key}">{label}</a>' for key,label,_ in chapters)
+    rendered=(f'<header><h3 id="plan-archive-heading">歷史提案：{title}</h3><p>規劃提案 · 尚未啟動；點位、經費、採購與營運承接仍待確認。</p></header>'
+              '<div data-reader="archive" data-reader-label="選擇百日計畫章節"><div class="reader-controls" data-reader-controls hidden><label for="reader-select-archive">選擇百日計畫章節</label><select id="reader-select-archive"></select><p class="reader-position" aria-live="polite"></p><nav aria-label="百日計畫前後章節"><a href="#research" data-reader-prev>上一項</a><a href="#research" data-reader-next>下一項</a></nav></div><div class="reader-items"><nav class="reader-index" aria-label="百日計畫章節">'+links+'</nav>'+items+'</div></div>')
     marker = 'hundred-day-plan'
     before = index_text.split(f'<!-- {marker}-start -->')[0]
-    assert re.findall(r'<section\b[^>]*\bid="(panel-[^"]+)"', before)[-1] == 'panel-plan'
+    assert re.findall(r'<section\b[^>]*\bid="(panel-[^"]+)"', before)[-1] == 'panel-archive'
     updated, count = re.subn(f'<!-- {marker}-start -->.*?<!-- {marker}-end -->',
                             lambda _: f'<!-- {marker}-start -->\n{rendered}\n<!-- {marker}-end -->',
                             index_text, flags=re.S)

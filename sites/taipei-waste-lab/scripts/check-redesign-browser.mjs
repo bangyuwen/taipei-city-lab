@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {pathToFileURL,fileURLToPath} from 'node:url';
 import {resolve} from 'node:path';
+import {workspaceForPage} from '../dist/data-utils.js';
 
 const site=fileURLToPath(new URL('..',import.meta.url));
 const qa=resolve(site,'.impeccable/review');
@@ -10,7 +11,6 @@ const {chromium}=await import(modulePath?pathToFileURL(resolve(modulePath)).href
 const browser=await chromium.launch({headless:true,args:['--no-sandbox'],...(process.env.CHROME_PATH?{executablePath:resolve(process.env.CHROME_PATH)}:{})});
 const baseURL=new URL(process.env.REDESIGN_QA_URL||'http://127.0.0.1:4174/');
 const errors=[],screens=[],measurements=[];
-const historyPages=['map','comparison','history'];
 const widths=[320,390,720,1440];
 const captureScreens=!process.argv.includes('--functional-only');
 await mkdir(qa,{recursive:true});
@@ -36,23 +36,18 @@ async function focused(page,id){
 async function primary(page,target){
   const menu=page.locator('#site-menu-toggle');
   if(await menu.isVisible()&&!await page.locator('#site-navigation').isVisible())await menu.click();
-  await page.locator(target==='history'?'#site-navigation [data-section="history"]':`#site-navigation [data-page="${target}"]`).click();
+  await page.locator(`#site-navigation [data-page="${target}"]`).click();
 }
 async function nav(page,target){
   const before=await page.evaluate(()=>location.hash);
-  if(historyPages.includes(target)){
-    await primary(page,'history');
-    if(target!=='history')await page.locator(`.history-subnav [data-page="${target}"]`).click();
-  }else if(target==='siting'){
-    await primary(page,'research');
-    await page.locator('footer a[href="#materials"]').click();
-    await page.locator('#panel-materials [data-page="siting"]').click();
-  }else if(['research','countries'].includes(target))await primary(page,target);
-  else if(target==='design'){
-    await primary(page,'research');
-    await page.locator('footer a[href="#materials"]').click();
-    await page.locator('#panel-materials a[href="#design"]').first().click();
-  }else await page.locator(`footer a[href="#${target}"]`).click();
+  const workspace=workspaceForPage(target);
+  await primary(page,workspace);
+  if(target!==workspace){
+    const route=workspace==='library'
+      ?`#panel-library .library-index a[href="#${target}"]`
+      :`#panel-${workspace} .project-subnav a[data-page="${target}"]`;
+    await page.locator(route).first().click();
+  }
   const panel=page.locator(`#panel-${target}`);
   await panel.waitFor({state:'visible'});
   await page.waitForFunction(expected=>document.body.dataset.page===expected,target);
@@ -67,22 +62,32 @@ async function ready(page,hash=''){
 async function checkHome(page){
   assert.equal(await page.locator('#panel-research').isVisible(),true);
   assert.equal(await page.locator('#panel-research details').count(),0);
-  assert.equal(await page.locator('#research-overview-conclusions > article').count(),3);
+  assert.equal(await page.locator('#panel-research .project-work-list > article').count(),3);
   assert.match(await page.locator('#panel-research').innerText(),/尚未進行真人研究/);
   assert.equal(await page.locator('#panel-research #service-prototype,#panel-research #conclusion-household').count(),0);
   assert.equal(await page.locator('#panel-materials #research-synthesis > article').count(),3);
-  assert.deepEqual(await page.locator('#site-navigation a').evaluateAll(links=>links.map(link=>link.hash)),['#research','#history','#countries']);
+  assert.deepEqual(await page.locator('#site-navigation a').evaluateAll(links=>links.map(link=>[link.hash,link.textContent.trim()])),[
+    ['#research','工作總覽'],['#analysis','熱點研究'],['#ideas','方案比較'],
+    ['#plan','執行分工'],['#library','資料庫'],
+  ]);
   assert.equal(await page.locator('#site-navigation [data-page="research"]').getAttribute('aria-current'),'page');
-  assert.equal(await page.locator('#history-navigation').isVisible(),false);
+  for(const selector of ['#history-navigation','#research-navigation']){
+    const legacy=page.locator(selector);
+    assert.equal(await legacy.isVisible(),false);
+    assert.equal(await legacy.evaluate(element=>element.childElementCount),0);
+  }
 }
 async function checkCurrentNavigation(page,target){
-  const current=await page.locator('a[aria-current="page"]').evaluateAll(links=>links.map(link=>({hash:link.hash,text:link.textContent.trim()})));
-  assert.ok(current.every(link=>link.hash===`#${target}`),`${target}: current-page links must identify the displayed route: ${JSON.stringify(current)}`);
-  assert.equal(await page.locator('#site-navigation [data-page="research"]').getAttribute('aria-current'),target==='research'?'page':null);
-  assert.equal(await page.locator('#site-navigation [data-section="history"]').getAttribute('aria-current'),target==='history'?'page':null);
-  if(target==='design')assert.deepEqual(current,[],'The design route has no current-page link in the navigation');
-  else assert.ok(current.length>0,`${target}: its navigation link must identify the current page`);
-  if(target==='materials')assert.equal(current.length,1,'Only the materials footer link identifies the current page');
+  const current=await page.locator('#site-navigation a[aria-current="page"],.page-panel:not([hidden]) a[aria-current="page"]').evaluateAll(links=>links.map(link=>({hash:link.hash,text:link.textContent.trim()})));
+  const workspace=workspaceForPage(target);
+  const expectedSubnav=await page.locator(`#panel-${target} .project-subnav a[data-page="${target}"]`).count()?[`#${target}`]:[];
+  assert.deepEqual(current.map(link=>link.hash),[`#${workspace}`,...expectedSubnav],`${target}: current links must identify its workspace and any matching subnav page`);
+  assert.deepEqual(await page.locator('#site-navigation a[aria-current="page"]').evaluateAll(links=>links.map(link=>link.hash)),[`#${workspace}`],`${target}: the main navigation must identify its parent workspace`);
+  assert.deepEqual(await page.locator(`#panel-${target} .project-subnav a[aria-current="page"]`).evaluateAll(links=>links.map(link=>link.hash)),expectedSubnav,`${target}: the page subnav must identify the current route when it links to that route`);
+  if(target!=='research'){
+    assert.equal(await page.locator(`#panel-${target} .project-breadcrumb`).count(),1,`${target}: its breadcrumb must be stable`);
+    assert.equal(await page.locator(`#panel-${target} .project-subnav`).count(),1,`${target}: its subnav must be stable`);
+  }
 }
 async function checkSkipLink(page){
   await nav(page,'map');
@@ -174,7 +179,8 @@ async function checkMapState(page){
   assert.equal(await page.locator('#search').inputValue(),'敦化');
   assert.equal(await page.locator('#result-count').innerText(),count);
   assert.ok(await page.locator('#map').evaluate(element=>element.getBoundingClientRect().width>100));
-  await nav(page,'countries');await page.goBack();await page.locator('#panel-map').waitFor({state:'visible'});
+  await nav(page,'countries');await page.goBack();await page.locator('#panel-library').waitFor({state:'visible'});
+  await page.goBack();await page.locator('#panel-map').waitFor({state:'visible'});
   await focused(page,'map-heading');
   assert.equal(await page.locator('#district').inputValue(),'大安區');
   assert.equal(await page.locator('#search').inputValue(),'敦化');
@@ -183,13 +189,13 @@ async function checkMapState(page){
 }
 async function checkReferences(page){
   for(const id of ['reference-L02','reference-P02']){
-    await nav(page,'research');
-    await page.locator('footer a[href="#materials"]').click();
+    await nav(page,'materials');
     await page.locator(`#panel-materials a[href="#${id}"]`).first().click();
     await page.locator('#panel-sources').waitFor({state:'visible'});
     await focused(page,id);
     assert.equal(await page.locator(`#${id}`).isVisible(),true);
     assert.equal(await page.locator('#history-navigation').isVisible(),false);
+    assert.equal(await page.locator('#research-navigation').isVisible(),false);
   }
   for(const id of ['reference-L13','reference-P03']){
     await page.goto(urlFor(id));await page.locator('#panel-sources').waitFor({state:'visible'});
@@ -218,8 +224,7 @@ try{
     await ready(page);assert.equal(new URL(page.url()).hash,'');await checkHome(page);
     assert.deepEqual(candidateRequests,[],'Candidate tools must not load with the homepage');
     let materialsVisited=false;
-    for(const target of ['research','map','comparison','history','countries','siting','design','materials','sources']){
-      // Siting and design navigation now passes through the materials entry.
+    for(const target of ['research','analysis','ideas','plan','library','map','comparison','history','countries','sources','materials','definition','archive','design','siting','team','work']){
       if(['siting','design','materials'].includes(target))materialsVisited=true;
       if(target!=='research')await nav(page,target);
       await checkCurrentNavigation(page,target);
@@ -246,7 +251,7 @@ try{
     assert.equal(await page.locator('[download],#export-csv,#comparison-export,#comparison-district-export').count(),0);
     if(width<960){
       await nav(page,'research');await page.locator('#site-menu-toggle').click();
-      await page.locator('#site-navigation [data-page="countries"]').click();await focused(page,'countries-heading');
+      await nav(page,'countries');
       assert.equal(await page.locator('#site-menu-toggle').getAttribute('aria-expanded'),'false');
       await page.locator('#site-menu-toggle').click();
       assert.equal(await page.locator('#site-menu-toggle').getAttribute('aria-expanded'),'true');
@@ -308,6 +313,6 @@ try{
   await retryContext.close();
 
   assert.deepEqual(errors,[]);
-  const report={status:'passed',widths,breakpoints:[639,640,959,960],screenshots:captureScreens?'captured':'skipped',screens,measurements,checks:'three primary entrances, research default, cited conclusions, secondary routes, current-page navigation semantics, keyboard skip preserves route/query/filter state and focuses main, reference hash focus, lazy candidate tools, single dataset selector, strategy-first country reader with optional media, guided design, navigation focus, map state/back, overflow, comparison empty/retry, photo fallback, static homepage on data failure, no downloads'};
+  const report={status:'passed',widths,breakpoints:[639,640,959,960],screenshots:captureScreens?'captured':'skipped',screens,measurements,checks:'five workspace entrances, research default, library and project subnav routes, cited conclusions, current workspace and subnav semantics, keyboard skip preserves route/query/filter state and focuses main, reference hash focus, lazy candidate tools, single dataset selector, single photo-first country reader, guided design, navigation focus, map state/back, overflow, comparison empty/retry, photo fallback, static homepage on data failure, no downloads'};
   await writeFile(resolve(qa,'redesign-report.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));
 }finally{await browser.close()}

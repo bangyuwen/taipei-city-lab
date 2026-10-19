@@ -289,6 +289,10 @@
 以上資料日期及官方來源查閱日為2026年10月19日。來源頁可驗證組織與公開職掌；不能單憑職掌頁或地圖界線推定特定地點所有權、許可、合規或政府參與。
 
 
+## 本輪交接與現勘排程
+
+[熱點分析交接](delivery/hotspot-handoff.md) · [政府分工交接](delivery/government-handoff.md) · [三輪現勘計畫](delivery/field-plan.md) · [現勘紀錄規則](delivery/field-record-guide.md)。計畫與空白表已備妥；實際現勘、人員排班及機關承接尚未完成。
+
 ## 重跑與保存
 
 - `analysis.ipynb`：從原始ZIP重算、獨立核對、表格及三張圖，已保存執行輸出。

@@ -199,6 +199,9 @@ def main():
     print(json.dumps([{'key': d['key'], 'rows': d['rows'], 'mapRows': d['plottableRows']} for d in datasets]))
     subprocess.run([sys.executable, str(ROOT / 'scripts/compare-snapshots.py')], check=True)
     subprocess.run([sys.executable, str(ROOT / 'scripts/analyze-coordinate-distances.py')], check=True)
+    # Refresh topic-owned derivations before packaging their standalone copies.
+    research_source = CANONICAL_RESEARCH if CANONICAL_RESEARCH.is_dir() else ROOT / 'research'
+    subprocess.run([sys.executable, str(research_source / 'taipei-citywide-2026-10-19/publish_results.py')], check=True)
     for script in ['prepare-research-execution.py', 'estimate-budget.py', 'package-research.py']:
         subprocess.run([sys.executable, str(ROOT / 'scripts' / script)], check=True)
 

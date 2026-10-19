@@ -81,15 +81,23 @@ test('reader entry and evidence links resolve to their owning pages',()=>{
   for(const hash of ['#reference-L01','#reference-L13','#reference-P04','#research-literature-heading','#source-comparison-method','#research-audit-heading','#research-papers-heading'])assert.equal(pageFromHash(hash),'sources');
   for(const hash of ['#materials','#research-materials-heading','#research-candidates-heading'])assert.equal(pageFromHash(hash),'materials');
   for(const hash of ['#definition','#definition-needs-heading','#t1-problems-heading'])assert.equal(pageFromHash(hash),'definition');
-  for(const hash of ['#ideas','#definition-scope-heading','#t1-process-heading','#definition-prd-risks-heading'])assert.equal(pageFromHash(hash),'ideas');
-  for(const hash of ['#analysis','#hotspot-heading','#citywide-area-12','#definition-evidence-E06-S2'])assert.equal(pageFromHash(hash),'analysis');
-  for(const hash of ['#hotspot-government','#hotspot-times','#definition-prd-heading','#t1-thinking-heading'])assert.equal(pageFromHash(hash),'plan');
+  for(const hash of ['#ideas','#t1-process-heading'])assert.equal(pageFromHash(hash),'ideas');
+  for(const hash of ['#analysis','#analysis-findings','#hotspot-candidates'])assert.equal(pageFromHash(hash),'analysis');
+  for(const hash of ['#plan','#t1-thinking-heading'])assert.equal(pageFromHash(hash),'plan');
   for(const hash of ['#design','#t1-specification','#t1-product-process-heading'])assert.equal(pageFromHash(hash),'design');
+  for(const [owner,hashes] of Object.entries({
+    methods:['hotspot-heading','hotspot-quality','reader-method-scope'],
+    districts:['citywide-area-12','plan-area-13','reader-district-01'],
+    evidence:['definition-evidence-E06-S2','definition-focus-P01','reader-definition-evidence-E01'],
+    work:['hotspot-government','hotspot-times','work-WP01','reader-work-duties'],
+    spec:['definition-scope-heading','definition-prd-risks-heading','definition-prd-heading'],
+    archive:['plan-budget','reader-archive-intro']
+  }))for(const hash of hashes)assert.equal(pageFromHash('#'+hash),owner,hash);
   assert.equal(pageFromHash('#country-japan'),'countries');
 });
 
 test('the main landmark fragment keeps the active route',()=>{
-  for(const page of ['map','comparison','history','siting','countries','design','definition','research','sources','materials']){
+  for(const page of ['map','comparison','history','siting','countries','design','definition','research','sources','materials','analysis','ideas','plan','districts','methods','evidence','work','spec','archive']){
     assert.equal(pageFromHash('#main',page),page);
     assert.equal(pageFromHash('#unknown',page),'research');
   }
@@ -98,7 +106,8 @@ test('the main landmark fragment keeps the active route',()=>{
 });
 
 test('hundred-day plan and its source links open the owning readable panel', () => {
-  for(const hash of ['#plan','#plan-heading','#plan-schedule','#plan-budget','#plan-responsibilities','#plan-acceptance'])assert.equal(pageFromHash(hash),'plan');
+  for(const hash of ['#plan','#plan-heading'])assert.equal(pageFromHash(hash),'plan');
+  for(const hash of ['#plan-schedule','#plan-budget','#plan-responsibilities','#plan-acceptance'])assert.equal(pageFromHash(hash),'archive');
   for(const hash of ['#budget-heading','#implementation-heading'])assert.equal(pageFromHash(hash),'materials');
   assert.equal(pageFromHash('#main','plan'),'plan');
   assert.equal(pageFromHash('#planning'),'research');
@@ -161,8 +170,18 @@ test('candidate streets remain addressable outside the history group',()=>{
 test('retained research fragments open their materials while summary and definition remain current',()=>{
   for(const hash of ['#research-synthesis','#conclusion-siting','#conclusion-collection','#conclusion-household','#current-evidence-heading','#problem-map-heading','#district-service-heading','#district-service-note','#service-method','#service-continuity-heading','#service-prototype','#service-scenarios','#service-measures','#disposal-continuity','#dc-scenario'])assert.equal(pageFromHash(hash),'materials',hash);
   for(const hash of ['#research-overview-conclusions','#research-overview-reading'])assert.equal(pageFromHash(hash),'research',hash);
-  assert.equal(pageFromHash('#research-overview-evidence'),'analysis');
-  assert.equal(pageFromHash('#research-overview-scope'),'ideas');
+  assert.equal(pageFromHash('#research-overview-evidence'),'evidence');
+  assert.equal(pageFromHash('#research-overview-scope'),'spec');
   assert.equal(pageFromHash('#research-overview-unknowns'),'plan');
   assert.equal(pageFromHash('#definition-evidence-heading'),'ideas');
+});
+
+
+test('each detail page belongs to one project workspace', async()=>{
+ const {workspacePages,workspaceForPage,allowedPages}=await import('../dist/data-utils.js');
+ const pages=Object.values(workspacePages).flat();assert.equal(pages.length,new Set(pages).size);
+ assert.deepEqual([...pages].sort(),[...allowedPages].sort());
+ for(const [page,owner] of [['districts','analysis'],['evidence','analysis'],['methods','analysis'],['work','plan'],['team','plan'],['spec','ideas'],['design','ideas'],['countries','library'],['archive','library'],['map','library']])assert.equal(workspaceForPage(page),owner,page);
+ for(const fragment of ['definition-prd-roles','definition-prd-roles-heading','reader-definition-prd-next','definition-prd-next'])assert.equal(pageFromHash('#'+fragment),'team');
+ assert.equal(pageFromHash('#definition-prd-validation'),'spec');
 });

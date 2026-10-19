@@ -1,0 +1,487 @@
+{
+  "version": "2026-10-19-first-round-v1",
+  "status": "planned_not_executed",
+  "city": {
+    "districts": 12,
+    "anchors": 36,
+    "sessions": 216,
+    "observation_hours": 54,
+    "person_observation_hours": 108
+  },
+  "campus": {
+    "anchors": 3,
+    "sessions": 18,
+    "observation_hours": 4.5,
+    "person_observation_hours": 9.0
+  },
+  "waves": [
+    {
+      "id": "W1",
+      "label": "第1輪：12區各第1錨點",
+      "candidate_ids": [
+        "D01-1",
+        "D02-1",
+        "D03-1",
+        "D04-1",
+        "D05-1",
+        "D06-1",
+        "D07-1",
+        "D08-1",
+        "D09-1",
+        "D10-1",
+        "D11-1",
+        "D12-1"
+      ],
+      "anchors": 12,
+      "sessions": 72,
+      "observation_hours": 18
+    },
+    {
+      "id": "W2",
+      "label": "第2輪：12區各第2錨點",
+      "candidate_ids": [
+        "D01-2",
+        "D02-2",
+        "D03-2",
+        "D04-2",
+        "D05-2",
+        "D06-2",
+        "D07-2",
+        "D08-2",
+        "D09-2",
+        "D10-2",
+        "D11-2",
+        "D12-2"
+      ],
+      "anchors": 12,
+      "sessions": 72,
+      "observation_hours": 18
+    },
+    {
+      "id": "W3",
+      "label": "第3輪：12區各第3錨點",
+      "candidate_ids": [
+        "D01-3",
+        "D02-3",
+        "D03-3",
+        "D04-3",
+        "D05-3",
+        "D06-3",
+        "D07-3",
+        "D08-3",
+        "D09-3",
+        "D10-3",
+        "D11-3",
+        "D12-3"
+      ],
+      "anchors": 12,
+      "sessions": 72,
+      "observation_hours": 18
+    }
+  ],
+  "geographic_groups": [
+    {
+      "id": "G1",
+      "label": "北側",
+      "districts": [
+        "北投區",
+        "士林區",
+        "大同區"
+      ]
+    },
+    {
+      "id": "G2",
+      "label": "東側",
+      "districts": [
+        "南港區",
+        "內湖區",
+        "松山區"
+      ]
+    },
+    {
+      "id": "G3",
+      "label": "中心東側",
+      "districts": [
+        "中山區",
+        "大安區",
+        "信義區"
+      ]
+    },
+    {
+      "id": "G4",
+      "label": "西南側",
+      "districts": [
+        "中正區",
+        "萬華區",
+        "文山區"
+      ]
+    }
+  ],
+  "capacity_scenarios": [
+    {
+      "teams": 1,
+      "people": 2,
+      "city_observation_dates": 108,
+      "weekday_dates": 72,
+      "weekend_dates": 36,
+      "interpretation": "每輪12點按可用組數分批、兩時窗同日完成；不是連續日曆天或完工承諾"
+    },
+    {
+      "teams": 2,
+      "people": 4,
+      "city_observation_dates": 54,
+      "weekday_dates": 36,
+      "weekend_dates": 18,
+      "interpretation": "每輪12點按可用組數分批、兩時窗同日完成；不是連續日曆天或完工承諾"
+    },
+    {
+      "teams": 3,
+      "people": 6,
+      "city_observation_dates": 36,
+      "weekday_dates": 24,
+      "weekend_dates": 12,
+      "interpretation": "每輪12點按可用組數分批、兩時窗同日完成；不是連續日曆天或完工承諾"
+    }
+  ],
+  "config": {
+    "version": "2026-10-19-first-round-v1",
+    "status": "planned_not_executed",
+    "observation_minutes": 15,
+    "minute_offset": 15,
+    "people_per_team": 2,
+    "day_slots": [
+      {
+        "id": "WD1",
+        "day_type": "weekday",
+        "label": "第一個平日"
+      },
+      {
+        "id": "WD2",
+        "day_type": "weekday",
+        "label": "另一個平日"
+      },
+      {
+        "id": "WE1",
+        "day_type": "weekend",
+        "label": "一個週末日"
+      }
+    ],
+    "geographic_groups": [
+      {
+        "id": "G1",
+        "label": "北側",
+        "districts": [
+          "北投區",
+          "士林區",
+          "大同區"
+        ]
+      },
+      {
+        "id": "G2",
+        "label": "東側",
+        "districts": [
+          "南港區",
+          "內湖區",
+          "松山區"
+        ]
+      },
+      {
+        "id": "G3",
+        "label": "中心東側",
+        "districts": [
+          "中山區",
+          "大安區",
+          "信義區"
+        ]
+      },
+      {
+        "id": "G4",
+        "label": "西南側",
+        "districts": [
+          "中正區",
+          "萬華區",
+          "文山區"
+        ]
+      }
+    ],
+    "sequence_rule": "先完成12區各第1錨點的六站次，再做各第2錨點，最後各第3錨點；區域分組只供排班，不是風險或需求排名，也未驗證最短路線。",
+    "calendar_rule": "每個錨點的WD1、WD2、WE1為三個不同日期；同日活動窗與對照窗由同組在同一錨點完成。實際日期、人員與交通時間待確認。",
+    "capacity_rule": "每組每個觀察日只安排一個錨點、兩個時窗；不假設能在一小時內跨訪三處。1、2、3組情境僅為容量換算，不代表已有承接人。"
+  },
+  "districts": [
+    {
+      "area": "松山區",
+      "stream": "city",
+      "group": "G2",
+      "snapshot_stations": 109,
+      "eligible_stations": 108,
+      "observed_stations": 107,
+      "unknown_stations": 1,
+      "observed_events": 1255794,
+      "street_source_rows": 55,
+      "venue_source_rows": 7,
+      "candidate_ids": "D01-1|D01-2|D01-3",
+      "weekday_activity_window": "18:00–19:00",
+      "weekday_control_window": "10:00–11:00",
+      "weekend_activity_window": "18:00–19:00",
+      "weekend_control_window": "10:00–11:00",
+      "data_task": "核對來源清冊、箱況、步行與清運",
+      "field_status": "未執行",
+      "authority_status": "逐點待核實"
+    },
+    {
+      "area": "信義區",
+      "stream": "city",
+      "group": "G3",
+      "snapshot_stations": 129,
+      "eligible_stations": 129,
+      "observed_stations": 127,
+      "unknown_stations": 2,
+      "observed_events": 1711503,
+      "street_source_rows": 60,
+      "venue_source_rows": 18,
+      "candidate_ids": "D02-1|D02-2|D02-3",
+      "weekday_activity_window": "18:00–19:00",
+      "weekday_control_window": "10:00–11:00",
+      "weekend_activity_window": "17:00–18:00",
+      "weekend_control_window": "10:00–11:00",
+      "data_task": "核對來源清冊、箱況、步行與清運",
+      "field_status": "未執行",
+      "authority_status": "逐點待核實"
+    },
+    {
+      "area": "大安區",
+      "stream": "city",
+      "group": "G3",
+      "snapshot_stations": 218,
+      "eligible_stations": 214,
+      "observed_stations": 210,
+      "unknown_stations": 4,
+      "observed_events": 2926122,
+      "street_source_rows": 47,
+      "venue_source_rows": 18,
+      "candidate_ids": "D03-1|D03-2|D03-3",
+      "weekday_activity_window": "18:00–19:00",
+      "weekday_control_window": "10:00–11:00",
+      "weekend_activity_window": "18:00–19:00",
+      "weekend_control_window": "10:00–11:00",
+      "data_task": "核對來源清冊、箱況、步行與清運",
+      "field_status": "未執行",
+      "authority_status": "逐點待核實"
+    },
+    {
+      "area": "中山區",
+      "stream": "city",
+      "group": "G3",
+      "snapshot_stations": 207,
+      "eligible_stations": 200,
+      "observed_stations": 195,
+      "unknown_stations": 5,
+      "observed_events": 1809481,
+      "street_source_rows": 50,
+      "venue_source_rows": 16,
+      "candidate_ids": "D04-1|D04-2|D04-3",
+      "weekday_activity_window": "18:00–19:00",
+      "weekday_control_window": "10:00–11:00",
+      "weekend_activity_window": "18:00–19:00",
+      "weekend_control_window": "10:00–11:00",
+      "data_task": "核對來源清冊、箱況、步行與清運",
+      "field_status": "未執行",
+      "authority_status": "逐點待核實"
+    },
+    {
+      "area": "中正區",
+      "stream": "city",
+      "group": "G4",
+      "snapshot_stations": 138,
+      "eligible_stations": 138,
+      "observed_stations": 137,
+      "unknown_stations": 1,
+      "observed_events": 1351594,
+      "street_source_rows": 83,
+      "venue_source_rows": 16,
+      "candidate_ids": "D05-1|D05-2|D05-3",
+      "weekday_activity_window": "18:00–19:00",
+      "weekday_control_window": "10:00–11:00",
+      "weekend_activity_window": "18:00–19:00",
+      "weekend_control_window": "10:00–11:00",
+      "data_task": "核對來源清冊、箱況、步行與清運",
+      "field_status": "未執行",
+      "authority_status": "逐點待核實"
+    },
+    {
+      "area": "大同區",
+      "stream": "city",
+      "group": "G1",
+      "snapshot_stations": 85,
+      "eligible_stations": 85,
+      "observed_stations": 84,
+      "unknown_stations": 1,
+      "observed_events": 853180,
+      "street_source_rows": 22,
+      "venue_source_rows": 14,
+      "candidate_ids": "D06-1|D06-2|D06-3",
+      "weekday_activity_window": "18:00–19:00",
+      "weekday_control_window": "10:00–11:00",
+      "weekend_activity_window": "18:00–19:00",
+      "weekend_control_window": "10:00–11:00",
+      "data_task": "核對來源清冊、箱況、步行與清運",
+      "field_status": "未執行",
+      "authority_status": "逐點待核實"
+    },
+    {
+      "area": "萬華區",
+      "stream": "city",
+      "group": "G4",
+      "snapshot_stations": 99,
+      "eligible_stations": 94,
+      "observed_stations": 91,
+      "unknown_stations": 3,
+      "observed_events": 698711,
+      "street_source_rows": 82,
+      "venue_source_rows": 3,
+      "candidate_ids": "D07-1|D07-2|D07-3",
+      "weekday_activity_window": "18:00–19:00",
+      "weekday_control_window": "10:00–11:00",
+      "weekend_activity_window": "18:00–19:00",
+      "weekend_control_window": "10:00–11:00",
+      "data_task": "核對來源清冊、箱況、步行與清運",
+      "field_status": "未執行",
+      "authority_status": "逐點待核實"
+    },
+    {
+      "area": "文山區",
+      "stream": "city",
+      "group": "G4",
+      "snapshot_stations": 127,
+      "eligible_stations": 124,
+      "observed_stations": 120,
+      "unknown_stations": 4,
+      "observed_events": 555429,
+      "street_source_rows": 51,
+      "venue_source_rows": 9,
+      "candidate_ids": "D08-1|D08-2|D08-3",
+      "weekday_activity_window": "18:00–19:00",
+      "weekday_control_window": "10:00–11:00",
+      "weekend_activity_window": "18:00–19:00",
+      "weekend_control_window": "10:00–11:00",
+      "data_task": "核對來源清冊、箱況、步行與清運",
+      "field_status": "未執行",
+      "authority_status": "逐點待核實"
+    },
+    {
+      "area": "南港區",
+      "stream": "city",
+      "group": "G2",
+      "snapshot_stations": 124,
+      "eligible_stations": 124,
+      "observed_stations": 121,
+      "unknown_stations": 3,
+      "observed_events": 745743,
+      "street_source_rows": 4,
+      "venue_source_rows": 5,
+      "candidate_ids": "D09-1|D09-2|D09-3",
+      "weekday_activity_window": "18:00–19:00",
+      "weekday_control_window": "10:00–11:00",
+      "weekend_activity_window": "17:00–18:00",
+      "weekend_control_window": "10:00–11:00",
+      "data_task": "優先補清冊：來源缺列不代表現場缺桶",
+      "field_status": "未執行",
+      "authority_status": "逐點待核實"
+    },
+    {
+      "area": "內湖區",
+      "stream": "city",
+      "group": "G2",
+      "snapshot_stations": 228,
+      "eligible_stations": 226,
+      "observed_stations": 221,
+      "unknown_stations": 5,
+      "observed_events": 941880,
+      "street_source_rows": 85,
+      "venue_source_rows": 7,
+      "candidate_ids": "D10-1|D10-2|D10-3",
+      "weekday_activity_window": "08:00–09:00",
+      "weekday_control_window": "10:00–11:00",
+      "weekend_activity_window": "17:00–18:00",
+      "weekend_control_window": "10:00–11:00",
+      "data_task": "核對來源清冊、箱況、步行與清運",
+      "field_status": "未執行",
+      "authority_status": "逐點待核實"
+    },
+    {
+      "area": "士林區",
+      "stream": "city",
+      "group": "G1",
+      "snapshot_stations": 158,
+      "eligible_stations": 152,
+      "observed_stations": 146,
+      "unknown_stations": 6,
+      "observed_events": 884249,
+      "street_source_rows": 142,
+      "venue_source_rows": 7,
+      "candidate_ids": "D11-1|D11-2|D11-3",
+      "weekday_activity_window": "18:00–19:00",
+      "weekday_control_window": "10:00–11:00",
+      "weekend_activity_window": "17:00–18:00",
+      "weekend_control_window": "10:00–11:00",
+      "data_task": "核對來源清冊、箱況、步行與清運",
+      "field_status": "未執行",
+      "authority_status": "逐點待核實"
+    },
+    {
+      "area": "北投區",
+      "stream": "city",
+      "group": "G1",
+      "snapshot_stations": 134,
+      "eligible_stations": 132,
+      "observed_stations": 125,
+      "unknown_stations": 7,
+      "observed_events": 682183,
+      "street_source_rows": 0,
+      "venue_source_rows": 10,
+      "candidate_ids": "D12-1|D12-2|D12-3",
+      "weekday_activity_window": "17:00–18:00",
+      "weekday_control_window": "10:00–11:00",
+      "weekend_activity_window": "17:00–18:00",
+      "weekend_control_window": "10:00–11:00",
+      "data_task": "優先補清冊：來源缺列不代表現場缺桶",
+      "field_status": "未執行",
+      "authority_status": "逐點待核實"
+    },
+    {
+      "area": "臺大公館校區",
+      "stream": "campus",
+      "group": "U",
+      "snapshot_stations": 65,
+      "eligible_stations": 64,
+      "observed_stations": 59,
+      "unknown_stations": 5,
+      "observed_events": 540785,
+      "street_source_rows": null,
+      "venue_source_rows": null,
+      "candidate_ids": "U-1|U-2|U-3",
+      "weekday_activity_window": "17:00–18:00",
+      "weekday_control_window": "10:00–11:00",
+      "weekend_activity_window": "12:00–13:00",
+      "weekend_control_window": "10:00–11:00",
+      "data_task": "核對來源清冊、箱況、步行與清運",
+      "field_status": "未執行",
+      "authority_status": "逐點待核實"
+    }
+  ],
+  "source_hashes": {
+    "protocol.md": "9ca20cf9c4b15b54f23e22cc93ed1c5a58b465be420f915ee0e19d9bfe4049cf",
+    "manifest.json": "247711b93af6906e5d273a3b994b93f8bd1c20a46e2424450070b1f88317562a",
+    "results/summary.json": "06d3290b73e8d8911b07f2d336aab5ba31e558777da00f9acc79ffb46c2c443a",
+    "results/stations.csv": "88ff5676c0a9e103b10133f7ba4d434b00f88600a17d4747d4bed85673b8b6cf",
+    "delivery/field-plan-config.json": "4b801be758f7a063d0d162267a5819b7a147c136698f2e6226ae0019f29e82de"
+  },
+  "limits": [
+    "七月活動時窗不是現時垃圾尖峰；現場時段有效性須另外記錄。",
+    "每小時內的15–30分是本次排程提案，來源只有小時精度，未提供分鐘級尖峰證據。",
+    "兩人一組僅為人力試算；實際承接人、日期、通勤與許可均未確認。",
+    "觀察小時是站點時間；兩人同步記錄不增加站次或事件分母。",
+    "三點只是首輪查核額度，不能代表整區垃圾問題；全站與無YouBike情境保留補查。"
+  ]
+}
