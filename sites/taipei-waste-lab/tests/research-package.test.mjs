@@ -92,19 +92,29 @@ home=layout.panels['panel-research']; materials=layout.panels['panel-materials']
 assert home['details']==0 and home['articles']==3
 assert {'research-overview-conclusions','research-overview-reading'}<=home['ids']
 analysis=layout.panels['panel-analysis']; ideas=layout.panels['panel-ideas']; plan=layout.panels['panel-plan']
-assert {'hotspot-heading','research-overview-evidence','definition-evidence-index-heading','hotspot-quality'}<=analysis['ids']
-assert all('citywide-area-%02d'%i in analysis['ids'] for i in range(1,14))
-assert {'ideas-options','definition-not-doing-heading','research-overview-scope','definition-prd-risks'}<=ideas['ids']
-assert {'hotspot-government','hotspot-times','hotspot-handoff','definition-prd','research-overview-unknowns'}<=plan['ids']
-assert all('plan-area-%02d'%i in plan['ids'] for i in range(1,14))
-assert not {'hotspot-government','definition-prd'} & analysis['ids']
-assert not {'hotspot-heading','definition-evidence-index-heading'} & plan['ids']
+assert {'analysis-findings','hotspot-candidates','analysis-city-map'}<=analysis['ids']
+assert {'ideas-options','definition-evidence-heading'}<=ideas['ids']
+assert {'plan-work-heading','plan-districts','research-overview-unknowns'}<=plan['ids']
+for name,limit in [('analysis',1800),('ideas',1400),('plan',2200)]:
+ assert len(''.join(layout.panels['panel-'+name]['text']))<limit,name
+assert all('citywide-area-%02d'%i in layout.panels['panel-districts']['ids'] for i in range(1,14))
+assert all('plan-area-%02d'%i in layout.panels['panel-districts']['ids'] for i in range(1,14))
+assert {'hotspot-heading','hotspot-quality'}<=layout.panels['panel-methods']['ids']
+assert {'research-overview-evidence','definition-evidence-index-heading','definition-focus-P01','definition-evidence-E06-S2'}<=layout.panels['panel-evidence']['ids']
+assert {'hotspot-government','hotspot-times','hotspot-handoff'}<=layout.panels['panel-work']['ids']
+assert {'definition-prd','definition-prd-risks','definition-not-doing-heading','research-overview-scope'}<=layout.panels['panel-spec']['ids']
+assert {'plan-budget','plan-acceptance'}<=layout.panels['panel-archive']['ids']
+assert not {'hotspot-government','definition-prd','definition-evidence-index-heading'} & analysis['ids']
+assert not {'plan-budget','hotspot-government','definition-prd','plan-area-01'} & plan['ids']
 assert not {'service-prototype','conclusion-household','budget-heading','problem-map-heading'} & home['ids']
 assert {'service-continuity','service-insight','service-prototype','service-scenarios','service-measures','disposal-continuity','current-evidence-heading','problem-map-heading'}<=materials['ids']
 assert '服務成效尚未驗證' in ''.join(materials['text'])
 assert '正式桌面測試 0/12 人（0/108 任務）' in ''.join(materials['text'])
 assert all(key in materials['ids'] for key in ['conclusion-siting','conclusion-collection','conclusion-household'])
-assert {'#analysis','#ideas','#plan','#feedback','#map','#sources','#definition','#research-materials-previous-heading'}<=home['links']
+assert {'#analysis','#ideas','#plan','#districts','#library','#definition-prd-roles','#definition-prd-next'}<=home['links']
+assert {'definition-prd-roles','definition-prd-next'}<=layout.panels['panel-team']['ids']
+assert not {'definition-prd-roles','definition-prd-next'} & layout.panels['panel-spec']['ids']
+assert {'#history','#map','#comparison','#countries','#sources','#materials','#definition','#archive'}<=layout.panels['panel-library']['links']
 assert '家戶本期不做' in ''.join(home['text']) and '尚未進行真人研究' in ''.join(home['text'])
 assert '12 區' in ''.join(home['text']) and '交通活動' in ''.join(home['text'])
 assert len(layout.references)==17 and set(layout.references.values())=={'panel-sources'}
@@ -148,10 +158,12 @@ assert plan.count('<table ')==sum(1 for line in source.splitlines() if re.fullma
 for href in p.links:
  assert href.startswith(('https://','#')),href
  if href.startswith('#plan-'): assert href[1:] in p.ids,href
-assert len(p.ids)==12
+assert len([key for key in p.ids if key.startswith('plan-')])==12
+assert len([key for key in p.ids if key.startswith('reader-archive-')])==12
 assert '尚未啟動' in plan and '仍待確認' in plan
-assert 'href="#plan"' in page.split('id="panel-materials"')[1].split('id="panel-sources"')[0]
-assert 'href="#plan"' in page.split('<footer>')[1]
+assert 'href="#archive"' in page.split('id="panel-materials"')[1].split('id="panel-sources"')[0]
+assert 'href="#archive"' in page.split('<footer>')[1]
+assert not re.search(r'<a href="#plan"[^>]*>(?:閱讀)?百日計畫',page)
 assert '180 日是各點從開放日起的營運期' in page
 assert '原估約 250 萬元不是新計畫上限' in page
 module=runpy.run_path('scripts/package-research.py')
@@ -176,6 +188,33 @@ rendered=m['render_service_continuity'](rendered)
 assert home(rendered)==home(page)
 assert rendered.index('<section id="panel-materials"')<rendered.index('<!-- research-synthesis-start -->')
 assert rendered.index('<section id="panel-materials"')<rendered.index('<!-- service-continuity-start -->')
+`],{cwd:new URL('../',import.meta.url),encoding:'utf8'});
+ assert.equal(result.status,0,result.stderr||result.stdout);
+});
+
+
+test('historical publisher cannot overwrite the current reader and retains its dated caller', () => {
+ const result=spawnSync(process.env.PYTHON_BIN||'python3',['-c',String.raw`
+import importlib.util, tempfile, shutil
+from pathlib import Path
+spec=importlib.util.spec_from_file_location('publisher','research/gongguan-hotspots-2026-10-19/publish_results.py')
+m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+source=m.ROOT
+with tempfile.TemporaryDirectory() as directory:
+ root=Path(directory);(root/'dist/images').mkdir(parents=True);page=root/'dist/index.html';m.SITE=root
+ for content in ['current page','<!-- gongguan-delivery:start -->','<!-- gongguan-delivery:end --><!-- gongguan-delivery:start -->','<!-- gongguan-delivery:start --><!-- gongguan-delivery:start --><!-- gongguan-delivery:end -->']:
+  page.write_text(content)
+  try:m.main()
+  except RuntimeError:pass
+  else:raise AssertionError('Invalid historical region accepted')
+  assert page.read_text()==content
+ study=root/'study';study.mkdir();m.ROOT=study
+ for name in ['results/summary.json','results/quality.json','government/government.json','government/government-plan.md','results/figures/activity-ranking.png','results/figures/activity-hours.png','results/figures/station-context.png']:
+  target=study/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(source/name,target)
+ page.write_text('before<!-- gongguan-delivery:start -->old<!-- gongguan-delivery:end -->after')
+ m.main();text=page.read_text()
+ assert text.startswith('before<!-- gongguan-delivery:start -->') and text.endswith('<!-- gongguan-delivery:end -->after')
+ assert text.count('id="hotspot-heading"')==1
 `],{cwd:new URL('../',import.meta.url),encoding:'utf8'});
  assert.equal(result.status,0,result.stderr||result.stdout);
 });

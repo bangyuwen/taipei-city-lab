@@ -1,0 +1,129 @@
+{
+  "checked_at": "2026-10-19",
+  "method": "透過瀏覽器工具開啟或搜尋現有來源清單中的官方網站。只記錄公開頁面可支持的職掌、流程或資料入口；沒有聯絡任何機關、建立案件或進行現場查核。",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "清潔箱之新設、拆除、遷移之申請？",
+      "url": "https://www.dep.gov.taipei/News_Content.aspx?n=ACEFA960B5A4ACD7&s=B90A10FBBF73521B",
+      "checked_at": "2026-10-19",
+      "verification_status": "verified",
+      "claim": "環保局公開問答說明清潔箱新設、拆除或遷移的反映與清潔隊檢核流程；這是公開流程，不代表本案任何候選點已獲核准。",
+      "evidence": "環保局「清潔箱之新設、拆除、遷移之申請？」頁面；公開文字說明可透過里長或1999反映並由清潔隊依要件檢核。沒有查得任何本案點位核准。"
+    },
+    {
+      "id": "S02",
+      "title": "組織架構",
+      "url": "https://www.dep.gov.taipei/cp.aspx?n=DD34C671F97B74E5",
+      "checked_at": "2026-10-19",
+      "verification_status": "verified",
+      "claim": "環保局組織頁列出依12區設置的區清潔隊，公開職掌包括行人專用清潔箱清理；直屬清潔隊職掌包括修護及拆裝。",
+      "evidence": "環保局「組織架構」頁面；瀏覽結果第279至293行列出12區清潔隊的範圍與職掌，以及直屬清潔隊的清潔箱修護、拆裝職掌。"
+    },
+    {
+      "id": "S06",
+      "title": "養護工程隊業務職掌",
+      "url": "https://nco.gov.taipei/News_Content.aspx?n=EF8BCD0B3D07B082&s=37A6FB2ACE0C25A8&sms=73A5113E33DDEA76",
+      "checked_at": "2026-10-19",
+      "verification_status": "verified",
+      "claim": "新工處養護工程隊公開職掌包括本市道路土地及財產管理、巡查維護與人民申請使用道路審核；不據此認定任何活動錨點的道路或土地管理者。",
+      "evidence": "新工處「養護工程隊」職掌頁；瀏覽結果第273至275行列出道路土地與財產管理、巡查維護及道路使用申請審核。"
+    },
+    {
+      "id": "S07",
+      "title": "闢建或拓寬人行道設施物妨礙通行",
+      "url": "https://nco.gov.taipei/News_Content.aspx?n=9B1841F5C8EEDA23&s=5E7A3A28AFDA77EF",
+      "checked_at": "2026-10-19",
+      "verification_status": "verified",
+      "claim": "新工處公開說明道路工程遇設施物影響通行時會洽設施所屬單位研議；此頁不確認本案任何錨點的設施權屬或完整核准鏈。",
+      "evidence": "新工處「闢建或拓寬人行道設施物妨礙通行」頁；瀏覽結果第275至282行說明工程與設施所屬單位研議的情形。頁面不判定本案點位權責。"
+    },
+    {
+      "id": "S08",
+      "title": "組織架構與業務職掌",
+      "url": "https://bote.gov.taipei/cp.aspx?n=15E4D7CDB56449D0",
+      "checked_at": "2026-10-19",
+      "verification_status": "verified",
+      "claim": "交工處公開職掌涵蓋交通規劃、交通資料調查，以及標誌、標線、號誌和安全設施設計維護；僅作實際交通介面重疊時的分流依據。",
+      "evidence": "交工處「組織架構」頁；瀏覽結果第240至251行列出交通規劃、交通資料、標誌標線號誌與安全設施職掌。"
+    },
+    {
+      "id": "S10",
+      "title": "大眾運輸科業務職掌",
+      "url": "https://pto.gov.taipei/News_Content.aspx?n=E9904C4AEF4C0B73&s=198ADD9BEFB9E915&sms=DDAD902E541DC448",
+      "checked_at": "2026-10-19",
+      "verification_status": "verified",
+      "claim": "公運處大眾運輸科公開職掌涵蓋公車路線及站位規劃、調整等事項；不據此推定候選點的土地管理權。",
+      "evidence": "公運處「大眾運輸科業務職掌」頁；瀏覽結果第425至427行列出公車站位、路線規劃與調整事項。"
+    },
+    {
+      "id": "S11",
+      "title": "公共自行車簡介",
+      "url": "https://dot.gov.taipei/News_Content.aspx?n=44C34CB5F656CF90&s=2982E80C499FE909",
+      "checked_at": "2026-10-19",
+      "verification_status": "verified",
+      "claim": "交通局公開頁說明YouBike由交通局委託業者建置及營運；僅作實際自行車站或動線介面重疊時的協調線索。",
+      "evidence": "交通局「公共自行車介紹－簡介」頁；瀏覽結果第351至355行說明公共自行車由交通局委託業者建置及營運。"
+    },
+    {
+      "id": "S15",
+      "title": "組織架構及單位職掌",
+      "url": "https://ga.ntu.edu.tw/main_ch/docDetail/59/0/464/",
+      "checked_at": "2026-10-19",
+      "verification_status": "not_verified",
+      "claim": "指定的臺大總務處職掌頁本次瀏覽未能讀取。本提案只把校園管理單位列為待確認對象，未用此頁認定任何校園錨點的土地權屬、許可或負責單位。",
+      "evidence": "使用瀏覽器開啟指定的臺大總務處職掌網址時回傳內部錯誤，未能核讀內容；不以此頁支持任何土地、場域或許可結論。"
+    },
+    {
+      "id": "S17",
+      "title": "1999使用說明及服務流程",
+      "url": "https://1999.gov.taipei/front/Accept/CasLogin",
+      "checked_at": "2026-10-19",
+      "verification_status": "verified",
+      "claim": "臺北市陳情系統官方頁提供案件登錄、分類與案件處理情形查詢入口；本交接包未建立或提交案件。",
+      "evidence": "臺北市陳情系統官方頁；瀏覽結果提供案件登錄、分類與案件狀態查詢資訊。本交接包未建立或提交案件。"
+    },
+    {
+      "id": "S20",
+      "title": "組織架構暨機關網路電話",
+      "url": "https://www.gov.taipei/cp.aspx?n=8ABE1F397F219F70",
+      "checked_at": "2026-10-19",
+      "verification_status": "verified",
+      "claim": "市府組織頁說明各區公所為市府派出機關並掌理區政工作，支持地方脈絡協調提案，不代表土地、道路或設施核准權。",
+      "evidence": "臺北市政府「組織架構暨機關網路電話」頁；瀏覽結果第965至979行說明各區公所的區政職掌並列出12區公所。"
+    },
+    {
+      "id": "S21",
+      "title": "臺北市公共自行車2.0租借紀錄",
+      "url": "https://data.gov.tw/dataset/150635",
+      "checked_at": "2026-10-19",
+      "verification_status": "verified",
+      "claim": "政府資料開放平臺列有臺北市YouBike 2.0租借紀錄資料集；本研究事件數與日期分母以已保存的資料檔及protocol為準，不由資料目錄頁推算。",
+      "evidence": "政府資料開放平臺YouBike 2.0租借紀錄資料集頁成功開啟；只確認官方資料入口存在，不以目錄頁重建研究列數。"
+    },
+    {
+      "id": "S22",
+      "title": "YouBike2.0臺北市公共自行車即時資訊",
+      "url": "https://data.gov.tw/dataset/137993",
+      "checked_at": "2026-10-19",
+      "verification_status": "verified",
+      "claim": "政府資料開放平臺列有YouBike 2.0臺北市站位資料集；1,821站與1,790啟用來自固定站點快照及研究結果，不由資料目錄頁推定即時現況。",
+      "evidence": "政府資料開放平臺YouBike 2.0站位資料集頁成功開啟；固定快照與啟用筆數沿用本地研究資料。"
+    },
+    {
+      "id": "S23",
+      "title": "臺北市行人專用清潔箱",
+      "url": "https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c",
+      "checked_at": "2026-10-19",
+      "verification_status": "verified",
+      "claim": "臺北市資料大平臺列有行人專用清潔箱資料集；本研究681筆街道清冊與130筆場域線索是不同日期、不同粒度的固定資料層。",
+      "evidence": "臺北市資料大平臺行人專用清潔箱資料集頁成功開啟；固定街道清冊與場所線索的筆數仍以各自保存檔案為準。"
+    }
+  ],
+  "limits": [
+    "公開職掌只支持提案分工的參考，不等於機關已接受工作、已指派人員或已核准本案。",
+    "一般職掌頁不能判定36個錨點的土地、道路、設施管理權、必要核准鏈或維護責任；須逐點確認。",
+    "來源資料目錄不能替代固定快照、資料檔雜湊、研究protocol或現況盤點。",
+    "S15指定頁面未能瀏覽，本包未據此認定校園權責；校園管理與進入規則仍待確認。"
+  ]
+}

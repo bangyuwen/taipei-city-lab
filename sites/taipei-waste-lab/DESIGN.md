@@ -134,7 +134,7 @@ components:
 
 ## Overview
 
-The 2026-10-17 information architecture puts three reader journeys in the primary rail: 研究結論 (the default page), 台北的變化, and 各國垃圾桶. Sources/methods and execution materials are secondary links. Recommendations, dated observations and authored concepts have distinct content homes and direct evidence links. The country reader leads with the selected country's strategy, operating flow, city evidence, sources, and limits; photo and 3D remain supplementary media for twelve cases. The browser covers fourteen countries and regions. Guided design demonstrations replace the parameter workbench. These changes retain the petrol/paper identity and the existing type and interaction tokens.
+The 2026-10-19 project workspace serves the research team. Five primary destinations organize work: 工作總覽, 熱點研究, 方案比較, 執行分工 and 資料庫. The overview connects completed desktop deliverables to planned next steps and unresolved decisions. Every secondary page has one stable parent, a breadcrumb and local navigation; history and reference material live in the library. Methods and requirements are continuous indexed documents, while districts and individual work packages remain selectable records. This structure preserves the petrol/paper identity, existing data boundaries and interaction tokens.
 
 **Creative North Star: "The Open-Shelf Research Index"**
 
@@ -218,6 +218,8 @@ The form language is mostly rectangular, with softly rounded controls and larger
 
 ### Buttons
 Buttons are compact task controls, not oversized calls to action. Primary actions use a solid petrol field; secondary actions use a white field and quiet border; source and reset actions use an underlined text treatment. Common controls are 44–46px high. Hover transitions use 160ms ease-out; visible keyboard focus uses a 3px outline.
+
+Headings and static reading destinations keep programmatic focus for route and anchor navigation without an outline around the text or article. Interactive controls and focusable regions retain their visible keyboard focus indicators.
 
 ### Chips
 Filter choices remain rectangular. An unselected choice uses white and a line border; a selected choice uses a solid petrol fill and white text. Dataset and history selections use a pale wash with a green underline or other visible state.

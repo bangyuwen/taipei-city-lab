@@ -10,7 +10,14 @@ ROOT = Path(__file__).resolve().parent.parent
 QA = ROOT / 'qa'
 QA.mkdir(exist_ok=True)
 URL = os.environ.get('REDESIGN_QA_URL', 'http://127.0.0.1:4174/')
-HISTORY_PAGES = ('map', 'comparison', 'history', 'siting')
+WORKSPACE_PAGES = {
+    'research': ('research',),
+    'analysis': ('analysis', 'districts', 'methods', 'feedback', 'evidence'),
+    'ideas': ('ideas', 'spec', 'siting', 'design'),
+    'plan': ('plan', 'team', 'work'),
+    'library': ('library', 'history', 'map', 'comparison', 'countries', 'sources',
+                'materials', 'definition', 'archive'),
+}
 CAPTURE_SCREENSHOTS = '--functional-only' not in sys.argv
 
 
@@ -50,30 +57,30 @@ def focused(page, target_id):
     page.wait_for_function('(id) => document.activeElement?.id === id', arg=target_id)
 
 
-def primary(page, panel):
+def workspace_for_page(panel):
+    return next((workspace for workspace, pages in WORKSPACE_PAGES.items()
+                 if panel in pages), 'research')
+
+
+def primary(page, workspace):
     menu = page.locator('#site-menu-toggle')
     if menu.is_visible() and not page.locator('#site-navigation').is_visible():
         menu.click()
-    selector = ('#site-navigation [data-section="history"]' if panel == 'history'
-                else f'#site-navigation [data-page="{panel}"]')
-    page.locator(selector).click()
+    page.locator(f'#site-navigation [data-page="{workspace}"]').click()
 
 
 def navigate(page, panel):
     previous_hash = urlsplit(page.url).fragment
-    if panel in HISTORY_PAGES:
-        primary(page, 'history')
-        if panel != 'history':
-            page.locator(f'.history-subnav [data-page="{panel}"]').click()
-    elif panel in ('research', 'countries'):
-        primary(page, panel)
-    elif panel == 'design':
-        primary(page, 'research')
-        page.locator('#panel-research a[href="#design"]').first.click()
-    else:
-        page.locator(f'footer a[href="#{panel}"]').click()
+    workspace = workspace_for_page(panel)
+    primary(page, workspace)
+    if panel != workspace:
+        if workspace == 'library':
+            page.locator(f'#panel-library .library-index a[href="#{panel}"]').first.click()
+        else:
+            page.locator(f'#panel-{workspace} .project-subnav a[data-page="{panel}"]').click()
     target = page.locator(f'#panel-{panel}')
     target.wait_for(state='visible')
+    page.wait_for_function('(expected) => document.body.dataset.page === expected', arg=panel)
     if previous_hash != panel:
         focused(page, target.get_attribute('aria-labelledby'))
 
@@ -84,8 +91,14 @@ def ready(page):
     page.locator('#dataset-version:not([disabled])').wait_for(state='attached')
     assert page.locator('#panel-research details').count() == 0
     assert page.locator('#research-synthesis > .research-synthesis-item').count() == 3
-    assert page.locator('#site-navigation a').evaluate_all('(links) => links.map(link => link.hash)') == ['#research', '#history', '#countries']
-    assert not page.locator('#history-navigation').is_visible()
+    assert page.locator('#site-navigation a').evaluate_all('(links) => links.map(link => [link.hash, link.textContent.trim()])') == [
+        ['#research', '工作總覽'], ['#analysis', '熱點研究'], ['#ideas', '方案比較'],
+        ['#plan', '執行分工'], ['#library', '資料庫'],
+    ]
+    for selector in ('#history-navigation', '#research-navigation'):
+        legacy_navigation = page.locator(selector)
+        assert not legacy_navigation.is_visible()
+        assert legacy_navigation.evaluate('(element) => element.childElementCount === 0')
     assert page.locator('.research-candidate').count() == 0
     navigate(page, 'map')
     page.locator('#map.leaflet-container').wait_for()
