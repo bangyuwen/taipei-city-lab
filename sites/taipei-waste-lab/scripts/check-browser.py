@@ -212,6 +212,8 @@ def main():
         assert phone.locator('#result-count').inner_text() == '235'
         navigate(phone, 'countries')
         phone.go_back()
+        phone.locator('#panel-library').wait_for(state='visible')
+        phone.go_back()
         phone.locator('#panel-map').wait_for(state='visible')
         assert phone.locator('#district').input_value() == '大安區'
         assert phone.locator('#dataset-version').input_value() == '2024'
