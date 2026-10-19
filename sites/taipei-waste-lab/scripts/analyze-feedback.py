@@ -769,7 +769,7 @@ def render(data, distribution=None):
     cross_md, cross_page = render_districts(data, distribution)
     md = [f'# {REPORT_TITLE}', '', f'分析整理日：{data["analysisDate"]}（非收集日期）', '', SCOPE, '', correction, '',
           *cross_md, f'## {REPORT_JUDGMENT}', '']
-    page = [f'<header class="research-page-heading"><h2 id="feedback-heading">{REPORT_TITLE}</h2><p>逐則理解 {total:,} 則留言，再比較各區問題與訴求。</p><p class="research-update">整理於 {data["analysisDate"]}；收集期間未提供。</p></header>',
+    page = [f'<header class="research-page-heading"><h2 id="feedback-heading">找不到桶、桶滿與投放難用，是不同的困難。</h2><p>已逐則標註 {total:,} 則篩選留言。有人要求增桶，也有人反對住宅附近設桶；以下分開呈現具體困難、使用情境與設桶立場。比例只描述這批留言，不代表全體市民。</p><p class="research-update">整理於 {data["analysisDate"]}；收集期間未提供。</p></header>',
             f'<p class="feedback-scope">{esc(SCOPE)}</p><p class="feedback-note">{esc(correction)}</p>',
             '<nav class="feedback-contents" aria-label="留言分析章節"><a href="#feedback-cross">十二區比較表</a><a href="#feedback-district-details">各區詳解</a><a href="#feedback-findings">整體判讀</a><a href="#feedback-stances">設桶立場</a><a href="#feedback-mechanisms">原因與反例</a><a href="#feedback-method">方法與限制</a></nav>',
             *cross_page,
