@@ -4,6 +4,8 @@ import shutil
 
 ROOT = Path(__file__).resolve().parent.parent
 ASSETS = (
+    'images/citywide/district-activity.png', 'images/citywide/catalog-coverage.png', 'images/citywide/citywide-context.png',
+    'images/hotspots/activity-ranking.png', 'images/hotspots/activity-hours.png', 'images/hotspots/station-context.png',
     'prd/index.html', 'prd/style.css',
     'design-thinking/index.html', 'design-thinking/style.css', 'design-thinking/reading.js',
     'index.html', 'siting-overlay.html', 'field-checklist.html', 'siting-ui.js', 'app.js', 'history.js', 'data-utils.js', 'styles.css', 'mark.svg',

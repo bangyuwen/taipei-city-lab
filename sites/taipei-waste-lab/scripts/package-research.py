@@ -195,7 +195,7 @@ def render_hundred_day_plan(index_text, markdown):
     assert seen == list(PLAN_SECTIONS), 'Plan sections changed; update public navigation'
     contents = ''.join(f'<a href="#plan-{slug}">{html.escape(label)}</a>'
                        for slug, label in PLAN_SECTIONS.values())
-    rendered = (f'<header class="research-page-heading"><h2 id="plan-heading">{title}</h2>'
+    rendered = (f'<header class="research-page-heading"><h3 id="plan-archive-heading">歷史提案：{title}</h3>'
                 '<p class="research-update">規劃提案 · 尚未啟動；點位、經費、採購與營運承接仍待確認。</p></header>'
                 '<div class="plan-reading-layout"><nav class="plan-contents" aria-label="百日計畫章節">'
                 + contents + '</nav><div class="plan-body">' + '\n'.join(body) + '</div></div>')

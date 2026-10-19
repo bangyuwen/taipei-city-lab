@@ -1,0 +1,74 @@
+{
+  "amendment_sha256": "c62ac5d8b26132fbfb2af3afc3ee9b613b537585d5243e0f2972eadd45a63e67",
+  "daily_borrow_median": 272491,
+  "threshold_fraction": 0.1,
+  "flagged_dates": [
+    "2026-07-10",
+    "2026-07-11"
+  ],
+  "primary_top5": [
+    "500101022",
+    "500101181",
+    "500101276",
+    "500106135",
+    "500106003"
+  ],
+  "excluding_flagged_top5": [
+    "500101022",
+    "500101181",
+    "500101276",
+    "500106135",
+    "500106003"
+  ],
+  "same_top5_members": true,
+  "ranked_excluding_flagged": [
+    {
+      "station_id": "500101022",
+      "name": "捷運公館站(2號出口)",
+      "events": 91243
+    },
+    {
+      "station_id": "500101181",
+      "name": "捷運公館站(3號出口)",
+      "events": 40437
+    },
+    {
+      "station_id": "500101276",
+      "name": "羅斯福新生南路口",
+      "events": 24294
+    },
+    {
+      "station_id": "500106135",
+      "name": "羅斯福路四段108巷口",
+      "events": 23708
+    },
+    {
+      "station_id": "500106003",
+      "name": "捷運公館站(1號出口)",
+      "events": 18632
+    }
+  ],
+  "profile_denominators": {
+    "weekday": 22,
+    "weekend": 7
+  },
+  "profile_peaks": {
+    "weekday": {
+      "day_type": "weekday",
+      "hour": 18,
+      "events": 16696,
+      "days": 22,
+      "average_per_day": 758.909
+    },
+    "weekend": {
+      "day_type": "weekend",
+      "hour": 18,
+      "events": 3935,
+      "days": 7,
+      "average_per_day": 562.143
+    }
+  },
+  "zero_snapshot_station_is_unknown": [
+    "臺大普通教學館東側"
+  ]
+}
