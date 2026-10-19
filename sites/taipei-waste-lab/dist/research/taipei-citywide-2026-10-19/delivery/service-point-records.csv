@@ -1,0 +1,1 @@
+record_id,visit_id,service_point_id,scope_version,status,fill_level,start_litter_count,start_count_time,end_litter_count,end_count_time,walking_route,last_confirmed_clearance,source,manager,authority_status,photo_ref,notes
