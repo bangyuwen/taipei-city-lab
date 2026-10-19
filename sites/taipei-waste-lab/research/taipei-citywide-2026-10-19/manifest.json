@@ -1,0 +1,61 @@
+{
+  "analysis_date": "2026-10-19",
+  "scope": "Taipei City 12 districts plus separate NTU campus source category",
+  "protocol_sha256": "9ca20cf9c4b15b54f23e22cc93ed1c5a58b465be420f915ee0e19d9bfe4049cf",
+  "trip_archive": {
+    "catalog": "https://data.gov.tw/dataset/150635",
+    "url": "https://tcgbusfs.blob.core.windows.net/dotapp/youbike_second_ticket_opendata/2026/2026-07/202607_YouBike2.0%E7%A5%A8%E8%AD%89%E5%88%B7%E5%8D%A1%E8%B3%87%E6%96%99.zip",
+    "sha256": "91216f4493e7b103b7c162fa1649946261a0a55486ed6bda4c45f86ac53ea312",
+    "bytes": 132748590,
+    "retained_archive": "/Users/bangyuwen/.codex/visualizations/2026/10/18/01a1515b-50dd-7f52-8f85-fccfe0716bdc/hotspot-analysis/raw/202607-youbike.zip",
+    "source_last_modified": "2026-09-07T02:52:20Z"
+  },
+  "inputs": [
+    {
+      "path": "../youbike-bin-screening-2026-10-18/inputs/youbike.json",
+      "sha256": "37cc4b32dfa5ae7dad0328701808df6d76860d86e08794b3af72773ca6ed9585",
+      "bytes": 953864
+    },
+    {
+      "path": "../youbike-bin-screening-2026-10-18/inputs/bins-2026.csv",
+      "sha256": "38b4af06dc0d57a38cc1361079fed8963632be746f5033638dec1001c072fda1",
+      "bytes": 84118
+    },
+    {
+      "path": "../youbike-bin-screening-2026-10-18/inputs/bins-2024.csv",
+      "sha256": "bb34f092da73d663b49eb0a55d98fe8864377a3dfcc1b103f04affdca4ca6cdb",
+      "bytes": 243970
+    },
+    {
+      "path": "../youbike-bin-screening-2026-10-18/inputs/venues.csv",
+      "sha256": "e63606bca5da810114f4352d38c0a5f13f0be85ee7959c307ad8c9df56d1ce72",
+      "bytes": 6675
+    },
+    {
+      "path": "../feedback-2026-10-17/summary.json",
+      "sha256": "8ce178c3d42c16eb7141b34c7cd345705c51498fe4304a3aa8235f97e937f9b2",
+      "bytes": 9206
+    },
+    {
+      "path": "../gongguan-hotspots-2026-10-19/results/source-station-events.csv",
+      "sha256": "49a295ceea6cfc3be297991b37bc09ed23295167d55490a8bb74c2f0f0408a90",
+      "bytes": 167185
+    },
+    {
+      "path": "../gongguan-hotspots-2026-10-19/results/source-daily.csv",
+      "sha256": "885ddbc8d62caec83c6169f2ceb3830080a75c9689e18c81d30a452423247491",
+      "bytes": 1600
+    },
+    {
+      "path": "../gongguan-hotspots-2026-10-19/inputs/trip-file-index.csv",
+      "sha256": "bfa978b28f326079dab191a255bbcbc5eff1039f71a4a9cc0ff9ae90c810ff36",
+      "bytes": 16327
+    }
+  ],
+  "sources": {
+    "station_catalog": "https://data.gov.tw/dataset/137993",
+    "bus_catalog": "https://data.taipei/dataset/detail?id=48aa5bca-2a4f-4fb7-a658-43cba51d5d56",
+    "bus_download": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=dfd68d8e-d3b9-44df-b614-8850c103239f",
+    "bin_catalog": "https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c"
+  }
+}

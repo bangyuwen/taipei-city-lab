@@ -89,16 +89,24 @@ class Layout(HTMLParser):
 
 layout=Layout(); layout.feed(Path('dist/index.html').read_text())
 home=layout.panels['panel-research']; materials=layout.panels['panel-materials']
-assert home['details']==0 and home['articles']==6
-assert {'research-overview-conclusions','research-overview-evidence','research-overview-scope','research-overview-unknowns','research-overview-reading'}<=home['ids']
+assert home['details']==0 and home['articles']==3
+assert {'research-overview-conclusions','research-overview-reading'}<=home['ids']
+analysis=layout.panels['panel-analysis']; ideas=layout.panels['panel-ideas']; plan=layout.panels['panel-plan']
+assert {'hotspot-heading','research-overview-evidence','definition-evidence-index-heading','hotspot-quality'}<=analysis['ids']
+assert all('citywide-area-%02d'%i in analysis['ids'] for i in range(1,14))
+assert {'ideas-options','definition-not-doing-heading','research-overview-scope','definition-prd-risks'}<=ideas['ids']
+assert {'hotspot-government','hotspot-times','hotspot-handoff','definition-prd','research-overview-unknowns'}<=plan['ids']
+assert all('plan-area-%02d'%i in plan['ids'] for i in range(1,14))
+assert not {'hotspot-government','definition-prd'} & analysis['ids']
+assert not {'hotspot-heading','definition-evidence-index-heading'} & plan['ids']
 assert not {'service-prototype','conclusion-household','budget-heading','problem-map-heading'} & home['ids']
 assert {'service-continuity','service-insight','service-prototype','service-scenarios','service-measures','disposal-continuity','current-evidence-heading','problem-map-heading'}<=materials['ids']
 assert '服務成效尚未驗證' in ''.join(materials['text'])
 assert '正式桌面測試 0/12 人（0/108 任務）' in ''.join(materials['text'])
 assert all(key in materials['ids'] for key in ['conclusion-siting','conclusion-collection','conclusion-household'])
-assert {'#definition-evidence-heading','#definition-not-doing-heading','#definition-decisions-heading','#feedback','#map','#research-audit-heading','#research-materials-previous-heading'}<=home['links']
+assert {'#analysis','#ideas','#plan','#feedback','#map','#sources','#definition','#research-materials-previous-heading'}<=home['links']
 assert '家戶本期不做' in ''.join(home['text']) and '尚未進行真人研究' in ''.join(home['text'])
-assert '行人投放，含搭車前情境' in ''.join(home['text'])
+assert '12 區' in ''.join(home['text']) and '交通活動' in ''.join(home['text'])
 assert len(layout.references)==17 and set(layout.references.values())=={'panel-sources'}
 assert layout.panels['panel-sources']['details']==0
 for key in ['budget-heading','paid-disposal-heading','implementation-heading','research-field-tools','research-candidates','research-context','research-district','research-exclusions']:

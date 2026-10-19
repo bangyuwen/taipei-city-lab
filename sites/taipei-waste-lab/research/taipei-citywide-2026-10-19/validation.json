@@ -1,0 +1,10 @@
+{
+  "all_station_counts_reconciled": 1821,
+  "independent_reference": "previous full raw-archive station aggregate, fixed SHA in manifest",
+  "daily_counts_reconciled": true,
+  "area_totals_reconciled": 13,
+  "candidate_selection_reconciled": 39,
+  "nearest_distances_independent_formula": true,
+  "max_distance_error_m": 0.004925032177723665,
+  "field_conditions_verified": false
+}
