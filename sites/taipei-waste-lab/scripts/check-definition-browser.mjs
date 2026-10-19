@@ -34,7 +34,7 @@ try{
    await page.waitForFunction(id=>document.activeElement.id===id,map[key]);
    assert.ok(await page.locator('#'+map[key]).isVisible());
   }
-  for(const bad of ['%ZZ','__proto__']){await page.goto(new URL(file+'#'+bad,base).href);await page.waitForURL(u=>u.pathname===new URL(base).pathname);assert.ok(await page.locator(file.startsWith('prd')?'#panel-plan':'#panel-ideas').isVisible());}
+  for(const bad of ['%ZZ','__proto__']){await page.goto(new URL(file+'#'+bad,base).href);await page.waitForURL(u=>u.pathname===new URL(base).pathname);assert.ok(await page.locator(file.startsWith('prd')?'#panel-spec':'#panel-ideas').isVisible());}
  }
  await page.goto(base+'#definition-current-P01');await page.locator('#definition-current-P01 a').click();
  await page.waitForFunction(()=>document.activeElement.id==='definition-focus-P01');
@@ -62,10 +62,10 @@ try{
  }
  const plain=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:1000},reducedMotion:'reduce'});const nojs=await plain.newPage();
  await nojs.goto(new URL('prd/index.html#P01',base).href);await nojs.locator('#definition-destination').click();
- assert.ok(await nojs.locator('#panel-plan').isVisible());
+ assert.ok(await nojs.locator('#panel-spec').isVisible());
  assert.equal(await nojs.locator('.page-panel:visible').count(),1);
- await nojs.locator('#panel-plan a[href="#analysis"]').last().click();await nojs.locator('#panel-analysis a[href="#definition-focus-P01"]').first().click();assert.ok(await nojs.locator('#definition-focus-P01').isVisible());
- assert.ok(await nojs.locator('#definition-evidence-E06-S2').isVisible());await plain.close();
+ await nojs.goto(base+'#definition-focus-P01');assert.ok(await nojs.locator('#definition-focus-P01').isVisible());
+ await nojs.locator('#definition-focus-P01').locator('..').locator('a[href="#definition-evidence-E06"]').click();assert.ok(await nojs.locator('#definition-evidence-E06-S2').isVisible());await plain.close();
  await page.goto(base+'#design');await page.locator('[data-design-jump="t1-product-process-heading"]').click();
  assert.equal(await page.evaluate(()=>document.activeElement.id),'t1-product-process-heading');
  await page.goto(base+'#research');assert.ok(await page.locator('#panel-research').isVisible());

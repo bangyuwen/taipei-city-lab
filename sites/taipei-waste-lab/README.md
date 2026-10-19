@@ -6,12 +6,13 @@
 
 ## 閱讀入口與資訊歸屬
 
-2026-10-19 將研究流程拆成「研究總覽／分析／發想／計劃」。各頁保留對應證據與前後導覽，歷史決策另行封存。既有錨點、`#map`、`#comparison`、`#history`、`#siting` 與資料版本 query 保持有效。
+2026-10-19 依團隊推進專案的情境整理為「工作總覽／熱點研究／方案比較／執行分工／資料庫」五個工作區。摘要頁連到各區、證據與工作包；歷史材料集中於資料庫。既有錨點、`#map`、`#comparison`、`#history`、`#siting` 與資料版本 query 保持有效。
 
-- `#research`：研究總覽，提供分析、發想、計劃三個入口與目前完成狀態。
-- `#analysis`：全臺北市12區熱點分析、全部1,821站的資料界線、12區首輪36處與校區另3處、問題定義與28則公開評論摘要。公館保留為局部案例，實地垃圾需求仍待查核。
+- `#research`：工作總覽，列出已交付、下一步與待確認承接；不預填組員、人力或日期。
+- `#analysis`：全臺北市12區熱點分析摘要；`#districts` 查各區錨點，`#methods` 查資料與規則，`#evidence` 查28則評論摘要。全部1,821站、12區首輪36處與校區另3處均保留；實地垃圾需求仍待查核。
 - `#ideas`：已採納的配置比較方向、A現況／B資訊改善／C等總量移位三方案、未來構想與本期不做項目。
-- `#plan`：政府工作包、12區與校區查核時段、跨機關交接、PRD v0.4及驗收條件。機關承諾、配置工具及成效仍待驗證；原百日計畫標為歷史材料。
+- `#plan`：執行分工摘要；`#team` 區分團隊任務，`#work` 查政府工作包與現勘計畫。PRD v0.4及驗收條件位於方案比較的 `#spec`；機關承接、實際現勘與成效仍待確認。
+- `#library`：台北歷史、各國案例、來源、舊研究與決策的共同索引；原百日計畫位於 `#archive`。
 - `#countries`：單一國家案例選單、預設實拍，在同一影像區切換 3D 示意。照片、署名、地點對應限制、證據及成本直接呈現；`?country=japan#countries` 與 `#country-japan` 可直接指定案例。
 - `#definition`：D01–D18決策與改寫紀錄，以及PRD v0.1／v0.2封存。原始全文與逐則分析保留於私人研究資料。
 - `design-thinking/index.html` 與 `prd/index.html`：保留舊網址與錨點，轉至分析、發想或計劃中的對應內容。
@@ -107,7 +108,11 @@ npm run preview
 
 概念設計入口為 `#design`，從材料頁的舊研究判讀進入。四款均為本站概念；選用途後，依固定投放／清運步驟查看分流、滿載、感測離線與家戶確認的示意，尺寸與物件不另提供自訂。WebGL 失效時文字流程仍可完整操作。沒有實際感測、身分辨識、付款或成效預測；假設見[用途體驗文件](../../topics/bins/docs/bin-design.md)。
 
-研究入口 `#research` 是三頁流程總覽。全市分析與 E01–E28 位於 `#analysis`，方案方向位於 `#ideas`，分工與驗收位於 `#plan`；不由舊研究綜合建議覆寫。原有三項判讀保留於 `#materials` 的 `#research-synthesis`，由 `topics/bins/research/reference-guide-2026-10-16/catalog.json` 經 `package-research.py` 產生；生成器固定將該段放在材料頁。完整文獻／實務留在 `#sources`，每筆分開呈現方法、來源結果、本站解讀及限制。原有 13 篇完整書目、18 個候選、費率、估算及未執行的現勘協定均保留，沒有新增下載入口或公開附件。
+The project workspace has five stable areas: `#research` (work overview), `#analysis` (hotspot research), `#ideas` (scenario comparison), `#plan` (execution responsibilities), and `#library` (reference library). The home page links completed desktop deliverables to planned next steps and unresolved ownership, without inventing task assignments, deadlines or completion percentages. Each page belongs to exactly one workspace through `workspacePages` in `dist/data-utils.js`; the main navigation highlights that workspace, and static breadcrumbs plus local navigation show the page's location even for direct links.
+
+Team responsibilities and the development handoff live at `#team` under execution, separate from government work packages at `#work`. Methods and shared requirements use continuous documents with section indexes. Districts, evidence records, government work packages and historical chapters retain native selectors. All former fragments remain addressable; old PRD responsibility links now open their team-owned destination. Historical Taipei records, country cases, source documents and older decisions are found through the library.
+
+The existing source and materials pages retain their full references, earlier prototypes and unexecuted estimates. `package-research.py` generates the historical plan in `#archive`; the citywide publisher writes separate summary and reader regions. Public output remains the `out/` allowlist, with no raw attachments or download entry points.
 
 版本比較 `#comparison` 共用行政區與地址範圍，範圍摘要、五類組數及距離分布隨之連動。分類選擇只縮小結果清單，不改寫範圍分母。預設顯示全部分類；同址座標差距納入同一清單排序，不另重複前十名。完整全市行政區表放在清單之後直接閱讀，明示不受篩選影響；完整配對及距離方法歸來源頁。追加結果、距離延遲載入及從來源地圖返回會保留已展開證據；主資料與距離資料各有重試入口。
 
@@ -206,3 +211,10 @@ check deep links, evidence round trips, attribution counts and mobile bounds.
 先前局部案例（已由D18更正為全市範圍）：`research/gongguan-hotspots-2026-10-19/README.md`，含可重跑 notebook、完整來源／結果、五處觀察錨點、政府分工與交接方案。公開摘要位於 `#hotspot-heading`；原始附件仍不公開。
 
 範圍修正：使用者要求全臺北市規劃，D18取代公館單一生活圈作為研究邊界。全市成果：`research/taipei-citywide-2026-10-19/README.md`，Notebook、全站表與12區政府分工均保留；公館舊版只作歷史案例。
+
+
+### Citywide handoff and first-round field plan
+
+`research/taipei-citywide-2026-10-19/delivery/` contains the hotspot and government handoffs, 39 anchor records, 13 area readiness rows, 234 unexecuted visit templates, scope setup, per-service-point form, three-wave plan and capacity scenarios. All rows remain planned or unknown until fieldwork. The public site presents summaries under analysis, district checks and execution work records; raw tables and attachments remain private. `delivery/build_handoff.py` regenerates templates from fixed analysis results without changing the analysis protocol. Copy templates before entering real observations.
+
+`npm run prepare-data` refreshes the citywide publisher from canonical topic inputs (or the standalone source package) before packaging private research and staging public assets. Source changes therefore update the derived field records and public summary together.

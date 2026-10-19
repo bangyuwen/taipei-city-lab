@@ -35,6 +35,9 @@ button, a { transition: background-color 160ms ease-out, color 160ms ease-out; }
 h1, h2, h3, h4, p { margin-top: 0; }
 h1, h2, h3, h4 { line-height: 1.4; text-wrap: balance; }
 button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visible, select:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+/* Reading destinations receive focus for navigation, without framing the content. */
+main[tabindex="-1"]:focus,
+.page-panel [tabindex="-1"]:not(a, button, input, select, textarea, summary, [role], [contenteditable]):focus { outline: none; }
 ::selection { background: #b8dde9; color: #123d49; }
 input { caret-color: var(--green); }
 * { scrollbar-color: #849fa8 var(--paper); scrollbar-width: thin; }

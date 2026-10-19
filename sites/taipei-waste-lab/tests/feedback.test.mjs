@@ -49,7 +49,7 @@ test('feedback chapter links resolve without changing other destinations', () =>
   }
   assert.equal(pageFromHash('#main', 'feedback'), 'feedback');
   assert.equal(pageFromHash('#reference-L01'), 'sources');
-  assert.equal(pageFromHash('#plan-scope'), 'plan');
+  assert.equal(pageFromHash('#plan-scope'), 'archive');
   assert.equal(pageFromHash('#unknown'), 'research');
 });
 

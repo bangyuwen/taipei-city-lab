@@ -1,5 +1,5 @@
 import {annualCounts,events} from './history.js';
-import {filterPoints,filterVenuePoints,recordStats,pageFromHash,allowedPages,historyPages,escapeHTML as esc} from './data-utils.js';
+import {filterPoints,filterVenuePoints,recordStats,pageFromHash,allowedPages,workspaceForPage,escapeHTML as esc} from './data-utils.js';
 
 const $=id=>document.getElementById(id),num=n=>new Intl.NumberFormat('zh-TW',{maximumFractionDigits:1}).format(n);
 const colors={'2015':'#986838','2022':'#30694e','2024':'#396e88','2026':'#244d43'};
@@ -89,16 +89,45 @@ function syncURL(){
   history.replaceState(null,'',url);
 }
 function dataset(){return catalog.datasets.find(d=>d.key===state.year)}
+function initReaders(){
+  for(const reader of document.querySelectorAll('[data-reader]')){
+    if(reader.dataset.readerMode==='document')continue;
+    const select=reader.querySelector('select');
+    const items=[...reader.querySelector('.reader-items').children].filter(item=>item.hasAttribute('data-reader-item'));
+    for(const item of items){const option=document.createElement('option');option.value=item.id;option.textContent=item.dataset.readerItem;select.append(option);}
+    select.addEventListener('change',()=>{location.hash=select.value;});
+    reader.querySelector('[data-reader-controls]').hidden=false;
+    for(const index of reader.querySelectorAll('.reader-index'))index.hidden=true;
+  }
+}
+function syncReader(page,target){
+  const reader=page?.querySelector('[data-reader]');if(!reader||reader.dataset.readerMode==='document')return;
+  const items=[...reader.querySelector('.reader-items').children].filter(item=>item.hasAttribute('data-reader-item'));
+  const selected=target?.closest('[data-reader-item]');
+  const index=selected&&items.includes(selected)?items.indexOf(selected):0;
+  items.forEach((item,i)=>{item.hidden=i!==index;});
+  reader.querySelector('select').value=items[index].id;
+  reader.querySelector('.reader-position').textContent=`第 ${index+1} 項，共 ${items.length} 項`;
+  for(const [attribute,offset] of [['prev',-1],['next',1]]){
+    const link=reader.querySelector(`[data-reader-${attribute}]`);const next=items[index+offset];
+    link.hidden=!next;
+    if(next){link.href='#'+next.id;link.setAttribute('aria-label',(offset<0?'上一項：':'下一項：')+next.dataset.readerItem);}
+    else link.removeAttribute('href');
+  }
+}
+
 function panel(){
   const previousPage=currentPage;
   const targetPanel=document.getElementById(location.hash.slice(1))?.closest('.page-panel');
   const nextPage=targetPanel?.id.slice('panel-'.length)||pageFromHash(location.hash,currentPage);
+  syncReader($('panel-'+nextPage),document.getElementById(location.hash.slice(1)));
   const moved=nextPage!==previousPage||lastHash!==location.hash;
   if(previousPage&&nextPage!==previousPage)pageScroll.set(previousPage,window.scrollY);
   currentPage=nextPage;
   lastHash=location.hash;
   for(const a of document.querySelectorAll('[data-page]')){
-    if(a.dataset.page===currentPage)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
+    const selected=a.closest('#site-navigation')?a.dataset.page===workspaceForPage(currentPage):a.dataset.page===currentPage;
+    if(selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
   }
   document.body.dataset.page=currentPage;
   if(moved){
@@ -112,18 +141,13 @@ function panel(){
       for(let parent=heading;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;
       heading?.setAttribute('tabindex','-1');
       if(previousPage||anchor||mainTarget)heading?.focus({preventScroll:true});
-      if(mainTarget||anchor)heading.scrollIntoView({block:'start',behavior:'instant'});
+      if(mainTarget||anchor){
+        const scrollTarget=anchor?.matches('[data-reader-item]')&&anchor.closest('[data-reader]').dataset.readerMode!=='document'?anchor.closest('[data-reader]').querySelector('[data-reader-controls]'):heading;
+        scrollTarget.scrollIntoView({block:'start',behavior:'instant'});
+      }
       else window.scrollTo({top:pageScroll.get(currentPage)??0,behavior:'instant'});
     });
   }
-  const inHistory=historyPages.includes(currentPage);
-  $('history-navigation').hidden=!inHistory;
-  $('research-navigation').hidden=!['research','analysis','ideas','plan','siting','design','definition'].includes(currentPage);
-  const historyLink=document.querySelector('[data-section="history"]');
-  historyLink.toggleAttribute('data-section-active',inHistory);
-  if(currentPage==='history')historyLink.setAttribute('aria-current','page');else historyLink.removeAttribute('aria-current');
-  const researchLink=document.querySelector('#site-navigation [data-page="research"]');
-  researchLink.toggleAttribute('data-section-active',['siting','design','definition','materials','feedback'].includes(currentPage));
   for(const p of allowedPages)if($(`panel-${p}`))$(`panel-${p}`).hidden=p!==currentPage;
   $('load-status').hidden=Boolean(catalog)||currentPage!=='map';
   document.body.classList.toggle('design-mode',currentPage==='design');
@@ -337,6 +361,7 @@ async function start(){
   $('comparison-retry').addEventListener('click',ensureComparison);
   $('siting-retry').addEventListener('click',()=>sitingExperience?sitingExperience.reload():ensureSiting());
   $('map-basemap').addEventListener('change',()=>setBasemap());
+  initReaders();
   window.addEventListener('hashchange',panel);
   $('main').addEventListener('click',event=>{
     const link=event.target.closest('a[href^="#"]');
