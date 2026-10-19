@@ -27,8 +27,8 @@ export function csvForPoints(points, dataset) {
     ...points.map(p=>[...context,p.id,p.district,p.address,p.rawX??p.x,p.rawY??p.y,p.quality])].map(r=>r.map(safe).join(',')).join('\r\n')+'\r\n';
 }
 export const historyPages=['map','comparison','history'];
-export const allowedPages=[...historyPages,'siting','countries','design','definition','research','analysis','ideas','sources','materials','plan','feedback','districts','methods','evidence','work','spec','archive','library','team'];
-export const workspacePages={"research":["research"],"analysis":["analysis","districts","methods","feedback","evidence"],"ideas":["ideas","spec","siting","design"],"plan":["plan","team","work"],"library":["library","history","map","comparison","countries","sources","materials","definition","archive"]};
+export const allowedPages=[...historyPages,'siting','countries','design','definition','research','analysis','ideas','sources','materials','plan','feedback','districts','methods','evidence','work','spec','archive','library','team','personas','problem'];
+export const workspacePages={"research":["research"],"analysis":["analysis","districts","methods","feedback","evidence","personas","problem"],"ideas":["ideas","spec","siting","design"],"plan":["plan","team","work"],"library":["library","history","map","comparison","countries","sources","materials","definition","archive"]};
 export function workspaceForPage(page){return Object.keys(workspacePages).find(key=>workspacePages[key].includes(page))||'research';}
 export function pageFromHash(hash,currentPage='research') {
   const page=hash.replace(/^#/,'');
@@ -42,6 +42,9 @@ export function pageFromHash(hash,currentPage='research') {
   if(/^reader-definition-prd|^reader-definition-not-doing|^reader-research-overview-scope|^definition-prd(?!-v0[12])/.test(page)||['definition-not-doing-heading','definition-scope-heading','research-overview-scope'].includes(page))return 'spec';
   if(/^reader-archive-|^plan-(?!heading$|work-heading$|departments$|districts$)/.test(page))return 'archive';
   if(/^reader-history-/.test(page))return 'definition';
+  if(page==='demand-evidence')return 'evidence';
+  if(/^problem-(?:heading|known|contrast|unknown|boundary)$/.test(page))return 'problem';
+  if(/^persona(?:s)?-/.test(page)||page==='journey-reading-note')return 'personas';
   if(/^analysis-/.test(page)||page==='hotspot-candidates')return 'analysis';
   if(/^ideas-|^definition-current-/.test(page)||['t1-process-heading','definition-evidence-heading'].includes(page))return 'ideas';
   if(['t1-thinking-heading','definition-cycle-heading','research-overview-mvp','research-overview-unknowns'].includes(page))return 'plan';
