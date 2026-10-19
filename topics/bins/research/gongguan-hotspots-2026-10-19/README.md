@@ -153,7 +153,7 @@ python figures.py
 
 Notebook 可設定環境變數 `GONGGUAN_ARCHIVE` 指向同一 ZIP 後從頭執行。原始來源、清冊副本、結果與 notebook 保留在私人交付包；公開網站只發布摘要與圖形，不開放原始附件。
 
-`publish_results.py` 另供原網站 source checkout 重新產生公開摘要及報告；它會更新網站的 `dist/index.html`，不屬於私人研究包的獨立重算步驟。
+`publish_results.py` 僅供仍保留完整公館版標記的歷史網站重建；標記不存在或損壞時會停止，且不寫入任何檔案。現行全市網站請使用 `../taipei-citywide-2026-10-19/publish_results.py`。產生器不屬於私人研究包的獨立重算步驟。
 
 ## 90 秒講稿
 

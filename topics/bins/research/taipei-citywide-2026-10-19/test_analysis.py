@@ -3,6 +3,7 @@ import contextlib
 import importlib.util
 import io
 import json
+import shutil
 import tempfile
 import unittest
 import zipfile
@@ -23,6 +24,37 @@ local = load('gongguan', ROOT.parent / 'gongguan-hotspots-2026-10-19/analyze.py'
 
 
 class AnalysisBoundaries(unittest.TestCase):
+    def test_historical_publisher_rejects_current_or_damaged_pages_without_writes(self):
+        publisher = load('historical_publisher', ROOT.parent / 'gongguan-hotspots-2026-10-19/publish_results.py')
+        start='<!-- gongguan-delivery:start -->';end='<!-- gongguan-delivery:end -->'
+        for content in ['<section aria-labelledby="research-overview-mvp">current citywide plan</section>',
+                        start, end, end+start, start+start+end]:
+            with self.subTest(content=content), tempfile.TemporaryDirectory() as folder:
+                site=Path(folder);(site/'dist').mkdir();page=site/'dist/index.html';page.write_text(content)
+                with patch.object(publisher,'SITE',site), patch.object(publisher,'ROOT',site/'missing-study'):
+                    with self.assertRaisesRegex(RuntimeError,'Historical Gongguan markers'):
+                        publisher.main()
+                self.assertEqual(page.read_text(),content)
+                self.assertEqual(sorted(str(p.relative_to(site)) for p in site.rglob('*')),['dist','dist/index.html'])
+
+    def test_historical_publisher_can_replace_an_existing_historical_section(self):
+        publisher = load('historical_publisher', ROOT.parent / 'gongguan-hotspots-2026-10-19/publish_results.py')
+        with tempfile.TemporaryDirectory() as folder:
+            site=Path(folder);(site/'dist/images').mkdir(parents=True)
+            study=site/'study';study.mkdir()
+            for name in ['results/summary.json','results/quality.json','government/government.json',
+                         'government/government-plan.md', 'results/figures/activity-ranking.png',
+                         'results/figures/activity-hours.png','results/figures/station-context.png']:
+                target=study/name;target.parent.mkdir(parents=True,exist_ok=True)
+                shutil.copyfile(publisher.ROOT/name,target)
+            page=site/'dist/index.html';page.write_text('before<!-- gongguan-delivery:start -->old<!-- gongguan-delivery:end -->after')
+            with patch.object(publisher,'SITE',site),patch.object(publisher,'ROOT',study):publisher.main()
+            text=page.read_text()
+            self.assertTrue(text.startswith('before<!-- gongguan-delivery:start -->'))
+            self.assertTrue(text.endswith('<!-- gongguan-delivery:end -->after'))
+            self.assertEqual(text.count('id="hotspot-heading"'),1)
+            self.assertTrue((study/'README.md').exists())
+
     def test_coordinate_limits_and_invalid_values(self):
         for module in (city, local):
             for x, y in [(121.4, 24.9), (121.7, 25.25)]:

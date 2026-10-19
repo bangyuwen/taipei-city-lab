@@ -17,6 +17,12 @@ def table(headers, rows):
 
 
 def main():
+    page=SITE/'dist/index.html';text=page.read_text()
+    start_marker='<!-- gongguan-delivery:start -->'
+    end_marker='<!-- gongguan-delivery:end -->'
+    if text.count(start_marker)!=1 or text.count(end_marker)!=1 or text.index(start_marker)>=text.index(end_marker):
+        raise RuntimeError('Historical Gongguan markers are absent or invalid; use the citywide publisher for the current site.')
+    start=text.index(start_marker);end=text.index(end_marker)+len(end_marker)
     s=json.loads((ROOT/'results/summary.json').read_text())
     q=json.loads((ROOT/'results/quality.json').read_text())
     g=json.loads((ROOT/'government/government.json').read_text())
@@ -83,13 +89,7 @@ def main():
 <p><a href="#definition-prd-roles-heading">回看你的分工</a> · <a href="#definition-decision-D17">本次執行紀錄</a></p>
 </section>
 <!-- gongguan-delivery:end -->'''
-    page=SITE/'dist/index.html';text=page.read_text()
-    if '<!-- gongguan-delivery:start -->' in text:
-        start=text.index('<!-- gongguan-delivery:start -->');end=text.index('<!-- gongguan-delivery:end -->',start)+len('<!-- gongguan-delivery:end -->')
-        text=text[:start]+fragment+text[end:]
-    else:
-        anchor='<section class="research-overview-section" aria-labelledby="research-overview-mvp">'
-        assert text.count(anchor)==1;text=text.replace(anchor,fragment+'\n'+anchor,1)
+    text=text[:start]+fragment+text[end:]
     page.write_text(text)
     images=SITE/'dist/images/hotspots';images.mkdir(exist_ok=True)
     for name in ('activity-ranking','activity-hours','station-context'):
@@ -154,7 +154,7 @@ python figures.py
 
 Notebook 可設定環境變數 `GONGGUAN_ARCHIVE` 指向同一 ZIP 後從頭執行。原始來源、清冊副本、結果與 notebook 保留在私人交付包；公開網站只發布摘要與圖形，不開放原始附件。
 
-`publish_results.py` 另供原網站 source checkout 重新產生公開摘要及報告；它會更新網站的 `dist/index.html`，不屬於私人研究包的獨立重算步驟。
+`publish_results.py` 僅供仍保留完整公館版標記的歷史網站重建；標記不存在或損壞時會停止，且不寫入任何檔案。現行全市網站請使用 `../taipei-citywide-2026-10-19/publish_results.py`。產生器不屬於私人研究包的獨立重算步驟。
 
 ## 90 秒講稿
 
