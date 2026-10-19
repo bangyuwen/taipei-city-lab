@@ -179,7 +179,8 @@ async function checkMapState(page){
   assert.equal(await page.locator('#search').inputValue(),'敦化');
   assert.equal(await page.locator('#result-count').innerText(),count);
   assert.ok(await page.locator('#map').evaluate(element=>element.getBoundingClientRect().width>100));
-  await nav(page,'countries');await page.goBack();await page.locator('#panel-map').waitFor({state:'visible'});
+  await nav(page,'countries');await page.goBack();await page.locator('#panel-library').waitFor({state:'visible'});
+  await page.goBack();await page.locator('#panel-map').waitFor({state:'visible'});
   await focused(page,'map-heading');
   assert.equal(await page.locator('#district').inputValue(),'大安區');
   assert.equal(await page.locator('#search').inputValue(),'敦化');
