@@ -1,0 +1,184 @@
+{
+  "source_rows": 3407,
+  "source_date": "2021-04-11",
+  "missing_prj": true,
+  "coordinate_caveat": "目錄標 TWD97；檔案 X/Y 為經緯度範圍且未附投影定義。未換算為公車可達距離，不作排名。",
+  "rows": [
+    {
+      "source_row": 36,
+      "stop_id": 2742,
+      "name": "台電大樓",
+      "raw_x": 121.531242919547,
+      "raw_y": 25.0181242298867,
+      "approximate_500m_selection": true
+    },
+    {
+      "source_row": 422,
+      "stop_id": 1918,
+      "name": "自來水博物館(�",
+      "raw_x": 121.530694390793,
+      "raw_y": 25.0140767701133,
+      "approximate_500m_selection": true
+    },
+    {
+      "source_row": 561,
+      "stop_id": 1000802,
+      "name": "自來水博物館(�",
+      "raw_x": 121.531685,
+      "raw_y": 25.014457,
+      "approximate_500m_selection": true
+    },
+    {
+      "source_row": 682,
+      "stop_id": 355,
+      "name": "捷運公館站",
+      "raw_x": 121.535644,
+      "raw_y": 25.0131118505664,
+      "approximate_500m_selection": true
+    },
+    {
+      "source_row": 702,
+      "stop_id": 1000278,
+      "name": "三軍總醫院(南�",
+      "raw_x": 121.531096317791,
+      "raw_y": 25.0157743937391,
+      "approximate_500m_selection": true
+    },
+    {
+      "source_row": 705,
+      "stop_id": 1856,
+      "name": "三軍總醫院",
+      "raw_x": 121.529932,
+      "raw_y": 25.016839,
+      "approximate_500m_selection": true
+    },
+    {
+      "source_row": 921,
+      "stop_id": 20293,
+      "name": "寶藏巖",
+      "raw_x": 121.53590852127,
+      "raw_y": 25.0114333407263,
+      "approximate_500m_selection": true
+    },
+    {
+      "source_row": 1048,
+      "stop_id": 1000045,
+      "name": "公館",
+      "raw_x": 121.538530831111,
+      "raw_y": 25.0120963546845,
+      "approximate_500m_selection": false
+    },
+    {
+      "source_row": 1058,
+      "stop_id": 2310,
+      "name": "捷運公館站",
+      "raw_x": 121.534086,
+      "raw_y": 25.015228,
+      "approximate_500m_selection": true
+    },
+    {
+      "source_row": 1180,
+      "stop_id": 2232,
+      "name": "臺灣科技大學",
+      "raw_x": 121.540464038545,
+      "raw_y": 25.0141515596899,
+      "approximate_500m_selection": false
+    },
+    {
+      "source_row": 1226,
+      "stop_id": 2219,
+      "name": "公館",
+      "raw_x": 121.538039495701,
+      "raw_y": 25.0121624746689,
+      "approximate_500m_selection": true
+    },
+    {
+      "source_row": 1267,
+      "stop_id": 2230,
+      "name": "台電大樓",
+      "raw_x": 121.530644248556,
+      "raw_y": 25.0186485379107,
+      "approximate_500m_selection": false
+    },
+    {
+      "source_row": 1395,
+      "stop_id": 2309,
+      "name": "捷運公館站",
+      "raw_x": 121.534517055222,
+      "raw_y": 25.0143047215272,
+      "approximate_500m_selection": true
+    },
+    {
+      "source_row": 1584,
+      "stop_id": 4741,
+      "name": "捷運公館站",
+      "raw_x": 121.536088,
+      "raw_y": 25.013181,
+      "approximate_500m_selection": true
+    },
+    {
+      "source_row": 1979,
+      "stop_id": 1991,
+      "name": "捷運公館站",
+      "raw_x": 121.534722,
+      "raw_y": 25.014321,
+      "approximate_500m_selection": true
+    },
+    {
+      "source_row": 2073,
+      "stop_id": 2224,
+      "name": "臺大",
+      "raw_x": 121.533435,
+      "raw_y": 25.018239,
+      "approximate_500m_selection": true
+    },
+    {
+      "source_row": 2076,
+      "stop_id": 2231,
+      "name": "台電大樓",
+      "raw_x": 121.531150770113,
+      "raw_y": 25.0174338505664,
+      "approximate_500m_selection": true
+    },
+    {
+      "source_row": 2136,
+      "stop_id": 1000046,
+      "name": "臺灣科技大學",
+      "raw_x": 121.540119600771,
+      "raw_y": 25.0133069209276,
+      "approximate_500m_selection": false
+    },
+    {
+      "source_row": 2415,
+      "stop_id": 1990,
+      "name": "捷運公館站",
+      "raw_x": 121.535185,
+      "raw_y": 25.013993,
+      "approximate_500m_selection": true
+    },
+    {
+      "source_row": 2682,
+      "stop_id": 6667,
+      "name": "臺大",
+      "raw_x": 121.53375,
+      "raw_y": 25.018029,
+      "approximate_500m_selection": true
+    },
+    {
+      "source_row": 2847,
+      "stop_id": 200005054,
+      "name": "交通事件裁決�",
+      "raw_x": 121.5354,
+      "raw_y": 25.01348,
+      "approximate_500m_selection": true
+    },
+    {
+      "source_row": 3337,
+      "stop_id": 1000635,
+      "name": "寶藏巖",
+      "raw_x": 121.536083864322,
+      "raw_y": 25.0114235397925,
+      "approximate_500m_selection": true
+    }
+  ]
+}

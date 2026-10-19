@@ -91,7 +91,8 @@ function syncURL(){
 function dataset(){return catalog.datasets.find(d=>d.key===state.year)}
 function panel(){
   const previousPage=currentPage;
-  const nextPage=pageFromHash(location.hash,currentPage);
+  const targetPanel=document.getElementById(location.hash.slice(1))?.closest('.page-panel');
+  const nextPage=targetPanel?.id.slice('panel-'.length)||pageFromHash(location.hash,currentPage);
   const moved=nextPage!==previousPage||lastHash!==location.hash;
   if(previousPage&&nextPage!==previousPage)pageScroll.set(previousPage,window.scrollY);
   currentPage=nextPage;
@@ -117,12 +118,12 @@ function panel(){
   }
   const inHistory=historyPages.includes(currentPage);
   $('history-navigation').hidden=!inHistory;
-  $('research-navigation').hidden=!['research','siting','design','definition'].includes(currentPage);
+  $('research-navigation').hidden=!['research','analysis','ideas','plan','siting','design','definition'].includes(currentPage);
   const historyLink=document.querySelector('[data-section="history"]');
   historyLink.toggleAttribute('data-section-active',inHistory);
   if(currentPage==='history')historyLink.setAttribute('aria-current','page');else historyLink.removeAttribute('aria-current');
   const researchLink=document.querySelector('#site-navigation [data-page="research"]');
-  researchLink.toggleAttribute('data-section-active',['research','siting','design','definition','materials','plan','feedback'].includes(currentPage));
+  researchLink.toggleAttribute('data-section-active',['siting','design','definition','materials','feedback'].includes(currentPage));
   for(const p of allowedPages)if($(`panel-${p}`))$(`panel-${p}`).hidden=p!==currentPage;
   $('load-status').hidden=Boolean(catalog)||currentPage!=='map';
   document.body.classList.toggle('design-mode',currentPage==='design');
@@ -337,11 +338,11 @@ async function start(){
   $('siting-retry').addEventListener('click',()=>sitingExperience?sitingExperience.reload():ensureSiting());
   $('map-basemap').addEventListener('change',()=>setBasemap());
   window.addEventListener('hashchange',panel);
-  $('panel-definition').addEventListener('click',event=>{
+  $('main').addEventListener('click',event=>{
     const link=event.target.closest('a[href^="#"]');
     if(!link||link.hash!==location.hash||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
     const target=$(link.hash.slice(1));
-    if(!target||!$('panel-definition').contains(target))return;
+    if(!target||!target.closest('.page-panel'))return;
     target.setAttribute('tabindex','-1');target.focus({preventScroll:true});target.scrollIntoView({block:'start',behavior:'instant'});
   });
   window.addEventListener('popstate',()=>{

@@ -27,11 +27,14 @@ export function csvForPoints(points, dataset) {
     ...points.map(p=>[...context,p.id,p.district,p.address,p.rawX??p.x,p.rawY??p.y,p.quality])].map(r=>r.map(safe).join(',')).join('\r\n')+'\r\n';
 }
 export const historyPages=['map','comparison','history'];
-export const allowedPages=[...historyPages,'siting','countries','design','definition','research','sources','materials','plan','feedback'];
+export const allowedPages=[...historyPages,'siting','countries','design','definition','research','analysis','ideas','sources','materials','plan','feedback'];
 export function pageFromHash(hash,currentPage='research') {
   const page=hash.replace(/^#/,'');
   if(page==='main'&&allowedPages.includes(currentPage))return currentPage;
   if(allowedPages.includes(page))return page;
+  if(/^analysis-|^citywide-|^hotspot-(?:heading|candidates|quality|sources)$/.test(page)||/^definition-(?:focus-|research-basis|evidence-(?!heading)|workbook-P01-claims)/.test(page)||/^research-overview-evidence/.test(page))return 'analysis';
+  if(/^ideas-|^definition-current-|^definition-prd-risks/.test(page)||['t1-process-heading','definition-evidence-heading','definition-not-doing-heading','definition-scope-heading','research-overview-scope'].includes(page))return 'ideas';
+  if(/^hotspot-(?:times|government|handoff)$/.test(page)||/^definition-prd(?!-v0[12])/.test(page)||['t1-thinking-heading','definition-cycle-heading','research-overview-mvp','research-overview-unknowns'].includes(page))return 'plan';
   if(/^reference-[LP]\d{2}$/.test(page)||/^source-/.test(page)||/^research-(?:literature|papers|paper-records|full-bibliography|practices|practice-records|operating-sources|audit)/.test(page))return 'sources';
   if(/^feedback-/.test(page))return 'feedback';
   if(/^plan-/.test(page))return 'plan';
