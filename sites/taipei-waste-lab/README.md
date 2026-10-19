@@ -216,3 +216,5 @@ check deep links, evidence round trips, attribution counts and mobile bounds.
 ### Citywide handoff and first-round field plan
 
 `research/taipei-citywide-2026-10-19/delivery/` contains the hotspot and government handoffs, 39 anchor records, 13 area readiness rows, 234 unexecuted visit templates, scope setup, per-service-point form, three-wave plan and capacity scenarios. All rows remain planned or unknown until fieldwork. The public site presents summaries under analysis, district checks and execution work records; raw tables and attachments remain private. `delivery/build_handoff.py` regenerates templates from fixed analysis results without changing the analysis protocol. Copy templates before entering real observations.
+
+`npm run prepare-data` refreshes the citywide publisher from canonical topic inputs (or the standalone source package) before packaging private research and staging public assets. Source changes therefore update the derived field records and public summary together.
