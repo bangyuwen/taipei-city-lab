@@ -218,3 +218,9 @@ check deep links, evidence round trips, attribution counts and mobile bounds.
 `research/taipei-citywide-2026-10-19/delivery/` contains the hotspot and government handoffs, 39 anchor records, 13 area readiness rows, 234 unexecuted visit templates, scope setup, per-service-point form, three-wave plan and capacity scenarios. All rows remain planned or unknown until fieldwork. The public site presents summaries under analysis, district checks and execution work records; raw tables and attachments remain private. `delivery/build_handoff.py` regenerates templates from fixed analysis results without changing the analysis protocol. Copy templates before entering real observations.
 
 `npm run prepare-data` refreshes the citywide publisher from canonical topic inputs (or the standalone source package) before packaging private research and staging public assets. Source changes therefore update the derived field records and public summary together.
+
+## Research synchronization (2026-10-22)
+
+The research pages now cover personas and disposal journeys, quantitative citywide evidence, the current problem definition, PRD v0.5 and blank field records. Canonical evidence and generators remain in `topics/bins/research/`; `npm run build` refreshes the standalone copies and private offline archive. The citywide publisher retains its historical layout and is not replayed during normal builds. Field handoffs and blank forms are regenerated without replacing the current research pages.
+
+The 12-district venue rechecks, proposed fieldwork order, MRT top-10 comparison, and Zhongshan / Zhongxiao Xinsheng follow-up retain separate dates, source rows and unknowns. Venue place counts are never converted to usable bin counts. The September OD raw file is too large for Git; its official URL, retrieval receipts and compact station/day extract are retained in the MRT study. Public output remains restricted by the existing runtime asset allowlist.

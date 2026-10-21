@@ -247,6 +247,8 @@
 .plan-table th,.plan-table td{border-bottom:1px solid var(--line);text-align:left;vertical-align:top;padding:14px 12px;overflow-wrap:anywhere}
 .plan-table th{background:var(--light);font-weight:600}
 .plan-table td:first-child{font-weight:600;min-width:7em}
+#reader-field-priority .plan-table td:first-child{font-weight:400}
+@media(min-width:761px){#reader-field-priority .plan-table th{width:50%}}
 .plan-cell-label{display:none}
 @media(max-width:1100px){.plan-reading-layout{grid-template-columns:minmax(0,1fr);gap:8px}.plan-contents{position:static;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 20px;border-bottom:1px solid var(--line);padding:12px 0}}
 @media(max-width:760px){
@@ -349,3 +351,61 @@
 /* Project workspaces: stable ownership, local orientation and actionable summaries. */
 .project-breadcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;color:var(--muted);font-size:14px;margin:0 0 8px}.project-breadcrumb a{display:inline-flex;align-items:center;min-height:44px}.project-subnav{display:flex;flex-wrap:wrap;gap:8px 24px;border-bottom:1px solid var(--line);margin:0 0 28px}.project-subnav a{min-height:44px;display:inline-flex;align-items:center;text-decoration:none;border-bottom:3px solid transparent}.project-subnav a[aria-current]{font-weight:700;border-color:var(--green)}.project-section{margin:32px 0;padding-top:24px;border-top:1px solid var(--line)}.project-section h3{margin:0 0 16px;font-size:28px}.project-work-list article{display:grid;grid-template-columns:150px minmax(0,1fr);gap:24px;padding:20px 0;border-bottom:1px solid var(--line)}.project-work-list h4{margin:0;font-size:20px}.project-work-list p{margin:0 0 8px}.project-pending{list-style:none;padding:0}.project-pending li{padding:12px 0}.project-pending span{display:block;margin-top:4px}.project-delivery{padding-top:24px;margin-top:32px;border-top:1px solid var(--line)}.library-index{max-width:76ch}.library-index section{padding:24px 0;border-top:1px solid var(--line)}.library-index h3{margin:0 0 8px}.library-index p{margin:4px 0 8px}.library-index a{display:inline-flex;align-items:center;min-height:44px;margin-right:24px}[data-reader-mode="document"] .reader-item{padding-top:24px;margin-top:24px;border-top:1px solid var(--line)}[data-reader-mode="document"] .reader-index{padding:16px 0;border-block:1px solid var(--line)}
 @media(max-width:639px){.project-work-list article{grid-template-columns:1fr;gap:8px}.project-subnav{gap:4px 20px}.project-section{margin-top:24px}.project-section h3{font-size:20px}}
+
+/* Shared reading order for research, government responsibilities and decisions. */
+.reading-path{display:flex;flex-wrap:wrap;gap:4px 24px;margin:20px 0 28px;padding:12px 0;border-block:1px solid var(--line)}
+.reading-path a{display:inline-flex;align-items:center;min-height:44px;text-underline-offset:5px}
+.reading-stage>section{padding:20px 0;border:0}
+.reading-stage>section+section{border-top:1px solid var(--line)}
+.reading-stage h4{font:700 20px/1.5 var(--sans);margin:0 0 12px}
+.reading-stage>p,.reading-stage>ul,.reading-stage>section>p{max-width:72ch}
+.reading-stage>ul{padding-left:1.5em;line-height:1.85}
+.reading-stage>ul li+li{margin-top:12px}
+.brand[aria-current] small{text-decoration:underline;text-underline-offset:5px}
+@media(max-width:639px){.reading-path{gap:0 20px;margin-block:16px 24px}.reading-stage h4{font-size:18px}}
+
+/* One evidence-backed journey per person, with details kept beside its source. */
+.persona-page{max-width:76ch}
+.persona-method{color:var(--muted);font-size:16px;line-height:1.8;margin:20px 0}
+.persona-profile{padding:32px 0;border-top:1px solid var(--line)}
+.persona-profile h3{font-family:var(--serif);font-size:28px;line-height:1.5;margin:0 0 12px}
+.persona-summary{font-size:20px;line-height:1.7;margin:0 0 24px;color:var(--ink)}
+.persona-route{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:24px 0}
+.persona-route>div{border-top:1px solid var(--line);padding-top:12px}
+.persona-route dt{font-size:14px;color:var(--muted);font-weight:600;margin-bottom:8px}
+.persona-route dd{margin:0;min-height:3.6em;font-size:16px;line-height:1.8;overflow-wrap:anywhere}
+.persona-proof{background:var(--light);padding:16px;margin:24px 0 16px}
+.persona-proof p{margin:0}.persona-proof p+p{margin-top:8px}
+.persona-question{margin:16px 0;font-size:16px}
+.persona-detail{margin-top:16px}.persona-detail summary{display:list-item;list-style:revert;cursor:pointer;color:var(--green);padding:8px 0;min-height:44px}
+.persona-detail summary::-webkit-details-marker{display:revert}.persona-detail p,.persona-detail li{font-size:16px;line-height:1.8}
+@media(max-width:600px){.persona-profile h3{font-size:20px}.persona-route{grid-template-columns:1fr;gap:0}.persona-route>div{display:grid;grid-template-columns:7em minmax(0,1fr);gap:16px;padding:12px 0}.persona-route dt{margin:0}.persona-route dd{min-height:1.8em}.persona-summary{font-size:16px}}
+
+.problem-evidence{margin:24px 0}.problem-evidence>div{padding:16px 0;border-bottom:1px solid var(--line)}.problem-evidence dt{font-weight:700;font-size:16px;margin-bottom:8px}.problem-evidence dd{margin:0;font-size:16px;line-height:1.8}
+
+/* Project decisions use the existing flat research reading surface. */
+.project-contract{margin:0;font-size:16px;line-height:1.85}
+.project-contract>div{display:grid;grid-template-columns:140px minmax(0,1fr);gap:24px;padding:16px 0;border-bottom:1px solid var(--line)}
+.project-contract dt{font-weight:700}
+.project-contract dd{margin:0;max-width:72ch}
+.project-decision-path{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:40px;margin:0;padding-left:26px}
+.project-decision-path li{padding:12px 0 16px;border-bottom:1px solid var(--line)}
+.project-decision-path li::marker{font-weight:700;color:var(--green)}
+.project-decision-path a{display:inline-flex;align-items:center;min-height:44px;font-size:19px;font-weight:650}
+.project-decision-path p{margin:0;font-size:15px;color:var(--muted);line-height:1.8}
+.project-path-note{margin:18px 0 0;font-size:15px;line-height:1.85;max-width:72ch}
+.project-reading-brief{margin:0 0 28px;padding:10px 0;border-block:1px solid var(--line);font-size:16px;line-height:1.85}
+.project-reading-brief>div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:20px;padding:7px 0}
+.project-reading-brief dt{font-weight:700}
+.project-reading-brief dd{margin:0}
+@media(max-width:639px){.project-contract>div{grid-template-columns:1fr;gap:4px;padding:14px 0}.project-decision-path{grid-template-columns:1fr}.project-decision-path a{font-size:18px}.project-reading-brief>div{grid-template-columns:1fr;gap:2px;padding:10px 0}}
+
+/* Blank field sheets share the existing responsive research tables. */
+.field-record-sheet th[scope="row"]{width:24%}
+.field-record-sheet td[data-label="填寫"]{width:25%}
+.field-record-blank{min-height:4rem;border-bottom:1px dashed var(--line, #a8bfc6)}
+@media(max-width:700px){.field-record-sheet th[scope="row"],.field-record-sheet td[data-label="填寫"]{width:auto}.field-record-blank{min-height:3rem}}
+
+/* Keep the MRT comparison captions readable when tables stack on narrow screens. */
+:is(#reader-method-mrt,#reader-method-station-venues) .plan-table caption{text-align:left;font-size:14px;line-height:1.8;color:var(--muted);padding:0 0 12px}
+@media(max-width:760px){:is(#reader-method-mrt,#reader-method-station-venues) .plan-table caption{display:block;width:100%}}

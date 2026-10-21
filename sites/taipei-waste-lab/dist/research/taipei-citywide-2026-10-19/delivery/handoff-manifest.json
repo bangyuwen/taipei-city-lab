@@ -22,20 +22,24 @@
     {
       "path": "../results/hourly-profiles.csv",
       "sha256": "0d725ea7fcb0b38b7402bf70ce7dec75adc6ea6a3960b447f61282874970d1ef"
+    },
+    {
+      "path": "../../field-priority-2026-10-20/priority.json",
+      "sha256": "67a3b9c28b094343c630698d187e8efa239d11c99b02478377a2a087e963374e"
     }
   ],
   "generated_files": [
     {
       "path": "hotspot-candidates-handoff.csv",
-      "sha256": "ee83338478ee878c1ea5947380870b3d1dc5b395ce2ba87f9945f1241b5f2fe0"
+      "sha256": "efc96efd6329e0601468cc95b7894f27710e98971612a95d3e0b513fab0e6ad5"
     },
     {
       "path": "district-readiness.csv",
-      "sha256": "1f3ee570d90d28256b46bad23d287c3623e76b82d72a3e962212028279734976"
+      "sha256": "3a10a4707e9fc42774439f147cbbd387cc1a397568e8719f36029944d43695cc"
     },
     {
       "path": "planned-visits.csv",
-      "sha256": "a4a3f59f1707ac962adf6427049253601d35fd73e61f0a6d155233cd3b77ea21"
+      "sha256": "08473ed234284380fecf2492a1fd544f493e0fd042a5e79e14398f9ee622e227"
     },
     {
       "path": "anchor-scope-setup.csv",
@@ -43,7 +47,7 @@
     },
     {
       "path": "field-plan.json",
-      "sha256": "665a6272afdeb514d94e58faaa7c04ef3d765748acb9dd04d7953178ec355c1a"
+      "sha256": "9754b9e0a0b1dddc1633b8ec66b93f71e313697022b15329aa1f018031d0c4e0"
     }
   ],
   "existing_validation": {

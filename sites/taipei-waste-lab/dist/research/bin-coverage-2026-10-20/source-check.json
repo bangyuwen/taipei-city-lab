@@ -1,0 +1,202 @@
+{
+  "checkedDateTaipei": "2026-10-20",
+  "streetSourceUpdatedAt": "2026-09-30 15:55:35",
+  "venueSourceUpdatedAt": "2026-08-18 16:27:22",
+  "streetRows": 681,
+  "focusDistricts": {
+    "北投區": {
+      "streetRows": 0,
+      "venueRows": 10,
+      "reportedPlaces": 49
+    },
+    "南港區": {
+      "streetRows": 4,
+      "venueRows": 5,
+      "reportedPlaces": 28
+    }
+  },
+  "inventoryComplete": null,
+  "surveyDate": null,
+  "addedVerifiedStreetRows": 0,
+  "sources": [
+    {
+      "file": "street.csv",
+      "url": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=267d550f-c6ec-46e0-b8af-fd5a464eb098",
+      "checkedAt": "2026-10-20T09:10:59.004657+00:00",
+      "status": 200,
+      "bytes": 63540,
+      "sha256": "ff3cf5528c057958f89871aa5300fc633b02d0f7b37131ab29d5ddc2f8e2370d",
+      "finalUrl": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=267d550f-c6ec-46e0-b8af-fd5a464eb098",
+      "contentType": "text/csv;charset=BIG-5",
+      "encoding": "cp950",
+      "rows": 681,
+      "columns": [
+        "行政區",
+        "地址",
+        "經度",
+        "緯度",
+        "備註"
+      ],
+      "districts": {
+        "中正區": 83,
+        "大安區": 47,
+        "大同區": 22,
+        "內湖區": 85,
+        "中山區": 50,
+        "松山區": 55,
+        "信義區": 60,
+        "萬華區": 82,
+        "士林區": 142,
+        "南港區": 4,
+        "文山區": 51
+      },
+      "retainedPath": "source-recovery-2026-10-15/raw/official-download.csv"
+    },
+    {
+      "file": "api-0.json",
+      "url": "https://data.taipei/api/v1/dataset/267d550f-c6ec-46e0-b8af-fd5a464eb098?scope=resourceAquire&limit=1000&offset=0",
+      "checkedAt": "2026-10-20T09:10:59.005031+00:00",
+      "status": 200,
+      "bytes": 196408,
+      "sha256": "8eaea29e277be00073bc7b3805eb0ef463ea6f130b45e01769b5066aa515d3c1",
+      "finalUrl": "https://data.taipei/api/v1/dataset/267d550f-c6ec-46e0-b8af-fd5a464eb098?scope=resourceAquire&limit=1000&offset=0",
+      "contentType": "application/json",
+      "meta": {
+        "limit": 1000,
+        "offset": 0,
+        "count": 681,
+        "sort": ""
+      },
+      "rows": 681,
+      "columns": [
+        "_id",
+        "_importdate",
+        "行政區",
+        "地址",
+        "經度",
+        "緯度",
+        "備註"
+      ],
+      "retainedPath": "source-recovery-2026-10-15/raw/api-offset-0.json"
+    },
+    {
+      "file": "api-1000.json",
+      "url": "https://data.taipei/api/v1/dataset/267d550f-c6ec-46e0-b8af-fd5a464eb098?scope=resourceAquire&limit=1000&offset=1000",
+      "checkedAt": "2026-10-20T09:10:59.005187+00:00",
+      "status": 200,
+      "bytes": 74,
+      "sha256": "0c5948ce4363aed883c20b3c86e89dd40acb1513ff72cdcbc0c0cc0a53e31583",
+      "finalUrl": "https://data.taipei/api/v1/dataset/267d550f-c6ec-46e0-b8af-fd5a464eb098?scope=resourceAquire&limit=1000&offset=1000",
+      "contentType": "application/json",
+      "meta": {
+        "limit": 1000,
+        "offset": 1000,
+        "count": 681,
+        "sort": ""
+      },
+      "rows": 0,
+      "columns": [],
+      "retainedPath": "source-recovery-2026-10-15/raw/api-offset-1000.json"
+    },
+    {
+      "file": "map.json",
+      "url": "https://www.dep-trash-can.gov.taipei:17443/i/tc",
+      "checkedAt": "2026-10-20T09:10:59.005304+00:00",
+      "status": 200,
+      "bytes": 85439,
+      "sha256": "793f93c30ef4f1cf7ae5b0703111b603bff34f5e129ac36673629335a073b8ba",
+      "finalUrl": "https://www.dep-trash-can.gov.taipei:17443/i/tc",
+      "contentType": "application/json; charset=utf-8",
+      "jsonType": "list",
+      "keys": [],
+      "rows": 681,
+      "retainedPath": "bin-coverage-2026-10-18/official-map-data.json"
+    },
+    {
+      "file": "venues.csv",
+      "url": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=2030d728-9597-437d-81a4-cf2a44c7f114",
+      "checkedAt": "2026-10-20T09:10:59.005518+00:00",
+      "status": 200,
+      "bytes": 5396,
+      "sha256": "47b1ddfb4f0ab4d5e57afab538f71da3d41d22e59c984bdd9c10b4248223b066",
+      "finalUrl": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=2030d728-9597-437d-81a4-cf2a44c7f114",
+      "contentType": "text/csv;charset=BIG-5",
+      "encoding": "cp950",
+      "rows": 130,
+      "columns": [
+        "行政區",
+        "地址",
+        "經度",
+        "緯度",
+        "備註"
+      ],
+      "districts": {
+        "士林區": 7,
+        "大同區": 14,
+        "大安區": 18,
+        "中山區": 16,
+        "中正區": 16,
+        "內湖區": 7,
+        "文山區": 9,
+        "北投區": 10,
+        "松山區": 7,
+        "信義區": 18,
+        "南港區": 5,
+        "萬華區": 3
+      },
+      "retainedPath": "source-recovery-2026-10-15/raw/official-tourist.csv"
+    },
+    {
+      "file": "catalog.html",
+      "url": "https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c",
+      "checkedAt": "2026-10-20T09:10:59.005632+00:00",
+      "status": 200,
+      "bytes": 87258,
+      "sha256": "93af65644f289883b03616ef7173f364c3f8c0b77d6c14712991597490dc7978",
+      "finalUrl": "https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c",
+      "contentType": "text/html;charset=utf-8",
+      "retainedPath": "bin-coverage-2026-10-20/catalog.html"
+    },
+    {
+      "file": "dog-bag-page.html",
+      "url": "https://www.dep.gov.taipei/News_Content.aspx?n=B18D1A1E2787E330&s=38BF6069E7B03DC1",
+      "checkedAt": "2026-10-20T09:10:59.005768+00:00",
+      "status": 200,
+      "bytes": 107227,
+      "sha256": "3cfb467281c0443118296c8befccf7b317aec1bec1db5ab4491cd682f4b1c60d",
+      "finalUrl": "https://www.dep.gov.taipei/News_Content.aspx?n=B18D1A1E2787E330&s=38BF6069E7B03DC1",
+      "contentType": "text/html; charset=utf-8",
+      "retainedPath": "bin-coverage-2026-10-20/dog-bag-page.html"
+    },
+    {
+      "url": "https://www-ws.gov.taipei/Download.ashx?u=LzAwMS9VcGxvYWQvMzYzL3JlbGZpbGUvNDExNDMvNzUyNTA3Ni83NTRlYjYyOS1jZDAzLTRmNzEtODU0Yy05ODQwMDk0OTIwZDUucGRm&n=55Kw5L%2bd5bGA54uX5L6%2f6KKL5riF5r2U566x6Kit572u5Zyw6bueMTk2LnBkZg%3d%3d&icon=..pdf",
+      "file": "dep-dog-bags-196.pdf",
+      "checkedAt": "2026-10-20T09:12:41.751703+00:00",
+      "status": 200,
+      "bytes": 166712,
+      "sha256": "ee7f1688739f3252cb65610dc510342b064e57b1369431efb8b078d189b3884d",
+      "retainedPath": "bin-coverage-2026-10-20/dep-dog-bags-196.pdf"
+    }
+  ],
+  "supplement": {
+    "type": "dog_bag_dispenser",
+    "sourcePageUpdatedDate": "2026-10-20",
+    "sourcePdfSurveyDate": null,
+    "nangangRows": 9,
+    "nangangRowNumbers": [
+      131,
+      132,
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139
+    ],
+    "nangangStreetAddressRows": 2,
+    "nangangParkSubLocations": 7,
+    "beitouRows": 0,
+    "samePhysicalBinMatchVerified": false
+  }
+}

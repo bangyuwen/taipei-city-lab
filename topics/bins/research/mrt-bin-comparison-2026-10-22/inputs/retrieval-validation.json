@@ -1,0 +1,9 @@
+{
+  "first_and_repeat_bytes": 302444881,
+  "first_and_repeat_sha256": "ff4878a3b9bf73a7bc4bf3c54ffc165d5876f65fbc88cf7d17103a8b0b2cb86a",
+  "repeat_identical": true,
+  "http_declared_content_md5": "jtqmvdfjYFzSOdsCNyAzKg==",
+  "computed_md5_base64": "xarLRlpA+rvqG5XTNTknUA==",
+  "md5_matches": false,
+  "status": "Repeated downloaded bodies are identical; official header/body checksum mismatch unresolved. No claim of header-validated integrity."
+}

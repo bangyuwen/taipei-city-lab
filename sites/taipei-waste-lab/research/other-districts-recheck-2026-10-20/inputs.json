@@ -1,0 +1,30 @@
+[
+  {
+    "path": "protocol.md",
+    "sha256": "c2eadc36470a6140ec56a401031354e483d4b5498450e3c6ff3798ed863cee80"
+  },
+  {
+    "path": "point-checks.json",
+    "sha256": "5733d95d018c899e87a809e0ec0d42553adb8c19c523567d7050c31fa490c093"
+  },
+  {
+    "path": "../beitou-nangang-recheck-2026-10-20/recheck.py",
+    "sha256": "6ad14cd9825d590ccf286837cfec555fb07266361aefcaa4b68c05c853487a7e"
+  },
+  {
+    "path": "../beitou-nangang-recheck-2026-10-20/inputs.json",
+    "sha256": "e484fb54d17dd493e56bbec83137d1f25dfb042fea6b65d37610c9b4fcff524d"
+  },
+  {
+    "path": "../beitou-nangang-recheck-2026-10-20/results.json",
+    "sha256": "3ea36d37d3377e1cd9b5e87641fc26427b8e11047f79ee10ea75f2f4dce9a3ab"
+  },
+  {
+    "path": "../taipei-citywide-2026-10-19/results/stations.csv",
+    "sha256": "88ff5676c0a9e103b10133f7ba4d434b00f88600a17d4747d4bed85673b8b6cf"
+  },
+  {
+    "path": "../taipei-citywide-2026-10-19/results/summary.json",
+    "sha256": "06d3290b73e8d8911b07f2d336aab5ba31e558777da00f9acc79ffb46c2c443a"
+  }
+]

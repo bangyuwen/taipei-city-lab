@@ -8,6 +8,10 @@ import csv, json, hashlib, runpy
 from pathlib import Path
 from collections import Counter
 root=Path('research/taipei-citywide-2026-10-19');delivery=root/'delivery'
+priority_root=Path('research/field-priority-2026-10-20')
+saved_priority=(priority_root/'priority.json').read_bytes()
+priority=runpy.run_path(str(priority_root/'build.py'))['build']()
+assert (priority_root/'priority.json').read_bytes()==saved_priority
 runpy.run_path(str(delivery/'build_handoff.py'))['build']()
 def rows(name):
  with (delivery/name).open(encoding='utf-8-sig',newline='') as f:return list(csv.DictReader(f))
@@ -16,6 +20,22 @@ v=rows('planned-visits.csv');h=rows('hotspot-candidates-handoff.csv');d=rows('di
 assert len(v)==234 and len({r['visit_id'] for r in v})==234
 assert Counter(r['stream'] for r in v)=={'city':216,'campus':18}
 assert Counter(r['wave'] for r in v)=={'W1':72,'W2':72,'W3':72,'U':18}
+first={'D01-2','D02-3','D03-1','D04-3','D05-1','D06-2','D07-2','D08-2','D09-3','D10-3','D11-2','D12-3'}
+assert {r['candidate_id'] for r in h if r['wave']=='W1'}==first
+assert len({r['area'] for r in h if r['wave']=='W1'})==12
+for district in priority['districts']:
+ original=[c['candidate_id'] for c in s['candidates'] if c['source_area']==district['area']]
+ order=district['candidate_ids']
+ assert order[0] in first and order[1:]==[cid for cid in original if cid not in first]
+ assert next(r['candidate_ids'] for r in d if r['area']==district['area'])=='|'.join(order)
+ for i,cid in enumerate(order,1):
+  assert {r['wave'] for r in v if r['candidate_id']==cid}=={f'W{i}'}
+assert all(r['wave']=='U' for r in h if r['stream']=='campus')
+for point in priority['candidates']:
+ assert all(value is None for value in point['field_status'].values())
+ row=next(r for r in h if r['candidate_id']==point['candidate_id'])
+ assert row['venue_original_remark']==point['venue']['remark']
+ assert row['next_check']==point['field_check'] and row['ready_for_siting']=='False'
 assert {r['candidate_id'] for r in h}=={r['candidate_id'] for r in s['candidates']}
 assert len(d)==13 and sum(int(r['eligible_stations']) for r in d)==1790
 assert sum(int(r['unknown_stations']) for r in d)==47
@@ -42,5 +62,17 @@ assert m['field_visits_completed']==0 and m['agency_commitments_confirmed']==0
 before={f:hashlib.sha256((delivery/f).read_bytes()).hexdigest() for f in ['hotspot-handoff.md','field-plan.md','field-plan.json','planned-visits.csv','district-readiness.csv','handoff-manifest.json']}
 runpy.run_path(str(delivery/'build_handoff.py'))['build']()
 assert before=={f:hashlib.sha256((delivery/f).read_bytes()).hexdigest() for f in before}
+page=Path('dist/index.html')
+saved_page=page.read_bytes()
+runpy.run_path(str(priority_root/'update_site.py'))['update']()
+assert page.read_bytes()==saved_page
+import re
+text=page.read_text()
+assert set(re.findall(r'data-priority-id="([^"]+)"',text))==first
+for point in priority['candidates']:
+ code=point['candidate_id'][1:3]
+ article=re.search(r'<article[^>]+id="reader-district-'+code+r'".*?</article>',text,re.S).group()
+ label=f'<strong>{point["candidate_id"]} {point["name"]}</strong><br><small>建議第{point["wave"][1]}輪現勘</small>'
+ assert label in article
 `],{cwd:root,stdio:'pipe'});
 });

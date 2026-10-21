@@ -1,21 +1,66 @@
 {
-  "version": "2026-10-19-first-round-v1",
+  "version": "2026-10-20-recheck-priority-v2",
   "status": "planned_not_executed",
   "observation_minutes": 15,
   "minute_offset": 15,
   "people_per_team": 2,
   "day_slots": [
-    {"id": "WD1", "day_type": "weekday", "label": "第一個平日"},
-    {"id": "WD2", "day_type": "weekday", "label": "另一個平日"},
-    {"id": "WE1", "day_type": "weekend", "label": "一個週末日"}
+    {
+      "id": "WD1",
+      "day_type": "weekday",
+      "label": "第一個平日"
+    },
+    {
+      "id": "WD2",
+      "day_type": "weekday",
+      "label": "另一個平日"
+    },
+    {
+      "id": "WE1",
+      "day_type": "weekend",
+      "label": "一個週末日"
+    }
   ],
   "geographic_groups": [
-    {"id": "G1", "label": "北側", "districts": ["北投區", "士林區", "大同區"]},
-    {"id": "G2", "label": "東側", "districts": ["南港區", "內湖區", "松山區"]},
-    {"id": "G3", "label": "中心東側", "districts": ["中山區", "大安區", "信義區"]},
-    {"id": "G4", "label": "西南側", "districts": ["中正區", "萬華區", "文山區"]}
+    {
+      "id": "G1",
+      "label": "北側",
+      "districts": [
+        "北投區",
+        "士林區",
+        "大同區"
+      ]
+    },
+    {
+      "id": "G2",
+      "label": "東側",
+      "districts": [
+        "南港區",
+        "內湖區",
+        "松山區"
+      ]
+    },
+    {
+      "id": "G3",
+      "label": "中心東側",
+      "districts": [
+        "中山區",
+        "大安區",
+        "信義區"
+      ]
+    },
+    {
+      "id": "G4",
+      "label": "西南側",
+      "districts": [
+        "中正區",
+        "萬華區",
+        "文山區"
+      ]
+    }
   ],
-  "sequence_rule": "先完成12區各第1錨點的六站次，再做各第2錨點，最後各第3錨點；區域分組只供排班，不是風險或需求排名，也未驗證最短路線。",
+  "sequence_rule": "依12區複查每區選1點為W1；W2、W3依同區其餘候選原次序。這是查核問題的人工排序，不是需求或風險排名；候選ID尾碼與活動排名不代表現勘輪次。",
   "calendar_rule": "每個錨點的WD1、WD2、WE1為三個不同日期；同日活動窗與對照窗由同組在同一錨點完成。實際日期、人員與交通時間待確認。",
-  "capacity_rule": "每組每個觀察日只安排一個錨點、兩個時窗；不假設能在一小時內跨訪三處。1、2、3組情境僅為容量換算，不代表已有承接人。"
+  "capacity_rule": "每組每個觀察日只安排一個錨點、兩個時窗；不假設能在一小時內跨訪三處。1、2、3組情境僅為容量換算，不代表已有承接人。",
+  "priority_source": "../../field-priority-2026-10-20/priority.json"
 }

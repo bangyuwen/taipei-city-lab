@@ -1,0 +1,1 @@
+﻿event_id,visit_id,scope_version,recorder_code,recorded_at,evidence_kind,source_ref,event_time,event_location,waste_origin,waste_type,carrying,search_actions,route,service_point_record_ids,observable_barrier,burden_quote,attempt_in_window,outcome,outcome_basis,dedup_status,canonical_event_id,missing_reason,reviewer_code

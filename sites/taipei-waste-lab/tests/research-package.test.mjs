@@ -94,15 +94,22 @@ assert {'research-overview-conclusions','research-overview-reading'}<=home['ids'
 analysis=layout.panels['panel-analysis']; ideas=layout.panels['panel-ideas']; plan=layout.panels['panel-plan']
 assert {'analysis-findings','hotspot-candidates','analysis-city-map'}<=analysis['ids']
 assert {'ideas-options','definition-evidence-heading'}<=ideas['ids']
-assert {'plan-work-heading','plan-districts','research-overview-unknowns'}<=plan['ids']
-for name,limit in [('analysis',1800),('ideas',1400),('plan',2200)]:
+assert {'plan-work-heading','plan-departments','plan-conclusion','plan-pending','plan-next'}<=plan['ids']
+assert 'plan-districts' in analysis['ids']
+assert '全市量化分析' in ''.join(analysis['text'])
+assert '目前尚未建立人物與候選點位的資料對應' in ''.join(analysis['text'])
+for name in ['analysis','plan','ideas']:
+ assert {name+'-'+stage for stage in ['conclusion','details','pending','next']}<=layout.panels['panel-'+name]['ids']
+# Analysis explains measure boundaries; ideas separates prior decisions from current research.
+for name,limit in [('analysis',3200),('ideas',1800),('plan',2200)]:
  assert len(''.join(layout.panels['panel-'+name]['text']))<limit,name
 assert all('citywide-area-%02d'%i in layout.panels['panel-districts']['ids'] for i in range(1,14))
 assert all('plan-area-%02d'%i in layout.panels['panel-districts']['ids'] for i in range(1,14))
-assert {'hotspot-heading','hotspot-quality'}<=layout.panels['panel-methods']['ids']
+assert {'hotspot-heading','hotspot-quality','hotspot-times','field-schedule','field-capacity','field-record'}<=layout.panels['panel-methods']['ids']
 assert {'research-overview-evidence','definition-evidence-index-heading','definition-focus-P01','definition-evidence-E06-S2'}<=layout.panels['panel-evidence']['ids']
-assert {'hotspot-government','hotspot-times','hotspot-handoff'}<=layout.panels['panel-work']['ids']
-assert {'definition-prd','definition-prd-risks','definition-not-doing-heading','research-overview-scope'}<=layout.panels['panel-spec']['ids']
+assert {'hotspot-government','hotspot-handoff'}<=layout.panels['panel-work']['ids']
+assert not {'field-schedule','field-capacity','field-record'} & layout.panels['panel-work']['ids']
+assert {'definition-prd','definition-prd-risks','definition-not-doing-heading','research-overview-scope','research-overview-mvp','research-overview-unknowns'}<=layout.panels['panel-spec']['ids']
 assert {'plan-budget','plan-acceptance'}<=layout.panels['panel-archive']['ids']
 assert not {'hotspot-government','definition-prd','definition-evidence-index-heading'} & analysis['ids']
 assert not {'plan-budget','hotspot-government','definition-prd','plan-area-01'} & plan['ids']
@@ -111,12 +118,12 @@ assert {'service-continuity','service-insight','service-prototype','service-scen
 assert '服務成效尚未驗證' in ''.join(materials['text'])
 assert '正式桌面測試 0/12 人（0/108 任務）' in ''.join(materials['text'])
 assert all(key in materials['ids'] for key in ['conclusion-siting','conclusion-collection','conclusion-household'])
-assert {'#analysis','#ideas','#plan','#districts','#library','#definition-prd-roles','#definition-prd-next'}<=home['links']
+assert {'#project-goal','#personas','#analysis','#problem','#ideas-options','#plan','#plan-validation','#plan-resources','#districts','#library','#definition-prd-roles'}<=home['links']
 assert {'definition-prd-roles','definition-prd-next'}<=layout.panels['panel-team']['ids']
 assert not {'definition-prd-roles','definition-prd-next'} & layout.panels['panel-spec']['ids']
 assert {'#history','#map','#comparison','#countries','#sources','#materials','#definition','#archive'}<=layout.panels['panel-library']['links']
-assert '家戶本期不做' in ''.join(home['text']) and '尚未進行真人研究' in ''.join(home['text'])
-assert '12 區' in ''.join(home['text']) and '交通活動' in ''.join(home['text'])
+assert '家戶收運與智慧桶開發不在本輪範圍' in ''.join(home['text']) and '尚未進行現勘或試辦' in ''.join(home['text'])
+assert '12 區' in ''.join(home['text']) and '尚不能決定新桶位置' in ''.join(home['text'])
 assert len(layout.references)==17 and set(layout.references.values())=={'panel-sources'}
 assert layout.panels['panel-sources']['details']==0
 for key in ['budget-heading','paid-disposal-heading','implementation-heading','research-field-tools','research-candidates','research-context','research-district','research-exclusions']:
