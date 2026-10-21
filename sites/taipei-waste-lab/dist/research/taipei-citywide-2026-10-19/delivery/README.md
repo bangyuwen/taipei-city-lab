@@ -37,3 +37,14 @@ node --test tests/citywide-handoff.test.mjs
 重建會覆寫此資料夾的衍生CSV、field-plan.json、交接說明及manifest，不能在已填入現場結果的唯一副本上執行。`field-record-guide.md`、政府交接文件與原始分析規則由各自來源保留。
 
 若只有私人研究交付包，在保留鄰接研究來源的原相對位置下，可執行`python3 build_handoff.py`重建模板；網站摘要仍需完整網站source。全站明細在`../results/stations.csv`，原分析規則在`../protocol.md`。提案的正式日期、人員、預算與必要核准未被本包代填。
+
+## PRD v0.5 journey and basket forms (2026-10-22)
+
+The [field guide](field-record-forms.md) contains four blank sheets, the CSV field dictionary, filling rules and twelve acceptance scenarios. `templates/` contains header-only CSV files, with no measured rows. `field-record-forms.json` is the authoring source; `build_field_records.py` regenerates the templates, guide and public blank sheets. No observation input is read or published by this generator.
+
+```sh
+python3 research/taipei-citywide-2026-10-19/delivery/build_field_records.py
+node --test tests/field-record-forms.test.mjs
+```
+
+Copy templates before recording fieldwork. Regeneration refuses to overwrite a template containing nonblank data rows. Recorded copies and photos remain private; the public website provides reading/printing sheets, not online storage. The existing visit schedule, candidate priorities and service-point records are unchanged. Acceptance scenarios are exercises, not field results or completed staff training.

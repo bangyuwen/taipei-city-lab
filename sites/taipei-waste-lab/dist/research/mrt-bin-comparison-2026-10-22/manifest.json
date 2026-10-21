@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-22",
+  "method": "Exit union; Haversine; fixed OD top 10 Taipei station names; street records only",
+  "raw_od": "https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202609.csv",
+  "raw_od_sha256": "ff4878a3b9bf73a7bc4bf3c54ffc165d5876f65fbc88cf7d17103a8b0b2cb86a",
+  "retrieval_validation": {
+    "first_and_repeat_bytes": 302444881,
+    "first_and_repeat_sha256": "ff4878a3b9bf73a7bc4bf3c54ffc165d5876f65fbc88cf7d17103a8b0b2cb86a",
+    "repeat_identical": true,
+    "http_declared_content_md5": "jtqmvdfjYFzSOdsCNyAzKg==",
+    "computed_md5_base64": "xarLRlpA+rvqG5XTNTknUA==",
+    "md5_matches": false,
+    "status": "Repeated downloaded bodies are identical; official header/body checksum mismatch unresolved. No claim of header-validated integrity."
+  },
+  "files": [
+    {
+      "path": "research/mrt-bin-comparison-2026-10-22/protocol.md",
+      "bytes": 2530,
+      "sha256": "9b57ee4a57d2bde23e4ee3e1eb21d7c639a71ab4e4a70fe3310e411b5d5df20e"
+    },
+    {
+      "path": "research/mrt-bin-comparison-2026-10-22/inputs/exits-2026-08-04.csv",
+      "bytes": 17633,
+      "sha256": "134d8488c240fb23e04535db6a94da73006f890c83617eeedaa9b26c9f120015"
+    },
+    {
+      "path": "research/mrt-bin-comparison-2026-10-22/inputs/od-http-headers.txt",
+      "bytes": 481,
+      "sha256": "ba4e9588198e8735ec2419c82e240bea5a0a11c7f0635ea88d169f258f9ec2fa"
+    },
+    {
+      "path": "research/mrt-bin-comparison-2026-10-22/inputs/od-index.csv",
+      "bytes": 25462,
+      "sha256": "f9c45551bc9c4c8126a5feeabab65067682fa3a3d33b3dd1820a07f3ea63cebc"
+    },
+    {
+      "path": "research/mrt-bin-comparison-2026-10-22/inputs/od-receipt.json",
+      "bytes": 23320,
+      "sha256": "f6f64fa2ad093d7b98b06dcaa8036d60cfd099d95109956203e0653a97146f9b"
+    },
+    {
+      "path": "research/mrt-bin-comparison-2026-10-22/inputs/od-repeat-http-headers.txt",
+      "bytes": 481,
+      "sha256": "6d78bbdc7720b6908c22421b49de571872edc6427d2e28b51111139aad2a6fe4"
+    },
+    {
+      "path": "research/mrt-bin-comparison-2026-10-22/inputs/retrieval-validation.json",
+      "bytes": 451,
+      "sha256": "c45a94b600881821770a8a507115b7e3d941750da2d59c3564cdd15cfb748a31"
+    },
+    {
+      "path": "research/mrt-bin-comparison-2026-10-22/inputs/station-day-202609.csv",
+      "bytes": 119755,
+      "sha256": "b41a356604f09db75192f73bdbfe6b2c29fe205c775e7b2043dfb1c5f4914585"
+    },
+    {
+      "path": "research/mrt-bin-comparison-2026-10-22/inputs/stations-2026-09-04.csv",
+      "bytes": 13690,
+      "sha256": "dc2a2e5070eba123621190621d135f6cde55459c1042d7f942b9ef4a66146ab0"
+    },
+    {
+      "path": "research/mrt-bin-comparison-2026-10-22/inputs/system-daily-202609.csv",
+      "bytes": 712,
+      "sha256": "daf8240c684b826b54bb2e3a90ba891211deaf93902d8d8c85a229d0e8c8ee2e"
+    },
+    {
+      "path": "research/youbike-bin-screening-2026-10-18/inputs/bins-2026.csv",
+      "bytes": 84118,
+      "sha256": "38b4af06dc0d57a38cc1361079fed8963632be746f5033638dec1001c072fda1"
+    },
+    {
+      "path": "research/youbike-bin-screening-2026-10-18/inputs/venues.csv",
+      "bytes": 6675,
+      "sha256": "e63606bca5da810114f4352d38c0a5f13f0be85ee7959c307ad8c9df56d1ce72"
+    }
+  ],
+  "sources": [
+    {
+      "title": "臺北捷運各站分時進出量統計",
+      "catalog": "https://data.taipei/dataset/detail?id=63f31c7e-7fc3-418b-bd82-b95158755b4d",
+      "download": "https://tcgmetro.blob.core.windows.net/stationod/%E8%87%BA%E5%8C%97%E6%8D%B7%E9%81%8B%E6%AF%8F%E6%97%A5%E5%88%86%E6%99%82%E5%90%84%E7%AB%99OD%E6%B5%81%E9%87%8F%E7%B5%B1%E8%A8%88%E8%B3%87%E6%96%99_202609.csv",
+      "published": "2026-10-12",
+      "period": "2026-09"
+    },
+    {
+      "title": "臺北捷運車站出入口座標",
+      "catalog": "https://data.taipei/dataset/detail?id=cfa4778c-62c1-497b-b704-756231de348b",
+      "download": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=307a7f61-e302-4108-a817-877ccbfca7c1",
+      "published": "2026-08-04"
+    },
+    {
+      "title": "臺北捷運車站資料服務",
+      "catalog": "https://data.taipei/dataset/detail?id=1eefa68d-7c8d-491b-8e75-66a161947426",
+      "download": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=c77e91bf-067c-475e-917b-545ff62b7d76",
+      "published": "2026-09-04"
+    },
+    {
+      "title": "臺北捷運全系統旅運量統計",
+      "catalog": "https://data.taipei/dataset/detail?id=660e3969-c011-481c-aa24-8a949ac2d62d",
+      "download": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=0aa8d409-6a93-4c30-8379-f1c489bf3296",
+      "period": "2026-09"
+    },
+    {
+      "title": "臺北市行人專用清潔箱設置點",
+      "catalog": "https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c",
+      "street_published": "2026-09-30",
+      "venue_published": "2026-08-18",
+      "retained_provenance": "research/source-recovery-2026-10-15/manifest.json"
+    }
+  ]
+}

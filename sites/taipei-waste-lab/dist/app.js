@@ -126,7 +126,7 @@ function panel(){
   currentPage=nextPage;
   lastHash=location.hash;
   for(const a of document.querySelectorAll('[data-page]')){
-    const selected=a.closest('#site-navigation')?a.dataset.page===workspaceForPage(currentPage):a.dataset.page===currentPage;
+    const selected=a.closest('.site-header')?a.dataset.page===workspaceForPage(currentPage):a.dataset.page===currentPage;
     if(selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
   }
   document.body.dataset.page=currentPage;
@@ -203,7 +203,7 @@ function renderVenues(){
   $('venue-status').textContent=!state.showVenues?'場域圖層已隱藏。':
     venueFiltered.length?'場域線索與街頭紀錄分開計數，不能相加；重複名稱及座標保留。':
     '沒有符合篩選的場域線索；不代表沒有可用投放點。';
-  $('venue-list').innerHTML=venueFiltered.map(p=>`<div class="point-row venue-row"><button type="button" data-venue="${esc(p.id)}"><span>${esc(p.address)}</span><small>${esc(p.district)} · 約略位置，待核實</small></button></div>`).join('');
+  $('venue-list').innerHTML=venueFiltered.map(p=>`<div class="point-row venue-row"><button type="button" data-venue="${esc(p.id)}"><span>${esc(p.address)}</span><small>${esc(p.district)} · 原表備註：${esc(p.sourceRemark||'未提供')} · 約略位置，待核實</small></button></div>`).join('');
   for(const button of $('venue-list').querySelectorAll('[data-venue]'))button.addEventListener('click',()=>focusVenue(button.dataset.venue));
   if(visible&&state.showVenues)$('map-caption').textContent+=` 另顯示 ${num(venueFiltered.length)} 筆場域線索（約略位置）；不是已核實桶位。`;
 }
@@ -260,10 +260,11 @@ function venuePopup(p){
   const el=document.createElement('div');el.className='venue-popup';
   const title=document.createElement('strong');title.textContent=p.address;
   const note=document.createElement('p');note.textContent=p.district+' · '+p.quality;
+  const remark=document.createElement('p');remark.textContent=`官方原表備註：${p.sourceRemark||'未提供'}。來源標示的處數未逐點核實，不與街道列數相加。`;
   const coordinates=document.createElement('p');coordinates.textContent=`原檔座標：${p.rawY}, ${p.rawX}。${catalog.venueLeads.coordinateNote}`;
   const status=document.createElement('p');status.textContent=catalog.venueLeads.availabilityNote;
   const source=document.createElement('a');source.href=catalog.venueLeads.source;source.target='_blank';source.rel='noopener noreferrer';source.textContent=`官方場域清單（${catalog.venueLeads.sourceUpdatedAt.slice(0,10)}）`;
-  el.append(title,note,coordinates,status,source);return el;
+  el.append(title,note,remark,coordinates,status,source);return el;
 }
 async function focusVenue(id){
   if(!map)await ensureMap();
@@ -323,7 +324,7 @@ async function start(){
     const open=document.querySelector('.site-header').classList.toggle('menu-open');
     $('site-menu-toggle').setAttribute('aria-expanded',String(open));
   });
-  document.querySelector('#site-navigation').addEventListener('click',event=>{
+  document.querySelector('.site-header').addEventListener('click',event=>{
     const link=event.target.closest('a');
     if(!link)return;
     if(pageFromHash(link.hash)===currentPage){

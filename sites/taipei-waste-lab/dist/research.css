@@ -247,6 +247,8 @@
 .plan-table th,.plan-table td{border-bottom:1px solid var(--line);text-align:left;vertical-align:top;padding:14px 12px;overflow-wrap:anywhere}
 .plan-table th{background:var(--light);font-weight:600}
 .plan-table td:first-child{font-weight:600;min-width:7em}
+#reader-field-priority .plan-table td:first-child{font-weight:400}
+@media(min-width:761px){#reader-field-priority .plan-table th{width:50%}}
 .plan-cell-label{display:none}
 @media(max-width:1100px){.plan-reading-layout{grid-template-columns:minmax(0,1fr);gap:8px}.plan-contents{position:static;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 20px;border-bottom:1px solid var(--line);padding:12px 0}}
 @media(max-width:760px){
@@ -380,3 +382,30 @@
 @media(max-width:600px){.persona-profile h3{font-size:20px}.persona-route{grid-template-columns:1fr;gap:0}.persona-route>div{display:grid;grid-template-columns:7em minmax(0,1fr);gap:16px;padding:12px 0}.persona-route dt{margin:0}.persona-route dd{min-height:1.8em}.persona-summary{font-size:16px}}
 
 .problem-evidence{margin:24px 0}.problem-evidence>div{padding:16px 0;border-bottom:1px solid var(--line)}.problem-evidence dt{font-weight:700;font-size:16px;margin-bottom:8px}.problem-evidence dd{margin:0;font-size:16px;line-height:1.8}
+
+/* Project decisions use the existing flat research reading surface. */
+.project-contract{margin:0;font-size:16px;line-height:1.85}
+.project-contract>div{display:grid;grid-template-columns:140px minmax(0,1fr);gap:24px;padding:16px 0;border-bottom:1px solid var(--line)}
+.project-contract dt{font-weight:700}
+.project-contract dd{margin:0;max-width:72ch}
+.project-decision-path{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:40px;margin:0;padding-left:26px}
+.project-decision-path li{padding:12px 0 16px;border-bottom:1px solid var(--line)}
+.project-decision-path li::marker{font-weight:700;color:var(--green)}
+.project-decision-path a{display:inline-flex;align-items:center;min-height:44px;font-size:19px;font-weight:650}
+.project-decision-path p{margin:0;font-size:15px;color:var(--muted);line-height:1.8}
+.project-path-note{margin:18px 0 0;font-size:15px;line-height:1.85;max-width:72ch}
+.project-reading-brief{margin:0 0 28px;padding:10px 0;border-block:1px solid var(--line);font-size:16px;line-height:1.85}
+.project-reading-brief>div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:20px;padding:7px 0}
+.project-reading-brief dt{font-weight:700}
+.project-reading-brief dd{margin:0}
+@media(max-width:639px){.project-contract>div{grid-template-columns:1fr;gap:4px;padding:14px 0}.project-decision-path{grid-template-columns:1fr}.project-decision-path a{font-size:18px}.project-reading-brief>div{grid-template-columns:1fr;gap:2px;padding:10px 0}}
+
+/* Blank field sheets share the existing responsive research tables. */
+.field-record-sheet th[scope="row"]{width:24%}
+.field-record-sheet td[data-label="填寫"]{width:25%}
+.field-record-blank{min-height:4rem;border-bottom:1px dashed var(--line, #a8bfc6)}
+@media(max-width:700px){.field-record-sheet th[scope="row"],.field-record-sheet td[data-label="填寫"]{width:auto}.field-record-blank{min-height:3rem}}
+
+/* Keep the MRT comparison captions readable when tables stack on narrow screens. */
+:is(#reader-method-mrt,#reader-method-station-venues) .plan-table caption{text-align:left;font-size:14px;line-height:1.8;color:var(--muted);padding:0 0 12px}
+@media(max-width:760px){:is(#reader-method-mrt,#reader-method-station-venues) .plan-table caption{display:block;width:100%}}

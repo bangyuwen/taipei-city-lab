@@ -1,0 +1,367 @@
+{
+  "checked_date": "2026-10-20",
+  "basis": "fixed July aggregates; no new field observations",
+  "venue_rows_added": 0,
+  "venue_remarks_used_in_ranking": false,
+  "all_station_activity_reconciled": 1821,
+  "source_counts": {
+    "street": {
+      "total": 681,
+      "valid_coordinates": 680
+    },
+    "venue": {
+      "total": 130,
+      "valid_coordinates": 130
+    }
+  },
+  "excluded_coordinates": [
+    {
+      "source": "street",
+      "row": 655,
+      "original": {
+        "行政區": "文山區",
+        "地址": "指南路3段40巷8-4號對面停車場 (貓空公車壺穴站)-1",
+        "經度": "?121.595369",
+        "緯度": "24.968972",
+        "備註": "嚴禁投入家用垃圾，違者重罰新臺幣6000元"
+      }
+    }
+  ],
+  "districts": [
+    {
+      "area": "南港區",
+      "snapshot_stations": 124,
+      "eligible_stations": 124,
+      "unknown_activity_stations": 3,
+      "scenarios": [
+        {
+          "gap_m": 300,
+          "metric": "events",
+          "station_ids": [
+            "500111013",
+            "500111035",
+            "500111046"
+          ],
+          "same_order_as_previous_main": true
+        },
+        {
+          "gap_m": 150,
+          "metric": "events",
+          "station_ids": [
+            "500111013",
+            "500111035",
+            "500111046"
+          ],
+          "same_order_as_previous_main": true
+        },
+        {
+          "gap_m": 500,
+          "metric": "events",
+          "station_ids": [
+            "500111013",
+            "500111035",
+            "500111046"
+          ],
+          "same_order_as_previous_main": true
+        },
+        {
+          "gap_m": 300,
+          "metric": "events_excluding_flags",
+          "station_ids": [
+            "500111013",
+            "500111035",
+            "500111046"
+          ],
+          "same_order_as_previous_main": true
+        }
+      ]
+    },
+    {
+      "area": "北投區",
+      "snapshot_stations": 134,
+      "eligible_stations": 132,
+      "unknown_activity_stations": 7,
+      "scenarios": [
+        {
+          "gap_m": 300,
+          "metric": "events",
+          "station_ids": [
+            "500109075",
+            "500109025",
+            "500109032"
+          ],
+          "same_order_as_previous_main": true
+        },
+        {
+          "gap_m": 150,
+          "metric": "events",
+          "station_ids": [
+            "500109075",
+            "500109025",
+            "500109032"
+          ],
+          "same_order_as_previous_main": true
+        },
+        {
+          "gap_m": 500,
+          "metric": "events",
+          "station_ids": [
+            "500109075",
+            "500109025",
+            "500109032"
+          ],
+          "same_order_as_previous_main": true
+        },
+        {
+          "gap_m": 300,
+          "metric": "events_excluding_flags",
+          "station_ids": [
+            "500109075",
+            "500109025",
+            "500109032"
+          ],
+          "same_order_as_previous_main": true
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_id": "D09-1",
+      "station_id": "500111013",
+      "name": "捷運南港展覽館站(5號出口)",
+      "source_area": "南港區",
+      "lon": 121.61669,
+      "lat": 25.05469,
+      "events": 23669,
+      "events_excluding_flags": 23651,
+      "city_rank": 91,
+      "street": {
+        "row": 631,
+        "name": "經園街與經貿一路口",
+        "source_area": "南港區",
+        "lon": 121.617093,
+        "lat": 25.06208,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 822.73
+      },
+      "venue": {
+        "row": 128,
+        "name": "南港展覽館捷運站",
+        "source_area": "南港區",
+        "lon": 121.617,
+        "lat": 25.055,
+        "remark": "6處",
+        "source_coordinate_distance_m": 46.51
+      },
+      "evidence_scope": "同站名的場所紀錄；未指定第 5 號出口或站外桶位。",
+      "next_check": "先核對第 5 號出口內外的實際設施、位置與接收條件，再走查 YouBike 站至設施的路線。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      }
+    },
+    {
+      "candidate_id": "D09-2",
+      "station_id": "500111035",
+      "name": "南港車站(市民大道)",
+      "source_area": "南港區",
+      "lon": 121.60656,
+      "lat": 25.05326,
+      "events": 22779,
+      "events_excluding_flags": 22752,
+      "city_rank": 104,
+      "street": {
+        "row": 192,
+        "name": "安康路內湖焚化廠內",
+        "source_area": "內湖區",
+        "lon": 121.604699,
+        "lat": 25.063238,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 1125.23
+      },
+      "venue": {
+        "row": 125,
+        "name": "南港捷運站",
+        "source_area": "南港區",
+        "lon": 121.606,
+        "lat": 25.052,
+        "remark": "2處",
+        "source_coordinate_distance_m": 151.04
+      },
+      "evidence_scope": "南港捷運站的場所紀錄；不能代表市民大道側或轉運站已有服務。",
+      "next_check": "核對市民大道側與捷運站內外的服務銜接，分開記錄進站條件、開放時間與站外步行路線。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      }
+    },
+    {
+      "candidate_id": "D09-3",
+      "station_id": "500111046",
+      "name": "捷運後山埤站(3號出口)",
+      "source_area": "南港區",
+      "lon": 121.5836,
+      "lat": 25.04511,
+      "events": 22512,
+      "events_excluding_flags": 22457,
+      "city_rank": 107,
+      "street": {
+        "row": 295,
+        "name": "八德路4段746號(松山國小)(捷運松山站5號出口)",
+        "source_area": "松山區",
+        "lon": 121.577748,
+        "lat": 25.05054,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 843.85
+      },
+      "venue": {
+        "row": 121,
+        "name": "後山埤捷運站",
+        "source_area": "信義區",
+        "lon": 121.582,
+        "lat": 25.045,
+        "remark": "12處",
+        "source_coordinate_distance_m": 161.65
+      },
+      "evidence_scope": "後山埤捷運站紀錄列在信義區；不能因候選點屬南港就漏掉，也不移算成南港場所處數。",
+      "next_check": "跨區核對第 3 號出口與場所逐點明細，確認設施位於哪側、由誰管理，以及能否從站外使用。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      }
+    },
+    {
+      "candidate_id": "D12-1",
+      "station_id": "500109075",
+      "name": "捷運北投站(1號出口)",
+      "source_area": "北投區",
+      "lon": 121.49862,
+      "lat": 25.13258,
+      "events": 35253,
+      "events_excluding_flags": 35199,
+      "city_rank": 22,
+      "street": {
+        "row": 515,
+        "name": "中山北路7段141巷43號 (下方公園旁一)",
+        "source_area": "士林區",
+        "lon": 121.530194,
+        "lat": 25.124294,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 3309.44
+      },
+      "venue": {
+        "row": 94,
+        "name": "北投捷運站",
+        "source_area": "北投區",
+        "lon": 121.498,
+        "lat": 25.132,
+        "remark": "10處",
+        "source_coordinate_distance_m": 89.75
+      },
+      "evidence_scope": "北投捷運站的場所紀錄；原文未把「10處」定位到第 1 號出口。",
+      "next_check": "取得場所逐點位置與箱號，先查第 1 號出口內外、開放與接收規則，再確認站外路徑。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      }
+    },
+    {
+      "candidate_id": "D12-2",
+      "station_id": "500109025",
+      "name": "捷運奇岩站(三合街)",
+      "source_area": "北投區",
+      "lon": 121.50099,
+      "lat": 25.12634,
+      "events": 25151,
+      "events_excluding_flags": 25111,
+      "city_rank": 68,
+      "street": {
+        "row": 500,
+        "name": "延平北路延平北路7段250號福安國中(右側公車亭左旁)",
+        "source_area": "士林區",
+        "lon": 121.487286,
+        "lat": 25.103342,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 2905.74
+      },
+      "venue": {
+        "row": 95,
+        "name": "奇岩捷運站",
+        "source_area": "北投區",
+        "lon": 121.501,
+        "lat": 25.125,
+        "remark": "2處",
+        "source_coordinate_distance_m": 149.0
+      },
+      "evidence_scope": "奇岩捷運站的場所紀錄；未確認「2處」是否位於三合街側。",
+      "next_check": "確認三合街側出口至實際設施的路徑，核對進站條件、接收項目與開放時間。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      }
+    },
+    {
+      "candidate_id": "D12-3",
+      "station_id": "500109032",
+      "name": "北投運動中心",
+      "source_area": "北投區",
+      "lon": 121.50962,
+      "lat": 25.11666,
+      "events": 24714,
+      "events_excluding_flags": 24687,
+      "city_rank": 77,
+      "street": {
+        "row": 511,
+        "name": "中山北路6段天壽2號公園(中山北路6段面對405巷口左側)",
+        "source_area": "士林區",
+        "lon": 121.5264996,
+        "lat": 25.11291038,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 1749.88
+      },
+      "venue": {
+        "row": 96,
+        "name": "唭哩岸捷運站",
+        "source_area": "北投區",
+        "lon": 121.506,
+        "lat": 25.12,
+        "remark": "3處",
+        "source_coordinate_distance_m": 520.35
+      },
+      "evidence_scope": "最近場所是唭哩岸捷運站；130 筆場所表未列北投運動中心，不能推定館內或周邊沒有設施。",
+      "next_check": "另查運動中心館內、入口與周邊道路的設施及管理者；唭哩岸站是否可作替代服務，仍須查路徑與使用條件。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      }
+    }
+  ],
+  "maximum_formula_difference_m": 6.471261904295034e-05,
+  "candidate_count": 6,
+  "unchanged_candidates_in_order": 6
+}

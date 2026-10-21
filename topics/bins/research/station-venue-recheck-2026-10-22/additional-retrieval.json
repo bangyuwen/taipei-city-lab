@@ -1,0 +1,22 @@
+[
+  {
+    "file": "inputs/xinsheng-map.pdf",
+    "url": "https://web.metro.taipei/img/ALL/INFOPDF/089.pdf",
+    "final_url": "https://web.metro.taipei/img/ALL/INFOPDF/089.pdf",
+    "retrieved_at": "2026-10-21T22:01:50.942836+00:00",
+    "http_status": 200,
+    "content_type": "application/pdf",
+    "bytes": 460965,
+    "sha256": "b35cb31d7e5dc27f0b9794b1ce37cdfb9f501b8a910bea36dfed08d01c3d23b2"
+  },
+  {
+    "file": "inputs/zhongshan-tdri.html",
+    "url": "https://www.tdri.org.tw/zh-TW/public_service_cases/1",
+    "final_url": "https://www.tdri.org.tw/zh-TW/public_service_cases/1",
+    "retrieved_at": "2026-10-21T22:01:51.202029+00:00",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "bytes": 32964,
+    "sha256": "001f0bc14b798a6e2802bce6eb01585b810644122920fcbac237722a310c37bb"
+  }
+]

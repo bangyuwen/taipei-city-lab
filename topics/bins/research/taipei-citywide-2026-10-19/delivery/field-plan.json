@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-19-first-round-v1",
+  "version": "2026-10-20-recheck-priority-v2",
   "status": "planned_not_executed",
   "city": {
     "districts": 12,
@@ -17,13 +17,34 @@
   "waves": [
     {
       "id": "W1",
-      "label": "第1輪：12區各第1錨點",
+      "label": "第1輪：12區各1點，依複查後的現勘順序",
+      "candidate_ids": [
+        "D01-2",
+        "D02-3",
+        "D03-1",
+        "D04-3",
+        "D05-1",
+        "D06-2",
+        "D07-2",
+        "D08-2",
+        "D09-3",
+        "D10-3",
+        "D11-2",
+        "D12-3"
+      ],
+      "anchors": 12,
+      "sessions": 72,
+      "observation_hours": 18
+    },
+    {
+      "id": "W2",
+      "label": "第2輪：12區各1點，依複查後的現勘順序",
       "candidate_ids": [
         "D01-1",
         "D02-1",
-        "D03-1",
+        "D03-2",
         "D04-1",
-        "D05-1",
+        "D05-2",
         "D06-1",
         "D07-1",
         "D08-1",
@@ -37,42 +58,21 @@
       "observation_hours": 18
     },
     {
-      "id": "W2",
-      "label": "第2輪：12區各第2錨點",
-      "candidate_ids": [
-        "D01-2",
-        "D02-2",
-        "D03-2",
-        "D04-2",
-        "D05-2",
-        "D06-2",
-        "D07-2",
-        "D08-2",
-        "D09-2",
-        "D10-2",
-        "D11-2",
-        "D12-2"
-      ],
-      "anchors": 12,
-      "sessions": 72,
-      "observation_hours": 18
-    },
-    {
       "id": "W3",
-      "label": "第3輪：12區各第3錨點",
+      "label": "第3輪：12區各1點，依複查後的現勘順序",
       "candidate_ids": [
         "D01-3",
-        "D02-3",
+        "D02-2",
         "D03-3",
-        "D04-3",
+        "D04-2",
         "D05-3",
         "D06-3",
         "D07-3",
         "D08-3",
-        "D09-3",
-        "D10-3",
+        "D09-2",
+        "D10-2",
         "D11-3",
-        "D12-3"
+        "D12-2"
       ],
       "anchors": 12,
       "sessions": 72,
@@ -144,7 +144,7 @@
     }
   ],
   "config": {
-    "version": "2026-10-19-first-round-v1",
+    "version": "2026-10-20-recheck-priority-v2",
     "status": "planned_not_executed",
     "observation_minutes": 15,
     "minute_offset": 15,
@@ -204,9 +204,10 @@
         ]
       }
     ],
-    "sequence_rule": "先完成12區各第1錨點的六站次，再做各第2錨點，最後各第3錨點；區域分組只供排班，不是風險或需求排名，也未驗證最短路線。",
+    "sequence_rule": "依12區複查每區選1點為W1；W2、W3依同區其餘候選原次序。這是查核問題的人工排序，不是需求或風險排名；候選ID尾碼與活動排名不代表現勘輪次。",
     "calendar_rule": "每個錨點的WD1、WD2、WE1為三個不同日期；同日活動窗與對照窗由同組在同一錨點完成。實際日期、人員與交通時間待確認。",
-    "capacity_rule": "每組每個觀察日只安排一個錨點、兩個時窗；不假設能在一小時內跨訪三處。1、2、3組情境僅為容量換算，不代表已有承接人。"
+    "capacity_rule": "每組每個觀察日只安排一個錨點、兩個時窗；不假設能在一小時內跨訪三處。1、2、3組情境僅為容量換算，不代表已有承接人。",
+    "priority_source": "../../field-priority-2026-10-20/priority.json"
   },
   "districts": [
     {
@@ -220,12 +221,12 @@
       "observed_events": 1255794,
       "street_source_rows": 55,
       "venue_source_rows": 7,
-      "candidate_ids": "D01-1|D01-2|D01-3",
+      "candidate_ids": "D01-2|D01-1|D01-3",
       "weekday_activity_window": "18:00–19:00",
       "weekday_control_window": "10:00–11:00",
       "weekend_activity_window": "18:00–19:00",
       "weekend_control_window": "10:00–11:00",
-      "data_task": "核對來源清冊、箱況、步行與清運",
+      "data_task": "先查藝文設施與街道的服務邊界：最近場所紀錄是台北小巨蛋站，不能當作藝文推廣處的設施；街道另有八德路紀錄。",
       "field_status": "未執行",
       "authority_status": "逐點待核實"
     },
@@ -240,12 +241,12 @@
       "observed_events": 1711503,
       "street_source_rows": 60,
       "venue_source_rows": 18,
-      "candidate_ids": "D02-1|D02-2|D02-3",
+      "candidate_ids": "D02-3|D02-1|D02-2",
       "weekday_activity_window": "18:00–19:00",
       "weekday_control_window": "10:00–11:00",
       "weekend_activity_window": "17:00–18:00",
       "weekend_control_window": "10:00–11:00",
-      "data_task": "核對來源清冊、箱況、步行與清運",
+      "data_task": "先查名單對點間隔的依賴：500 m版本以松山車站替代象山；象山場所與信義路街道紀錄也可能重複。",
       "field_status": "未執行",
       "authority_status": "逐點待核實"
     },
@@ -265,7 +266,7 @@
       "weekday_control_window": "10:00–11:00",
       "weekend_activity_window": "18:00–19:00",
       "weekend_control_window": "10:00–11:00",
-      "data_task": "核對來源清冊、箱況、步行與清運",
+      "data_task": "作為近距離紀錄的核實對照：公館同站名場所約12 m、街道紀錄約41 m且列在中正區；看似近仍不代表出口外可投放。",
       "field_status": "未執行",
       "authority_status": "逐點待核實"
     },
@@ -280,12 +281,12 @@
       "observed_events": 1809481,
       "street_source_rows": 50,
       "venue_source_rows": 16,
-      "candidate_ids": "D04-1|D04-2|D04-3",
+      "candidate_ids": "D04-3|D04-1|D04-2",
       "weekday_activity_window": "18:00–19:00",
       "weekday_control_window": "10:00–11:00",
       "weekend_activity_window": "18:00–19:00",
       "weekend_control_window": "10:00–11:00",
-      "data_task": "核對來源清冊、箱況、步行與清運",
+      "data_task": "先查私人場所與公共路口的差別：最近線索為欣欣百貨，尚不能支持林森長春路口有可用服務。",
       "field_status": "未執行",
       "authority_status": "逐點待核實"
     },
@@ -305,7 +306,7 @@
       "weekday_control_window": "10:00–11:00",
       "weekend_activity_window": "18:00–19:00",
       "weekend_control_window": "10:00–11:00",
-      "data_task": "核對來源清冊、箱況、步行與清運",
+      "data_task": "先查運動中心自身的服務：最近場所線索是中正紀念堂捷運站；最近街道紀錄在國家音樂廳車輛出入口，場域與安全路徑未明。",
       "field_status": "未執行",
       "authority_status": "逐點待核實"
     },
@@ -320,12 +321,12 @@
       "observed_events": 853180,
       "street_source_rows": 22,
       "venue_source_rows": 14,
-      "candidate_ids": "D06-1|D06-2|D06-3",
+      "candidate_ids": "D06-2|D06-1|D06-3",
       "weekday_activity_window": "18:00–19:00",
       "weekday_control_window": "10:00–11:00",
       "weekend_activity_window": "18:00–19:00",
       "weekend_control_window": "10:00–11:00",
-      "data_task": "核對來源清冊、箱況、步行與清運",
+      "data_task": "先查公園、碼頭與河濱的差別：最近場所原文是大稻埕公園，不能定位碼頭、水門或河濱的設施。",
       "field_status": "未執行",
       "authority_status": "逐點待核實"
     },
@@ -340,12 +341,12 @@
       "observed_events": 698711,
       "street_source_rows": 82,
       "venue_source_rows": 3,
-      "candidate_ids": "D07-1|D07-2|D07-3",
+      "candidate_ids": "D07-2|D07-1|D07-3",
       "weekday_activity_window": "18:00–19:00",
       "weekday_control_window": "10:00–11:00",
       "weekend_activity_window": "18:00–19:00",
       "weekend_control_window": "10:00–11:00",
-      "data_task": "核對來源清冊、箱況、步行與清運",
+      "data_task": "先查換點與廣場邊界：500 m版本改選開封西寧路口；中華路街道紀錄雖近，西門站場所紀錄列在中正區，都未確認廣場服務。",
       "field_status": "未執行",
       "authority_status": "逐點待核實"
     },
@@ -360,12 +361,12 @@
       "observed_events": 555429,
       "street_source_rows": 51,
       "venue_source_rows": 9,
-      "candidate_ids": "D08-1|D08-2|D08-3",
+      "candidate_ids": "D08-2|D08-1|D08-3",
       "weekday_activity_window": "18:00–19:00",
       "weekday_control_window": "10:00–11:00",
       "weekend_activity_window": "18:00–19:00",
       "weekend_control_window": "10:00–11:00",
-      "data_task": "核對來源清冊、箱況、步行與清運",
+      "data_task": "先解開共用來源：花木市場與萬隆站候選引用同一筆萬隆捷運站紀錄；500 m版本改選景文街142巷口。",
       "field_status": "未執行",
       "authority_status": "逐點待核實"
     },
@@ -380,12 +381,12 @@
       "observed_events": 745743,
       "street_source_rows": 4,
       "venue_source_rows": 5,
-      "candidate_ids": "D09-1|D09-2|D09-3",
+      "candidate_ids": "D09-3|D09-1|D09-2",
       "weekday_activity_window": "18:00–19:00",
       "weekday_control_window": "10:00–11:00",
       "weekend_activity_window": "17:00–18:00",
       "weekend_control_window": "10:00–11:00",
-      "data_task": "優先補清冊：來源缺列不代表現場缺桶",
+      "data_task": "先查跨區來源：後山埤同站名場所紀錄列在信義區，南港候選若只看本區清冊就會漏掉這條線索。",
       "field_status": "未執行",
       "authority_status": "逐點待核實"
     },
@@ -400,12 +401,12 @@
       "observed_events": 941880,
       "street_source_rows": 85,
       "venue_source_rows": 7,
-      "candidate_ids": "D10-1|D10-2|D10-3",
+      "candidate_ids": "D10-3|D10-1|D10-2",
       "weekday_activity_window": "08:00–09:00",
       "weekday_control_window": "10:00–11:00",
       "weekend_activity_window": "17:00–18:00",
       "weekend_control_window": "10:00–11:00",
-      "data_task": "核對來源清冊、箱況、步行與清運",
+      "data_task": "作為街道與場所雙來源的核實對照：成功路街道紀錄約51 m、內湖捷運場所約134 m，兩筆是否同一設施未知。",
       "field_status": "未執行",
       "authority_status": "逐點待核實"
     },
@@ -420,12 +421,12 @@
       "observed_events": 884249,
       "street_source_rows": 142,
       "venue_source_rows": 7,
-      "candidate_ids": "D11-1|D11-2|D11-3",
+      "candidate_ids": "D11-2|D11-1|D11-3",
       "weekday_activity_window": "18:00–19:00",
       "weekday_control_window": "10:00–11:00",
       "weekend_activity_window": "17:00–18:00",
       "weekend_control_window": "10:00–11:00",
-      "data_task": "核對來源清冊、箱況、步行與清運",
+      "data_task": "先查路口與捷運出口的銜接：劍潭站場所及1號出口北側街道紀錄都近，但不等於劍潭基河路口的行經路線可用。",
       "field_status": "未執行",
       "authority_status": "逐點待核實"
     },
@@ -440,12 +441,12 @@
       "observed_events": 682183,
       "street_source_rows": 0,
       "venue_source_rows": 10,
-      "candidate_ids": "D12-1|D12-2|D12-3",
+      "candidate_ids": "D12-3|D12-1|D12-2",
       "weekday_activity_window": "17:00–18:00",
       "weekday_control_window": "10:00–11:00",
       "weekend_activity_window": "17:00–18:00",
       "weekend_control_window": "10:00–11:00",
-      "data_task": "優先補清冊：來源缺列不代表現場缺桶",
+      "data_task": "先查清冊無法定位的運動中心：沒有同場域場所線索，最近為唭哩岸站；北投街道0列也不能證明中心附近無桶。",
       "field_status": "未執行",
       "authority_status": "逐點待核實"
     },
@@ -475,7 +476,8 @@
     "manifest.json": "247711b93af6906e5d273a3b994b93f8bd1c20a46e2424450070b1f88317562a",
     "results/summary.json": "06d3290b73e8d8911b07f2d336aab5ba31e558777da00f9acc79ffb46c2c443a",
     "results/stations.csv": "88ff5676c0a9e103b10133f7ba4d434b00f88600a17d4747d4bed85673b8b6cf",
-    "delivery/field-plan-config.json": "4b801be758f7a063d0d162267a5819b7a147c136698f2e6226ae0019f29e82de"
+    "delivery/field-plan-config.json": "6aad6f4c087f72c51fa25019a229e69069d53c0993e50c62584c67b3335d01cf",
+    "../field-priority-2026-10-20/priority.json": "67a3b9c28b094343c630698d187e8efa239d11c99b02478377a2a087e963374e"
   },
   "limits": [
     "七月活動時窗不是現時垃圾尖峰；現場時段有效性須另外記錄。",

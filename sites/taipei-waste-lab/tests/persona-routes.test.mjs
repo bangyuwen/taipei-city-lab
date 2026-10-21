@@ -23,6 +23,6 @@ test('research entry opens personas and exposes both new pages',async()=>{
   assert.match(navigation,/<a href="#personas" data-page="analysis">熱點研究<\/a>/);
   for(const nav of html.matchAll(/<nav class="project-subnav" aria-label="熱點研究內頁">([\s\S]*?)<\/nav>/g)){
     assert.ok(nav[1].indexOf('href="#personas"') < nav[1].indexOf('href="#problem"'));
-    assert.ok(nav[1].indexOf('href="#problem"') < nav[1].indexOf('href="#analysis"'));
+    assert.ok(nav[1].indexOf('href="#analysis"') < nav[1].indexOf('href="#problem"'));
   }
 });

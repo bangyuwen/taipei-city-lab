@@ -1,0 +1,50 @@
+[
+  {
+    "id": "Z1",
+    "file": "inputs/zhongshan-redesign.html",
+    "published": "2022-11-07",
+    "excerpt": "另增設帶狀服務區，整合充電區、愛心傘架、垃圾桶等公共服務",
+    "supports": "Historical inclusion of bins in the Tamsui-Xinyi Zhongshan service strip.",
+    "does_not_support": "Current count, ten venue locations, paid-area access, or waste acceptance."
+  },
+  {
+    "id": "Z2",
+    "file": "inputs/zhongshan-award.html",
+    "published": "2023-10-20",
+    "excerpt": "整合充電區、公告架、垃圾桶等公共服務",
+    "supports": "Later Metro restatement of the redesign.",
+    "does_not_support": "A present-day inventory."
+  },
+  {
+    "id": "Z3",
+    "file": "inputs/zhongshan-tdri.html",
+    "published": "2025-12-12",
+    "excerpt": "垃圾桶、雨傘架：利用模組單元規劃設施、整併至盒狀系統，增加走道面積。",
+    "supports": "TDRI project case gives relative placement around the information-desk service system.",
+    "does_not_support": "Unique facility positions or matching to ten venue places."
+  },
+  {
+    "id": "Z4",
+    "file": "inputs/zhongshan-station.html",
+    "published": null,
+    "excerpt": "近出口1、4",
+    "supports": "Information-desk position for fieldwork orientation.",
+    "does_not_support": "Trash bins located at either exit."
+  },
+  {
+    "id": "X1",
+    "file": "inputs/xinsheng-station.html",
+    "published": null,
+    "excerpt": "近出口1、2",
+    "supports": "Information-desk position for fieldwork orientation; the page also lists near exits 5 and 7.",
+    "does_not_support": "Bin locations, IDs, operating hours or accepted waste."
+  },
+  {
+    "id": "C1",
+    "file": "inputs/metro-signage.html",
+    "published": null,
+    "excerpt": "禁止丟棄家庭垃圾",
+    "supports": "Official Metro signage wording in the city glossary.",
+    "does_not_support": "Presence of this sign at these facilities or a complete access policy."
+  }
+]

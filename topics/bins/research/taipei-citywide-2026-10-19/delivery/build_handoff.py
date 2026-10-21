@@ -3,6 +3,7 @@ import csv
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -30,12 +31,20 @@ def build():
     summary = read(ROOT / 'results/summary.json')
     manifest = read(ROOT / 'manifest.json')
     config = read(HERE / 'field-plan-config.json')
+    priority_path = HERE / config['priority_source']
+    priorities = read(priority_path)
+    for source in priorities['sources']:
+        assert digest(priority_path.parent / source['path']) == source['sha256'], source['path']
+    priority_points = {c['candidate_id']: c for c in priorities['candidates']}
+    priority_orders = {d['area']: d['candidate_ids'] for d in priorities['districts']}
     assert digest(ROOT / 'protocol.md') == manifest['protocol_sha256']
     for source in manifest['inputs']:
         assert digest(ROOT / source['path']) == source['sha256'], source['path']
     districts = summary['districts'][:12]
     by_area = {d['source_area']: d for d in summary['districts']}
     areas = [d['source_area'] for d in districts]
+    assert set(priority_orders) == set(areas) and len(priority_points) == 36
+    assert set(priority_points) == {c['candidate_id'] for c in summary['candidates'] if c['source_area'] in areas}
     grouped = [d for g in config['geographic_groups'] for d in g['districts']]
     assert len(grouped) == len(set(grouped)) == 12 and set(grouped) == set(areas)
     assert config['observation_minutes'] == 15 and config['minute_offset'] + 15 <= 60
@@ -49,7 +58,11 @@ def build():
         selected = [c for c in candidates if c['source_area'] == area]
         assert len(selected) == 3
         is_city = area in areas
-        priority = '優先補清冊：來源缺列不代表現場缺桶' if area in ['北投區', '南港區'] else '核對來源清冊、箱況、步行與清運'
+        if is_city:
+            order = priority_orders[area]
+            assert len(order) == len(set(order)) == 3 and set(order) == {c['candidate_id'] for c in selected}
+            selected.sort(key=lambda c: order.index(c['candidate_id']))
+        priority = priority_points[selected[0]['candidate_id']]['planning_reason'] if is_city else '核對來源清冊、箱況、步行與清運'
         district_rows.append({
             'area': area, 'stream': 'city' if is_city else 'campus',
             'group': group_by_area[area]['id'] if is_city else 'U',
@@ -65,6 +78,9 @@ def build():
         })
         for rank, c in enumerate(selected, 1):
             wave = f'W{rank}' if is_city else 'U'
+            point = priority_points.get(c['candidate_id'])
+            if is_city:
+                assert point['wave'] == wave and all(value is None for value in point['field_status'].values())
             group = group_by_area[area]['id'] if is_city else 'U'
             handoff.append({
                 'candidate_id': c['candidate_id'], 'stream': 'city' if is_city else 'campus',
@@ -75,7 +91,11 @@ def build():
                 'area_activity_rank': c['area_rank'], 'city_activity_rank': c['city_rank'],
                 'nearest_street_record_m': c['street_nearest_m'], 'street_record': c['street_name'],
                 'street_record_area': c['street_source_area'], 'nearest_venue_hint': c['venue_name'],
-                'next_check': c['next_check'], 'district_data_task': priority,
+                'next_check': point['field_check'] if point else c['next_check'], 'district_data_task': priority,
+                'inspection_reason': point['planning_reason'] if point else '校區維持獨立查核序列',
+                'evidence_scope': point['evidence_scope'] if point else '',
+                'venue_source_row': point['venue']['row'] if point else '',
+                'venue_original_remark': point['venue']['remark'] if point else '',
                 'point_authority': '未確認', 'actual_bin_status': '未查核', 'walking_route': '未查核',
                 'collection_capacity': '未確認', 'handoff_to': '配置比較承接人待確認',
                 'ready_for_siting': False,
@@ -105,7 +125,7 @@ def build():
     campus_sessions = [r for r in sessions if r['stream'] == 'campus']
     assert len(city_sessions) == 216 and len(campus_sessions) == 18
     assert len({r['visit_id'] for r in sessions}) == 234
-    waves = [{'id': f'W{i}', 'label': f'第{i}輪：12區各第{i}錨點',
+    waves = [{'id': f'W{i}', 'label': f'第{i}輪：12區各1點，依複查後的現勘順序',
               'candidate_ids': [r['candidate_id'] for r in handoff if r['wave'] == f'W{i}'],
               'anchors': 12, 'sessions': 72, 'observation_hours': 18} for i in [1, 2, 3]]
     capacity = []
@@ -123,7 +143,7 @@ def build():
                        'person_observation_hours': 4.5 * config['people_per_team']},
             'waves': waves, 'geographic_groups': config['geographic_groups'],
             'capacity_scenarios': capacity, 'config': config, 'districts': district_rows,
-            'source_hashes': {str(p.relative_to(ROOT)): digest(p) for p in [ROOT/'protocol.md', ROOT/'manifest.json', ROOT/'results/summary.json', ROOT/'results/stations.csv', HERE/'field-plan-config.json']},
+            'source_hashes': {os.path.relpath(p, ROOT): digest(p) for p in [ROOT/'protocol.md', ROOT/'manifest.json', ROOT/'results/summary.json', ROOT/'results/stations.csv', HERE/'field-plan-config.json', priority_path]},
             'limits': ['七月活動時窗不是現時垃圾尖峰；現場時段有效性須另外記錄。',
                        '每小時內的15–30分是本次排程提案，來源只有小時精度，未提供分鐘級尖峰證據。',
                        '兩人一組僅為人力試算；實際承接人、日期、通勤與許可均未確認。',
@@ -140,10 +160,10 @@ def build():
     write_csv('district-readiness.csv', district_rows)
     write_csv('planned-visits.csv', sessions)
     write_json('field-plan.json', plan)
-    sources = [ROOT/'results/stations.csv', ROOT/'results/candidates.csv', ROOT/'results/districts.csv', ROOT/'results/sensitivity.csv', ROOT/'results/hourly-profiles.csv']
+    sources = [ROOT/'results/stations.csv', ROOT/'results/candidates.csv', ROOT/'results/districts.csv', ROOT/'results/sensitivity.csv', ROOT/'results/hourly-profiles.csv', priority_path]
     write_json('handoff-manifest.json', {'status': 'desk_delivery_and_field_plan_only',
         'field_visits_completed': 0, 'agency_commitments_confirmed': 0,
-        'source_files': [{'path': '../'+str(p.relative_to(ROOT)), 'sha256': digest(p)} for p in sources],
+        'source_files': [{'path': os.path.relpath(p, HERE), 'sha256': digest(p)} for p in sources],
         'generated_files': [{'path': n, 'sha256': digest(HERE/n)} for n in ['hotspot-candidates-handoff.csv','district-readiness.csv','planned-visits.csv','anchor-scope-setup.csv','field-plan.json']],
         'existing_validation': read(ROOT/'validation.json')})
     city_events = sum(d['events'] for d in districts)
@@ -151,13 +171,13 @@ def build():
              f'全臺北市12區的桌面交付已整理成13列區域狀態（校區另列）與39列觀察錨點交接表。12區有{sum(d["eligible_stations"] for d in districts):,}個啟用有效站、{city_events:,}個已觀測借還端點；這是交通活動代理，不是垃圾量。', '',
              '## 接收者先看什麼', '',
              '| 交付 | 內容 | 使用方式 |', '|---|---|---|',
-             '| district-readiness.csv | 12區及校區的分母、清冊列數、未知站、時窗與待辦 | 保留全部區域；先追北投與南港清冊覆蓋 |',
+             '| district-readiness.csv | 12區及校區的分母、清冊列數、未知站、時窗與待辦 | candidate_ids依現勘輪次排列；活動排名另存，不能混用 |',
              '| hotspot-candidates-handoff.csv | 36個全市錨點、校區另3點；座標、活動、鄰近線索與未知現場條件 | 當作訪查入口，不能直接當新桶位置 |',
              '| ../results/stations.csv | 全部1,821站與停用、無觀測、排序狀態 | 候選名單以外的站仍保留；未知不填零 |',
              '| ../results/sensitivity.csv | 排除異常日期、改150／500m分散門檻的對照 | 檢查選點對規則的依賴，不挑最好看的版本 |',
              '| planned-visits.csv、field-plan.md | 234筆未執行訪次與分輪計畫 | 先填日期、人員與觀察範圍，再記真實結果 |', '',
              '## 查核優先順序', '',
-             '1. 12區同步核對清冊；北投0街道列、南港4列列為優先補件，不能推定現場沒有桶。',
+             '1. 首批12區各一點，依選點／共用來源、場域邊界、跨區／近距離對照三類問題人工選擇；依據與未知條件見../../field-priority-2026-10-20/priority.json。北投0街道列、南港4列不能推定現場沒有桶。',
              '2. 按W1→W2→W3讓所有12區先有首點基線，再加深同區查核。輪次是執行順序，沒有重新計算垃圾風險排名。',
              '3. 將現場結果分成資料不足、資訊／可達性、清運維護與配置比較條件。缺資料或權責未明者保留未知，不能強行推薦桶位。', '',
              '## 每區交接索引', '', '| 區域 | 觀測站／啟用站 | 未知站 | 街道列／場所線索 | 錨點 |', '|---|---:|---:|---:|---|']
@@ -179,8 +199,8 @@ def write_field_plan(plan):
              '計畫與空白紀錄已備妥，實際現勘尚未執行。日期與人員待確認；本文件不代表機關承接或已預約。', '',
              '## 三輪順序', '',
              '| 輪次 | 覆蓋 | 每點要求 | 站次／純觀察 |', '|---|---|---|---|']
-    lines += [f'| {w["id"]} | 12區各第{w["id"][1]}錨點，共12點 | 兩個不同平日＋一個週末，每日對照與活動兩窗 | 72站次／18小時 |' for w in plan['waves']]
-    lines += ['', 'W1完成或明確保留各區未完成原因後才彙整下一輪排班。個別區無法進場時保留待補；其餘區可繼續，不把缺測區當零，也不將已觀察區宣稱全市代表。W2、W3維持相同方法。校區U序列獨立安排3點、18站次、4.5小時，不占12區額度，也不重複計入全站分母。', '',
+    lines += [f'| {w["id"]} | 12區各1點，依下表現勘順序，共12點 | 兩個不同平日＋一個週末，每日對照與活動兩窗 | 72站次／18小時 |' for w in plan['waves']]
+    lines += ['', 'W1由12區複查的具體疑點選擇；W2、W3保留同區其餘點的原候選次序，沒有證據表示後兩點需求較少。候選ID與活動排名不變，ID尾碼不再代表現勘輪次。W1完成或明確保留各區未完成原因後才彙整下一輪排班。個別區無法進場時保留待補；其餘區可繼續，不把缺測區當零，也不將已觀察區宣稱全市代表。W2、W3維持相同方法。校區U序列獨立安排3點、18站次、4.5小時，不占12區額度，也不重複計入全站分母。', '',
               '## 區域協調分組', '', '| 分組 | 行政區 | 用途 |', '|---|---|---|']
     lines += [f'| {g["id"]} {g["label"]} | {"、".join(g["districts"])} | 共用查核與協調清單；不是同一條步行路線 |' for g in plan['geographic_groups']]
     lines += ['', '四組都從本輪開始盤點；北投與南港清冊補件優先送出待詢問清單。分組不代表需求或垃圾風險排名，亦未驗證最短交通路線。觀察組可依可用時間跨分組分派，但每組每日只排一個錨點。', '',
@@ -208,7 +228,7 @@ def write_field_plan(plan):
               '## 通過與停止條件', '',
               '每個錨點需六筆可回查訪次，或逐筆保留未完成原因；只有完整同邊界、同日型／時窗、可辨別清掃脈絡的紀錄才進入相應比較。首次現勘只能建立基線，不宣稱改善成效。', '',
               '任何危及安全、現場要求停止、範圍屬性不明或規則要求事先許可的情況，停止相關觀察並查明；不因此停止無關的桌面分析。實際設桶、移桶、採購與試辦另案取得全部必要核准，不屬本輪。', '',
-              '方法沿用../protocol.md的2平日＋1週末、每次15分鐘與分區小時窗；本次僅新增輪次、協調分組、分鐘偏移和容量情境，詳見field-plan-config.json。']
+              '方法沿用../protocol.md的2平日＋1週末、每次15分鐘與分區小時窗；10/20依12區複查調整現勘輪次與逐點查核問題，其餘容量情境及分鐘偏移不變，詳見field-plan-config.json與../../field-priority-2026-10-20/protocol.md。']
     (HERE/'field-plan.md').write_text('\n'.join(lines)+'\n')
 
 if __name__ == '__main__':
