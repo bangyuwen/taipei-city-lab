@@ -29,12 +29,6 @@ for (const monorepo of [true, false]) {
     await cp(new URL('dist/', site), join(output, 'dist'), {recursive: true, filter: source => !/[\\/]dist[\\/](data|research)([\\/]|$)/.test(source)});
     const bundle = monorepo ? join(fixture, 'topics/bins/research') : join(output, 'research');
     await cp(new URL('research/', site), bundle, {recursive: true});
-    const delivery = 'taipei-citywide-2026-10-19/delivery';
-    const configPath = join(bundle, delivery, 'field-plan-config.json');
-    const config = JSON.parse(await readFile(configPath, 'utf8'));
-    const groupLabel = 'build-path-source-change';
-    config.geographic_groups[0].label = groupLabel;
-    await writeFile(configPath, JSON.stringify(config));
     const inputs = monorepo ? join(fixture, 'topics/bins') : join(output, 'data');
     const inputHistory = monorepo ? join(inputs, 'data/history') : join(inputs, 'history');
     const inputResearch = monorepo ? join(inputs, 'docs') : join(inputs, 'research');
@@ -53,11 +47,6 @@ for (const monorepo of [true, false]) {
     for(const name of stalePaths){await mkdir(join(output,name,'..'),{recursive:true});await writeFile(join(output,name),'retired generated copy');}
     const result = spawnSync(process.env.PYTHON_BIN || 'python3', [join(output, 'scripts/prepare-data.py')], {encoding: 'utf8'});
     assert.equal(result.status, 0, result.stderr || result.stdout);
-    assert.ok((await readFile(join(output, 'out/index.html'), 'utf8')).includes(groupLabel), 'normal preparation must refresh the public citywide summary');
-    for (const prefix of ['research', 'dist/research']) {
-      const plan = JSON.parse(await readFile(join(output, prefix, delivery, 'field-plan.json'), 'utf8'));
-      assert.equal(plan.geographic_groups[0].label, groupLabel, 'packaging must retain refreshed derived records');
-    }
     for(const name of stalePaths)await assert.rejects(access(join(output,name)),{code:'ENOENT'});
     for (const name of ['README.md', 'inputs.json', 'estimate.csv']) {
       const expected = await readFile(new URL('research/budget-2026-10-15/'+name, site));

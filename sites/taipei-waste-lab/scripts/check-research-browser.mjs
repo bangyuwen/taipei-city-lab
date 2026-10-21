@@ -13,10 +13,10 @@ try{
  await page.goto(base);await page.locator('#panel-research').waitFor({state:'visible'});
  assert.equal(await page.locator('#panel-research article').count(),3);
  assert.equal(await page.locator('#panel-research table,#panel-research details,#panel-research iframe').count(),0);
- assert.deepEqual(await page.locator('#site-navigation a').allTextContents(),['工作總覽','熱點研究','方案比較','執行分工','資料庫']);
+ assert.deepEqual(await page.locator('#site-navigation a').allTextContents(),['熱點研究','政府分工','決策過程','參考資料']);
  for(const route of allowedPages){
   await page.goto(base+'#'+route);await page.waitForFunction(route=>document.body.dataset.page===route,route);
-  assert.equal(await page.locator('#site-navigation [aria-current="page"]').getAttribute('data-page'),workspaceForPage(route),route);
+  assert.equal(await page.locator('.site-header [data-page][aria-current="page"]').getAttribute('data-page'),workspaceForPage(route),route);
   if(route!=='research')assert.ok(await page.locator('#panel-'+route+' .project-breadcrumb').isVisible(),route);
  }
  for(const route of ['methods','spec']){
@@ -26,6 +26,7 @@ try{
  }
  await page.goto(base+'#research');
  assert.match(await page.locator('#panel-research').innerText(),/12 區.*尚未進行真人研究.*家戶本期不做/s);
+ for(const route of ['analysis','plan','ideas'])assert.deepEqual(await page.locator('#panel-'+route+' > [data-reading-stage]').evaluateAll(xs=>xs.map(x=>x.dataset.readingStage)),['conclusion','details','pending','next']);
  const ids=await page.locator('[id]').evaluateAll(xs=>xs.map(x=>x.id));assert.equal(ids.length,new Set(ids).size);
  const links=await page.locator('#panel-research a[href^="#"],#panel-analysis a[href^="#"],#panel-ideas a[href^="#"],#panel-plan a[href^="#"]').evaluateAll(xs=>[...new Set(xs.map(x=>x.hash))]);
  for(const hash of links)assert.ok(ids.includes(hash.slice(1))||allowedPages.includes(hash.slice(1)),hash);
@@ -37,7 +38,7 @@ try{
  await page.locator('#panel-research a[href="#analysis"]').first().click();
  await page.locator('#panel-analysis').waitFor({state:'visible'});
  await page.locator('#panel-analysis a[href="#ideas"]').click();await page.locator('#panel-ideas').waitFor({state:'visible'});
- await page.locator('#panel-ideas a[href="#definition-prd-validation"]').click();
+ await page.locator('#ideas-prd a[href="#definition-prd-validation"]').click();
  await page.waitForFunction(()=>document.activeElement.id==='definition-prd-validation');
  assert.ok(await page.locator('#panel-spec').isVisible());
  await page.goBack();await page.locator('#panel-ideas').waitFor({state:'visible'});
@@ -46,13 +47,13 @@ try{
  const targets={
   analysis:['hotspot-candidates','analysis-findings'],
   team:['definition-prd-roles','definition-prd-next'],
-  methods:['hotspot-heading','hotspot-quality'],
+  methods:['hotspot-heading','hotspot-quality','hotspot-times','field-schedule','field-capacity','field-record'],
   districts:['citywide-area-12','plan-area-13'],
   evidence:['definition-focus-P01','definition-evidence-E06-S2','research-overview-evidence-youbike'],
-  ideas:['definition-evidence-heading','t1-process-heading'],
-  work:['hotspot-government','hotspot-times','hotspot-handoff','field-schedule','field-capacity','field-record','government-handoff','government-inquiry'],
+  ideas:['definition-evidence-heading','t1-process-heading','t1-thinking-heading'],
+  work:['hotspot-government','hotspot-handoff','government-handoff','government-inquiry'],
   spec:['definition-prd-heading','definition-prd-risks-heading','definition-not-doing-heading','research-overview-scope'],
-  plan:['t1-thinking-heading','plan-work-heading'],
+  plan:['plan-work-heading'],
   archive:['plan-budget'],
   definition:['definition-decision-D18','definition-prd-v02-heading','definition-history-heading'],
   materials:['research-synthesis','conclusion-siting','conclusion-household','current-evidence-heading','problem-map-heading','district-service-heading','service-method','service-prototype','service-scenarios','service-measures']
@@ -88,7 +89,7 @@ try{
    await page.goto(base+'#'+route);await page.waitForFunction(route=>document.body.dataset.page===route,route);
    assert.equal(await page.locator('.page-panel:visible').count(),1);
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'overflow '+route+' '+width);
-   assert.equal(await page.locator('#site-navigation [aria-current="page"]').getAttribute('data-page'),workspaceForPage(route));
+   assert.equal(await page.locator('.site-header [data-page][aria-current="page"]').getAttribute('data-page'),workspaceForPage(route));
    if(['analysis','ideas','plan'].includes(route))lengths[route]=(await page.locator('#panel-'+route).innerText()).replace(/\s/g,'').length;
    if(width<960){
     await page.locator('#site-menu-toggle').click();assert.equal(await page.locator('#site-menu-toggle').getAttribute('aria-expanded'),'true');
@@ -115,7 +116,7 @@ try{
  const plain=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:1000},reducedMotion:'reduce'});const nojs=await plain.newPage();
  await nojs.goto(base);
  for(const route of ['analysis','ideas','plan','research']){
-  await nojs.locator('#site-navigation a[href="#'+route+'"]').click();
+  await nojs.locator('.site-header a[href="#'+route+'"]').click();
   assert.ok(await nojs.locator('#panel-'+route).isVisible(),route+' no-js');
   assert.equal(await nojs.locator('.page-panel:visible').count(),1);
  }

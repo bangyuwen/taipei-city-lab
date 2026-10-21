@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
-import {filterPoints,filterVenuePoints,recordStats,csvForPoints,pageFromHash,historyPages,allowedPages} from '../dist/data-utils.js';
+import {filterPoints,filterVenuePoints,recordStats,csvForPoints,pageFromHash} from '../dist/data-utils.js';
 
 const catalog=JSON.parse(await readFile(new URL('../dist/data/datasets.json',import.meta.url)));
 
@@ -83,13 +83,13 @@ test('reader entry and evidence links resolve to their owning pages',()=>{
   for(const hash of ['#definition','#definition-needs-heading','#t1-problems-heading'])assert.equal(pageFromHash(hash),'definition');
   for(const hash of ['#ideas','#t1-process-heading'])assert.equal(pageFromHash(hash),'ideas');
   for(const hash of ['#analysis','#analysis-findings','#hotspot-candidates'])assert.equal(pageFromHash(hash),'analysis');
-  for(const hash of ['#plan','#t1-thinking-heading'])assert.equal(pageFromHash(hash),'plan');
+  for(const hash of ['#plan'])assert.equal(pageFromHash(hash),'plan');
   for(const hash of ['#design','#t1-specification','#t1-product-process-heading'])assert.equal(pageFromHash(hash),'design');
   for(const [owner,hashes] of Object.entries({
-    methods:['hotspot-heading','hotspot-quality','reader-method-scope'],
+    methods:['hotspot-heading','hotspot-quality','reader-method-scope','hotspot-times'],
     districts:['citywide-area-12','plan-area-13','reader-district-01'],
     evidence:['definition-evidence-E06-S2','definition-focus-P01','reader-definition-evidence-E01'],
-    work:['hotspot-government','hotspot-times','work-WP01','reader-work-duties'],
+    work:['hotspot-government','work-WP01','reader-work-duties'],
     spec:['definition-scope-heading','definition-prd-risks-heading','definition-prd-heading'],
     archive:['plan-budget','reader-archive-intro']
   }))for(const hash of hashes)assert.equal(pageFromHash('#'+hash),owner,hash);
@@ -106,7 +106,7 @@ test('the main landmark fragment keeps the active route',()=>{
 });
 
 test('hundred-day plan and its source links open the owning readable panel', () => {
-  for(const hash of ['#plan','#plan-heading'])assert.equal(pageFromHash(hash),'plan');
+  for(const hash of ['#plan','#plan-heading','#plan-validation','#plan-resources'])assert.equal(pageFromHash(hash),'plan');
   for(const hash of ['#plan-schedule','#plan-budget','#plan-responsibilities','#plan-acceptance'])assert.equal(pageFromHash(hash),'archive');
   for(const hash of ['#budget-heading','#implementation-heading'])assert.equal(pageFromHash(hash),'materials');
   assert.equal(pageFromHash('#main','plan'),'plan');
@@ -155,24 +155,21 @@ test('public venue data covers twelve districts and preserves coarse coordinates
   assert.match(coarse.quality,/約略位置.*不是.*桶位或入口/);
   assert.match(d.availabilityNote,/開放時間.*接收規則.*待確認/);
   assert.match(d.note,/保留重複名稱及座標.*不代表.*不同場所/);
+  // Preserve reported facility counts as source text, never as point multiplicity.
+  assert.equal(d.points.find(p=>p.address==='北投捷運站').sourceRemark,'10處');
+  assert.equal(coarse.sourceRemark,'18處');
+  assert.equal(d.points.filter(p=>p.district==='北投區').length,10);
+  assert.equal(d.points.filter(p=>p.district==='南港區').length,5);
+  assert.ok(d.points.every(p=>typeof p.sourceRemark==='string'));
 });
 
-test('candidate streets remain addressable outside the history group',()=>{
-  assert.equal(historyPages.includes('siting'),false);
-  assert.equal(allowedPages.includes('siting'),true);
-  assert.equal(pageFromHash('#siting'),'siting');
-  for(const page of ['map','comparison','history']){
-    assert.equal(historyPages.includes(page),true);
-    assert.equal(pageFromHash('#'+page),page);
-  }
-});
 
 test('retained research fragments open their materials while summary and definition remain current',()=>{
   for(const hash of ['#research-synthesis','#conclusion-siting','#conclusion-collection','#conclusion-household','#current-evidence-heading','#problem-map-heading','#district-service-heading','#district-service-note','#service-method','#service-continuity-heading','#service-prototype','#service-scenarios','#service-measures','#disposal-continuity','#dc-scenario'])assert.equal(pageFromHash(hash),'materials',hash);
   for(const hash of ['#research-overview-conclusions','#research-overview-reading'])assert.equal(pageFromHash(hash),'research',hash);
   assert.equal(pageFromHash('#research-overview-evidence'),'evidence');
   assert.equal(pageFromHash('#research-overview-scope'),'spec');
-  assert.equal(pageFromHash('#research-overview-unknowns'),'plan');
+  assert.equal(pageFromHash('#research-overview-unknowns'),'spec');
   assert.equal(pageFromHash('#definition-evidence-heading'),'ideas');
 });
 
@@ -181,7 +178,23 @@ test('each detail page belongs to one project workspace', async()=>{
  const {workspacePages,workspaceForPage,allowedPages}=await import('../dist/data-utils.js');
  const pages=Object.values(workspacePages).flat();assert.equal(pages.length,new Set(pages).size);
  assert.deepEqual([...pages].sort(),[...allowedPages].sort());
- for(const [page,owner] of [['districts','analysis'],['evidence','analysis'],['methods','analysis'],['work','plan'],['team','plan'],['spec','ideas'],['design','ideas'],['countries','library'],['archive','library'],['map','library']])assert.equal(workspaceForPage(page),owner,page);
+ for(const [page,owner] of [['districts','analysis'],['evidence','analysis'],['methods','analysis'],['work','plan'],['team','research'],['spec','ideas'],['design','library'],['siting','library'],['definition','ideas'],['countries','library'],['archive','library'],['map','library']])assert.equal(workspaceForPage(page),owner,page);
  for(const fragment of ['definition-prd-roles','definition-prd-roles-heading','reader-definition-prd-next','definition-prd-next'])assert.equal(pageFromHash('#'+fragment),'team');
  assert.equal(pageFromHash('#definition-prd-validation'),'spec');
+ for(const fragment of ['field-schedule','field-capacity','field-record','reader-field-schedule','reader-work-observation','hotspot-times'])assert.equal(pageFromHash('#'+fragment),'methods',fragment);
+ for(const fragment of ['t1-thinking-heading','definition-cycle-heading','ideas-conclusion','ideas-details','ideas-pending','ideas-next'])assert.equal(pageFromHash('#'+fragment),'ideas',fragment);
+ for(const fragment of ['plan-conclusion','plan-details','plan-pending','plan-next'])assert.equal(pageFromHash('#'+fragment),'plan',fragment);
+ assert.equal(pageFromHash('#plan-districts'),'analysis');
+});
+
+
+test('research reading order puts the current definition after qualitative and quantitative evidence',async()=>{
+  const html=await readFile(new URL('../dist/index.html',import.meta.url),'utf8');
+  const navs=[...html.matchAll(/<nav class="project-subnav" aria-label="熱點研究內頁">(.*?)<\/nav>/g)];
+  assert.equal(navs.length,7);
+  for(const [,nav] of navs){
+    const pages=[...nav.matchAll(/data-page="([^"]+)"/g)].map(m=>m[1]);
+    assert.deepEqual(pages.slice(0,5),['personas','analysis','problem','districts','methods']);
+    assert.match(nav,/目前問題定義/);
+  }
 });

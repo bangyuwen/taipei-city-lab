@@ -97,6 +97,7 @@ def venue_leads(research):
         if not p['plottable']:
             raise ValueError('Venue coordinate outside existing map bounds')
         p['quality'] = '場域約略位置；不是已核實桶位或入口'
+        p['sourceRemark'] = row.get('備註', '')
         points.append(p)
     if len(points) != 130 or {p['district'] for p in points} != set(DISTRICTS):
         raise ValueError('Venue scope changed; review the retained twelve-district list')
@@ -199,9 +200,10 @@ def main():
     print(json.dumps([{'key': d['key'], 'rows': d['rows'], 'mapRows': d['plottableRows']} for d in datasets]))
     subprocess.run([sys.executable, str(ROOT / 'scripts/compare-snapshots.py')], check=True)
     subprocess.run([sys.executable, str(ROOT / 'scripts/analyze-coordinate-distances.py')], check=True)
-    # Refresh topic-owned derivations before packaging their standalone copies.
+    # Refresh field handoffs without overwriting the current research reading pages.
     research_source = CANONICAL_RESEARCH if CANONICAL_RESEARCH.is_dir() else ROOT / 'research'
-    subprocess.run([sys.executable, str(research_source / 'taipei-citywide-2026-10-19/publish_results.py')], check=True)
+    for name in ['build_handoff.py', 'build_field_records.py']:
+        subprocess.run([sys.executable, str(research_source / 'taipei-citywide-2026-10-19/delivery' / name)], check=True)
     for script in ['prepare-research-execution.py', 'estimate-budget.py', 'package-research.py']:
         subprocess.run([sys.executable, str(ROOT / 'scripts' / script)], check=True)
 

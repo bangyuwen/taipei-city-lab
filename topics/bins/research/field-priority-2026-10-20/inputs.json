@@ -1,0 +1,24 @@
+{
+  "sources": [
+    {
+      "path": "../beitou-nangang-recheck-2026-10-20/results.json",
+      "sha256": "3ea36d37d3377e1cd9b5e87641fc26427b8e11047f79ee10ea75f2f4dce9a3ab"
+    },
+    {
+      "path": "../other-districts-recheck-2026-10-20/results.json",
+      "sha256": "2eada71dac2789102668ba547c565038f765b4aefd189451c4e472425eb2a491"
+    },
+    {
+      "path": "../taipei-citywide-2026-10-19/results/summary.json",
+      "sha256": "06d3290b73e8d8911b07f2d336aab5ba31e558777da00f9acc79ffb46c2c443a"
+    },
+    {
+      "path": "choices.json",
+      "sha256": "32a9b5a1c8a29e66b240893e0cce21f182523d08b22dec265f68c4dda0efe69f"
+    },
+    {
+      "path": "protocol.md",
+      "sha256": "24f5ba00562bb3905524c47875529643ccebf48b199c14c23c5bf4fb1fd836b2"
+    }
+  ]
+}
