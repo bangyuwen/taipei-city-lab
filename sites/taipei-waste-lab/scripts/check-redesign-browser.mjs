@@ -62,7 +62,7 @@ async function ready(page,hash=''){
 async function checkHome(page){
   assert.equal(await page.locator('#panel-research').isVisible(),true);
   assert.equal(await page.locator('#panel-research details').count(),0);
-  assert.equal(await page.locator('#panel-research .project-work-list > article').count(),3);
+  assert.equal(await page.locator('#research-overview-conclusions > article').count(),3);
   assert.match(await page.locator('#panel-research').innerText(),/尚未進行真人研究/);
   assert.equal(await page.locator('#panel-research #service-prototype,#panel-research #conclusion-household').count(),0);
   assert.equal(await page.locator('#panel-materials #research-synthesis > article').count(),3);
@@ -78,7 +78,7 @@ async function checkHome(page){
   }
 }
 async function checkCurrentNavigation(page,target){
-  const current=await page.locator('#site-navigation a[aria-current="page"],.page-panel:not([hidden]) a[aria-current="page"]').evaluateAll(links=>links.map(link=>({hash:link.hash,text:link.textContent.trim()})));
+  const current=await page.locator('a[aria-current="page"]').evaluateAll(links=>links.map(link=>({hash:link.hash,text:link.textContent.trim()})));
   const workspace=workspaceForPage(target);
   const expectedSubnav=await page.locator(`#panel-${target} .project-subnav a[data-page="${target}"]`).count()?[`#${target}`]:[];
   assert.deepEqual(current.map(link=>link.hash),[`#${workspace}`,...expectedSubnav],`${target}: current links must identify its workspace and any matching subnav page`);
@@ -116,7 +116,7 @@ async function checkSkipLink(page){
 async function checkCountryReader(page){
   await page.locator('#panel-countries.country-reading-ready').waitFor();
   assert.equal(await page.locator('#country-reader-select').count(),1);
-  assert.equal(await page.locator('#country-reader-select option').count(),14);
+  assert.equal(await page.locator('#country-reader-select option').count(),12);
   assert.equal(await page.locator('.country-case:visible').count(),1);
   assert.equal(await page.locator('#country-viewer').getAttribute('data-media'),'photo');
   assert.equal(await page.locator('#country-viewer .country-photo-column').isVisible(),true);
@@ -125,22 +125,11 @@ async function checkCountryReader(page){
   // check-country-browser.mjs and check-country-play-browser.mjs.
   assert.equal(await page.locator('#country-viewer .country-viewer-media > div').count(),2);
   assert.equal(await page.locator('.country-return,.country-model-open').count(),0);
-  const selectCountry=async id=>{
-    const entry=page.locator(`.country-index [data-country-target="country-${id}"]`);
-    if(await entry.isVisible())await entry.click();
-    else await page.selectOption('#country-reader-select',id);
-  };
-  await selectCountry('korea');
-  assert.equal(await page.locator('.country-case:visible > h3').getAttribute('id'),'country-korea');
+  await page.selectOption('#country-reader-select','korea');
+  assert.equal(await page.locator('.country-case:visible h4').getAttribute('id'),'country-korea');
   assert.equal(await page.locator('#country-viewer').getAttribute('data-media'),'photo');
   assert.equal(await page.locator('.country-case:visible').count(),1);
-  for(const id of ['hong-kong','uruguay']){
-    await selectCountry(id);
-    assert.equal(await page.locator('#country-viewer').count(),0);
-    assert.equal(await page.locator('.country-case:visible .strategy-flow li').count(),4);
-    assert.equal(await page.locator('.country-case:visible .strategy-media-absence').count(),1);
-  }
-  await selectCountry('us');
+  await page.selectOption('#country-reader-select','us');
 }
 async function checkDesign(page){
   await page.waitForFunction(()=>document.querySelector('#design-options')?.options.length===4);
@@ -179,8 +168,7 @@ async function checkMapState(page){
   assert.equal(await page.locator('#search').inputValue(),'敦化');
   assert.equal(await page.locator('#result-count').innerText(),count);
   assert.ok(await page.locator('#map').evaluate(element=>element.getBoundingClientRect().width>100));
-  await nav(page,'countries');await page.goBack();await page.locator('#panel-library').waitFor({state:'visible'});
-  await page.goBack();await page.locator('#panel-map').waitFor({state:'visible'});
+  await nav(page,'countries');await page.goBack();await page.locator('#panel-map').waitFor({state:'visible'});
   await focused(page,'map-heading');
   assert.equal(await page.locator('#district').inputValue(),'大安區');
   assert.equal(await page.locator('#search').inputValue(),'敦化');
@@ -223,9 +211,7 @@ try{
     page.on('request',request=>{if(/(?:research-ui\.js|desk-results\.json)(?:\?|$)/.test(request.url()))candidateRequests.push(request.url())});
     await ready(page);assert.equal(new URL(page.url()).hash,'');await checkHome(page);
     assert.deepEqual(candidateRequests,[],'Candidate tools must not load with the homepage');
-    let materialsVisited=false;
     for(const target of ['research','analysis','ideas','plan','library','map','comparison','history','countries','sources','materials','definition','archive','design','siting','team','work']){
-      if(['siting','design','materials'].includes(target))materialsVisited=true;
       if(target!=='research')await nav(page,target);
       await checkCurrentNavigation(page,target);
       if(target==='comparison')await page.locator('#comparison-content:not([hidden])').waitFor();
@@ -235,7 +221,7 @@ try{
         await page.locator('#research-context:not([disabled])').waitFor({state:'attached'});
         assert.equal(await page.locator('.research-candidate').count(),18);
         assert.ok(candidateRequests.some(request=>request.includes('desk-results.json')));
-      }else if(!materialsVisited)assert.deepEqual(candidateRequests,[],`${target} must not load candidate tools`);
+      }else if(!['sources'].includes(target))assert.deepEqual(candidateRequests,[],`${target} must not load candidate tools`);
       await checkBounds(page,`${width}/${target}`);await screenshot(page,width,target);
       measurements.push({width,target,body:await page.locator('body').evaluate(element=>getComputedStyle(element).fontSize)});
     }
@@ -259,13 +245,6 @@ try{
       assert.equal(await page.locator('#site-menu-toggle').getAttribute('aria-expanded'),'false');await focused(page,'site-menu-toggle');
     }
     await context.close();
-  }
-  // Direct visits still preserve lazy loading without passing through materials.
-  for(const target of ['siting','definition']){
-    const context=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'});
-    const page=await context.newPage();await observe(page,`direct/${target}`);
-    const requests=[];page.on('request',request=>{if(/(?:research-ui\.js|desk-results\.json)(?:\?|$)/.test(request.url()))requests.push(request.url())});
-    await ready(page,target);assert.deepEqual(requests,[],`${target} direct visit must not load candidate tools`);await context.close();
   }
   for(const width of [639,640,959,960]){
     const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'});

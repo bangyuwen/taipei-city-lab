@@ -85,7 +85,7 @@ export function renderPanel(countries, template) {
   if (media.size !== 12) throw Error('Preserve all twelve equipment cases');
   const regions = [['亞洲與地區',countries.slice(0,5)],['歐洲',countries.slice(5,10)],['美洲、非洲與大洋洲',countries.slice(10)]];
   return `<section id="panel-countries" class="page-panel" aria-labelledby="countries-heading" hidden>
-  <nav class="project-breadcrumb" aria-label="目前位置"><a href="#research">工作總覽</a><span aria-hidden="true">/</span><a href="#library">資料庫</a><span aria-hidden="true">/</span><span aria-current="page">各國案例</span></nav><nav class="project-subnav" aria-label="資料庫內頁"><a href="#library" data-page="library">資料庫索引</a></nav>
+  <nav class="project-breadcrumb" aria-label="目前位置"><a href="#research">工作總覽</a><span aria-hidden="true">/</span><a href="#library">參考資料</a><span aria-hidden="true">/</span><span aria-current="page">各國案例</span></nav><nav class="project-subnav" aria-label="參考資料內頁"><a href="#library" data-page="library">參考資料索引</a></nav>
   <div class="section-heading"><div><h2 id="countries-heading" tabindex="-1">各國垃圾桶</h2></div><p>收錄 24 個地方案例，分別列出桶放在哪裡、誰清運、誰付費，以及哪些效果已有觀測。各案指標與服務不同，不能直接排出台北該採用哪一種。</p></div>
   <p class="strategy-page-intro">先讀策略，再看設備。以十四個國家與地區為入口，完整列出本頁收錄案例的做法、流程、財源與成效限制；城市案例不等於全國政策。</p>
   <p class="strategy-update">策略整理：2026-10-18。來源年份與查閱範圍分案標示；歷史試辦、部署計畫與已觀測結果分開呈現。</p>

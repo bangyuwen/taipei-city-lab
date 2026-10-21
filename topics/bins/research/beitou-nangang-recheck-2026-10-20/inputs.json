@@ -1,0 +1,22 @@
+[
+  {
+    "path": "../taipei-citywide-2026-10-19/results/stations.csv",
+    "sha256": "88ff5676c0a9e103b10133f7ba4d434b00f88600a17d4747d4bed85673b8b6cf"
+  },
+  {
+    "path": "../taipei-citywide-2026-10-19/results/summary.json",
+    "sha256": "06d3290b73e8d8911b07f2d336aab5ba31e558777da00f9acc79ffb46c2c443a"
+  },
+  {
+    "path": "../bin-coverage-2026-10-20/source-check.json",
+    "sha256": "1def0c3350ee16c5f8e9fa948179cfa7635572ca2b84ad29b5955bc23ce7d5a5"
+  },
+  {
+    "path": "protocol.md",
+    "sha256": "afad3ced971fa92ef1cecd4c9112c1fc184a1bd7fcebab2e791a961146f8af65"
+  },
+  {
+    "path": "point-checks.json",
+    "sha256": "129336ac74ff12f4b5ccc716415f1e2f514395673c0fd88cbf19a3b8a2cc85ca"
+  }
+]

@@ -1,0 +1,189 @@
+{
+  "status": "OD totals internally consistent; system total mismatch retained",
+  "system_journeys": 64319630,
+  "od_journeys": 64273963,
+  "difference": 45667,
+  "difference_pct_system": 0.07100009748190404,
+  "daily": [
+    {
+      "date": "2026-09-01",
+      "official_system_journeys": 2201985,
+      "od_journeys": 2200837,
+      "difference": 1148
+    },
+    {
+      "date": "2026-09-02",
+      "official_system_journeys": 2294408,
+      "od_journeys": 2293019,
+      "difference": 1389
+    },
+    {
+      "date": "2026-09-03",
+      "official_system_journeys": 2268658,
+      "od_journeys": 2267347,
+      "difference": 1311
+    },
+    {
+      "date": "2026-09-04",
+      "official_system_journeys": 2382200,
+      "od_journeys": 2380736,
+      "difference": 1464
+    },
+    {
+      "date": "2026-09-05",
+      "official_system_journeys": 2001609,
+      "od_journeys": 1999612,
+      "difference": 1997
+    },
+    {
+      "date": "2026-09-06",
+      "official_system_journeys": 1547599,
+      "od_journeys": 1546369,
+      "difference": 1230
+    },
+    {
+      "date": "2026-09-07",
+      "official_system_journeys": 2214759,
+      "od_journeys": 2213333,
+      "difference": 1426
+    },
+    {
+      "date": "2026-09-08",
+      "official_system_journeys": 2295384,
+      "od_journeys": 2294360,
+      "difference": 1024
+    },
+    {
+      "date": "2026-09-09",
+      "official_system_journeys": 2300152,
+      "od_journeys": 2299017,
+      "difference": 1135
+    },
+    {
+      "date": "2026-09-10",
+      "official_system_journeys": 2306710,
+      "od_journeys": 2305523,
+      "difference": 1187
+    },
+    {
+      "date": "2026-09-11",
+      "official_system_journeys": 2484917,
+      "od_journeys": 2483270,
+      "difference": 1647
+    },
+    {
+      "date": "2026-09-12",
+      "official_system_journeys": 2069294,
+      "od_journeys": 2066802,
+      "difference": 2492
+    },
+    {
+      "date": "2026-09-13",
+      "official_system_journeys": 1723252,
+      "od_journeys": 1720854,
+      "difference": 2398
+    },
+    {
+      "date": "2026-09-14",
+      "official_system_journeys": 2242451,
+      "od_journeys": 2241211,
+      "difference": 1240
+    },
+    {
+      "date": "2026-09-15",
+      "official_system_journeys": 2295272,
+      "od_journeys": 2294253,
+      "difference": 1019
+    },
+    {
+      "date": "2026-09-16",
+      "official_system_journeys": 2348724,
+      "od_journeys": 2347270,
+      "difference": 1454
+    },
+    {
+      "date": "2026-09-17",
+      "official_system_journeys": 2364684,
+      "od_journeys": 2363396,
+      "difference": 1288
+    },
+    {
+      "date": "2026-09-18",
+      "official_system_journeys": 2558209,
+      "od_journeys": 2556719,
+      "difference": 1490
+    },
+    {
+      "date": "2026-09-19",
+      "official_system_journeys": 2135607,
+      "od_journeys": 2133393,
+      "difference": 2214
+    },
+    {
+      "date": "2026-09-20",
+      "official_system_journeys": 1734941,
+      "od_journeys": 1733000,
+      "difference": 1941
+    },
+    {
+      "date": "2026-09-21",
+      "official_system_journeys": 2284331,
+      "od_journeys": 2282873,
+      "difference": 1458
+    },
+    {
+      "date": "2026-09-22",
+      "official_system_journeys": 2332579,
+      "od_journeys": 2331129,
+      "difference": 1450
+    },
+    {
+      "date": "2026-09-23",
+      "official_system_journeys": 2373258,
+      "od_journeys": 2371762,
+      "difference": 1496
+    },
+    {
+      "date": "2026-09-24",
+      "official_system_journeys": 2468241,
+      "od_journeys": 2466717,
+      "difference": 1524
+    },
+    {
+      "date": "2026-09-25",
+      "official_system_journeys": 1580792,
+      "od_journeys": 1579017,
+      "difference": 1775
+    },
+    {
+      "date": "2026-09-26",
+      "official_system_journeys": 1742089,
+      "od_journeys": 1740023,
+      "difference": 2066
+    },
+    {
+      "date": "2026-09-27",
+      "official_system_journeys": 1715012,
+      "od_journeys": 1712979,
+      "difference": 2033
+    },
+    {
+      "date": "2026-09-28",
+      "official_system_journeys": 1478762,
+      "od_journeys": 1477473,
+      "difference": 1289
+    },
+    {
+      "date": "2026-09-29",
+      "official_system_journeys": 2263695,
+      "od_journeys": 2262677,
+      "difference": 1018
+    },
+    {
+      "date": "2026-09-30",
+      "official_system_journeys": 2310056,
+      "od_journeys": 2308992,
+      "difference": 1064
+    }
+  ]
+}

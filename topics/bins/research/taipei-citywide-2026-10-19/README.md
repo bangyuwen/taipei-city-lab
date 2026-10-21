@@ -300,7 +300,7 @@
 - `results/districts.csv`、`candidates.csv`、`hourly-profiles.csv`、`sensitivity.csv`：全區分母、39處首輪錨點、時段及敏感度。
 - `government/government.json`：全市工作包、12區分工與來源。
 
-原始ZIP另行保存，不隨Git或公開網站發布。可從manifest.json的trip_archive.url取回；analyze.py會核對SHA-256，來源不同就停止。安裝requirements-analysis.txt後，在本研究目錄執行：
+保留整個私人交付資料夾的research/及raw/相對位置。安裝requirements-analysis.txt後，在本研究目錄執行：
 
 ```sh
 python analyze.py --archive /path/to/202607-youbike.zip

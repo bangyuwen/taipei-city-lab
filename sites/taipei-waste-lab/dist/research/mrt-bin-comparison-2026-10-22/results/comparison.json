@@ -1,0 +1,865 @@
+{
+  "period": "2026-09",
+  "days": 30,
+  "taipei_station_names_in_catalog": 74,
+  "eligible_station_count": 74,
+  "excluded_missing_od": [],
+  "station_names_in_od": 123,
+  "street_source_rows": 681,
+  "street_valid_rows": 680,
+  "invalid_street_rows": [
+    655
+  ],
+  "venue_source_rows": 130,
+  "exit_source_rows": 390,
+  "radii_m": [
+    100,
+    200,
+    300,
+    500
+  ],
+  "primary_radius_m": 300,
+  "cohort_size": 10,
+  "od_journeys": 64273963,
+  "results": [
+    {
+      "rank": 1,
+      "station": "台北車站",
+      "monthly_gate_passages": 9085144,
+      "daily_gate_passages": 302838.13333333336,
+      "days": 30,
+      "exit_count": 8,
+      "exits": [
+        {
+          "source_csv_row": 122,
+          "name": "台北車站M5",
+          "coordinate": [
+            121.516246,
+            25.046755
+          ]
+        },
+        {
+          "source_csv_row": 123,
+          "name": "台北車站M6",
+          "coordinate": [
+            121.516787,
+            25.046234
+          ]
+        },
+        {
+          "source_csv_row": 124,
+          "name": "台北車站M7",
+          "coordinate": [
+            121.518643,
+            25.046077
+          ]
+        },
+        {
+          "source_csv_row": 125,
+          "name": "台北車站M8",
+          "coordinate": [
+            121.517479,
+            25.045948
+          ]
+        },
+        {
+          "source_csv_row": 126,
+          "name": "台北車站M1",
+          "coordinate": [
+            121.518193,
+            25.048232
+          ]
+        },
+        {
+          "source_csv_row": 127,
+          "name": "台北車站M2",
+          "coordinate": [
+            121.51908,
+            25.048159
+          ]
+        },
+        {
+          "source_csv_row": 128,
+          "name": "台北車站M3",
+          "coordinate": [
+            121.517882,
+            25.046337
+          ]
+        },
+        {
+          "source_csv_row": 129,
+          "name": "台北車站M4",
+          "coordinate": [
+            121.517345,
+            25.046485
+          ]
+        }
+      ],
+      "street_rows": {
+        "100": 0,
+        "200": 2,
+        "300": 5,
+        "500": 16
+      },
+      "distinct_street_coordinates": {
+        "100": 0,
+        "200": 2,
+        "300": 5,
+        "500": 16
+      },
+      "venues": [
+        {
+          "source_csv_row": 21,
+          "行政區": "大同區",
+          "地址": "台北車站捷運站",
+          "經度": "121.517",
+          "緯度": "25.0463",
+          "備註": "14處"
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "station": "西門",
+      "monthly_gate_passages": 3996379,
+      "daily_gate_passages": 133212.63333333333,
+      "days": 30,
+      "exit_count": 6,
+      "exits": [
+        {
+          "source_csv_row": 347,
+          "name": "西門站出口1",
+          "coordinate": [
+            121.507566,
+            25.042137
+          ]
+        },
+        {
+          "source_csv_row": 348,
+          "name": "西門站出口2",
+          "coordinate": [
+            121.508435,
+            25.041545
+          ]
+        },
+        {
+          "source_csv_row": 349,
+          "name": "西門站出口3",
+          "coordinate": [
+            121.508888,
+            25.041789
+          ]
+        },
+        {
+          "source_csv_row": 350,
+          "name": "西門站出口4",
+          "coordinate": [
+            121.509006,
+            25.042203
+          ]
+        },
+        {
+          "source_csv_row": 351,
+          "name": "西門站出口5",
+          "coordinate": [
+            121.508789,
+            25.042935
+          ]
+        },
+        {
+          "source_csv_row": 352,
+          "name": "西門站出口6",
+          "coordinate": [
+            121.507602,
+            25.042573
+          ]
+        }
+      ],
+      "street_rows": {
+        "100": 14,
+        "200": 43,
+        "300": 66,
+        "500": 82
+      },
+      "distinct_street_coordinates": {
+        "100": 14,
+        "200": 43,
+        "300": 66,
+        "500": 82
+      },
+      "venues": [
+        {
+          "source_csv_row": 64,
+          "行政區": "中正區",
+          "地址": "西門捷運站",
+          "經度": "121.509",
+          "緯度": "25.042",
+          "備註": "2處"
+        },
+        {
+          "source_csv_row": 129,
+          "行政區": "萬華區",
+          "地址": "西門捷運站",
+          "經度": "121.509",
+          "緯度": "25.042",
+          "備註": "2處"
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "station": "市政府",
+      "monthly_gate_passages": 3684669,
+      "daily_gate_passages": 122822.3,
+      "days": 30,
+      "exit_count": 4,
+      "exits": [
+        {
+          "source_csv_row": 237,
+          "name": "市政府站出口1",
+          "coordinate": [
+            121.565459,
+            25.041408
+          ]
+        },
+        {
+          "source_csv_row": 238,
+          "name": "市政府站出口2",
+          "coordinate": [
+            121.565062,
+            25.040971
+          ]
+        },
+        {
+          "source_csv_row": 239,
+          "name": "市政府站出口3",
+          "coordinate": [
+            121.567149,
+            25.040903
+          ]
+        },
+        {
+          "source_csv_row": 240,
+          "name": "市政府站出口4",
+          "coordinate": [
+            121.567181,
+            25.041263
+          ]
+        }
+      ],
+      "street_rows": {
+        "100": 2,
+        "200": 2,
+        "300": 5,
+        "500": 21
+      },
+      "distinct_street_coordinates": {
+        "100": 2,
+        "200": 2,
+        "300": 5,
+        "500": 21
+      },
+      "venues": []
+    },
+    {
+      "rank": 4,
+      "station": "中山",
+      "monthly_gate_passages": 3151049,
+      "daily_gate_passages": 105034.96666666666,
+      "days": 30,
+      "exit_count": 6,
+      "exits": [
+        {
+          "source_csv_row": 341,
+          "name": "中山站出口1",
+          "coordinate": [
+            121.520303,
+            25.052414
+          ]
+        },
+        {
+          "source_csv_row": 342,
+          "name": "中山站出口4",
+          "coordinate": [
+            121.520306,
+            25.052858
+          ]
+        },
+        {
+          "source_csv_row": 343,
+          "name": "中山站出口2",
+          "coordinate": [
+            121.521063,
+            25.052382
+          ]
+        },
+        {
+          "source_csv_row": 344,
+          "name": "中山站出口3",
+          "coordinate": [
+            121.521154,
+            25.052611
+          ]
+        },
+        {
+          "source_csv_row": 345,
+          "name": "中山站出口5",
+          "coordinate": [
+            121.519329,
+            25.053037
+          ]
+        },
+        {
+          "source_csv_row": 346,
+          "name": "中山站出口6",
+          "coordinate": [
+            121.519007,
+            25.052833
+          ]
+        }
+      ],
+      "street_rows": {
+        "100": 0,
+        "200": 0,
+        "300": 0,
+        "500": 0
+      },
+      "distinct_street_coordinates": {
+        "100": 0,
+        "200": 0,
+        "300": 0,
+        "500": 0
+      },
+      "venues": [
+        {
+          "source_csv_row": 54,
+          "行政區": "中山區",
+          "地址": "中山捷運站",
+          "經度": "121.5204",
+          "緯度": "25.0527",
+          "備註": "10處"
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "station": "忠孝復興",
+      "monthly_gate_passages": 2596356,
+      "daily_gate_passages": 86545.2,
+      "days": 30,
+      "exit_count": 5,
+      "exits": [
+        {
+          "source_csv_row": 10,
+          "name": "忠孝復興站出口1",
+          "coordinate": [
+            121.543143,
+            25.041797
+          ]
+        },
+        {
+          "source_csv_row": 11,
+          "name": "忠孝復興站出口2",
+          "coordinate": [
+            121.543517,
+            25.041206
+          ]
+        },
+        {
+          "source_csv_row": 12,
+          "name": "忠孝復興站出口3",
+          "coordinate": [
+            121.544806,
+            25.041467
+          ]
+        },
+        {
+          "source_csv_row": 13,
+          "name": "忠孝復興站出口4",
+          "coordinate": [
+            121.54506,
+            25.041772
+          ]
+        },
+        {
+          "source_csv_row": 14,
+          "name": "忠孝復興站出口5",
+          "coordinate": [
+            121.543985,
+            25.04202
+          ]
+        }
+      ],
+      "street_rows": {
+        "100": 1,
+        "200": 3,
+        "300": 6,
+        "500": 9
+      },
+      "distinct_street_coordinates": {
+        "100": 1,
+        "200": 3,
+        "300": 6,
+        "500": 9
+      },
+      "venues": [
+        {
+          "source_csv_row": 23,
+          "行政區": "大安區",
+          "地址": "忠孝復興捷運站",
+          "經度": "121.5439",
+          "緯度": "25.0417",
+          "備註": "6處"
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "station": "南京復興",
+      "monthly_gate_passages": 2396999,
+      "daily_gate_passages": 79899.96666666666,
+      "days": 30,
+      "exit_count": 8,
+      "exits": [
+        {
+          "source_csv_row": 333,
+          "name": "南京復興站出口1",
+          "coordinate": [
+            121.542121,
+            25.052625
+          ]
+        },
+        {
+          "source_csv_row": 334,
+          "name": "南京復興站出口2",
+          "coordinate": [
+            121.541863,
+            25.051748
+          ]
+        },
+        {
+          "source_csv_row": 335,
+          "name": "南京復興站出口3",
+          "coordinate": [
+            121.543087,
+            25.05178085
+          ]
+        },
+        {
+          "source_csv_row": 336,
+          "name": "南京復興站出口4",
+          "coordinate": [
+            121.5431633,
+            25.0517841
+          ]
+        },
+        {
+          "source_csv_row": 337,
+          "name": "南京復興站出口5",
+          "coordinate": [
+            121.544338,
+            25.051727
+          ]
+        },
+        {
+          "source_csv_row": 338,
+          "name": "南京復興站出口6",
+          "coordinate": [
+            121.5449255,
+            25.05195456
+          ]
+        },
+        {
+          "source_csv_row": 339,
+          "name": "南京復興站出口8",
+          "coordinate": [
+            121.543819,
+            25.052018
+          ]
+        },
+        {
+          "source_csv_row": 340,
+          "name": "南京復興站出口7",
+          "coordinate": [
+            121.5445925,
+            25.0524873
+          ]
+        }
+      ],
+      "street_rows": {
+        "100": 4,
+        "200": 5,
+        "300": 7,
+        "500": 14
+      },
+      "distinct_street_coordinates": {
+        "100": 4,
+        "200": 5,
+        "300": 7,
+        "500": 14
+      },
+      "venues": [
+        {
+          "source_csv_row": 53,
+          "行政區": "中山區",
+          "地址": "南京復興捷運站",
+          "經度": "121.5439",
+          "緯度": "25.0522",
+          "備註": "2處"
+        },
+        {
+          "source_csv_row": 99,
+          "行政區": "松山區",
+          "地址": "南京復興捷運站",
+          "經度": "121.5439",
+          "緯度": "25.0522",
+          "備註": "4處"
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "station": "國父紀念館",
+      "monthly_gate_passages": 2218679,
+      "daily_gate_passages": 73955.96666666666,
+      "days": 30,
+      "exit_count": 5,
+      "exits": [
+        {
+          "source_csv_row": 232,
+          "name": "國父紀念館站出口1",
+          "coordinate": [
+            121.556663,
+            25.041838
+          ]
+        },
+        {
+          "source_csv_row": 233,
+          "name": "國父紀念館站出口2",
+          "coordinate": [
+            121.556704,
+            25.041029
+          ]
+        },
+        {
+          "source_csv_row": 234,
+          "name": "國父紀念館站出口3",
+          "coordinate": [
+            121.557981,
+            25.041195
+          ]
+        },
+        {
+          "source_csv_row": 235,
+          "name": "國父紀念館站出口4",
+          "coordinate": [
+            121.558539,
+            25.04117
+          ]
+        },
+        {
+          "source_csv_row": 236,
+          "name": "國父紀念館站出口5",
+          "coordinate": [
+            121.558002,
+            25.041501
+          ]
+        }
+      ],
+      "street_rows": {
+        "100": 3,
+        "200": 6,
+        "300": 10,
+        "500": 24
+      },
+      "distinct_street_coordinates": {
+        "100": 3,
+        "200": 6,
+        "300": 10,
+        "500": 24
+      },
+      "venues": [
+        {
+          "source_csv_row": 25,
+          "行政區": "大安區",
+          "地址": "國父紀念館捷運站",
+          "經度": "121.5597",
+          "緯度": "25.0456",
+          "備註": "8處"
+        },
+        {
+          "source_csv_row": 107,
+          "行政區": "信義區",
+          "地址": "國父紀念館捷運站",
+          "經度": "121.557",
+          "緯度": "25.041",
+          "備註": "7處"
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "station": "忠孝新生",
+      "monthly_gate_passages": 2176444,
+      "daily_gate_passages": 72548.13333333333,
+      "days": 30,
+      "exit_count": 7,
+      "exits": [
+        {
+          "source_csv_row": 217,
+          "name": "忠孝新生站出口2",
+          "coordinate": [
+            121.532065,
+            25.042103
+          ]
+        },
+        {
+          "source_csv_row": 218,
+          "name": "忠孝新生站出口3",
+          "coordinate": [
+            121.53368,
+            25.041783
+          ]
+        },
+        {
+          "source_csv_row": 219,
+          "name": "忠孝新生站出口4",
+          "coordinate": [
+            121.533213,
+            25.042458
+          ]
+        },
+        {
+          "source_csv_row": 220,
+          "name": "忠孝新生站出口1",
+          "coordinate": [
+            121.531829,
+            25.042784
+          ]
+        },
+        {
+          "source_csv_row": 221,
+          "name": "忠孝新生站出口5",
+          "coordinate": [
+            121.5323987,
+            25.0410441
+          ]
+        },
+        {
+          "source_csv_row": 222,
+          "name": "忠孝新生站出口6",
+          "coordinate": [
+            121.533068,
+            25.040791
+          ]
+        },
+        {
+          "source_csv_row": 223,
+          "name": "忠孝新生站出口7",
+          "coordinate": [
+            121.533068,
+            25.041729
+          ]
+        }
+      ],
+      "street_rows": {
+        "100": 0,
+        "200": 0,
+        "300": 0,
+        "500": 0
+      },
+      "distinct_street_coordinates": {
+        "100": 0,
+        "200": 0,
+        "300": 0,
+        "500": 0
+      },
+      "venues": [
+        {
+          "source_csv_row": 34,
+          "行政區": "大安區",
+          "地址": "忠孝新生捷運站",
+          "經度": "121.5331",
+          "緯度": "25.0417",
+          "備註": "10處"
+        },
+        {
+          "source_csv_row": 68,
+          "行政區": "中正區",
+          "地址": "忠孝新生捷運站",
+          "經度": "121.5331",
+          "緯度": "25.0417",
+          "備註": "10處"
+        }
+      ]
+    },
+    {
+      "rank": 9,
+      "station": "松江南京",
+      "monthly_gate_passages": 2145782,
+      "daily_gate_passages": 71526.06666666667,
+      "days": 30,
+      "exit_count": 8,
+      "exits": [
+        {
+          "source_csv_row": 353,
+          "name": "松江南京站出口1",
+          "coordinate": [
+            121.532388,
+            25.051842
+          ]
+        },
+        {
+          "source_csv_row": 354,
+          "name": "松江南京站出口2",
+          "coordinate": [
+            121.532875,
+            25.051342
+          ]
+        },
+        {
+          "source_csv_row": 355,
+          "name": "松江南京站出口3",
+          "coordinate": [
+            121.53287,
+            25.051085
+          ]
+        },
+        {
+          "source_csv_row": 356,
+          "name": "松江南京站出口4",
+          "coordinate": [
+            121.53324,
+            25.051624
+          ]
+        },
+        {
+          "source_csv_row": 357,
+          "name": "松江南京站出口5",
+          "coordinate": [
+            121.534081,
+            25.051882
+          ]
+        },
+        {
+          "source_csv_row": 358,
+          "name": "松江南京站出口6",
+          "coordinate": [
+            121.533808,
+            25.052205
+          ]
+        },
+        {
+          "source_csv_row": 359,
+          "name": "松江南京站出口7",
+          "coordinate": [
+            121.533195,
+            25.05247
+          ]
+        },
+        {
+          "source_csv_row": 360,
+          "name": "松江南京站出口8",
+          "coordinate": [
+            121.532826,
+            25.05257
+          ]
+        }
+      ],
+      "street_rows": {
+        "100": 5,
+        "200": 7,
+        "300": 13,
+        "500": 18
+      },
+      "distinct_street_coordinates": {
+        "100": 5,
+        "200": 7,
+        "300": 13,
+        "500": 18
+      },
+      "venues": [
+        {
+          "source_csv_row": 41,
+          "行政區": "中山區",
+          "地址": "松江南京捷運站",
+          "經度": "121.533",
+          "緯度": "25.0519",
+          "備註": "4處"
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "station": "台北101/世貿",
+      "monthly_gate_passages": 1975224,
+      "daily_gate_passages": 65840.8,
+      "days": 30,
+      "exit_count": 5,
+      "exits": [
+        {
+          "source_csv_row": 261,
+          "name": "台北101/世貿站出口1",
+          "coordinate": [
+            121.561671,
+            25.033107
+          ]
+        },
+        {
+          "source_csv_row": 262,
+          "name": "台北101/世貿站出口2",
+          "coordinate": [
+            121.5619435,
+            25.03284073
+          ]
+        },
+        {
+          "source_csv_row": 263,
+          "name": "台北101/世貿站出口3",
+          "coordinate": [
+            121.563646,
+            25.032742
+          ]
+        },
+        {
+          "source_csv_row": 264,
+          "name": "台北101/世貿站出口4",
+          "coordinate": [
+            121.564112,
+            25.033034
+          ]
+        },
+        {
+          "source_csv_row": 265,
+          "name": "台北101/世貿站出口5",
+          "coordinate": [
+            121.563292,
+            25.033102
+          ]
+        }
+      ],
+      "street_rows": {
+        "100": 3,
+        "200": 9,
+        "300": 12,
+        "500": 22
+      },
+      "distinct_street_coordinates": {
+        "100": 3,
+        "200": 9,
+        "300": 12,
+        "500": 22
+      },
+      "venues": [
+        {
+          "source_csv_row": 108,
+          "行政區": "信義區",
+          "地址": "101站/世貿捷運站",
+          "經度": "121.563",
+          "緯度": "25.032",
+          "備註": "8處"
+        }
+      ]
+    }
+  ]
+}

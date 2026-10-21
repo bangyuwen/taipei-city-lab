@@ -1,0 +1,120 @@
+{
+  "checked_on": "2026-10-22",
+  "venue_catalog_version": "2026-08-18",
+  "street_catalog_version": "2026-10-21",
+  "venue_parsed_rows_unchanged": true,
+  "venue_source_rows": 130,
+  "original_venue_records": [
+    {
+      "source_csv_row": 34,
+      "行政區": "大安區",
+      "地址": "忠孝新生捷運站",
+      "經度": "121.5331",
+      "緯度": "25.0417",
+      "備註": "10處"
+    },
+    {
+      "source_csv_row": 54,
+      "行政區": "中山區",
+      "地址": "中山捷運站",
+      "經度": "121.5204",
+      "緯度": "25.0527",
+      "備註": "10處"
+    },
+    {
+      "source_csv_row": 68,
+      "行政區": "中正區",
+      "地址": "忠孝新生捷運站",
+      "經度": "121.5331",
+      "緯度": "25.0417",
+      "備註": "10處"
+    }
+  ],
+  "xinsheng_differing_fields": [
+    "行政區"
+  ],
+  "physical_overlap_confirmed": null,
+  "usable_bin_count": {
+    "中山": null,
+    "忠孝新生": null
+  },
+  "street_source_rows": 661,
+  "street_valid_coordinate_rows": 659,
+  "invalid_street_csv_rows": [
+    136,
+    242
+  ],
+  "stations": [
+    {
+      "station": "中山",
+      "exit_count": 6,
+      "baseline_street_rows": {
+        "100": 0,
+        "200": 0,
+        "300": 0,
+        "500": 0
+      },
+      "rechecked_street_rows": {
+        "100": 0,
+        "200": 0,
+        "300": 0,
+        "500": 1
+      },
+      "within_500m": [
+        {
+          "source_csv_row": 222,
+          "distance_m": 473.336,
+          "nearest_exit": "中山站出口3",
+          "行政區": "中山區",
+          "地址": "林森北路247號",
+          "經度": "121.525561",
+          "緯度": "25.054088",
+          "備註": "嚴禁投入家用垃圾，違者重罰新臺幣6000元"
+        }
+      ],
+      "nearest_street_record": {
+        "source_csv_row": 222,
+        "distance_m": 473.336,
+        "nearest_exit": "中山站出口3",
+        "行政區": "中山區",
+        "地址": "林森北路247號",
+        "經度": "121.525561",
+        "緯度": "25.054088",
+        "備註": "嚴禁投入家用垃圾，違者重罰新臺幣6000元"
+      }
+    },
+    {
+      "station": "忠孝新生",
+      "exit_count": 7,
+      "baseline_street_rows": {
+        "100": 0,
+        "200": 0,
+        "300": 0,
+        "500": 0
+      },
+      "rechecked_street_rows": {
+        "100": 0,
+        "200": 0,
+        "300": 0,
+        "500": 0
+      },
+      "within_500m": [],
+      "nearest_street_record": {
+        "source_csv_row": 204,
+        "distance_m": 532.248,
+        "nearest_exit": "忠孝新生站出口1",
+        "行政區": "中山區",
+        "地址": "新生北路1段76巷口 ",
+        "經度": "121.530233",
+        "緯度": "25.047347",
+        "備註": "嚴禁投入家用垃圾，違者重罰新臺幣6000元"
+      }
+    }
+  ],
+  "limits": [
+    "Same retained 2026-08-04 exits; radii are straight-line unions, not walking distance.",
+    "Only these two stations recalculated. The ten-station comparison remains a 2026-09-30 street snapshot.",
+    "Changed records do not establish installations, removals, or currently usable bins.",
+    "Venue coordinates do not locate individual facilities; no sums of place counts."
+  ]
+}

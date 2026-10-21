@@ -1,0 +1,1881 @@
+{
+  "date": "2026-10-20",
+  "status": "proposed_not_observed",
+  "basis": "manual_inspection_order_from_frozen_rechecks_not_demand_ranking",
+  "groups": [
+    {
+      "id": "selection",
+      "label": "先釐清選點與共用來源",
+      "count": 3
+    },
+    {
+      "id": "boundary",
+      "label": "先釐清場所與候選場域的邊界",
+      "count": 5
+    },
+    {
+      "id": "comparison",
+      "label": "核實跨區或近距離紀錄，保留對照",
+      "count": 4
+    }
+  ],
+  "districts": [
+    {
+      "area": "松山區",
+      "code": "01",
+      "candidate_ids": [
+        "D01-2",
+        "D01-1",
+        "D01-3"
+      ]
+    },
+    {
+      "area": "信義區",
+      "code": "02",
+      "candidate_ids": [
+        "D02-3",
+        "D02-1",
+        "D02-2"
+      ]
+    },
+    {
+      "area": "大安區",
+      "code": "03",
+      "candidate_ids": [
+        "D03-1",
+        "D03-2",
+        "D03-3"
+      ]
+    },
+    {
+      "area": "中山區",
+      "code": "04",
+      "candidate_ids": [
+        "D04-3",
+        "D04-1",
+        "D04-2"
+      ]
+    },
+    {
+      "area": "中正區",
+      "code": "05",
+      "candidate_ids": [
+        "D05-1",
+        "D05-2",
+        "D05-3"
+      ]
+    },
+    {
+      "area": "大同區",
+      "code": "06",
+      "candidate_ids": [
+        "D06-2",
+        "D06-1",
+        "D06-3"
+      ]
+    },
+    {
+      "area": "萬華區",
+      "code": "07",
+      "candidate_ids": [
+        "D07-2",
+        "D07-1",
+        "D07-3"
+      ]
+    },
+    {
+      "area": "文山區",
+      "code": "08",
+      "candidate_ids": [
+        "D08-2",
+        "D08-1",
+        "D08-3"
+      ]
+    },
+    {
+      "area": "南港區",
+      "code": "09",
+      "candidate_ids": [
+        "D09-3",
+        "D09-1",
+        "D09-2"
+      ]
+    },
+    {
+      "area": "內湖區",
+      "code": "10",
+      "candidate_ids": [
+        "D10-3",
+        "D10-1",
+        "D10-2"
+      ]
+    },
+    {
+      "area": "士林區",
+      "code": "11",
+      "candidate_ids": [
+        "D11-2",
+        "D11-1",
+        "D11-3"
+      ]
+    },
+    {
+      "area": "北投區",
+      "code": "12",
+      "candidate_ids": [
+        "D12-3",
+        "D12-1",
+        "D12-2"
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_id": "D01-2",
+      "station_id": "500110019",
+      "name": "臺北市藝文推廣處",
+      "source_area": "松山區",
+      "lon": 121.55235,
+      "lat": 25.04826,
+      "events": 29859,
+      "events_excluding_flags": 29815,
+      "city_rank": 33,
+      "street": {
+        "row": 312,
+        "name": "八德路3段30號對面",
+        "source_area": "松山區",
+        "lon": 121.551431,
+        "lat": 25.048248,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 92.59
+      },
+      "venue": {
+        "row": 100,
+        "name": "台北小巨蛋捷運站",
+        "source_area": "松山區",
+        "lon": 121.5502,
+        "lat": 25.0521,
+        "remark": "4處",
+        "source_coordinate_distance_m": 478.78
+      },
+      "relation": "不同場域",
+      "evidence_scope": "最近場所是台北小巨蛋捷運站，不能代表藝文推廣處館內或周邊服務；街道表另有八德路三段 30 號對面紀錄。",
+      "next_check": "先查八德路紀錄的現況與道路側，另查藝文推廣處出入口及管理者；不把遠處捷運場所直接當替代點。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W1",
+      "original_area_activity_rank": 2,
+      "choice": {
+        "candidate_id": "D01-2",
+        "group": "boundary",
+        "reason": "先查藝文設施與街道的服務邊界：最近場所紀錄是台北小巨蛋站，不能當作藝文推廣處的設施；街道另有八德路紀錄。",
+        "confirm": "核對八德路三段30號對面的設施、道路側與通行路線；確認藝文推廣處入口內外是否有服務、使用條件及管理者。",
+        "changes": "若館內與街道服務不同，分開記錄範圍與時段；只有確認可抵達、可接收的設施才列入本點服務清單。"
+      },
+      "planning_reason": "先查藝文設施與街道的服務邊界：最近場所紀錄是台北小巨蛋站，不能當作藝文推廣處的設施；街道另有八德路紀錄。",
+      "field_check": "核對八德路三段30號對面的設施、道路側與通行路線；確認藝文推廣處入口內外是否有服務、使用條件及管理者。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D01-1",
+      "station_id": "500110007",
+      "name": "捷運南京三民站(1號出口)",
+      "source_area": "松山區",
+      "lon": 121.5636,
+      "lat": 25.05155,
+      "events": 44875,
+      "events_excluding_flags": 44840,
+      "city_rank": 11,
+      "street": {
+        "row": 296,
+        "name": "南京東路5段182號(捷運站)",
+        "source_area": "松山區",
+        "lon": 121.563599,
+        "lat": 25.051343,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 23.02
+      },
+      "venue": {
+        "row": 104,
+        "name": "南京三民捷運站",
+        "source_area": "松山區",
+        "lon": 121.5638,
+        "lat": 25.0516,
+        "remark": "2處",
+        "source_coordinate_distance_m": 20.9
+      },
+      "relation": "同站名",
+      "evidence_scope": "南京三民站紀錄未指定第 1 號出口；街道表另有南京東路五段 182 號紀錄，兩者是否同一設施未知。",
+      "next_check": "逐點核對站內外與 182 號前的箱號、位置及接收條件，確認第 1 號出口路徑，避免重複計入同一設施。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W2",
+      "original_area_activity_rank": 1,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "逐點核對站內外與 182 號前的箱號、位置及接收條件，確認第 1 號出口路徑，避免重複計入同一設施。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D01-3",
+      "station_id": "500110044",
+      "name": "捷運南京復興站(5號出口)",
+      "source_area": "松山區",
+      "lon": 121.54506,
+      "lat": 25.05168,
+      "events": 28929,
+      "events_excluding_flags": 28900,
+      "city_rank": 37,
+      "street": {
+        "row": 269,
+        "name": "南京東路3段217號前",
+        "source_area": "中山區",
+        "lon": 121.543092,
+        "lat": 25.051971,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 200.87
+      },
+      "venue": {
+        "row": 53,
+        "name": "南京復興捷運站",
+        "source_area": "中山區",
+        "lon": 121.5439,
+        "lat": 25.0522,
+        "remark": "2處",
+        "source_coordinate_distance_m": 130.37
+      },
+      "relation": "同站名",
+      "evidence_scope": "南京復興站場所列在中山區，未定位至候選點的第 5 號出口。",
+      "next_check": "跨區核對第 5 號出口內外、場所逐點明細與管理者；保留來源區，不移算場所處數。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W3",
+      "original_area_activity_rank": 3,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "跨區核對第 5 號出口內外、場所逐點明細與管理者；保留來源區，不移算場所處數。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D02-3",
+      "station_id": "500112010",
+      "name": "捷運象山站(2號出口)",
+      "source_area": "信義區",
+      "lon": 121.56974,
+      "lat": 25.03222,
+      "events": 40859,
+      "events_excluding_flags": 40824,
+      "city_rank": 13,
+      "street": {
+        "row": 390,
+        "name": "信義路5段126號",
+        "source_area": "信義區",
+        "lon": 121.5690814,
+        "lat": 25.0326291,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 80.45
+      },
+      "venue": {
+        "row": 122,
+        "name": "象山捷運站",
+        "source_area": "信義區",
+        "lon": 121.57,
+        "lat": 25.032,
+        "remark": "3處",
+        "source_coordinate_distance_m": 35.84
+      },
+      "relation": "同站名",
+      "evidence_scope": "象山站場所未指定第 2 號出口；街道另列信義路五段 126 號，設施是否相同未知。",
+      "next_check": "核對出口與 126 號前的逐點設施、箱號及步行路徑；另保留 500 m 規則會改選松山車站的結果。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W1",
+      "original_area_activity_rank": 3,
+      "choice": {
+        "candidate_id": "D02-3",
+        "group": "selection",
+        "reason": "先查名單對點間隔的依賴：500 m版本以松山車站替代象山；象山場所與信義路街道紀錄也可能重複。",
+        "confirm": "走查2號出口、信義路五段126號紀錄，辨認是否同一設施；記錄與松仁路95巷觀察範圍是否重疊，以及各自可觀察的路徑。",
+        "changes": "若觀察範圍重疊，先記錄重疊並評估下一輪邊界或候選替換，保留版本；若不同則保留兩點。500 m替換本身不證明應換點。"
+      },
+      "planning_reason": "先查名單對點間隔的依賴：500 m版本以松山車站替代象山；象山場所與信義路街道紀錄也可能重複。",
+      "field_check": "走查2號出口、信義路五段126號紀錄，辨認是否同一設施；記錄與松仁路95巷觀察範圍是否重疊，以及各自可觀察的路徑。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D02-1",
+      "station_id": "500112070",
+      "name": "捷運永春站(2號出口)",
+      "source_area": "信義區",
+      "lon": 121.57538,
+      "lat": 25.0405,
+      "events": 51984,
+      "events_excluding_flags": 51894,
+      "city_rank": 7,
+      "street": {
+        "row": 368,
+        "name": "忠孝東路5段257號後方",
+        "source_area": "信義區",
+        "lon": 121.57062,
+        "lat": 25.041543,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 493.36
+      },
+      "venue": {
+        "row": 120,
+        "name": "永春捷運站",
+        "source_area": "信義區",
+        "lon": 121.576,
+        "lat": 25.04,
+        "remark": "5處",
+        "source_coordinate_distance_m": 83.62
+      },
+      "relation": "同站名",
+      "evidence_scope": "永春站紀錄未將「5處」定位到第 2 號出口或站外。",
+      "next_check": "取得逐點位置，確認第 2 號出口內外的接收項目、開放與進站條件，再走查實際路線。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W2",
+      "original_area_activity_rank": 1,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "取得逐點位置，確認第 2 號出口內外的接收項目、開放與進站條件，再走查實際路線。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D02-2",
+      "station_id": "500112081",
+      "name": "松仁路95巷口",
+      "source_area": "信義區",
+      "lon": 121.56866,
+      "lat": 25.03656,
+      "events": 46333,
+      "events_excluding_flags": 46300,
+      "city_rank": 9,
+      "street": {
+        "row": 382,
+        "name": "松壽路華納威秀手機門市前公車站",
+        "source_area": "信義區",
+        "lon": 121.56733,
+        "lat": 25.03575,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 161.45
+      },
+      "venue": {
+        "row": 115,
+        "name": "新光三越-A11",
+        "source_area": "信義區",
+        "lon": 121.5674,
+        "lat": 25.0361,
+        "remark": "13處",
+        "source_coordinate_distance_m": 136.86
+      },
+      "relation": "不同場域",
+      "evidence_scope": "新光三越 A11 是百貨場所紀錄，不能代表松仁路 95 巷口的公共投放服務。",
+      "next_check": "分別查巷口路側與百貨內外設施；核對是否限顧客、營業時段、接收物及可走通的入口，勿預設百貨可替代街道服務。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W3",
+      "original_area_activity_rank": 2,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "分別查巷口路側與百貨內外設施；核對是否限顧客、營業時段、接收物及可走通的入口，勿預設百貨可替代街道服務。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D03-1",
+      "station_id": "500101022",
+      "name": "捷運公館站(2號出口)",
+      "source_area": "大安區",
+      "lon": 121.53438,
+      "lat": 25.01491,
+      "events": 91340,
+      "events_excluding_flags": 91243,
+      "city_rank": 1,
+      "street": {
+        "row": 77,
+        "name": "羅斯福路4段68號",
+        "source_area": "中正區",
+        "lon": 121.534322,
+        "lat": 25.014546,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 40.89
+      },
+      "venue": {
+        "row": 37,
+        "name": "公館捷運站",
+        "source_area": "大安區",
+        "lon": 121.5344,
+        "lat": 25.0148,
+        "remark": "4處",
+        "source_coordinate_distance_m": 12.4
+      },
+      "relation": "同站名",
+      "evidence_scope": "公館站場所列在大安區；最近街道紀錄羅斯福路四段 68 號列在中正區，未確認與第 2 號出口同一設施。",
+      "next_check": "跨區核對 68 號、站內外及第 2 號出口的箱號與位置，確認實際步行、接收及維護條件，不用座標接近判定可用。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W1",
+      "original_area_activity_rank": 1,
+      "choice": {
+        "candidate_id": "D03-1",
+        "group": "comparison",
+        "reason": "作為近距離紀錄的核實對照：公館同站名場所約12 m、街道紀錄約41 m且列在中正區；看似近仍不代表出口外可投放。",
+        "confirm": "核對2號出口、羅斯福路四段68號紀錄及實際箱號；確認道路側、是否需進站、接收條件與步行路線。",
+        "changes": "若兩表指向同一設施，用同一服務點ID；若服務可用，記錄可達路線與投放結果，作為其他點的比較案例，不把近距離當成功證據。"
+      },
+      "planning_reason": "作為近距離紀錄的核實對照：公館同站名場所約12 m、街道紀錄約41 m且列在中正區；看似近仍不代表出口外可投放。",
+      "field_check": "核對2號出口、羅斯福路四段68號紀錄及實際箱號；確認道路側、是否需進站、接收條件與步行路線。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D03-2",
+      "station_id": "500101001",
+      "name": "捷運科技大樓站",
+      "source_area": "大安區",
+      "lon": 121.5436,
+      "lat": 25.02605,
+      "events": 56631,
+      "events_excluding_flags": 56578,
+      "city_rank": 3,
+      "street": {
+        "row": 127,
+        "name": "和平東路2段110號",
+        "source_area": "大安區",
+        "lon": 121.542447,
+        "lat": 25.024938,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 169.66
+      },
+      "venue": {
+        "row": 38,
+        "name": "科技大樓捷運站",
+        "source_area": "大安區",
+        "lon": 121.5435,
+        "lat": 25.0261,
+        "remark": "8處",
+        "source_coordinate_distance_m": 11.51
+      },
+      "relation": "同站名",
+      "evidence_scope": "科技大樓站紀錄只提供場所概略座標，不能把約 12 m 視為到桶距離或「8處」的個別位置。",
+      "next_check": "查站內外逐點設施、出入口與進站限制，實走 YouBike 站至設施的路徑，確認接收物與管理者。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W2",
+      "original_area_activity_rank": 2,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "查站內外逐點設施、出入口與進站限制，實走 YouBike 站至設施的路徑，確認接收物與管理者。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D03-3",
+      "station_id": "500101179",
+      "name": "捷運東門站(5號出口)",
+      "source_area": "大安區",
+      "lon": 121.52962,
+      "lat": 25.03363,
+      "events": 55312,
+      "events_excluding_flags": 55257,
+      "city_rank": 4,
+      "street": {
+        "row": 100,
+        "name": "愛國東路35之1號(公車站牌)",
+        "source_area": "大安區",
+        "lon": 121.526135,
+        "lat": 25.031913,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 399.66
+      },
+      "venue": {
+        "row": 70,
+        "name": "東門捷運站",
+        "source_area": "中正區",
+        "lon": 121.528,
+        "lat": 25.0338,
+        "remark": "7處",
+        "source_coordinate_distance_m": 164.3
+      },
+      "relation": "同站名",
+      "evidence_scope": "東門站場所列在中正區；未指定大安區候選點的第 5 號出口。",
+      "next_check": "跨區核對第 5 號出口與站內外設施，保留原表來源區，確認開放、接收條件及實際道路側。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W3",
+      "original_area_activity_rank": 3,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "跨區核對第 5 號出口與站內外設施，保留原表來源區，確認開放、接收條件及實際道路側。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D04-3",
+      "station_id": "500107063",
+      "name": "林森長春路口",
+      "source_area": "中山區",
+      "lon": 121.52536,
+      "lat": 25.05497,
+      "events": 34674,
+      "events_excluding_flags": 34564,
+      "city_rank": 24,
+      "street": {
+        "row": 249,
+        "name": "南京東路2段38號(對面公車專用道上)",
+        "source_area": "中山區",
+        "lon": 121.529539,
+        "lat": 25.05203,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 532.99
+      },
+      "venue": {
+        "row": 49,
+        "name": "欣欣百貨",
+        "source_area": "中山區",
+        "lon": 121.5252,
+        "lat": 25.0533,
+        "remark": "9處",
+        "source_coordinate_distance_m": 186.39
+      },
+      "relation": "不同場域",
+      "evidence_scope": "欣欣百貨是不同場域，原表「9處」不能代表林森長春路口的路側服務。",
+      "next_check": "分開盤點路口與百貨內外，核對進入限制、營業時間、接收物及步行路徑，再判斷有無服務銜接。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W1",
+      "original_area_activity_rank": 3,
+      "choice": {
+        "candidate_id": "D04-3",
+        "group": "boundary",
+        "reason": "先查私人場所與公共路口的差別：最近線索為欣欣百貨，尚不能支持林森長春路口有可用服務。",
+        "confirm": "盤點路口既有設施；核對百貨服務的位置、營業時間、是否限顧客及接收物，實走路口到設施的路線。",
+        "changes": "只有符合當時通行與使用條件的服務才列入；若有時間或身分限制，保留限制與未覆蓋情境，不寫成路口完全無桶。"
+      },
+      "planning_reason": "先查私人場所與公共路口的差別：最近線索為欣欣百貨，尚不能支持林森長春路口有可用服務。",
+      "field_check": "盤點路口既有設施；核對百貨服務的位置、營業時間、是否限顧客及接收物，實走路口到設施的路線。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D04-1",
+      "station_id": "500107024",
+      "name": "捷運中山國中站",
+      "source_area": "中山區",
+      "lon": 121.54406,
+      "lat": 25.06106,
+      "events": 59123,
+      "events_excluding_flags": 59040,
+      "city_rank": 2,
+      "street": {
+        "row": 246,
+        "name": "復興北路386號",
+        "source_area": "中山區",
+        "lon": 121.544065,
+        "lat": 25.061262,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 22.47
+      },
+      "venue": {
+        "row": 52,
+        "name": "中山國中捷運站",
+        "source_area": "中山區",
+        "lon": 121.5441,
+        "lat": 25.0608,
+        "remark": "1處",
+        "source_coordinate_distance_m": 29.19
+      },
+      "relation": "同站名",
+      "evidence_scope": "中山國中站場所與復興北路 386 號街道紀錄都靠近候選座標，但無法確認是否同一實體。",
+      "next_check": "比對站內外與 386 號前的箱號、照片及位置，確認去重關係、步行動線和目前接收條件。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W2",
+      "original_area_activity_rank": 1,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "比對站內外與 386 號前的箱號、照片及位置，確認去重關係、步行動線和目前接收條件。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D04-2",
+      "station_id": "500107036",
+      "name": "捷運行天宮站(3號出口)",
+      "source_area": "中山區",
+      "lon": 121.5333,
+      "lat": 25.05992,
+      "events": 40097,
+      "events_excluding_flags": 40003,
+      "city_rank": 17,
+      "street": {
+        "row": 244,
+        "name": "民權東路2段與松江路口(東向西公車道)(二)",
+        "source_area": "中山區",
+        "lon": 121.533408,
+        "lat": 25.062533,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 290.76
+      },
+      "venue": {
+        "row": 51,
+        "name": "行天宮捷運站",
+        "source_area": "中山區",
+        "lon": 121.5331,
+        "lat": 25.0594,
+        "remark": "3處",
+        "source_coordinate_distance_m": 61.23
+      },
+      "relation": "同站名",
+      "evidence_scope": "行天宮站紀錄未將「3處」定位到第 3 號出口；不能代表行天宮廟區。",
+      "next_check": "查第 3 號出口內外的逐點設施與開放條件；廟區若另有投放情境，需另取場域與動線證據。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W3",
+      "original_area_activity_rank": 2,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "查第 3 號出口內外的逐點設施與開放條件；廟區若另有投放情境，需另取場域與動線證據。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D05-1",
+      "station_id": "500106047",
+      "name": "中正運動中心",
+      "source_area": "中正區",
+      "lon": 121.51985,
+      "lat": 25.03786,
+      "events": 29939,
+      "events_excluding_flags": 29934,
+      "city_rank": 32,
+      "street": {
+        "row": 22,
+        "name": "信義路1段南側(中正紀念堂國家音樂廳車輛出入口)",
+        "source_area": "中正區",
+        "lon": 121.520633,
+        "lat": 25.037328,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 98.6
+      },
+      "venue": {
+        "row": 58,
+        "name": "中正紀念堂捷運站",
+        "source_area": "中正區",
+        "lon": 121.518,
+        "lat": 25.033,
+        "remark": "6處",
+        "source_coordinate_distance_m": 571.65
+      },
+      "relation": "不同場域",
+      "evidence_scope": "中正紀念堂捷運站不能代表中正運動中心；較近街道紀錄位於國家音樂廳車輛出入口附近。",
+      "next_check": "先核實街道紀錄與安全步行路線，另盤點運動中心館內、入口及道路側；查各自管理者與使用規則。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W1",
+      "original_area_activity_rank": 1,
+      "choice": {
+        "candidate_id": "D05-1",
+        "group": "boundary",
+        "reason": "先查運動中心自身的服務：最近場所線索是中正紀念堂捷運站；最近街道紀錄在國家音樂廳車輛出入口，場域與安全路徑未明。",
+        "confirm": "核對運動中心館內外、音樂廳車輛出口旁街道紀錄的確切位置；確認安全通行、開放與接收條件及管理者。",
+        "changes": "若是不同管理範圍，分列服務邊界；不可安全抵達的紀錄不算已可用，須另查既有服務，仍不直接推導增設。"
+      },
+      "planning_reason": "先查運動中心自身的服務：最近場所線索是中正紀念堂捷運站；最近街道紀錄在國家音樂廳車輛出入口，場域與安全路徑未明。",
+      "field_check": "核對運動中心館內外、音樂廳車輛出口旁街道紀錄的確切位置；確認安全通行、開放與接收條件及管理者。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D05-2",
+      "station_id": "500106070",
+      "name": "光華商場",
+      "source_area": "中正區",
+      "lon": 121.53274,
+      "lat": 25.04478,
+      "events": 27141,
+      "events_excluding_flags": 27122,
+      "city_rank": 52,
+      "street": {
+        "row": 250,
+        "name": "松江路43號(對面公車專用道上)",
+        "source_area": "中山區",
+        "lon": 121.532999,
+        "lat": 25.048005,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 359.55
+      },
+      "venue": {
+        "row": 34,
+        "name": "忠孝新生捷運站",
+        "source_area": "大安區",
+        "lon": 121.5331,
+        "lat": 25.0417,
+        "remark": "10處",
+        "source_coordinate_distance_m": 344.4
+      },
+      "relation": "不同場域",
+      "evidence_scope": "最近場所是列在大安區的忠孝新生捷運站，不能代表光華商場館內或商場出口。",
+      "next_check": "另查商場館內外設施、營業與接收規則；往捷運站的路徑、進站限制及跨區管理分別核實。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W2",
+      "original_area_activity_rank": 2,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "另查商場館內外設施、營業與接收規則；往捷運站的路徑、進站限制及跨區管理分別核實。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D05-3",
+      "station_id": "500106006",
+      "name": "捷運古亭站(2號出口)",
+      "source_area": "中正區",
+      "lon": 121.52346,
+      "lat": 25.0255,
+      "events": 27084,
+      "events_excluding_flags": 27035,
+      "city_rank": 54,
+      "street": {
+        "row": 57,
+        "name": "羅斯福路2段74號前(捷運古亭站對面公車道)",
+        "source_area": "中正區",
+        "lon": 121.52224,
+        "lat": 25.02721,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 226.42
+      },
+      "venue": {
+        "row": 71,
+        "name": "古亭捷運站",
+        "source_area": "中正區",
+        "lon": 121.5229,
+        "lat": 25.0263,
+        "remark": "6處",
+        "source_coordinate_distance_m": 105.34
+      },
+      "relation": "同站名",
+      "evidence_scope": "古亭站場所紀錄未定位到第 2 號出口；街道另列對面公車道紀錄，不能把直線距離當可達路線。",
+      "next_check": "核對出口內外、道路側與實際可通行動線，記錄開放及接收條件，確認公車道紀錄的現況與安全到達方式。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W3",
+      "original_area_activity_rank": 3,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "核對出口內外、道路側與實際可通行動線，記錄開放及接收條件，確認公車道紀錄的現況與安全到達方式。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D06-2",
+      "station_id": "500103044",
+      "name": "大稻埕碼頭",
+      "source_area": "大同區",
+      "lon": 121.50783,
+      "lat": 25.05662,
+      "events": 35942,
+      "events_excluding_flags": 35911,
+      "city_rank": 21,
+      "street": {
+        "row": 141,
+        "name": "重慶北路2段60號前（公車專用道）（1）",
+        "source_area": "大同區",
+        "lon": 121.514016,
+        "lat": 25.055566,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 634.05
+      },
+      "venue": {
+        "row": 9,
+        "name": "大稻埕公園",
+        "source_area": "大同區",
+        "lon": 121.5098,
+        "lat": 25.0583,
+        "remark": "1處",
+        "source_coordinate_distance_m": 272.53
+      },
+      "relation": "不同場域",
+      "evidence_scope": "大稻埕公園的名稱與概略座標，不能證明設施位於碼頭、水門內外或河濱活動路線。",
+      "next_check": "確認公園紀錄的實際位置與管理範圍，分別盤點碼頭及進出動線，查通行、開放與接收規則。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W1",
+      "original_area_activity_rank": 2,
+      "choice": {
+        "candidate_id": "D06-2",
+        "group": "boundary",
+        "reason": "先查公園、碼頭與河濱的差別：最近場所原文是大稻埕公園，不能定位碼頭、水門或河濱的設施。",
+        "confirm": "確認候選站到碼頭、水門內外及公園的路線、服務位置、開放條件與各自管理者，分開記錄道路與河濱邊界。",
+        "changes": "若服務分屬不同範圍或有通行限制，分列可用時段與路徑；不把公園的原文處數套用成碼頭桶數。"
+      },
+      "planning_reason": "先查公園、碼頭與河濱的差別：最近場所原文是大稻埕公園，不能定位碼頭、水門或河濱的設施。",
+      "field_check": "確認候選站到碼頭、水門內外及公園的路線、服務位置、開放條件與各自管理者，分開記錄道路與河濱邊界。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D06-1",
+      "station_id": "500103009",
+      "name": "捷運圓山站(1號出口)",
+      "source_area": "大同區",
+      "lon": 121.52024,
+      "lat": 25.07133,
+      "events": 53258,
+      "events_excluding_flags": 53170,
+      "city_rank": 5,
+      "street": {
+        "row": 274,
+        "name": "中山北路3段，北往南，花博公園圓山園區人行道",
+        "source_area": "中山區",
+        "lon": 121.523482,
+        "lat": 25.071245,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 326.67
+      },
+      "venue": {
+        "row": 45,
+        "name": "圓山捷運站",
+        "source_area": "中山區",
+        "lon": 121.52,
+        "lat": 25.0713,
+        "remark": "13處",
+        "source_coordinate_distance_m": 24.4
+      },
+      "relation": "同站名",
+      "evidence_scope": "圓山站場所列在中山區；未確認第 1 號出口、站外及花博園區是否共用服務。",
+      "next_check": "跨區核對第 1 號出口與園區邊界，查逐點位置、管理者及開放條件，避免把站區與園區當成同一服務點。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W2",
+      "original_area_activity_rank": 1,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "跨區核對第 1 號出口與園區邊界，查逐點位置、管理者及開放條件，避免把站區與園區當成同一服務點。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D06-3",
+      "station_id": "500103028",
+      "name": "捷運北門站(3號出口)",
+      "source_area": "大同區",
+      "lon": 121.5104,
+      "lat": 25.04991,
+      "events": 28336,
+      "events_excluding_flags": 28294,
+      "city_rank": 43,
+      "street": {
+        "row": 149,
+        "name": "塔城街忠孝西路口",
+        "source_area": "大同區",
+        "lon": 121.509598,
+        "lat": 25.048334,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 192.97
+      },
+      "venue": {
+        "row": 10,
+        "name": "北門捷運站",
+        "source_area": "大同區",
+        "lon": 121.5108,
+        "lat": 25.0494,
+        "remark": "10處",
+        "source_coordinate_distance_m": 69.57
+      },
+      "relation": "同站名",
+      "evidence_scope": "北門站紀錄未將「10處」定位到第 3 號出口，不能代表北門廣場已有服務。",
+      "next_check": "取得站內外逐點明細，確認第 3 號出口的設施與使用條件；廣場及路側另按場域核對。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W3",
+      "original_area_activity_rank": 3,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "取得站內外逐點明細，確認第 3 號出口的設施與使用條件；廣場及路側另按場域核對。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D07-2",
+      "station_id": "500113038",
+      "name": "西本願寺廣場",
+      "source_area": "萬華區",
+      "lon": 121.50769,
+      "lat": 25.04099,
+      "events": 29449,
+      "events_excluding_flags": 29364,
+      "city_rank": 35,
+      "street": {
+        "row": 483,
+        "name": "中華路1段170號",
+        "source_area": "萬華區",
+        "lon": 121.507661,
+        "lat": 25.040762,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 25.52
+      },
+      "venue": {
+        "row": 64,
+        "name": "西門捷運站",
+        "source_area": "中正區",
+        "lon": 121.509,
+        "lat": 25.042,
+        "remark": "2處",
+        "source_coordinate_distance_m": 173.29
+      },
+      "relation": "不同場域",
+      "evidence_scope": "列在中正區的西門站場所不能代表西本願寺廣場；附近街道紀錄為中華路一段 170 號。",
+      "next_check": "先核實 170 號前設施與廣場邊界，分開查站內外；保留 500 m 規則會改選開封西寧路口的結果。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W1",
+      "original_area_activity_rank": 2,
+      "choice": {
+        "candidate_id": "D07-2",
+        "group": "selection",
+        "reason": "先查換點與廣場邊界：500 m版本改選開封西寧路口；中華路街道紀錄雖近，西門站場所紀錄列在中正區，都未確認廣場服務。",
+        "confirm": "核對中華路一段170號前設施、廣場與西門站的使用邊界；記錄是否與中華桂林路口共用觀察路徑或服務。",
+        "changes": "先將共用設施去重；若觀察範圍重疊，評估下一輪邊界或替換並留版本，不能僅按500 m結果宣布原點錯誤。"
+      },
+      "planning_reason": "先查換點與廣場邊界：500 m版本改選開封西寧路口；中華路街道紀錄雖近，西門站場所紀錄列在中正區，都未確認廣場服務。",
+      "field_check": "核對中華路一段170號前設施、廣場與西門站的使用邊界；記錄是否與中華桂林路口共用觀察路徑或服務。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D07-1",
+      "station_id": "500113039",
+      "name": "中華桂林路口",
+      "source_area": "萬華區",
+      "lon": 121.50662,
+      "lat": 25.03771,
+      "events": 36357,
+      "events_excluding_flags": 36202,
+      "city_rank": 20,
+      "street": {
+        "row": 480,
+        "name": "中華路1段196號",
+        "source_area": "萬華區",
+        "lon": 121.506978,
+        "lat": 25.038627,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 108.16
+      },
+      "venue": {
+        "row": 57,
+        "name": "小南門捷運站",
+        "source_area": "中正區",
+        "lon": 121.51,
+        "lat": 25.035,
+        "remark": "2處",
+        "source_coordinate_distance_m": 454.71
+      },
+      "relation": "不同場域",
+      "evidence_scope": "最近場所是列在中正區的小南門捷運站，不能代表中華桂林路口；街道另有中華路一段 196 號紀錄。",
+      "next_check": "先查路口與 196 號的現況及道路側，再核對往小南門站是否有可使用服務，不把跨區近鄰當供給證明。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W2",
+      "original_area_activity_rank": 1,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "先查路口與 196 號的現況及道路側，再核對往小南門站是否有可使用服務，不把跨區近鄰當供給證明。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D07-3",
+      "station_id": "500113095",
+      "name": "萬華區公所(大理街)",
+      "source_area": "萬華區",
+      "lon": 121.5,
+      "lat": 25.03457,
+      "events": 27345,
+      "events_excluding_flags": 27293,
+      "city_rank": 50,
+      "street": {
+        "row": 479,
+        "name": "環河南路1段280-1號前",
+        "source_area": "萬華區",
+        "lon": 121.499825,
+        "lat": 25.041761,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 799.8
+      },
+      "venue": {
+        "row": 130,
+        "name": "龍山寺捷運站",
+        "source_area": "萬華區",
+        "lon": 121.499,
+        "lat": 25.035,
+        "remark": "1處",
+        "source_coordinate_distance_m": 111.52
+      },
+      "relation": "不同場域",
+      "evidence_scope": "龍山寺捷運站場所不能代表區公所大理街側、區公所館內或龍山寺廟區。",
+      "next_check": "分開查區公所入口、道路側及捷運站的設施和開放條件；確認各場域的管理者、路徑與接收項目。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W3",
+      "original_area_activity_rank": 3,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "分開查區公所入口、道路側及捷運站的設施和開放條件；確認各場域的管理者、路徑與接收項目。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D08-2",
+      "station_id": "500105001",
+      "name": "台北花木批發市場",
+      "source_area": "文山區",
+      "lon": 121.54074,
+      "lat": 25.00402,
+      "events": 21348,
+      "events_excluding_flags": 21314,
+      "city_rank": 123,
+      "street": {
+        "row": 632,
+        "name": "羅斯福路5段27號公車專用道(1)",
+        "source_area": "文山區",
+        "lon": 121.53832,
+        "lat": 25.00783,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 488.83
+      },
+      "venue": {
+        "row": 88,
+        "name": "萬隆捷運站",
+        "source_area": "文山區",
+        "lon": 121.539,
+        "lat": 25.002,
+        "remark": "4處",
+        "source_coordinate_distance_m": 284.95
+      },
+      "relation": "不同場域",
+      "evidence_scope": "萬隆捷運站不能代表花木市場館內外；與 D08-1 共用同一場所來源，不是兩套已確認供給。",
+      "next_check": "另盤點市場入口、館內與路側，查開放時間、接收物及管理者；市場往萬隆站的實際銜接需另驗證。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W1",
+      "original_area_activity_rank": 2,
+      "choice": {
+        "candidate_id": "D08-2",
+        "group": "selection",
+        "reason": "先解開共用來源：花木市場與萬隆站候選引用同一筆萬隆捷運站紀錄；500 m版本改選景文街142巷口。",
+        "confirm": "確認市場本身的服務、開放與接收條件；走查至萬隆站的路線，與D08-1共用設施時使用同一ID，記錄兩個觀察範圍是否重疊。",
+        "changes": "市場與捷運分開判讀；同一服務不累計兩次。依現場邊界評估後續選點，另保留文山150 m版本會換掉景行公園的缺口。"
+      },
+      "planning_reason": "先解開共用來源：花木市場與萬隆站候選引用同一筆萬隆捷運站紀錄；500 m版本改選景文街142巷口。",
+      "field_check": "確認市場本身的服務、開放與接收條件；走查至萬隆站的路線，與D08-1共用設施時使用同一ID，記錄兩個觀察範圍是否重疊。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D08-1",
+      "station_id": "500105005",
+      "name": "捷運萬隆站(2號出口)",
+      "source_area": "文山區",
+      "lon": 121.53983,
+      "lat": 25.00144,
+      "events": 22821,
+      "events_excluding_flags": 22799,
+      "city_rank": 102,
+      "street": {
+        "row": 633,
+        "name": "羅斯福路6段142巷與景福街交叉口",
+        "source_area": "文山區",
+        "lon": 121.53675,
+        "lat": 24.99811,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 483.17
+      },
+      "venue": {
+        "row": 88,
+        "name": "萬隆捷運站",
+        "source_area": "文山區",
+        "lon": 121.539,
+        "lat": 25.002,
+        "remark": "4處",
+        "source_coordinate_distance_m": 104.28
+      },
+      "relation": "同站名",
+      "evidence_scope": "萬隆站紀錄未指定第 2 號出口；與花木市場候選點引用同一來源第 88 列，不能重複累計處數。",
+      "next_check": "核對第 2 號出口的逐點位置與接收條件；與花木市場的查核共用來源索引，現場再確認是否共用同一服務。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W2",
+      "original_area_activity_rank": 1,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "核對第 2 號出口的逐點位置與接收條件；與花木市場的查核共用來源索引，現場再確認是否共用同一服務。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D08-3",
+      "station_id": "500105071",
+      "name": "景行公園",
+      "source_area": "文山區",
+      "lon": 121.54255,
+      "lat": 24.99279,
+      "events": 12947,
+      "events_excluding_flags": 12937,
+      "city_rank": 330,
+      "street": {
+        "row": 635,
+        "name": "景福街113號對面人行道",
+        "source_area": "文山區",
+        "lon": 121.5361688,
+        "lat": 24.996614,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 770.96
+      },
+      "venue": {
+        "row": 80,
+        "name": "景美捷運站",
+        "source_area": "文山區",
+        "lon": 121.543,
+        "lat": 24.993,
+        "remark": "4處",
+        "source_coordinate_distance_m": 51.01
+      },
+      "relation": "不同場域",
+      "evidence_scope": "景美捷運站雖在概略座標上接近，仍不能代表景行公園內有設施或可從公園使用。",
+      "next_check": "分開查公園出入口、園內與捷運站內外；核對位置、管理者和路徑，並保留間隔改變時會換點的結果。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W3",
+      "original_area_activity_rank": 4,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "分開查公園出入口、園內與捷運站內外；核對位置、管理者和路徑，並保留間隔改變時會換點的結果。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D09-3",
+      "station_id": "500111046",
+      "name": "捷運後山埤站(3號出口)",
+      "source_area": "南港區",
+      "lon": 121.5836,
+      "lat": 25.04511,
+      "events": 22512,
+      "events_excluding_flags": 22457,
+      "city_rank": 107,
+      "street": {
+        "row": 295,
+        "name": "八德路4段746號(松山國小)(捷運松山站5號出口)",
+        "source_area": "松山區",
+        "lon": 121.577748,
+        "lat": 25.05054,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 843.85
+      },
+      "venue": {
+        "row": 121,
+        "name": "後山埤捷運站",
+        "source_area": "信義區",
+        "lon": 121.582,
+        "lat": 25.045,
+        "remark": "12處",
+        "source_coordinate_distance_m": 161.65
+      },
+      "evidence_scope": "後山埤捷運站紀錄列在信義區；不能因候選點屬南港就漏掉，也不移算成南港場所處數。",
+      "next_check": "跨區核對第 3 號出口與場所逐點明細，確認設施位於哪側、由誰管理，以及能否從站外使用。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W1",
+      "original_area_activity_rank": 3,
+      "choice": {
+        "candidate_id": "D09-3",
+        "group": "comparison",
+        "reason": "先查跨區來源：後山埤同站名場所紀錄列在信義區，南港候選若只看本區清冊就會漏掉這條線索。",
+        "confirm": "核對3號出口內外、實際設施與道路側，確認使用規則、步行路線、管理者及紀錄是否對到同一位置。",
+        "changes": "依實際位置與管理範圍交接；保留來源行政區，不把該列的12處移算成南港的已核實桶數。"
+      },
+      "planning_reason": "先查跨區來源：後山埤同站名場所紀錄列在信義區，南港候選若只看本區清冊就會漏掉這條線索。",
+      "field_check": "核對3號出口內外、實際設施與道路側，確認使用規則、步行路線、管理者及紀錄是否對到同一位置。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D09-1",
+      "station_id": "500111013",
+      "name": "捷運南港展覽館站(5號出口)",
+      "source_area": "南港區",
+      "lon": 121.61669,
+      "lat": 25.05469,
+      "events": 23669,
+      "events_excluding_flags": 23651,
+      "city_rank": 91,
+      "street": {
+        "row": 631,
+        "name": "經園街與經貿一路口",
+        "source_area": "南港區",
+        "lon": 121.617093,
+        "lat": 25.06208,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 822.73
+      },
+      "venue": {
+        "row": 128,
+        "name": "南港展覽館捷運站",
+        "source_area": "南港區",
+        "lon": 121.617,
+        "lat": 25.055,
+        "remark": "6處",
+        "source_coordinate_distance_m": 46.51
+      },
+      "evidence_scope": "同站名的場所紀錄；未指定第 5 號出口或站外桶位。",
+      "next_check": "先核對第 5 號出口內外的實際設施、位置與接收條件，再走查 YouBike 站至設施的路線。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W2",
+      "original_area_activity_rank": 1,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "先核對第 5 號出口內外的實際設施、位置與接收條件，再走查 YouBike 站至設施的路線。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D09-2",
+      "station_id": "500111035",
+      "name": "南港車站(市民大道)",
+      "source_area": "南港區",
+      "lon": 121.60656,
+      "lat": 25.05326,
+      "events": 22779,
+      "events_excluding_flags": 22752,
+      "city_rank": 104,
+      "street": {
+        "row": 192,
+        "name": "安康路內湖焚化廠內",
+        "source_area": "內湖區",
+        "lon": 121.604699,
+        "lat": 25.063238,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 1125.23
+      },
+      "venue": {
+        "row": 125,
+        "name": "南港捷運站",
+        "source_area": "南港區",
+        "lon": 121.606,
+        "lat": 25.052,
+        "remark": "2處",
+        "source_coordinate_distance_m": 151.04
+      },
+      "evidence_scope": "南港捷運站的場所紀錄；不能代表市民大道側或轉運站已有服務。",
+      "next_check": "核對市民大道側與捷運站內外的服務銜接，分開記錄進站條件、開放時間與站外步行路線。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W3",
+      "original_area_activity_rank": 2,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "核對市民大道側與捷運站內外的服務銜接，分開記錄進站條件、開放時間與站外步行路線。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D10-3",
+      "station_id": "500108082",
+      "name": "捷運內湖站(1號出口)",
+      "source_area": "內湖區",
+      "lon": 121.59406,
+      "lat": 25.08373,
+      "events": 19061,
+      "events_excluding_flags": 19037,
+      "city_rank": 156,
+      "street": {
+        "row": 179,
+        "name": "成功路4段155號",
+        "source_area": "內湖區",
+        "lon": 121.594027,
+        "lat": 25.083273,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 50.92
+      },
+      "venue": {
+        "row": 78,
+        "name": "內湖捷運站",
+        "source_area": "內湖區",
+        "lon": 121.593,
+        "lat": 25.083,
+        "remark": "5處",
+        "source_coordinate_distance_m": 134.11
+      },
+      "relation": "同站名",
+      "evidence_scope": "內湖站場所與成功路四段 155 號街道紀錄分開保存，未確認是否同一設施或位於第 1 號出口。",
+      "next_check": "先核對 155 號與出口內外的箱號、位置及去重關係，再查接收、開放條件與實際步行。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W1",
+      "original_area_activity_rank": 3,
+      "choice": {
+        "candidate_id": "D10-3",
+        "group": "comparison",
+        "reason": "作為街道與場所雙來源的核實對照：成功路街道紀錄約51 m、內湖捷運場所約134 m，兩筆是否同一設施未知。",
+        "confirm": "核對1號出口、成功路四段155號及站內外實際箱號；確認兩筆來源是否重複、過街路徑與接收條件。",
+        "changes": "同一設施去重；不同設施分列可用條件。以現場投放結果判讀服務是否銜接，不因紀錄接近就宣稱服務充足。"
+      },
+      "planning_reason": "作為街道與場所雙來源的核實對照：成功路街道紀錄約51 m、內湖捷運場所約134 m，兩筆是否同一設施未知。",
+      "field_check": "核對1號出口、成功路四段155號及站內外實際箱號；確認兩筆來源是否重複、過街路徑與接收條件。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D10-1",
+      "station_id": "500108128",
+      "name": "捷運港墘站(1號出口)",
+      "source_area": "內湖區",
+      "lon": 121.57568,
+      "lat": 25.08004,
+      "events": 21400,
+      "events_excluding_flags": 21380,
+      "city_rank": 122,
+      "street": {
+        "row": 206,
+        "name": "內湖路1段550號前50公尺處圓環",
+        "source_area": "內湖區",
+        "lon": 121.577044,
+        "lat": 25.079257,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 162.64
+      },
+      "venue": {
+        "row": 73,
+        "name": "港墘捷運站",
+        "source_area": "內湖區",
+        "lon": 121.5752,
+        "lat": 25.0801,
+        "remark": "1處",
+        "source_coordinate_distance_m": 48.8
+      },
+      "relation": "同站名",
+      "evidence_scope": "港墘站場所紀錄未把「1處」定位到第 1 號出口或站外。",
+      "next_check": "查第 1 號出口內外的實際設施位置、進站及接收條件，再記錄到 YouBike 站的步行路線。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W2",
+      "original_area_activity_rank": 1,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "查第 1 號出口內外的實際設施位置、進站及接收條件，再記錄到 YouBike 站的步行路線。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D10-2",
+      "station_id": "500108028",
+      "name": "捷運文德站(2號出口)",
+      "source_area": "內湖區",
+      "lon": 121.58464,
+      "lat": 25.07842,
+      "events": 19789,
+      "events_excluding_flags": 19776,
+      "city_rank": 145,
+      "street": {
+        "row": 203,
+        "name": "文德路91號右側10公尺",
+        "source_area": "內湖區",
+        "lon": 121.582943,
+        "lat": 25.078615,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 172.28
+      },
+      "venue": {
+        "row": 77,
+        "name": "文德捷運站",
+        "source_area": "內湖區",
+        "lon": 121.585,
+        "lat": 25.078,
+        "remark": "2處",
+        "source_coordinate_distance_m": 59.12
+      },
+      "relation": "同站名",
+      "evidence_scope": "文德站場所紀錄未指定第 2 號出口；概略座標近不代表設施就在出口。",
+      "next_check": "核對第 2 號出口與逐點明細，確認開放、接收項目及管理者，實走站外通往設施的路線。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W3",
+      "original_area_activity_rank": 2,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "核對第 2 號出口與逐點明細，確認開放、接收項目及管理者，實走站外通往設施的路線。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D11-2",
+      "station_id": "500104031",
+      "name": "劍潭基河路口",
+      "source_area": "士林區",
+      "lon": 121.5249,
+      "lat": 25.08403,
+      "events": 30261,
+      "events_excluding_flags": 30234,
+      "city_rank": 30,
+      "street": {
+        "row": 541,
+        "name": "中山北路劍潭1號出口北側",
+        "source_area": "士林區",
+        "lon": 121.5250622,
+        "lat": 25.0843761,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 41.81
+      },
+      "venue": {
+        "row": 3,
+        "name": "劍潭捷運站",
+        "source_area": "士林區",
+        "lon": 121.5249,
+        "lat": 25.0847,
+        "remark": "7處",
+        "source_coordinate_distance_m": 74.5
+      },
+      "relation": "不同場域",
+      "evidence_scope": "劍潭站場所不能直接代表劍潭基河路口；街道另有劍潭第 1 號出口北側紀錄，也不能擴大到士林夜市。",
+      "next_check": "核對路口、出口北側與站內外設施的關係，確認道路側、接收與管理者；夜市情境需另有現場證據。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W1",
+      "original_area_activity_rank": 3,
+      "choice": {
+        "candidate_id": "D11-2",
+        "group": "comparison",
+        "reason": "先查路口與捷運出口的銜接：劍潭站場所及1號出口北側街道紀錄都近，但不等於劍潭基河路口的行經路線可用。",
+        "confirm": "走查路口至1號出口北側，核對設施、道路側、通行與接收條件；現場獨立記錄投放物及結果。",
+        "changes": "先確認服務可達與否，再判讀阻礙；沒有共同事件證據時，不把士林夜市回饋或人物直接指派給本點。"
+      },
+      "planning_reason": "先查路口與捷運出口的銜接：劍潭站場所及1號出口北側街道紀錄都近，但不等於劍潭基河路口的行經路線可用。",
+      "field_check": "走查路口至1號出口北側，核對設施、道路側、通行與接收條件；現場獨立記錄投放物及結果。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D11-1",
+      "station_id": "500104108",
+      "name": "捷運芝山站(2號出口)_1",
+      "source_area": "士林區",
+      "lon": 121.52263,
+      "lat": 25.10336,
+      "events": 50703,
+      "events_excluding_flags": 50653,
+      "city_rank": 8,
+      "street": {
+        "row": 613,
+        "name": "雨聲街120號對面人行道",
+        "source_area": "士林區",
+        "lon": 121.5320716,
+        "lat": 25.1044627,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 958.56
+      },
+      "venue": {
+        "row": 7,
+        "name": "芝山捷運站",
+        "source_area": "士林區",
+        "lon": 121.5226,
+        "lat": 25.1026,
+        "remark": "12處",
+        "source_coordinate_distance_m": 84.56
+      },
+      "relation": "同站名",
+      "evidence_scope": "芝山站場所紀錄未將「12處」定位到第 2 號出口；站名中的「_1」沿用來源，不推定服務範圍。",
+      "next_check": "取得逐點位置與箱號，核對第 2 號出口、站內外及使用規則，再記錄實際步行與投放情況。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W2",
+      "original_area_activity_rank": 1,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "取得逐點位置與箱號，核對第 2 號出口、站內外及使用規則，再記錄實際步行與投放情況。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D11-3",
+      "station_id": "500104041",
+      "name": "捷運士林站(2號出口)",
+      "source_area": "士林區",
+      "lon": 121.52642,
+      "lat": 25.09343,
+      "events": 25823,
+      "events_excluding_flags": 25802,
+      "city_rank": 60,
+      "street": {
+        "row": 563,
+        "name": "中山北路5段463號",
+        "source_area": "士林區",
+        "lon": 121.527637,
+        "lat": 25.092467,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 162.74
+      },
+      "venue": {
+        "row": 4,
+        "name": "士林捷運站",
+        "source_area": "士林區",
+        "lon": 121.5265,
+        "lat": 25.0929,
+        "remark": "14處",
+        "source_coordinate_distance_m": 59.48
+      },
+      "relation": "同站名",
+      "evidence_scope": "士林站場所未把「14處」定位到第 2 號出口；不能用站名連結成士林夜市投放需求。",
+      "next_check": "查第 2 號出口內外的實際位置與開放條件，記錄使用路徑及投放情境，確認後才連結需求人物。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W3",
+      "original_area_activity_rank": 4,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "查第 2 號出口內外的實際位置與開放條件，記錄使用路徑及投放情境，確認後才連結需求人物。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D12-3",
+      "station_id": "500109032",
+      "name": "北投運動中心",
+      "source_area": "北投區",
+      "lon": 121.50962,
+      "lat": 25.11666,
+      "events": 24714,
+      "events_excluding_flags": 24687,
+      "city_rank": 77,
+      "street": {
+        "row": 511,
+        "name": "中山北路6段天壽2號公園(中山北路6段面對405巷口左側)",
+        "source_area": "士林區",
+        "lon": 121.5264996,
+        "lat": 25.11291038,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 1749.88
+      },
+      "venue": {
+        "row": 96,
+        "name": "唭哩岸捷運站",
+        "source_area": "北投區",
+        "lon": 121.506,
+        "lat": 25.12,
+        "remark": "3處",
+        "source_coordinate_distance_m": 520.35
+      },
+      "evidence_scope": "最近場所是唭哩岸捷運站；130 筆場所表未列北投運動中心，不能推定館內或周邊沒有設施。",
+      "next_check": "另查運動中心館內、入口與周邊道路的設施及管理者；唭哩岸站是否可作替代服務，仍須查路徑與使用條件。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W1",
+      "original_area_activity_rank": 3,
+      "choice": {
+        "candidate_id": "D12-3",
+        "group": "boundary",
+        "reason": "先查清冊無法定位的運動中心：沒有同場域場所線索，最近為唭哩岸站；北投街道0列也不能證明中心附近無桶。",
+        "confirm": "先盤點運動中心館內外、入口與周邊道路既有服務，記錄位置、開放與接收條件、管理者；另核對清冊缺列原因。",
+        "changes": "找到既有設施就補來源對應；找不到則保留已走查範圍、日期與未查範圍，不外推成整區缺桶，也不直接列增設點。"
+      },
+      "planning_reason": "先查清冊無法定位的運動中心：沒有同場域場所線索，最近為唭哩岸站；北投街道0列也不能證明中心附近無桶。",
+      "field_check": "先盤點運動中心館內外、入口與周邊道路既有服務，記錄位置、開放與接收條件、管理者；另核對清冊缺列原因。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D12-1",
+      "station_id": "500109075",
+      "name": "捷運北投站(1號出口)",
+      "source_area": "北投區",
+      "lon": 121.49862,
+      "lat": 25.13258,
+      "events": 35253,
+      "events_excluding_flags": 35199,
+      "city_rank": 22,
+      "street": {
+        "row": 515,
+        "name": "中山北路7段141巷43號 (下方公園旁一)",
+        "source_area": "士林區",
+        "lon": 121.530194,
+        "lat": 25.124294,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 3309.44
+      },
+      "venue": {
+        "row": 94,
+        "name": "北投捷運站",
+        "source_area": "北投區",
+        "lon": 121.498,
+        "lat": 25.132,
+        "remark": "10處",
+        "source_coordinate_distance_m": 89.75
+      },
+      "evidence_scope": "北投捷運站的場所紀錄；原文未把「10處」定位到第 1 號出口。",
+      "next_check": "取得場所逐點位置與箱號，先查第 1 號出口內外、開放與接收規則，再確認站外路徑。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W2",
+      "original_area_activity_rank": 1,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "取得場所逐點位置與箱號，先查第 1 號出口內外、開放與接收規則，再確認站外路徑。",
+      "ready_for_siting": false
+    },
+    {
+      "candidate_id": "D12-2",
+      "station_id": "500109025",
+      "name": "捷運奇岩站(三合街)",
+      "source_area": "北投區",
+      "lon": 121.50099,
+      "lat": 25.12634,
+      "events": 25151,
+      "events_excluding_flags": 25111,
+      "city_rank": 68,
+      "street": {
+        "row": 500,
+        "name": "延平北路延平北路7段250號福安國中(右側公車亭左旁)",
+        "source_area": "士林區",
+        "lon": 121.487286,
+        "lat": 25.103342,
+        "remark": "嚴禁投入家用垃圾，違者重罰新臺幣6000元",
+        "source_coordinate_distance_m": 2905.74
+      },
+      "venue": {
+        "row": 95,
+        "name": "奇岩捷運站",
+        "source_area": "北投區",
+        "lon": 121.501,
+        "lat": 25.125,
+        "remark": "2處",
+        "source_coordinate_distance_m": 149.0
+      },
+      "evidence_scope": "奇岩捷運站的場所紀錄；未確認「2處」是否位於三合街側。",
+      "next_check": "確認三合街側出口至實際設施的路徑，核對進站條件、接收項目與開放時間。",
+      "field_status": {
+        "physical_bin_count": null,
+        "actual_bin_locations": null,
+        "opening_and_acceptance_rules": null,
+        "walking_route": null,
+        "manager": null,
+        "disposal_demand": null
+      },
+      "wave": "W3",
+      "original_area_activity_rank": 2,
+      "choice": null,
+      "planning_reason": "首點之後，依原候選次序補查；不表示需求或問題較少。",
+      "field_check": "確認三合街側出口至實際設施的路徑，核對進站條件、接收項目與開放時間。",
+      "ready_for_siting": false
+    }
+  ],
+  "sources": [
+    {
+      "path": "../beitou-nangang-recheck-2026-10-20/results.json",
+      "sha256": "3ea36d37d3377e1cd9b5e87641fc26427b8e11047f79ee10ea75f2f4dce9a3ab"
+    },
+    {
+      "path": "../other-districts-recheck-2026-10-20/results.json",
+      "sha256": "2eada71dac2789102668ba547c565038f765b4aefd189451c4e472425eb2a491"
+    },
+    {
+      "path": "../taipei-citywide-2026-10-19/results/summary.json",
+      "sha256": "06d3290b73e8d8911b07f2d336aab5ba31e558777da00f9acc79ffb46c2c443a"
+    },
+    {
+      "path": "choices.json",
+      "sha256": "32a9b5a1c8a29e66b240893e0cce21f182523d08b22dec265f68c4dda0efe69f"
+    },
+    {
+      "path": "protocol.md",
+      "sha256": "24f5ba00562bb3905524c47875529643ccebf48b199c14c23c5bf4fb1fd836b2"
+    }
+  ],
+  "city_candidate_count": 36,
+  "first_wave_count": 12,
+  "campus_unchanged": true
+}
