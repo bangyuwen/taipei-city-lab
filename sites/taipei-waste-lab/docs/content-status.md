@@ -4,18 +4,27 @@ There is one current proposal: the hundred-day plan at `#plan`.
 `#spec`, `#work`, and `#team` are its requirements and coordination views.
 `#ideas` and `#methods` are retained aliases, not other projects.
 
-Current work starts with a decision. Use desk evidence first. Only unresolved
-evidence that can distinguish options justifies fieldwork or a comparison.
-No district quota, fixed visits, mandatory A/B/C prototype or demonstration
-duration is a core deliverable. Existing datasets and candidate IDs remain.
+Current revision is 2026-10-23, PRD v0.6. The initial configuration belongs
+inside the hundred-day plan and uses existing bin locations and collection
+arrangements, confirmed with participating crews. A saved inventory is not a
+complete verified live baseline. The MVP is pre-collection crew reporting,
+reviewed configuration adjustment, and before/after follow-up of receiving and
+original service areas. Its implementation and field acceptance are pending.
 
-The transport overlay and candidate lists are an initial configuration reference.
-They can inform provisional options for bin positions, counts and collection.
-Revise those options using field evidence on access, disposal, overflow and
-maintenance; retaining the current configuration is also a valid outcome.
-Record the initial assumption, evidence, date, before/after configuration and
-reason for each decision. Reference groups and activity peaks do not prescribe
-fixed visits, bin positions or collection schedules.
+Record observation time, capacity, the last known collection time, fullness and
+exceptions. Keep collection completion, missing reports and unreadable fullness
+separate. Low fullness is a review signal, not permission to remove a bin.
+Receiving-area need, original-area service loss, management approval and rollback
+are required before a physical adjustment. Fix comparison windows and decision
+thresholds before outcomes; do not invent improvement percentages or staff savings.
+
+The transport overlay and candidate lists remain research analysis at #analysis,
+not the initial configuration or an automatic work queue. They may supply
+conditional evidence checks; retained Q01–Q04 remain optional supplements.
+No district quota, fixed visits or mandatory A/B/C demo is a core deliverable.
+Existing demo operations are simulations, not completed v0.6 requirements.
+Full pedestrian navigation, prediction, automatic relocation and hardware are
+deferred. Preserve research inputs, source dates, unknowns and negative outcomes.
 
 Dated records keep their source content and unexecuted status. The 2026-10-17
 build/operation draft, 2026-10-20 field schedule, v0.4 specification and T1
