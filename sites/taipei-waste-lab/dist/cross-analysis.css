@@ -1,0 +1,49 @@
+.cross-analysis{margin:24px 0;padding:24px 0;border-block:1px solid var(--line,#c6d6dc)}
+.cross-analysis p{max-width:75ch;line-height:1.8}
+.cross-controls{display:flex;flex-wrap:wrap;gap:16px;align-items:end;margin:20px 0}
+.cross-controls label{display:flex;flex-direction:column;gap:6px}
+.cross-controls label:has(input){flex-direction:row;align-items:center;min-height:44px}
+.cross-controls select,.cross-analysis button{min-height:44px;max-width:100%}
+.cross-table-wrap{overflow-x:auto}
+.cross-table{width:100%;border-collapse:collapse;text-align:left;font-variant-numeric:tabular-nums}
+.cross-table th,.cross-table td{padding:14px 12px;border-bottom:1px solid #c6d6dc;vertical-align:top}
+.cross-table small{display:block;font-weight:400;color:#52676d;margin-top:6px}
+.cross-table button{color:#16566a;background:transparent;border:0;text-align:left;text-decoration:underline;text-underline-offset:4px;font:inherit;font-weight:600;cursor:pointer}
+.cross-table button:hover{background:#e2eff3}
+.cross-analysis :focus-visible{outline:3px solid #bd5c16;outline-offset:3px}
+.cross-bus-marker span{display:block;width:12px;height:12px;background:#bd5c16;border:2px solid white;box-sizing:border-box}
+.cross-caveat{background:#fff0d9;color:#734917;padding:16px}
+#cross-detail{margin-top:20px;padding:20px;background:#f2f6f7}
+@media(max-width:720px){.cross-analysis{padding:16px 0}.cross-table thead{display:none}.cross-table tr{display:block;padding:16px 0;border-bottom:1px solid #c6d6dc}.cross-table th,.cross-table td{display:block;border:0;padding:6px 0}.cross-table td:nth-child(2)::before{content:'YouBike 活動：';font-weight:600}.cross-table td:nth-child(3)::before{content:'最近垃圾桶：';font-weight:600}.cross-table td:nth-child(4)::before{content:'附近公車：';font-weight:600}.cross-controls{display:block}.cross-controls label{margin:12px 0}}
+.cross-comparison-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:32px;margin:24px 0 32px}
+.cross-comparison-grid h4,#cross-time-title{font-size:20px;line-height:1.5;margin:0 0 12px}
+.cross-ratio-chart{list-style:none;padding:0;margin:24px 0 32px}
+.cross-ratio-chart li{display:grid;grid-template-columns:minmax(140px,1.1fr) minmax(60px,1fr) 80px;gap:12px;align-items:center;margin:16px 0}
+.cross-ratio-chart small{display:block;font-size:13px;line-height:1.6;color:#52676d;font-weight:400}
+.cross-ratio-chart button,.cross-zero-list button{border:0;background:none;color:#16566a;text-align:left;font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:4px;padding:0}
+.cross-bar-track{height:22px;background:#e2eff3;display:block}
+.cross-bar-track span{display:block;height:100%;background:#16566a}
+.cross-ratio-chart strong{text-align:right;font-variant-numeric:tabular-nums}
+.cross-bus-summary{font-size:20px;font-weight:650;line-height:1.6}
+.cross-zero-list{padding-left:20px;line-height:1.8}
+.cross-zero-list li{margin:12px 0}
+@media(max-width:1000px){.cross-comparison-grid{grid-template-columns:1fr;gap:32px}}
+@media(max-width:720px){.cross-ratio-chart li{grid-template-columns:minmax(0,1fr) 76px}.cross-ratio-chart button{grid-column:1/-1}.cross-area-table td:nth-child(2)::before{content:'未見桶位／站位數：'}.cross-area-table td:nth-child(3)::before{content:'比例：'}.cross-time-table td:nth-child(2)::before{content:'平日／週末日均事件：'}.cross-time-table td:nth-child(3)::before{content:'週末 ÷ 平日：'}.cross-time-table td:nth-child(4)::before{content:'平日／週末尖峰：'}}
+.cross-controls input[type="checkbox"]{width:18px;height:18px;min-height:0;flex:none;accent-color:#16566a}
+.cross-scope-controls input[type="search"]{min-height:44px;width:100%;box-sizing:border-box}
+.cross-scope-controls label:has(input[type="search"]){display:flex;flex-direction:column;align-items:stretch}
+#cross-mrt h4{font-size:20px;margin-top:28px}
+#cross-day-type{min-height:44px;margin:8px 0 16px;max-width:100%}
+.cross-hourly-charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;margin:28px 0}
+.cross-hourly-charts h4{font-size:18px;margin:0}
+.cross-hourly-charts p{font-size:14px;color:#52676d;margin:8px 0 16px}
+.cross-hour-bars{display:flex;gap:3px;padding-bottom:24px;border-bottom:1px solid #c6d6dc}
+.cross-hour-slot{height:130px;flex:1;min-width:0;display:flex;align-items:end;position:relative}
+.cross-hour-slot i{display:block;width:100%;background:#16566a}
+.cross-hour-slot small{position:absolute;bottom:-24px;left:0;font-size:11px;color:#52676d}
+.cross-hour-slot i.cross-hour-missing{background:repeating-linear-gradient(45deg,#52676d 0 2px,transparent 2px 4px)}
+.cross-hour-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.cross-hour-table th,.cross-hour-table td{padding:12px 10px;border-bottom:1px solid #c6d6dc;text-align:left;min-width:85px}
+.cross-hour-table small{display:block;font-weight:400}
+#cross-hourly summary{cursor:pointer;min-height:44px;padding-block:12px}
+@media(max-width:720px){.cross-hourly-charts{grid-template-columns:1fr}.cross-mrt-table td:nth-child(2)::before{content:'日均進出站人次：'}.cross-mrt-table td:nth-child(3)::before{content:'清冊桶位：'}.cross-mrt-table td:nth-child(4)::before{content:'人次／日／桶位：'}.cross-mrt-table td:nth-child(5)::before{content:'周邊 YouBike 日均事件：';font-weight:600}.cross-mrt-table td:nth-child(6)::before{content:'公車未見桶位／站位：';font-weight:600}}

@@ -55,7 +55,7 @@
 
 2026 舊版中心示範框為經度 121.51–121.57、緯度 25.02–25.08。原始重疊及異常座標全數保留，粗篩未通過者不繪製；原 CSV、各版 provenance、補查原始檔及離線匯出工具保留在私人專案，不隨公開站發布。
 
-分享連結的 `year=2024`、`year=2026` 保留原舊版意義；新主版本為 `year=2024-archive`、`year=2026-main`。六份版本合併為一個選單；地圖初始選取 2015，網站首頁為研究摘要。
+分享連結的 `year=2024`、`year=2026` 保留原舊版意義；新主版本為 `year=2024-archive`、`year=2026-main`。六份版本合併為一個選單；地圖初始選取 2026 官方主檔，網站首頁為研究摘要。
 
 ## 研究筆記
 
@@ -224,3 +224,10 @@ check deep links, evidence round trips, attribution counts and mobile bounds.
 The research pages now cover personas and disposal journeys, quantitative citywide evidence, the current problem definition, PRD v0.5 and blank field records. Canonical evidence and generators remain in `topics/bins/research/`; `npm run build` refreshes the standalone copies and private offline archive. The citywide publisher retains its historical layout and is not replayed during normal builds. Field handoffs and blank forms are regenerated without replacing the current research pages.
 
 The 12-district venue rechecks, proposed fieldwork order, MRT top-10 comparison, and Zhongshan / Zhongxiao Xinsheng follow-up retain separate dates, source rows and unknowns. Venue place counts are never converted to usable bin counts. The September OD raw file is too large for Git; its official URL, retrieval receipts and compact station/day extract are retained in the MRT study. Public output remains restricted by the existing runtime asset allowlist.
+
+## Transport and bin cross-check
+
+The `#map` page joins retained July YouBike endpoint activity, the official bus snapshot updated on 2026-10-22, and the 2026 bin inventory. Run `npm run prepare-cross-analysis` to regenerate the runtime data. See [cross-analysis.md](docs/cross-analysis.md) for scope, provenance and limitations. Raw inputs stay private; only the required map data is staged.
+
+
+The map now also compares July MRT OD activity with the union of station-exit buffers, nearby YouBike activity and retained bus stops. Citywide complaint acceptance-hour charts are kept separate because the official case file has no locations. Run `npm run prepare-transport-time` to regenerate the retained raw-source aggregates, then `npm run prepare-cross-analysis`. See [cross-analysis methodology](docs/cross-analysis.md) for source custody, period exclusions, unmatched stations and interpretation limits.
