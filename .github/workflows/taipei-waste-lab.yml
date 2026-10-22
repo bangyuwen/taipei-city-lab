@@ -4,12 +4,14 @@ on:
   pull_request:
     paths:
       - 'sites/taipei-waste-lab/**'
+      - 'sites/youtong/**'
       - 'topics/bins/**'
       - '.github/workflows/taipei-waste-lab.yml'
   push:
     branches: [main]
     paths:
       - 'sites/taipei-waste-lab/**'
+      - 'sites/youtong/**'
       - 'topics/bins/**'
       - '.github/workflows/taipei-waste-lab.yml'
 

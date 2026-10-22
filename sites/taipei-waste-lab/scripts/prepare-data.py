@@ -212,6 +212,7 @@ def main():
     subprocess.run([sys.executable, str(ROOT / 'scripts/prepare-siting-overlay.py')], check=True)
     subprocess.run([sys.executable, str(ROOT / 'scripts/prepare-hotspots.py')], check=True)
     subprocess.run([sys.executable, str(ROOT / 'scripts/prepare-public.py')], check=True)
+    subprocess.run([sys.executable, str(ROOT / 'scripts/prepare-portal.py')], check=True)
 
 if __name__ == '__main__':
     main()
