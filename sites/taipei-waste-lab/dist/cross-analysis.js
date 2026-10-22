@@ -119,7 +119,7 @@ export async function initializeCrossAnalysis({map,L,getState,catalog}) {
     map.fitBounds(p.exitLocations.map(e=>[e.y,e.x]),{padding:[70,70],maxZoom:16,animate:false});
     const peak=p.hourly.indexOf(Math.max(...p.hourly));
     $('cross-detail').hidden=false;
-    $('cross-detail').innerHTML=`<h4>${esc(p.name)}：按出口逐段查核</h4><p>${p.exitLocations.length} 個來源出口，日均進出站 ${n(Math.round(p.daily))} 人次；出口 ${radius} 公尺聯集內 ${p.binCount} 個清冊桶位。最近桶位 ${esc(bin.address)}，距任一出口最短 ${n(Math.round(bin.distanceM))} 公尺。</p><p>周邊 ${p.bikeIds.length} 個 YouBike 站、${p.busIds.length} 個公車站位；公車中 ${p.busUncovered} 個在 ${radius} 公尺內未見清冊桶位。捷運進站紀錄尖峰 ${peak}–${peak+1} 時，可作現勘時段之一。</p><p>先核對各出口方向、轉乘動線、清冊漏列、站內外替代桶位與桶況；整站流量不能證明每個出口同樣繁忙。全市陳情未定位到此站，不能當作本站問題證據。</p>`;
+    $('cross-detail').innerHTML=`<h4>${esc(p.name)}：按出口逐段查核</h4><p>${p.exitLocations.length} 個來源出口，日均進出站 ${n(Math.round(p.daily))} 人次；出口 ${radius} 公尺聯集內 ${p.binCount} 個清冊桶位。最近桶位 ${esc(bin.address)}，距任一出口最短 ${n(Math.round(bin.distanceM))} 公尺。</p><p>周邊 ${p.bikeIds.length} 個 YouBike 站、${p.busIds.length} 個公車站位；公車中 ${p.busUncovered} 個在 ${radius} 公尺內未見清冊桶位。捷運進站紀錄尖峰 ${peak}–${peak+1} 時，可作初始觀察線索；實際時段依本站活動、投放與清運紀錄調整。</p><p>先核對各出口方向、轉乘動線、清冊漏列、站內外替代桶位與桶況；整站流量不能證明每個出口同樣繁忙。全市陳情未定位到此站，不能當作本站問題證據。</p>`;
     map.getContainer().scrollIntoView({block:'center',behavior:'instant'});
   }
   function renderMrt(state,radius){
@@ -135,7 +135,7 @@ export async function initializeCrossAnalysis({map,L,getState,catalog}) {
     const kind=$('cross-day-type').value,series=hourlySeries(data,kind),days=kind==='weekday'?22:kind==='weekend'?7:29;
     const hour=p=>p.peaks.map(h=>`${h}–${h+1} 時`).join('、');
     const max=Math.max(...series.flatMap(p=>p.shares));
-    $('cross-hourly-finding').textContent=`${days} 日觀測：捷運進站紀錄與 YouBike 尖峰分別為 ${hour(series[0])}、${hour(series[1])}；路面清潔陳情 ${n(series[2].total)} 件，尖峰 ${hour(series[2])}；垃圾車服務陳情 ${n(series[3].total)} 件，尖峰 ${hour(series[3])}。應分開安排交通尖峰與陳情集中時段的對照現勘，再核對現場垃圾量和清運班表。`;
+    $('cross-hourly-finding').textContent=`${days} 日觀測：捷運進站紀錄與 YouBike 尖峰分別為 ${hour(series[0])}、${hour(series[1])}；路面清潔陳情 ${n(series[2].total)} 件，尖峰 ${hour(series[2])}；垃圾車服務陳情 ${n(series[3].total)} 件，尖峰 ${hour(series[3])}。這些分布可作初始觀察假設；實際時段依場址活動、投放及清運紀錄調整，陳情受理尖峰不直接指定現場時段。`;
     $('cross-hourly-charts').innerHTML=series.map((p,i)=>`<section><h4>${esc(p.name)}</h4><p>共 ${n(p.total)} ${p.unit} · 日均 ${n(Math.round(p.total/days))} · 尖峰 ${hour(p)}</p><div class="cross-hour-bars" role="img" aria-label="${esc(p.name)}各小時占比；最高 ${Math.max(...p.shares).toFixed(1)}%，尖峰 ${hour(p)}。完整數值見下表。">${p.values.map((v,h)=>`<span class="cross-hour-slot" title="${h}–${h+1} 時：${p.missing.includes(h)?'來源未提供':n(v)+' '+p.unit+'，'+p.shares[h].toFixed(2)+'%'}"><i class="${p.missing.includes(h)?'cross-hour-missing':''}" style="height:${p.missing.includes(h)?4:100*p.shares[h]/max}%"></i><small>${h%3===0?h:''}</small></span>`).join('')}</div></section>`).join('');
     $('cross-hour-head').innerHTML=`<tr><th scope="col">時段</th>${series.map(p=>`<th scope="col">${esc(p.name)}<small>數量／占比</small></th>`).join('')}</tr>`;
     $('cross-hour-rows').innerHTML=Array.from({length:24},(_,h)=>`<tr><th scope="row">${h}–${h+1}</th>${series.map(p=>`<td>${p.missing.includes(h)?'未提供':n(p.values[h])+'／'+p.shares[h].toFixed(2)+'%'}</td>`).join('')}</tr>`).join('');
@@ -157,7 +157,7 @@ export async function initializeCrossAnalysis({map,L,getState,catalog}) {
     const priorities=selectStations(data,{...state,radius,mode:'priority'});
     renderComparison(scoped,radius,state);
     renderMrt(state,radius);
-    $('cross-summary').textContent=`目前範圍 ${n(scoped.length)} 站中，${n(priorities.length)} 站同時符合「高 YouBike 活動、距清冊桶位超過 ${radius} 公尺、300 公尺內有公車站位」。這些是現勘順序提案，尚不能判定缺桶；${selected.length?'下表按活動量排序。':'目前沒有符合條件的站點，可切換全部站點或清除搜尋。'}`;
+    $('cross-summary').textContent=`目前範圍 ${n(scoped.length)} 站中，${n(priorities.length)} 站同時符合「高 YouBike 活動、距清冊桶位超過 ${radius} 公尺、300 公尺內有公車站位」。這些是初始配置比較的候選參考，後續依現場證據調整，不是固定出勤或設桶安排；尚不能據此判定缺桶。${selected.length?'下表按活動量排序。':'目前沒有符合條件的站點，可切換全部站點或清除搜尋。'}`;
     busIds=new Set();
     for(const p of selected){
       p.buses.forEach(b=>busIds.add(b.id));
