@@ -1,11 +1,10 @@
-// localStorage 前綴：依網址路徑自動決定。本份程式放在 taipei-city-lab 的 sites/youtong/，
-// 路徑含 taipei-city-lab 或 sites/youtong 時用「有桶tcl_」；其他路徑（例如本機直接開啟）也用同一前綴，
-// 確保不會和正式站「有桶_」或 beta 站「有桶beta_」共用鍵名（兩者都不是「有桶tcl_」的前綴，反之亦然）。
-window.KP=(p=>/(^|\/)(taipei-city-lab|sites\/youtong)(\/|$)/.test(p)?'有桶tcl_':'有桶tcl_')(location.pathname);
+// Demo state is local-only and never reads or migrates existing live/beta keys.
+window.KP='有桶demo_v1_';
 // ===== 可編輯設定檔：開場數字、示範區、方案參數 =====
 // 開場數字（headline）計數定義待與資料工程師對齊，改這裡即可，頁面不寫死數字。
 window.CONFIG={
   brand:'有桶',
+  demo:true,
   headline:{
     title:'有桶｜台北行人垃圾桶：從近 3,000 組到約 800 組',titleNote:'「近 3,000 組減到約 800 組」是官方題目的問題陳述，不是本工具的計算',
     items:[
@@ -49,9 +48,7 @@ window.CONFIG={
     demoTime:{day:'we',time:'15:30'}, // 示範：週六 15:30（對照平日 10:00）
     demoLinks:[{day:'wk',time:'10:00',label:'平日 10:00'},{day:'we',time:'15:30',label:'週六 15:30'}] // 抽屜預設：示範對照 ≥100% 桶數（平日 10:00＝2、週六 15:30＝6）
   },
-  // Firebase Realtime Database（回報／清運／需求即時同步）。留空 → 只用本機 localStorage＋同瀏覽器分頁同步。
-  // 填入 Firebase 主控台「專案設定 → 你的應用程式」的 firebaseConfig（apiKey、authDomain、databaseURL、projectId、appId…）；databaseURL 必填
-  // 公開的網頁設定（不是密鑰）；不啟用 Analytics
-  firebaseConfig:{apiKey:'AIzaSyBqwAw93WLZ5BG6CAykda_F6BCdikVzCp8',authDomain:'youtong-529da.firebaseapp.com',databaseURL:'https://youtong-529da-default-rtdb.asia-southeast1.firebasedatabase.app',projectId:'youtong-529da',storageBucket:'youtong-529da.firebasestorage.app',messagingSenderId:'349692717136',appId:'1:349692717136:web:81c9063632f7752acf8955'},
+  // Demo publication must remain local-only; cloud.js also enforces CONFIG.demo.
+  firebaseConfig:{},
   storageKeys:{scenario:KP+'scenario_v2',events:KP+'events_v1',forecast:KP+'forecast_v1'}
 };

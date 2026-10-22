@@ -4,6 +4,25 @@
 
 網站：[台北垃圾箱研究](https://taipei-waste-lab.bangyuwen.chatgpt.site)。網站程式與部署產物位於 `sites/taipei-waste-lab/`；本題資料、模型與研究入口見[垃圾箱題目目錄](../../topics/bins/README.md)。Sites 部署使用本站自己的 Git 與 `.openai/hosting.json`。
 
+## Combined publication
+
+The homepage has equal entrances for residents and research readers. `/research/`
+keeps the research interface; `/demo/` opens the pedestrian prototype, with role
+links to planning and simulated collection. Old root hash/query links redirect to
+`/research/` while preserving both values. Historical standalone HTML links also
+redirect to their research paths.
+
+Use Python 3.12 or newer. `npm run prepare-data` and `npm run check` build the
+combined `public/` output; `npm run preview` serves that directory. To assemble
+already-generated research without regenerating retained research packages, run
+`python scripts/prepare-public.py` followed by `python scripts/prepare-portal.py`.
+The hosting project identity is unchanged; its static directory is `public`.
+
+The demo uses `有桶demo_v1_` local storage and makes no Firebase requests. Reports
+and collection actions remain browser-local simulations. The displayed plan
+version is generated from the canonical decision-check source. See
+[demo scope](../youtong/README.md) and `tests/portal.test.mjs`.
+
 ## 閱讀入口與資訊歸屬
 
 2026-10-19 依團隊推進專案的情境整理為「工作總覽／熱點研究／方案比較／執行分工／資料庫」五個工作區。摘要頁連到各區、證據與工作包；歷史材料集中於資料庫。既有錨點、`#map`、`#comparison`、`#history`、`#siting` 與資料版本 query 保持有效。
@@ -81,7 +100,7 @@
 
 ## 公開瀏覽與附件範圍
 
-網站保持公開，移除資料下載按鈕、CSV 匯出與本站附件連結。公開輸出採固定資產清單，只包含互動網頁、樣式、字型、必要函式庫、展示照片及四份顯示用 JSON；原始 CSV／GeoJSON、來源紀錄、研究 Markdown、計算協定及 ZIP 不在公開目錄。原網址不再提供這些檔案；不得把 `dist/` 或專案根目錄當公開服務目錄。
+公開部署目錄為 `public/`，由 `scripts/prepare-portal.py` 組合首頁、`research/` 與 `demo/`。研究站先由 `scripts/prepare-public.py` 產生白名單中介目錄 `out/`，再放入 `public/research/`；有桶只發布必要的畫面、程式與地圖資料。私人研究原始檔、計算協定、Markdown、ZIP 與 Firebase 管理工具不公開；不得把 `dist/` 或專案根目錄當公開服務目錄。
 
 這是取消直接下載與公開附件，不是禁止擷取已顯示的資料。地圖和比較頁需要的地址、座標與分析 JSON 仍送到訪客瀏覽器；來源引用的外部網站由原發布者管理。原始證據保留在私人專案，不做刪除或公開權限變更。
 
@@ -112,7 +131,7 @@ The project workspace has five stable areas: `#research` (work overview), `#anal
 
 Team responsibilities and the development handoff live at `#team` under execution, separate from government work packages at `#work`. Methods and shared requirements use continuous documents with section indexes. Districts, evidence records, government work packages and historical chapters retain native selectors. All former fragments remain addressable; old PRD responsibility links now open their team-owned destination. Historical Taipei records, country cases, source documents and older decisions are found through the library.
 
-The existing source and materials pages retain their full references, earlier prototypes and unexecuted estimates. `package-research.py` generates the historical plan in `#archive`; the citywide publisher writes separate summary and reader regions. Public output remains the `out/` allowlist, with no raw attachments or download entry points.
+The existing source and materials pages retain their full references, earlier prototypes and unexecuted estimates. `package-research.py` generates the historical plan in `#archive`; the citywide publisher writes separate summary and reader regions. Research runtime assets remain protected by the `out/` allowlist and are published under `public/research/`, with no private attachments or download entry points.
 
 版本比較 `#comparison` 共用行政區與地址範圍，範圍摘要、五類組數及距離分布隨之連動。分類選擇只縮小結果清單，不改寫範圍分母。預設顯示全部分類；同址座標差距納入同一清單排序，不另重複前十名。完整全市行政區表放在清單之後直接閱讀，明示不受篩選影響；完整配對及距離方法歸來源頁。追加結果、距離延遲載入及從來源地圖返回會保留已展開證據；主資料與距離資料各有重試入口。
 
@@ -127,7 +146,8 @@ The existing source and materials pages retain their full references, earlier pr
 ## 結構
 
 - `dist/`：網頁來源與完整私人衍生產物，含原始附件；不可直接對外提供此目錄。
-- `out/`：由 `scripts/prepare-public.py` 依固定清單產生的公開網站；不納入版本控制。預覽與 Sites 部署均只使用此目錄。
+- `out/`：研究站的白名單中介產物；不納入版本控制。
+- `public/`：首頁、研究與有桶的整合發布產物；預覽與 Sites 部署只使用此目錄，不納入版本控制。
 - `dist/history.js`：有來源的政策與撤除歷程。
 - `dist/bin-scene.js`：Three.js 概念街角；`design-model.js`：尺寸與試投規則；`design-ui.js`：操作介面。
 - `../../topics/bins/docs/` 與 `../../topics/bins/research/`：研究正文、固定來源與分析協定；本站 `research/` 為獨立部署副本。

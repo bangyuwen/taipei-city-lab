@@ -5,7 +5,7 @@
 // - 刪除＝寫 del:true（墓碑）；只有持有該筆 owner 密鑰的瀏覽器能刪／改（規則見 database.rules.json）
 (function(){
 const FBV='12.4.0',T=window.FB_TEST||{},cfg=T.config||((window.CONFIG&&CONFIG.firebaseConfig)||{});
-const on=!!(cfg&&cfg.databaseURL&&(cfg.apiKey||T.emu));window.CLOUD_ON=on;
+const on=!window.CONFIG?.demo&&!!(cfg&&cfg.databaseURL&&(cfg.apiKey||T.emu));window.CLOUD_ON=on;
 let st='local',everLive=false,bootAt=Date.now();const listeners=[];
 // ===== 連線狀態（設計稿 v1）=====
 // 在線：平常什麼都不顯示；別台裝置的更新到達／自己上傳成功 → 「已同步」短暫提示（150ms 淡入、停 1.6s、200ms 淡出；連續觸發合併）
