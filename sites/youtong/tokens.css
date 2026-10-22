@@ -1,0 +1,25 @@
+/* ===== 有桶・語意色彩 tokens（所有頁面共用）===== */
+:root{
+  /* 品牌綠：只用於主要動作與「你的位置」 */
+  --brand:#0f9d76;--brand-ink:#0b7a5c;--brand-soft:#e6f4ef;
+  /* 滿度色階（冷→暖，固定）：<70 淺綠、70–99 黃、≥100 深橘（淺綠需明顯淡於品牌綠）；只有 4 種狀態色（＋--reported 紅）。--fill-over 保留名稱＝深橘 */
+  --fill-low:#8cc9a8;--fill-mid:#e8b931;--fill-high:#d9731f;--fill-over:var(--fill-high);
+  --fill-low-soft:#e8f4ed;--fill-mid-soft:#fcf3d6;--fill-high-soft:#fbeadb;--fill-over-soft:var(--fill-high-soft);
+  /* 紅色只保留給「被回報滿了」（行人回報、尚未清運）；滿度色階不使用紅色 */
+  --bin-neutral:#7d8b8b;--bin-neutral-lid:#566262; /* 設點規劃頁：現有垃圾桶（中性，不表示狀態） */
+  --reported:#e2574c;--reported-soft:#fcebe9;--reported-ink:#b4232a;
+  /* 類別（只在有真實類別資料時使用） */
+  --cat-general:#3b3734;--cat-recycle:#2f6fde;
+  /* 其他圖層：交通站點、方案 */
+  --pt-youbike:#a07d3e;--pt-bus:#5b6f9c;--scenario:#2b3333;--scenario-soft:#eef0f0;--venue:#1f8fa3; /* 紫色只給民眾回報需求（--need，圓點）；場域線索／備用垃圾桶＝--venue 青色菱形；方案變更＝ink */
+  /* 中性灰 */
+  --ink:#1c1f21;--ink-2:#3f4549;--mute:#646b70;--faint:#9aa0a4;--line:#eceeef;--gray-1:#f4f5f5;--gray-2:#e7e9ea;--ink-strong:#2b3333;--need:#7a5cc4;
+  /* 表面 */
+  --bg:#ffffff;--surface:#ffffff;--surface-2:#f6f7f6;--map-bg:#f2f2f0;--scrim:#0000004d;
+  --shadow-1:0 1px 3px #0000001f;--shadow-2:0 6px 24px #0000001f,0 1px 3px #00000014;
+  --r:16px;--r-sm:12px;--touch:44px;
+  /* 唯一字體：iOS 系統字（不載入任何 webfont）；字重只用 400/500/600/700 */
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","PingFang TC","Helvetica Neue","Heiti TC","Microsoft JhengHei",sans-serif;
+  /* 舊變數對應（common.css 相容） */
+  --accent:var(--brand);--accent-l:var(--brand-soft);--warn:var(--fill-mid);--bad:var(--reported)
+}
