@@ -1,6 +1,7 @@
 {
   "version": "2026-10-20-recheck-priority-v2",
-  "status": "planned_not_executed",
+  "status": "historical_superseded_not_executed",
+  "superseded_by": "../../decision-checks-2026-10-22/checks.json",
   "city": {
     "districts": 12,
     "anchors": 36,

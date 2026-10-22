@@ -1,0 +1,20 @@
+{
+  "sources": [
+    {
+      "path": "../station-venue-recheck-2026-10-22/results.json",
+      "sha256": "193b191b6c945aefc7c7f3e585f6f9a025740a52993bc17d4f9bcac47d33034c"
+    },
+    {
+      "path": "../station-venue-recheck-2026-10-22/evidence.json",
+      "sha256": "cd4026f35bd4fe4116bb37ba0e75e54e52abcf61ee5cbb9d6be2a802a587420d"
+    },
+    {
+      "path": "../other-districts-recheck-2026-10-20/results.json",
+      "sha256": "2eada71dac2789102668ba547c565038f765b4aefd189451c4e472425eb2a491"
+    },
+    {
+      "path": "../demand-evidence-2026-10-20/journey-table.json",
+      "sha256": "12e038e787b7bf2cae66d12242eeb3349e9e1a3fede18dd39aebdfcbcd85c025"
+    }
+  ]
+}

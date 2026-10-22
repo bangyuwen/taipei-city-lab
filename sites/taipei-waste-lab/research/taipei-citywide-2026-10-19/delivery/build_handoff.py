@@ -136,7 +136,8 @@ def build():
                          'city_observation_dates': groups * 3 * 3,
                          'weekday_dates': groups * 3 * 2, 'weekend_dates': groups * 3,
                          'interpretation': '每輪12點按可用組數分批、兩時窗同日完成；不是連續日曆天或完工承諾'})
-    plan = {'version': config['version'], 'status': 'planned_not_executed',
+    plan = {'version': config['version'], 'status': 'historical_superseded_not_executed',
+            'superseded_by': '../../decision-checks-2026-10-22/checks.json',
             'city': {'districts': 12, 'anchors': 36, 'sessions': 216, 'observation_hours': 54,
                      'person_observation_hours': 54 * config['people_per_team']},
             'campus': {'anchors': 3, 'sessions': 18, 'observation_hours': 4.5,
@@ -161,7 +162,8 @@ def build():
     write_csv('planned-visits.csv', sessions)
     write_json('field-plan.json', plan)
     sources = [ROOT/'results/stations.csv', ROOT/'results/candidates.csv', ROOT/'results/districts.csv', ROOT/'results/sensitivity.csv', ROOT/'results/hourly-profiles.csv', priority_path]
-    write_json('handoff-manifest.json', {'status': 'desk_delivery_and_field_plan_only',
+    write_json('handoff-manifest.json', {'status': 'desk_delivery_with_superseded_field_schedule',
+        'current_plan': '../../decision-checks-2026-10-22/checks.json',
         'field_visits_completed': 0, 'agency_commitments_confirmed': 0,
         'source_files': [{'path': os.path.relpath(p, HERE), 'sha256': digest(p)} for p in sources],
         'generated_files': [{'path': n, 'sha256': digest(HERE/n)} for n in ['hotspot-candidates-handoff.csv','district-readiness.csv','planned-visits.csv','anchor-scope-setup.csv','field-plan.json']],
@@ -192,6 +194,10 @@ def build():
               '既有分析規則與已驗證結果保留不變。本次新增的是交接與排程；沒有新增實測、機關同意或改善成效。']
     (HERE/'hotspot-handoff.md').write_text('\n'.join(lines)+'\n')
     write_field_plan(plan)
+    notice = '> 歷史排程已取代（2026-10-22）：234筆訪次與固定工時僅供回查，不作本輪派工。現行查核依 ../../decision-checks-2026-10-22/checks.json，取消每區一點配額。尚未執行。\n\n'
+    for name in ['hotspot-handoff.md', 'field-plan.md']:
+        path = HERE / name
+        path.write_text(notice + path.read_text())
     return plan
 
 def write_field_plan(plan):

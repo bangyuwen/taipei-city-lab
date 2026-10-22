@@ -28,12 +28,12 @@ def build_checklist(priorities):
 <div class="sheet-heading"><span>台北垃圾箱研究 · 資料判讀表</span><span>{item['id']} · <span class="page-number">{number:02d} / 10</span></span></div>
 <h2 id="title-{item['id']}">{item['name']}</h2>
 <div class="assessment-grades"><p>新增評估優先度 <strong class="badge {item['priority']}">{escape(levels[site['priority']])}</strong></p><p>資料可信度 <strong class="confidence">{escape(confidence[site['confidence']])}</strong></p></div>
-<p class="scope">純資料評估 · 保存資料整理日 {escape(priorities['asOf'])} · 不代表今日現況或核准設置</p>
+<p class="scope">純資料評估 · 保存資料整理日 {escape(priorities['asOf'])} · 不代表今日現況或核准設置；不是本輪查核排程</p>
 <section><h3>推薦理由</h3><p class="reason">{item['priorityReason']}</p></section>
 <section><h3>資料可信度的理由</h3><p class="confidence-reason">{item['confidenceReason']}</p></section>
 <section><h3>資料依據</h3><ol class="evidence">{evidence}</ol></section>
 <section><h3>判讀限制</h3><p class="uncertainty">{item['uncertainty']}</p></section>
-<section class="conclusion"><h3>目前建議</h3><p class="decision">{item['decision']}</p></section>
+<section class="conclusion"><h3>保存時的判讀</h3><p class="decision">{item['decision']}</p></section>
 <section class="sources"><h3>保存時引用的官方來源</h3><ul>{references}</ul></section>
 <footer class="sheet-footer"><p>優先度指新增的研究順序；可信度指資料互證程度，兩者不是同一件事。未計算加權分數，同級不細排名，這 10 處也不是全市前十名。</p><p>2.77 是本案假設，並非法定門檻；寬度單位未核實。缺列不代表撤桶，近點不代表可用供給；未取得的需求與營運條件保留未知。</p></footer>
 </article>''')

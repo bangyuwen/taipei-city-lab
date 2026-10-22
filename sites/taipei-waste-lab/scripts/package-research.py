@@ -202,10 +202,17 @@ def render_hundred_day_plan(index_text, markdown):
             current_id,current_title=match[1],match[2];current=[]
         current.append(block)
     if current:chapters.append((current_id,current_title,''.join(current)))
-    items=''.join(f'<article class="reader-item" id="reader-archive-{key}" data-reader-item="{html.escape(label,quote=True)}">{content}</article>' for key,label,content in chapters)
+    historical_notice='<p class="research-overview-status">2026-10-17規劃草稿，已由目前百日計畫取代。以下採購、設點、預算與時程未執行，保留原文供回查，不是現行待辦。<a href="#plan">回到目前百日計畫</a>。</p>'
+    items=[]
+    for key,label,content in chapters:
+        # Keep context visible when a legacy link scrolls directly to its heading.
+        contextual = (historical_notice + content if key == 'intro' else
+                      re.sub(r'(</h3>)', lambda m: m[1]+historical_notice, content, count=1))
+        items.append(f'<article class="reader-item" id="reader-archive-{key}" data-reader-item="{html.escape(label,quote=True)}">{contextual}</article>')
+    items=''.join(items)
     links=''.join(f'<a href="#reader-archive-{key}">{label}</a>' for key,label,_ in chapters)
-    rendered=(f'<header><h3 id="plan-archive-heading">歷史提案：{title}</h3><p>規劃提案 · 尚未啟動；點位、經費、採購與營運承接仍待確認。</p></header>'
-              '<div data-reader="archive" data-reader-label="選擇百日計畫章節"><div class="reader-controls" data-reader-controls hidden><label for="reader-select-archive">選擇百日計畫章節</label><select id="reader-select-archive"></select><p class="reader-position" aria-live="polite"></p><nav aria-label="百日計畫前後章節"><a href="#research" data-reader-prev>上一項</a><a href="#research" data-reader-next>下一項</a></nav></div><div class="reader-items"><nav class="reader-index" aria-label="百日計畫章節">'+links+'</nav>'+items+'</div></div>')
+    rendered=(f'<header><h3 id="plan-archive-heading">2026-10-17規劃草稿：{title}</h3><p>已取代的規劃草稿 · 尚未啟動；原文的待確認事項不列為現行待辦。</p></header>'
+              '<div data-reader="archive" data-reader-mode="document" data-reader-label="選擇草稿章節"><div class="reader-controls" data-reader-controls hidden><label for="reader-select-archive">選擇草稿章節</label><select id="reader-select-archive"></select><p class="reader-position" aria-live="polite"></p><nav aria-label="草稿前後章節"><a href="#research" data-reader-prev>上一項</a><a href="#research" data-reader-next>下一項</a></nav></div><div class="reader-items"><nav class="reader-index" aria-label="草稿章節">'+links+'</nav>'+items+'</div></div>')
     marker = 'hundred-day-plan'
     before = index_text.split(f'<!-- {marker}-start -->')[0]
     assert re.findall(r'<section\b[^>]*\bid="(panel-[^"]+)"', before)[-1] == 'panel-archive'
@@ -223,7 +230,7 @@ def render_service_continuity(index_text):
     prototype = (source / 'source/prototype-v0.1.html').read_text()
     # Keep the frozen participant source intact; adapt heading depth for this page.
     prototype = prototype.replace('h2', 'h4').replace('h3', 'h5')
-    rendered = summary.replace('{{prototype}}', prototype)
+    rendered = '<p class="research-overview-status">2026-10-18研究草稿與模擬原型。原列測試人數、任務與後續流程均未執行，不是目前排程；是否採用依<a href="#plan">百日計畫</a>另判。</p>' + summary.replace('{{prototype}}', prototype)
     updated, count = re.subn(r'<!-- service-continuity-start -->.*?<!-- service-continuity-end -->',
                             lambda _: '<!-- service-continuity-start -->\n' + rendered + '\n<!-- service-continuity-end -->',
                             index_text, flags=re.S)

@@ -27,19 +27,26 @@ export function csvForPoints(points, dataset) {
     ...points.map(p=>[...context,p.id,p.district,p.address,p.rawX??p.x,p.rawY??p.y,p.quality])].map(r=>r.map(safe).join(',')).join('\r\n')+'\r\n';
 }
 export const historyPages=['map','comparison','history'];
-export const allowedPages=[...historyPages,'siting','countries','design','definition','research','analysis','ideas','sources','materials','plan','feedback','districts','methods','evidence','work','spec','archive','library','team','personas','problem'];
-export const workspacePages={"research":["research","team"],"analysis":["analysis","districts","methods","feedback","evidence","personas","problem"],"plan":["plan","work"],"ideas":["ideas","spec","definition"],"library":["library","history","map","comparison","countries","sources","materials","archive","siting","design"]};
+export const allowedPages=[...historyPages,'siting','countries','design','definition','research','analysis','sources','materials','plan','feedback','districts','evidence','work','spec','archive','library','team','personas','problem','data-methods'];
+export const workspacePages={"research":["research"],"personas":["personas","problem","feedback","evidence"],"analysis":["analysis","districts","data-methods"],"plan":["plan","spec","work","team"],"library":["library","history","map","comparison","countries","sources","materials","archive","siting","design","definition"]};
 export function workspaceForPage(page){return Object.keys(workspacePages).find(key=>workspacePages[key].includes(page))||'research';}
 export function pageFromHash(hash,currentPage='research') {
   const page=hash.replace(/^#/,'');
+  if(page==='ideas')return 'plan';
+  if(page==='methods'||page==='methods-heading')return 'plan';
   if(page==='main'&&allowedPages.includes(currentPage))return currentPage;
   if(allowedPages.includes(page))return page;
   if(/^(?:reader-)?definition-prd-(?:roles|next)(?:-|$)/.test(page))return 'team';
-  if(/^(?:reader-)?field-|^reader-work-observation$/.test(page)||page==='hotspot-times')return 'methods';
+  // Dated drafts live under references; current forms and requirements stay in the plan.
+  if(/^plan-prior-field-plan$|^archive-build-draft$|^reader-field-priority$|^(?:reader-)?field-(?!forms$|form-|priority$)|^reader-work-|^(?:reader-)?government-|^reader-WP|^work-(?:WP|prior-contract)|^hotspot-(?:times|government|handoff)$/.test(page))return 'archive';
+  if(/^(?:reader-)?definition-prd(?!-current|-roles|-next|-v0[12])|^(?:reader-)?definition-not-doing|^reader-research-overview-scope/.test(page)||['definition-scope-heading','research-overview-scope','research-overview-mvp','research-overview-unknowns'].includes(page))return 'archive';
+  if(/^field-form|^reader-field-forms$|^field-priority$|^plan-purpose$/.test(page))return 'plan';
+
+  if(/^(?:reader-)?field-|^reader-work-observation$/.test(page)||page==='hotspot-times')return 'plan';
   if(['plan-districts'].includes(page))return 'analysis';
-  if(/^plan-(?:conclusion|details|pending|next|validation|resources)$/.test(page))return 'plan';
+  if(/^plan-(?:conclusion|details|pending|next|validation|resources|checks-heading|check-Q\d+|100day|support|prior-field-plan)$/.test(page))return 'plan';
   if(/^reader-district-|^citywide-area-|^plan-area-/.test(page))return 'districts';
-  if(/^reader-method-|^method-|^hotspot-(?:heading|quality|sources|source-)|^citywide-(?:heading|districts)$/.test(page))return 'methods';
+  if(/^reader-method-|^method-|^hotspot-(?:heading|quality|sources|source-)|^citywide-(?:heading|districts)$/.test(page))return 'data-methods';
   if(page==='demand-evidence')return 'evidence';
   if(/^reader-(?:evidence|problem|definition-evidence|claim-check)|^definition-(?:focus-|research-basis|evidence-(?!heading)|workbook-P01-claims)/.test(page)||/^research-overview-evidence/.test(page))return 'evidence';
   if(/^reader-(?:work-|WP)|^work-|^hotspot-(?:times|government|handoff)$/.test(page))return 'work';
@@ -48,9 +55,10 @@ export function pageFromHash(hash,currentPage='research') {
   if(/^reader-history-/.test(page))return 'definition';
   if(/^problem-(?:heading|known|contrast|unknown|boundary)$/.test(page))return 'problem';
   if(/^persona(?:s)?-/.test(page)||page==='journey-reading-note')return 'personas';
+  if(page==='data-methods-heading')return 'data-methods';
   if(/^analysis-/.test(page)||page==='hotspot-candidates')return 'analysis';
-  if(/^ideas-|^definition-current-/.test(page)||['t1-process-heading','definition-evidence-heading'].includes(page))return 'ideas';
-  if(['t1-thinking-heading','definition-cycle-heading'].includes(page))return 'ideas';
+  if(/^ideas-|^definition-current-/.test(page)||['t1-process-heading','definition-evidence-heading'].includes(page))return 'plan';
+  if(['t1-thinking-heading','definition-cycle-heading'].includes(page))return 'plan';
   if(['research-overview-mvp','research-overview-unknowns'].includes(page))return 'spec';
   if(/^reference-[LP]\d{2}$/.test(page)||/^source-/.test(page)||/^research-(?:literature|papers|paper-records|full-bibliography|practices|practice-records|operating-sources|audit)/.test(page))return 'sources';
   if(/^feedback-/.test(page))return 'feedback';
