@@ -96,7 +96,7 @@ assert {'analysis-findings','hotspot-candidates','analysis-city-map'}<=analysis[
 assert {'ideas-options','definition-evidence-heading'}<=ideas['ids']
 assert {'plan-work-heading','plan-departments','plan-conclusion','plan-pending','plan-next'}<=plan['ids']
 assert 'plan-districts' in analysis['ids']
-assert '初始配置參考：全市活動與桶位分布' in ''.join(analysis['text'])
+assert '資料分析：全市活動與桶位分布' in ''.join(analysis['text'])
 assert '目前尚未建立人物與候選點位的資料對應' in ''.join(analysis['text'])
 for name in ['analysis','plan','ideas']:
  assert {name+'-'+stage for stage in ['conclusion','details','pending','next']}<=layout.panels['panel-plan' if name=='ideas' else 'panel-'+name]['ids']

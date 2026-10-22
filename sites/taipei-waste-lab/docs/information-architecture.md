@@ -37,10 +37,11 @@ to personal accounts or that fieldwork has happened.
   a self-reported completed disposal; E01/E02/E15 outcomes remain unknown.
 - Move quantitative chapters byte-for-byte. Keep 9/30 ten-station and 10/21
   two-station snapshots distinct. Keep their source limitations adjacent.
-- The current plan starts with a decision and its missing evidence. No district
-  quota or automatic visits. Use existing records first; fieldwork starts only
-  when it can distinguish options. Historical schedules remain closed by default.
-- `topics/bins/research/decision-checks-2026-10-22` owns the current plan. Preserve
+- The current plan starts with existing bin locations, then crew reporting,
+  reviewed configuration adjustment and before/after follow-up. Analysis remains
+  a research input. Low fullness alone does not justify moving a bin. No district
+  quota or automatic visits. Historical schedules remain closed by default.
+- `topics/bins/research/decision-checks-2026-10-22` owns current plan metadata (revised 2026-10-23) and conditional checks. Preserve
   frozen source protocols and all unknown outcomes. `#methods` routes to `#plan`.
 - Home links to page owners instead of repeating their detailed task lists.
 - Retain old IDs and resolve moved chapter links to their new panel. Plain HTML
