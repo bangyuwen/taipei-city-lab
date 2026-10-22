@@ -62,3 +62,7 @@ area/search filters. Campus remains a separate source category. Facility layers
 retain cross-district records and do not assert access or service coverage.
 The current map replaces the saved first-round-anchor figure in the main flow;
 its underlying research figure and original proposal data remain preserved.
+
+The current schedule uses inauguration as day 0, preparation from day -45,
+and post-inauguration work through day 100. Pre-inauguration operational trials
+need management/crew agreement; earlier baselines require a comparability check.
