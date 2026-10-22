@@ -18,12 +18,13 @@ for (const monorepo of [true, false]) {
     t.after(() => rm(fixture, {recursive: true, force: true}));
     const output = join(fixture, 'sites/taipei-waste-lab');
     await mkdir(join(output, 'scripts'), {recursive: true});
-    for (const script of ['prepare-data.py', 'prepare-public.py', 'prepare-siting-overlay.py', 'compare-snapshots.py', 'analyze-coordinate-distances.py',
+    for (const script of ['cross_transport.py', 'prepare-cross-analysis.py', 'prepare-data.py', 'prepare-public.py', 'prepare-siting-overlay.py', 'compare-snapshots.py', 'analyze-coordinate-distances.py',
                           'prepare-research-execution.py', 'estimate-budget.py', 'package-research.py', 'analyze-feedback.py', 'feedback_access.py', 'feedback_removal.py']) {
       await cp(new URL('scripts/'+script, site), join(output, 'scripts', script));
     }
     await cp(new URL('templates/', site), join(output, 'templates'), {recursive:true});
     await mkdir(join(output, 'data'), {recursive:true});
+    await cp(new URL('data/cross-analysis-inputs/', site), join(output, 'data/cross-analysis-inputs'), {recursive:true});
     for(const name of ['siting-overlay.json','siting-overlay.provenance.json','field-priorities.json'])await cp(new URL('data/'+name,site),join(output,'data',name));
     await mkdir(join(output, 'dist'), {recursive: true});
     await cp(new URL('dist/', site), join(output, 'dist'), {recursive: true, filter: source => !/[\\/]dist[\\/](data|research)([\\/]|$)/.test(source)});
