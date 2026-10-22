@@ -1,0 +1,59 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "events": {
+      ".read": true,
+      ".indexOn": ["ts"],
+      "$id": {
+        ".write": "$id.matches(/^ev[0-9a-z]{6,24}$/) && newData.exists() && ((!data.exists() && newData.parent().parent().child('owners').child($id).exists() && newData.parent().parent().child('last').child(newData.child('c').val()).val() === now && newData.child('e').val() === (root.child('meta').child('epoch').exists() ? root.child('meta').child('epoch').val() : 0)) || (data.exists() && newData.child('del').val() === true && newData.parent().parent().child('proof').child($id).val() === root.child('owners').child($id).val()))",
+        ".validate": "newData.hasChildren(['bin','kind','ts','c'])",
+        "bin":  { ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 40 && (!data.exists() || newData.val() === data.val())" },
+        "kind": { ".validate": "newData.isString() && newData.val().matches(/^(full|level|clear)$/) && (!data.exists() || newData.val() === data.val())" },
+        "ts":   { ".validate": "newData.isNumber() && (data.exists() ? newData.val() === data.val() : newData.val() === now)" },
+        "c":    { ".validate": "newData.isString() && newData.val().matches(/^c[0-9a-z]{8,24}$/) && (!data.exists() || newData.val() === data.val())" },
+        "by":   { ".validate": "newData.isString() && newData.val().length <= 10 && (!data.exists() || newData.val() === data.val())" },
+        "level":    { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100 && (!data.exists() || newData.val() === data.val())" },
+        "amount":   { ".validate": "newData.isString() && newData.val().length <= 10 && (!data.exists() || newData.val() === data.val())" },
+        "amountPct":{ ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 200 && (!data.exists() || newData.val() === data.val())" },
+        "predPct":  { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 1000 && (!data.exists() || newData.val() === data.val())" },
+        "calib":    { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 10 && (!data.exists() || newData.val() === data.val())" },
+        "fcDay":    { ".validate": "newData.isString() && newData.val().length <= 4 && (!data.exists() || newData.val() === data.val())" },
+        "fcMin":    { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 1440 && (!data.exists() || newData.val() === data.val())" },
+        "e":    { ".validate": "newData.isNumber() && (!data.exists() || newData.val() === data.val())" },
+        "ot":   { ".validate": "newData.isNumber() && newData.val() <= now + 300000 && newData.val() >= now - 604800000 && (!data.exists() || newData.val() === data.val())" },
+        "del":  { ".validate": "newData.val() === true" },
+        "$other": { ".validate": false }
+      }
+    },
+    "needs": {
+      ".read": true,
+      ".indexOn": ["ts"],
+      "$id": {
+        ".write": "$id.matches(/^N[0-9a-z]{6,24}$/) && newData.exists() && ((!data.exists() && newData.parent().parent().child('owners').child($id).exists() && newData.parent().parent().child('last').child(newData.child('c').val()).val() === now && newData.child('e').val() === (root.child('meta').child('epoch').exists() ? root.child('meta').child('epoch').val() : 0)) || (data.exists() && newData.parent().parent().child('proof').child($id).val() === root.child('owners').child($id).val()))",
+        ".validate": "newData.hasChildren(['la','lo','ts','c'])",
+        "la": { ".validate": "newData.isNumber() && newData.val() >= 21 && newData.val() <= 26 && (!data.exists() || newData.val() === data.val())" },
+        "lo": { ".validate": "newData.isNumber() && newData.val() >= 119 && newData.val() <= 123 && (!data.exists() || newData.val() === data.val())" },
+        "ts": { ".validate": "newData.isNumber() && (data.exists() ? newData.val() === data.val() : newData.val() === now)" },
+        "c":  { ".validate": "newData.isString() && newData.val().matches(/^c[0-9a-z]{8,24}$/) && (!data.exists() || newData.val() === data.val())" },
+        "reason": { ".validate": "newData.isString() && newData.val().matches(/^(general|other)$/)" },
+        "note":   { ".validate": "newData.isString() && newData.val().length >= 1 && newData.val().length <= 40" },
+        "e":      { ".validate": "newData.isNumber() && (!data.exists() || newData.val() === data.val())" },
+        "del":    { ".validate": "newData.val() === true" },
+        "$other": { ".validate": false }
+      }
+    },
+    "meta": {
+      ".read": true
+    },
+    "owners": {
+      "$id": { ".write": "!data.exists() && newData.isString() && newData.val().matches(/^[0-9a-z]{20,40}$/) && ($id.matches(/^ev[0-9a-z]{6,24}$/) || $id.matches(/^N[0-9a-z]{6,24}$/))" }
+    },
+    "proof": {
+      "$id": { ".write": "newData.exists() && root.child('owners').child($id).exists()", ".validate": "newData.val() === root.child('owners').child($id).val()" }
+    },
+    "last": {
+      "$c": { ".write": "$c.matches(/^c[0-9a-z]{8,24}$/) && newData.val() === now && (!data.exists() || now - data.val() >= 1500)" }
+    }
+  }
+}
