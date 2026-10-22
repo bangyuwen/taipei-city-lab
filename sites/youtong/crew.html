@@ -100,7 +100,7 @@ roleSwitch('crew.html');
 // 清運門檻：兩段切換「快滿了以上」(70)／「只清滿溢」(100)；舊存檔的數字門檻對應到最近的選項，壞值→預設
 const TH_OPTS=[70,100],thNorm=v=>{v=+v;return isFinite(v)&&v>0?(v>=85?100:70):70};
 const th={get value(){const i=document.querySelector('[name=thr]:checked');return i?+i.value:70},set value(v){const n=thNorm(v),i=document.querySelector(`[name=thr][value="${n}"]`);if(i)i.checked=true}};
-// localStorage 前綴：由 config.js 依網址路徑決定（window.KP，taipei-city-lab 版為「有桶tcl_」）
+// localStorage 前綴：由 config.js 指定 window.KP；整合示範站使用「有桶demo_v1_」。
 const C=CONFIG.forecast,LSU=KP+'crew_ui_v2',AMT=[['empty','空',0],['half','半',50],['full','滿',100],['overflow','滿溢',120]];
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const map=quietMap(CONFIG.demoArea.center,15),binL=L.layerGroup().addTo(map),rtL=L.layerGroup().addTo(map);
