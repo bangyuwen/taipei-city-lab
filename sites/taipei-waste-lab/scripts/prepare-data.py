@@ -204,6 +204,7 @@ def main():
     research_source = CANONICAL_RESEARCH if CANONICAL_RESEARCH.is_dir() else ROOT / 'research'
     for name in ['build_handoff.py', 'build_field_records.py']:
         subprocess.run([sys.executable, str(research_source / 'taipei-citywide-2026-10-19/delivery' / name)], check=True)
+    subprocess.run([sys.executable, str(ROOT / 'scripts/prepare-cross-analysis.py')], check=True)
     for script in ['prepare-research-execution.py', 'estimate-budget.py', 'package-research.py']:
         subprocess.run([sys.executable, str(ROOT / 'scripts' / script)], check=True)
 
