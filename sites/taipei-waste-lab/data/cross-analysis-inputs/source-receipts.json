@@ -1,0 +1,16 @@
+[
+  {
+    "path": "complaints-202607.csv.gz",
+    "url": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=5b129918-bc5b-4d1d-9f39-afb442c9c9b4",
+    "retrievedAt": "2026-10-22",
+    "sha256Compressed": "8388846df1e880bbe369db5b7ef1514306a9f87eb783468584974647af72ff27",
+    "sha256Original": "aba9e58b4a91abf2c54f080647e2f0956092d0ef8a3c49630805b37523206216"
+  },
+  {
+    "path": "mrt-exits.csv.gz",
+    "url": "https://data.taipei/api/frontstage/tpeod/dataset/resource.download?rid=307a7f61-e302-4108-a817-877ccbfca7c1",
+    "retrievedAt": "2026-10-22",
+    "sha256Compressed": "67d11e2a2ae4a1b0283b4cf1b9409833eea577a394484fe685946a404042eb2e",
+    "sha256Original": "134d8488c240fb23e04535db6a94da73006f890c83617eeedaa9b26c9f120015"
+  }
+]

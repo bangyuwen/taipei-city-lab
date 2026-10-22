@@ -5,7 +5,12 @@ const $=id=>document.getElementById(id),num=n=>new Intl.NumberFormat('zh-TW',{ma
 const colors={'2015':'#986838','2022':'#30694e','2024':'#396e88','2026':'#244d43'};
 let catalog,map,L,layers,venueLayers,markers=new Map(),venueMarkers=new Map(),venueFiltered=[],filtered=[],shown=40,currentPage=null,lastHash;
 let basemap;
-let state={year:'2015',district:'',search:'',showVenues:true},mapStarting=false;
+let crossAnalysis,crossLoading;
+function ensureCrossAnalysis(){
+  if(!map||crossLoading)return;
+  crossLoading=import('./cross-analysis.js').then(module=>module.initializeCrossAnalysis({map,L,getState:()=>state,catalog})).then(instance=>{crossAnalysis=instance;$('cross-retry').hidden=true;}).catch(()=>{crossLoading=null;$('cross-status').textContent='交叉分析暫時無法載入；保存桶位仍可查詢。';$('cross-retry').hidden=false;});
+}
+let state={year:'2026-main',district:'',search:'',showVenues:true},mapStarting=false;
 let designExperience,designLoading;
 let comparisonLoading;
 let sitingExperience,sitingLoading;
@@ -87,7 +92,7 @@ function ensureCountries(){
 
 function readURL(){
   const url=new URL(location.href),year=url.searchParams.get('year'),district=url.searchParams.get('district');
-  state.year=catalog.datasets.some(d=>d.key===year)?year:'2015';
+  state.year=catalog.datasets.some(d=>d.key===year)?year:'2026-main';
   state.district=catalog.districtOrder.includes(district)?district:'';
   state.search=(url.searchParams.get('q')??'').slice(0,100);
   state.showVenues=url.searchParams.get('venues')!=='0';
@@ -240,7 +245,7 @@ async function ensureMap(){
     L=await import('./vendor/leaflet/leaflet-src.esm.js');
     map=L.map('map',{preferCanvas:true,scrollWheelZoom:false}).setView([25.045,121.535],12);
     setBasemap();
-    layers=L.layerGroup().addTo(map);venueLayers=L.layerGroup().addTo(map);renderMap();
+    layers=L.layerGroup().addTo(map);venueLayers=L.layerGroup().addTo(map);renderMap();ensureCrossAnalysis();
   }catch(error){
     $('map-status').textContent='地圖暫時無法載入；仍可搜尋位置與查看清單。';
     console.error('Map initialization failed:',error.message);
@@ -299,6 +304,7 @@ function renderMap(){
     marker.getElement()?.setAttribute('aria-label',label);venueMarkers.set(p.id,marker);
   }
   fitMap();
+  crossAnalysis?.update();
 }
 function fitMap(allCoordinates=false){
   if(!map||$('panel-map').hidden||!map.getContainer().clientWidth)return;
@@ -374,6 +380,8 @@ async function start(){
     for(let parent=target.parentElement;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;
     target.focus({preventScroll:true});target.scrollIntoView({block:'start',behavior:'instant'});
   });
+  $('cross-start').addEventListener('click',()=>{state.year='2026-main';syncURL();renderDataset();ensureCrossAnalysis();});
+  $('cross-retry').addEventListener('click',ensureCrossAnalysis);
   $('comparison-retry').addEventListener('click',ensureComparison);
   $('hotspot-retry').addEventListener('click',ensureHotspots);
   $('siting-retry').addEventListener('click',()=>sitingExperience?sitingExperience.reload():ensureSiting());
