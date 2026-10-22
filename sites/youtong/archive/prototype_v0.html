@@ -1,0 +1,36 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>debug松 – 最近垃圾桶</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>body{margin:0;font-family:sans-serif}#map{height:70vh}#panel{padding:8px 12px}li{margin:4px 0}.src{color:#888;font-size:12px}</style></head>
+<body><div id="map"></div><div id="panel"><b id="status">定位中…</b><ol id="list"></ol>
+<div class="src">資料：臺北市資料大平臺（行人專用清潔箱、YouBike2.0、公車站位）；距離為直線距離</div></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const FALLBACK=[25.0478,121.5170];
+const map=L.map('map').setView(FALLBACK,16);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
+const hav=(a,b,c,d)=>{const R=6371000,r=x=>x*Math.PI/180,dl=r(c-a),dn=r(d-b);return 2*R*Math.asin(Math.sqrt(Math.sin(dl/2)**2+Math.cos(r(a))*Math.cos(r(c))*Math.sin(dn/2)**2))};
+const dot=(c,r)=>(f,ll)=>L.circleMarker(ll,{radius:r,color:c,weight:1,fillOpacity:.7});
+let bins=[],near=L.layerGroup().addTo(map),me;
+Promise.all(['bins','youbike','busstops'].map(n=>fetch(n+'.geojson').then(r=>r.json()))).then(([b,y,s])=>{
+  bins=b.features;
+  const binL=L.geoJSON(b,{pointToLayer:dot('#555',4),onEachFeature:(f,l)=>l.bindPopup('🗑 '+f.properties.address)}).addTo(map);
+  const ybL=L.geoJSON(y,{pointToLayer:dot('#f5a623',4),onEachFeature:(f,l)=>l.bindPopup('🚲 '+f.properties.name+'<br>可借 '+f.properties.available_rent+' / 可還 '+f.properties.available_return)});
+  const bsL=L.geoJSON(s,{pointToLayer:dot('#2a7de1',3),onEachFeature:(f,l)=>l.bindPopup('🚌 '+f.properties.name)});
+  L.control.layers(null,{['垃圾桶 ('+b.features.length+')']:binL,['YouBike ('+y.features.length+')']:ybL,['公車站 ('+s.features.length+')']:bsL},{collapsed:false}).addTo(map);
+  let done=false;const once=(p,l)=>{if(!done){done=true;show(p,l)}};setTimeout(()=>once(FALLBACK,'定位逾時，使用台北車站'),6000);
+  if(navigator.geolocation) navigator.geolocation.getCurrentPosition(p=>once([p.coords.latitude,p.coords.longitude],'目前位置'),()=>once(FALLBACK,'無法定位，使用台北車站'),{timeout:5000});
+  else show(FALLBACK,'不支援定位，使用台北車站');
+}).catch(e=>{document.getElementById('status').textContent='資料載入失敗: '+e});
+function show(p,label){
+  if(me) me.remove(); me=L.marker(p).addTo(map).bindPopup(label);
+  near.clearLayers();
+  const top=bins.map(f=>{const[lo,la]=f.geometry.coordinates;return{f,d:hav(p[0],p[1],la,lo)}}).sort((a,b)=>a.d-b.d).slice(0,3);
+  document.getElementById('status').textContent=label+'：最近 3 個垃圾桶';
+  document.getElementById('list').innerHTML=top.map(t=>`<li>${t.f.properties.district} ${t.f.properties.address} — ${Math.round(t.d)} m（步行約 ${Math.ceil(t.d*1.3/80)} 分）</li>`).join('');
+  const pts=[p];top.forEach((t,i)=>{const ll=[t.f.geometry.coordinates[1],t.f.geometry.coordinates[0]];pts.push(ll);
+    L.marker(ll,{icon:L.divIcon({html:'<b style="background:#e33;color:#fff;padding:2px 6px;border-radius:9px">'+(i+1)+'</b>',className:''})}).addTo(near);
+    L.polyline([p,ll],{color:'#e33',dashArray:'4'}).addTo(near)});
+  map.fitBounds(pts,{padding:[40,40]});
+}
+</script></body></html>
