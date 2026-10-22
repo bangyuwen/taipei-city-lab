@@ -23,8 +23,9 @@ __LEAFLET_CSS__
 </style>
 </head>
 <body>
-<header class="top"><h1>設點候選 × 歷史清潔箱</h1><div class="top-meta"><a href="./#siting" target="_top">返回垃圾桶歷史</a><label class="theme">外觀<select id="theme"><option value="auto">依系統</option><option value="light">淺色</option><option value="dark">深色</option></select></label></div></header>
+<header class="top"><h1>設點候選 × 歷史清潔箱</h1><div class="top-meta"><a href="./#siting" target="_top">返回保存場址研究</a><label class="theme">外觀<select id="theme"><option value="auto">依系統</option><option value="light">淺色</option><option value="dark">深色</option></select></label></div></header>
 <p class="boundary"><strong>跨年未出現的紀錄，不等於垃圾桶已撤除。</strong> 各期為資料快照，實際調查時間未確認。</p>
+<p class="boundary">這是2026-10-17保存的資料判讀；優先度不是本輪查核排程或設點建議。必要工作依<a href="./#plan" target="_top">目前百日計畫</a>決定。</p>
 <main class="workspace">
 <aside class="controls" aria-label="地圖篩選與圖層">
 <section class="control-block"><div class="block-title"><h2>篩選範圍</h2><span class="small">同時套用街段與清潔箱</span></div><div class="filters"><label class="filter-field">行政區<select id="district"><option value="">全部行政區</option></select></label><label class="filter-field">街道或地址<input id="search" type="search" placeholder="輸入路名、地址" autocomplete="off"></label></div><div class="actions"><button id="fit" type="button">縮放至篩選範圍</button><button id="reset" type="button">重設</button></div></section>
@@ -105,7 +106,7 @@ __LEAFLET_JS__
    assessmentSection(el,'資料可信度的理由',priority.confidenceReason);
    assessmentSection(el,'資料依據',undefined,priority.evidence);
    assessmentSection(el,'判讀限制',priority.uncertainty);
-   assessmentSection(el,'目前建議',priority.decision);
+   assessmentSection(el,'保存時的判讀',priority.decision);
    const limits=make('details',undefined,'inspection-fields');limits.append(make('summary','共同資料限制'));
    assessmentSection(limits,'共同資料限制',undefined,assessment.limits);el.append(limits);
    const sources=make('details',undefined,'inspection-fields');sources.append(make('summary','推薦依據的官方來源'));

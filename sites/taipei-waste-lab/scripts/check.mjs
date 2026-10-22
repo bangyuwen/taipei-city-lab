@@ -103,13 +103,13 @@ if(!embedded||JSON.stringify(JSON.parse(embedded[1]))!==JSON.stringify(overlayIn
 if(overlayInput.candidates.features.length!==425||JSON.stringify(overlayInput.layers.map(layer=>layer.mapped))!=='[2505,1799,1000,1969,680]')throw Error('Siting snapshot scope changed');
 if(/\bdownload(?:\s|=|>)/i.test(overlay)||/href=["']inventory\.html/.test(overlay))throw Error('Siting attachment control remains');
 for(const [,href] of overlay.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)){
-  if(!/^(?:https?:|#)/i.test(href)&&!['./#siting','field-checklist.html'].includes(href))throw Error(`Siting attachment link: ${href}`);
+  if(!/^(?:https?:|#)/i.test(href)&&!['./#siting','./#plan','field-checklist.html'].includes(href))throw Error(`Siting attachment link: ${href}`);
 }
 const checklist=await readFile(resolve(publicRoot,'field-checklist.html'),'utf8');
 if((checklist.match(/<article class="sheet"/g)||[]).length!==10)throw Error('Expected ten printable data assessments');
 if(/<script[^>]*src=|<iframe|\bdownload(?:\s|=|>)/i.test(checklist))throw Error('Checklist must remain self-contained without attachment controls');
 for(const [,href] of checklist.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)){
-  if(!href.startsWith('#')&&href!=='./#siting'&&!overlayInput.fieldPriorities.sources.some(source=>source.url===href.replaceAll('&amp;','&')))throw Error(`Checklist attachment link: ${href}`);
+  if(!href.startsWith('#')&&!['./#siting','./#plan'].includes(href)&&!overlayInput.fieldPriorities.sources.some(source=>source.url===href.replaceAll('&amp;','&')))throw Error(`Checklist attachment link: ${href}`);
 }
 console.log('Siting snapshot and interactive-page publication boundary verified.');
 

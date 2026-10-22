@@ -69,14 +69,14 @@ def render(schema):
 <li><strong>人的一段投放旅程：</strong>填表1。用餐、遛狗或步行等情境依實際依據記錄，不先套人物標籤。</li>
 <li><strong>車籃當下的狀態：</strong>表2A固定盤點範圍與時間，表2B逐籃記錄；兩表一起核對分母。</li>
 <li><strong>有人遇見或處理車籃垃圾：</strong>填表2C。有最後投放依據才連表1，同一投放不計兩次。</li></ul>
-<p><strong>共同接點：</strong>visit_id連既有訪次與候選，scope_version連範圍；表1的設施列ID連逐設施附表。E01／E02／E06／E15只作問題依據，不會預填到任何現勘表。現有234筆計畫訪次維持未執行。</p>
+<p><strong>共同接點：</strong>visit_id連既有訪次與候選，scope_version連範圍；表1的設施列ID連逐設施附表。E01／E02／E06／E15只作問題依據，不會預填到任何現勘表。本輪只為通過百日計畫決策條件的必要查核另建紀錄。</p>
 <p>這些表格供查閱、抄錄或列印，<strong>不會線上儲存或送出</strong>。私人交接包附四份只有欄名的CSV及欄位字典；複製工作副本後再填，實測資料與照片不放入公開頁。</p>
 {''.join(forms)}
 <section class="research-overview-section" aria-labelledby="field-form-rules"><h4 id="field-form-rules">共通填寫與彙總規則</h4><ol>{rules}</ol></section>
 <section class="research-overview-section" aria-labelledby="field-form-cases"><h4 id="field-form-cases">驗收案例：用來檢查填法，不是實測資料</h4>
 <p>以下是預期判定。除C04回查既有原文、C11回查清冊外，其餘情境及數字僅供驗收演練；不得寫入正式空白模板或冒充已發生事件。填寫人與覆核人應能一致區分通過與退回修正；尚未進行現場人員演練。</p>
 <table class="plan-table"><thead><tr><th scope="col">驗收案例</th><th scope="col">應有結果</th><th scope="col">退回修正</th></tr></thead><tbody>{cases}</tbody></table></section>
-<p><a href="#definition-prd-current-needs">回查PRD需求</a> · <a href="#field-record">既有訪次與逐設施規則</a> · <a href="#field-priority">先查哪些點</a> · <a href="#problem">問題原文與未知</a></p>
+<p><a href="#definition-prd-current-needs">回查PRD需求</a> · <a href="#field-form-rules">本輪填寫與彙總規則</a> · <a href="#field-priority">確認是否需要查核</a> · <a href="#problem">問題原文與未知</a></p>
 </article>'''
 
 

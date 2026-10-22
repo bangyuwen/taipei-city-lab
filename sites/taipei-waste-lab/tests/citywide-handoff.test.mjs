@@ -2,7 +2,7 @@ import test from 'node:test';
 import {execFileSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 const root=fileURLToPath(new URL('..',import.meta.url));
-test('citywide handoff preserves all anchors and produces a complete unexecuted field schedule',()=>{
+test('historical handoff retains all anchors and its superseded unexecuted schedule',()=>{
  execFileSync(process.env.PYTHON_BIN||'python3',['-c',String.raw`
 import csv, json, hashlib, runpy
 from pathlib import Path
@@ -58,6 +58,8 @@ assert len(rows('service-point-records.csv'))==0
 m=json.loads((delivery/'handoff-manifest.json').read_text())
 for item in m['source_files']+m['generated_files']:
  assert hashlib.sha256((delivery/item['path']).read_bytes()).hexdigest()==item['sha256']
+assert p['status']=='historical_superseded_not_executed'
+assert m['current_plan'].endswith('decision-checks-2026-10-22/checks.json')
 assert m['field_visits_completed']==0 and m['agency_commitments_confirmed']==0
 before={f:hashlib.sha256((delivery/f).read_bytes()).hexdigest() for f in ['hotspot-handoff.md','field-plan.md','field-plan.json','planned-visits.csv','district-readiness.csv','handoff-manifest.json']}
 runpy.run_path(str(delivery/'build_handoff.py'))['build']()
@@ -72,7 +74,7 @@ assert set(re.findall(r'data-priority-id="([^"]+)"',text))==first
 for point in priority['candidates']:
  code=point['candidate_id'][1:3]
  article=re.search(r'<article[^>]+id="reader-district-'+code+r'".*?</article>',text,re.S).group()
- label=f'<strong>{point["candidate_id"]} {point["name"]}</strong><br><small>建議第{point["wave"][1]}輪現勘</small>'
+ label=f'<strong>{point["candidate_id"]} {point["name"]}</strong><br><small>歷史第{point["wave"][1]}輪安排，已取代</small>'
  assert label in article
 `],{cwd:root,stdio:'pipe'});
 });
