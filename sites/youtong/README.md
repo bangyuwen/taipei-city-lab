@@ -13,7 +13,7 @@ state isolation, report wording and the current research-plan reference.
 | `/demo/` | Opens the pedestrian prototype |
 | `/demo/pedestrian.html` | Saved bin locations, walking navigation and local report simulation |
 | `/demo/planning.html` | Scenario comparison and historical research context |
-| `/demo/crew.html` | Simulated collection order and local completion records |
+| `/demo/crew.html` | Assigned-bin list, optional location map and local amount reports |
 | `/research/` | Evidence, sources and the current decision plan |
 
 Build and serve from `sites/taipei-waste-lab`, using Python 3.12 or newer:
@@ -84,3 +84,19 @@ accepted against v0.7. Full pedestrian navigation, prediction and automatic
 relocation are deferred from current MVP acceptance. See
 [the current plan](../taipei-waste-lab/dist/index.html#plan) and
 [PRD v0.7](../taipei-waste-lab/dist/index.html#spec).
+
+## Assigned-bin reporting entry
+
+The crew page opens a list of every street-inventory bin in the existing
+Gongguan–Daan demo bounds, in source inventory order. This is a demo assignment,
+not a confirmed staff roster or collection route. Forecast fullness, traffic
+activity, threshold settings and pedestrian reports never filter or reorder it.
+The map is optional and opens the same bin report as the list.
+
+Today means the Asia/Taipei calendar day. Only retained crew amount reports
+count as reported; missing records, old route progress, pedestrian reports, and
+legacy completion events without an amount do not imply an empty or reported bin.
+Reload and same-browser tabs read the same local events. Undo recomputes status
+from any earlier report that remains. The existing amount action still also
+records simulated collection completion; separating those actions is a later
+product decision. Forecast and navigation remain secondary simulation controls.
