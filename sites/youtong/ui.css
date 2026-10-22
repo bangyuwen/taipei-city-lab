@@ -1,0 +1,87 @@
+/* ===== 有桶・共用元件（浮動控制、抽屜、圖例、角色切換）===== */
+html,body{font-family:var(--font)}
+#map.quiet .leaflet-tile-pane{filter:grayscale(1) contrast(.62) brightness(1.2);opacity:.8}
+.leaflet-container{background:var(--map-bg);font-family:var(--font)}
+.leaflet-control-attribution{font-size:9px;background:#ffffffb0!important;color:#8a8f92}.leaflet-control-attribution a{color:#8a8f92}
+.fab{flex:none;width:var(--touch);height:var(--touch);border:0;border-radius:50%;background:var(--surface);box-shadow:var(--shadow-1);font:600 20px/1 var(--font);color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;pointer-events:auto;text-decoration:none}
+.pillbtn{display:inline-flex;align-items:center;gap:6px;height:var(--touch);padding:0 14px;border:0;border-radius:999px;background:var(--surface);box-shadow:var(--shadow-1);font:500 14px/1 var(--font);color:var(--ink);cursor:pointer;pointer-events:auto;white-space:nowrap}
+.infochip{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:0 10px;border:0;border-radius:999px;background:#ffffffe6;box-shadow:var(--shadow-1);font:500 12px/1 var(--font);color:var(--mute);cursor:pointer;pointer-events:auto}
+.infochip::before{content:"i";display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;border-radius:50%;background:var(--gray-2);color:var(--ink-2);font:700 10px/1 var(--font)}
+.sim{font-size:.82em;color:var(--faint);margin-left:2px;font-weight:400}.sim::before{content:"＊"}
+/* 抽屜 */
+.sheet{position:fixed;inset:0;z-index:2500;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center}
+.sheet>.sh{width:100%;max-width:560px;max-height:88%;overflow-y:auto;background:var(--surface);border-radius:var(--r) var(--r) 0 0;padding:6px 18px calc(22px + env(safe-area-inset-bottom))}
+.sheet .hd{display:flex;align-items:center;justify-content:space-between;min-height:52px}.sheet .hd b{font-size:17px}
+.sheet .x{width:var(--touch);height:var(--touch);border:0;border-radius:50%;background:var(--gray-1);font:16px var(--font);cursor:pointer;color:var(--ink)}
+.sheet h3{font-size:13px;color:var(--mute);font-weight:600;margin:18px 0 8px}
+.sheet p,.sheet li{font-size:14px;line-height:1.65;color:var(--ink-2)}.sheet ul{padding-left:18px;margin:6px 0}
+.sheet a{color:var(--brand-ink)}
+@media (min-width:761px){.sheet{align-items:center}.sheet>.sh{border-radius:var(--r);max-height:80%}}
+/* 角色切換（示範導覽）：common.js nav() 輸出放在抽屜裡 */
+.rolenav header{display:block;height:auto;padding:0;border:0;margin:0;background:none}
+.rolenav header .brand{display:none}
+.rolenav nav.tabs{position:static;display:flex;gap:8px;padding:0;border:0;background:none;justify-content:flex-start}
+.rolenav nav.tabs a{flex:1;flex-direction:row;justify-content:center;min-height:var(--touch);font-size:14px;padding:0 10px;border-radius:var(--r-sm);background:var(--gray-1);color:var(--ink-2)}
+.rolenav nav.tabs a.on{background:var(--ink);color:#fff;font-weight:600}
+.rolenav .cap{font-size:11px;color:var(--faint);margin:0 0 6px}
+/* 圖例 */
+.lgd{display:flex;flex-wrap:wrap;gap:4px 10px;max-width:300px;padding:6px 10px;border-radius:12px;background:#ffffffe6;box-shadow:var(--shadow-1);font:12px/1.4 var(--font);color:var(--ink-2)}
+.lgd span{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.lgd i{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c)}
+.lgd i.line{width:16px;height:3px;border-radius:2px}.lgd i.ring{background:none;box-shadow:inset 0 0 0 2px var(--c)}.lgd i.diamond{width:8px;height:8px;border-radius:1px;transform:rotate(45deg)}.lgd i.sq{border-radius:3px}
+.leaflet-bottom.leaflet-left .lgd{margin-left:10px;margin-bottom:10px}
+.toast{background:var(--ink);border-radius:var(--r-sm)}
+.ibtn{font:600 19px/1 var(--font)!important;color:var(--ink-2)}
+.pill.ok{background:var(--fill-low-soft);color:#3f6b55}.pill.mid{background:var(--fill-mid-soft);color:#8a5a00}.pill.full{background:var(--fill-high-soft);color:#9a4d10}.pill.rep{background:var(--reported-soft);color:var(--reported-ink)}.pill-x{color:var(--fill-over)}
+.num{background:var(--ink)}
+/* 常駐角色切換 */
+.roles{display:flex;align-items:center;gap:10px;pointer-events:auto;z-index:1100}
+.roles.fixed{position:fixed;top:calc(10px + env(safe-area-inset-top));left:12px}
+.roles .wm{display:inline-flex;gap:6px;justify-content:center;min-width:var(--touch);box-sizing:border-box;font-weight:700;font-size:16px;letter-spacing:.5px;color:var(--ink);background:#ffffffe6;height:var(--touch);align-items:center;padding:0 14px;border-radius:999px;box-shadow:var(--shadow-1)}
+.roles .seg3{display:flex;padding:3px;border-radius:999px;background:var(--surface);box-shadow:var(--shadow-1)}
+.roles a{display:flex;align-items:center;justify-content:center;min-width:58px;height:var(--touch);padding:0 12px;border-radius:999px;color:var(--ink-2);text-decoration:none;font:500 14px/1 var(--font);white-space:nowrap}
+.roles a.on{background:var(--ink);color:#fff;font-weight:700}
+.roles .seg3{min-height:var(--touch);box-sizing:border-box}
+.roles .wm img{display:block;flex:none}.roles .wm .wt{display:none}
+@media (max-width:760px){.roles .wm{padding:0}}
+@media (min-width:761px){.roles .wm{padding:0 14px 0 10px}.roles .wm .wt{display:inline}}
+/* 字體統一：表單元件、Leaflet 控制項／彈窗／版權列都用同一個 --font */
+button,input,select,textarea,optgroup{font-family:inherit}
+.leaflet-container,.leaflet-container .leaflet-control,.leaflet-popup-content,.leaflet-tooltip,.leaflet-control-attribution{font-family:var(--font)!important}
+.leaflet-control-zoom a,.leaflet-container a.leaflet-popup-close-button{font-family:var(--font)!important;font-weight:400}
+.num,.prog .no,.dist b,.lgd,.hs .ev b,.stat b,.sumr b,.big,.cmp td{font-variant-numeric:tabular-nums}
+.lgd.static{box-shadow:none;background:var(--surface-2);max-width:none;padding:10px 12px;gap:8px 14px;font-size:13px}
+.lgd.lhint{flex-wrap:nowrap;padding:4px 10px;max-width:none}
+
+/* 資料說明 i：所有頁面固定在最右上角 */
+#infoBtn.ibtn,#menu.ibtn{position:fixed!important;top:calc(10px + env(safe-area-inset-top))!important;right:12px!important;left:auto!important;margin:0!important;z-index:1200}
+.stico{background:none;border:0;opacity:.92}.stico svg{display:block}
+/* logo 層級：不是按鈕 → 無底無陰影，直接放在地圖上，白色柔光保可讀 */
+.roles .wm{background:none!important;box-shadow:none!important;border:0;padding:0 2px!important;min-width:0;filter:drop-shadow(0 0 6px rgba(255,255,255,.9)) drop-shadow(0 0 2px rgba(255,255,255,.9))}
+.roles .wm img{width:28px;height:28px}
+@media (max-width:760px){.roles{gap:8px}.roles a{min-width:50px;padding:0 10px}}
+/* 直式 logo：標誌在上、「有桶」在下（HTML 系統字），比 44px 切換器大；不包底，白色柔光。切換器對齊標誌中心 */
+:root{--row2:80px}
+.roles{align-items:flex-start}
+.roles .wm{flex-direction:column;gap:1px;height:auto!important;margin-top:2px}
+.roles .wm img{width:40px!important;height:40px!important}
+.roles .wm .wt{display:block!important;font:700 13px/1.15 var(--font);color:#2b2b2b;letter-spacing:1px}
+@media (min-width:761px){:root{--row2:92px}.roles .wm{margin-top:-2px}.roles .wm img{width:48px!important;height:48px!important}.roles .wm .wt{font-size:15px}}
+/* 第二列浮動 UI 移到 logo 下方 */
+.crow{top:calc(var(--row2) + env(safe-area-inset-top))!important}
+html body .top{padding-top:calc(var(--row2) + env(safe-area-inset-top))!important}
+@media (max-width:760px){.lychips{top:var(--row2)!important}.leaflet-bottom.leaflet-left{top:calc(var(--row2) + 2px)!important}}
+/* 滿度狀態 chip（取代 %） */
+.stchip{display:inline-flex;align-items:center;gap:5px;font:600 13px/1 var(--font);color:var(--ink);background:var(--gray-1);padding:5px 9px;border-radius:999px;white-space:nowrap}.stchip i{width:9px;height:9px;border-radius:50%;flex:none}
+.stchip.st-reported{background:var(--reported-soft);color:var(--reported-ink)}
+/* logo 徽章：綠色圓角方塊內＝白色桶圖示＋白色粗體「有桶」（HTML 系統字）；比 44px 切換器大 */
+.roles .wm{background:var(--brand)!important;border-radius:14px;width:48px;height:56px!important;padding:0!important;margin-top:0;gap:0;justify-content:center;filter:none;box-shadow:var(--shadow-1)!important}
+.roles .wm img{width:34px!important;height:34px!important;margin:-3px 0 -2px}
+.roles .wm .wt{color:#fff!important;font:700 12px/1.1 var(--font)!important;letter-spacing:1px}
+@media (min-width:761px){.roles .wm{width:56px;height:64px!important;border-radius:16px;margin-top:-2px}.roles .wm img{width:40px!important;height:40px!important}.roles .wm .wt{font-size:14px!important}}
+.meta .rep{display:inline-flex;align-items:center;min-height:23px}/* 與 .stchip 同高，回報後卡片不跳動 */
+/* v5 logo：方形綠色徽章（logo.svg 內含綠底＋桶＋「有桶」字樣），大於 44px 切換器 */
+.roles .wm{width:52px!important;height:52px!important;border-radius:11px;overflow:hidden;background:none!important;margin-top:0!important;flex:none}
+.roles .wm img{width:52px!important;height:52px!important;margin:0!important;display:block}
+.roles .wm .wt{display:none!important}
+@media (min-width:761px){.roles .wm{width:60px!important;height:60px!important;border-radius:12px}.roles .wm img{width:60px!important;height:60px!important}}

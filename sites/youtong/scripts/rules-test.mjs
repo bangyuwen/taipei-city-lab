@@ -1,0 +1,58 @@
+// 規則測試：對 Firebase 模擬器（firebase emulators:start --only database）跑合法／非法寫入
+// 用法：node scripts/rules-test.mjs   （需要 firebase 套件：cd scripts && npm i firebase）
+import {initializeApp} from 'firebase/app';
+import {getDatabase,connectDatabaseEmulator,ref,update,set,get,serverTimestamp} from 'firebase/database';
+const app=initializeApp({projectId:'demo-youtong',databaseURL:'http://127.0.0.1:9000?ns=demo-youtong-default-rtdb'});
+const db=getDatabase(app);connectDatabaseEmulator(db,'127.0.0.1',9000);
+const EP=(await get(ref(db,'meta/epoch'))).val()||0; // 目前的清空世代
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));let pass=0,fail=0;
+async function t(name,want,fn){let ok;try{await fn();ok=true}catch(e){ok=false}const g=ok===want;g?pass++:fail++;console.log(g?'PASS':'FAIL',want?'允許':'拒絕',name)}
+const id=()=>'ev'+Date.now().toString(36)+Math.random().toString(36).slice(2,6),nid=()=>'N'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+let n=0;const C=()=>'ctest'+(++n).toString().padStart(4,'0')+Date.now().toString(36);const SEC='s'+'0123456789abcdefghijklmnop'.slice(0,24);
+const ev=(c,o={})=>({bin:'B001',kind:'full',by:'行人',ts:serverTimestamp(),c,e:EP,...o});
+const put=(node,i,rec,c,sec=SEC,last=true)=>update(ref(db),{[`${node}/${i}`]:rec,[`owners/${i}`]:sec,...(last?{[`last/${c}`]:serverTimestamp()}:{})});
+const e1=id(),c1=C();
+await t('建立事件（含 owner＋last）',true,()=>put('events',e1,ev(c1),c1));
+await t('kind=clear 帶 amount/level',true,()=>{const c=C();return put('events',id(),ev(c,{kind:'clear',level:0,by:'清潔隊',amount:'half',amountPct:50,predPct:80,calib:1.05,fcDay:'we',fcMin:930}),c)});
+await t('沒有 owner 密鑰',false,()=>{const c=C(),i=id();return update(ref(db),{[`events/${i}`]:ev(c),[`last/${c}`]:serverTimestamp()})});
+await t('沒有 last（繞過頻率限制）',false,()=>{const c=C();return put('events',id(),ev(c),c,SEC,false)});
+await t('kind 不在 full|level|clear',false,()=>{const c=C();return put('events',id(),ev(c,{kind:'boom'}),c)});
+await t('多餘欄位',false,()=>{const c=C();return put('events',id(),ev(c,{x:1}),c)});
+await t('ts 不是伺服器時間',false,()=>{const c=C();return put('events',id(),ev(c,{ts:123}),c)});
+await t('bin 超過 40 字',false,()=>{const c=C();return put('events',id(),ev(c,{bin:'x'.repeat(41)}),c)});
+await t('id 格式錯',false,()=>{const c=C();return put('events','hack',ev(c),c)});
+await t('同一 clientId 1.5 秒內再寫',false,()=>put('events',id(),ev(c1),c1));
+await sleep(1700);
+await t('同一 clientId 1.7 秒後再寫',true,()=>put('events',id(),ev(c1),c1));
+await t('整個 events 節點覆寫',false,()=>set(ref(db,'events'),{}));
+await t('整個 events 節點刪除',false,()=>set(ref(db,'events'),null));
+await t('根節點覆寫',false,()=>set(ref(db),{}));
+await t('直接刪除單筆（set null）',false,()=>set(ref(db,`events/${e1}`),null));
+await t('覆寫既有一筆（不同 owner）',false,()=>put('events',e1,ev(c1,{kind:'clear'}),c1,'x'.repeat(24)));
+await t('墓碑：錯的密鑰',false,()=>update(ref(db),{[`proof/${e1}`]:'wrongwrongwrongwrong00',[`events/${e1}/del`]:true}));
+await t('墓碑：沒帶密鑰',false,()=>update(ref(db),{[`events/${e1}/del`]:true}));
+await t('改既有事件的 bin（帶正確密鑰）',false,()=>update(ref(db),{[`proof/${e1}`]:SEC,[`events/${e1}/bin`]:'B999'}));
+await t('墓碑：自己的密鑰（取消）',true,()=>update(ref(db),{[`proof/${e1}`]:SEC,[`events/${e1}/del`]:true}));
+await t('讀 events',true,()=>get(ref(db,'events')));
+await t('讀 owners（密鑰）',false,()=>get(ref(db,'owners')));
+await t('讀 proof',false,()=>get(ref(db,'proof')));
+await t('寫其他節點',false,()=>set(ref(db,'foo'),1));
+await t('改寫別人的 owner 密鑰',false,()=>set(ref(db,`owners/${e1}`),'z'.repeat(24)));
+const n1=nid(),c2=C();
+await t('建立需求回報',true,()=>put('needs',n1,{la:25.01,lo:121.53,ts:serverTimestamp(),c:c2,e:EP},c2));
+await t('需求座標超出台灣',false,()=>{const c=C();return put('needs',nid(),{la:0,lo:0,ts:serverTimestamp(),c,e:EP},c)});
+await t('原因 other＋40 字說明（自己的）',true,()=>update(ref(db),{[`proof/${n1}`]:SEC,[`needs/${n1}/reason`]:'other',[`needs/${n1}/note`]:'字'.repeat(40)}));
+await t('說明 41 字',false,()=>update(ref(db),{[`proof/${n1}`]:SEC,[`needs/${n1}/note`]:'字'.repeat(41)}));
+await t('原因不在 general|other',false,()=>update(ref(db),{[`proof/${n1}`]:SEC,[`needs/${n1}/reason`]:'x'}));
+await t('改別人的需求原因',false,()=>update(ref(db),{[`proof/${n1}`]:'wrongwrongwrongwrong00',[`needs/${n1}/reason`]:'general'}));
+await t('移動需求座標',false,()=>update(ref(db),{[`proof/${n1}`]:SEC,[`needs/${n1}/la`]:25.02}));
+await t('epoch 不符（清空前的舊動作）',false,()=>{const c=C();return put('events',id(),ev(c,{e:12345}),c)});
+await t('沒帶 epoch',false,()=>{const c=C(),r=ev(c);delete r.e;return put('events',id(),r,c)});
+await sleep(1600);
+await t('帶原始時間 ot（現在）',true,()=>{const c=C();return put('events',id(),ev(c,{ot:Date.now()}),c)});
+await t('ot 太舊（>7 天）',false,()=>{const c=C();return put('events',id(),ev(c,{ot:Date.now()-8*864e5}),c)});
+await t('ot 在未來',false,()=>{const c=C();return put('events',id(),ev(c,{ot:Date.now()+36e5}),c)});
+await t('讀 meta/epoch',true,()=>get(ref(db,'meta/epoch')));
+await t('用戶端寫 meta/epoch',false,()=>set(ref(db,'meta/epoch'),1));
+await t('用戶端刪 meta',false,()=>set(ref(db,'meta'),null));
+console.log(`規則測試：${pass} 通過，${fail} 失敗`);process.exit(fail?1:0);
