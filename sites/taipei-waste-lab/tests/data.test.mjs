@@ -193,7 +193,7 @@ test('local navigation separates personal evidence, distribution and field prepa
   const html=await readFile(new URL('../dist/index.html',import.meta.url),'utf8');
   for(const [label,expected,count] of [
     ['理解問題',['personas','problem','feedback','evidence'],4],
-    ['初始配置參考',['analysis','districts','data-methods'],3],
+    ['資料分析',['analysis','districts','data-methods'],3],
     ['現勘準備',[],0],
     ['百日計畫',['plan','spec','work','team'],4],
     ['方案與需求',[],0],
