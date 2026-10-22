@@ -9,6 +9,14 @@ evidence that can distinguish options justifies fieldwork or a comparison.
 No district quota, fixed visits, mandatory A/B/C prototype or demonstration
 duration is a core deliverable. Existing datasets and candidate IDs remain.
 
+The transport overlay and candidate lists are an initial configuration reference.
+They can inform provisional options for bin positions, counts and collection.
+Revise those options using field evidence on access, disposal, overflow and
+maintenance; retaining the current configuration is also a valid outcome.
+Record the initial assumption, evidence, date, before/after configuration and
+reason for each decision. Reference groups and activity peaks do not prescribe
+fixed visits, bin positions or collection schedules.
+
 Dated records keep their source content and unexecuted status. The 2026-10-17
 build/operation draft, 2026-10-20 field schedule, v0.4 specification and T1
 hardware exploration do not authorize current work. Place status context near
