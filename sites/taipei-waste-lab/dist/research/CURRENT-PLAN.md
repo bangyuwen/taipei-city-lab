@@ -18,3 +18,7 @@ The 2026-10-20 district-first priorities and citywide field schedule are
 superseded, unexecuted planning records. Preserve their numbers for historical
 reproduction; do not use them as the current workload, budget or completion goal.
 Research observations and original quantitative analysis remain unchanged.
+
+The current schedule uses inauguration as day 0, preparation from day -45,
+and post-inauguration work through day 100. Pre-inauguration operational trials
+need management/crew agreement; earlier baselines require a comparability check.
