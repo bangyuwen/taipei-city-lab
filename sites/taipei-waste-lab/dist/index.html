@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="feedback.css">
   <link rel="stylesheet" href="country.css">
   <script type="module" src="app.js"></script>
+  <link rel="stylesheet" href="cross-analysis.css">
 </head>
 <body>
   <a class="skip-link" href="#main">跳到主要內容</a>
@@ -33,13 +34,57 @@
     <div id="load-status" class="load-status" role="status" hidden>正在載入保存的位置資料…</div>
 
     <section id="panel-map" class="page-panel" aria-labelledby="map-heading" hidden><nav class="project-breadcrumb" aria-label="目前位置"><a href="#research">工作總覽</a><span aria-hidden="true">/</span><a href="#library">參考資料</a><span aria-hidden="true">/</span><span aria-current="page">保存位置地圖</span></nav><nav class="project-subnav" aria-label="參考資料內頁"><a href="#library" data-page="library">參考資料索引</a></nav>
-      <div class="section-heading"><div><h2 id="map-heading">找當時的垃圾箱位置</h2></div><p>切換資料版本，查看保存位置；2026 主檔另附 12 區、130 筆場域線索。</p></div>
+      <div class="section-heading"><div><h2 id="map-heading">比對交通活動與垃圾桶位置</h2></div><p>交叉檢視捷運進出站量、YouBike 活動、公車站位、陳情受理時段與現有垃圾桶，找出優先查核的位置與時段。</p></div>
       <div class="dataset-meta"><div><span id="dataset-date"></span><a id="dataset-source" target="_blank" rel="noopener noreferrer">原始來源 ↗</a><a href="#sources">完整來源與限制</a></div><p id="dataset-completeness" role="status"></p></div>
+      <section class="cross-analysis" aria-labelledby="cross-heading">
+        <h3 id="cross-heading">哪些活動站點離清冊垃圾桶較遠？</h3>
+        <p id="cross-status" role="status">正在載入交通交叉分析…</p>
+        <button type="button" id="cross-start">比對 2026 固定主檔</button>
+        <button type="button" id="cross-retry" hidden>重試交叉分析</button>
+        <div class="cross-controls cross-scope-controls" aria-label="共同篩選條件">
+          <label for="district">行政區<select id="district"><option value="">全部行政區</option></select></label>
+          <label for="search">地址、路名、站名或場域名稱<input id="search" type="search" placeholder="例如：東門" maxlength="100" autocomplete="off"></label>
+          <button id="reset-filters" class="quiet-button" type="button">清除篩選</button>
+        </div>
+        <div id="cross-content" hidden>
+          <p id="cross-summary" aria-live="polite"></p>
+          <div class="cross-controls">
+            <label for="cross-mode">查核範圍<select id="cross-mode"><option value="priority">高活動、遠桶且有公車</option><option value="all">全部啟用 YouBike 站</option></select></label>
+            <label for="cross-radius">距離提示線<select id="cross-radius"><option value="100">100 公尺</option><option value="200">200 公尺</option><option value="300">300 公尺</option></select></label>
+            <label><input id="cross-bikes" type="checkbox" checked>藍色圓點：YouBike</label>
+            <label><input id="cross-buses" type="checkbox" checked>橘色方點：公車站位（放大至街區顯示）</label>
+          </div>
+          <p class="cross-caveat">捷運進出站人次已納入下方比較；站外行人人流與公車上下車量仍未取得。借還是端點事件，同一旅程可計兩次；公車站位只表示服務位置。距離是直線，不是步行距離或法定服務半徑。2026 主檔完整性未核實，北投 0 列、南港 4 列須先補查；距桶遠不等於現場缺桶。</p>
+        </div>
+      </section>
+      <section id="cross-comparison" class="cross-analysis" aria-labelledby="cross-comparison-title" hidden>
+        <h3 id="cross-comparison-title">活動量與清冊桶位怎麼對照？</h3>
+        <p>以下比較使用上方行政區與站名搜尋的全部啟用站點，不只使用「高活動、遠桶且有公車」候選，避免只看問題站而高估比例。先看差異，再點站名回地圖查位置。</p>
+        <div class="cross-comparison-grid">
+          <section aria-labelledby="cross-ratio-title"><h4 id="cross-ratio-title">每個清冊桶位對應多少 YouBike 活動？</h4><p id="cross-ratio-note"></p><ol id="cross-ratio-chart" class="cross-ratio-chart"></ol><h4>周邊零桶位：另列補查</h4><p id="cross-zero-note"></p><ul id="cross-zero-list" class="cross-zero-list"></ul></section>
+          <section aria-labelledby="cross-bus-title"><h4 id="cross-bus-title">公車站周邊，哪些未見清冊桶位？</h4><p id="cross-bus-summary" class="cross-bus-summary"></p><p>分母僅含所選 YouBike 站 300 公尺內的不同公車站位，不代表全臺北公車站。跨區緩衝範圍可能共用同一站位，各區列數不能相加；清冊缺列也可能造成比例偏高。</p><div class="cross-table-wrap"><table class="cross-table cross-area-table"><caption>依 YouBike 所屬區分組的周邊公車站位</caption><thead><tr><th scope="col">站點範圍</th><th scope="col">未見桶位／站位數</th><th scope="col">比例</th></tr></thead><tbody id="cross-bus-areas"></tbody></table></div></section>
+        </div>
+        <section aria-labelledby="cross-time-title"><h4 id="cross-time-title">平日與週末，活動量與尖峰是否不同？</h4><p id="cross-time-scope"></p><div class="cross-table-wrap"><table class="cross-table cross-time-table"><caption>區級日均借還端點事件與小時尖峰；不是垃圾量或陳情時段</caption><thead><tr><th scope="col">行政區／校區</th><th scope="col">平日／週末日均事件</th><th scope="col">週末 ÷ 平日</th><th scope="col">平日／週末尖峰</th></tr></thead><tbody id="cross-time-rows"></tbody></table></div><p>比值大於 1 表示週末日均借還活動較多。可據此安排對照觀察時段；下方另比較捷運與陳情受理時段。尚無滿溢、垃圾量與現行清運班表，不能直接決定清運班次。</p></section>
+      </section>
+      <section id="cross-mrt" class="cross-analysis" aria-labelledby="cross-mrt-title" hidden>
+        <h3 id="cross-mrt-title">捷運人流高的地方，桶位與轉乘活動是否對得上？</h3>
+        <p id="cross-mrt-scope"></p><p>此處固定用七月活動與九月街頭主檔。<a href="#method-mrt-comparison">另看九月捷運比較</a>；中山、忠孝新生的站內設施已有官方線索，<a href="#method-station-venues">查看場域補查</a>，街頭零列不表示站內無桶。</p><p id="cross-mrt-finding" class="cross-caveat"></p>
+        <div class="cross-table-wrap"><table class="cross-table cross-mrt-table"><caption>日均進出站人次 ÷ 出口周邊不同清冊桶位；列比值最高前 10 站</caption><thead><tr><th scope="col">捷運站</th><th scope="col">日均進出站人次</th><th scope="col">清冊桶位</th><th scope="col">人次／日／桶位</th><th scope="col">周邊 YouBike 日均事件</th><th scope="col">周邊公車未見桶位／站位</th></tr></thead><tbody id="cross-mrt-rows"></tbody></table></div>
+        <h4>零桶位站另列，不能用除以零的比值排序</h4><ul id="cross-mrt-zero" class="cross-zero-list"></ul>
+        <p>以任一出口的直線半徑聯集計算桶位，同座標只計一次；整站流量不平均分派給各出口。OD 來源的起站與迄站名單不對稱（119／108 個原始名稱），進出人次限於來源收錄旅次，未確認跨線旅次完整性。周邊 YouBike 與公車採出口 300 公尺內聯集，跨站可能重疊，人次、借還事件與站位數不相加。比值不是每桶實際負荷，也沒有量測垃圾量。北投、南港應先補查清冊覆蓋。</p>
+      </section>
+      <section id="cross-hourly" class="cross-analysis" aria-labelledby="cross-hourly-title" hidden>
+        <h3 id="cross-hourly-title">交通尖峰與陳情受理，集中在相同時段嗎？</h3>
+        <p>固定比較全範圍，不隨上方行政區、站名或候選模式篩選。2026 年七月同樣排除 7/10、7/11；捷運取本次配對站的進站紀錄，YouBike 為全區彙總，陳情為全市案件，地理母體不同。這是時段分布比較。</p>
+        <label for="cross-day-type">比較日型 <select id="cross-day-type"><option value="hourly">全部 29 日</option><option value="weekday">平日 22 日</option><option value="weekend">週末 7 日</option></select></label>
+        <p id="cross-hourly-finding" class="cross-caveat"></p><p>各圖使用同一百分比尺度，柱高是該小時占該序列總量的比例。每格一小時，斜線表示來源未提供；數量另列，不將不同單位相加。</p><div id="cross-hourly-charts" class="cross-hourly-charts"></div>
+        <details><summary>檢視各小時數值與占比</summary><div class="cross-table-wrap"><table class="cross-hour-table"><caption>各序列占自身總量的比例；各序列單位不同</caption><thead id="cross-hour-head"></thead><tbody id="cross-hour-rows"></tbody></table></div></details>
+        <p id="cross-complaint-audit"></p><p>陳情以受理時間計算，不是事件發生時間；「路面清潔」包含果皮箱、菸蒂與狗便，不能全部當成缺桶陳情。來源沒有案件地點，無法判定哪個車站有陳情，也不能用尖峰先後推論垃圾累積或清運延誤。捷運時段使用來源 OD 紀錄的小時，未核實為刷卡進站時刻；不將目的站彙總當作實際出站時段。02–04 時來源沒有列，保留為未提供。下載回應的 Content-MD5 與保存內容計算值不符，尚未釐清；本頁數字限於保存內容，不宣稱已通過官方完整性驗證。</p>
+        <p id="cross-transport-sources"></p>
+      </section>
       <div class="map-layout">
-        <section class="map-filter-fields" aria-label="篩選位置"><div class="filter-heading"><h3>找一個位置</h3><button id="reset-filters" class="quiet-button" type="button">清除篩選</button></div>
+        <section class="map-filter-fields" aria-label="篩選位置"><div class="filter-heading"><h3>清冊與場域圖層</h3></div>
           <div id="dataset-version-field" class="dataset-version-field"><label for="dataset-version">資料版本</label><select id="dataset-version" disabled><option>正在載入版本…</option></select></div>
-          <label for="district">行政區</label><select id="district"><option value="">全部行政區</option></select>
-          <label for="search">地址、路名或場域名稱</label><div class="search-input"><input id="search" type="search" placeholder="例如：中山北路" maxlength="100" autocomplete="off"></div>
           <div id="venue-layer" class="venue-layer" hidden>
             <label for="show-venues"><input id="show-venues" type="checkbox" checked disabled aria-describedby="venue-layer-note">顯示 12 區場域線索</label>
             <p id="venue-layer-note">菱形是場域約略位置，不是已核實桶位或入口。同座標線索可能重疊，可從清單逐筆查看；開放時間、接收規則與桶況待確認。</p>
@@ -56,6 +101,14 @@
           <section id="venue-results" class="venue-results" aria-labelledby="venue-heading" hidden><h3 id="venue-heading">場域線索 <span id="venue-count">0</span> 筆</h3><p id="venue-status" role="status"></p><div id="venue-list" class="point-list" aria-label="場域線索清單"></div></section></section>
 
       </div>
+      <section class="cross-analysis" id="cross-results" aria-labelledby="cross-results-heading" hidden>
+        <h3 id="cross-results-heading">現勘順序提案：理由與要確認什麼</h3>
+        <p>沿用上方行政區與搜尋條件，搜尋可輸入站名或地址。點站名，在地圖連到最近的清冊桶位；距離一律用完整 2026 清冊計算，不受畫面篩選影響。</p>
+        <div class="cross-table-wrap"><table class="cross-table"><caption>交通活動 × 公車站位 × 2026 保存垃圾桶；站外行人人流與實際垃圾需求待補</caption><thead><tr><th scope="col">站點與位置</th><th scope="col">YouBike 活動</th><th scope="col">最近清冊垃圾桶</th><th scope="col">附近公車</th><th scope="col">要查核的問題</th></tr></thead><tbody id="cross-rows"></tbody></table></div>
+        <button type="button" id="cross-more" hidden>顯示更多查核站點</button>
+        <div id="cross-detail" hidden></div>
+        <details><summary>交叉方法、分母與來源日期</summary><p id="cross-method"></p><p id="cross-sources"></p></details>
+      </section>
       <section class="district-details" aria-labelledby="district-distribution-heading"><h3 id="district-distribution-heading">這份資料的行政區分布</h3><div class="district-explanation">這裡統計保存資料列，不是已核實的全市垃圾箱存量。沒有保存紀錄的行政區，不代表當地沒有垃圾箱。</div><div id="district-table"></div></section>
       <p class="context-note"><strong>如何判讀：</strong>地圖預設聚焦台北市區，可按「顯示搜尋範圍」查看所有可繪製位置。各年資料的日期、範圍與完整性不同。某個位置未出現在另一份資料中，還可能是搬移、漏列或更新差異，需要異動紀錄才能確認撤除。</p>
     </section>
