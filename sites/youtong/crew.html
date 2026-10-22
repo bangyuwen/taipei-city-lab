@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261022o"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261022o"><title>清潔隊｜今日清運｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261022o"><link rel="stylesheet" href="tokens.css?v=20261022o"><link rel="stylesheet" href="ui.css?v=20261022o">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261022q"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261022q"><title>清潔隊｜今日清運｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261022q"><link rel="stylesheet" href="tokens.css?v=20261022q"><link rel="stylesheet" href="ui.css?v=20261022q">
 <style>
 /* ===== 有桶・清潔隊（mobile-first 390x844；一張卡片兩種狀態：A 規劃（預測）→ B 執行）===== */
 html,body{height:100%;overflow:hidden;background:var(--map-bg)}
@@ -94,7 +94,7 @@ html,body{height:100%;overflow:hidden;background:var(--map-bg)}
   <h3>排序</h3><ul><li>選站：清運門檻二選一——「快滿了以上」（預設）或「只清滿溢」。站序分兩層：第 1 層「必清」＝下一次例行清運或收班前預計會滿（收班後則為隔天上班前）；第 2 層＝其餘達門檻的桶。層內從出發點起在行車路網距離上走最近鄰（不是最佳解）。站號＝實際拜訪順序。</li><li>這是給領班的參考排序，不排班、不派工，全部是模擬。</li><li>行車路網：OpenStreetMap（network_type=drive，遵守單行道），2026-10-18 預先計算，展示時不呼叫路徑 API；© OpenStreetMap contributors，ODbL。垃圾桶以最近的車道節點接駁。</li></ul>
 </div></div>
 
-<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261022o"></script><script src="common.js?v=20261022o"></script><script src="cloud.js?v=20261022o"></script><script src="ui.js?v=20261022o"></script><script src="bin-icons.js?v=20261022o"></script><script src="forecast.js?v=20261022o"></script><script src="routing.js?v=20261022o"></script>
+<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261022q"></script><script src="common.js?v=20261022q"></script><script src="cloud.js?v=20261022q"></script><script src="ui.js?v=20261022q"></script><script src="bin-icons.js?v=20261022q"></script><script src="forecast.js?v=20261022q"></script><script src="routing.js?v=20261022q"></script>
 <script>
 roleSwitch('crew.html');
 // 清運門檻：兩段切換「快滿了以上」(70)／「只清滿溢」(100)；舊存檔的數字門檻對應到最近的選項，壞值→預設
@@ -248,4 +248,4 @@ window.NAVH={osrm:'https://routing.openstreetmap.de/routed-car/route/v1/driving/
     if(i<0){navEnd&&document.body.classList.remove('navon');navMe.hidden=true;NAVH.setCol(false);draw();requestAnimationFrame(()=>fitTop());return true} // 最後一站：結束導航，回到路線總覽
     NAVH.setCol(true);navStart(route[i].b,{idx:i});return true}};
 {const s=document.createElement('style');s.textContent='.navw{display:block!important;width:100%}.ncw{display:flex;flex-wrap:wrap;align-items:baseline;min-width:0;flex:1}.ncw .nn{flex-basis:100%;font:400 13px/1.4 var(--font,system-ui);color:#7d8b8b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#card .narr .amts{margin-top:8px}';document.head.appendChild(s)}
-</script><script src="nav.js?v=20261022o"></script></body></html>
+</script><script src="nav.js?v=20261022q"></script></body></html>
