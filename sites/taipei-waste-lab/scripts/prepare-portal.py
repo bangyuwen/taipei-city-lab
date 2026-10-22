@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parent.parent
 DEMO_ASSETS = (
     'index.html', 'pedestrian.html', 'planning.html', 'crew.html', 'crew-route.html',
     'config.js', 'common.js', 'cloud.js', 'ui.js', 'ui.css', 'common.css', 'tokens.css',
-    'bin-category.js', 'bin-icons.js', 'scenario.js', 'forecast.js', 'routing.js', 'nav.js',
+    'bin-category.js', 'bin-icons.js', 'scenario.js', 'forecast.js', 'crew-list.js', 'routing.js', 'nav.js',
     'bins.geojson', 'youbike.geojson', 'busstops_taipei.geojson', 'footfall_hourly.json',
     'roads_walk.json', 'roads_drive.json', 'mrt_stations.json', 'survey_candidates.json',
     'anchors.json', 'assets/favicon.svg', 'assets/apple-touch-icon.png', 'assets/logo.svg',
