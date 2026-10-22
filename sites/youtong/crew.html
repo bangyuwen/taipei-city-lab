@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261022q"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261022q"><title>清潔隊｜今日清運｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261022q"><link rel="stylesheet" href="tokens.css?v=20261022q"><link rel="stylesheet" href="ui.css?v=20261022q">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261022q"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261022q"><title>清潔隊｜我的負責桶位｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261022q"><link rel="stylesheet" href="tokens.css?v=20261022q"><link rel="stylesheet" href="ui.css?v=20261022q">
 <style>
 /* ===== 有桶・清潔隊（mobile-first 390x844；一張卡片兩種狀態：A 規劃（預測）→ B 執行）===== */
 html,body{height:100%;overflow:hidden;background:var(--map-bg)}
@@ -59,12 +59,51 @@ html,body{height:100%;overflow:hidden;background:var(--map-bg)}
 .stack{display:grid;gap:8px}
 .leaflet-top.leaflet-left{top:calc(164px + env(safe-area-inset-top))}.leaflet-top.leaflet-left .lgd{margin:0 0 0 12px;max-width:none;flex-wrap:nowrap}
 @media (min-width:761px){#card{left:auto;right:16px;bottom:16px;width:400px;max-height:calc(100vh - 100px)}.top{right:auto;width:520px}}
+
+/* The assigned list leads; the map is an optional location aid. */
+body.crew-list{background:var(--surface)}
+.crew-list #map{visibility:hidden}
+.crew-list.map-open #map{visibility:visible;top:calc(var(--demo-header-bottom,104px) + 64px);left:460px}
+.crew-list .top{max-width:760px;left:0;right:0;width:auto;margin:auto;flex-wrap:wrap}
+.crew-list .prog{border-radius:0;box-shadow:none;padding:0;flex:1;font-size:14px}
+.crew-list .top .tchip{box-shadow:none;border:1px solid var(--line);border-radius:8px}
+.crew-list #infoBtn{display:none}
+.crew-list #card{top:calc(var(--demo-header-bottom,104px) + 64px);bottom:12px;left:0;right:0;width:auto;max-width:760px;max-height:none;border-radius:0;box-shadow:none;padding:16px 20px;margin:auto}
+.crew-list.map-open #card{right:auto;left:0;width:440px;box-sizing:border-box}
+.crew-list:not(.navon) #grab{display:none}
+.crew-list h1{font:700 24px/1.4 var(--font);margin:0 0 8px}
+.list-intro,.list-help{font:400 14px/1.6 var(--font);color:var(--mute);margin:0 0 12px}
+.list-help{margin-bottom:20px}
+.assigned-list{list-style:none;padding:0;margin:0 0 24px}
+.assigned-list li{border-top:1px solid var(--line)}
+.assigned-bin{display:flex;align-items:center;gap:12px;width:100%;min-height:88px;text-align:left;padding:16px 0;background:transparent;border:0;color:var(--ink);font:400 16px/1.5 var(--font);cursor:pointer}
+.assigned-bin:hover{background:var(--surface-2)}
+.bin-number{font-variant-numeric:tabular-nums;color:var(--mute);width:28px;flex:none;text-align:center}
+.bin-copy{flex:1;min-width:0}.bin-copy strong{display:block;font-weight:600;overflow-wrap:anywhere}
+.bin-id{display:block;font:400 13px/1.5 var(--font);color:var(--mute);margin:4px 0}
+.report-status{display:block;font:500 14px/1.5 var(--font);color:var(--ink-2)}
+.reported{color:var(--brand-ink)}
+.row-action{font-size:14px;color:var(--brand-ink);flex:none}
+.forecast-detail{margin-top:16px;border-top:1px solid var(--line);padding-top:8px}
+.forecast-detail summary{min-height:44px;cursor:pointer;font-size:14px;line-height:44px}
+.crew-list .q{font-size:14px;line-height:1.6;margin:24px 0 12px}
+.crew-list .amts{margin-bottom:16px}
+.crew-list button:focus-visible,.crew-list summary:focus-visible{outline:3px solid var(--brand-ink);outline-offset:2px}
+.crew-list .undo{max-width:calc(100vw - 24px);white-space:normal;border-radius:12px;box-sizing:border-box}
+@media(max-width:760px){
+ .crew-list .top{gap:8px;padding-left:16px;padding-right:16px}
+ .crew-list #card{padding:16px;max-width:none}
+ .crew-list.map-open #map{left:0;right:0;height:220px;bottom:auto}
+ .crew-list.map-open #card{left:0;right:0;top:calc(var(--demo-header-bottom,104px) + 284px);width:auto}
+ .crew-list .prog small{display:none}
+ .assigned-bin{gap:8px}.bin-number{width:24px}
+}
 </style></head>
-<body>
-<div id="map"></div>
-<div class="top"><div class="prog" id="prog" aria-live="polite">載入中…</div><button class="tchip" id="tChip" aria-label="選擇預測時間">🕒 —</button><button class="tchip" id="menu" aria-label="調度設定">調度</button></div>
+<body class="crew-list">
+<div id="map" aria-label="桶位參考地圖" inert></div>
+<div class="top"><div class="prog" id="prog" aria-live="polite">載入中…</div><button class="tchip" id="mapToggle" aria-pressed="false" aria-controls="map">顯示地圖</button><button class="tchip" id="menu" aria-label="回報紀錄與示範設定">紀錄</button></div>
 <button class="fab ibtn" id="infoBtn" aria-label="資料說明">i</button>
-<section id="card" aria-live="polite" data-state="A"><button class="tog" id="grab" aria-expanded="true" aria-label="收合卡片"><svg width="20" height="12" viewBox="0 0 20 12"><path d="M3 3l7 6 7-6" fill="none" stroke="#9aa0a4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="cardBody"><div class="addr" style="color:var(--mute);font-weight:500">正在載入預測…</div></div></section>
+<section id="card" aria-label="負責桶位與回報" data-state="A"><button class="tog" id="grab" aria-expanded="true" aria-label="收合卡片"><svg width="20" height="12" viewBox="0 0 20 12"><path d="M3 3l7 6 7-6" fill="none" stroke="#9aa0a4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="cardBody"><div class="addr" style="color:var(--mute);font-weight:500">正在載入負責桶位…</div></div></section>
 
 <div class="sheet" id="timeSheet" hidden><div class="sh" role="dialog" aria-label="預測時間">
   <div class="hd"><b>預測時間</b><button class="x" data-close aria-label="關閉">✕</button></div>
@@ -74,15 +113,14 @@ html,body{height:100%;overflow:hidden;background:var(--map-bg)}
   <p class="small">放開滑桿即套用並關閉。</p>
 </div></div>
 
-<div class="sheet" id="setSheet" hidden><div class="sh" role="dialog" aria-label="調度設定">
-  <div class="hd"><b>調度設定</b><button class="x" data-close aria-label="關閉">✕</button></div>
-  <div class="fld"><div class="thl" id="thLbl">清運範圍<span id="cnt"></span></div><div class="seg" id="thSeg" role="radiogroup" aria-labelledby="thLbl"><label><input type="radio" name="thr" value="70" checked>快滿了以上</label><label><input type="radio" name="thr" value="100">只清滿溢</label></div></div>
-  <div class="sumr" id="sum"></div>
-  <a class="b" id="gmap" target="_blank" rel="noopener">在 Google Maps 開啟</a>
+<div class="sheet" id="setSheet" hidden><div class="sh" role="dialog" aria-label="回報紀錄與示範設定">
+  <div class="hd"><b>回報紀錄與示範設定</b><button class="x" data-close aria-label="關閉">✕</button></div>
+  <p class="small">所有示範負責桶位皆可回報；清單不依預測滿度篩選或重新排序。</p>
+  <button class="b" id="tChip" aria-label="選擇模擬預測時間">查看預測設定</button>
+  <button class="tlink" id="showInfo">資料與示範說明</button>
   <h3>已校正的桶</h3><div class="hist" id="calList">尚無</div>
   <h3>回報紀錄</h3><div class="hist" id="hist">尚無紀錄</div>
-  <h3>示範工具</h3>
-  <div class="stack"><button class="b danger" id="allClear">將剩餘站點全部標示已清運…</button></div>
+
 </div></div>
 
 <div class="sheet" id="infoSheet" hidden><div class="sh" role="dialog" aria-label="資料說明">
@@ -91,85 +129,81 @@ html,body{height:100%;overflow:hidden;background:var(--map-bg)}
   <h3>真實資料</h3><ul><li><b>本機示範</b>：回報、清運與需求紀錄只存於這個瀏覽器，可在同一瀏覽器的角色分頁查看；不會上傳、通知機關或形成正式派工。滿度預測、例行清運時間與出發點都是模擬。</li><li>垃圾桶位置與地址：臺北市行人專用清潔箱街道清冊（2026-09-30）。</li><li>每小時交通活動：YouBike 2.0 租借紀錄 2026-07，200m 內站點每小時每日平均借＋還（平日 22 天、週末 7 天，排除 7/10、7/11）。</li></ul>
   <h3>推估與假設</h3><ul><li>人流由交通活動推估，不是實測人流。</li><li>產生量每次借還 <b id="iLpr"></b> 公升（<b>假設，不是觀測到的垃圾量</b>）：<a id="iSrc" target="_blank" rel="noopener">用官方公開的每日清運頻率校準，仍是假設</a>（環保局：每箱約 120 公升、每日清運 3–6 次；假設示範區人流中位數的桶平日一天滿 3 次：3 × 120 ÷ 361.1）。</li><li>例行清運時間 05:00／08:00／12:00／16:00 為假設；官方公開資料只提到一天 3–6 次，沒有公布時間。預測從最近一次清運起累積。</li></ul>
   <h3>模擬資料（標 <span class="sim"></span>）</h3><ul><li>填充度與預計滿時間是模擬；清潔隊回報的實際滿度會校正該桶產生量（EMA）。</li></ul>
-  <h3>排序</h3><ul><li>選站：清運門檻二選一——「快滿了以上」（預設）或「只清滿溢」。站序分兩層：第 1 層「必清」＝下一次例行清運或收班前預計會滿（收班後則為隔天上班前）；第 2 層＝其餘達門檻的桶。層內從出發點起在行車路網距離上走最近鄰（不是最佳解）。站號＝實際拜訪順序。</li><li>這是給領班的參考排序，不排班、不派工，全部是模擬。</li><li>行車路網：OpenStreetMap（network_type=drive，遵守單行道），2026-10-18 預先計算，展示時不呼叫路徑 API；© OpenStreetMap contributors，ODbL。垃圾桶以最近的車道節點接駁。</li></ul>
+  <h3>負責桶位清單</h3><ul><li>示範負責範圍沿用公館–大安範圍內的街道清冊桶位，並依原清冊順序顯示；不是已確認的人員派工或清運路線。</li><li>空桶、半滿及滿溢桶都能回報。預測與其他角色的通報不會增減清單或改變順序。</li><li>今日狀態依台北日期及本機保存的清潔隊滿度回報判定；未回報不代表空桶。只有清運完成而沒有滿度的舊紀錄不算已回報。</li><li>地圖輔助確認位置；點選標記可以打開同一桶的回報。</li></ul>
 </div></div>
 
-<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261022q"></script><script src="common.js?v=20261022q"></script><script src="cloud.js?v=20261022q"></script><script src="ui.js?v=20261022q"></script><script src="bin-icons.js?v=20261022q"></script><script src="forecast.js?v=20261022q"></script><script src="routing.js?v=20261022q"></script>
+<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261022q"></script><script src="common.js?v=20261022q"></script><script src="cloud.js?v=20261022q"></script><script src="ui.js?v=20261022q"></script><script src="bin-icons.js?v=20261022q"></script><script src="forecast.js?v=20261022q"></script><script src="crew-list.js?v=20261023a"></script><script src="routing.js?v=20261022q"></script>
 <script>
 roleSwitch('crew.html');
-// 清運門檻：兩段切換「快滿了以上」(70)／「只清滿溢」(100)；舊存檔的數字門檻對應到最近的選項，壞值→預設
-const TH_OPTS=[70,100],thNorm=v=>{v=+v;return isFinite(v)&&v>0?(v>=85?100:70):70};
-const th={get value(){const i=document.querySelector('[name=thr]:checked');return i?+i.value:70},set value(v){const n=thNorm(v),i=document.querySelector(`[name=thr][value="${n}"]`);if(i)i.checked=true}};
-// localStorage 前綴：由 config.js 指定 window.KP；整合示範站使用「有桶demo_v1_」。
-const C=CONFIG.forecast,LSU=KP+'crew_ui_v2',AMT=[['empty','空',0],['half','半',50],['full','滿',100],['overflow','滿溢',120]];
+const C=CONFIG.forecast,LSU=KP+'crew_list_ui_v1',AMT=[['empty','空',0],['half','半',50],['full','滿',100],['overflow','滿溢',120]];
+const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const map=quietMap(CONFIG.demoArea.center,15),binL=L.layerGroup().addTo(map),rtL=L.layerGroup().addTo(map);
 legendIntoSheet('infoSheet',[...BIN_LEGEND(),{c:css('--ink-2'),t:'站序',shape:'line'}]);
-const q=new URLSearchParams(location.search),ui=JSON.parse(localStorage.getItem(LSU)||'{}');
-let P=[],E=[],route=[],state='A',gen=0;const depot=C.depot||CONFIG.demoArea.center;
+const q=new URLSearchParams(location.search),ui=(()=>{try{return JSON.parse(localStorage.getItem(LSU))||{}}catch{return{}}})();
+let P=[],E=[],route=[],state='A',activeId=null;const depot=C.depot||CONFIG.demoArea.center;
 const day=()=>document.querySelector('[name=fcd]:checked').value,T=()=>+fcT.value;
 const dayName=k=>k==='we'?'週六':'平日';
-function saveUI(){localStorage.setItem(LSU,JSON.stringify({day:day(),t:T(),th:+th.value,state,gen,route:route.map(e=>e.b.id)}))}
-// 路線進度（哪幾站完成）只存在這台裝置的 localStorage，不從 Firebase 回報推導：別人的回報不影響我的進度。
-// 鍵＝前綴（KP）＋本機日期＋路線（站序 id），隔天自動換新鍵並清掉舊日期的鍵。收運量回報照舊寫 Firebase。
-const PROG_PFX=KP+'crewprog_v1|';
-const progDate=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
-const progKey=()=>PROG_PFX+progDate()+'|'+route.map(e=>e.b.id).join(',');
-function progLoad(){try{const v=JSON.parse(localStorage.getItem(progKey()));return new Set(Array.isArray(v&&v.done)?v.done:[])}catch(e){return new Set()}}
-function progSave(s){const k=progKey(),today=PROG_PFX+progDate()+'|';try{for(let i=localStorage.length-1;i>=0;i--){const x=localStorage.key(i);if(x&&x.startsWith(PROG_PFX)&&!x.startsWith(today))localStorage.removeItem(x)}localStorage.setItem(k,JSON.stringify({done:[...s]}))}catch(e){}}
-function progMark(id,on){const s=progLoad();on?s.add(id):s.delete(id);progSave(s)}
-const doneSet=()=>{const ids=new Set(route.map(e=>e.b.id)),s=progLoad();return new Set([...s].filter(id=>ids.has(id)))};
-const curIdx=()=>{const d=doneSet();return route.findIndex(e=>!d.has(e.b.id))};
-// 規劃：依選定時間的預測，站序＝預計滿時間由早到晚
-// 選站＝預測 ≥ 門檻；站序＝行車路網（OSM drive、遵守單行道）距離矩陣上的最近鄰（自出發點）。路網不可用 → 預測優先序
-let DR=null;const dd=(a,b)=>{const d=DR&&RT.dist(DR,a,b);return d==null?hav(a[0],a[1],b[0],b[1])*1.4:d};
-function nnDrive(sel){const left=[...sel],out=[];let cur=depot;while(left.length){let bi=0,bd=1e18;left.forEach((x,i)=>{const d=dd(cur,[x.b.la,x.b.lo]);if(d<bd){bd=d;bi=i}});const x=left.splice(bi,1)[0];out.push(x);cur=[x.b.la,x.b.lo]}return out}
-// 第 1 層「必清」：在下一次例行清運（或收班）前會滿；收班後則為隔天上班前會滿
-function deadline(t){const day=Math.floor(t/1440)*1440,rc=C.routineClears.map(FC.hm),end=day+FC.hm(C.shiftEnd);const nx=rc.map(m=>day+m).filter(m=>m>t)[0];return t>=end||nx==null?day+1440+FC.hm(C.shiftStart):Math.min(nx,end)}
-// 示範回報時間：該桶最後一筆 full 事件 → 「N 分前」
-function repAgo(id){const l=binEvents(id).filter(x=>x.kind==='full').slice(-1)[0];if(!l)return '';const m=Math.max(0,Math.round((Date.now()-l.ts)/60000));return m<1?'剛剛':m<60?m+' 分前':m<1440?Math.round(m/60)+' 小時前':Math.round(m/1440)+' 天前'}
-function plan(){const st=FC.state();E=FC.evaluate(P,day(),T(),st);const dl=deadline(T());const ev=getEvents();E.forEach(e=>e.rep=binState(e.b.id,ev)==='reported');const sel=E.filter(e=>e.fill>=+th.value||e.rep);sel.forEach(e=>e.must=e.rep||e.fill>=100||e.fullAt<=dl); // 示範回報滿（尚未清運）→ 一定排進「必清」
-  route=!DR||C.routeOrder==='priority'?sel:C.routeOrder==='tiered'?[...nnDrive(sel.filter(e=>e.must)),...nnDriveFrom(sel.filter(e=>e.must),sel.filter(e=>!e.must))]:nnDrive(sel);gen=Date.now()}
-function nnDriveFrom(prev,sel){const left=[...sel],out=[];let cur=prev.length?(()=>{const p=nnDrive(prev).slice(-1)[0];return[p.b.la,p.b.lo]})():depot;while(left.length){let bi=0,bd=1e18;left.forEach((x,i)=>{const d=dd(cur,[x.b.la,x.b.lo]);if(d<bd){bd=d;bi=i}});const x=left.splice(bi,1)[0];out.push(x);cur=[x.b.la,x.b.lo]}return out}
-const legKm=()=>{let km=0,c0=depot;for(const e of route){km+=dd(c0,[e.b.la,e.b.lo]);c0=[e.b.la,e.b.lo]}return km};
+function saveUI(){localStorage.setItem(LSU,JSON.stringify({day:day(),t:T()}))}
+const reportsToday=()=>CrewList.reports(P,getEvents());
+const doneSet=()=>new Set(reportsToday().keys());
+const curIdx=()=>{const selected=route.findIndex(e=>e.b.id===activeId);if(state==='B'&&selected>=0)return selected;const d=doneSet();return route.findIndex(e=>!d.has(e.b.id))};
+function plan(){
+  const ev=getEvents();
+  E=FC.evaluate(P,day(),T(),FC.state());
+  route=CrewList.entries(P,E);
+  route.forEach(e=>{e.rep=binState(e.b.id,ev)==='reported';e.must=false});
+}
+function showMap(show){
+  document.body.classList.toggle('map-open',show);
+  document.getElementById('map').inert=!show;
+  mapToggle.setAttribute('aria-pressed',String(show));mapToggle.textContent=show?'隱藏地圖':'顯示地圖';
+  if(show)requestAnimationFrame(()=>{map.invalidateSize();fitTop()});
+}
+mapToggle.onclick=()=>showMap(!document.body.classList.contains('map-open'));
+function openBin(id){if(!route.some(e=>e.b.id===id))return;if(window.NAV)navEnd();activeId=id;card.classList.remove('collapsed');setState('B');card.scrollTop=0;cardBody.querySelector('[data-amt]')?.focus({preventScroll:true})}
 function cardH(){return card.getBoundingClientRect().height}
-function fitTop(n=3){const pts=route.slice(0,n).map(e=>[e.b.la,e.b.lo]);if(!pts.length){map.fitBounds(CONFIG.demoArea.bounds,{paddingTopLeft:[20,topUIBottom()+24],paddingBottomRight:[20,cardH()+20]});return}
-  if(state==='B'){const ci=curIdx();if(ci>=0){const b=route[ci].b,prev=ci?[route[ci-1].b.la,route[ci-1].b.lo]:depot;pts.length=0;pts.push(prev,[b.la,b.lo])}}
-  map.fitBounds(pts,{paddingTopLeft:[50,topUIBottom()+30],paddingBottomRight:innerWidth>760?[card.getBoundingClientRect().width+50,40]:[50,cardH()+30],maxZoom:17})}
-function draw(){binL.clearLayers();rtL.clearLayers();const ev=getEvents(),done=doneSet(),ci=curIdx(),ids=new Set(route.map(e=>e.b.id)),small=map.getZoom()<15;
-  for(const e of E)if(!ids.has(e.b.id)){const f=Math.floor(e.fill);/* 不四捨五入：99.7% 不能畫成「滿溢」（卡片與選站用同一時間、同一個 ≥100 判斷）*/L.marker([e.b.la,e.b.lo],{icon:binDivIcon(f,false,binState(e.b.id,ev),small),title:`${e.b.addr}・預測${rampState(f).t}`}).addTo(binL)}
-  if(route.length){L.polyline(DR?route.reduce((a,e,i)=>{const p=i?[route[i-1].b.la,route[i-1].b.lo]:depot;return a.concat(RT.path(DR,p,[e.b.la,e.b.lo]))},[]):[depot,...route.map(e=>[e.b.la,e.b.lo])],{color:css('--ink-2'),weight:3,opacity:.55,lineJoin:'round'}).addTo(rtL);
-    L.marker(depot,{icon:L.divIcon({className:'start'}),title:'清潔隊出發點',interactive:false}).addTo(rtL);
-    route.forEach((e,i)=>{const ok=done.has(e.b.id),cur=state==='B'&&i===ci,s=cur?34:ok?16:i<3&&state==='A'?28:24; // 已完成：較小、壓在站號下面
-      L.marker([e.b.la,e.b.lo],{zIndexOffset:cur?3000:ok?-3000:1000-i,title:e.b.addr,icon:L.divIcon({className:'stopw',iconSize:[s,s],html:`<div class="stop${ok?' ok':''}${cur?' cur':''}${e.must&&!ok?' must':''}" style="width:${s}px;height:${s}px;background:${rampColor(e.fill,e.fill>100)};color:${e.fill>=100?'#fff':'#2b2b2b'}">${ok?'✓':i+1}</div>`})}).bindPopup(`<b>第 ${i+1} 站</b>・${e.b.addr}${ok?'<br>已完成':''}`).addTo(rtL)})} // 點站點只看資訊，不改導航目標
-  const nd=route.filter(e=>done.has(e.b.id)).length;
-  prog.innerHTML=route.length?`<span class="no">${nd} / ${route.length}</span><span class="tr"><i style="width:${nd/route.length*100}%"></i></span><small>${CONFIG.demoArea.name}</small>`:`<small class="empty">${CONFIG.demoArea.name}・沒有要清的桶</small>`;
-  tChip.textContent=`🕒 ${dayName(day())} ${FC.fmt(T())} ▾`;
-  cnt.textContent=`　${E.length} 桶中列入 ${route.length} 桶`;
-  const km=legKm();
-  sum.innerHTML=`<span><b>${route.length}</b>站</span><span><b>${(km/1000).toFixed(1)} km</b>${DR?'行車路網':'直線×1.4'}</span><span><b>${E.filter(e=>e.fill>=100).length}</b>預計會滿</span>`;
-  if(route.length){const wp=route.slice(0,9).map(e=>e.b.la+','+e.b.lo),dest=wp.pop();gmap.href=`https://www.google.com/maps/dir/?api=1&origin=${depot.join(',')}&destination=${dest}&waypoints=${encodeURIComponent(wp.join('|'))}&travelmode=driving`;gmap.hidden=false}else gmap.hidden=true;
-  allClear.disabled=!(state==='B'&&ci>=0);renderCard(ev,done,ci);renderLists()}
-function renderCard(ev,done,ci){card.dataset.state=state;if(window.NAV&&typeof navRender==='function'){navRender();return} // App 內導航中：卡片＝導航列
-const k=day(),t=FC.fmt(T()),st=FC.state();
-  if(state==='A'){const nM=route.filter(e=>e.must).length,nR=route.length-nM;
-    const li=(e,i)=>`<li><span class="n${e.must?' must':''}" style="background:${rampColor(e.fill)};color:${e.fill>=100?'#fff':'#2b2b2b'}">${i+1}</span><span class="t"><b>${e.b.addr}</b><span>預計滿 ${e.fill>=100?'已滿':isFinite(e.fullAt)?FC.fmt(e.fullAt):'—'}${e.must?' <span class="flag must">必清</span>':''}${e.rep?` <span class="repby">示範回報・${repAgo(e.b.id)}</span>`:''}${st.cal[e.b.id]?' <span class="flag cal">已校正</span>':''}</span></span><span class="p">${stateChip(e.fill,e.rep)}</span></li>`;
-    if(!route.length){ // 空狀態：標題＝狀況，副標＝桶數；「快滿了以上」也沒有時，若剛例行清運過就說明
-      const tt=T(),d0=Math.floor(tt/1440)*1440,lastRC=C.routineClears.map(FC.hm).sort((x,y)=>x-y).filter(m=>d0+m<=tt).pop(),none70=!E.some(e=>e.fill>=70);
-      const [title,link]=th.value>=100&&!none70?['目前沒有滿溢的桶','<button class="tlink" id="toNear">改看快滿了以上</button>']:[lastRC!=null?`${FC.fmt(lastRC)} 已例行清運，目前沒有要清的桶`:'目前沒有要清的桶','<button class="tlink" id="toTime">調整時間</button>'];
-      cardBody.innerHTML=`<div class="k cpri"><span class="lbl" id="cardEmpty">${title}</span></div><div class="small" id="cardCount">${P.length} 桶中列入 0 桶</div>${link}`;return}
-    cardBody.innerHTML=`<div class="k"><span class="lbl" id="cardTitle">必清 ${nM} 站・順路 ${nR} 站</span></div>
-     <div class="small" id="crewSub">給領班的參考排序，全部為模擬</div>
-     ${route.length?`<button class="b pri cpri" id="startBtn" style="display:flex;width:100%;margin:8px 0 10px">開始清運，從第 1 站</button><ol class="top3" id="mustList">${route.map((e,i)=>e.must?li(e,i):'').join('')}</ol>${nR?`<div class="subh">順路</div><ol class="top3" id="wayList">${route.map((e,i)=>e.must?'':li(e,i)).join('')}</ol>`:''}`:(th.value>=100?`<p class="small" style="margin:10px 0 0;color:var(--mute)">目前沒有滿溢的桶</p><button class="tlink" id="toNear">改看快滿了以上</button>`:`<p class="small" style="margin:10px 0;color:var(--mute)">這個時間沒有快滿了以上的桶，可換時間。</p>`)}`;return}
-  if(ci<0){cardBody.innerHTML=`<div class="k"><button class="back" id="backBtn" aria-label="回到路線">‹</button><span class="lbl">今日路線完成</span></div><div class="done cpri"><p>${route.length} 站都已回報收運量。</p><button class="b pri" id="replanBtn">回到路線</button></div>`;return}
-  const e=route[ci],b=e.b,prev=ci?[route[ci-1].b.la,route[ci-1].b.lo]:depot,d=dd(prev,[b.la,b.lo]),v=Math.round(FC.fillAt(b,k,T(),st));
-  cardBody.innerHTML=`<div class="k"><button class="back" id="backBtn" aria-label="回到路線">‹</button><span class="lbl">下一站</span><span class="no">${ci+1} / ${route.length}</span>${e.must?'<span class="flag must">必清</span>':''}<button type="button" class="nav" id="navIcon" aria-label="導航到這一站"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M3 11L21 3l-8 18-2-8z" fill="currentColor"/></svg></button></div>
-   <button type="button" class="b pri cpri cOnly" id="navPri">導航到第 ${ci+1} 站</button>
-   <div class="addr">${b.addr}</div>
-   <div class="meta"><span><b>${fmtM(d)}</b>・車程約 ${Math.max(1,Math.round(d/1000/20*60))} 分</span><span><span class="fb"><i style="width:${Math.max(6,Math.min(100,v))}%;background:${rampColor(v,v>100)}"></i></span>${e.rep?stateChip(v,true)+` <span class="repby">示範回報・${repAgo(b.id)}</span>`:`預測 <b>${rampState(v).t}</b>`}<span class="sim" title="模擬值"></span></span>${st.cal[b.id]?'<span class="flag cal">已校正 ×'+st.cal[b.id].k+'</span>':''}</div>
-   <div class="small" id="orderNote">依 ${t} 預測・必清優先，層內行車路網排序</div>
-   <div class="q">這桶實際多滿？點一下即完成此站（並校正預測）</div>
-   <div class="amts">${AMT.map(a=>`<button class="amt" data-amt="${a[0]}" data-pct="${a[2]}" aria-label="收運量：${a[1]}">${binIconSVG(a[2],a[2]>100?'overflow':null).html}${a[1]}</button>`).join('')}</div>`}
+function fitTop(){
+  if(!document.body.classList.contains('map-open'))return;
+  const ci=curIdx(),pts=state==='B'&&ci>=0?[[route[ci].b.la,route[ci].b.lo]]:route.map(e=>[e.b.la,e.b.lo]);
+  map.invalidateSize();
+  if(pts.length)map.fitBounds(pts,{padding:[32,32],maxZoom:17,animate:false});
+}
+function draw(){
+  binL.clearLayers();rtL.clearLayers();const ev=getEvents(),done=doneSet(),ci=curIdx();
+  route.forEach((e,i)=>{
+    const reported=done.has(e.b.id),selected=state==='B'&&i===ci;
+    L.marker([e.b.la,e.b.lo],{title:`${e.b.addr}・${reported?'今日已回報':'今日未回報'}`,icon:L.divIcon({className:'stopw',iconSize:[28,28],html:`<div class="stop${selected?' cur':''}" style="width:28px;height:28px;background:${css(reported?'--brand-ink':'--ink-2')}">${i+1}</div>`})}).on('click',()=>openBin(e.b.id)).addTo(rtL);
+  });
+  prog.innerHTML=`<span class="no">今日已回報 ${done.size} / ${route.length}</span><small>${esc(CONFIG.demoArea.name)}示範</small>`;
+  tChip.textContent=`模擬預測：${dayName(day())} ${FC.fmt(T())}`;
+  renderCard(ev,done,ci);renderLists();
+}
+function renderCard(ev,done,ci){
+  card.dataset.state=state;
+  if(window.NAV&&typeof navRender==='function'){navRender();return}
+  if(state==='A'){
+    const reports=reportsToday();
+    cardBody.innerHTML=`<h1 id="cardTitle">我的負責桶位</h1>
+      <p class="list-intro">${esc(CONFIG.demoArea.name)}示範清單 · 依原清冊順序</p>
+      <p class="list-help">所有負責桶位都可回報。未回報不代表空桶。</p>
+      ${route.length?`<ol class="assigned-list" aria-label="所有負責桶位">${route.map((e,i)=>{
+        const report=reports.get(e.b.id),amount=report&&AMT.find(a=>a[0]===report.amount)[1];
+        return `<li><button class="assigned-bin" data-bin="${esc(e.b.id)}"><span class="bin-number">${i+1}</span><span class="bin-copy"><strong>${esc(e.b.addr)}</strong><span class="bin-id">桶位 ${esc(e.b.id)}</span><span class="report-status${report?' reported':''}">${report?'今日已回報 · '+amount+' · '+esc(timeStr(report.ts)):'今日未回報'}</span></span><span class="row-action">${report?'再次回報':'回報'}</span></button></li>`;
+      }).join('')}</ol>`:'<p class="empty-list">目前示範範圍沒有桶位，請先確認負責清單。</p>'}
+      <p class="list-help">目前以既有示範範圍代表負責清單，尚未接入真實派工名單。</p>`;
+    return;
+  }
+  if(ci<0){activeId=null;state='A';renderCard(ev,done,ci);return}
+  const e=route[ci],b=e.b,v=Math.floor(e.fill),report=reportsToday().get(b.id);
+  cardBody.innerHTML=`<button class="tlink" id="backBtn">回到負責桶位清單</button>
+    <h1 class="addr">${esc(b.addr)}</h1><p class="bin-id">桶位 ${esc(b.id)} · 清單第 ${ci+1} / ${route.length} 桶</p>
+    <p class="report-status${report?' reported':''}">${report?'今日已回報，可再次記錄':'今日未回報'}</p>
+    <div class="q">這桶實際多滿？沿用既有示範：選擇滿度會同時記錄清運完成。</div>
+    <div class="amts">${AMT.map(a=>`<button class="amt" data-amt="${a[0]}" data-pct="${a[2]}" aria-label="收運量：${a[1]}">${binIconSVG(a[2],a[2]>100?'overflow':null).html}${a[1]}</button>`).join('')}</div>
+    <button type="button" class="tlink" id="locateBin">在地圖確認位置</button>
+    <details class="forecast-detail"><summary>預測與導航（模擬參考）</summary><p class="small">${dayName(day())} ${FC.fmt(T())} 預測：${rampState(v).t}。預測不影響負責清單與回報狀態。</p><button type="button" class="b" id="navIcon">導航到這個桶位</button></details>`;
+}
 function renderLists(){const st=FC.state(),A=Object.fromEntries(AMT.map(a=>[a[0],a[1]]));
   const cb=P.filter(b=>st.cal[b.id]);calList.innerHTML=cb.length?cb.map(b=>`<div data-calid="${b.id}">${b.addr}・產生量 ×${st.cal[b.id].k}（${st.cal[b.id].n} 次回報）</div>`).join(''):'尚無';
   const ids=new Set(P.map(b=>b.id)),ev=getEvents().filter(e=>ids.has(e.bin)).reverse().slice(0,12);
@@ -177,46 +211,42 @@ function renderLists(){const st=FC.state(),A=Object.fromEntries(AMT.map(a=>[a[0]
 function setState(s){state=s;saveUI();draw();requestAnimationFrame(()=>fitTop())}
 let undoT=null;
 function record(id,amount,pct){const b=P.find(x=>x.id===id),st=FC.state(),r=FC.clearAndCalibrate(b,day(),T(),pct,st);
-  addEvent({bin:id,kind:'clear',level:0,by:'清潔隊',amount,amountPct:pct,predPct:Math.round(r.pred),calib:+r.k.toFixed(3),fcDay:day(),fcMin:T()});progMark(id,true); // 進度：只記在本機
-  const ts=getEvents().slice(-1)[0].ts,eid=getEvents().slice(-1)[0].id;draw();fitTop();
+  addEvent({bin:id,kind:'clear',level:0,by:'清潔隊',amount,amountPct:pct,predPct:Math.round(r.pred),calib:+r.k.toFixed(3),fcDay:day(),fcMin:T()});// 回報狀態由今天的滿度事件推導，不依預測或路線進度。
+  const ts=getEvents().slice(-1)[0].ts,eid=getEvents().slice(-1)[0].id;activeId=null;state='A';card.classList.remove('collapsed');draw();card.scrollTop=0;fitTop();
   let u=document.querySelector('.undo');if(u)u.remove();clearTimeout(undoT);
   u=document.createElement('div');u.className='undo';u.setAttribute('role','status');
-  u.innerHTML=`<span>已完成・實際 ${AMT.find(a=>a[0]===amount)[1]}・預測${rampState(r.pred).t}</span><button>復原</button>`;u.style.bottom=(cardH()+22)+'px';document.body.appendChild(u);
-  u.querySelector('button').onclick=()=>{progMark(id,false); // 復原：只把這一站改回未完成
+  u.innerHTML=`<span>已完成・實際 ${AMT.find(a=>a[0]===amount)[1]}・預測${rampState(r.pred).t}</span><button>復原</button>`;u.style.bottom='16px';document.body.appendChild(u);
+  u.querySelector('button').onclick=()=>{ // 復原後，依仍保留的回報重新判讀狀態。
     getEvents().filter(e=>e.id===eid||(e.ts===ts&&e.bin===id)).forEach(e=>removeEvent(e.id));const s2=FC.state();if(r.old===1&&s2.cal[id]&&s2.cal[id].n===1)delete s2.cal[id];else if(s2.cal[id])s2.cal[id]={k:r.old,n:s2.cal[id].n-1};delete s2.clear[id];FC.save(s2);u.remove();clearTimeout(undoT);draw();fitTop()};
   undoT=setTimeout(()=>u.remove(),3000)}
-card.onclick=e=>{const a=e.target.closest('[data-amt]');if(a){record(route[curIdx()].b.id,a.dataset.amt,+a.dataset.pct);return}
-  if(e.target.closest('#startBtn')){setState('B');return}
-  if(e.target.closest('#backBtn')||e.target.closest('#replanBtn')){plan();setState('A');return}
-  if(e.target.closest('#grab')||(e.target.closest('#cardBody > .k')&&!e.target.closest('button,a'))){card.classList.toggle('collapsed');togSet(document.getElementById('grab'),card.classList.contains('collapsed'));const u=document.querySelector('.undo');if(u)u.style.bottom=(cardH()+22)+'px';requestAnimationFrame(()=>{fitTop();window.dispatchEvent(new Event('resize'))})}}; // 把手或標題都能收合／展開（和行人頁一樣）
-menu.onclick=()=>sheetOpen('setSheet');infoBtn.onclick=()=>sheetOpen('infoSheet');tChip.onclick=()=>sheetOpen('timeSheet');
-// 跨分頁同步（行人 滿了／取消、別的分頁清運）：只更新每站狀態，不重新排序、不 fit 地圖、不換狀態
-function syncStatus(){const old=route.map(e=>e.b.id),ev=getEvents(),dl=deadline(T());
-  if(state==='B'){const st=FC.state();const m=new Map(FC.evaluate(P,day(),T(),st).map(e=>[e.b.id,e]));E=[...m.values()];route=old.map(id=>m.get(id)).filter(Boolean);route.forEach(e=>{e.rep=binState(e.b.id,ev)==='reported';e.must=e.rep||e.fill>=100||e.fullAt<=dl})}
-  else{const g=gen;plan();gen=g;const m=new Map(route.map(e=>[e.b.id,e])),keep=old.filter(id=>m.has(id)).map(id=>m.get(id)),add=route.filter(e=>!old.includes(e.b.id));
-    const lastMust=keep.map(e=>e.must).lastIndexOf(true);route=[...keep.slice(0,lastMust+1),...add.filter(e=>e.must),...keep.slice(lastMust+1),...add.filter(e=>!e.must)]} // 既有站序不動；新加入的必清接在既有必清之後，其餘接在最後
-  draw()}
+card.onclick=e=>{
+  const row=e.target.closest('[data-bin]');if(row){openBin(row.dataset.bin);return}
+  const amount=e.target.closest('[data-amt]');if(amount&&!(window.NAV)){const i=curIdx();if(i>=0)record(route[i].b.id,amount.dataset.amt,+amount.dataset.pct);return}
+  if(e.target.closest('#backBtn')){activeId=null;setState('A');card.scrollTop=0;cardBody.querySelector('[data-bin]')?.focus({preventScroll:true});return}
+  if(e.target.closest('#locateBin'))showMap(true);
+};
+showInfo.onclick=()=>{setSheet.hidden=true;sheetOpen('infoSheet')};
+menu.onclick=()=>sheetOpen('setSheet');infoBtn.onclick=()=>sheetOpen('infoSheet');tChip.onclick=()=>{setSheet.hidden=true;sheetOpen('timeSheet')};
+function syncStatus(){plan();draw()}
 onAppSync(()=>syncStatus());
-function replan(){plan();if(state==='B')state='A';saveUI();draw();requestAnimationFrame(()=>fitTop())}
+function replan(){plan();saveUI();draw();requestAnimationFrame(()=>fitTop())}
 fcT.oninput=()=>{fcTV.textContent=FC.fmt(T())};fcT.onchange=()=>{replan();timeSheet.hidden=true};
 document.querySelectorAll('[name=fcd]').forEach(r=>r.onchange=()=>{replan();timeSheet.hidden=true});
-thSeg.onchange=()=>replan();
-cardBody.addEventListener('click',e=>{if(e.target.closest('#toNear')){th.value=70;replan()}if(e.target.closest('#toTime'))sheetOpen('timeSheet')}); // 空狀態連結：切回「快滿了以上」（切換鈕、清單、存檔一起更新）
-allClear.onclick=()=>{const d=doneSet(),left=route.filter(e=>!d.has(e.b.id));if(!left.length)return;
-  if(confirm(`確定將剩餘 ${left.length} 站全部標示為「已清運」？\n（不會記錄實際滿度，也不會校正）`)){left.forEach(e=>addEvent({bin:e.b.id,kind:'clear',level:0,by:'清潔隊'}));progSave(new Set(route.map(e=>e.b.id)));toast(`已標示 ${left.length} 站清運完成`);draw();setSheet.hidden=true}};
+let displayedDate=CrewList.dateKey(Date.now());
+setInterval(()=>{const date=CrewList.dateKey(Date.now());if(date!==displayedDate){displayedDate=date;draw()}},30000);
 iLpr.textContent=C.litersPerRide;dlinks.innerHTML=C.demoLinks.map(l=>`<a href="crew.html?fc=1&day=${l.day}&t=${l.time}" data-pd="${l.day}" data-pt="${l.time}">${l.label}</a>`).join('');
 dlinks.onclick=ev=>{const a=ev.target.closest('[data-pd]');if(!a)return;ev.preventDefault();document.querySelector(`[name=fcd][value=${a.dataset.pd}]`).checked=true;fcT.value=FC.hm(a.dataset.pt);fcTV.textContent=a.dataset.pt;
   card.classList.add('fade');setTimeout(()=>{replan();card.classList.remove('fade');timeSheet.hidden=true},300)};iSrc.href=C.calibration.source;
-Promise.all([loadJSON('bins.geojson'),loadJSON('footfall_hourly.json'),RT.load('drive').catch(()=>null)]).then(([b,h,g])=>{DR=g;
+Promise.all([loadJSON('bins.geojson'),loadJSON('footfall_hourly.json')]).then(([b,h])=>{
   const[[a1,b1],[c1,d1]]=CONFIG.demoArea.bounds;
   const bins=b.features.filter(f=>f.properties.source.startsWith('main')).map(f=>({id:f.properties.id,la:ll(f)[0],lo:ll(f)[1],addr:f.properties.address})).filter(x=>x.la>=a1&&x.la<=c1&&x.lo>=b1&&x.lo<=d1);
   P=FC.prepare(bins,h);
   const deep=q.get('fc')==='1'||q.has('day')||q.has('t');
   const dd=q.get('day')||(!deep&&ui.day)||C.demoTime.day,tt=q.get('t')?FC.hm(q.get('t')):(!deep&&ui.t!=null?ui.t:FC.hm(C.demoTime.time));
-  document.querySelector(`[name=fcd][value=${dd}]`).checked=true;fcT.value=tt;fcTV.textContent=FC.fmt(tt);th.value=ui.th!=null?ui.th:C.threshold;
+  document.querySelector(`[name=fcd][value=${dd}]`).checked=true;fcT.value=tt;fcTV.textContent=FC.fmt(tt);
   plan();
-  if(!deep&&ui.state==='B'&&ui.gen&&ui.route&&ui.route.length){const m=new Map(E.map(e=>[e.b.id,e]));route=ui.route.map(id=>m.get(id)).filter(Boolean);gen=ui.gen;state='B'}else state='A';
-  saveUI();draw();requestAnimationFrame(()=>fitTop())}).catch(e=>toast('資料載入失敗：'+e.message));
+  state='A';activeId=null;
+  saveUI();draw();requestAnimationFrame(()=>fitTop())}).catch(e=>{cardBody.innerHTML='<h1>負責桶位載入失敗</h1><p>請確認網路後重新載入，未回報狀態不會改成空桶。</p><button class="b" id="retryLoad">重新載入</button>';document.getElementById('retryLoad').onclick=()=>location.reload();prog.textContent='清單尚未載入';console.error(e)});
 
 // ===== App 內行車導航（beta）：沿用行人頁 nav.js，只換參數 =====
 // 路線：OSRM car（routing.openstreetmap.de/routed-car，driving profile）；Google 地圖只當次要小按鈕；抵達＝原本的收運量回報（同選項、同寫入）
@@ -224,9 +254,9 @@ let crewPos=null,crewAcc=999,crewMe=null;
 const crewGm=(la,lo)=>`https://www.google.com/maps/dir/?api=1&destination=${la},${lo}&travelmode=driving`;
 function crewSetPos(q,a){crewPos=q;if(a>0)crewAcc=a;if(!crewMe)crewMe=L.circleMarker(q,{radius:7,color:'#fff',weight:2.5,fillColor:'#2a7de1',fillOpacity:1,interactive:false}).addTo(map);else crewMe.setLatLng(q)}
 function crewSoftEnd(){if(!NAV)return;clearTimeout(NAV.idleT);if(NAV.wid!=null&&navigator.geolocation)navigator.geolocation.clearWatch(NAV.wid);NAV=null;navL.clearLayers()}
-function crewReopen(i){crewSoftEnd();const b=route[i]&&route[i].b;if(!b)return;document.body.classList.add('navon');
+function crewReopen(i){crewSoftEnd();const b=route[i]&&route[i].b;if(!b)return;activeId=b.id;state='B';showMap(true);document.body.classList.add('navon');
   NAV={idx:i,bin:b,pts:null,fail:false,loading:false,dragAt:0,shownD:null,shownAt:0,lastPos:(crewPos||[b.la,b.lo]).slice(),near0:null,arrShown:false,mode:'nav',idleT:0,acc:crewAcc,startAt:Date.now()};navWatch();navArrOpen()}
-function crewNavGo(){const i=curIdx();if(i<0)return;const b=route[i].b,go=()=>{if(!crewPos){const pr=i?[route[i-1].b.la,route[i-1].b.lo]:depot;crewSetPos(pr,999)}NAVH.setCol(true);navStart(b,{idx:i})};
+function crewNavGo(){showMap(true);const i=curIdx();if(i<0)return;const b=route[i].b,go=()=>{if(!crewPos){const pr=i?[route[i-1].b.la,route[i-1].b.lo]:depot;crewSetPos(pr,999)}NAVH.setCol(true);navStart(b,{idx:i})};
   if(crewPos||!navigator.geolocation)return go();let done=false;const fin=()=>{if(!done){done=true;go()}};setTimeout(fin,3000);
   try{navigator.geolocation.getCurrentPosition(p=>{crewSetPos([p.coords.latitude,p.coords.longitude],p.coords.accuracy);fin()},fin,{enableHighAccuracy:true,timeout:3000,maximumAge:5000})}catch(e){fin()}}
 window.NAVH={osrm:'https://routing.openstreetmap.de/routed-car/route/v1/driving/',speed:333,label:'行車', // 20 km/h（同卡片車程估算）
@@ -241,11 +271,11 @@ window.NAVH={osrm:'https://routing.openstreetmap.de/routed-car/route/v1/driving/
     <div class="q">這桶實際多滿？點一下即完成此站（並校正預測）</div><div class="amts">${AMT.map(a=>`<button class="amt" data-amt="${a[0]}" data-pct="${a[2]}" aria-label="收運量：${a[1]}">${binIconSVG(a[2],a[2]>100?'overflow':null).html}${a[1]}</button>`).join('')}</div></div>`,
   fitFail:()=>false,clearOther:()=>{},
   after:()=>{const u=document.querySelector('.undo');if(u)u.style.bottom=(cardH()+22)+'px'},
-  onEnd:()=>{draw();requestAnimationFrame(()=>fitTop())},
+  onEnd:()=>{card.classList.remove('collapsed');draw();requestAnimationFrame(()=>fitTop())},
   idleClick:t=>{if(state==='B'&&t.closest('#navPri,#navIcon')){crewNavGo();return true}return false},
   arrClick:(t,N)=>{const a=t.closest('[data-amt]');if(!a)return null; // 抵達：原本的收運量回報（record：同選項、同寫入）
     const id=N.bin.id,i0=N.idx;crewSoftEnd();record(id,a.dataset.amt,+a.dataset.pct);const ub=document.querySelector('.undo button');if(ub)ub.addEventListener('click',()=>crewReopen(i0));const i=curIdx(); // 復原：撤銷回報後回到這一站的抵達卡（含最後一站）
     if(i<0){navEnd&&document.body.classList.remove('navon');navMe.hidden=true;NAVH.setCol(false);draw();requestAnimationFrame(()=>fitTop());return true} // 最後一站：結束導航，回到路線總覽
-    NAVH.setCol(true);navStart(route[i].b,{idx:i});return true}};
+    activeId=route[i].b.id;state='B';NAVH.setCol(true);navStart(route[i].b,{idx:i});return true}};
 {const s=document.createElement('style');s.textContent='.navw{display:block!important;width:100%}.ncw{display:flex;flex-wrap:wrap;align-items:baseline;min-width:0;flex:1}.ncw .nn{flex-basis:100%;font:400 13px/1.4 var(--font,system-ui);color:#7d8b8b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#card .narr .amts{margin-top:8px}';document.head.appendChild(s)}
 </script><script src="nav.js?v=20261022q"></script></body></html>
