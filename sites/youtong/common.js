@@ -27,7 +27,7 @@ const gmapWalk=(la,lo)=>`https://www.google.com/maps/dir/?api=1&destination=${la
 function toast(t){let e=document.querySelector('.toast');if(!e){e=document.createElement('div');e.className='toast';document.body.appendChild(e)}e.textContent=t;e.classList.add('show');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('show'),2200)}
 // 事件：{bin, kind:'full'|'level'|'clear', level(0-100), by:'行人'|'清潔隊', ts}
 const getEvents=()=>{try{const v=JSON.parse(localStorage.getItem(LS_EVENTS));return Array.isArray(v)?v.filter(e=>e&&typeof e==='object'&&typeof e.bin==='string'):[]}catch(e){return[]}}; // 舊版／壞掉的存檔不會讓頁面掛掉
-// 「這裡需要垃圾桶」民眾回報：已同步到雲端（cloud.js）；本機快取在 localStorage（KP 前綴，見 config.js），重設／?reset=1 只清本機，沒有預設資料
+// 「這裡需要垃圾桶」民眾回報：本機示範紀錄，不送往機關；本機快取在 localStorage（KP 前綴，見 config.js），重設／?reset=1 只清示範空間，沒有預設資料
 const LS_NEEDS=KP+'needs_v1',NEED_DEDUP_M=50;
 // 同一瀏覽器跨分頁即時同步（模擬）：只在回報事件或需求回報的鍵改變時呼叫 fn；跨裝置不同步。
 // 正在輸入（焦點在 input/textarea/select）時延後到離開輸入框再套用，不打斷使用者
@@ -60,7 +60,7 @@ function removeEvent(id){localStorage.setItem(LS_EVENTS,JSON.stringify(getEvents
 // 待上傳的動作存在 KP+'cloudq_v1'，重新連線後依序送出
 const LS_CQ=KP+'cloudq_v1',LS_OWN=KP+'owners_v1';
 const cloudQ=()=>{try{const v=JSON.parse(localStorage.getItem(LS_CQ));return Array.isArray(v)?v:[]}catch(e){return[]}};
-function cloudOp(op,node,rec){if(!window.CLOUD_ON)return;const q=cloudQ();q.push({op,node,rec,t:Date.now(),ep:(v=>v==null?null:+v)(localStorage.getItem(KP+'epoch_v1'))});try{localStorage.setItem(LS_CQ,JSON.stringify(q.slice(-300)))}catch(e){}if(window.Cloud){Cloud.flush();Cloud.refresh&&Cloud.refresh()}}
+function cloudOp(op,node,rec){if(window.CONFIG?.demo||!window.CLOUD_ON)return;const q=cloudQ();q.push({op,node,rec,t:Date.now(),ep:(v=>v==null?null:+v)(localStorage.getItem(KP+'epoch_v1'))});try{localStorage.setItem(LS_CQ,JSON.stringify(q.slice(-300)))}catch(e){}if(window.Cloud){Cloud.flush();Cloud.refresh&&Cloud.refresh()}}
 function seedFill(id){let h=2166136261;for(const c of id){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return (h>>>0)%101} // 模擬：依 id 固定
 // 清運規則：某桶最近一次「清運完成」之後，比它早的回報（滿了／滿度）不算。比較用回報的原始時間 ot（離線排隊、晚上傳也一樣），沒有 ot 時用 ts
 const evT=e=>e.ot??e.ts;

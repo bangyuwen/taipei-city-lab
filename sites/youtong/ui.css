@@ -85,3 +85,12 @@ html body .top{padding-top:calc(var(--row2) + env(safe-area-inset-top))!importan
 .roles .wm img{width:52px!important;height:52px!important;margin:0!important;display:block}
 .roles .wm .wt{display:none!important}
 @media (min-width:761px){.roles .wm{width:60px!important;height:60px!important;border-radius:12px}.roles .wm img{width:60px!important;height:60px!important}}
+
+/* The portal adds a home link and an always-visible local-demo boundary. */
+.roles{flex-wrap:wrap;gap:4px 8px;max-width:calc(100vw - 72px)}
+.roles .wm{padding:0 8px;min-width:48px}
+.roles .demo-note{display:flex;align-items:center;gap:10px;flex-basis:100%;font:500 12px/1.5 var(--font);color:#18333b;background:#fff;padding:0 8px;border-radius:4px}
+.roles .demo-note a{font-size:12px;min-width:0;min-height:36px;height:auto;padding:4px 0;color:#16566a;text-decoration:underline;text-underline-offset:3px}
+.roles a:focus-visible{outline:3px solid #bd5c16;outline-offset:3px}
+.tchip{top:calc(var(--demo-header-bottom,76px) + 8px)!important}
+@media(max-width:400px){.roles{gap:3px}.roles .seg3 a{padding:0 8px;min-width:44px;font-size:13px}.roles .wm{padding:0 4px;min-width:44px}.roles .demo-note{gap:6px;font-size:11px}.roles .demo-note a{font-size:11px}}
