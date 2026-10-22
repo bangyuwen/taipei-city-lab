@@ -4,7 +4,7 @@ import {createHash} from 'node:crypto';
 const root=resolve(import.meta.dirname,'../dist');
 const html=await readFile(resolve(root,'index.html'),'utf8');
 const hosting=JSON.parse(await readFile(resolve(root,'../.openai/hosting.json')));
-if(hosting.project_id!=='appgprj_6acfae6c57308191a1c3f97a36d33b66'||hosting.static?.directory!=='out')throw Error('Hosting manifest incomplete');
+if(hosting.project_id!=='appgprj_6acfae6c57308191a1c3f97a36d33b66'||hosting.static?.directory!=='public')throw Error('Hosting manifest incomplete');
 const files=['siting-ui.js','siting-overlay.html','app.js','history.js','data-utils.js','styles.css','mark.svg','data/datasets.json','data/taipei-bins-2026-study-area.provenance.json',
   'comparison-ui.js','comparison-utils.js','comparison.css','data/comparison-2024-2026.json','data/comparison-2024-2026.csv',
   'research/comparison-2024-2026/README.md','research/comparison-2024-2026/protocol.json',
@@ -114,3 +114,16 @@ for(const [,href] of checklist.matchAll(/<a\b[^>]*href=["']([^"']+)["']/gi)){
 console.log('Siting snapshot and interactive-page publication boundary verified.');
 
 if(/現勘問題|現場共通紀錄|現勘優先序|P1／P2/.test(checklist))throw Error('Old field workflow remains in data-reading table');
+
+// Validate the combined publication against the same allowlist and transformations.
+execFileSync(process.env.PYTHON_BIN||'python3',['-c',`
+import runpy
+from pathlib import Path
+m=runpy.run_path('scripts/prepare-portal.py'); expected=m['publication_files']()
+root=Path('public')
+assert not root.is_symlink()
+assert not any(p.is_symlink() for p in root.rglob('*'))
+actual={str(p.relative_to(root)):p.read_bytes() for p in root.rglob('*') if p.is_file()}
+assert actual==expected, 'Portal assets or source bindings differ'
+`],{cwd:resolve(root,'..'),stdio:'pipe'});
+console.log('Portal home, research and isolated demo publication verified.');

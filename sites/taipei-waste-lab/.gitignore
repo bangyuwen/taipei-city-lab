@@ -8,3 +8,5 @@ qa/
 
 .impeccable/review/
 .impeccable/mocks/
+
+/public/

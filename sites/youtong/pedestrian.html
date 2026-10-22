@@ -105,12 +105,12 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);background:#f4f4f2
 <div class="sheet" id="infoSheet" hidden><div class="sh" role="dialog" aria-label="資料說明">
   <div class="hd"><b>資料說明</b><button class="x" data-close aria-label="關閉">✕</button></div>
   <h3>真實資料</h3>
-  <ul><li><b>即時同步</b>：回報會即時同步到所有裝置；離線時先存在本機，恢復連線後上傳。「回報、清運、需求回報」是真實資料（Firebase 同步）；滿度預測、例行清運時間、出發點仍是模擬。</li><li><b>位置、地址、禁丟家用垃圾</b>：臺北市行人專用清潔箱（環保局，data.taipei，2026-09-30 版，欄位：行政區、地址、經度、緯度、備註）。</li>
+  <ul><li><b>本機示範</b>：回報、清運與需求紀錄只存於這個瀏覽器，可在同一瀏覽器的角色分頁查看；不會上傳、通知機關或形成正式派工。滿度預測、例行清運時間與出發點都是模擬。</li><li><b>位置、地址、禁丟家用垃圾</b>：臺北市行人專用清潔箱（環保局，data.taipei，2026-09-30 版，欄位：行政區、地址、經度、緯度、備註）。</li>
   <li><b>一般垃圾＋資源回收</b>：開放資料<b>沒有逐桶類別欄位</b>；依環保局全市說明「全市共設有1943組『行人專用清潔箱』，每組包含一般垃圾箱與資源回收箱各1個，每個容量約為120公升」（資料截至 2025 年 2 月），每個點位皆標示為一般＋回收。個別點位實況可能不同。<br>
   來源：<a href="https://www.chinatimes.com/realtimenews/20250817001619-260405" target="_blank" rel="noopener">中國時報 2025-08-17</a>・<a href="https://udn.com/news/story/7266/8945553" target="_blank" rel="noopener">聯合報 2025-08-18</a>・<a href="https://money.udn.com/money/story/7307/8944421" target="_blank" rel="noopener">經濟日報</a></li>
   <li>示範位置：捷運公館站公車站（示範區內），最近的清潔箱（羅斯福路4段106號(水源市場前)）步行約 102 公尺；在這裡按「滿了」，清潔隊頁看得到。點地圖任一處可手動設定位置。</li></ul>
   <h3>這裡需要垃圾桶</h3>
-  <ul><li>按一下記錄目前位置與時間，可再選原因（一般垃圾／其他；選「其他」可再輸入 40 字內說明）；50 m 內已有回報只算一次。最近的桶步行超過 200 m 時按鈕會變醒目。設點規劃頁的「民眾回報需求」圖層看得到，只當佐證，不計入查核優先序。</li><li>需求回報已同步到雲端。</li></ul>
+  <ul><li>按一下記錄目前位置與時間，可再選原因（一般垃圾／其他；選「其他」可再輸入 40 字內說明）；50 m 內已有回報只算一次。最近的桶步行超過 200 m 時按鈕會變醒目。設點規劃頁的「本機示範需求」圖層看得到，只當佐證，不計入查核優先序。</li><li>需求回報僅存本機示範空間，不會送至機關。</li></ul>
   <h3>地圖</h3>
   <ul><li><span style="color:#1f8fa3">◆</span> 備用垃圾桶：依景點、商圈推估的可能丟點，尚未實地確認（120 點，2026-08-18；固定顯示，不列入「最近的桶」與步行路線）</li></ul>
   <h3>回報</h3>
@@ -212,7 +212,7 @@ function renderInner(fit){if(window.NAV){navRender();return} // 導航中：卡�
     <div class="dist"><b>${fmtM(P.d).replace(' ','\u2009')}</b><span>${dlab(P)}</span></div>
     ${fr?`<div class="meta">${fr}</div>`:''}${real.length?`<div class="meta" style="margin-top:2px">${real.join('・')}</div>`:''}
     <div class="acts"><button class="b pri" id="navGo">步行導航</button></div>${window.NAVNEXT?'<button class="nnext" id="navNext">找下一個最近的桶</button>':''}
-    <div class="q" data-q="${p.id}"><div class="qt">這桶滿了嗎？</div>${askedV(p.id)?`<div class="qd"><span>${askedV(p.id)==='full'&&SC.inArea(p.la,p.lo)?'✓ 謝謝，已通知清潔隊':'✓ 謝謝回報'}</span>${myRep&&myRep.bin===p.id?'<button class="undo" id="repUndo">取消</button>':''}</div>`:`<div class="qb"><button id="okBtn" data-ok="${p.id}">還能丟</button><button data-full="${p.id}">滿了</button></div>`}</div>
+    <div class="q" data-q="${p.id}"><div class="qt">這桶滿了嗎？</div>${askedV(p.id)?`<div class="qd"><span>${'已記錄於本機示範，未通知機關'}</span>${myRep&&myRep.bin===p.id?'<button class="undo" id="repUndo">取消</button>':''}</div>`:`<div class="qb"><button id="okBtn" data-ok="${p.id}">還能丟</button><button data-full="${p.id}">滿了</button></div>`}</div>
   </div>
   ${needHTML()}`;
   drawRoute(P);redraw();kbFit();
@@ -265,7 +265,7 @@ list.onclick=e=>{
   if(e.target.closest('#cardTog')){collapsed=!collapsed;render(true);return} // 收合／展開後重新 fit（下緣＝當下卡片上緣＋24）
   const fb=e.target.closest('[data-full]');if(fb){const r=addEvent({bin:fb.dataset.full,kind:'full',level:100,by:'行人'});setAsked(fb.dataset.full,'full');myRep={bin:fb.dataset.full,kind:'full',id:r.id};saveRep();sel=fb.dataset.full;render(false);return}
   const ob=e.target.closest('[data-ok]');if(ob){setAsked(ob.dataset.ok,'ok');myRep={bin:ob.dataset.ok,kind:'ok'};saveRep();sel=ob.dataset.ok;render(false);return}
-  if(e.target.closest('#repUndo')&&myRep){if(myRep.id)removeEvent(myRep.id);setAsked(myRep.bin,null);sel=myRep.bin;myRep=null;saveRep();render(false);return} // 用 id 撤回自己那一筆 → 清潔隊頁的已回報滿／行人回報／必清一起解除；卡片回到問句
+  if(e.target.closest('#repUndo')&&myRep){if(myRep.id)removeEvent(myRep.id);setAsked(myRep.bin,null);sel=myRep.bin;myRep=null;saveRep();render(false);return} // 用 id 撤回自己那一筆 → 清潔隊頁的已回報滿／示範回報／必清一起解除；卡片回到問句
   if(e.target.closest('#needBtn')&&pos){needId=addNeed(pos[0],pos[1]).rec.id;render(false);return}
   if(e.target.closest('#needNoteSend')&&needId){setNeedNote(needId,needNote.value.slice(0,NEED_NOTE_MAX));needNoteSent=true;render(false);return}
   if(e.target.closest('#needUndo')&&needId){needNoteSent=false;removeNeed(needId);needId=null;render(false);return}

@@ -6,8 +6,8 @@
   "scripts": {
     "prepare-data": "python scripts/prepare-data.py",
     "test": "node --test tests/*.test.mjs",
-    "check": "npm run prepare-countries && python scripts/prepare-siting-overlay.py && python scripts/prepare-hotspots.py && npm run prepare-cross-analysis && python scripts/prepare-public.py && node scripts/check.mjs",
-    "preview": "python -m http.server 4174 --bind 0.0.0.0 --directory out",
+    "check": "npm run prepare-countries && python scripts/prepare-siting-overlay.py && python scripts/prepare-hotspots.py && npm run prepare-cross-analysis && python scripts/prepare-public.py && python scripts/prepare-portal.py && node scripts/check.mjs",
+    "preview": "python -m http.server 4174 --bind 0.0.0.0 --directory public",
     "prepare-countries": "node scripts/prepare-country-strategies.mjs",
     "prepare-cross-analysis": "python3 scripts/prepare-cross-analysis.py",
     "prepare-transport-time": "python3 scripts/aggregate-mrt-complaints.py"
