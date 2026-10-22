@@ -26,7 +26,7 @@ export function validateCountries(countries) {
     }
     if (new Set(c.cases.map(item => item.id)).size !== c.cases.length) throw Error(`${id}: duplicate cases`);
     for (const item of c.cases) {
-      if (!/^[a-z0-9-]+$/.test(item.id) || ['media','taipei','sources'].includes(item.id)) throw Error(`${id}: invalid case id`);
+      if (!/^[a-z0-9-]+$/.test(item.id) || ['media','taipei','sources','cases','flow'].includes(item.id)) throw Error(`${id}: invalid case id`);
       for (const key of ['title','place','period','status',...fields.map(([key]) => key)]) if (!item[key]?.trim()) throw Error(`${id}/${item.id}: missing ${key}`);
     }
     for (const step of c.flow.steps) if (!step.label || !step.text) throw Error(`${id}: incomplete flow`);
@@ -46,7 +46,7 @@ function citations(country, ids) {
 
 function flow(country) {
   const item = country.flow;
-  return `<figure class="strategy-flow"><figcaption>${escape(item.title)}</figcaption><ol>${item.steps.map(step => `<li><strong>${escape(step.label)}</strong><p>${escape(step.text)}</p></li>`).join('')}</ol><p class="strategy-diagram-note">${escape(item.note)} 流程箭頭表示作業順序，不表示垃圾量或成效。</p>${citations(country,item.sourceIds)}</figure>`;
+  return `<figure class="strategy-flow" aria-labelledby="country-${country.id}-flow"><figcaption id="country-${country.id}-flow" tabindex="-1">${escape(item.title)}</figcaption><ol>${item.steps.map(step => `<li><strong>${escape(step.label)}</strong><p>${escape(step.text)}</p></li>`).join('')}</ol><p class="strategy-diagram-note">${escape(item.note)} 步驟編號表示作業順序，不表示垃圾量或成效。</p>${citations(country,item.sourceIds)}</figure>`;
 }
 
 function chart(country) {
@@ -57,7 +57,13 @@ function chart(country) {
 
 function caseStudy(country, item) {
   const id = `country-${country.id}-${item.id}`;
-  return `<section class="strategy-case" aria-labelledby="${id}"><h4 id="${id}" tabindex="-1">${escape(item.title)}</h4><p class="strategy-case-meta">${escape(item.place)} · ${escape(item.period)} · ${escape(item.status)}</p><dl class="strategy-facts">${fields.map(([key,label]) => `<div${key==='limits'?' class="strategy-limit"':''}><dt>${label}</dt><dd>${escape(item[key])}</dd></div>`).join('')}</dl>${citations(country,item.sourceIds)}</section>`;
+  const groups = [
+    ['服務與配置',['problem','placement','separation']],
+    ['執行與費用',['operation','responsibility','finance']],
+    ['結果與限制',['result','limits']],
+  ];
+  const facts = groups.map(([title,keys]) => `<section class="strategy-fact-group"><h5>${title}</h5><dl class="strategy-facts">${keys.map(key => `<div${key==='limits'?' class="strategy-limit"':''}><dt>${fields.find(([name])=>name===key)[1]}</dt><dd>${escape(item[key])}</dd></div>`).join('')}</dl></section>`).join('');
+  return `<section class="strategy-case" aria-labelledby="${id}"><h4 id="${id}" tabindex="-1">${escape(item.title)}</h4><dl class="strategy-case-meta"><div><dt>地點</dt><dd>${escape(item.place)}</dd></div><div><dt>時間</dt><dd>${escape(item.period)}</dd></div><div><dt>紀錄狀態</dt><dd>${escape(item.status)}</dd></div></dl>${facts}${citations(country,item.sourceIds)}</section>`;
 }
 
 function mediaArticles(template) {
@@ -72,7 +78,8 @@ export function renderCountry(country, media) {
   const id = `country-${country.id}`;
   const chapterLinks = country.cases.length > 1 ? `<nav class="strategy-case-nav" aria-label="${escape(country.name)}地方案例">${country.cases.map(item => `<a href="#${id}-${item.id}">${escape(item.title)}</a>`).join('')}</nav>` : '';
   const equipment = media ? `<section class="country-media-supplement" aria-labelledby="${id}-media"><h4 id="${id}-media" tabindex="-1">外觀與 3D 補充</h4><p class="country-media-place">${media.title}</p><p>以下照片與模型只對應這個設備或收運案例，不代表同國所有政策。設備價格依原年份與範圍閱讀。</p>${media.body}</section>` : `<p class="strategy-media-absence">本案例目前提供策略與研究證據，尚未收錄可對應的實拍或 3D 模型。</p>`;
-  return `<li><article class="country-case" aria-labelledby="${id}" data-country-name="${escape(country.name)}"${media?' data-media-case="true"':''}><h3 id="${id}" tabindex="-1">${escape(country.name)}<span>${escape(country.scope)}</span></h3><div class="country-strategy"><p class="strategy-thesis">${escape(country.thesis)}</p><p class="strategy-summary">${escape(country.summary)}</p>${chapterLinks}${flow(country)}${chart(country)}${country.cases.map(item => caseStudy(country,item)).join('')}<section class="strategy-takeaways" aria-labelledby="${id}-taipei"><h4 id="${id}-taipei" tabindex="-1">台北可以借鏡的條件</h4><p>以下是研究判斷，尚未在台北驗證。</p><ul>${country.takeaways.map(text => `<li>${escape(text)}</li>`).join('')}</ul></section><section class="strategy-sources" aria-labelledby="${id}-sources"><h4 id="${id}-sources" tabindex="-1">來源與查閱範圍</h4><ol>${country.sources.map(source => `<li>${link(source)}<span>${escape(source.kind)}</span></li>`).join('')}</ol></section></div>${equipment}<p class="strategy-return"><a href="#country-index-heading">回到國家索引</a> · <a href="#country-strategy-comparison">查看跨國策略表</a></p></article></li>`;
+  const readingLinks = [['cases','地方案例'],['flow','作業流程'],['taipei','台北借鏡'],...(media?[['media','設備補充']]:[]),['sources','來源']];
+  return `<li><article class="country-case" aria-labelledby="${id}" data-country-name="${escape(country.name)}"${media?' data-media-case="true"':''}><h3 id="${id}" tabindex="-1">${escape(country.name)}</h3><p class="strategy-thesis">${escape(country.thesis)}</p><p class="strategy-scope">${escape(country.scope)}</p><nav class="strategy-reading-nav" aria-label="${escape(country.name)}閱讀段落">${readingLinks.map(([anchor,label])=>`<a href="#${id}-${anchor}">${label}</a>`).join('')}</nav><div class="country-strategy"><section class="strategy-case-overview" aria-labelledby="${id}-cases"><h4 id="${id}-cases" tabindex="-1">地方案例</h4><p class="strategy-summary">${escape(country.summary)}</p>${chapterLinks}</section>${country.cases.map(item => caseStudy(country,item)).join('')}${flow(country)}${chart(country)}<section class="strategy-takeaways" aria-labelledby="${id}-taipei"><h4 id="${id}-taipei" tabindex="-1">台北可以借鏡的條件</h4><p>以下是研究判斷，尚未在台北驗證。</p><ul>${country.takeaways.map(text => `<li>${escape(text)}</li>`).join('')}</ul></section></div>${equipment}<section class="strategy-sources" aria-labelledby="${id}-sources"><h4 id="${id}-sources" tabindex="-1">來源與查閱範圍</h4><ol>${country.sources.map(source => `<li>${link(source)}<span>${escape(source.kind)}</span></li>`).join('')}</ol></section><p class="strategy-return"><a href="#country-index-heading">回到國家索引</a> · <a href="#country-strategy-comparison">查看跨國策略表</a></p></article></li>`;
 }
 
 function comparison(countries) {
@@ -85,14 +92,12 @@ export function renderPanel(countries, template) {
   if (media.size !== 12) throw Error('Preserve all twelve equipment cases');
   const regions = [['亞洲與地區',countries.slice(0,5)],['歐洲',countries.slice(5,10)],['美洲、非洲與大洋洲',countries.slice(10)]];
   return `<section id="panel-countries" class="page-panel" aria-labelledby="countries-heading" hidden>
-  <nav class="project-breadcrumb" aria-label="目前位置"><a href="#research">工作總覽</a><span aria-hidden="true">/</span><a href="#library">參考資料</a><span aria-hidden="true">/</span><span aria-current="page">各國案例</span></nav><nav class="project-subnav" aria-label="參考資料內頁"><a href="#library" data-page="library">參考資料索引</a></nav>
+  <nav class="project-breadcrumb" aria-label="目前位置"><a href="#research">研究總覽</a><span aria-hidden="true">/</span><a href="#library">參考資料</a><span aria-hidden="true">/</span><span aria-current="page">各國案例</span></nav><nav class="project-subnav" aria-label="參考資料內頁"><a href="#library" data-page="library">參考資料索引</a></nav>
   <div class="section-heading"><div><h2 id="countries-heading" tabindex="-1">各國垃圾桶</h2></div><p>收錄 24 個地方案例，分別列出桶放在哪裡、誰清運、誰付費，以及哪些效果已有觀測。各案指標與服務不同，不能直接排出台北該採用哪一種。</p></div>
-  <p class="strategy-page-intro">先讀策略，再看設備。以十四個國家與地區為入口，完整列出本頁收錄案例的做法、流程、財源與成效限制；城市案例不等於全國政策。</p>
-  <p class="strategy-update">策略整理：2026-10-18。來源年份與查閱範圍分案標示；歷史試辦、部署計畫與已觀測結果分開呈現。</p>
-  <div class="country-browser"><aside class="country-reading-navigation"><h3 id="country-index-heading" tabindex="-1">選擇國家／地區</h3><label class="country-current">閱讀國家<select id="country-reader-select">${regions.map(([region,items])=>`<optgroup label="${region}">${items.map(c=>`<option value="${c.id}">${escape(c.name)}</option>`).join('')}</optgroup>`).join('')}</select></label><nav class="country-index" aria-label="國家與地區索引">${regions.map(([region,items])=>`<div><h4>${region}</h4><ul>${items.map(c=>`<li><a href="#country-${c.id}" data-country-target="country-${c.id}">${escape(c.name)}</a></li>`).join('')}</ul></div>`).join('')}</nav><a class="strategy-compare-link" href="#country-strategy-comparison">跨國策略比較</a><p id="country-selection-status" class="visually-hidden" role="status" aria-live="polite"></p></aside><ol class="country-cases">${countries.map(c=>renderCountry(c,media.get(c.id))).join('\n')}</ol></div>
-  ${comparison(countries)}
+  <p class="strategy-update">14 個國家與地區、24 個地方案例。城市案例不等於全國政策；歷史試辦、部署計畫與已觀測結果分案標示。整理於 2026-10-18，來源年份與查閱範圍保留於各案。</p>
+  <div class="country-browser"><aside class="country-reading-navigation"><h3 id="country-index-heading" tabindex="-1">國家／地區</h3><label class="country-current"><span class="visually-hidden">閱讀國家</span><select id="country-reader-select">${regions.map(([region,items])=>`<optgroup label="${region}">${items.map(c=>`<option value="${c.id}">${escape(c.name)}</option>`).join('')}</optgroup>`).join('')}</select></label><nav class="country-index" aria-label="國家與地區索引">${regions.map(([region,items])=>`<div><h4>${region}</h4><ul>${items.map(c=>`<li><a href="#country-${c.id}" data-country-target="country-${c.id}">${escape(c.name)}</a></li>`).join('')}</ul></div>`).join('')}</nav><a class="strategy-compare-link" href="#country-strategy-comparison">跨國策略比較</a><p id="country-selection-status" class="visually-hidden" role="status" aria-live="polite"></p></aside><ol class="country-cases">${countries.map(c=>renderCountry(c,media.get(c.id))).join('\n')}</ol>${comparison(countries)}</div>
   <p id="country-load-status" role="status" hidden>國家切換暫時無法載入；以下仍保留全部策略、來源與照片。重新整理可再試一次。</p>
-  <p class="related-reading">把海外案例接回本地條件：<a href="#ideas">查看本期方案比較</a>。</p>
+  <p class="related-reading">把海外案例接回本地條件：<a href="#ideas">查看本期決策過程</a>。</p>
 </section>`;
 }
 

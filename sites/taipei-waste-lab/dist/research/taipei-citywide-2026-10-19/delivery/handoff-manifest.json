@@ -1,5 +1,6 @@
 {
-  "status": "desk_delivery_and_field_plan_only",
+  "status": "desk_delivery_with_superseded_field_schedule",
+  "current_plan": "../../decision-checks-2026-10-22/checks.json",
   "field_visits_completed": 0,
   "agency_commitments_confirmed": 0,
   "source_files": [
@@ -47,7 +48,7 @@
     },
     {
       "path": "field-plan.json",
-      "sha256": "9754b9e0a0b1dddc1633b8ec66b93f71e313697022b15329aa1f018031d0c4e0"
+      "sha256": "a161d12791987aca42cb94d564c93526cbed9764796a7102a2a29cee693c81ca"
     }
   ],
   "existing_validation": {
