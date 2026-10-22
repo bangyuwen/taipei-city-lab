@@ -4,7 +4,7 @@ There is one current proposal: the hundred-day plan at `#plan`.
 `#spec`, `#work`, and `#team` are its requirements and coordination views.
 `#ideas` and `#methods` are retained aliases, not other projects.
 
-Current revision is 2026-10-23, PRD v0.6. The initial configuration belongs
+Current revision is 2026-10-23, PRD v0.7. The initial configuration belongs
 inside the hundred-day plan and uses existing bin locations and collection
 arrangements, confirmed with participating crews. A saved inventory is not a
 complete verified live baseline. The MVP is pre-collection crew reporting,
@@ -19,10 +19,13 @@ are required before a physical adjustment. Fix comparison windows and decision
 thresholds before outcomes; do not invent improvement percentages or staff savings.
 
 The transport overlay and candidate lists remain research analysis at #analysis,
-not the initial configuration or an automatic work queue. They may supply
-conditional evidence checks; retained Q01–Q04 remain optional supplements.
+not the initial configuration or an automatic work queue. Current planning explicitly uses activity/service overlays alongside crew
+reports to create a receiving-location candidate table, with source dates, units,
+coverage, exact-location status, evidence, donor pairing and review state.
+Traffic is a proxy, not waste demand; retain absent-bin areas with separate
+service evidence. Retained Q01–Q04 remain optional supplements.
 No district quota, fixed visits or mandatory A/B/C demo is a core deliverable.
-Existing demo operations are simulations, not completed v0.6 requirements.
+Existing demo operations are simulations, not completed v0.7 requirements.
 Full pedestrian navigation, prediction, automatic relocation and hardware are
 deferred. Preserve research inputs, source dates, unknowns and negative outcomes.
 
