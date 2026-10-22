@@ -364,3 +364,9 @@ main { padding-top: 32px; }
 .venue-results .point-list:empty{min-height:0}
 .venue-popup p{line-height:1.7;margin:8px 0}
 .venue-popup a{display:inline-block;min-height:32px}
+
+/* Keep the initial configuration framing prominent on both map surfaces. */
+.configuration-heading.section-heading { display: block; }
+.configuration-heading h2 { max-width: 28ch; }
+.configuration-heading .configuration-lead { margin: 12px 0; font-size: 18px; font-weight: 650; line-height: 1.7; color: var(--ink); }
+.configuration-heading .configuration-context { max-width: 70ch; margin: 0; font-size: 16px; line-height: 1.9; color: var(--muted); }
