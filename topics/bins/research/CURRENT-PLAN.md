@@ -3,8 +3,9 @@
 Revision 2026-10-23: use `decision-checks-2026-10-22/checks.json` and its README.
 Initial configuration means existing bin locations, confirmed with participating
 crews and managers. The MVP is crew pre-collection reporting, reviewed
-configuration adjustment, and before/after follow-up of both receiving and
-original service areas. PRD v0.6 and the current plan are authored in
+configuration adjustment supported by activity/service overlays and a receiving
+location candidate table, and before/after follow-up of both receiving and
+original service areas. PRD v0.7 and the current plan are authored in
 `sites/taipei-waste-lab/dist/index.html`.
 
 Q01–Q04 remain conditional evidence checks when a decision needs them. They are

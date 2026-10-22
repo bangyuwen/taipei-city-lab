@@ -409,3 +409,15 @@
 /* Keep the MRT comparison captions readable when tables stack on narrow screens. */
 :is(#reader-method-mrt,#reader-method-station-venues) .plan-table caption{text-align:left;font-size:14px;line-height:1.8;color:var(--muted);padding:0 0 12px}
 @media(max-width:760px){:is(#reader-method-mrt,#reader-method-station-venues) .plan-table caption{display:block;width:100%}}
+
+/* Relative-day schedule: the same rows also provide detailed textual handoff. */
+.plan-timeline{margin:24px 0;padding:24px 0;border-block:1px solid var(--line)}
+.plan-timeline figcaption{font-size:16px;font-weight:700;margin-bottom:24px;line-height:1.8}
+.plan-timeline ol{list-style:none;padding:0;margin:0}
+.plan-timeline li{display:grid;grid-template-columns:210px minmax(0,1fr);gap:24px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.plan-timeline-label{display:flex;flex-direction:column;font-size:16px;line-height:1.6}
+.plan-timeline-label span{color:var(--muted);font-size:14px;font-variant-numeric:tabular-nums}
+.plan-timeline-scale{margin-left:234px;display:flex;justify-content:space-between;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.plan-timeline-track{height:16px;background:var(--light);position:relative}
+.plan-timeline-track>span{display:block;position:absolute;left:var(--start);width:var(--span);height:100%;background:var(--green)}
+@media(max-width:639px){.plan-timeline li{grid-template-columns:1fr;gap:8px;padding:16px 0}.plan-timeline-label{flex-direction:row;justify-content:space-between;gap:12px}.plan-timeline-scale{margin-left:0}.plan-timeline-track{height:12px}}

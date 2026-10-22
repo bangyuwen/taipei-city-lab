@@ -44,7 +44,7 @@ export function pageFromHash(hash,currentPage='research') {
 
   if(/^(?:reader-)?field-|^reader-work-observation$/.test(page)||page==='hotspot-times')return 'plan';
   if(['plan-districts'].includes(page))return 'analysis';
-  if(/^plan-(?:conclusion|details|pending|next|validation|resources|checks-heading|check-Q\d+|100day|support|prior-field-plan)$/.test(page))return 'plan';
+  if(/^plan-(?:conclusion|details|pending|next|validation|resources|checks-heading|check-Q\d+|overlay(?:-heading)?|candidates(?:-heading)?|100day(?:-heading)?|schedule-details|support|prior-field-plan)$/.test(page))return 'plan';
   if(/^reader-district-|^citywide-area-|^plan-area-/.test(page))return 'districts';
   if(/^reader-method-|^method-|^hotspot-(?:heading|quality|sources|source-)|^citywide-(?:heading|districts)$/.test(page))return 'data-methods';
   if(page==='demand-evidence')return 'evidence';
