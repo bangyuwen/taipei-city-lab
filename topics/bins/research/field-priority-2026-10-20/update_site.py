@@ -75,6 +75,12 @@ def schedule_article(result, plan):
 
 
 def update():
+    # Current decision planning supersedes this dated district-quota publisher.
+    current = HERE.parent / 'decision-checks-2026-10-22/build.py'
+    if current.exists() and '<!-- decision-checks-start -->' in (SITE / 'dist/index.html').read_text():
+        import runpy
+        runpy.run_path(str(current))['build'](SITE / 'dist/index.html')
+        return
     result = json.loads((HERE / 'priority.json').read_text())
     plan = json.loads((SITE / 'research/taipei-citywide-2026-10-19/delivery/field-plan.json').read_text())
     by_id = {p['candidate_id']: p for p in result['candidates']}

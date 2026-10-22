@@ -10,8 +10,22 @@ let designExperience,designLoading;
 let comparisonLoading;
 let sitingExperience,sitingLoading;
 let researchLoading;
+let hotspotExperience,hotspotLoading;
 let countryExperience,countryLoading;
 const pageScroll = new Map();
+
+function ensureHotspots(){
+  if(hotspotExperience){hotspotExperience.setActive(currentPage==='analysis');return;}
+  if(hotspotLoading)return hotspotLoading;
+  $('hotspot-status').hidden=false;$('hotspot-status').textContent='正在載入活動地圖…';$('hotspot-retry').hidden=true;
+  hotspotLoading=import('./hotspot-ui.js').then(module=>module.initializeHotspots()).then(experience=>{
+    hotspotExperience=experience;experience.setActive(currentPage==='analysis');
+  }).catch(()=>{
+    hotspotLoading=null;$('hotspot-status').hidden=false;
+    $('hotspot-status').textContent='活動資料暫時無法載入。可重試，或繼續閱讀各區摘要與來源。';$('hotspot-retry').hidden=false;
+  });
+  return hotspotLoading;
+}
 
 function ensureSiting(){
   if(!sitingLoading)sitingLoading=import('./siting-ui.js').then(module=>{
@@ -153,6 +167,7 @@ function panel(){
   document.body.classList.toggle('design-mode',currentPage==='design');
   document.body.classList.toggle('comparison-mode',currentPage==='comparison');
   document.body.classList.toggle('research-mode',currentPage==='research');
+  if(currentPage==='analysis')ensureHotspots();
   if(currentPage==='design')ensureDesign();
   if(currentPage==='siting')ensureSiting();
   sitingExperience?.setActive(currentPage==='siting');
@@ -360,6 +375,7 @@ async function start(){
     target.focus({preventScroll:true});target.scrollIntoView({block:'start',behavior:'instant'});
   });
   $('comparison-retry').addEventListener('click',ensureComparison);
+  $('hotspot-retry').addEventListener('click',ensureHotspots);
   $('siting-retry').addEventListener('click',()=>sitingExperience?sitingExperience.reload():ensureSiting());
   $('map-basemap').addEventListener('change',()=>setBasemap());
   initReaders();

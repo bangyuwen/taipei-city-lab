@@ -18,7 +18,7 @@ for (const monorepo of [true, false]) {
     t.after(() => rm(fixture, {recursive: true, force: true}));
     const output = join(fixture, 'sites/taipei-waste-lab');
     await mkdir(join(output, 'scripts'), {recursive: true});
-    for (const script of ['prepare-data.py', 'prepare-public.py', 'prepare-siting-overlay.py', 'compare-snapshots.py', 'analyze-coordinate-distances.py',
+    for (const script of ['prepare-data.py', 'prepare-hotspots.py', 'prepare-public.py', 'prepare-siting-overlay.py', 'compare-snapshots.py', 'analyze-coordinate-distances.py',
                           'prepare-research-execution.py', 'estimate-budget.py', 'package-research.py', 'analyze-feedback.py', 'feedback_access.py', 'feedback_removal.py']) {
       await cp(new URL('scripts/'+script, site), join(output, 'scripts', script));
     }
