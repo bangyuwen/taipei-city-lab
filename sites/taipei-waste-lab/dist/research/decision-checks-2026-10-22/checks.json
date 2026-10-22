@@ -1,7 +1,7 @@
 {
-  "date": "2026-10-22",
+  "date": "2026-10-23",
   "status": "proposed_not_started",
-  "selection_rule": "decision_change_then_desk_evidence_then_conditional_fieldwork",
+  "selection_rule": "existing_bins_then_crew_reports_then_reviewed_adjustment_then_followup",
   "district_quota": null,
   "scheduled_visits": [],
   "checks": [
@@ -71,5 +71,11 @@
       "outcome": null
     }
   ],
-  "supersedes": "field-priority-2026-10-20: district-based field schedule only; historical evidence retained"
+  "supersedes": "field-priority-2026-10-20: district-based field schedule only; historical evidence retained",
+  "initial_configuration": "existing_bin_locations",
+  "mvp_scope": [
+    "crew_pre_collection_reporting",
+    "reviewed_configuration_adjustment",
+    "before_after_followup"
+  ]
 }

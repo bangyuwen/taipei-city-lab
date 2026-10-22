@@ -72,3 +72,15 @@ requests. Set `PLAYWRIGHT_MODULE` and `CHROME_PATH` for your installed tooling.
 The imported Python recordings and cloud/emulator scripts remain upstream
 reference tools. They are not the acceptance suite for this local-only demo and
 must not be used to enable or clear the former live database.
+
+## Current MVP requirements (2026-10-23)
+
+The hundred-day plan and PRD v0.7 start with existing bin locations. The MVP
+requirements are pre-collection crew reports, reviewed configuration changes,
+and follow-up of both receiving and original service areas. This repository's
+current interactions remain a local demonstration; reporting fields, durable
+handoff, approval/execution states and comparable outcome review have not been
+accepted against v0.7. Full pedestrian navigation, prediction and automatic
+relocation are deferred from current MVP acceptance. See
+[the current plan](../taipei-waste-lab/dist/index.html#plan) and
+[PRD v0.7](../taipei-waste-lab/dist/index.html#spec).
