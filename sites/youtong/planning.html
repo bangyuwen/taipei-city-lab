@@ -73,6 +73,7 @@ section.plan{margin:0 0 14px;border:0;border-radius:0;padding:0 0 12px;backgroun
  <div id="peek" class="peek"></div>
  <section class="now" id="nowSec"><h3 class="sec">現況</h3><section class="insight" id="insight"></section></section>
  <section class="plan" id="planSec"><h3 class="sec"><span class="pt">推動計畫</span></h3>
+  <p id="currentPlan" role="status">正在讀取研究計畫版本…</p>
   <p class="pgoal" id="pgoal">先查核，再決策。把街頭垃圾桶的缺口從「感覺」變成「有現場證據的配置」。</p><p class="psm">從公館–大安示範區開始</p>
   <div class="pbar" id="pbar" role="group" aria-label="推動階段"></div>
   <p class="pcur" id="pcur"></p>
@@ -134,7 +135,7 @@ function initDrawer(){const P=document.querySelector('.panel');
   const chipPos=()=>{const c=lychips;if(isMobile()){c.style.top=c.style.left=c.style.maxWidth='';return}const ft=document.querySelector('.ftop').getBoundingClientRect(),m=document.getElementById('map').getBoundingClientRect();c.style.top=(ft.bottom+12)+'px';c.style.left=(m.left+12)+'px';c.style.maxWidth=(m.width-80)+'px'};
   chipPos();addEventListener('resize',chipPos);window.chipPos=chipPos;
   map.on('popupopen',()=>{if(isMobile()&&DRAW!=='half')drawer('half',1)})}
-function peekLine(){const v=document.getElementById('bigNum');peek.textContent=`${v?v.firstChild.textContent.trim():''} 站・YouBike 站走 ${THR} 公尺內個別留言與可重建個人內容已因隱私移除。・目前階段 ①`}
+function peekLine(){const v=document.getElementById('bigNum');peek.textContent=`${v?v.firstChild.textContent.trim():''} 站・YouBike 站走 ${THR} 公尺內個別留言與可重建個人內容已因隱私移除。・提案階段，尚未啟動`}
 window.sheetFit=()=>{if(innerWidth>760)return;fitHot()}; // 手機收合／展開後依面板上緣重新 fit 排名點
 // 首屏 fit 全部排名點：上方扣掉 header＋圖層膠囊列，右側扣掉蓋在地圖上的面板（桌機）或下方抽屜（手機），左下扣掉圖例
 function fitHot(){if(!HS||!HS.length)return;const m=map.getContainer().getBoundingClientRect(),r=e=>e&&!e.hidden?e.getBoundingClientRect():null,pb=r(document.querySelector('.panel')),ch=r(lychips),ft=r(document.querySelector('.ftop'));
@@ -176,6 +177,10 @@ const mName=n=>/站$/.test(n)?n:n+'站';
 const mPos=s=>[s.exitLocs.reduce((a,e)=>a+e.la,0)/s.exitLocs.length,s.exitLocs.reduce((a,e)=>a+e.lo,0)/s.exitLocs.length]; // 圖上位置＝出口座標平均（只為畫點）
 function mrtLine(h){if(!MRT)return'';let b=null;for(const s of MRT.stations)for(const e of s.exitLocs){const d=hav(h.la,h.lo,e.la,e.lo);if(d<=500&&(!b||d<b.d))b={s,d}}
   return b?`<br><span id="mrtNear">附近捷運：${mName(b.s.name)} 每日 ${fmt(b.s.daily)} 人次</span><span class="tag">只顯示，不計入排序</span>`:''}
+// The publication builder validates the canonical plan remains proposed, with no scheduled visits.
+loadJSON('current-plan.json').then(plan=>{
+  currentPlan.textContent=`研究版本 ${plan.date}・計畫尚未啟動`;
+}).catch(()=>{currentPlan.textContent='版本暫時無法讀取，請開啟研究站查看目前計畫。'});
 // ---- 推動計畫（本團隊提案；月份為本團隊推估） ----
 const PLAN_V=['查核','現勘','改善','擴查','試點']; // 進度條兩字標籤（完整階段文字不改）
 const PLAN=[
@@ -184,12 +189,12 @@ const PLAN=[
  ['③','改善 3–6 月','第 3–6 個月，先改善現有的桶','原位改善（指示牌、地圖標示）或同桶數挪位試點。<br>第 16～30 天配對與方案比較，第 31～45 天核准後小範圍試調，第 46～90 天兩側追蹤回看，第 91～100 天成效判讀與交接。<br>未核准不搬。<small class="srcn">資料：百日計畫・<a href="https://taipei-waste-lab.bangyuwen.chatgpt.site/research/#plan-100day" target="_blank" rel="noopener">研究時程</a> 2026-10-23</small>'],
  ['④','擴查 6–12 月','第 6–12 個月，擴大查核範圍','把查核範圍從示範區擴大到全市。<small class="srcn">資料：YouBike 1,644／1,821 站、公車站位 3,129／3,460 個步行 100m 內無清冊桶（查核線索）・<a href="https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json" target="_blank" rel="noopener">YouBike 站點</a> 2026-10-19、<a href="https://tcgbusfs.blob.core.windows.net/blobbus/GetStop.gz" target="_blank" rel="noopener">公車站位 GetStop</a>、<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OSM 步行路網</a> 2026-10-18；不設行政區配額・<a href="https://taipei-waste-lab.bangyuwen.chatgpt.site/research/" target="_blank" rel="noopener">研究團隊</a></small>'],
  ['⑤','試點 1–2 年','第 1–2 年，與 YouBike 結合','高借還站試點智慧垃圾桶，自動回報滿度，接上清潔隊的動態路線。<small class="srcn">資料：YouBike 借＋還次數（人流推估，不是垃圾量）・<a href="https://data.taipei/dataset/detail?id=c5924c17-25db-4f1e-99c4-f8ada40f2445" target="_blank" rel="noopener">YouBike 2.0 租借紀錄</a> 2026-07；試點結果分維持／修正／復原／證據不足・<a href="https://taipei-waste-lab.bangyuwen.chatgpt.site/research/" target="_blank" rel="noopener">研究團隊</a></small>']
-],PLAN_CUR=0;
-function planPick(i){pbar.querySelectorAll('button').forEach((b,k)=>b.setAttribute('aria-pressed',k===i));const s=PLAN[i];pcur.innerHTML=`<b>${s[0]}</b> ${s[2]}${i===PLAN_CUR?'<span class="now">現在</span>':''}`;pbox.innerHTML='上任日為第 0 天。<br>'+s[3]} // 標題只在 pcur 顯示一次，展開的 pbox 只放內容
-pbar.innerHTML=PLAN.map((s,i)=>`<button type="button" data-st="${i}" class="${i===PLAN_CUR?'cur':''}" aria-label="${s[0]} ${s[2]}${i===PLAN_CUR?'（現在）':''}">${i===PLAN_CUR?'<span class="nowb" aria-hidden="true">現在</span>':''}<span class="lb">${i+1} ${s[1].split(' ')[0]}<small>${s[1].split(' ').slice(1).join(' ')}</small></span></button>`).join('');
-pbar.onclick=e=>{const b=e.target.closest('[data-st]');if(b)planPick(+b.dataset.st)};planPick(PLAN_CUR);
+];
+function planPick(i){pbar.querySelectorAll('button').forEach((b,k)=>b.setAttribute('aria-pressed',k===i));const s=PLAN[i];pcur.innerHTML=`<b>${s[0]}</b> ${s[2]}（提案）`;pbox.innerHTML='上任日為第 0 天。<br>'+s[3]} // 標題只在 pcur 顯示一次，展開的 pbox 只放內容
+pbar.innerHTML=PLAN.map((s,i)=>`<button type="button" data-st="${i}" aria-label="${s[0]} ${s[2]}（提案）"><span class="lb">${i+1} ${s[1].split(' ')[0]}<small>${s[1].split(' ').slice(1).join(' ')}</small></span></button>`).join('');
+pbar.onclick=e=>{const b=e.target.closest('[data-st]');if(b)planPick(+b.dataset.st)};planPick(0);
 function miniPlan(h){const c=SV&&SV.candidates.find(x=>x.sno===String(h.id)),st=0;
-  return `<div class="mini" id="miniPlan"><div class="mbar">${PLAN.map((s,i)=>`<i class="${i===st?'cur':''}">${i+1} ${s[1].split(' ')[0]}<small>${s[1].split(' ').slice(1).join(' ')}</small></i>`).join('')}</div><p>這個熱點目前在：${c?'① 待查核（研究歷史候選，現已未排程）':'① 待查核'}</p><a id="toPlan" role="link" tabindex="0">看完整計畫</a></div>`}
+  return `<div class="mini" id="miniPlan"><div class="mbar">${PLAN.map((s,i)=>`<i class="${i===st?'cur':''}">${i+1} ${s[1].split(' ')[0]}<small>${s[1].split(' ').slice(1).join(' ')}</small></i>`).join('')}</div><p>${c?'研究歷史候選':'提案查核線索'}・未排程</p><a id="toPlan" role="link" tabindex="0">看完整計畫</a></div>`}
 function planOpen(o){planMore.hidden=!o;planSec.open=o;planBtn.textContent=o?'收合完整計畫':'展開完整計畫';planBtn.setAttribute('aria-expanded',o)}
 planBtn.onclick=()=>planOpen(planMore.hidden);
 function toPlan(){home();planOpen(true);if(isMobile()&&window.drawer)drawer('exp');requestAnimationFrame(()=>planSec.scrollIntoView({block:'start',behavior:'smooth'}))}
