@@ -38,6 +38,7 @@ def check_runtime_links(page):
         new URL('.', current).pathname,
         new URL('index.html', current).pathname,
         new URL('siting-overlay.html', current).pathname,
+        new URL('cases/zhongshan.html', current).pathname,
       ]);
       return links.map(link => link.getAttribute('href')).filter(href => {
         let target;

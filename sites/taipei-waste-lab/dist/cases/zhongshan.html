@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#123d49">
+  <meta name="description" content="用中山站已有的街道清冊、場所紀錄與站內設施線索，逐步判斷保留、調整與增設。缺少的服務、清運與預算證據明確留白。">
+  <title>中山站：垃圾桶該怎麼調整？｜台北垃圾箱研究</title>
+  <link rel="icon" href="../mark.svg" type="image/svg+xml">
+  <style>
+    :root{color-scheme:light;--ink:#18333b;--muted:#52676d;--accent:#16566a;--rail:#123d49;--paper:#f2f6f7;--line:#c6d6dc;--wash:#e2eff3;--warn:#fff0d9;--warn-ink:#734917;--focus:#bd5c16}
+    *{box-sizing:border-box}html{scroll-padding-top:24px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.85 -apple-system,BlinkMacSystemFont,"Noto Sans TC","Microsoft JhengHei",sans-serif}
+    ::selection{background:var(--wash);color:var(--rail)}a{color:var(--accent);text-underline-offset:.22em}a:hover{color:var(--rail)}a:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:5px}
+    .skip{position:absolute;top:-90px;left:24px;background:white;padding:12px;z-index:9}.skip:focus{top:12px}
+    .rail{position:fixed;inset:0 auto 0 0;width:224px;background:var(--rail);color:#bcd5dc;padding:40px 24px;display:flex;flex-direction:column;gap:28px}
+    .brand{display:flex;align-items:center;gap:10px;color:white;font-weight:700;text-decoration:none;line-height:1.5}.brand img{width:32px;height:32px}.rail nav{display:grid;gap:8px}.rail nav a{color:#bcd5dc;padding:10px 12px;text-decoration:none;border-radius:6px}.rail nav a:hover{background:var(--accent);color:white}.rail .current{background:#d9ecf1;color:var(--rail)}.rail a:focus-visible{outline-color:#ffc287}.rail small{margin-top:auto;line-height:1.8}
+    main{max-width:1390px;margin-left:224px;padding:36px 48px 80px}.crumb{font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
+    h1,h2,h3{line-height:1.5;text-wrap:balance;letter-spacing:-.02em}h1{font-size:clamp(26px,2.3vw,34px);margin:0 0 16px;max-width:26ch}h2{font-size:28px;margin:0 0 20px}h3{font-size:20px;margin:24px 0 8px}p{margin:0 0 16px;max-width:74ch}.lead{font-size:20px;line-height:1.8;max-width:46em}.meta{font-size:14px;color:var(--muted)}
+    .verdict{background:var(--wash);padding:24px 28px;margin:28px 0}.verdict p:last-child{margin-bottom:0}.verdict strong{font-size:20px}.toc{display:flex;flex-wrap:wrap;gap:8px 24px;border-block:1px solid var(--line);padding:16px 0;margin:28px 0 0}.toc a{padding:4px 0}
+    .chapter{padding:40px 0;border-bottom:1px solid var(--line)}.step{color:var(--accent);display:block;font-size:14px;font-weight:600;margin-bottom:8px}.note{color:var(--warn-ink);background:var(--warn);padding:16px 20px;font-size:16px}.quiet{color:var(--muted);font-size:14px}
+    .evidence{margin:24px 0}.evidence>div{display:grid;grid-template-columns:minmax(180px,1fr) 2.2fr;gap:28px;padding:20px 0;border-top:1px solid var(--line)}dt{font-weight:700}dd{margin:0}dd p:last-child{margin-bottom:0}.status{display:inline-block;font-size:13px;color:var(--accent);font-weight:500;margin-top:6px}.unknown{color:var(--warn-ink)}
+    .route{display:grid;grid-template-columns:1fr 40px 1fr;align-items:center;gap:8px;margin:24px 0}.route>div{padding:20px;background:white;border:1px solid var(--line)}.route p{margin:8px 0 0;font-size:14px}.route svg{width:32px;color:var(--accent)}figcaption{color:var(--muted);font-size:14px;margin-top:12px}figure{margin:24px 0}
+    details{border-top:1px solid var(--line);padding:0 0 16px}summary{cursor:pointer;font-size:20px;font-weight:600;padding:18px 0;line-height:1.6}summary:hover{color:var(--accent)}details p{padding-left:20px}details .choice-state{font-size:14px;font-weight:400;color:var(--muted);display:block;padding-left:20px}
+    table{border-collapse:collapse;width:100%;font-size:16px;font-variant-numeric:tabular-nums}caption{text-align:left;color:var(--muted);padding-bottom:12px}th,td{text-align:left;vertical-align:top;padding:14px 16px;border-bottom:1px solid var(--line)}thead{background:var(--wash)}th:first-child{width:26%}.table-wrap{overflow-x:auto;margin:24px 0}
+    .asks{list-style:none;padding:0;margin:24px 0;counter-reset:asks}.asks>li{counter-increment:asks;position:relative;padding:20px 0 20px 48px;border-top:1px solid var(--line)}.asks>li::before{content:counter(asks);position:absolute;left:0;top:23px;color:var(--accent);font-weight:700}.asks h3{margin:0 0 8px}.asks p{margin-bottom:10px}.asks p:last-child{margin-bottom:0}
+    .branches{padding-left:24px}.branches li{margin:12px 0}.sources{padding-left:24px}.sources li{padding:8px 0;overflow-wrap:anywhere}footer{padding-top:28px;font-size:14px;color:var(--muted)}
+    @media(max-width:959px){.rail{position:static;width:auto;padding:20px 24px;gap:16px}.rail nav{display:flex;flex-wrap:wrap;gap:4px}.rail small{display:none}.rail nav a{padding:8px 12px}main{margin:0;padding:28px 24px 60px}.crumb{margin-bottom:24px}}
+    @media(max-width:600px){body{font-size:16px}.rail{padding:16px}.rail nav{font-size:14px;gap:0}.rail nav a{padding:8px}main{padding:24px 20px 48px}.lead{font-size:20px}.verdict{padding:20px}.chapter{padding:30px 0}.evidence>div{grid-template-columns:1fr;gap:10px}.route{grid-template-columns:1fr;gap:12px}.route svg{transform:rotate(90deg);margin:auto}.toc{gap:8px 20px}h2{font-size:20px}.table-wrap table,.table-wrap tbody,.table-wrap tr,.table-wrap td{display:block}.table-wrap thead{display:none}.table-wrap tr{padding:14px 0;border-bottom:1px solid var(--line)}.table-wrap td{border:0;padding:6px 0}.table-wrap td::before{content:attr(data-label);display:block;font-size:13px;color:var(--muted)}.table-wrap caption{display:block}.asks>li{padding-left:32px}}
+    @media print{.rail,.toc,.skip{display:none}main{margin:0;padding:0;max-width:none}body{background:white}.chapter{break-inside:auto}a{color:inherit}}
+  </style>
+</head>
+<body>
+<a class="skip" href="#case-main">跳到案例內容</a>
+<header class="rail">
+  <a class="brand" href="../index.html#research"><img src="../mark.svg" alt="">台北垃圾箱研究</a>
+  <nav aria-label="研究導覽"><a href="../index.html#personas">理解問題</a><a href="../index.html#analysis">查核分布</a><a href="../index.html#plan">百日計畫</a><a class="current" href="#case-main" aria-current="page">中山站配置案例</a><a href="../index.html#library">參考資料</a></nav>
+  <small>用已有證據走一次決策。<br>未知的地方，留下具體問題。</small>
+</header>
+<main id="case-main">
+  <nav class="crumb" aria-label="目前位置"><a href="../index.html#research">研究總覽</a><span>/</span><a href="../index.html#method-venue-zhongshan">中山站場所補查</a><span>/</span><span aria-current="page">配置決策案例</span></nav>
+  <h1>中山站：垃圾桶該怎麼調整？</h1>
+  <p class="lead">街道清冊沒有近距離紀錄，站內卻有設施線索。先判斷既有服務能否使用，才能知道要改善指引、搬桶，還是增設。</p>
+  <p class="meta">案例整理：2026-10-23 · 使用截至 2026-10-22 已保存的研究 · 尚未現勘、未取得管理單位回覆</p>
+  <div class="verdict"><p><strong>目前可決定：先核對站內服務，尚不足以選定搬移或增設。</strong></p><p>最先確認淡水信義線詢問處兩側的設施，能否讓不進付費區的行人在所需時段投放。營運預算上限與現行成本也尚未取得，所有方案都不能先寫成「預算內可行」。</p></div>
+  <nav class="toc" aria-label="案例閱讀順序"><a href="#case-evidence">1．已有證據</a><a href="#case-question">2．決策問題</a><a href="#case-options">3．比較方案</a><a href="#case-budget">4．預算限制</a><a href="#case-next">5．補證與決定</a></nav>
+
+  <section class="chapter" id="case-evidence" aria-labelledby="evidence-title">
+    <span class="step">第一步 · 分清紀錄與現況</span><h2 id="evidence-title">這個地點，我們已經知道什麼？</h2>
+    <dl class="evidence">
+      <div><dt>街道清冊<br><span class="status">已計算・2026-10-21 版本</span></dt><dd><p>中山站 6 個來源出口的 300 公尺直線範圍聯集內，街道紀錄為 <strong>0 列</strong>；500 公尺內為 1 列。</p><p class="quiet">使用 8/4 出口座標。清冊完整性未核實，零列不代表現場無桶，半徑也不是步行服務標準。<a href="#source-catalog">來源 1</a></p></dd></div>
+      <div><dt>站內場所紀錄<br><span class="status">原文・2026-08-18 版本</span></dt><dd><p>場所表第 54 列記載「中山區／中山捷運站／10處」。這是一筆場所紀錄，<strong>不是已核實的 10 個可用垃圾桶。</strong></p><p class="quiet">尚無逐點箱號、樓層、門禁與收受規則；不能加進街道列數。<a href="#source-catalog">來源 1</a></p></dd></div>
+      <div><dt>站內服務區<br><span class="status">有歷史設施依據・現況待查</span></dt><dd><p>北捷 2022 年公告將垃圾桶納入帶狀服務區；設計研究院 2025 年案例說明，以詢問處為中心向兩側整合設施。</p><p class="quiet">2026-10-22 保存的車站頁列詢問處近出口 1、4，地址為南京西路 16 號。這是核對起點，不是出口旁桶位證明；也還不能與「10處」逐一對上。<a href="#source-metro">來源 2–4</a></p></dd></div>
+      <div><dt>最近的街道紀錄<br><span class="status">位置線索・尚非搬移候選</span></dt><dd><p>「林森北路247號」，距最近來源出口「中山站出口3」約 <strong>473.3 公尺直線距離</strong>；原始 CSV 第 222 列。</p><p class="quiet">沒有步行距離、使用量或清運紀錄。不能因為它最近，就把它當成可借調的桶。<a href="../index.html#method-venue-street-update">查看既有補查</a></p></dd></div>
+    </dl>
+    <p class="note">目前沒有中山站逐點投放失敗、滿溢、垃圾量或清運工時的觀測。既有全市回饋也未與這條路線逐案連接，不能把「找不到桶」寫成本地已確認的普遍問題。</p>
+  </section>
+
+  <section class="chapter" id="case-question" aria-labelledby="question-title">
+    <span class="step">第二步 · 限定要回答的問題</span><h2 id="question-title">站外行人，能否使用站內既有服務？</h2>
+    <p><strong>待驗證情境：</strong>一位在中山站出口 1、4 周邊步行、持有飲料杯的行人，能否在不付費進站的情況下，找到並使用既有投放設施？這是研究要測的情境，不是已觀察到的人物或事件。</p>
+    <figure>
+      <div class="route"><div><strong>出口 1、4 周邊的街道</strong><p>要確認：實際行經路線、投放物、發生時段，以及是否確有投放困難。</p></div><svg viewBox="0 0 32 24" role="img" aria-label="待核對的服務連接"><path d="M2 12h26M20 4l8 8-8 8" fill="none" stroke="currentColor" stroke-width="2"/></svg><div><strong>詢問處兩側服務區</strong><p>要確認：桶位、閘門內外、開放條件、收受物與當時桶況。</p></div></div>
+      <figcaption>服務關係示意，不是地圖；尚未確認樓層連接、步行距離或推薦路線。若核對後這兩個出口不對應相關服務，就依實際位置修正範圍並留紀錄。</figcaption>
+    </figure>
+    <p>先比較「保留現況、利用既有服務」。只有確認這條情境仍有缺口，才需要提出移位或增設的具體位置。</p>
+  </section>
+
+  <section class="chapter" id="case-options" aria-labelledby="options-title">
+    <span class="step">第三步 · 每個方案都有進入條件</span><h2 id="options-title">現有資料，讓哪些選項走得下去？</h2>
+    <p>以下是條件式比較，沒有任何方案已獲核准或通過成本檢查。展開可看「什麼證據會改變選擇」。</p>
+    <details open><summary>保留現況，先核對服務<span class="choice-state">現在可提出的下一步</span></summary><p><strong>中山站的依據：</strong>已找到站內服務區的歷史證據，但當下可用性不明。</p><p><strong>要確認：</strong>是否仍有設施、免進付費區能否抵達、使用時段與飲料杯收受規則。若已足夠且未發現具體障礙，就保留配置；資料不足不等於已證明服務足夠。</p></details>
+    <details><summary>改善指引或協調使用條件<span class="choice-state">待證實「設施可用，但難找或有特定限制」</span></summary><p><strong>中山站的可能做法：</strong>確認服務可用後，再比較出口到服務區的指引；若限制出在開放條件，先詢問管理者是否有可行調整。</p><p><strong>改變選擇的證據：</strong>有投放需求的人確實因找不到或規則不明而失敗。站內開放協調是跨管理單位方案，不能自行當作可用供給；增加站內清潔負擔也要計入。</p></details>
+    <details><summary>調整清運或容量<span class="choice-state">待證實「找得到、能使用，但常滿」</span></summary><p><strong>目前缺少：</strong>中山站逐桶滿溢時段、容量、清運時間與實際負荷。沒有證據支持加班次、改巡收順序或換大桶。</p><p><strong>改變選擇的證據：</strong>同一時段的投放、滿溢與清運紀錄能定位問題；管理者確認調整能承接，並提出成本。</p></details>
+    <details><summary>移動既有垃圾桶<span class="choice-state">待確認來源桶、新位置與原址損失</span></summary><p><strong>目前沒有可指定的來源桶。</strong>林森北路247號只是最近的街道清冊紀錄，不是低使用量或可移動的證明；站內整合設施也不能預設可搬到街上。</p><p><strong>改變選擇的證據：</strong>找到管理者同意評估的來源桶，核對原址替代服務、新址通行與收運條件，再比較兩邊的便利及營運負擔。若原址服務明顯受損，放棄該移位方案。</p></details>
+    <details><summary>增設垃圾桶<span class="choice-state">待確認需求、既有方案不足，以及預算可承接</span></summary><p><strong>目前不能指定增設位置與數量。</strong>街道零列、場所「10處」和捷運活動量，都不足以單獨支持增設。</p><p><strong>改變選擇的證據：</strong>確認某路線、時段及投放物仍有需求；既有服務、維護或可行移位無法補足；新址可設且有人清運，完整營運成本落在核定上限內。超出上限就另提預算取捨，不把額外工時算成免費。</p></details>
+  </section>
+
+  <section class="chapter" id="case-budget" aria-labelledby="budget-title">
+    <span class="step">第四步 · 把你的預算原則帶進來</span><h2 id="budget-title">預算是限制，但目前還沒有可代入的金額</h2>
+    <p><strong>已選定的原則：</strong>以總營運預算為上限，優先調整既有垃圾桶，有明確需求再增設。總桶數不變，也可能增加清運成本。</p>
+    <div class="table-wrap"><table><caption>中山站案例的預算欄位｜未知不填零，不使用前一個假設案例的金額</caption><thead><tr><th scope="col">要比較的項目</th><th scope="col">目前資料</th><th scope="col">由誰協助確認</th></tr></thead><tbody>
+      <tr><td data-label="項目">服務邊界與預算上限</td><td data-label="目前資料">待確認。本站街區分配額、計算期間，以及站內／街道是否共同承擔尚未確定。</td><td data-label="確認對象">預算主責、北捷及環保局相關窗口。</td></tr>
+      <tr><td data-label="項目">現況營運成本</td><td data-label="目前資料">待確認。逐線巡收、停靠、清洗、巡查、異常處理、替班、車輛及設備維護。</td><td data-label="確認對象">站內管理／清潔承接者、街道清潔隊。</td></tr>
+      <tr><td data-label="項目">各方案增加或減少的成本</td><td data-label="目前資料">待估。保留現況、指引、清運調整、移位及增設都沒有本站報價或工時。</td><td data-label="確認對象">同一批營運承接者，採相同期間與成本口徑。</td></tr>
+      <tr><td data-label="項目">一次性支出</td><td data-label="目前資料">待估。設計、指引、購置、搬移、施工與復原；另列經費來源。</td><td data-label="確認對象">設施與場地管理者、施工或設備承接者。</td></tr>
+    </tbody></table></div>
+    <p class="note">判斷式：現況總營運成本 ＋ 方案淨增減成本 ≤ 核定營運預算上限。三項目前都未知，所以尚不能比較哪案最省、是否符合預算，或宣稱可由既有編制吸收。</p>
+    <p class="quiet">上述是擬詢問的角色，尚無合作承諾；不得把工作轉給北捷或其他單位後，當成整體成本減少。</p>
+  </section>
+
+  <section class="chapter" id="case-next" aria-labelledby="next-title">
+    <span class="step">第五步 · 只補會改變決策的證據</span><h2 id="next-title">下一輪，先確認這三件事</h2>
+    <ol class="asks">
+      <li><h3>服務區能否接住這個投放情境？</h3><p><strong>先向北捷／資料填報窗口確認：</strong>「10處」的定義與明細、目前桶位、閘門內外、使用資格與時段、飲料杯等物品的收受方式。</p><p><strong>有答案後：</strong>可用 → 比較是否仍有指引或使用障礙；有限制 → 保留受限情境，查其他替代服務；未答覆 → 維持未知。若位置或路徑仍不明，而且會影響是否採用這項服務，再走查指定路段。</p></li>
+      <li><h3>這段路線是否真的存在投放困難？</h3><p><strong>先查既有事件與維護紀錄。</strong>若仍無法區分「找不到、走不到、不收或已滿」，才固定一段路線、投放物與相關時段，觀察完整投放過程。</p><p><strong>要留下：</strong>明確投放需求的事件數、成功／失敗／未知結果、額外步行時間及障礙；地面散落物、滿溢與清運另記。捷運人次不作投放成功率分母，沒有看到也不填零需求。</p></li>
+      <li><h3>哪個管理者能承接，成本在哪個預算內？</h3><p><strong>可與前兩項並行：</strong>確認管理邊界、決策窗口、現有班表與營運上限。只有形成具體方案後，才請承接者估該方案的增量工時及費用。</p><p><strong>若考慮移位：</strong>另外確認來源桶的使用者、替代服務與原址損失。若沒有可移桶，記錄原因；不為了維持桶數硬找一個地方撤桶。</p></li>
+    </ol>
+    <h3>補完資料後，如何作決定？</h3>
+    <ul class="branches">
+      <li><strong>既有服務可用，也沒有確認到實質障礙：</strong>保留配置；仍不宣稱已證明全站服務足夠。</li>
+      <li><strong>障礙在找路或維護：</strong>比較指引／清運方案與現況，確認改善及成本後再採用。</li>
+      <li><strong>有服務缺口，且有可移來源桶：</strong>比較新址改善與原址損失；同時通過服務、通行及預算條件才試移。</li>
+      <li><strong>有明確需求，既有調整仍不足：</strong>提出增設位置、數量、承接及成本；超支則另提資源取捨。</li>
+      <li><strong>關鍵資料仍缺：</strong>結論維持「證據不足」，列出下一個會改變選擇的問題。</li>
+    </ul>
+    <details><summary>何時才值得試辦？要看哪些結果？</summary><p>確定待比較方案、位置、時段、投放物、管理承接與預算後，才固定基線、觀察分母、成功門檻及停止條件。本站目前尚未訂日期、樣本量、步行時間門檻或成功率門檻。</p><p>比較同條件的投放成功、額外步行、可用狀態、原址與鄰近街段髒亂，以及實際營運工時。若有合適且不受介入影響的同期對照，另記天候與活動差異。移位一定納入原址，不只看新址。</p><p>通行危險、無人承接或超出事前核定負擔即暫停；紀錄不足則不作成效結論。沒有排定現勘，不自動追加輪次直到結果通過。</p></details>
+    <div class="verdict"><p><strong>本案走到的決策：先核對既有服務與預算，暫不提出搬移或增設名單。</strong></p><p>這不是判定中山站不需要桶，而是已把問題縮小到能向管理者確認的設施、使用條件和承接成本。收到答案，才進入下一個分支。</p></div>
+  </section>
+
+  <section class="chapter" id="case-sources" aria-labelledby="sources-title"><h2 id="sources-title">資料從哪裡來？</h2>
+    <p>本頁沿用已保存的研究，沒有更新成即時清冊，也沒有新增現場觀測。頁面數字從 2026-10-22 補查結果產生；原始檔、下載收據及內容雜湊留在研究來源包。</p>
+    <ol class="sources">
+      <li id="source-catalog"><a href="https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c">環保局：臺北市行人專用清潔箱</a>。街道表 2026-10-21 共 661 列，659 列座標可計算；場所表 2026-08-18 共 130 列。出口座標使用 2026-08-04 版本。<a href="https://data.taipei/dataset/detail?id=cfa4778c-62c1-497b-b704-756231de348b">出口座標來源</a>。</li>
+      <li id="source-metro"><a href="https://www.metro.taipei/News_Content.aspx?n=30CCEFD2A45592BF&amp;s=6BD780192C794BB9&amp;sms=72544237BBE4C5F6">北捷中山站改造公告</a>，2022-11-07。支持歷史服務區設施，不證明目前數量與可用性。</li>
+      <li><a href="https://www.tdri.org.tw/zh-TW/public_service_cases/1">台灣設計研究院：中山站設計案例</a>，2025-12-12。支持詢問處兩側整合設施的線索，不提供逐桶對照。</li>
+      <li><a href="https://web.metro.taipei/pages2026/WebStation/053/1">北捷中山站資訊</a>及<a href="https://web.metro.taipei/img/ALL/INFOPDF/053.pdf">官方車站圖</a>，本研究於 2026-10-22 保存。圖面版本 G14R11-SW(26.05)，沒有垃圾桶圖例；不能用圖上未標示判定沒有桶。</li>
+    </ol>
+    <p class="quiet">場所表行政區寫「中山區」，車站地址寫「大同區」，保留原文；尚未核實管理範圍。上述連結是官方可更新頁面，歷史判讀以已保存版本為準。</p>
+    <p><a href="../index.html#method-venue-zhongshan">回中山站原始補查</a> · <a href="../index.html#plan-check-Q01">回百日計畫的既有服務查核</a></p>
+  </section>
+  <footer>台北垃圾箱研究 · 配置決策討論案例 · 未核定設置、未執行試辦</footer>
+</main>
+</body>
+</html>

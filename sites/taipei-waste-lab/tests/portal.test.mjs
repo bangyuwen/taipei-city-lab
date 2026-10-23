@@ -27,6 +27,10 @@ test('publication connects both entrances and preserves private boundaries and p
   const stage=()=>spawnSync(python,[join(root,'scripts/prepare-portal.py')],{encoding:'utf8'});
   let result=stage();assert.equal(result.status,0,result.stderr);
   const output=join(root,'public');
+  const casePage=await read('dist/cases/zhongshan.html');
+  assert.equal(await readFile(join(root,'out/cases/zhongshan.html'),'utf8'),casePage);
+  assert.equal(await readFile(join(output,'research/cases/zhongshan.html'),'utf8'),casePage);
+  await assert.rejects(readFile(join(output,'research/research/placement-case-2026-10-23/inputs.json')),{code:'ENOENT'});
   const html=await readFile(join(output,'index.html'),'utf8');
   assert.match(html,/href="demo\/"/);assert.match(html,/href="research\/"/);
   assert.match(await readFile(join(output,'demo/index.html'),'utf8'),/pedestrian\.html/);
@@ -39,7 +43,7 @@ test('publication connects both entrances and preserves private boundaries and p
   async function walk(dir,prefix=''){for(const e of await readdir(dir,{withFileTypes:true})){if(e.isDirectory())await walk(join(dir,e.name),prefix+e.name+'/');else names.push(prefix+e.name);}}
   await walk(output);
   assert.ok(!names.some(p=>/\.py$|\.csv$|\.zip$|\.md$|database\.rules|firebase\.json|source\.tsv|wipe-cloud/.test(p)));
-  for(const page of ['demo/pedestrian.html','demo/planning.html','demo/crew.html','research/index.html']){
+  for(const page of ['demo/pedestrian.html','demo/planning.html','demo/crew.html','research/index.html','research/cases/zhongshan.html']){
     const body=await readFile(join(output,page),'utf8');
     for(const [,url] of body.matchAll(/(?:src|href)="([^"#]+)"/g)){
       if(/^(https?:|data:)|\$\{/.test(url)||url.startsWith('?'))continue;
