@@ -69,6 +69,21 @@
       "source_label": "基線、驗收與停止條件",
       "candidate_ids": [],
       "outcome": null
+    },
+    {
+      "id": "Q05",
+      "title": "清潔人員：App應由第一線、領班使用，還是暫不用？",
+      "decision": "確認清潔箱作業的手機條件、路線與人力，決定使用對象及是否值得進行原型比較；不預設每位隊員都要用App。",
+      "known": "已找到官方勤務職掌、垃圾車點位路線目錄、歷年人數目錄與短期招募配置；尚無本案第一線訪談、手機使用調查、清潔箱逐線巡收與實際班表。",
+      "desk": "先請相關區隊及環境清潔管理科提供去識別化路線、箱號、班別、編制／實到／可調度人數、車輛與替班、回報流程和手機規範；區分已有、未取得及不能提供。",
+      "trigger": "資料仍不能判斷誰可安全使用、回報是否增加負擔，且答案會改變App使用對象時，才訪談第一線與領班、觀察必要工作段；確認痛點與安全條件後才比較原型。",
+      "yes": "第一線可安全獨立完成且相對現行方法減負：提出小範圍試用與設備、訓練、承接條件；成效只限已觀察情境。",
+      "no": "第一線使用不合適：評估領班代錄並計入其工時；若問題在人力或權責、App未改善或增加負擔，暫不用。",
+      "unknown": "手機、路線、班表或比較結果不足：交付缺口與補證條件，保持未知；不宣稱省人、省時或已有正式派工能力。",
+      "source": "#persona-crew",
+      "source_label": "清潔人員Persona與官方資料界線",
+      "candidate_ids": [],
+      "outcome": null
     }
   ],
   "supersedes": "field-priority-2026-10-20: district-based field schedule only; historical evidence retained",
@@ -77,5 +92,6 @@
     "crew_pre_collection_reporting",
     "reviewed_configuration_adjustment",
     "before_after_followup"
-  ]
+  ],
+  "updated_at": "2026-10-23"
 }
