@@ -75,13 +75,15 @@ from pathlib import Path
 
 class Layout(HTMLParser):
  def __init__(self):
-  super().__init__(); self.stack=[]; self.panel=None; self.panels={}; self.references={}
+  super().__init__(); self.stack=[]; self.panel=None; self.panels={}; self.references={}; self.detail_depth=0; self.summary_depth=0
  def handle_starttag(self,tag,attrs):
   attrs=dict(attrs)
   if tag=='section':
    self.stack.append(self.panel)
    if attrs.get('id','').startswith('panel-'):
-    self.panel=attrs['id']; self.panels[self.panel]={'details':0,'articles':0,'ids':set(),'links':set(),'text':[]}
+    self.panel=attrs['id']; self.panels[self.panel]={'details':0,'articles':0,'ids':set(),'links':set(),'text':[],'default_text':[]}
+  if tag=='details': self.detail_depth+=1
+  if tag=='summary': self.summary_depth+=1
   if self.panel:
    view=self.panels[self.panel]
    if tag=='details': view['details']+=1
@@ -93,9 +95,13 @@ class Layout(HTMLParser):
      self.references[attrs['id']]=self.panel
    if tag=='a': view['links'].add(attrs.get('href'))
  def handle_endtag(self,tag):
+  if tag=='details': self.detail_depth-=1
+  if tag=='summary': self.summary_depth-=1
   if tag=='section': self.panel=self.stack.pop()
  def handle_data(self,data):
-  if self.panel: self.panels[self.panel]['text'].append(data)
+  if self.panel:
+   self.panels[self.panel]['text'].append(data)
+   if not self.detail_depth or self.summary_depth:self.panels[self.panel]['default_text'].append(data)
 
 layout=Layout(); layout.feed(Path('dist/index.html').read_text())
 home=layout.panels['panel-research']; materials=layout.panels['panel-materials']
@@ -107,13 +113,14 @@ assert {'ideas-options','definition-evidence-heading'}<=ideas['ids']
 assert {'plan-work-heading','plan-departments','plan-conclusion','plan-pending','plan-next'}<=plan['ids']
 assert 'plan-districts' in analysis['ids']
 assert '資料分析：全市活動與桶位分布' in ''.join(analysis['text'])
-assert '目前尚未建立人物與候選點位的資料對應' in ''.join(analysis['text'])
+assert '實際事件連結尚未驗證' in ''.join(analysis['text']) and '0／4' in ''.join(analysis['text'])
 for name in ['analysis','plan','ideas']:
  assert {name+'-'+stage for stage in ['conclusion','details','pending','next']}<=layout.panels['panel-plan' if name=='ideas' else 'panel-'+name]['ids']
 # Analysis explains measure boundaries; plan owns current options and execution.
-# Includes the interactive map legend, controls and source limitations.
+# Includes the map legend, controls and closed disclosure summaries. Supporting
+# evidence may grow while the default analysis reading remains bounded.
 for name,limit in [('analysis',4000)]:
- assert len(''.join(layout.panels['panel-'+name]['text']))<limit,name
+ assert len(''.join(layout.panels['panel-'+name]['default_text']))<limit,name
 assert all('citywide-area-%02d'%i in layout.panels['panel-districts']['ids'] for i in range(1,14))
 assert all('plan-area-%02d'%i in layout.panels['panel-districts']['ids'] for i in range(1,14))
 assert {'field-priority','reader-field-forms','plan-purpose'}<=layout.panels['panel-plan']['ids']

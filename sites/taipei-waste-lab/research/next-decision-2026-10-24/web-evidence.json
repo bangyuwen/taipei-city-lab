@@ -1,0 +1,23 @@
+{
+  "checked_on": "2026-10-24",
+  "retrieval_method": "Connected web tool: primary pages opened and relevant rendered passages inspected; excerpts below are bounded research notes, not raw-response archives.",
+  "sources": [
+    {
+      "id": "market",
+      "title": "臺北市市場處：士林夜市",
+      "url": "https://www.tcma.gov.taipei/News_Content.aspx?n=FAC14AD2DE4E01A4&s=AF2DC775A3AA076A&sms=32F7BA052C5CA548",
+      "support": "官方列夜市範圍、路段，營業時間為下午5時至凌晨0時，交通資訊指向劍潭站。",
+      "locator": "市集名稱、地址、營業時間、交通資訊欄；web rendered lines 274–283.",
+      "does_not_establish": "沒有提供E01的完整行程、逐桶位置、夜間可用狀態或已安排走查。"
+    },
+    {
+      "id": "dog_bags",
+      "title": "臺北市環保局：狗便袋清潔箱設置地點",
+      "url": "https://www.dep.gov.taipei/News_Content.aspx?n=B18D1A1E2787E330&s=38BF6069E7B03DC1&sms=305AECD29BED80F5",
+      "support": "官方說明提供免費狗便清潔袋，並按行人清潔箱、公園、河濱及鄰里場域列管理單位與附件。",
+      "locator": "正文第1、2點及附件列表；web rendered lines 249–271.",
+      "page_update_displayed": "115-09-07 20:43",
+      "does_not_establish": "領袋設施資料不會單獨確認某條路線可丟棄已裝袋狗便、目前可用，或E02發生於該處。未沿用頁上總數作現場存量。"
+    }
+  ]
+}
