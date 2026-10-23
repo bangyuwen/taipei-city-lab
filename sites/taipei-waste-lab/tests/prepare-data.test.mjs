@@ -19,7 +19,7 @@ for (const monorepo of [true, false]) {
     const output = join(fixture, 'sites/taipei-waste-lab');
     await mkdir(join(output, 'scripts'), {recursive: true});
     for (const script of ['cross_transport.py', 'prepare-cross-analysis.py', 'prepare-data.py', 'prepare-portal.py', 'prepare-hotspots.py', 'prepare-public.py', 'prepare-siting-overlay.py', 'compare-snapshots.py', 'analyze-coordinate-distances.py',
-                          'prepare-research-execution.py', 'estimate-budget.py', 'package-research.py', 'analyze-feedback.py', 'feedback_access.py', 'feedback_removal.py']) {
+                          'prepare-research-execution.py', 'prepare-placement-case.py', 'estimate-budget.py', 'package-research.py', 'analyze-feedback.py', 'feedback_access.py', 'feedback_removal.py']) {
       await cp(new URL('scripts/'+script, site), join(output, 'scripts', script));
     }
     await cp(new URL('../youtong/', site), join(fixture, 'sites/youtong'), {recursive:true});
