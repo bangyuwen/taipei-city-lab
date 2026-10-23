@@ -246,13 +246,13 @@ def render(data, heat_colors):
         table, table_md = matrix(field, labels, field, title)
         page.append(table); md += ['', *table_md]
     page += ['</details>', '<h5 id="feedback-access-readings" tabindex="-1">各區怎麼讀，下一步查什麼</h5>',
-             '<p>以下列出每區則數最多的具體困難（不含泛稱不足，同數並列）與最常提及的明示情境；是描述性摘要，不是改善優先序。查核建議尚未執行。</p>', '<dl class="feedback-access-readings">']
+             '<p>以下列出每區則數最多的具體困難（不含泛稱不足，同數並列）與最常提及的明示情境；是描述性摘要，不是改善優先序。查核建議尚未執行。點選行政區展開判讀。</p>', '<div class="feedback-access-readings">']
     md += ['', '## 各區判讀與查核方向', '', '具體困難與情境取區內最高則數，同數並列；不是顯著差異或改善優先序。', '', '| 區 | 困難判讀 | 明示情境 | 下一步（待驗證） |', '| --- | --- | --- | --- |']
     for index, (district, group) in enumerate(data['districts'].items(), 1):
         reading, context, action = district_reading(group)
-        page += [f'<div><dt id="feedback-access-district-{index}" tabindex="-1">{esc(district)}</dt><dd><p>{esc(reading)}</p><p><strong>明示情境：</strong>{esc(context)}。未標所列情境 {group["noContext"]} 則；未標六類困難 {group["noDifficulty"]} 則；資訊不明 {group["unclear"]} 則。</p><p><strong>先查：</strong>{esc(action)}</p><a href="#feedback-access">回到六種困難比較表</a> · <a href="#feedback-district-{index}">接著看街頭與場域資料</a></dd></div>']
+        page += [f'<details name="feedback-access-districts"><summary id="feedback-access-district-{index}" tabindex="0">{esc(district)}</summary><div><p>{esc(reading)}</p><p><strong>明示情境：</strong>{esc(context)}。未標所列情境 {group["noContext"]} 則；未標六類困難 {group["noDifficulty"]} 則；資訊不明 {group["unclear"]} 則。</p><p><strong>先查：</strong>{esc(action)}</p><a href="#feedback-access">回到六種困難比較表</a> · <a href="#feedback-district-{index}">接著看街頭與場域資料</a></div></details>']
         md.append(f'| {district} | {reading} | {context} | {action} |')
-    page.append('</dl>')
+    page.append('</div>')
     audit = data['audit']; group = data['overall']
     method = (f'三個子代理逐則閱讀 {total:,} 則，不使用關鍵字分類。每區抽 12 則，共 {audit["sampleSize"]} 則，'
               f'由不同於原判讀者的代理盲讀交叉標註。初判完全一致：困難 {audit["initialAgreement"]["difficulties"]}/{audit["sampleSize"]}、'
