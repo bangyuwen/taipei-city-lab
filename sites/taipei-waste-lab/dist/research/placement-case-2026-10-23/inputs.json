@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-23",
+  "evidence_checked_on": "2026-10-22",
+  "status": "decision_pending_evidence",
+  "sources": [
+    {
+      "path": "../station-venue-recheck-2026-10-22/results.json",
+      "sha256": "193b191b6c945aefc7c7f3e585f6f9a025740a52993bc17d4f9bcac47d33034c"
+    },
+    {
+      "path": "../station-venue-recheck-2026-10-22/evidence.json",
+      "sha256": "cd4026f35bd4fe4116bb37ba0e75e54e52abcf61ee5cbb9d6be2a802a587420d"
+    },
+    {
+      "path": "../station-venue-recheck-2026-10-22/retrieval.json",
+      "sha256": "560e34bf1b805b5adb63edac5901b59256a2adad9380a604d97206e86e3d2963"
+    },
+    {
+      "path": "../station-venue-recheck-2026-10-22/additional-retrieval.json",
+      "sha256": "9fbc11534f4428eb5ef6a1d36172b573739e6bd6c0a15def7c4e88eed2c8cb45"
+    },
+    {
+      "path": "../station-venue-recheck-2026-10-22/inputs/venues.csv",
+      "sha256": "47b1ddfb4f0ab4d5e57afab538f71da3d41d22e59c984bdd9c10b4248223b066"
+    },
+    {
+      "path": "../station-venue-recheck-2026-10-22/inputs/streets-2026-10-21.csv",
+      "sha256": "a5dc928c93b99794d31eaf513bc4f82a953937488aece61d004ed0ee5faf91d1"
+    },
+    {
+      "path": "../station-venue-recheck-2026-10-22/inputs/zhongshan-station.html",
+      "sha256": "569908591536a1474c174ab3ebc5093c7d988fb0e7361eed390339763bf10408"
+    },
+    {
+      "path": "../station-venue-recheck-2026-10-22/inputs/zhongshan-redesign.html",
+      "sha256": "6cd332b151171b770f44dc0e99b9ae0b5acb1496ed745b2921bf04b65fd1012b"
+    },
+    {
+      "path": "../station-venue-recheck-2026-10-22/inputs/zhongshan-tdri.html",
+      "sha256": "001f0bc14b798a6e2802bce6eb01585b810644122920fcbac237722a310c37bb"
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import shutil
 
 ROOT = Path(__file__).resolve().parent.parent
 ASSETS = (
+    'cases/zhongshan.html',
     'hotspot-ui.js', 'hotspot-utils.js', 'hotspot.css', 'data/activity-hotspots.json',
     'cross-analysis.js', 'cross-analysis.css', 'data/cross-analysis.json',
     'images/citywide/district-activity.png', 'images/citywide/catalog-coverage.png', 'images/citywide/citywide-context.png',
