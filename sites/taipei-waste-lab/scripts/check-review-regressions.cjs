@@ -8,6 +8,8 @@ const base=process.env.PORTAL_QA_URL||'http://127.0.0.1:4198/';
   const context=await browser.newContext({viewport:{width,height:900},timezoneId:'Asia/Taipei'});
   const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.route('https://**/*',r=>r.abort());
+  await page.goto(base);
+  await page.evaluate(()=>localStorage.setItem('有桶demo_v1_crew_ui_v2','{broken-json'));
   await page.goto(new URL('demo/crew.html',base).href);
   await page.locator('[data-zone]').first().waitFor();
   const id=await page.evaluate(()=>{

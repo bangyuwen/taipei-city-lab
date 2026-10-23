@@ -73,3 +73,13 @@ test('navigation undo resolves the original bin after a synchronized route inser
     assert.deepEqual(events,[]);
   }
 });
+
+
+test('crew startup recovers from malformed or null saved UI without discarding valid settings',()=>{
+  const initialization=html.match(/^const q=new URLSearchParams.*$/m)[0];
+  for(const [raw,expected] of [['{broken-json','{}'],['null','{}'],[null,'{}'],['{"zone":"B","t":930}','{"zone":"B","t":930}']]){
+    const c={URLSearchParams,location:{search:''},LSU:'saved-ui',localStorage:{getItem:()=>raw}};
+    vm.createContext(c);vm.runInContext(initialization,c);
+    assert.equal(vm.runInContext('JSON.stringify(ui)',c),expected);
+  }
+});
