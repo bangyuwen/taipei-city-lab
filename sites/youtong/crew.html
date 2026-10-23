@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261023u"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261023u"><title>清潔隊｜今日清運｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261023u"><link rel="stylesheet" href="tokens.css?v=20261023u"><link rel="stylesheet" href="ui.css?v=20261023u">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261023v"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261023v"><title>清潔隊｜今日清運｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261023v"><link rel="stylesheet" href="tokens.css?v=20261023v"><link rel="stylesheet" href="ui.css?v=20261023v">
 <style>
 /* ===== 有桶・清潔隊（mobile-first 390x844；以正式版為底：A 選路線（A/B/C 分區）→ B 執行）===== */
 html,body{height:100%;overflow:hidden;background:var(--map-bg)}
@@ -83,18 +83,36 @@ body.navon .tchip.ab{display:none} /* 導航中不顯示「全部桶」 */
 .sumr{display:flex;gap:18px;font-size:14px;color:var(--mute);margin:10px 0}.sumr b{display:block;font-size:22px;color:var(--ink)}
 .hist div{padding:8px 0;border-bottom:1px solid var(--line);font-size:13px;color:var(--ink-2);line-height:1.5}
 .stack{display:grid;gap:8px}
-/* 全部桶：全螢幕頁面，依路線分組 */
-#allPage{position:fixed;inset:0;z-index:2500;background:var(--surface);display:flex;flex-direction:column}
+/* 全部桶（B 方案）：上方約 40% 地圖＋下方可拖曳的半開抽屜；分頁「本輪｜下一輪」；清單和地圖連動 */
+#allPage{position:fixed;inset:0;z-index:2500;background:var(--map-bg);overflow:hidden}
 #allPage[hidden]{display:none}
-.aph{display:flex;align-items:center;gap:10px;padding:calc(10px + env(safe-area-inset-top)) 12px 10px 16px;border-bottom:1px solid var(--line)}.aph b{font:700 18px var(--font);color:var(--ink)}.aph .small{flex:1}
-.aph .x{width:var(--touch);height:var(--touch);border:0;border-radius:50%;background:var(--gray-1);font:400 18px/1 var(--font);color:var(--ink);cursor:pointer}
-#apBody{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:0 16px calc(20px + env(safe-area-inset-bottom))}
-#apBody h3{position:sticky;top:0;z-index:1;display:flex;align-items:baseline;gap:8px;margin:0;padding:14px 0 8px;background:var(--surface);font:700 15px var(--font);color:var(--ink)}#apBody h3 span{font:500 13px var(--font);color:var(--mute)}#apBody h3 .cur{color:var(--brand);font-weight:700}
-.ar{display:flex;align-items:center;gap:10px;width:100%;min-height:56px;padding:6px 0;border:0;border-top:1px solid var(--line);background:none;text-align:left;cursor:pointer;font:inherit}
-.ar .ai{flex:none;width:28px;display:flex;justify-content:center}.ar.cl .ai svg{filter:grayscale(1);opacity:.55}
-.ar .at{flex:1;min-width:0}.ar .at b{display:block;font:600 15px/1.3 var(--font);color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ar .at small{font-size:12px;color:var(--mute)}
-.ar .as{flex:none;padding:3px 10px;border-radius:999px;font:600 13px var(--font);background:var(--gray-1);color:var(--ink-2)}.ar .as.ok{background:var(--gray-2);color:var(--mute)}
-.ar.cl .at b{color:var(--mute)}
+#apMap{position:absolute;inset:0;z-index:0}#apMap .leaflet-tile-pane{filter:grayscale(1) contrast(.62) brightness(1.2);opacity:.8}
+.apx{position:absolute;z-index:700;top:calc(10px + env(safe-area-inset-top));left:12px;display:flex;align-items:center;gap:6px;height:var(--touch);padding:0 16px 0 12px;border:0;border-radius:999px;background:var(--surface);box-shadow:var(--shadow-1);font:700 16px/1 var(--font);color:var(--ink);cursor:pointer}
+#apDr{position:absolute;z-index:600;left:0;right:0;bottom:0;top:40%;display:flex;flex-direction:column;background:var(--surface);border-radius:20px 20px 0 0;box-shadow:0 -4px 20px rgba(0,0,0,.12);transition:top .25s ease}#apDr.drag{transition:none}
+.aphd{position:relative;flex:none;padding:0 14px 10px;touch-action:none;cursor:grab}.aphd .gr{display:block;width:40px;height:5px;border-radius:3px;background:var(--gray-2);margin:8px auto 10px}
+.aptop{display:flex;gap:8px;align-items:center}
+.aptab{flex:1;display:flex;background:var(--gray-1);border-radius:12px;padding:3px}
+.aptab button{flex:1;min-height:42px;border:0;border-radius:10px;background:none;font:600 15px/1 var(--font);color:var(--ink-2);cursor:pointer;font-variant-numeric:tabular-nums}
+.aptab button[aria-selected=true]{background:var(--surface);box-shadow:var(--shadow-1);color:var(--ink);font-weight:700}
+.apf{flex:none;min-height:48px;padding:0 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font:700 14px/1 var(--font);color:var(--ink);cursor:pointer;white-space:nowrap}
+#apFm{position:absolute;right:14px;top:72px;z-index:5;min-width:190px;padding:6px;border-radius:14px;background:var(--surface);box-shadow:var(--shadow-2)}#apFm[hidden]{display:none}
+#apFm button{display:flex;align-items:center;gap:8px;width:100%;min-height:44px;padding:0 10px;border:0;border-radius:10px;background:none;font:600 15px var(--font);color:var(--ink);cursor:pointer;text-align:left}
+#apFm button .ck{margin-left:auto;color:var(--brand);font-weight:800}#apFm button[aria-pressed=false]{color:var(--mute)}#apFm button[aria-pressed=false] .ck{visibility:hidden}
+#apBody{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:0 0 calc(20px + env(safe-area-inset-bottom))}
+.ar{display:flex;align-items:center;gap:12px;min-height:64px;padding:10px 14px;border-top:1px solid var(--line);cursor:pointer}
+.ar.on{background:var(--brand-soft);box-shadow:inset 4px 0 0 var(--brand)}
+.ar .ai{flex:none;width:28px;display:flex;justify-content:center}
+.ar .at{flex:1;min-width:0}
+.ar .l1{display:flex;align-items:center;gap:6px;min-width:0}.ar .l1 b{min-width:0;font:700 16px/1.35 var(--font);color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ar .l1 .flag{flex:none;font-size:12px;padding:2px 7px}
+.ar .l2{display:flex;flex-wrap:wrap;align-items:center;gap:2px 10px;margin-top:4px;font-size:14px;color:var(--mute);font-variant-numeric:tabular-nums}
+.ar .rz{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 5px;border-radius:6px;background:var(--gray-1);font:700 12px/1 var(--font);font-style:normal;color:var(--ink-2)}
+.ar .l2 em{font-style:normal;font-weight:700}.ar .rp{font-weight:600;color:#b25a14}
+.ar .aa{flex:none;display:flex;flex-direction:column;gap:6px}.ar .aa .b{width:auto;min-height:42px;padding:0 14px;border-radius:999px;font-size:14px;white-space:nowrap}.ar .aa .b:not(.pri){background:var(--surface);box-shadow:inset 0 0 0 1px var(--gray-2)}
+.ar.sk .l1 b{color:var(--mute)}
+.ar.cl{background:var(--gray-1)}.ar.cl .ai svg{filter:grayscale(1);opacity:.55}.ar.cl .l1 b{color:var(--mute);font-weight:600}.ar.cl.on{background:var(--gray-2);box-shadow:inset 4px 0 0 var(--faint)}
+.apsec{padding:12px 14px 8px;border-top:1px solid var(--line);background:var(--gray-1);font:700 15px var(--font);color:var(--ink)}
+.apemp{padding:24px 14px;color:var(--mute);font-size:14px;text-align:center}
+.binmk.fade svg{opacity:.22}.binmk.sel .w{filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
 @media (min-width:761px){#allPage{left:50%;width:640px;transform:translateX(-50%);box-shadow:var(--shadow-2)}}
 .leaflet-top.leaflet-left{top:calc(164px + env(safe-area-inset-top))}.leaflet-top.leaflet-left .lgd{margin:0 0 0 12px;max-width:none;flex-wrap:nowrap}
 @media (min-width:761px){#card{left:auto;right:16px;bottom:16px;width:400px;max-height:calc(100vh - 100px)}#card[data-state=B]{max-height:calc(100vh - 100px)}.top{right:auto;width:560px}}
@@ -105,7 +123,9 @@ body.navon .tchip.ab{display:none} /* 導航中不顯示「全部桶」 */
 <button class="fab ibtn" id="infoBtn" aria-label="資料說明">i</button>
 <section id="card" aria-live="polite" data-state="A"><button class="tog" id="grab" aria-expanded="true" aria-label="收合卡片"><svg width="20" height="12" viewBox="0 0 20 12"><path d="M3 3l7 6 7-6" fill="none" stroke="#9aa0a4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div id="cardBody"><div class="addr" style="color:var(--mute);font-weight:500">正在載入預測…</div></div></section>
 
-<div id="allPage" role="dialog" aria-label="全部桶" hidden><div class="aph"><b>全部桶</b><span class="small" id="apSub"></span><button class="x" id="apX" aria-label="關閉">✕</button></div><div id="apBody"></div></div>
+<div id="allPage" role="dialog" aria-label="全部桶" hidden><div id="apMap"></div><button class="apx" id="apX" aria-label="關閉全部桶">‹ 全部桶</button>
+ <section id="apDr"><div class="aphd" id="apHd"><span class="gr" id="apGrab" aria-hidden="true"></span><div class="aptop"><div class="aptab" role="tablist" aria-label="本輪／下一輪"><button role="tab" data-tab="cur" aria-selected="true">本輪</button><button role="tab" data-tab="next" aria-selected="false">下一輪</button></div><button class="apf" id="apF" aria-haspopup="true" aria-expanded="false" aria-label="篩選路線">A・B・C ▾</button></div>
+  <div id="apFm" role="menu" hidden></div></div><div id="apBody"></div></section></div>
 
 <div class="sheet" id="timeSheet" hidden><div class="sh" role="dialog" aria-label="預測時間">
   <div class="hd"><b>預測時間</b><button class="x" data-close aria-label="關閉">✕</button></div>
@@ -137,7 +157,7 @@ body.navon .tchip.ab{display:none} /* 導航中不顯示「全部桶」 */
   <h3>回報與進度</h3><ul><li>抵達後回報收運量（空／半／滿／滿溢），約 3 秒內可「復原」，之後自動前往下一站；也可「略過此站」。收運量回報寫入既有回報事件，照舊同步雲端。</li><li>路線進度（完成、略過）只存在這台手機，台北時間每天換新；別人的回報不影響你的進度。</li><li>地圖上灰色＋✓＝今天清潔隊已回報（已清）。路線上的站若今天已有別的隊員回報清運（之後沒有新的行人「滿了」），會變灰並自動略過，不算入待清。一輪全部回報完後，新的行人「滿了」回報不會插進已完成的這一輪，而是列入下一輪（從第 1 站排起）；已完成的輪次留在「今日清運輪次」紀錄。行人回報「滿了」只會讓桶變紅、列為必清，不算已清；也不和民眾的「這裡需要垃圾桶」需求回報混算。</li></ul>
 </div></div>
 
-<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261023u"></script><script src="common.js?v=20261023u"></script><script src="cloud.js?v=20261023u"></script><script src="ui.js?v=20261023u"></script><script src="bin-icons.js?v=20261023u"></script><script src="forecast.js?v=20261023u"></script><script src="routing.js?v=20261023u"></script><script src="crew-zones.js?v=20261023u"></script>
+<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261023v"></script><script src="common.js?v=20261023v"></script><script src="cloud.js?v=20261023v"></script><script src="ui.js?v=20261023v"></script><script src="bin-icons.js?v=20261023v"></script><script src="forecast.js?v=20261023v"></script><script src="routing.js?v=20261023v"></script><script src="crew-zones.js?v=20261023v"></script>
 <script>
 roleSwitch('crew.html');
 // 清運門檻：兩段切換「快滿了以上」(70)／「只清滿溢」(100)；舊存檔的數字門檻對應到最近的選項，壞值→預設
@@ -178,7 +198,7 @@ const act=R=>R.filter(e=>!OC[e.b.id]),ocTail=(R,pool)=>[...R,...pool.filter(e=>O
 // 本輪是否全部回報完（完成、略過，或別的隊員已清）
 const roundFin=z=>{const p=progLoad(z);return p.ids.length>0&&p.ids.every(id=>p.done.has(id)||p.skip.has(id)||OC[id])};
 // 開始清運：next＝開始下一輪（上一輪存進今日紀錄 hist、進度歸零、輪數＋1）；否則把目前路線併入本輪
-function roundStart(next){const p=progLoad();if(next){if(p.ids.length)p.hist=[...(p.hist||[]),{r:p.round,ids:p.ids,done:[...p.done],skip:[...p.skip],oc:p.ids.filter(id=>OC[id]&&!p.done.has(id)),t0:p.t0,last:p.last}];p.round++;p.done=new Set();p.skip=new Set();p.ids=[];p.t0=0;p.last=0}p.ids=[...new Set([...p.ids,...route.map(e=>e.b.id)])];if(!p.t0)p.t0=Date.now();progSave(p)}
+function roundStart(next){const p=progLoad();if(next){if(p.ids.length)p.hist=[...(p.hist||[]),{r:p.round,ids:p.ids,done:[...p.done],skip:[...p.skip],oc:p.ids.filter(id=>OC[id]&&!p.done.has(id)),t0:p.t0,last:p.last}];p.round++;p.done=new Set();p.skip=new Set(p.nskip||[]);p.nskip=[];p.ids=[];p.t0=0;p.last=0}p.ids=[...new Set([...p.ids,...route.map(e=>e.b.id)])];if(!p.t0)p.t0=Date.now();progSave(p)}
 const doneSet=()=>{const ids=new Set(route.map(e=>e.b.id)),p=progLoad();return new Set([...p.done].filter(id=>ids.has(id)))};
 const curIdx=()=>{const p=progLoad();return route.findIndex(e=>!p.done.has(e.b.id)&&!p.skip.has(e.b.id)&&!OC[e.b.id])};
 // 進度：分母不含別的隊員已清的站
@@ -220,8 +240,8 @@ function fitTop(){if(state==='A'){const pts=route.length?route.map(e=>[e.b.la,e.
   const ci=curIdx(),pts=[];if(ci>=0){const b=route[ci].b;pts.push(ci?[route[ci-1].b.la,route[ci-1].b.lo]:depot,[b.la,b.lo])}else route.forEach(e=>pts.push([e.b.la,e.b.lo]));
   if(!pts.length)return;map.fitBounds(pts,{paddingTopLeft:[50,topUIBottom()+30],paddingBottomRight:padBR(),maxZoom:17})}
 // 地圖：與行人頁相同的垃圾桶狀態圖示（binIconSVG／binState：行人回報滿＝紅）；路線站＝桶＋站號；今天已清＝灰＋✓（取代站號）
-function crewIcon(f,st,o){const{html}=binIconSVG(f,st),k=o.cur?1.15:o.done?.62:o.n!=null?.92:o.dim?.62:.78;
-  return L.divIcon({className:'binmk oth crw'+(o.done?' done':'')+(o.cur?' cur':'')+(o.skip?' skip':'')+(o.dim?' dim':'')+(o.must&&!o.done?' must':''),iconSize:[44,44],iconAnchor:[22,41],popupAnchor:[0,-32],
+function crewIcon(f,st,o){const{html}=binIconSVG(f,st),k=o.big?1.5:o.cur?1.15:o.done?.62:o.n!=null?.92:o.dim?.62:.78;
+  return L.divIcon({className:'binmk oth crw'+(o.done?' done':'')+(o.cur?' cur':'')+(o.skip?' skip':'')+(o.dim?' dim':'')+(o.must&&!o.done?' must':'')+(o.fade?' fade':'')+(o.big?' sel':''),iconSize:[44,44],iconAnchor:[22,41],popupAnchor:[0,-32],
     html:`<div class="w" style="transform:scale(${k})">${html}${o.done?'<span class="bn">✓</span>':o.n!=null?`<span class="bn">${o.n}</span>`:''}</div>`})}
 // 每段路線：行車路網投影到最近路段（RT.pathE，同行人頁）；相距 NEAR_M 內＝步行接駁、不管單行道方向。無法對應路網 → null（畫虛線直線）
 const LEGC=new Map();function legPath(a,b){const k=a.join()+'|'+b.join();if(!LEGC.has(k)){if(LEGC.size>500)LEGC.clear();LEGC.set(k,DR?RT.pathE(DR,a,b,hav(a[0],a[1],b[0],b[1])<=NEAR_M||(a===depot&&'a')):null)}return LEGC.get(k)}
@@ -305,21 +325,89 @@ function renderLists(){const st=FC.state(),A=Object.fromEntries(AMT.map(a=>[a[0]
   roundHist.innerHTML=rh.length?rh.map(h=>`<div>路線 ${zone}・第 ${h.r} 輪${h.cur?'（本輪）':''}：已清 ${h.done.length} / ${h.ids.length-(h.oc||[]).length} 站${h.skip.length?`・略過 ${h.skip.length}`:''}${(h.oc||[]).length?`・他人已清 ${h.oc.length}`:''}${h.t0?`・${hhmm(h.t0)}${h.last>h.t0?'–'+hhmm(h.last):''}`:''}</div>`).join(''):'尚無';
   const ids=new Set(P.map(b=>b.id)),ev=getEvents().filter(e=>ids.has(e.bin)).reverse().slice(0,12);
   hist.innerHTML=ev.length?ev.map(e=>{const b=P.find(x=>x.id===e.bin);return `<div>${timeStr(e.ts)}・<b>${e.by}</b> ${e.kind==='full'?'回報已滿':e.kind==='clear'?'已清運'+(e.amount?'・實際 '+A[e.amount]:'')+(e.predPct!=null?'（預測'+rampState(e.predPct).t+'）':''):'回報'+rampState(e.level).t}<br>${b?b.addr:e.bin}</div>`}).join(''):'尚無紀錄'}
-// ---- 全部桶：全螢幕清單，依路線分組；點一列＝在地圖上看該站（不改路線、不改導航目標）----
-function renderAll(){const TD=todayCrew(),p=progLoad(),ev=getEvents(),m=new Map(E.map(e=>[e.b.id,e])),ix=new Map(route.map((e,i)=>[e.b.id,i]));let tot=0,ncl=0;
-  apBody.innerHTML=ZS.map(z=>{const rs=P.filter(b=>ZONE[b.id]===z).map(b=>{const e=m.get(b.id),cl=!!TD[b.id]||(z===zone&&p.done.has(b.id)),ri=z===zone?ix.get(b.id):null;return{b,e,cl,ri}})
-      .sort((x,y)=>(x.cl-y.cl)||((x.ri??999)-(y.ri??999))||x.b.addr.localeCompare(y.b.addr,'zh-Hant'));
-    const n=rs.filter(r=>r.cl).length;tot+=rs.length;ncl+=n;
-    return `<h3>路線 ${z}・${ZN[z]}<span>已清 ${n} / ${rs.length}</span>${z===zone&&state==='B'?'<span class="cur">目前路線</span>':''}</h3>`+rs.map(({b,e,cl,ri})=>{const f=e?Math.floor(e.fill):0,s=cl?null:binState(b.id,ev);
-      return `<button type="button" class="ar${cl?' cl':''}" data-bin="${b.id}"><span class="ai">${binIconSVG(f,s).html}</span><span class="at"><b>${b.addr}</b><small>${b.id}${ri!=null?`・第 ${ri+1} 站`:''}${s?'・行人回報滿':''}${!cl&&!s&&e?'・預測'+rampState(f).t:''}</small></span><span class="as${cl?' ok':''}">${cl?'✓ 已清'+(TD[b.id]?' '+hhmm(TD[b.id]):''):'未清'}</span></button>`}).join('')}).join('');
-  apBody.insertAdjacentHTML('afterbegin',`<div style="padding-top:8px"></div>`);apSub.textContent=`${CONFIG.demoArea.name}・${tot} 桶・今天已清 ${ncl}`}
-function allOpen(){if(window.NAV)return;renderAll();allPage.hidden=false;apX.focus()}
-function allClose(){allPage.hidden=true;allBtn.focus()}
-allBtn.onclick=allOpen;apX.onclick=allClose;addEventListener('keydown',e=>{if(e.key==='Escape'&&!allPage.hidden)allClose()});
-apBody.onclick=e=>{const r=e.target.closest('[data-bin]');if(!r)return;allPage.hidden=true;focusBin(r.dataset.bin)};
-function focusBin(id){const mk=MK[id];if(!mk)return;const ll=mk.getLatLng();map.setView(ll,Math.max(map.getZoom(),17),{animate:false});
-  const c=map.latLngToContainerPoint(ll),top=topUIBottom(),mob=innerWidth<=760,bot=mob?card.getBoundingClientRect().top:innerHeight,right=mob?innerWidth:card.getBoundingClientRect().left;
-  map.panBy([c.x-right/2,c.y-(top+bot)/2+20],{animate:false});mk.openPopup()}
+// ---- 全部桶（B 方案）：上方地圖＋下方可拖曳半開抽屜；分頁「本輪｜下一輪」；清單和地圖連動 ----
+// 本輪＝各路線這一輪的站（目前路線＝route＋已開始的站；本輪已完成的路線＝這一輪的站）；下一輪＝該路線其餘的桶（已清後又被回報滿的桶也列下一輪）
+// 排序：必清 → 滿溢 → 行人回報（次數多、時間近）→ 距離近；略過的接在後面；今天已清（任何隊員）反灰沉到最底
+// 每列只有「導航到這桶」「略過」兩個動作；收運量回報只在導航流程裡做
+const AP={tab:'cur',zs:new Set(ZS),sel:null};let amap=null,amL=null,AMK={};
+const kmS=m=>m<1000?Math.round(m/10)*10+' m':(m/1000).toFixed(1)+' km';
+const ST_INK={reported:'var(--reported-ink)',high:'#b25a14',mid:'#8a6d12',low:'#3d7a5a'}; // 狀態字（4 種）用色階的深色，白底可讀
+// 今天（台北）清潔隊最後一筆清運：bin → {t, me}（me＝這台裝置寫的；別的裝置＝其他隊員）
+function crewWho(){const d=tpeDay(Date.now()),M=mineLoad(),r={};for(const e of getEvents()){if(e.by!=='清潔隊'||(e.kind!=='clear'&&e.kind!=='level'))continue;const t=e.ts||e.ot;if(tpeDay(t)!==d)continue;if(!r[e.bin]||t>r[e.bin].t)r[e.bin]={t,me:M.has(e.id)||M.has('t'+e.ot)}}return r}
+// 距離（沿車行道路）：從目前位置（沒有定位＝出發點）；位置不變就沿用
+const APD=new Map();let apdK='';
+function apDist(b){const pos=crewPos||depot,k=pos.join();if(k!==apdK){APD.clear();apdK=k}if(!APD.has(b.id))APD.set(b.id,dd(pos,[b.la,b.lo]));return APD.get(b.id)}
+function apRows(){const ev=getEvents(),W=crewWho(),dl=deadline(T()),m=new Map(E.map(e=>[e.b.id,e])),rows=[];
+  for(const z of ZS){const p=progLoad(z),fin=roundFin(z),ns=new Set(p.nskip||[]),cur=new Set(fin?p.ids:[...p.ids,...(z===zone?route:ZR[z]||[]).map(e=>e.b.id)]);
+    for(const b of P){if(ZONE[b.id]!==z)continue;const e=m.get(b.id);if(!e)continue;const id=b.id,rep=binState(id,ev)==='reported',w=W[id],cl=!!w&&!rep,
+        tab=cur.has(id)&&(cl||!p.done.has(id))?'cur':'next',fe=rep?binEvents(id,ev).filter(x=>x.kind==='full'):[],f=Math.floor(e.fill);
+      rows.push({id,b,e,z,tab,cl,w,f,rep,sk:!cl&&(tab==='cur'?p.skip.has(id):ns.has(id)),must:rep||e.fill>=100||e.fullAt<=dl,over:!rep&&e.fill>=100,nr:fe.length,rt:fe.length?evT(fe[fe.length-1]):0,d:apDist(b)})}}
+  return rows}
+const apSort=(a,b)=>(a.cl-b.cl)||(a.sk-b.sk)||(a.cl?b.w.t-a.w.t:(b.must-a.must)||(b.over-a.over)||(b.rep-a.rep)||(b.nr-a.nr)||(b.rt-a.rt)||(a.d-b.d));
+function apRow(r){const on=r.id===AP.sel,a=`class="ar${on?' on':''}${r.cl?' cl':''}${r.sk?' sk':''}" data-bin="${r.id}" role="button" tabindex="0" aria-current="${on}"`;
+  if(r.cl)return `<div ${a}><span class="ai">${binIconSVG(r.f).html}</span><span class="at"><span class="l1"><b>✓ ${r.b.addr}</b></span><span class="l2"><i class="rz">${r.z}</i><span>${r.w.me?'我':'其他隊員'} ${hhmm(r.w.t)} 已清</span></span></span></div>`;
+  const s=rampState(r.f,r.rep);
+  return `<div ${a}><span class="ai">${binIconSVG(r.f,r.rep?'reported':null).html}</span><span class="at"><span class="l1"><span class="flag${r.must?' must':''}">${r.must?'必清':'順路'}</span><b>${r.b.addr}</b></span>
+    <span class="l2"><i class="rz" aria-label="路線 ${r.z}">${r.z}</i><em style="color:${ST_INK[s.k]}">${s.t}</em><span>${kmS(r.d)}</span>${r.rep?`<span class="rp">行人回報 ${r.nr}・${repAgo(r.id)}</span>`:''}${r.sk?`<span>${r.tab==='cur'?'本輪':'下一輪'}略過</span>`:''}</span></span>
+    ${on?`<span class="aa"><button type="button" class="b pri" data-go>導航到這桶</button><button type="button" class="b" data-skip>${r.sk?'取消略過':'略過'}</button></span>`:''}</div>`}
+function renderAll(){const R=apRows().filter(r=>AP.zs.has(r.z)),L0=R.filter(r=>r.tab===AP.tab).sort(apSort),pend=L0.filter(r=>!r.cl),cl=L0.filter(r=>r.cl),st=apBody.scrollTop;
+  if(AP.sel&&!L0.some(r=>r.id===AP.sel))AP.sel=null;
+  document.querySelectorAll('.aptab [data-tab]').forEach(b=>{const t=b.dataset.tab;b.setAttribute('aria-selected',t===AP.tab);b.textContent=`${t==='cur'?'本輪':'下一輪'} ${R.filter(r=>r.tab===t).length}`});
+  apF.textContent=ZS.filter(z=>AP.zs.has(z)).join('・')+' ▾';
+  apFm.innerHTML=ZS.map(z=>`<button type="button" role="menuitemcheckbox" data-fz="${z}" aria-pressed="${AP.zs.has(z)}" aria-checked="${AP.zs.has(z)}">路線 ${z}・${ZN[z]}<span class="ck">✓</span></button>`).join('');
+  apBody.innerHTML=(pend.length?pend.map(apRow).join(''):`<div class="apemp">${AP.tab==='cur'?'本輪沒有待清的桶':'下一輪沒有其他的桶'}</div>`)+(cl.length?`<div class="apsec">✓ 已清（今天）</div>${cl.map(apRow).join('')}`:'');
+  apBody.scrollTop=st;apDraw(R)}
+// 地圖：與行人頁相同的狀態圖示；不在目前分頁＝淡化；選到的桶放大；已清＝灰＋✓
+function apDraw(R){if(!amap)return;amL.clearLayers();AMK={};
+  if(AP.tab==='cur'&&state==='B'&&zone&&AP.zs.has(zone)){const p=progLoad();let p0=crewPos||depot; // 目前路線剩下的站：灰色細線（沿車行道路）
+    for(const e of route){if(OC[e.b.id]||p.done.has(e.b.id)||p.skip.has(e.b.id))continue;const q=[e.b.la,e.b.lo],r=legPath(p0,q);L.polyline(r?r.pts:[p0,q],{color:'#8f9599',weight:4,opacity:.75,dashArray:r?null:'6 8',interactive:false}).addTo(amL);p0=q}}
+  for(const r of R){const on=r.tab===AP.tab,sel=r.id===AP.sel;
+    AMK[r.id]=L.marker([r.b.la,r.b.lo],{zIndexOffset:sel?5000:on?(r.cl?-500:1000):-2000,title:r.b.addr,keyboard:false,icon:crewIcon(r.f,r.cl?null:r.rep?'reported':null,{done:r.cl,big:sel,fade:!on,skip:on&&r.sk})}).on('click',()=>apPick(r.id,'map')).addTo(amL)}
+  if(crewPos)L.circleMarker(crewPos,{radius:7,color:'#fff',weight:2.5,fillColor:'#2a7de1',fillOpacity:1,interactive:false}).addTo(amL)}
+// 抽屜：半開（地圖約 40%）／全開／收低；拖曳把手或分頁列、放開後吸附到最近的位置
+const apH=()=>allPage.clientHeight,apSN=()=>({full:Math.round(64+(parseFloat(getComputedStyle(apX).top)||10)),half:Math.round(apH()*.4),low:apH()-170});
+function apSnap(k){apDr.style.top=apSN()[k]+'px';apDr.dataset.snap=k}
+const apTop=()=>apSN()[apDr.dataset.snap||'half'];
+function apFit(){if(!amap)return;const pts=apRows().filter(r=>AP.zs.has(r.z)&&r.tab===AP.tab&&!r.cl).map(r=>[r.b.la,r.b.lo]),all=pts.length?pts:P.filter(b=>AP.zs.has(ZONE[b.id])).map(b=>[b.la,b.lo]);if(!all.length)return;
+  amap.fitBounds(all,{paddingTopLeft:[30,70],paddingBottomRight:[30,apH()-apTop()+20],maxZoom:17,animate:false})}
+// 把桶放大並置中在抽屜上方看得到的地圖裡
+function apFocus(id){const mk=AMK[id];if(!mk)return;const z=Math.max(amap.getZoom(),17),pt=amap.project(mk.getLatLng(),z).add([0,(apH()-apTop())/2]);amap.setView(amap.unproject(pt,z),z)}
+function apPick(id,src){const r=apRows().find(x=>x.id===id);if(!r)return;AP.sel=id;AP.zs.add(r.z);if(r.tab!==AP.tab)AP.tab=r.tab;
+  if(src==='list'&&apDr.dataset.snap!=='half')apSnap('half');renderAll();
+  if(src==='list')apFocus(id);else{const el=apBody.querySelector(`[data-bin="${id}"]`);if(el)apBody.scrollTop=el.offsetTop-apBody.offsetTop-8}}
+function allOpen(){if(window.NAV)return;allPage.hidden=false;
+  if(!amap){amap=L.map('apMap',{zoomControl:false,preferCanvas:true}).setView(CONFIG.demoArea.center,15);amap.attributionControl.setPrefix(false);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(amap);amL=L.layerGroup().addTo(amap)}
+  AP.sel=null;apFm.hidden=true;apSnap('half');amap.invalidateSize();renderAll();apBody.scrollTop=0;apFit();apX.focus()}
+function allClose(){allPage.hidden=true;apFm.hidden=true;allBtn.focus()}
+allBtn.onclick=allOpen;apX.onclick=allClose;
+addEventListener('keydown',e=>{if(allPage.hidden)return;if(e.key==='Escape'){if(!apFm.hidden){apFm.hidden=true;apF.setAttribute('aria-expanded',false)}else allClose()}
+  else if(e.key==='Enter'&&e.target.matches&&e.target.matches('.ar[data-bin]'))apPick(e.target.dataset.bin,'list')});
+apHd.addEventListener('click',e=>{const t=e.target.closest('[data-tab]');if(t){AP.tab=t.dataset.tab;AP.sel=null;renderAll();apBody.scrollTop=0;apFit();return}
+  if(e.target.closest('#apF')){apFm.hidden=!apFm.hidden;apF.setAttribute('aria-expanded',!apFm.hidden);return}
+  const f=e.target.closest('[data-fz]');if(f){const z=f.dataset.fz;if(AP.zs.has(z)){if(AP.zs.size>1)AP.zs.delete(z)}else AP.zs.add(z);renderAll();apFit()}}); // 至少留一條路線
+allPage.addEventListener('pointerdown',e=>{if(!apFm.hidden&&!e.target.closest('#apFm,#apF')){apFm.hidden=true;apF.setAttribute('aria-expanded',false)}});
+{let y0=null,t0=0,mv=false;
+  apHd.addEventListener('pointerdown',e=>{if(e.target.closest('button,#apFm'))return;y0=e.clientY;t0=apDr.offsetTop;mv=false;apDr.classList.add('drag');apHd.setPointerCapture(e.pointerId)});
+  apHd.addEventListener('pointermove',e=>{if(y0==null)return;const dy=e.clientY-y0;if(Math.abs(dy)>4)mv=true;const S=apSN();apDr.style.top=Math.max(S.full,Math.min(S.low,t0+dy))+'px'});
+  const up=()=>{if(y0==null)return;y0=null;apDr.classList.remove('drag');const S=apSN(),y=apDr.offsetTop;
+    if(!mv){apSnap(apDr.dataset.snap==='full'?'half':'full');return} // 點把手：半開 ↔ 全開
+    apSnap(Object.keys(S).reduce((a,k)=>Math.abs(S[k]-y)<Math.abs(S[a]-y)?k:a,'half'))};
+  apHd.addEventListener('pointerup',up);apHd.addEventListener('pointercancel',up)}
+addEventListener('resize',()=>{if(!allPage.hidden)apSnap(apDr.dataset.snap||'half')});
+apBody.onclick=e=>{const r=e.target.closest('[data-bin]');if(!r)return;const id=r.dataset.bin;
+  if(e.target.closest('[data-go]')){apGo(id);return}if(e.target.closest('[data-skip]')){apSkip(id);return}apPick(id,'list')};
+// 略過：本輪＝這一輪不清（同卡片「略過此站」）；下一輪＝開始下一輪時直接略過。再點一次＝取消略過
+function apSkip(id){const r=apRows().find(x=>x.id===id);if(!r||r.cl)return;const p=progLoad(r.z);
+  if(r.tab==='cur'){r.sk?p.skip.delete(id):p.skip.add(id)}else{const s=new Set(p.nskip||[]);r.sk?s.delete(id):s.add(id);p.nskip=[...s]}
+  progSave(p,r.z);toast(r.sk?'已取消略過':r.tab==='cur'?'已略過，本輪不清這桶':'已略過，下一輪不清這桶');draw()}
+// 導航到這桶：App 內導航（同卡片導航鈕）。還沒開始／別條路線／本輪已完成 → 先開始該路線這一輪；不在路線上的桶 → 插成下一站
+function apGo(id){const r=apRows().find(x=>x.id===id);if(!r||r.cl)return;advClear();
+  if(state!=='B'||r.z!==zone||roundFin(r.z)){zone=r.z;plan();roundStart(roundFin(zone));state='B'}
+  let i=route.findIndex(e=>e.b.id===id);
+  if(i<0){const e=E.find(x=>x.b.id===id);if(!e)return;e.must=r.must;const c=curIdx();i=c<0?route.length:c;route.splice(i,0,e);ZR[zone]=route}
+  const p=progLoad();p.skip.delete(id);p.ids=[...new Set([...p.ids,id])];progSave(p);saveUI();
+  allPage.hidden=true;draw();crewNavGo(i)}
 function setState(s){state=s;saveUI();draw();requestAnimationFrame(()=>fitTop())}
 // 收運量回報：寫入既有 events（Firebase 同步）＋校正預測；進度只記在本機。o.nav＝導航抵達卡送出
 function record(id,amount,pct,o={}){const b=P.find(x=>x.id===id),st=FC.state(),r=FC.clearAndCalibrate(b,day(),T(),pct,st),i0=route.findIndex(e=>e.b.id===id);
@@ -398,7 +486,7 @@ let crewPos=null,crewAcc=999,crewMe=null;
 function crewSetPos(q,a){crewPos=q;if(a>0)crewAcc=a;if(!crewMe)crewMe=L.circleMarker(q,{radius:7,color:'#fff',weight:2.5,fillColor:'#2a7de1',fillOpacity:1,interactive:false}).addTo(map);else crewMe.setLatLng(q)}
 function crewSoftEnd(){if(!NAV)return;clearTimeout(NAV.idleT);if(NAV.wid!=null&&navigator.geolocation)navigator.geolocation.clearWatch(NAV.wid);NAV=null;navL.clearLayers()}
 function crewReopen(i){crewSoftEnd();const b=route[i]&&route[i].b;if(!b)return;NAVH.setCol(true);navStart(b,{idx:i});draw()} // 復原回報：回到這一站繼續導航
-function crewNavGo(){const i=curIdx();if(i<0)return;allPage.hidden=true;const b=route[i].b,go=()=>{if(!crewPos){const pr=i?[route[i-1].b.la,route[i-1].b.lo]:depot;crewSetPos(pr,999)}NAVH.setCol(true);navStart(b,{idx:i})};
+function crewNavGo(i=curIdx()){if(i<0||!route[i])return;allPage.hidden=true;const b=route[i].b,go=()=>{if(!crewPos){const pr=i?[route[i-1].b.la,route[i-1].b.lo]:depot;crewSetPos(pr,999)}NAVH.setCol(true);navStart(b,{idx:i})};
   if(crewPos||!navigator.geolocation)return go();let done=false;const fin=()=>{if(!done){done=true;go()}};setTimeout(fin,3000);
   try{navigator.geolocation.getCurrentPosition(p=>{crewSetPos([p.coords.latitude,p.coords.longitude],p.coords.accuracy);fin()},fin,{enableHighAccuracy:true,timeout:3000,maximumAge:5000})}catch(e){fin()}}
 window.NAVH={osrm:'https://routing.openstreetmap.de/routed-car/route/v1/driving/',speed:333,label:'行車', // 20 km/h（同卡片車程估算）
@@ -419,7 +507,7 @@ card.addEventListener('click',e=>{if(!window.NAV)return;const t=e.target,a=t.clo
   if(t.closest('#navSkip')){e.stopImmediatePropagation();skipStop(NAV.bin.id,true);return}
   if(a){e.stopImmediatePropagation();const id=NAV.bin.id;crewSoftEnd();record(id,a.dataset.amt,+a.dataset.pct,{nav:true})}},true);
 {const s=document.createElement('style');s.textContent='.navw{display:block!important;width:100%}.ncw{display:flex;flex-wrap:wrap;align-items:baseline;min-width:0;flex:1}.ncw .nn{flex-basis:100%;font:400 13px/1.4 var(--font,system-ui);color:#7d8b8b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.navw .rbar{position:static;margin:8px 0 0;padding:0;background:none}.navw .rbar .q{margin:0 0 8px}';document.head.appendChild(s)}
-</script><script src="nav.js?v=20261023u"></script><script>
+</script><script src="nav.js?v=20261023v"></script><script>
 // 清潔隊不另外判定抵達（沒有「到了嗎？」、沒有抵達卡）：回報鈕一直在導航卡上
 navArrive=()=>{};navArrOpen=()=>{};
 // 第一段沿道路：藍點投影到最近的車行路段（RT.pathE，同 routing.js／地圖路線），不從藍點拉直線穿過街區。
