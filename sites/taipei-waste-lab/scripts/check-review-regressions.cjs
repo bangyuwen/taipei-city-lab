@@ -50,6 +50,10 @@ const base=process.env.PORTAL_QA_URL||'http://127.0.0.1:4198/';
    assert.match(await page.locator('#pcur').innerText(),/（提案）/);
    assert.match(await page.locator(`[data-st="${i}"]`).getAttribute('aria-label'),/（提案）/);
   }
+  await page.locator('#hot [data-i]').first().click();
+  await page.locator('#miniPlan').waitFor();
+  assert.equal(await page.locator('#miniPlan .cur').count(),0);
+  assert.match(await page.locator('#miniPlan').innerText(),/未排程/);
   await page.route('**/current-plan.json',r=>r.abort());await page.reload();
   await page.waitForFunction(()=>currentPlan.textContent.includes('版本暫時無法讀取'));
   assert.equal(await page.locator('#pbar .nowb,#pcur .now').count(),0);
