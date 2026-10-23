@@ -51,3 +51,25 @@ test('bulk skip preserves observations and completed or externally reported stop
   assert.deepEqual([...p.skip].sort(),['pending','skipped']);assert.deepEqual([...p.done],['done']);
   assert.deepEqual(events,[]);assert.equal(c.setSheet.hidden,true);
 });
+
+test('navigation undo resolves the original bin after a synchronized route insertion',()=>{
+  for(const action of ['record','skipStop'])for(const removed of [false,true]){
+    const route=['B1','B2'].map(id=>({b:{id}})),events=[],reopened=[],state={cal:{},clear:{}};
+    const c={route,P:route.map(e=>e.b),FC:{state:()=>state,clearAndCalibrate:()=>({pred:50,k:1,old:1}),save:()=>{}},
+      day:()=> 'we',T:()=>930,AMT:[['half','半',50]],rampState:()=>({t:'半'}),
+      addEvent:e=>{const event={...e,id:'report',ts:1};events.push(event);return event},
+      getEvents:()=>events,removeEvent:id=>events.splice(events.findIndex(e=>e.id===id),1),
+      mineAdd:()=>{},progMark:()=>{},advSet:()=>{},advClear:()=>{},draw:()=>{},fitTop:()=>{},
+      undoToast:(_,fn)=>{c.undo=fn},crewReopen:i=>reopened.push(route[i].b.id),
+      crewSoftEnd:()=>{},NAVH:{setCol:()=>{}},navStart:b=>reopened.push(b.id),curIdx:()=>-1,
+      navOff:()=>{},requestAnimationFrame:fn=>fn()};
+    vm.runInNewContext(body('function record(', '\ncard.onclick='),c);
+    if(action==='record')c.record('B2','half',50,{nav:true});else c.skipStop('B2',true);
+    // A sync inserts a stop before the saved index while the undo toast is open.
+    route.unshift({b:{id:'new-stop'}});
+    if(removed)route.splice(route.findIndex(e=>e.b.id==='B2'),1);
+    c.undo();
+    assert.deepEqual(reopened,removed?[]:['B2'],`${action}, removed=${removed}`);
+    assert.deepEqual(events,[]);
+  }
+});

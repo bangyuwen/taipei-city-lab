@@ -392,15 +392,15 @@ function apGo(id){const r=apRows().find(x=>x.id===id);if(!r||r.cl)return;advClea
   AP.page='route';amL.clearLayers();draw();crewNavGo(i)}
 function setState(s){state=s;saveUI();draw();requestAnimationFrame(()=>fitTop())}
 // 收運量回報：寫入既有 events（Firebase 同步）＋校正預測；進度只記在本機。o.nav＝導航抵達卡送出
-function record(id,amount,pct,o={}){const b=P.find(x=>x.id===id),st=FC.state(),r=FC.clearAndCalibrate(b,day(),T(),pct,st),i0=route.findIndex(e=>e.b.id===id);
+function record(id,amount,pct,o={}){const b=P.find(x=>x.id===id),st=FC.state(),r=FC.clearAndCalibrate(b,day(),T(),pct,st);
   const ev=addEvent({bin:id,kind:'clear',level:0,by:'清潔隊',amount,amountPct:pct,predPct:Math.round(r.pred),calib:+r.k.toFixed(3),fcDay:day(),fcMin:T()});mineAdd(ev);progMark(id,true);
   const ts=ev.ts,eid=ev.id;advSet({id,kind:'rec',amt:amount,nav:!!o.nav});draw();fitTop();
   undoToast(`已完成・實際 ${AMT.find(a=>a[0]===amount)[1]}・預測${rampState(r.pred).t}`,()=>{advClear();progMark(id,false); // 復原：只把這一站改回未完成
     getEvents().filter(e=>e.id===eid||(e.ts===ts&&e.bin===id)).forEach(e=>removeEvent(e.id));const s2=FC.state();if(r.old===1&&s2.cal[id]&&s2.cal[id].n===1)delete s2.cal[id];else if(s2.cal[id])s2.cal[id]={k:r.old,n:s2.cal[id].n-1};delete s2.clear[id];FC.save(s2);
-    if(o.nav&&i0>=0){crewReopen(i0);return}draw();fitTop()})}
+    if(o.nav){const i=route.findIndex(e=>e.b.id===id);if(i>=0){crewReopen(i);return}}draw();fitTop()})}
 // 略過此站：只記在本機，立刻前往下一站；可復原
-function skipStop(id,nav){advClear();const i0=route.findIndex(e=>e.b.id===id);progMark(id,true,'skip');
-  undoToast('已略過此站',()=>{progMark(id,false,'skip');if(nav){crewSoftEnd();NAVH.setCol(true);navStart(route[i0].b,{idx:i0});draw();return}draw();fitTop()});
+function skipStop(id,nav){advClear();progMark(id,true,'skip');
+  undoToast('已略過此站',()=>{progMark(id,false,'skip');if(nav){const i=route.findIndex(e=>e.b.id===id);if(i>=0){crewReopen(i);return}}draw();fitTop()});
   if(nav){crewSoftEnd();const i=curIdx();if(i>=0){NAVH.setCol(true);navStart(route[i].b,{idx:i});draw();return}navOff()}
   draw();requestAnimationFrame(()=>fitTop())}
 card.onclick=e=>{const t=e.target;
