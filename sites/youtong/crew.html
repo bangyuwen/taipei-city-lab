@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261023t"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261023t"><title>清潔隊｜今日清運｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261023t"><link rel="stylesheet" href="tokens.css?v=20261023t"><link rel="stylesheet" href="ui.css?v=20261023t">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261023u"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261023u"><title>清潔隊｜今日清運｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261023u"><link rel="stylesheet" href="tokens.css?v=20261023u"><link rel="stylesheet" href="ui.css?v=20261023u">
 <style>
 /* ===== 有桶・清潔隊（mobile-first 390x844；以正式版為底：A 選路線（A/B/C 分區）→ B 執行）===== */
 html,body{height:100%;overflow:hidden;background:var(--map-bg)}
@@ -137,7 +137,7 @@ body.navon .tchip.ab{display:none} /* 導航中不顯示「全部桶」 */
   <h3>回報與進度</h3><ul><li>抵達後回報收運量（空／半／滿／滿溢），約 3 秒內可「復原」，之後自動前往下一站；也可「略過此站」。收運量回報寫入既有回報事件，照舊同步雲端。</li><li>路線進度（完成、略過）只存在這台手機，台北時間每天換新；別人的回報不影響你的進度。</li><li>地圖上灰色＋✓＝今天清潔隊已回報（已清）。路線上的站若今天已有別的隊員回報清運（之後沒有新的行人「滿了」），會變灰並自動略過，不算入待清。一輪全部回報完後，新的行人「滿了」回報不會插進已完成的這一輪，而是列入下一輪（從第 1 站排起）；已完成的輪次留在「今日清運輪次」紀錄。行人回報「滿了」只會讓桶變紅、列為必清，不算已清；也不和民眾的「這裡需要垃圾桶」需求回報混算。</li></ul>
 </div></div>
 
-<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261023t"></script><script src="common.js?v=20261023t"></script><script src="cloud.js?v=20261023t"></script><script src="ui.js?v=20261023t"></script><script src="bin-icons.js?v=20261023t"></script><script src="forecast.js?v=20261023t"></script><script src="routing.js?v=20261023t"></script><script src="crew-zones.js?v=20261023t"></script>
+<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261023u"></script><script src="common.js?v=20261023u"></script><script src="cloud.js?v=20261023u"></script><script src="ui.js?v=20261023u"></script><script src="bin-icons.js?v=20261023u"></script><script src="forecast.js?v=20261023u"></script><script src="routing.js?v=20261023u"></script><script src="crew-zones.js?v=20261023u"></script>
 <script>
 roleSwitch('crew.html');
 // 清運門檻：兩段切換「快滿了以上」(70)／「只清滿溢」(100)；舊存檔的數字門檻對應到最近的選項，壞值→預設
@@ -330,8 +330,8 @@ function record(id,amount,pct,o={}){const b=P.find(x=>x.id===id),st=FC.state(),r
     if(o.nav&&i0>=0){crewReopen(i0);return}draw();fitTop()})}
 // 略過此站：只記在本機，立刻前往下一站；可復原
 function skipStop(id,nav){advClear();const i0=route.findIndex(e=>e.b.id===id);progMark(id,true,'skip');
-  undoToast('已略過此站',()=>{progMark(id,false,'skip');if(nav){crewSoftEnd();NAVH.setCol(true);navStart(route[i0].b,{idx:i0});return}draw();fitTop()});
-  if(nav){crewSoftEnd();const i=curIdx();if(i>=0){NAVH.setCol(true);navStart(route[i].b,{idx:i});return}navOff()}
+  undoToast('已略過此站',()=>{progMark(id,false,'skip');if(nav){crewSoftEnd();NAVH.setCol(true);navStart(route[i0].b,{idx:i0});draw();return}draw();fitTop()});
+  if(nav){crewSoftEnd();const i=curIdx();if(i>=0){NAVH.setCol(true);navStart(route[i].b,{idx:i});draw();return}navOff()}
   draw();requestAnimationFrame(()=>fitTop())}
 card.onclick=e=>{const t=e.target;
   const z=t.closest('[data-zone]');if(z){zone=z.dataset.zone;route=ZR[zone]||[];saveUI();draw();requestAnimationFrame(()=>fitTop());return} // 點卡片＝地圖亮起該區路線
@@ -393,12 +393,11 @@ Promise.all([loadJSON('bins.geojson'),loadJSON('footfall_hourly.json'),RT.load('
   saveUI();draw();requestAnimationFrame(()=>fitTop())}).catch(e=>toast('資料載入失敗：'+e.message));
 
 // ===== App 內行車導航：沿用行人頁 nav.js，只換參數；不開 Google 地圖 =====
-// 路線：OSRM car（routing.openstreetmap.de/routed-car，driving profile，沿實際道路）；抵達＝原本的收運量回報（同選項、同寫入）
+// 路線：OSRM car（routing.openstreetmap.de/routed-car，driving profile，沿實際道路）；不另外確認抵達——導航卡一直顯示這一站的收運量回報（同選項、同寫入），點了就完成並導航到下一站
 let crewPos=null,crewAcc=999,crewMe=null;
 function crewSetPos(q,a){crewPos=q;if(a>0)crewAcc=a;if(!crewMe)crewMe=L.circleMarker(q,{radius:7,color:'#fff',weight:2.5,fillColor:'#2a7de1',fillOpacity:1,interactive:false}).addTo(map);else crewMe.setLatLng(q)}
 function crewSoftEnd(){if(!NAV)return;clearTimeout(NAV.idleT);if(NAV.wid!=null&&navigator.geolocation)navigator.geolocation.clearWatch(NAV.wid);NAV=null;navL.clearLayers()}
-function crewReopen(i){crewSoftEnd();const b=route[i]&&route[i].b;if(!b)return;document.body.classList.add('navon');
-  NAV={idx:i,bin:b,pts:null,fail:false,loading:false,dragAt:0,shownD:null,shownAt:0,lastPos:(crewPos||[b.la,b.lo]).slice(),near0:null,arrShown:false,mode:'nav',idleT:0,acc:crewAcc,startAt:Date.now()};navWatch();navArrOpen()}
+function crewReopen(i){crewSoftEnd();const b=route[i]&&route[i].b;if(!b)return;NAVH.setCol(true);navStart(b,{idx:i});draw()} // 復原回報：回到這一站繼續導航
 function crewNavGo(){const i=curIdx();if(i<0)return;allPage.hidden=true;const b=route[i].b,go=()=>{if(!crewPos){const pr=i?[route[i-1].b.la,route[i-1].b.lo]:depot;crewSetPos(pr,999)}NAVH.setCol(true);navStart(b,{idx:i})};
   if(crewPos||!navigator.geolocation)return go();let done=false;const fin=()=>{if(!done){done=true;go()}};setTimeout(fin,3000);
   try{navigator.geolocation.getCurrentPosition(p=>{crewSetPos([p.coords.latitude,p.coords.longitude],p.coords.accuracy);fin()},fin,{enableHighAccuracy:true,timeout:3000,maximumAge:5000})}catch(e){fin()}}
@@ -407,20 +406,30 @@ window.NAVH={osrm:'https://routing.openstreetmap.de/routed-car/route/v1/driving/
   getCol:()=>card.classList.contains('collapsed'),setCol:v=>{card.classList.toggle('collapsed',v);togSet(document.getElementById('grab'),v)},
   getPos:()=>crewPos,getAcc:()=>crewAcc,setPos:crewSetPos,
   // 只在 App 內導航：拿掉 nav.js 的「用 Google 地圖開啟」連結（收合＋路線失敗時補回「結束」）
-  paint:(html,col)=>{cardBody.innerHTML=`<div class="cpri navw">${html}</div>`;cardBody.querySelectorAll('#navGm').forEach(a=>{const nr=a.closest('.nr'),wrap=a.closest('.acts');a.remove();if(wrap&&!wrap.children.length)wrap.remove();if(nr&&!nr.querySelector('#navEnd'))nr.insertAdjacentHTML('beforeend','<button class="ntx" id="navEnd">結束</button>')})},
+  paint:(html,col)=>{cardBody.innerHTML=`<div class="cpri navw">${html}${window.NAV?`<div class="rbar"><div class="q">這桶實際多滿？點一下即完成此站（並校正預測）</div>${amtsHTML()}<button type="button" class="skp" id="navSkip">略過此站</button></div>`:''}</div>`;cardBody.querySelectorAll('#navGm').forEach(a=>{const nr=a.closest('.nr'),wrap=a.closest('.acts');a.remove();if(wrap&&!wrap.children.length)wrap.remove();if(nr&&!nr.querySelector('#navEnd'))nr.insertAdjacentHTML('beforeend','<button class="ntx" id="navEnd">結束</button>')})},
   left:(N,rem)=>{const n=`第 ${N.idx+1} 站／共 ${route.length} 站`,d=N.mode==='arrived'?'已抵達':N.fail?`直線距離 ${navFmt(rem)}`:`${navFmt(rem)}・約 ${navMin(rem)} 分鐘`;
     return `<span class="ncw"><span class="nd">${n}</span><span class="nt">・${d}</span><span class="nn">${N.bin.addr}</span></span>`},
-  nbin:N=>`<div class="nbin">${route[N.idx]&&route[N.idx].must?'<span class="flag must">必清</span>':''}<span class="small">路線 ${zone}・沿實際道路（OSRM 行車）</span><button class="tlink" id="navSkip" style="margin:0 0 0 auto">略過此站</button></div>`,
-  arrHTML:N=>`<div class="narr" id="navArr"><button class="nx" id="navX" aria-label="關閉，不回報">✕</button><h2>抵達第 ${N.idx+1} 站</h2><p class="ns">${N.bin.addr}</p>
-    <div class="rbar"><div class="q">這桶實際多滿？點一下即完成此站（並校正預測）</div>${amtsHTML()}<button type="button" class="skp" id="arrSkip">略過此站</button></div></div>`,
+  nbin:N=>`<div class="nbin">${route[N.idx]&&route[N.idx].must?'<span class="flag must">必清</span>':''}<span class="small">路線 ${zone}・沿實際道路（OSRM 行車）</span></div>`,
   fitFail:()=>false,clearOther:()=>{},
   after:()=>{const u=document.querySelector('.undo');if(u&&innerWidth<=760)u.style.bottom=(cardH()+22)+'px'},
   onEnd:()=>{draw();requestAnimationFrame(()=>fitTop())},
-  idleClick:t=>{if(state==='B'&&!ADV&&t.closest('#navPri,#navIcon')){crewNavGo();return true}return false},
-  arrClick:(t,N)=>{if(t.closest('#arrSkip')){skipStop(N.bin.id,true);return true}
-    const a=t.closest('[data-amt]');if(!a)return null; // 抵達：原本的收運量回報（record：同選項、同寫入）；約 3 秒後自動導航到下一站
-    const id=N.bin.id;crewSoftEnd();record(id,a.dataset.amt,+a.dataset.pct,{nav:true});return true}};
-// 導航中（還沒抵達）「略過此站」：在 nav.js 的點擊處理之前攔下
-card.addEventListener('click',e=>{if(window.NAV&&e.target.closest('#navSkip')){e.stopImmediatePropagation();skipStop(NAV.bin.id,true)}},true);
-{const s=document.createElement('style');s.textContent='.navw{display:block!important;width:100%}.ncw{display:flex;flex-wrap:wrap;align-items:baseline;min-width:0;flex:1}.ncw .nn{flex-basis:100%;font:400 13px/1.4 var(--font,system-ui);color:#7d8b8b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#card .narr .amts{margin-top:8px}';document.head.appendChild(s)}
-</script><script src="nav.js?v=20261023t"></script></body></html>
+  idleClick:t=>{if(state==='B'&&!ADV&&t.closest('#navPri,#navIcon')){crewNavGo();return true}return false}};
+// 導航中「略過此站」與收運量回報：在 nav.js 的點擊處理之前攔下。回報＝原本的 record（同選項、同寫入），約 3 秒（可復原）後自動導航到下一站
+card.addEventListener('click',e=>{if(!window.NAV)return;const t=e.target,a=t.closest('[data-amt]');
+  if(t.closest('#navSkip')){e.stopImmediatePropagation();skipStop(NAV.bin.id,true);return}
+  if(a){e.stopImmediatePropagation();const id=NAV.bin.id;crewSoftEnd();record(id,a.dataset.amt,+a.dataset.pct,{nav:true})}},true);
+{const s=document.createElement('style');s.textContent='.navw{display:block!important;width:100%}.ncw{display:flex;flex-wrap:wrap;align-items:baseline;min-width:0;flex:1}.ncw .nn{flex-basis:100%;font:400 13px/1.4 var(--font,system-ui);color:#7d8b8b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.navw .rbar{position:static;margin:8px 0 0;padding:0;background:none}.navw .rbar .q{margin:0 0 8px}';document.head.appendChild(s)}
+</script><script src="nav.js?v=20261023u"></script><script>
+// 清潔隊不另外判定抵達（沒有「到了嗎？」、沒有抵達卡）：回報鈕一直在導航卡上
+navArrive=()=>{};navArrOpen=()=>{};
+// 第一段沿道路：藍點投影到最近的車行路段（RT.pathE，同 routing.js／地圖路線），不從藍點拉直線穿過街區。
+// OSRM 的起點離投影點 10 m 內（同一條路） → 用 OSRM 路線、前面接「藍點→投影點」；否則（OSRM 吸到別條路）或 OSRM 失敗／還沒回來 → 用本機路網路線
+{const draw0=navDraw;navDraw=function(){const N=NAV;if(N&&DR&&crewPos){
+  if(N.loc===undefined){const pos=crewPos.slice(),b=[N.bin.la,N.bin.lo];N.loc=RT.pathE(DR,pos,b,hav(pos[0],pos[1],b[0],b[1])<=NEAR_M||'a')}
+  const L=N.loc;if(L&&L.pts.length>2&&N.pts!==N.fixed){
+    if(!N.pts||N.pts===L.pts){N.pts=L.pts;N.fail=false}
+    else{const pa=L.pts[1],c0=N.pts[1];N.pts=c0&&hav(pa[0],pa[1],c0[0],c0[1])<=10?[N.pts[0],pa,...N.pts.slice(1)]:L.pts}
+    N.fixed=N.pts}
+  if(L&&N.pts===L.pts)N.fail=false}
+  draw0()}}
+</script></body></html>
