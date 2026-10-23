@@ -26,3 +26,7 @@ The new page inherits the existing petrol navigation, cool paper background,
 system typography, quiet rules and native disclosures. It adds no shared visual
 system changes. Verify desktop/mobile rendering, source links, disclosure
 operation, generated values, idempotence and historical input digests.
+
+The full `npm run prepare-data` build renders the case before creating the
+private research ZIP. The ZIP contains `dist/cases/zhongshan.html`; its local
+links name `index.html` explicitly so they also resolve after extraction.
