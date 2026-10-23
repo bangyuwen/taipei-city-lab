@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261023x"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261023x"><title>清潔隊｜今日清運｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261023x"><link rel="stylesheet" href="tokens.css?v=20261023x"><link rel="stylesheet" href="ui.css?v=20261023x">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261023z"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261023z"><title>清潔隊｜今日清運｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261023z"><link rel="stylesheet" href="tokens.css?v=20261023z"><link rel="stylesheet" href="ui.css?v=20261023z">
 <style>
 /* ===== 有桶・清潔隊（mobile-first 390x844；以正式版為底：A 選路線（A/B/C 分區）→ B 執行）===== */
 html,body{height:100%;overflow:hidden;background:var(--map-bg)}
@@ -17,7 +17,7 @@ body.navon .tchip.ab{display:none} /* 導航中不顯示「全部桶」 */
 /* 卡片：A 選路線／B 執行 */
 #card{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:1000;background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow-2);padding:16px 16px 16px;max-width:520px;margin:0 auto;max-height:52vh;overflow-y:auto}
 #card[data-state=B]{max-height:62vh}
-#card.collapsed{max-height:none;overflow:hidden}#card.collapsed #cardBody>*:not(.cpri){display:none}#card.collapsed #cardBody>.cpri{margin:4px 0 0!important}.cOnly{display:none!important}#card.collapsed .cOnly{display:flex!important;width:100%}#card.collapsed .done>p{display:none}#card.collapsed .done .b{width:100%}
+#card.collapsed{max-height:none;overflow:hidden}#card.collapsed #cardBody>*:not(.cpri):not(.k):not(.addr){display:none}#card.collapsed #cardBody>.cpri{margin:4px 0 0!important}.cOnly{display:none!important}#card.collapsed .addr{font-size:14px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:2px 0 0}#card.collapsed .cOnly{display:flex!important;width:100%}#card.collapsed .done>p{display:none}#card.collapsed .done .b{width:100%}
 @media (max-width:760px){.prog{flex:none}.prog small,.prog .tr{display:none}.prog small.empty{display:inline}} /* 手機上方只顯示「0 / 12」 */
 @media (max-width:400px){.tchip{padding:0 10px}.tchip.ab .tx{font-size:13px}}
 
@@ -84,6 +84,7 @@ body.navon .tchip.ab{display:none} /* 導航中不顯示「全部桶」 */
 .hist div{padding:8px 0;border-bottom:1px solid var(--line);font-size:13px;color:var(--ink-2);line-height:1.5}
 .stack{display:grid;gap:8px}
 /* 全部桶清單：嵌入選路線卡片，共用背景地圖 */
+.aptop{display:flex;gap:8px;align-items:center}.aptop .aptab{flex:1;min-width:0}.aptop .apf{flex:none;min-height:44px;padding:0 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font:700 14px/1 var(--font);color:var(--ink);cursor:pointer;white-space:nowrap}
 .aptab{display:flex;background:var(--gray-1);border-radius:12px;padding:3px;margin:8px 0}
 .aptab button{flex:1;min-height:42px;border:0;border-radius:10px;background:none;font:600 15px/1 var(--font);color:var(--ink-2);cursor:pointer}
 .aptab button[aria-selected=true]{background:var(--surface);box-shadow:var(--shadow-1);color:var(--ink);font-weight:700}
@@ -106,6 +107,7 @@ body.navon .tchip.ab{display:none} /* 導航中不顯示「全部桶」 */
 .apemp{padding:24px 14px;color:var(--mute);font-size:14px;text-align:center}
 .binmk.fade svg{opacity:.22}.binmk.sel .w{filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
 .leaflet-top.leaflet-left{top:calc(164px + env(safe-area-inset-top))}.leaflet-top.leaflet-left .lgd{margin:0 0 0 12px;max-width:none;flex-wrap:nowrap}
+@media (max-width:760px){.leaflet-bottom.leaflet-left{top:calc(var(--row2) + 54px + env(safe-area-inset-top))!important;bottom:auto}.leaflet-bottom.leaflet-left .lgd{flex-wrap:nowrap;white-space:nowrap}}
 @media (min-width:761px){#card{left:auto;right:16px;bottom:16px;width:400px;max-height:calc(100vh - 100px)}#card[data-state=B]{max-height:calc(100vh - 100px)}.top{right:auto;width:560px}}
 </style></head>
 <body>
@@ -145,7 +147,7 @@ body.navon .tchip.ab{display:none} /* 導航中不顯示「全部桶」 */
   <h3>回報與進度</h3><ul><li>抵達後回報收運量（空／半／滿／滿溢），約 3 秒內可「復原」，之後自動前往下一站；也可「略過此站」。收運量回報寫入既有回報事件，照舊同步雲端。</li><li>路線進度（完成、略過）只存在這台手機，台北時間每天換新；別人的回報不影響你的進度。</li><li>地圖上灰色＋✓＝今天清潔隊已回報（已清）。路線上的站若今天已有別的隊員回報清運（之後沒有新的行人「滿了」），會變灰並自動略過，不算入待清。一輪全部回報完後，新的行人「滿了」回報不會插進已完成的這一輪，而是列入下一輪（從第 1 站排起）；已完成的輪次留在「今日清運輪次」紀錄。行人回報「滿了」只會讓桶變紅、列為必清，不算已清；也不和民眾的「這裡需要垃圾桶」需求回報混算。</li></ul>
 </div></div>
 
-<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261023x"></script><script src="common.js?v=20261023x"></script><script src="cloud.js?v=20261023x"></script><script src="ui.js?v=20261023x"></script><script src="bin-icons.js?v=20261023x"></script><script src="forecast.js?v=20261023x"></script><script src="routing.js?v=20261023x"></script><script src="crew-zones.js?v=20261023x"></script>
+<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261023z"></script><script src="common.js?v=20261023z"></script><script src="cloud.js?v=20261023z"></script><script src="ui.js?v=20261023z"></script><script src="bin-icons.js?v=20261023z"></script><script src="forecast.js?v=20261023z"></script><script src="routing.js?v=20261023z"></script><script src="crew-zones.js?v=20261023z"></script>
 <script>
 roleSwitch('crew.html');
 // 清運門檻：兩段切換「快滿了以上」(70)／「只清滿溢」(100)；舊存檔的數字門檻對應到最近的選項，壞值→預設
@@ -340,7 +342,7 @@ function apRow(r){const on=r.id===AP.sel,a=`class="ar${on?' on':''}${r.cl?' cl':
   return `<div ${a}><span class="ai">${binIconSVG(r.f,r.rep?'reported':null).html}</span><span class="at"><span class="l1"><span class="flag${r.must?' must':''}">${r.must?'必清':'順路'}</span><b>${r.b.addr}</b></span>
     <span class="l2"><i class="rz" aria-label="路線 ${r.z}">${r.z}</i><em style="color:${ST_INK[s.k]}">${s.t}</em><span>${kmS(r.d)}</span>${r.rep?`<span class="rp">行人回報 ${r.nr}・${repAgo(r.id)}</span>`:''}${r.sk?`<span>${r.tab==='cur'?'本輪':'下一輪'}略過</span>`:''}</span></span>
     ${on?`<span class="aa"><button type="button" class="b pri" data-go>導航到這桶</button><button type="button" class="b" data-skip>${r.sk?'取消略過':'略過'}</button></span>`:''}</div>`}
-function renderAll(){const R=apRows().filter(r=>AP.zs.has(r.z)),L0=R.filter(r=>r.tab===AP.tab).sort(apSort),pend=L0.filter(r=>!r.cl),cl=L0.filter(r=>r.cl),st=apBody.scrollTop;
+function renderAll(){const apF=document.getElementById('apF'),apFm=document.getElementById('apFm'),apBody=document.getElementById('apBody');if(!apF||!apFm||!apBody)return;const R=apRows().filter(r=>AP.zs.has(r.z)),L0=R.filter(r=>r.tab===AP.tab).sort(apSort),pend=L0.filter(r=>!r.cl),cl=L0.filter(r=>r.cl),st=apBody.scrollTop;
   if(AP.sel&&!L0.some(r=>r.id===AP.sel))AP.sel=null;
   document.querySelectorAll('.aptab [data-tab]').forEach(b=>{const t=b.dataset.tab;b.setAttribute('aria-selected',t===AP.tab);b.textContent=`${t==='cur'?'本輪':'下一輪'} ${R.filter(r=>r.tab===t).length}`});
   apF.textContent=ZS.filter(z=>AP.zs.has(z)).join('・')+' ▾';
@@ -363,8 +365,8 @@ function apFocus(id){const mk=AMK[id];if(mk)map.setView(mk.getLatLng(),Math.max(
 function apPick(id,src){const r=apRows().find(x=>x.id===id);if(!r)return;AP.sel=id;AP.zs.add(r.z);if(r.tab!==AP.tab)AP.tab=r.tab;
   renderAll();
   if(src==='list')apFocus(id);else{const el=apBody.querySelector(`[data-bin="${id}"]`);if(el)apBody.scrollTop=el.offsetTop-apBody.offsetTop-8}}
-card.addEventListener('click',e=>{const page=e.target.closest('[data-page]');if(page){AP.page=page.dataset.page;draw();cardBody.querySelector('#routePanel').hidden=AP.page!=='route';cardBody.querySelector('#allPanel').hidden=AP.page!=='all';if(AP.page==='all'){binL.clearLayers();renderAll();apFit()}else{amL.clearLayers();draw()}return}const t=e.target.closest('[data-tab]');if(t&&!t.dataset.page){AP.tab=t.dataset.tab;AP.sel=null;renderAll();apFit();return}if(e.target.closest('#apF')){apFm.hidden=!apFm.hidden;apF.setAttribute('aria-expanded',!apFm.hidden);return}const f=e.target.closest('[data-fz]');if(f){const z=f.dataset.fz;if(AP.zs.has(z)){if(AP.zs.size>1)AP.zs.delete(z)}else AP.zs.add(z);renderAll();apFit()}});
-document.addEventListener('pointerdown',e=>{if(!apFm.hidden&&!e.target.closest('#apFm,#apF')){apFm.hidden=true;apF.setAttribute('aria-expanded',false)}});
+card.addEventListener('click',e=>{const apF=document.getElementById('apF'),apFm=document.getElementById('apFm');const page=e.target.closest('[data-page]');if(page){AP.page=page.dataset.page;draw();cardBody.querySelector('#routePanel').hidden=AP.page!=='route';cardBody.querySelector('#allPanel').hidden=AP.page!=='all';if(AP.page==='all'){binL.clearLayers();renderAll();apFit()}else{amL.clearLayers();draw()}return}const t=e.target.closest('[data-tab]');if(t&&!t.dataset.page){AP.tab=t.dataset.tab;AP.sel=null;renderAll();apFit();return}if(e.target.closest('#apF')&&apFm&&apF){apFm.hidden=!apFm.hidden;apF.setAttribute('aria-expanded',!apFm.hidden);return}const f=e.target.closest('[data-fz]');if(f){const z=f.dataset.fz;if(AP.zs.has(z)){if(AP.zs.size>1)AP.zs.delete(z)}else AP.zs.add(z);renderAll();apFit()}});
+document.addEventListener('pointerdown',e=>{const fm=document.getElementById('apFm'),fb=document.getElementById('apF');if(fm&&fb&&!fm.hidden&&!e.target.closest('#apFm,#apF')){fm.hidden=true;fb.setAttribute('aria-expanded',false)}});
 document.addEventListener('click',e=>{if(!e.target.closest('#apBody'))return;const r=e.target.closest('[data-bin]');if(!r)return;const id=r.dataset.bin;
   if(e.target.closest('[data-go]')){apGo(id);return}if(e.target.closest('[data-skip]')){apSkip(id);return}apPick(id,'list')});
 // 略過：本輪＝這一輪不清（同卡片「略過此站」）；下一輪＝開始下一輪時直接略過。再點一次＝取消略過
@@ -477,7 +479,7 @@ card.addEventListener('click',e=>{if(!window.NAV)return;const t=e.target,a=t.clo
   if(t.closest('#navSkip')){e.stopImmediatePropagation();skipStop(NAV.bin.id,true);return}
   if(a){e.stopImmediatePropagation();const id=NAV.bin.id;crewSoftEnd();record(id,a.dataset.amt,+a.dataset.pct,{nav:true})}},true);
 {const s=document.createElement('style');s.textContent='.navw{display:block!important;width:100%}.ncw{display:flex;flex-wrap:wrap;align-items:baseline;min-width:0;flex:1}.ncw .nn{flex-basis:100%;font:400 13px/1.4 var(--font,system-ui);color:#7d8b8b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.navw .rbar{position:static;margin:8px 0 0;padding:0;background:none}.navw .rbar .q{margin:0 0 8px}';document.head.appendChild(s)}
-</script><script src="nav.js?v=20261023x"></script><script>
+</script><script src="nav.js?v=20261023z"></script><script>
 // 清潔隊不另外判定抵達（沒有「到了嗎？」、沒有抵達卡）：回報鈕一直在導航卡上
 navArrive=()=>{};navArrOpen=()=>{};
 // 第一段沿道路：藍點投影到最近的車行路段（RT.pathE，同 routing.js／地圖路線），不從藍點拉直線穿過街區。
