@@ -78,6 +78,24 @@ version is generated from the canonical decision-check source. See
 
 ## 研究筆記
 
+### Website-to-Markdown coverage
+
+The [coverage inventory](docs/website-notes.json) maps all 23 research panels
+and seven other page/interface groups to their existing notes and content owners.
+Run `npm run prepare-notes` in this site directory to generate the private
+[reading index](notes/README.md) and the 16 missing or partial reading notes.
+This command requires the full repository, including `topics/bins/` and
+`sites/youtong/`, and reads the current local site, not the deployed website.
+
+Keep editing the owners listed in each note. Existing research Markdown stays
+canonical; authored HTML, JSON and their renderers retain their current ownership.
+After rebuilding affected website content, rerun `npm run prepare-notes`.
+`npm run check-notes` detects missing or stale exports relative to those local
+HTML files; it does not verify that upstream research has already been rebuilt.
+The export never edits website content or research inputs. Do not edit `notes/`:
+it is reproducible, Git-ignored and excluded from public publication. Maps, 3D
+views and browser-local simulation state remain interactive website content.
+
 - [中山站配置決策案例](dist/cases/zhongshan.html)：以既有站內服務與街道清冊走過保留、指引、清運、移位與增設的判斷；預算與現場缺口維持未知。正式來源在 `topics/bins/research/placement-case-2026-10-23/`，由 `scripts/prepare-placement-case.py` 重建，網站路徑為 `/research/cases/zhongshan.html`。
 
 - [服務預算概估](research/budget-2026-10-15/README.md)：30 處／180 日及 100 處／365 日的設備、清運與家戶分流費用；保留假設、公式、來源與 CSV。由 `python3 scripts/estimate-budget.py` 重算，再以 `python3 scripts/package-research.py` 更新私人離線研究包；發布前須執行完整 `npm run prepare-data`。
