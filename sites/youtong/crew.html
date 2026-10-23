@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261023h"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261023h"><title>清潔隊｜今日清運｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261023h"><link rel="stylesheet" href="tokens.css?v=20261023h"><link rel="stylesheet" href="ui.css?v=20261023h">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261023i"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261023i"><title>清潔隊｜今日清運｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261023i"><link rel="stylesheet" href="tokens.css?v=20261023i"><link rel="stylesheet" href="ui.css?v=20261023i">
 <style>
 /* ===== 有桶・清潔隊（測試版：清單為主）=====
    手機：地圖在上、清單在底部抽屜（同行人頁收合箭頭，預設半開）；桌機：清單在左側欄 */
@@ -42,6 +42,13 @@ html,body{height:100%;overflow:hidden;background:var(--map-bg)}
 .row .n{flex:none;width:24px;height:24px;border-radius:50%;background:var(--gray-1);display:flex;align-items:center;justify-content:center;font:700 12px var(--font);color:var(--ink-2)}.row.curr .n{background:var(--ink);color:#fff}
 .done{text-align:center;padding:6px 0 10px}.done b{display:block;font:700 20px var(--font);color:var(--ink)}.done p{margin:4px 0 0;font-size:13px;color:var(--mute)}
 .bm.cur{box-shadow:0 0 0 3px #fff,0 0 0 7px #0003;font-size:13px}.bm{font-size:11px}
+/* 路線每站：直接一鍵回報（5 選項）＋右側小 Google 地圖導航圖示 */
+#rows{position:relative}.row.rs{display:block;padding:10px 0 8px}.rs .sh{display:flex;align-items:flex-start;gap:10px}.rs .n{margin-top:2px}
+.rs.curr{background:var(--gray-1);margin:0 -16px;padding:10px 16px 8px}.rs.curr+.rs{border-top-color:transparent}
+.rs.mine,.rs.other{opacity:.5}.rs.mine .t b::after{content:none}
+.gmb{flex:none;display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin:-6px -6px -6px 0;border-radius:50%;color:var(--ink-2);text-decoration:none}.gmb:active{background:var(--gray-2)}.gmb svg{width:22px;height:22px}
+.qr{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin:8px 0 0 34px}.qr button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:48px;padding:2px 0;border:1.5px solid var(--line);border-radius:10px;background:var(--surface);font:600 13px/1.1 var(--font);color:var(--ink);cursor:pointer}.qr button:active{background:var(--gray-1)}.qr i{width:10px;height:10px;border-radius:50%;box-shadow:inset 0 0 0 1px #0002}
+.rs .rf{display:flex;justify-content:flex-end;margin-left:34px}.rs .rf .lnk{min-height:36px;margin:0;font-size:13px}
 </style></head>
 <body>
 <div id="map"></div>
@@ -53,9 +60,9 @@ html,body{height:100%;overflow:hidden;background:var(--map-bg)}
   <li><b>建議順序（依人流推估，可略過）</b>：區內依 YouBike 借還推估的目前預測滿度（預計滿時間由早到晚）排序。這是推估，不是派工順序，也不是實際垃圾量。</li>
   <li><b>多人同時使用</b>：今天已有其他清潔隊回報的桶會變灰、顯示「今天已有人回報 HH:MM」並自動跳到下一站；行人回報「滿了」不算。也可以「略過此站」。</li>
   <li><b>進度</b>：選的路線和略過的站只存在這台手機，台北時間每天換新；回報寫入既有的回報事件（Firebase 同步），路線和「清單」分頁共用，任一邊回報都算完成。離線時先存在本機，恢復連線後上傳。</li>
-  <li><b>導航</b>：App 內行車導航（OSRM）；抵達後跳出回報，回報後自動前往下一站，可「復原」。Google 地圖只當備用連結。</li></ul>
+  <li><b>回報與導航</b>：路線上每一站直接點 5 個選項之一就回報，回報後自動捲到下一站，可「復原」；每站右側的小箭頭圖示用 Google 地圖導航。「清單」分頁的「帶我去」仍是 App 內行車導航（OSRM）。</li></ul>
 </div></div>
-<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261023h"></script><script src="common.js?v=20261023h"></script><script src="cloud.js?v=20261023h"></script><script src="ui.js?v=20261023h"></script><script src="bin-icons.js?v=20261023h"></script><script src="forecast.js?v=20261023h"></script><script src="crew-zones.js?v=20261023h"></script>
+<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261023i"></script><script src="common.js?v=20261023i"></script><script src="cloud.js?v=20261023i"></script><script src="ui.js?v=20261023i"></script><script src="bin-icons.js?v=20261023i"></script><script src="forecast.js?v=20261023i"></script><script src="crew-zones.js?v=20261023i"></script>
 <script>
 roleSwitch('crew.html');
 // ===== 清潔隊（beta）：主畫面＝分區路線導航；「清單」為次要分頁，兩邊共用同一份回報狀態 =====
@@ -106,10 +113,12 @@ function rows(){const T=todayMap(),o=origin();
 function stHTML(r){if(r.me){const o=optOf(r.me);return `<span class="st mine">你已回報 ${hhmm(r.me.ts||r.me.ot)}${o?'・'+o.t:''}</span>`}
   if(r.other)return `<span class="st other">今天已有人回報 ${hhmm(r.other.ts||r.other.ot)}</span>`;if(r.skip)return '<span class="st">已略過</span>';return '<span class="st">今天尚未回報</span>'}
 const tabsHTML=()=>`<div class="tabs" role="tablist"><button role="tab" data-tab="route" aria-selected="${tab==='route'}">路線${zone?' '+zone:''}</button><button role="tab" data-tab="list" aria-selected="${tab==='list'}">清單</button></div>`;
-function render(){if(window.NAV)return;draw();
+let lastK='';
+function render(){if(window.NAV)return;draw();const u=document.getElementById('rows'),y=u?u.scrollTop:0;renderCard();const k=tab+view+zone+cur,u2=document.getElementById('rows');if(u2&&k===lastK)u2.scrollTop=y;lastK=k}
+function renderCard(){
   if(!zone||view==='pick'){cardBody.innerHTML=`<div class="hd1"><b>我的路線</b><span>${A.name}・${P.length} 桶分成 3 區</span></div><p class="sub">選一次就記在這台手機；之後可在路線分頁「換路線」。</p>
     <div class="zp" id="zonePick">${'ABC'.split('').map(z=>`<button class="zb" data-zone="${z}"><b>路線 ${z}</b><span>${ZN[z]}・${P.filter(b=>ZONE[b.id]===z).length} 桶</span></button>`).join('')}</div>`;return}
-  if(view==='report'&&cur){const r=rows().find(x=>x.b.id===cur);if(!r){view='list';return render()}const b=r.b;
+  if(view==='report'&&cur){const r=rows().find(x=>x.b.id===cur);if(!r){view='list';return renderCard()}const b=r.b;
     cardBody.innerHTML=`<div class="hd1"><b>回報桶位 ${b.id}</b></div><div class="rm" id="repMenu"><h2>${b.addr}</h2><p class="ns">${fmtM(r.d)}・${stHTML(r)}</p>${optsHTML()}
       <div class="rmf"><button id="repBack">‹ 返回</button>${tab==='route'?'<button id="repSkip">略過此站</button>':''}<a id="repGm" target="_blank" rel="noopener" href="${crewGm(b.la,b.lo)}">Google 地圖</a></div></div>`;return}
   if(tab==='list'){const R=rows(),n=R.filter(r=>r.me).length;
@@ -117,13 +126,11 @@ function render(){if(window.NAV)return;draw();
     <div class="sub">${gps?'依目前位置由近到遠':'未定位：依示範區中心由近到遠'}・和路線共用回報</div>
     <ul id="rows">${R.map(r=>`<li class="row${r.me?' mine':''}${r.other?' other':''}" data-id="${r.b.id}"><span class="t"><b>${r.b.addr}</b><small><span class="id">${r.b.id}</span>・路線 ${ZONE[r.b.id]||'—'}・${fmtM(r.d)}</small>${stHTML(r)}</span><span class="a"><button class="rep" data-rep="${r.b.id}">回報</button><button class="go" data-go="${r.b.id}">帶我去</button></span></li>`).join('')}</ul>`;return}
   const R=stops(),i=nextIdx(R),nd=R.filter(s=>!pending(s)).length;
-  const li=(s,j)=>`<li class="row${s.me?' mine':''}${s.other||s.skip?' other':''}${j===i?' curr':''}" data-id="${s.b.id}"><span class="n">${j+1}</span><span class="t"><b>${s.b.addr}</b><small><span class="id">${s.b.id}</span></small>${stHTML(s)}</span></li>`;
-  const head=`${tabsHTML()}<div class="hd1" id="hd1"><b>路線 ${zone}・${nd} / ${R.length}</b><span>${ZN[zone]}</span><button class="lnk" id="zoneChg">換路線</button></div><div class="sub" id="orderLbl">${ORDER_LBL}</div>`;
-  if(i<0){cardBody.innerHTML=`${head}<div class="done" id="routeDone"><b>今日路線完成</b><p>${R.length} 站都已回報、已有人回報或略過。</p></div><ul id="rows">${R.map(li).join('')}</ul>`;return}
-  const s=R[i],b=s.b,d=hav(origin()[0],origin()[1],b.la,b.lo);
-  cardBody.innerHTML=`${head}<div class="nx1" id="nextStop"><div class="k"><span class="lbl">下一站</span><span class="no">第 ${i+1} 站／共 ${R.length} 站</span></div><div class="addr">${b.addr}</div><div class="small">${b.id}・${fmtM(d)}</div>
-    <div class="acts"><button class="b pri" id="navPri">導航到第 ${i+1} 站</button><button class="b" id="repNow">回報</button><button class="b" id="skipBtn">略過此站</button></div></div>
-    <ul id="rows">${R.map(li).join('')}</ul>`}
+  const li=(s,j)=>{const p=pending(s),b=s.b;return `<li class="row rs${s.me?' mine':''}${s.other||s.skip?' other':''}${j===i?' curr':''}" data-id="${b.id}"><div class="sh"><span class="n">${j+1}</span><span class="t"><b>${b.addr}</b><small><span class="id">${b.id}</span>${j===i?'・下一站':''}</small>${stHTML(s)}</span><a class="gmb" target="_blank" rel="noopener" href="${crewGm(b.la,b.lo)}" aria-label="用 Google 地圖導航到第 ${j+1} 站 ${b.addr}" title="Google 地圖導航"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l7.5 18.5-7.5-4-7.5 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></a></div>${p?`<div class="qr">${OPTS.map(o=>`<button data-q="${o.k}" aria-label="第 ${j+1} 站回報：${o.t}"><i style="background:${optColor(o)}"></i>${o.t.split('・')[0]}</button>`).join('')}</div><div class="rf"><button class="lnk" data-skip="${b.id}">略過此站</button></div>`:''}</li>`};
+  const head=`${tabsHTML()}<div class="hd1" id="hd1"><b>路線 ${zone}・${nd} / ${R.length}</b><span>${ZN[zone]}</span><button class="lnk" id="zoneChg">換路線</button></div><div class="sub" id="orderLbl">${ORDER_LBL}・點選項直接回報</div>`;
+  cardBody.innerHTML=`${head}${i<0?`<div class="done" id="routeDone"><b>今日路線完成</b><p>${R.length} 站都已回報、已有人回報或略過。</p></div>`:''}<ul id="rows">${R.map(li).join('')}</ul>`}
+// 捲到下一站（回報／略過後）
+function scrollNext(){const u=document.getElementById('rows'),el=u&&u.querySelector('.rs.curr');if(el)u.scrollTo({top:Math.max(0,el.offsetTop-4),behavior:'smooth'})}
 // 地圖：與行人頁相同的垃圾桶狀態圖示（bin-icons.js binIconSVG／binState、common.js fillOf）；清潔隊今天已清＝灰；路線站加建議順序號碼
 function crewIcon(b,ev,o={}){const st=binState(b.id,ev),f=st?0:Math.floor(fillOf(b.id,ev)/10)*10,{html}=binIconSVG(f,st),k=o.cur?1.15:o.dim?.62:.8;
   return L.divIcon({className:'binmk oth crw'+(st?' rep':'')+(o.done?' done':'')+(o.cur?' cur':''),iconSize:[44,44],iconAnchor:[22,36],html:`<div class="w" style="transform:scale(${k})">${html}</div>${o.n!=null?`<span class="bn">${o.n}</span>`:''}`})}
@@ -148,8 +155,8 @@ function showUndo(txt,fn){let u=document.querySelector('.undo');if(u)u.remove();
 // 回報：寫入既有 events（同清單版的對應與寫入）；回傳 undo 函式
 function writeReport(id,k){const o=OPT[k],r=addEvent({bin:id,kind:o.kind,level:o.level,by:'清潔隊',amount:o.k,amountPct:o.pct});const M=mine();M.add(r.id);mineSet(M);skipMark(id,false);
   return {o,undo:()=>{removeEvent(r.id);const M2=mine();M2.delete(r.id);mineSet(M2)}}}
-function report(id,k){const w=writeReport(id,k);backToList();showUndo(`已記錄・${w.o.t}`,()=>{w.undo();render()})}
-function skipStop(id){skipMark(id,true);view='list';cur=null;render();showUndo('已略過此站',()=>{skipMark(id,false);render()})}
+function report(id,k){const w=writeReport(id,k);backToList();if(tab==='route')scrollNext();showUndo(`已記錄・${w.o.t}`,()=>{w.undo();render()})}
+function skipStop(id){skipMark(id,true);view='list';cur=null;render();if(tab==='route')scrollNext();showUndo('已略過此站',()=>{skipMark(id,false);render()})}
 card.addEventListener('click',e=>{const t=e.target;
   if(t.closest('#grab')||(t.closest('#hd1')&&isMobile()&&!t.closest('button'))){setCol(!card.classList.contains('collapsed'));return}
   const zb=t.closest('[data-zone]');if(zb){zone=zb.dataset.zone;try{localStorage.setItem(LS_ZONE,zone)}catch(_){}tab='route';view='list';render();fitZone();return}
@@ -160,9 +167,9 @@ card.addEventListener('click',e=>{const t=e.target;
   const op=t.closest('[data-opt]');if(op&&cur){report(cur,op.dataset.opt);return}
   if(t.closest('#repBack')){backToList();return}
   if(t.closest('#repSkip')&&cur){skipStop(cur);return}
-  const R=tab==='route'&&zone?stops():null,i=R?nextIdx(R):-1;
-  if(R&&i>=0){if(t.closest('#navPri')){goTo(R[i].b.id,true);return}if(t.closest('#repNow')){openReport(R[i].b.id);return}if(t.closest('#skipBtn')){skipStop(R[i].b.id);return}}
-  const row=t.closest('.row');if(row&&!t.closest('button')){const b=P.find(x=>x.id===row.dataset.id);if(b){cur=b.id;draw();panTo(b)}}});
+  const q=t.closest('[data-q]');if(q){const id=q.closest('.row').dataset.id,w=writeReport(id,q.dataset.q);cur=null;render();scrollNext();showUndo(`已記錄・${w.o.t}`,()=>{w.undo();render()});return}
+  const sk=t.closest('[data-skip]');if(sk){skipStop(sk.dataset.skip);return}
+  const row=t.closest('.row');if(row&&!t.closest('button,a')){const b=P.find(x=>x.id===row.dataset.id);if(b){cur=b.id;draw();panTo(b)}}});
 infoBtn.onclick=()=>sheetOpen('infoSheet');
 // 同步：導航中目標被別人回報 → 自動前往下一個未清的站
 onAppSync(()=>{if(window.NAV&&NAV.route){const R=stops(),s=R.find(x=>x.b.id===NAV.bin.id);if(s&&s.other&&NAV.mode!=='sent'){toast(`今天已有人回報 ${hhmm(s.other.ts||s.other.ot)}，前往下一站`);routeNext();}return}render()});
@@ -207,4 +214,4 @@ window.NAVH={osrm:'https://routing.openstreetmap.de/routed-car/route/v1/driving/
     const w=writeReport(id,a.dataset.opt);routeNext();showUndo(`已記錄・${w.o.t}`,()=>{w.undo();reopenArr(b)});return true}};
 // 導航中「略過此站」（還沒抵達）
 card.addEventListener('click',e=>{if(window.NAV&&NAV.route&&e.target.closest('#navSkip')){e.stopImmediatePropagation();const id=NAV.bin.id;skipMark(id,true);routeNext();showUndo('已略過此站',()=>{skipMark(id,false);const b=P.find(x=>x.id===id);softEnd();setCol(true);navStart(b,{route:true})})}},true);
-</script><script src="nav.js?v=20261023h"></script></body></html>
+</script><script src="nav.js?v=20261023i"></script></body></html>
