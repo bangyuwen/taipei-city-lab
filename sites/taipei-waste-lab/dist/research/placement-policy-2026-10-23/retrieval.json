@@ -1,0 +1,49 @@
+{
+  "purpose": "Fresh verification during PR review; not a reconstruction of the earlier unarchived lookup. Source publication/update dates are distinct from retrieval time.",
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://www.dep.gov.taipei/News_Content.aspx?n=ACEFA960B5A4ACD7&s=B90A10FBBF73521B",
+      "final_url": "https://www.dep.gov.taipei/News_Content.aspx?n=ACEFA960B5A4ACD7&s=B90A10FBBF73521B",
+      "retrieved_at": "2026-10-23T06:14:59.397788+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "file": "faq.html",
+      "sha256": "c3601f6e8a34d5cbb7f6cc66c997bac85caaeb2f9f85779db181b3620b01812d",
+      "bytes": 101334
+    },
+    {
+      "id": "S2",
+      "url": "https://www.gov.taipei/News_Content.aspx?n=F0DDAF49B89E9413&s=798A998A29BE46CD&sms=72544237BBE4C5F6",
+      "final_url": "https://www.gov.taipei/News_Content.aspx?n=F0DDAF49B89E9413&s=798A998A29BE46CD&sms=72544237BBE4C5F6",
+      "retrieved_at": "2026-10-23T06:15:03.772528+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "file": "policy.html",
+      "sha256": "555965f6b88028ea33ff34db4c259b1b2bd86f4d46731b5a68ce5499815c03ce",
+      "bytes": 206243
+    },
+    {
+      "id": "S3",
+      "url": "https://laws.gov.taipei/Law/LawSearch/LawInformation/FL076512",
+      "final_url": "https://laws.gov.taipei/Law/LawSearch/LawInformation/FL076512",
+      "retrieved_at": "2026-10-23T06:15:03.973820+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "file": "procedure-history.html",
+      "sha256": "2a8aef498b30a06b7da0fd48e0cc79a78bd3c9f6abd063e415f6eb45f50306be",
+      "bytes": 39560
+    },
+    {
+      "id": "S4",
+      "url": "https://laws.gov.taipei/law/LawSearch/LawArticleContent/FL076512?date=20210202",
+      "final_url": "https://laws.gov.taipei/law/LawSearch/LawArticleContent/FL076512?date=20210202",
+      "retrieved_at": "2026-10-23T06:15:04.088995+00:00",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "file": "procedure-2021.html",
+      "sha256": "02cffa857b4fd7c4d817ab8373e074988374dfc026759593889ccd123a935f2e",
+      "bytes": 43330
+    }
+  ]
+}

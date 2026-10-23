@@ -78,6 +78,8 @@ version is generated from the canonical decision-check source. See
 
 ## 研究筆記
 
+- [中山站配置決策案例](dist/cases/zhongshan.html)：以既有站內服務與街道清冊走過保留、指引、清運、移位與增設的判斷；預算與現場缺口維持未知。正式來源在 `topics/bins/research/placement-case-2026-10-23/`，由 `scripts/prepare-placement-case.py` 重建，網站路徑為 `/research/cases/zhongshan.html`。
+
 - [服務預算概估](research/budget-2026-10-15/README.md)：30 處／180 日及 100 處／365 日的設備、清運與家戶分流費用；保留假設、公式、來源與 CSV。由 `python3 scripts/estimate-budget.py` 重算，再以 `python3 scripts/package-research.py` 更新私人離線研究包；發布前須執行完整 `npm run prepare-data`。
 
 - [配置、清運與家戶垃圾分流的資料判斷](research/service-strategy-2026-10-15/README.md)：既有判讀文件，分開事實、建議與未知效果。入口 `#conclusion-siting`，位於材料頁。
