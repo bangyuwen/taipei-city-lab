@@ -1,0 +1,437 @@
+[
+  {
+    "title": "交通活動與保存位置地圖",
+    "page": "dist/index.html",
+    "selector": "#panel-map",
+    "coverage": "已有筆記",
+    "reason": "交叉分析方法、時段與八站參考已有正文；地圖篩選和即時計算留在網站。",
+    "notes": [
+      "docs/cross-analysis.md",
+      "docs/cross-analysis-field-visits.md",
+      "../../topics/bins/research/source-recovery-2026-10-15/README.md"
+    ],
+    "owners": [
+      "dist/index.html"
+    ]
+  },
+  {
+    "title": "清冊版本與座標差異",
+    "page": "dist/index.html",
+    "selector": "#panel-comparison",
+    "coverage": "已有筆記",
+    "reason": "兩版配對方法、數字與限制已有研究筆記；互動清單不另存靜態副本。",
+    "notes": [
+      "../../topics/bins/research/comparison-2024-2026/README.md",
+      "../../topics/bins/research/coordinate-distances-2024-2026/README.md"
+    ],
+    "owners": [
+      "dist/index.html"
+    ]
+  },
+  {
+    "title": "既有候選場址研究",
+    "page": "dist/index.html",
+    "selector": "#panel-siting",
+    "coverage": "缺少完整正文",
+    "reason": "與獨立核驗頁使用同一份場址資料；共用本次產生的 field-assessments.md，不重寫地圖與嵌入入口的正文。",
+    "notes": [],
+    "owners": [
+      "data/field-priorities.json",
+      "scripts/prepare-siting-overlay.py",
+      "templates/field-checklist.html"
+    ],
+    "reading": "field-assessments.md"
+  },
+  {
+    "title": "研究歷程、D01–D18 決策與舊版 PRD",
+    "page": "dist/index.html",
+    "selector": "#panel-definition",
+    "coverage": "缺少完整正文",
+    "reason": "既有研究資料未完整保存此頁逐項決策、問題改寫及 PRD v0.1／v0.2 的連續正文。",
+    "notes": [],
+    "owners": [
+      "dist/index.html"
+    ],
+    "output": "definition.md"
+  },
+  {
+    "title": "T1 桶型與設計探索",
+    "page": "dist/index.html",
+    "selector": "#panel-design",
+    "coverage": "已有筆記",
+    "reason": "設計假設與計畫已有正文；3D、操作回饋和設備狀態留在網站。",
+    "notes": [
+      "../../topics/bins/docs/bin-design.md",
+      "../../topics/bins/docs/taipei-bin-design-plan.md"
+    ],
+    "owners": [
+      "dist/index.html"
+    ]
+  },
+  {
+    "title": "歷史分布與撤除紀錄",
+    "page": "dist/index.html",
+    "selector": "#panel-history",
+    "coverage": "已有筆記",
+    "reason": "時間線與撤除證據限制已有研究正文；年度資料仍由原始資料維護。",
+    "notes": [
+      "../../topics/bins/docs/bin-removal-history.md",
+      "../../topics/bins/docs/bin-reduction.md"
+    ],
+    "owners": [
+      "dist/index.html"
+    ]
+  },
+  {
+    "title": "各國垃圾桶策略與案例",
+    "page": "dist/index.html",
+    "selector": "#panel-countries",
+    "coverage": "部分對應",
+    "reason": "舊比較與來源說明已有筆記；十四地區的新版逐案正文、流程及限制主要在 JSON，由網站產生完整閱讀副本。",
+    "notes": [
+      "../../topics/bins/docs/global-bin-practices.md",
+      "../../topics/bins/research/country-strategies/README.md"
+    ],
+    "owners": [
+      "../../topics/bins/research/country-strategies/asia.json",
+      "../../topics/bins/research/country-strategies/europe.json",
+      "../../topics/bins/research/country-strategies/other.json",
+      "scripts/prepare-country-strategies.mjs",
+      "templates/country-media.html"
+    ],
+    "output": "countries.md"
+  },
+  {
+    "title": "研究總覽",
+    "page": "dist/index.html",
+    "selector": "#panel-research",
+    "coverage": "導覽入口",
+    "reason": "摘要連到內容歸屬頁；不另建重複正文。",
+    "notes": [],
+    "owners": [
+      "dist/index.html"
+    ]
+  },
+  {
+    "title": "全市量化分析摘要與複查",
+    "page": "dist/index.html",
+    "selector": "#panel-analysis",
+    "coverage": "部分對應",
+    "reason": "各研究包已有個別結果；此頁整合的結論、適用界線與下一個決定尚無完整閱讀筆記。",
+    "notes": [
+      "../../topics/bins/research/taipei-citywide-2026-10-19/README.md",
+      "../../topics/bins/research/beitou-nangang-recheck-2026-10-20/README.md",
+      "../../topics/bins/research/other-districts-recheck-2026-10-20/README.md"
+    ],
+    "owners": [
+      "dist/index.html"
+    ],
+    "output": "analysis.md"
+  },
+  {
+    "title": "現行團隊分工與成果交接",
+    "page": "dist/index.html",
+    "selector": "#panel-team",
+    "coverage": "缺少完整正文",
+    "reason": "歷史政府工作包不是目前團隊交接正文；保留本頁責任與未知。",
+    "notes": [],
+    "owners": [
+      "dist/index.html"
+    ],
+    "output": "team.md"
+  },
+  {
+    "title": "參考資料索引",
+    "page": "dist/index.html",
+    "selector": "#panel-library",
+    "coverage": "導覽入口",
+    "reason": "各研究筆記已在所屬區塊對應；索引不另寫一份內容。",
+    "notes": [],
+    "owners": [
+      "dist/index.html"
+    ]
+  },
+  {
+    "title": "回饋主題、立場與情境分析",
+    "page": "dist/index.html",
+    "selector": "#panel-feedback",
+    "coverage": "已有筆記",
+    "reason": "分析程式同時產生 HTML 和 Markdown；細分類與撤除分析已有獨立筆記，直接沿用。",
+    "notes": [
+      "../../topics/bins/research/feedback-2026-10-17/README.md",
+      "../../topics/bins/research/feedback-access-2026-10-18/README.md",
+      "../../topics/bins/research/feedback-removal-2026-10-18/README.md",
+      "../../topics/bins/research/feedback-distribution-2026-10-18/README.md"
+    ],
+    "owners": [
+      "scripts/analyze-feedback.py",
+      "scripts/feedback_access.py",
+      "scripts/feedback_removal.py"
+    ]
+  },
+  {
+    "title": "現行百日計畫與空白紀錄表",
+    "page": "dist/index.html",
+    "selector": "#panel-plan",
+    "coverage": "部分對應",
+    "reason": "現行權威、查核原則及清潔人員研究已有說明；完整計畫、五項查核、規劃窗口與表單尚無整合正文。",
+    "notes": [
+      "../../topics/bins/research/CURRENT-PLAN.md",
+      "../../topics/bins/research/decision-checks-2026-10-22/README.md",
+      "../../topics/bins/research/crew-persona-2026-10-23/README.md"
+    ],
+    "owners": [
+      "dist/index.html",
+      "../../topics/bins/research/decision-checks-2026-10-22/checks.json",
+      "../../topics/bins/research/decision-checks-2026-10-22/build.py",
+      "../../topics/bins/research/crew-persona-2026-10-23/plan.html",
+      "../../topics/bins/research/taipei-citywide-2026-10-19/delivery/build_field_records.py"
+    ],
+    "output": "plan.md"
+  },
+  {
+    "title": "保存的研究與執行材料",
+    "page": "dist/index.html",
+    "selector": "#panel-materials",
+    "coverage": "部分對應",
+    "reason": "個別預算、策略及原型已有筆記；網頁整合判讀與歷史適用界線補為同來源閱讀副本。",
+    "notes": [
+      "../../topics/bins/research/budget-2026-10-15/README.md",
+      "../../topics/bins/research/service-strategy-2026-10-15/README.md",
+      "../../topics/bins/research/paid-disposal-2026-10-15/README.md",
+      "../../topics/bins/research/service-continuity-2026-10-18/README.md",
+      "../../topics/bins/research/execution-2026-10-15/README.md"
+    ],
+    "owners": [
+      "dist/index.html",
+      "scripts/package-research.py"
+    ],
+    "output": "materials.md"
+  },
+  {
+    "title": "來源、文獻與方法註解",
+    "page": "dist/index.html",
+    "selector": "#panel-sources",
+    "coverage": "部分對應",
+    "reason": "已有書目及導讀，但網站的逐則方法、實務判讀與限制並非全在既有 Markdown 中。",
+    "notes": [
+      "../../topics/bins/research/literature-2026-10-15/README.md",
+      "../../topics/bins/research/reference-guide-2026-10-16/README.md"
+    ],
+    "owners": [
+      "dist/index.html",
+      "../../topics/bins/research/reference-guide-2026-10-16/catalog.json",
+      "scripts/package-research.py"
+    ],
+    "output": "sources.md"
+  },
+  {
+    "title": "十二區查核明細",
+    "page": "dist/index.html",
+    "selector": "#panel-districts",
+    "coverage": "部分對應",
+    "reason": "全市報告有摘要表；逐點理由、條件及來源欄位的完整網頁明細補為閱讀副本。",
+    "notes": [
+      "../../topics/bins/research/taipei-citywide-2026-10-19/README.md"
+    ],
+    "owners": [
+      "dist/index.html"
+    ],
+    "output": "districts.md"
+  },
+  {
+    "title": "資料方法、捷運比較與場域補查",
+    "page": "dist/index.html",
+    "selector": "#panel-data-methods",
+    "coverage": "部分對應",
+    "reason": "各研究包已有方法及結果；此頁合併的逐站判讀與差異說明補為完整閱讀副本。",
+    "notes": [
+      "../../topics/bins/research/taipei-citywide-2026-10-19/README.md",
+      "../../topics/bins/research/mrt-bin-comparison-2026-10-22/README.md",
+      "../../topics/bins/research/station-venue-recheck-2026-10-22/README.md"
+    ],
+    "owners": [
+      "dist/index.html"
+    ],
+    "output": "data-methods.md"
+  },
+  {
+    "title": "人物、完整旅程與清潔人員假設",
+    "page": "dist/index.html",
+    "selector": "#panel-personas",
+    "coverage": "部分對應",
+    "reason": "證據摘要和清潔人員研究已有筆記；人物、短引文、旅程及未知的連續閱讀內容主要在 HTML／JSON。",
+    "notes": [
+      "../../topics/bins/research/demand-evidence-2026-10-20/README.md",
+      "../../topics/bins/research/crew-persona-2026-10-23/README.md"
+    ],
+    "owners": [
+      "dist/index.html",
+      "../../topics/bins/research/demand-evidence-2026-10-20/journey-table.json",
+      "../../topics/bins/research/crew-persona-2026-10-23/persona.html",
+      "../../topics/bins/research/decision-checks-2026-10-22/build.py"
+    ],
+    "output": "personas.md"
+  },
+  {
+    "title": "目前問題定義",
+    "page": "dist/index.html",
+    "selector": "#panel-problem",
+    "coverage": "已有筆記",
+    "reason": "主問題、車籃線索與資料缺口已有 core-problem.md；保留研究範圍與未知。",
+    "notes": [
+      "../../topics/bins/research/demand-evidence-2026-10-20/core-problem.md"
+    ],
+    "owners": [
+      "dist/index.html"
+    ]
+  },
+  {
+    "title": "回饋證據索引與逐段判讀",
+    "page": "dist/index.html",
+    "selector": "#panel-evidence",
+    "coverage": "部分對應",
+    "reason": "查核報告已有 Markdown；E01–E28 公開摘要、逐段判讀及舊需求工作版補為連續閱讀副本。",
+    "notes": [
+      "../../topics/bins/research/demand-evidence-2026-10-20/README.md",
+      "../../topics/bins/research/feedback-2026-10-17/semantic-adjudication-notes.md"
+    ],
+    "owners": [
+      "dist/index.html"
+    ],
+    "output": "evidence.md"
+  },
+  {
+    "title": "現行必要查核的協作與承接",
+    "page": "dist/index.html",
+    "selector": "#panel-work",
+    "coverage": "缺少完整正文",
+    "reason": "已有政府分工筆記屬歷史提案；目前協作條件與交接欄位僅有網頁正文。",
+    "notes": [],
+    "owners": [
+      "dist/index.html"
+    ],
+    "output": "work.md"
+  },
+  {
+    "title": "PRD v0.5 與現行驗收條件",
+    "page": "dist/index.html",
+    "selector": "#panel-spec",
+    "coverage": "缺少完整正文",
+    "reason": "目前八節需求規格、資料單位、驗收案例與界線未有完整 Markdown 正文。",
+    "notes": [],
+    "owners": [
+      "dist/index.html"
+    ],
+    "output": "spec.md"
+  },
+  {
+    "title": "舊規格、排程與建置草稿",
+    "page": "dist/index.html",
+    "selector": "#panel-archive",
+    "coverage": "部分對應",
+    "reason": "歷史計畫與交接筆記已存在；PRD v0.4 及整頁封存狀態補為閱讀副本，保持已取代、未執行的界線。",
+    "notes": [
+      "../../topics/bins/research/hundred-day-plan-2026-10-17/README.md",
+      "../../topics/bins/research/taipei-citywide-2026-10-19/delivery/field-plan.md",
+      "../../topics/bins/research/taipei-citywide-2026-10-19/government/government-plan.md"
+    ],
+    "owners": [
+      "dist/index.html",
+      "scripts/package-research.py"
+    ],
+    "output": "archive.md"
+  },
+  {
+    "title": "中山站配置決策案例",
+    "page": "dist/cases/zhongshan.html",
+    "selector": "main",
+    "coverage": "部分對應",
+    "reason": "README 只說明案例範圍與重建方法；完整案例論述由 page.html 維護，補出含實際填入數值的閱讀副本。",
+    "notes": [
+      "../../topics/bins/research/placement-case-2026-10-23/README.md",
+      "../../topics/bins/docs/bin-placement-decisions-2026-10-23.md"
+    ],
+    "owners": [
+      "../../topics/bins/research/placement-case-2026-10-23/page.html",
+      "../../topics/bins/research/placement-case-2026-10-23/render.py",
+      "../../topics/bins/research/station-venue-recheck-2026-10-22/results.json"
+    ],
+    "output": "zhongshan-case.md"
+  },
+  {
+    "title": "首頁雙入口",
+    "page": "templates/portal/index.html",
+    "coverage": "導覽入口",
+    "reason": "導向研究及有桶原型；不另寫重複研究正文。",
+    "notes": [
+      "README.md"
+    ],
+    "owners": [
+      "templates/portal/index.html"
+    ]
+  },
+  {
+    "title": "獨立候選疊圖",
+    "page": "dist/siting-overlay.html",
+    "coverage": "缺少完整正文",
+    "reason": "與獨立核驗頁使用同一份場址資料；共用本次產生的 field-assessments.md，不重寫地圖與嵌入入口的正文。",
+    "notes": [],
+    "owners": [
+      "data/field-priorities.json",
+      "scripts/prepare-siting-overlay.py",
+      "templates/field-checklist.html"
+    ],
+    "reading": "field-assessments.md"
+  },
+  {
+    "title": "保存的十處場址判讀與核驗表",
+    "page": "dist/field-checklist.html",
+    "coverage": "缺少完整正文",
+    "reason": "舊研究 Markdown 未納入版本庫；從已版本控制的 JSON 所產生的核驗頁補齊十處理由、證據、限制與來源，空白欄位維持未執行。",
+    "notes": [],
+    "owners": [
+      "data/field-priorities.json",
+      "scripts/prepare-siting-overlay.py",
+      "templates/field-checklist.html"
+    ],
+    "selector": "main",
+    "output": "field-assessments.md"
+  },
+  {
+    "title": "舊設計思考入口",
+    "page": "dist/design-thinking/index.html",
+    "coverage": "轉址入口",
+    "reason": "舊入口導向整合研究頁；內容已依目前區塊盤點。",
+    "notes": [
+      "docs/information-architecture.md"
+    ],
+    "owners": [
+      "dist/design-thinking/index.html"
+    ]
+  },
+  {
+    "title": "舊 PRD 入口",
+    "page": "dist/prd/index.html",
+    "coverage": "轉址入口",
+    "reason": "舊網址轉到整合頁；現行 PRD 正文見 spec.md。",
+    "notes": [
+      "docs/information-architecture.md"
+    ],
+    "owners": [
+      "dist/prd/index.html"
+    ]
+  },
+  {
+    "title": "有桶原型各角色介面",
+    "page": "../youtong/index.html",
+    "coverage": "互動原型",
+    "reason": "居民、規劃與清運等操作頁依原型 README 說明；瀏覽器內模擬狀態不當成研究或執行紀錄。",
+    "notes": [
+      "../youtong/README.md"
+    ],
+    "owners": [
+      "../youtong/README.md"
+    ]
+  }
+]
