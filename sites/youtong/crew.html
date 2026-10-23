@@ -170,7 +170,7 @@ const ZN={A:'南・公館',B:'東・大安',C:'西北・古亭'},ZS=['A','B','C'
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const map=quietMap(CONFIG.demoArea.center,15),binL=L.layerGroup().addTo(map),rtL=L.layerGroup().addTo(map);
 legendIntoSheet('infoSheet',[...BIN_LEGEND(),{html:`<span style="filter:grayscale(1);opacity:.55">${_sm(binIconSVG(50).html)}</span>`,t:'今天清潔隊已回報（已清）'},{c:css('--brand')||'#0f9d76',t:'路線（沿車行道路）',shape:'line'}]);
-const q=new URLSearchParams(location.search),ui=JSON.parse(localStorage.getItem(LSU)||'{}');
+const q=new URLSearchParams(location.search),ui=(()=>{try{return JSON.parse(localStorage.getItem(LSU))||{}}catch{return{}}})();
 let P=[],E=[],route=[],ZR={},ZONE={},zone=null,state='A',gen=0,MK={};const depot=C.depot||CONFIG.demoArea.center;
 const day=()=>document.querySelector('[name=fcd]:checked').value,T=()=>+fcT.value;
 const dayName=k=>k==='we'?'週六':'平日';
