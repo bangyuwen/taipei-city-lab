@@ -193,8 +193,8 @@ const PLAN=[
 function planPick(i){pbar.querySelectorAll('button').forEach((b,k)=>b.setAttribute('aria-pressed',k===i));const s=PLAN[i];pcur.innerHTML=`<b>${s[0]}</b> ${s[2]}（提案）`;pbox.innerHTML='上任日為第 0 天。<br>'+s[3]} // 標題只在 pcur 顯示一次，展開的 pbox 只放內容
 pbar.innerHTML=PLAN.map((s,i)=>`<button type="button" data-st="${i}" aria-label="${s[0]} ${s[2]}（提案）"><span class="lb">${i+1} ${s[1].split(' ')[0]}<small>${s[1].split(' ').slice(1).join(' ')}</small></span></button>`).join('');
 pbar.onclick=e=>{const b=e.target.closest('[data-st]');if(b)planPick(+b.dataset.st)};planPick(0);
-function miniPlan(h){const c=SV&&SV.candidates.find(x=>x.sno===String(h.id)),st=0;
-  return `<div class="mini" id="miniPlan"><div class="mbar">${PLAN.map((s,i)=>`<i class="${i===st?'cur':''}">${i+1} ${s[1].split(' ')[0]}<small>${s[1].split(' ').slice(1).join(' ')}</small></i>`).join('')}</div><p>${c?'研究歷史候選':'提案查核線索'}・未排程</p><a id="toPlan" role="link" tabindex="0">看完整計畫</a></div>`}
+function miniPlan(h){const c=SV&&SV.candidates.find(x=>x.sno===String(h.id));
+  return `<div class="mini" id="miniPlan"><div class="mbar">${PLAN.map((s,i)=>`<i>${i+1} ${s[1].split(' ')[0]}<small>${s[1].split(' ').slice(1).join(' ')}</small></i>`).join('')}</div><p>${c?'研究歷史候選':'提案查核線索'}・未排程</p><a id="toPlan" role="link" tabindex="0">看完整計畫</a></div>`}
 function planOpen(o){planMore.hidden=!o;planSec.open=o;planBtn.textContent=o?'收合完整計畫':'展開完整計畫';planBtn.setAttribute('aria-expanded',o)}
 planBtn.onclick=()=>planOpen(planMore.hidden);
 function toPlan(){home();planOpen(true);if(isMobile()&&window.drawer)drawer('exp');requestAnimationFrame(()=>planSec.scrollIntoView({block:'start',behavior:'smooth'}))}
