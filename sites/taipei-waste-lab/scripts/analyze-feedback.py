@@ -146,11 +146,11 @@ def render_depth():
         for item, heading, observation, hypothesis, alternative, measure, decision in mechanisms:
             md += [f'#### {heading}', '', f'**留言線索：**{observation}', '', f'**可能機制 · 待驗證：**{hypothesis}', '',
                    f'**其他解釋與反例：**{alternative}', '', f'**如何查核：**{measure}', '', f'**結果如何改變決定：**{decision}', '']
-            page += [f'<article class="feedback-mechanism" aria-labelledby="feedback-mechanism-{item}"><h5 id="feedback-mechanism-{item}" tabindex="-1">{esc(heading)}</h5>',
+            page += [f'<details class="feedback-mechanism" name="feedback-mechanisms"><summary><h5 id="feedback-mechanism-{item}" tabindex="-1">{esc(heading)}</h5></summary>',
                      f'<p><strong>留言線索：</strong>{esc(observation)}</p>',
                      f'<p><strong>可能機制 · 待驗證：</strong>{esc(hypothesis)}</p>',
                      f'<p><strong>其他解釋與反例：</strong>{esc(alternative)}</p>',
-                     f'<div class="feedback-check"><p><strong>如何查核：</strong>{esc(measure)}</p><p><strong>結果如何改變決定：</strong>{esc(decision)}</p></div></article>']
+                     f'<div class="feedback-check"><p><strong>如何查核：</strong>{esc(measure)}</p><p><strong>結果如何改變決定：</strong>{esc(decision)}</p></div></details>']
         page += ['</section>']
     page += ['</section><section class="feedback-section" aria-labelledby="feedback-loop"><h3 id="feedback-loop" tabindex="-1">把可能的連鎖關係變成查核問題</h3>',
              f'<p>{esc(LOOP_BRIDGE)}</p><figure class="problem-loop"><figcaption>{esc(LOOP_NOTE)}</figcaption><ol>']
@@ -585,7 +585,7 @@ def render_district_diagram(data, distribution=None):
             distribution_label = f'<div class="district-bin-count" data-bin-rows="{group["rows"]}"><strong>{label}</strong><span>不等於現場桶數</span><span data-venue-count="{len(distribution["venues"][district])}">另有場域線索 {len(distribution["venues"][district])} 筆</span><span>可用條件待核實</span><a href="{esc(url)}">查看公開地圖</a></div>'
         top, contrast = district_profile(data, district)
         issues = '；'.join(f'{THEMES[k][0]} {counts[k]}／{n}（{percent(counts[k],n)}）' for k in top) or '無可歸類議題'
-        page += [f'<li class="district-row" data-profile="{esc(district)}"><div class="district-name"><h4 id="feedback-district-{row_number}" tabindex="-1">{esc(district)}</h4><span>本檔 {n:,} 則</span>{distribution_label}</div>',
+        page += [f'<li class="district-row" data-profile="{esc(district)}"><details class="district-disclosure" name="feedback-districts"><summary><h4 id="feedback-district-{row_number}" tabindex="-1">{esc(district)}</h4><span>本檔 {n:,} 則</span></summary><div class="district-detail-grid"><div class="district-name">{distribution_label}</div>',
                  '<div class="district-issues"><span class="district-mobile-label">區內常談議題</span><ul>']
         for key in top:
             pct = percent(counts[key], n)
@@ -618,7 +618,7 @@ def render_district_diagram(data, distribution=None):
         else:
             page += ['<div class="district-direction"><span class="district-mobile-label">改善方向 · 待驗證</span>']
             page += [f'<p><strong>先查</strong>{esc(check)}</p><p><strong>再試</strong>{esc(trial)}</p>' if contrast else f'<p>{direction}</p>']
-        page += ['<a class="district-matrix-return" href="#feedback-cross">回到十二區比較表</a></div></li>']
+        page += ['<a class="district-matrix-return" href="#feedback-cross">回到十二區比較表</a></div></div></details></li>']
         distribution_cell = f'{distribution["bins"][district]["rows"]}／{len(distribution["venues"][district])} | ' if distribution else ''
         md += [f'| {district}（{n}） | {distribution_cell}{issues} | {comparison} | {direction} |']
     page += ['</ol>']
@@ -824,6 +824,43 @@ def render(data, distribution=None):
     return '\n'.join(md), '\n'.join(page)
 
 
+def reading_chapters(content, access_html, removal_html):
+    """Keep original evidence and fragment IDs in seven focused reading chapters."""
+    starts = [
+        ('cross', '<section class="feedback-section feedback-cross"'),
+        *[(key, f'<section class="feedback-section{extra}" aria-labelledby="feedback-{key}"')
+          for key, extra in [('findings', ''), ('signals', ' feedback-appendix'),
+                             ('stances', ''), ('problems', ''), ('mechanisms', ''),
+                             ('loop', ''), ('method', ''), ('appendix', ' feedback-appendix')]],
+    ]
+    positions = [content.index(marker) for _, marker in starts] + [len(content)]
+    if positions != sorted(positions):
+        raise ValueError('Feedback section order changed')
+    sections = {key: content[positions[i]:positions[i+1]] for i, (key, _) in enumerate(starts)}
+    chapters = [
+        ('summary', '重點判讀', sections['findings'] + sections['problems']),
+        ('districts', '十二區比較', sections['cross']),
+        ('access', '六種困難', '<section class="feedback-section">' + access_html + '</section>'),
+        ('removal', '撤除影響', '<section class="feedback-section">' + removal_html + '</section>'),
+        ('causes', '原因與反例', sections['mechanisms'] + sections['loop']),
+        ('statistics', '統計與立場', sections['signals'] + sections['stances']),
+        ('method', '方法與附錄', sections['method'] + sections['appendix']),
+    ]
+    # The introduction and sample limits stay visible in every chapter. The old
+    # contents are replaced by fragment links that also work without JavaScript.
+    intro = content[:content.index('<nav class="feedback-contents"')]
+    links = ''.join(f'<a href="#reader-feedback-{key}" data-reader-link>{title}</a>' for key, title, _ in chapters)
+    items = ''.join(f'<article class="reader-item" id="reader-feedback-{key}" data-reader-item="{title}">{body}</article>' for key, title, body in chapters)
+    return (intro + '<div class="feedback-reader" data-reader="feedback" data-reader-label="閱讀主題">'
+            '<div class="reader-controls" data-reader-controls hidden><label for="reader-select-feedback">閱讀主題</label>'
+            '<select id="reader-select-feedback"></select><p class="reader-position" aria-live="polite"></p></div>'
+            '<nav class="feedback-chapters" aria-label="回饋分析閱讀主題">' + links + '</nav>'
+            '<div class="reader-items">' + items + '</div>'
+            '<nav class="feedback-paging" aria-label="閱讀前後主題" hidden data-reader-paging>'
+            '<a href="#reader-feedback-summary" data-reader-prev>上一主題</a>'
+            '<a href="#reader-feedback-districts" data-reader-next>下一主題</a></nav></div>')
+
+
 def render_with_detail(data, distribution, research):
     markdown, content = render(data, distribution)
     access = runpy.run_path(str(ROOT / 'scripts/feedback_access.py'))
@@ -832,13 +869,7 @@ def render_with_detail(data, distribution, research):
     removal = runpy.run_path(str(ROOT / 'scripts/feedback_removal.py'))
     removal_data, comparisons = removal['load'](research, detail)
     removal_html, _ = removal['render'](removal_data, comparisons, heat_colors)
-    detail_html += '\n' + removal_html
-    anchor = '<h4 id="feedback-district-details" tabindex="-1">'
-    if content.count(anchor) != 1:
-        raise ValueError('Expected one district details destination')
-    content = content.replace(anchor, detail_html + '\n' + anchor)
-    content = content.replace('<a href="#feedback-district-details">各區詳解</a>',
-                              '<a href="#feedback-access">六種困難細分</a><a href="#feedback-removal">撤除地點與後果</a><a href="#feedback-district-details">各區詳解</a>')
+    content = reading_chapters(content, detail_html, removal_html)
     markdown = markdown.replace('### 十二區問題與改善方向',
                                 '### 桶位留言的六種困難細分\n\n' + access['narrative'](detail) +
                                 '\n\n[細分類、十二區情境與立場分析](../feedback-access-2026-10-18/README.md)\n\n[撤除地點、後果、訴求與官方紀錄比對](../feedback-removal-2026-10-18/README.md)\n\n### 十二區問題與改善方向', 1)

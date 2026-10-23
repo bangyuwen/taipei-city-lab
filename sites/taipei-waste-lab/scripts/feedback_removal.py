@@ -261,12 +261,12 @@ def render(data, comparisons, heat_colors):
             md.append(f'| {label} | {count} | {share} |')
         page.append(f'</ol><p class="feedback-note">未明說這組內容：{g[missing]} 則（{percent(g[missing],n)}）。</p></figure>')
         md += [f'| 未明說這組內容 | {g[missing]} | {percent(g[missing],n)} |', '']
-    page += ['</div>', '<h5>同樣說「撤桶」，需要的處理方式不同</h5>', '<dl class="feedback-removal-examples">']
+    page += ['</div>', '<details class="feedback-codebook"><summary>同樣說「撤桶」，需要的處理方式不同</summary>', '<dl class="feedback-removal-examples">']
     md += ['## 具體怎麼說，以及先查什麼', '', '以下是逐則回讀後的改寫，不是逐字引文。例子說明機制，不代表該地多數人的看法，也不把一則留言中的後果套到其所有地名。', '']
     for example in comparisons['examples']:
         page.append(f'<div><dt>{esc(example["title"])}</dt><dd><p>{esc(example["account"])}</p><p><strong>對應查核：</strong>{esc(example["action"])}</p></dd></div>')
         md += [f'### {example["title"]}', '', example['account'], '', '對應查核（尚未執行）：' + example['action'], '']
-    page += ['</dl>', '<h5 id="feedback-removal-evidence" tabindex="-1">現有清冊能對上地點，還不能對上同一次撤除</h5>',
+    page += ['</dl></details>', '<details class="feedback-codebook"><summary>查看地點與官方紀錄的交叉比對</summary><h5 id="feedback-removal-evidence" tabindex="-1">現有清冊能對上地點，還不能對上同一次撤除</h5>',
              f'<p>{g["namedPlace"]} 則含命名地點，但包含「台北市」等大範圍、外地比較與無關參照。{g["statedTime"]} 則有時間線索，多為相對時間、任期或事件期間；其中 {g["placeAndTime"]} 則同時有地名與時間，也不一定能定位到一個桶。留言收集日未知，不能把「今年」直接換成 2026 年。</p>',
              '<p>本次重新取得的街頭清冊有 681 列，場域清單有 130 筆，與先前保存版本相同；街頭列、場所紀錄及歷史列分開比對。地圖上的場所標記仍只表示查核入口。</p>']
     md += ['## 地點與時間的可比程度', '', f'含命名地點 {g["namedPlace"]} 則；有時間線索 {g["statedTime"]} 則；兩者皆有 {g["placeAndTime"]} 則。地名可能是全市、全區、替代投放處、比較案例或無關參照。相對日期不能以分析日錨定。', '',
@@ -313,7 +313,7 @@ def render(data, comparisons, heat_colors):
     page += [table, '<details class="feedback-codebook"><summary>完整地名對照：包含大範圍、替代處、比較及無法定位的線索</summary>']
     md += lines + ['']
     table, lines = place_table([p for p in comparisons['places'] if p['id'] not in featured], '其餘地名與待確認線索')
-    page += [table, '</details>']; md += lines + ['']
+    page += [table, '</details></details>']; md += lines + ['']
     page += ['<details class="feedback-codebook"><summary>十二區的困難與訴求組成：區內「撤除／變動」留言為分母</summary>',
              '<p>行政區沿用原檔標籤，未確認為事件所在地。這裡比較同一子群的組成，不是撤除率、缺桶排名或因果差異。顏色固定 0–100%；0 表示本次未標到，空白資訊仍留在分母。</p>']
     for field, labels, title in [('effects', EFFECTS, '撤除後困難'), ('requests', REQUESTS, '改善訴求')]:
