@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261023q"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261023q"><title>清潔隊｜今日清運｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261023q"><link rel="stylesheet" href="tokens.css?v=20261023q"><link rel="stylesheet" href="ui.css?v=20261023q">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261023r"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261023r"><title>清潔隊｜今日清運｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261023r"><link rel="stylesheet" href="tokens.css?v=20261023r"><link rel="stylesheet" href="ui.css?v=20261023r">
 <style>
 /* ===== 有桶・清潔隊（mobile-first 390x844；以正式版為底：A 選路線（A/B/C 分區）→ B 執行）===== */
 html,body{height:100%;overflow:hidden;background:var(--map-bg)}
@@ -134,11 +134,11 @@ body.navon .tchip.ab{display:none} /* 導航中不顯示「全部桶」 */
   <h3>推估與假設</h3><ul><li>人流由交通活動推估，不是實測人流。</li><li>產生量每次借還 <b id="iLpr"></b> 公升（<b>假設，不是觀測到的垃圾量</b>）：<a id="iSrc" target="_blank" rel="noopener">用官方公開的每日清運頻率校準，仍是假設</a>（環保局：每箱約 120 公升、每日清運 3–6 次；假設示範區人流中位數的桶平日一天滿 3 次：3 × 120 ÷ 361.1）。</li><li>例行清運時間 05:00／08:00／12:00／16:00 為假設；官方公開資料只提到一天 3–6 次，沒有公布時間。預測從最近一次清運起累積。</li></ul>
   <h3>模擬資料（標 <span class="sim"></span>）</h3><ul><li>示範：預估模型待驗證，百日計畫本期暫緩。填充度與預計滿時間是模擬；清潔隊回報的實際滿度會校正該桶產生量（EMA）。</li></ul>
   <h3>路線分區</h3><ul><li>示範區桶位依地理位置分成路線 A（南・公館）、B（東・大安）、C（西北・古亭）（容量平衡 k-means，每人負責不同區域）。先選路線，再「開始清運」；只排該區的桶。</li><li>路線卡片：桶數＝該區達清運門檻的桶；滿溢＝預測滿溢或行人回報「滿了」（尚未清運）的桶；預估時間＝行車路網距離以時速 20 公里估算，加每站 2 分鐘作業（假設）。</li></ul>
-  <h3>排序</h3><ul><li>選站：清運門檻二選一——「快滿了以上」（預設）或「只清滿溢」。站序分兩層：第 1 層「必清」＝下一次例行清運或收班前預計會滿（收班後則為隔天上班前），以及行人回報「滿了」、尚未清運的桶；第 2 層＝其餘達門檻的桶。層內從出發點起在行車路網距離上走最近鄰（不是最佳解）。站號＝實際拜訪順序。</li><li>路線依實際道路：地圖上的路線沿行車路網畫；導航在 App 內，用 OSRM 行車路線（routing.openstreetmap.de），不開 Google 地圖。</li><li>這是給領班的參考排序，不排班、不派工，全部是模擬。</li><li>行車路網：OpenStreetMap（network_type=drive，遵守單行道），2026-10-18 預先計算，展示時不呼叫路徑 API；© OpenStreetMap contributors，ODbL。垃圾桶以最近的車道節點接駁。</li></ul>
+  <h3>排序</h3><ul><li>選站：清運門檻二選一——「快滿了以上」（預設）或「只清滿溢」。站序分兩層：第 1 層「必清」＝下一次例行清運或收班前預計會滿（收班後則為隔天上班前），以及行人回報「滿了」、尚未清運的桶；第 2 層＝其餘達門檻的桶。層內從出發點起在行車路網距離上走最近鄰（不是最佳解）。站號＝實際拜訪順序。</li><li>路線依實際道路：地圖上的路線沿行車路網畫；導航在 App 內，用 OSRM 行車路線（routing.openstreetmap.de），不開 Google 地圖。</li><li>這是給領班的參考排序，不排班、不派工，全部是模擬。</li><li>行車路網：OpenStreetMap（network_type=drive，遵守單行道），2026-10-18 預先計算，展示時不呼叫路徑 API；© OpenStreetMap contributors，ODbL。垃圾桶投影到最近的車道路段（遵守單行道）；相距 40 m 內的桶排成連續站、下車步行接駁，不繞回頭。</li></ul>
   <h3>回報與進度</h3><ul><li>抵達後回報收運量（空／半／滿／滿溢），約 3 秒內可「復原」，之後自動前往下一站；也可「略過此站」。收運量回報寫入既有回報事件，照舊同步雲端。</li><li>路線進度（完成、略過）只存在這台手機，台北時間每天換新；別人的回報不影響你的進度。</li><li>地圖上灰色＋✓＝今天清潔隊已回報（已清）。路線上的站若今天已有別的隊員回報清運（之後沒有新的行人「滿了」），會變灰並自動略過，不算入待清。一輪全部回報完後，新的行人「滿了」回報不會插進已完成的這一輪，而是列入下一輪（從第 1 站排起）；已完成的輪次留在「今日清運輪次」紀錄。行人回報「滿了」只會讓桶變紅、列為必清，不算已清；也不和民眾的「這裡需要垃圾桶」需求回報混算。</li></ul>
 </div></div>
 
-<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261023q"></script><script src="common.js?v=20261023q"></script><script src="cloud.js?v=20261023q"></script><script src="ui.js?v=20261023q"></script><script src="bin-icons.js?v=20261023q"></script><script src="forecast.js?v=20261023q"></script><script src="routing.js?v=20261023q"></script><script src="crew-zones.js?v=20261023q"></script>
+<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261023r"></script><script src="common.js?v=20261023r"></script><script src="cloud.js?v=20261023r"></script><script src="ui.js?v=20261023r"></script><script src="bin-icons.js?v=20261023r"></script><script src="forecast.js?v=20261023r"></script><script src="routing.js?v=20261023r"></script><script src="crew-zones.js?v=20261023r"></script>
 <script>
 roleSwitch('crew.html');
 // 清運門檻：兩段切換「快滿了以上」(70)／「只清滿溢」(100)；舊存檔的數字門檻對應到最近的選項，壞值→預設
@@ -149,7 +149,7 @@ const C=CONFIG.forecast,LSU=KP+'crew_ui_v2',AMT=[['empty','空',0],['half','半'
 const ZN={A:'南・公館',B:'東・大安',C:'西北・古亭'},ZS=['A','B','C'],SVC_MIN=2; // 路線分區（crew-zones.js）；每站作業時間（假設）
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const map=quietMap(CONFIG.demoArea.center,15),binL=L.layerGroup().addTo(map),rtL=L.layerGroup().addTo(map);
-legendIntoSheet('infoSheet',[...BIN_LEGEND(),{html:`<span style="filter:grayscale(1);opacity:.55">${_sm(binIconSVG(50).html)}</span>`,t:'今天清潔隊已回報（已清）'},{c:css('--ink-2'),t:'路線（沿行車路網）',shape:'line'}]);
+legendIntoSheet('infoSheet',[...BIN_LEGEND(),{html:`<span style="filter:grayscale(1);opacity:.55">${_sm(binIconSVG(50).html)}</span>`,t:'今天清潔隊已回報（已清）'},{c:css('--brand')||'#0f9d76',t:'路線（沿行車路網）',shape:'line'}]);
 const q=new URLSearchParams(location.search),ui=JSON.parse(localStorage.getItem(LSU)||'{}');
 let P=[],E=[],route=[],ZR={},ZONE={},zone=null,state='A',gen=0,MK={};const depot=C.depot||CONFIG.demoArea.center;
 const day=()=>document.querySelector('[name=fcd]:checked').value,T=()=>+fcT.value;
@@ -189,13 +189,16 @@ const DEMO='<span class="srcn">示範：預估模型待驗證，百日計畫本�
 function todayCrew(){const d=tpeDay(Date.now()),r={};for(const e of getEvents()){if(e.by!=='清潔隊'||(e.kind!=='clear'&&e.kind!=='level'))continue;const t=e.ts||e.ot;if(tpeDay(t)!==d)continue;if(!r[e.bin]||t>r[e.bin])r[e.bin]=t}return r}
 // 規劃：選站＝預測 ≥ 門檻或行人回報滿；每條路線（A/B/C）各自排序
 // 站序＝行車路網（OSM drive、遵守單行道）距離矩陣上的最近鄰（自出發點）。路網不可用 → 預測優先序
-let DR=null;const dd=(a,b)=>{const d=DR&&RT.dist(DR,a,b);return d==null?hav(a[0],a[1],b[0],b[1])*1.4:d};
+// 相距 NEAR_M 內的桶（同一個路口／騎樓）＝停一次車走過去：距離用直線、排成連續站，不沿單行道繞一圈再回來
+const NEAR_M=40;let DR=null;const dd=(a,b)=>{const h=hav(a[0],a[1],b[0],b[1]);if(h<=NEAR_M)return h;const d=DR&&RT.dist(DR,a,b,1e9,a===depot);return d==null?h*1.4:d}; // 出發點可迴轉：往任一方向出發
 function nnDrive(sel){const left=[...sel],out=[];let cur=depot;while(left.length){let bi=0,bd=1e18;left.forEach((x,i)=>{const d=dd(cur,[x.b.la,x.b.lo]);if(d<bd){bd=d;bi=i}});const x=left.splice(bi,1)[0];out.push(x);cur=[x.b.la,x.b.lo]}return out}
 // 第 1 層「必清」：在下一次例行清運（或收班）前會滿；收班後則為隔天上班前會滿
 function deadline(t){const day=Math.floor(t/1440)*1440,rc=C.routineClears.map(FC.hm),end=day+FC.hm(C.shiftEnd);const nx=rc.map(m=>day+m).filter(m=>m>t)[0];return t>=end||nx==null?day+1440+FC.hm(C.shiftStart):Math.min(nx,end)}
 // 行人回報時間：該桶最後一筆 full 事件 → 「N 分前」
 function repAgo(id){const l=binEvents(id).filter(x=>x.kind==='full').slice(-1)[0];if(!l)return '';const m=Math.max(0,Math.round((Date.now()-l.ts)/60000));return m<1?'剛剛':m<60?m+' 分前':m<1440?Math.round(m/60)+' 小時前':Math.round(m/1440)+' 天前'}
-function orderSel(sel){return !DR||C.routeOrder==='priority'?sel:C.routeOrder==='tiered'?[...nnDrive(sel.filter(e=>e.must)),...nnDriveFrom(sel.filter(e=>e.must),sel.filter(e=>!e.must))]:nnDrive(sel)}
+function orderSel(sel){return !DR||C.routeOrder==='priority'?sel:groupNear(C.routeOrder==='tiered'?[...nnDrive(sel.filter(e=>e.must)),...nnDriveFrom(sel.filter(e=>e.must),sel.filter(e=>!e.must))]:nnDrive(sel))}
+// 幾乎同位置的桶接在第一次到達的那站後面（順路桶跟著必清桶清＝pull，列在必清之內）
+function groupNear(R){const out=[],left=[...R];while(left.length){const x=left.shift();out.push(x);for(let i=0;i<left.length;)if(hav(x.b.la,x.b.lo,left[i].b.la,left[i].b.lo)<=NEAR_M){const y=left.splice(i,1)[0];y.pull=(x.must||x.pull)&&!y.must;out.push(y)}else i++}return out}
 function plan(){refreshOC();const st=FC.state();E=FC.evaluate(P,day(),T(),st);const dl=deadline(T());const ev=getEvents();E.forEach(e=>{e.rep=binState(e.b.id,ev)==='reported';e.z=ZONE[e.b.id]});const sel=E.filter(e=>e.fill>=+th.value||e.rep);sel.forEach(e=>e.must=e.rep||e.fill>=100||e.fullAt<=dl); // 行人回報滿（尚未清運）→ 一定排進「必清」
   ZR={};for(const z of ZS)ZR[z]=roundFin(z)?nextRound(z,E).R:ocTail(orderSel(act(sel.filter(e=>e.z===z))),sel.filter(e=>e.z===z));route=zone?ZR[zone]:[];gen=Date.now();updAt=Date.now()}
 // 下一輪建議：本輪回報完後，依同一時間點的 FC 預估（清過的桶已歸零）重新選站——行人回報滿、已滿、或下一次例行清運／收班前預計會滿＝必清；其餘達門檻＝順路；同一套排序
@@ -219,10 +222,18 @@ function fitTop(){if(state==='A'){const pts=route.length?route.map(e=>[e.b.la,e.
 function crewIcon(f,st,o){const{html}=binIconSVG(f,st),k=o.cur?1.15:o.done?.62:o.n!=null?.92:o.dim?.62:.78;
   return L.divIcon({className:'binmk oth crw'+(o.done?' done':'')+(o.cur?' cur':'')+(o.skip?' skip':'')+(o.dim?' dim':'')+(o.must&&!o.done?' must':''),iconSize:[44,44],iconAnchor:[22,41],popupAnchor:[0,-32],
     html:`<div class="w" style="transform:scale(${k})">${html}${o.done?'<span class="bn">✓</span>':o.n!=null?`<span class="bn">${o.n}</span>`:''}</div>`})}
+// 每段路線：行車路網投影到最近路段（RT.pathE，同行人頁）；相距 NEAR_M 內＝步行接駁、不管單行道方向。無法對應路網 → null（畫虛線直線）
+const LEGC=new Map();function legPath(a,b){const k=a.join()+'|'+b.join();if(!LEGC.has(k)){if(LEGC.size>500)LEGC.clear();LEGC.set(k,DR?RT.pathE(DR,a,b,hav(a[0],a[1],b[0],b[1])<=NEAR_M||(a===depot&&'a')):null)}return LEGC.get(k)}
+// 路線線條＝行人頁 drawRoute 的樣式：白邊 8px＋品牌綠 5px；無法對應路網＝品牌綠虛線直線（op＝執行中淡化倍率）
+function legLine(pts,ok,op){const brand=css('--brand')||'#0f9d76';
+  if(ok){L.polyline(pts,{color:'#fff',weight:8,opacity:.9*op,interactive:false}).addTo(rtL);L.polyline(pts,{color:brand,weight:5,opacity:.95*op,interactive:false,className:'walkroute'}).addTo(rtL)}
+  else L.polyline(pts,{color:brand,weight:4,opacity:.9*op,dashArray:'6 8',interactive:false,className:'walkroute dashed'}).addTo(rtL)}
 function draw(){refreshOC();binL.clearLayers();rtL.clearLayers();MK={};const ev=getEvents(),p=progLoad(),TD=todayCrew(),ci=state==='B'?curIdx():-1,ix=new Map(route.map((e,i)=>[e.b.id,i]));
   const RL=route.filter(e=>!OC[e.b.id]); // 路線線條不經過別人已清（自動略過）的站
-  if(RL.length){L.polyline(DR?RL.reduce((a,e,i)=>{const p0=i?[RL[i-1].b.la,RL[i-1].b.lo]:depot;return a.concat(RT.path(DR,p0,[e.b.la,e.b.lo]))},[]):[depot,...RL.map(e=>[e.b.la,e.b.lo])],{color:css('--ink-2'),weight:state==='A'?4:3,opacity:state==='A'?.75:.55,lineJoin:'round',interactive:false}).addTo(rtL);
-    L.marker(depot,{icon:L.divIcon({className:'start'}),title:'清潔隊出發點',interactive:false}).addTo(rtL)}
+  if(RL.length){const legs=RL.map((e,i)=>{const p0=i?[RL[i-1].b.la,RL[i-1].b.lo]:depot,r=legPath(p0,[e.b.la,e.b.lo]);return{e,pts:r?i?r.pts:r.pts.slice(1):[p0,[e.b.la,e.b.lo]],ok:!!r}}),c=ci>=0?legs.findIndex(l=>l.e===route[ci]):-1; // 第 1 段從出發點接上的車道起畫（出發點標在路上）
+    // 執行中：走過的段最淡、後續段淡、目前這段＝行人頁樣式（畫在最上面）；選路線＝整條行人頁樣式
+    const op=i=>state!=='B'?1:c<0?.3:i<c?.25:i>c?.45:1;legs.forEach((l,i)=>i!==c&&legLine(l.pts,l.ok,op(i)));if(c>=0)legLine(legs[c].pts,legs[c].ok,1);
+    L.marker(legs[0].pts[0],{icon:L.divIcon({className:'start'}),title:'清潔隊出發點',interactive:false}).addTo(rtL)}
   for(const e of E){const id=e.b.id,i=ix.get(id),on=i!=null,oc=on&&!!OC[id],done=on?p.done.has(id)||oc:!!TD[id],sk=on&&!done&&p.skip.has(id),cur=on&&i===ci,f=Math.floor(e.fill); /* 不四捨五入：99.7% 不能畫成「滿溢」*/
     const st=done?null:binState(id,ev),dim=!on&&!done&&!!zone&&e.z!==zone;
     const t=oc?`今天已有清潔隊回報 ${hhmm(OC[id])}・自動略過`:done?`已清${TD[id]?' '+hhmm(TD[id]):''}`:st?`行人回報滿・${repAgo(id)}`:`預測${rampState(f).t}`;
@@ -246,11 +257,11 @@ function navOff(){document.body.classList.remove('navon');navMe.hidden=true;NAVH
 function undoToast(txt,fn){let u=document.querySelector('.undo');if(u)u.remove();clearTimeout(undoT);
   u=document.createElement('div');u.className='undo';u.setAttribute('role','status');u.innerHTML=`<span>${txt}</span><button>復原</button>`;u.style.bottom=(innerWidth>760?24:cardH()+22)+'px';if(innerWidth>760)u.style.left=`calc(100% - ${card.getBoundingClientRect().width/2+16}px)`;document.body.appendChild(u);
   u.querySelector('button').onclick=()=>{u.remove();clearTimeout(undoT);fn()};undoT=setTimeout(()=>u.remove(),3000)}
-const stopLi=(e,i,done,st)=>OC[e.b.id]&&!done.has(e.b.id)?`<li class="oc"><span class="n">✓</span><span class="t"><b>${e.b.addr}</b><span class="occ">今天已有清潔隊回報 ${hhmm(OC[e.b.id])}・自動略過</span></span><span class="p">已清</span></li>`:`<li${done.has(e.b.id)?' class="ok"':''}><span class="n${e.must?' must':''}" style="background:${e.rep?REPORTED:rampColor(e.fill)};color:${e.fill>=100||e.rep?'#fff':'#2b2b2b'}">${done.has(e.b.id)?'✓':i+1}</span><span class="t"><b>${e.b.addr}</b><span>預計滿 ${e.fill>=100?'已滿':isFinite(e.fullAt)?FC.fmt(e.fullAt):'—'}${e.must?' <span class="flag must">必清</span>':''}${e.rep?` <span class="repby">行人回報・${repAgo(e.b.id)}</span>`:''}${st.cal[e.b.id]?' <span class="flag cal">已校正</span>':''}</span></span><span class="p">${stateChip(e.fill,e.rep)}</span></li>`;
+const stopLi=(e,i,done,st)=>OC[e.b.id]&&!done.has(e.b.id)?`<li class="oc"><span class="n">✓</span><span class="t"><b>${e.b.addr}</b><span class="occ">今天已有清潔隊回報 ${hhmm(OC[e.b.id])}・自動略過</span></span><span class="p">已清</span></li>`:`<li${done.has(e.b.id)?' class="ok"':''}><span class="n${e.must?' must':''}" style="background:${e.rep?REPORTED:rampColor(e.fill)};color:${e.fill>=100||e.rep?'#fff':'#2b2b2b'}">${done.has(e.b.id)?'✓':i+1}</span><span class="t"><b>${e.b.addr}</b><span>預計滿 ${e.fill>=100?'已滿':isFinite(e.fullAt)?FC.fmt(e.fullAt):'—'}${e.must?' <span class="flag must">必清</span>':e.pull?' <span class="flag">同點順路</span>':''}${e.rep?` <span class="repby">行人回報・${repAgo(e.b.id)}</span>`:''}${st.cal[e.b.id]?' <span class="flag cal">已校正</span>':''}</span></span><span class="p">${stateChip(e.fill,e.rep)}</span></li>`;
 function renderCard(ev,ci){card.dataset.state=state;if(window.NAV&&typeof navRender==='function'){navRender();return} // App 內導航中：卡片＝導航列
 const k=day(),t=FC.fmt(T()),st=FC.state();
   if(state==='A'){const zc=ZS.map(z=>{const s=zstat(z),fz=roundFin(z);return `<button type="button" class="zc${z===zone?' on':''}" data-zone="${z}" aria-pressed="${z===zone}" aria-label="路線 ${z} ${ZN[z]}：${fz?`本輪已完成，下一輪 ${s.n} 站`:`${s.n} 桶`}，滿溢 ${s.red} 桶，預估 ${s.min} 分鐘"><b>${z}</b><span class="zn">${ZN[z]}</span>${fz?`<span class="zf">本輪已完成・下一輪 ${s.n} 站</span>`:`<span class="zl"><em>${s.n}</em> 桶</span>`}<span class="zl">${s.red?`<i class="rd"></i>滿溢 <em>${s.red}</em>`:'無滿溢'}</span><span class="zl">約 <em>${s.min}</em> 分</span></button>`}).join('');
-    const fin=!!zone&&roundFin(zone),p=fin?{done:new Set()}:progLoad(),isOC=e=>OC[e.b.id]&&!p.done.has(e.b.id),nA=route.filter(e=>!isOC(e)).length,nO=route.length-nA,nM=route.filter(e=>e.must&&!isOC(e)).length,nR=nA-nM,nd=route.filter(e=>p.done.has(e.b.id)).length,li=(e,i)=>stopLi(e,i,p.done,st);
+    const fin=!!zone&&roundFin(zone),p=fin?{done:new Set()}:progLoad(),isOC=e=>OC[e.b.id]&&!p.done.has(e.b.id),nA=route.filter(e=>!isOC(e)).length,nO=route.length-nA,nM=route.filter(e=>(e.must||e.pull)&&!isOC(e)).length,nR=nA-nM,nd=route.filter(e=>p.done.has(e.b.id)).length,li=(e,i)=>stopLi(e,i,p.done,st);
     let btn,body='';
     if(!zone)btn=`<button class="b pri cpri" id="startBtn" disabled>先選一條路線</button>`;
     else if(!nA&&fin){btn=`<button class="b pri cpri" id="startBtn" disabled>路線 ${zone} 本輪已完成・下一輪 0 站</button>`;body=nxHTML(nextRound(zone).nx)}
@@ -258,7 +269,7 @@ const k=day(),t=FC.fmt(T()),st=FC.state();
       btn=`<button class="b pri cpri" id="startBtn" disabled>路線 ${zone} 目前沒有要清的桶</button>`;
       body=(th.value>=100&&!none70?'<button class="tlink" id="toNear">改看快滿了以上</button>':`<p class="small" style="margin:8px 0 0">${lastRC!=null?FC.fmt(lastRC)+' 已例行清運。':''}</p><button class="tlink" id="toTime">調整時間</button>`)+(nO?`<div class="subh">今天已有清潔隊回報 ${nO} 站・自動略過</div><ol class="top3" id="ocList">${route.map((e,i)=>isOC(e)?li(e,i):'').join('')}</ol>`:'')}
     else{btn=`<button class="b pri cpri" id="startBtn">${fin?`開始下一輪・路線 ${zone}（${nA} 站）`:nd?`繼續清運路線 ${zone}（已完成 ${nd} / ${pgN().N}）`:`開始清運路線 ${zone}・從第 1 站`}</button>`;
-      body=`<div class="subh" style="margin-top:12px">必清 ${nM} 站</div><ol class="top3" id="mustList">${route.map((e,i)=>e.must&&!isOC(e)?li(e,i):'').join('')}</ol>${nR?`<div class="subh">順路 ${nR} 站</div><ol class="top3" id="wayList">${route.map((e,i)=>e.must||isOC(e)?'':li(e,i)).join('')}</ol>`:''}${nO?`<div class="subh">今天已有清潔隊回報 ${nO} 站・自動略過</div><ol class="top3" id="ocList">${route.map((e,i)=>isOC(e)?li(e,i):'').join('')}</ol>`:''}`}
+      body=`<div class="subh" style="margin-top:12px">必清 ${nM} 站</div><ol class="top3" id="mustList">${route.map((e,i)=>(e.must||e.pull)&&!isOC(e)?li(e,i):'').join('')}</ol>${nR?`<div class="subh">順路 ${nR} 站</div><ol class="top3" id="wayList">${route.map((e,i)=>e.must||e.pull||isOC(e)?'':li(e,i)).join('')}</ol>`:''}${nO?`<div class="subh">今天已有清潔隊回報 ${nO} 站・自動略過</div><ol class="top3" id="ocList">${route.map((e,i)=>isOC(e)?li(e,i):'').join('')}</ol>`:''}`}
     cardBody.innerHTML=`<div class="k"><span class="lbl" id="cardTitle">選路線</span><span class="small" style="margin-left:auto">依 ${dayName(k)} ${t} 預測</span></div>
      <div class="zg" id="zonePick" role="group" aria-label="選路線">${zc}</div>${btn}
      <div class="small" id="crewSub" style="margin-top:6px">站序：必清優先，層內沿行車路網順路（遵守單行道）・參考排序，全部為模擬</div>${DEMO}${body}`;return}
@@ -337,6 +348,10 @@ menu.onclick=()=>sheetOpen('setSheet');infoBtn.onclick=()=>sheetOpen('infoSheet'
 // 新加入的必清（例如行人剛回報滿）接在既有必清之後，其餘接在最後；已完成的站不動
 // 本輪已全部回報完：新回報不插進這一輪，改列入「下一輪建議」（從第 1 站排起）；別的隊員剛清的站：變灰、自動略過
 let toldNext=new Set(),toldOC=new Set();
+// 新加入的桶：旁邊（NEAR_M 內）有還沒清的站 → 接在那站後面；其餘插在 at（不切開已經相鄰的同點站）
+const nearE=(x,y)=>hav(x.b.la,x.b.lo,y.b.la,y.b.lo)<=NEAR_M;
+function insNear(R,add,at,ok=()=>true){R=[...R];const rest=[];for(const a of add){let j=-1;R.forEach((e,i)=>{if(ok(e)&&nearE(e,a))j=i});if(j>=0){R.splice(j+1,0,a);if(j<at)at++}else rest.push(a)}
+  while(at>0&&at<R.length&&nearE(R[at-1],R[at]))at++;R.splice(at,0,...groupNear(rest));return R}
 function syncStatus(){const old=route.map(e=>e.b.id),dl=deadline(T());
   if(state==='B'){const ocOld={...OC};refreshOC();const ev=getEvents(),st=FC.state();E=FC.evaluate(P,day(),T(),st);E.forEach(e=>{e.rep=binState(e.b.id,ev)==='reported';e.z=ZONE[e.b.id];e.must=e.rep||e.fill>=100||e.fullAt<=dl});const m=new Map(E.map(e=>[e.b.id,e]));
     const keep=old.map(id=>m.get(id)).filter(Boolean),add=E.filter(e=>e.z===zone&&e.rep&&!old.includes(e.b.id)),p=progLoad(),msg=[];route=keep;
@@ -345,11 +360,11 @@ function syncStatus(){const old=route.map(e=>e.b.id),dl=deadline(T());
     if(roundFin(zone)){const nw=add.filter(e=>!toldNext.has(e.b.id));nw.forEach(e=>toldNext.add(e.b.id));if(nw.length)msg.push('新回報滿，已列入下一輪：'+nw.map(e=>e.b.addr).join('、'))}
     else if(add.length){ // 插在剩下（未完成）的必清之後；不會排到已完成／略過的站前面
       const rem=keep.map((e,i)=>[e,i]).filter(([e])=>!p.done.has(e.b.id)&&!p.skip.has(e.b.id)&&!OC[e.b.id]),rm=rem.filter(([e])=>e.must),at=rm.length?rm[rm.length-1][1]+1:rem.length?rem[0][1]:keep.length;
-      route=[...keep.slice(0,at),...add,...keep.slice(at)];
+      route=insNear(keep,add,at,e=>!p.done.has(e.b.id)&&!p.skip.has(e.b.id)&&!OC[e.b.id]);
       if(p.ids.length){p.ids=[...new Set([...p.ids,...add.map(e=>e.b.id)])];progSave(p)}saveUI();msg.push('新增必清：'+add.map(e=>e.b.addr).join('、'))}
     if(msg.length)crewToast(msg.join('；'))}
   else{const g=gen;plan();gen=g;const m=new Map(route.map(e=>[e.b.id,e])),keep=old.filter(id=>m.has(id)).map(id=>m.get(id)),add=route.filter(e=>!old.includes(e.b.id));
-    const lastMust=keep.map(e=>e.must).lastIndexOf(true);route=[...keep.slice(0,lastMust+1),...add.filter(e=>e.must),...keep.slice(lastMust+1),...add.filter(e=>!e.must)];route=ocTail(act(route),route);if(zone)ZR[zone]=route} // 還沒開始：別人已清的站移到最後（站號連續）
+    const lastMust=keep.map(e=>e.must||e.pull).lastIndexOf(true),r=insNear(keep,add.filter(e=>e.must),lastMust+1);route=insNear(r,add.filter(e=>!e.must),r.length);route=ocTail(act(route),route);if(zone)ZR[zone]=route} // 還沒開始：別人已清的站移到最後（站號連續）
   updAt=Date.now();draw()}
 onAppSync(()=>syncStatus());
 // 清運途中每分鐘依預估重算一次（導航中、回報倒數中、全部桶頁開著時不打斷）
@@ -409,4 +424,4 @@ window.NAVH={osrm:'https://routing.openstreetmap.de/routed-car/route/v1/driving/
 // 導航中（還沒抵達）「略過此站」：在 nav.js 的點擊處理之前攔下
 card.addEventListener('click',e=>{if(window.NAV&&e.target.closest('#navSkip')){e.stopImmediatePropagation();skipStop(NAV.bin.id,true)}},true);
 {const s=document.createElement('style');s.textContent='.navw{display:block!important;width:100%}.ncw{display:flex;flex-wrap:wrap;align-items:baseline;min-width:0;flex:1}.ncw .nn{flex-basis:100%;font:400 13px/1.4 var(--font,system-ui);color:#7d8b8b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#card .narr .amts{margin-top:8px}#card .narr .tlink{margin:0}';document.head.appendChild(s)}
-</script><script src="nav.js?v=20261023q"></script></body></html>
+</script><script src="nav.js?v=20261023r"></script></body></html>
