@@ -10,3 +10,6 @@ qa/
 .impeccable/mocks/
 
 /public/
+
+# Private Markdown reading exports; rebuild with npm run prepare-notes.
+/notes/
