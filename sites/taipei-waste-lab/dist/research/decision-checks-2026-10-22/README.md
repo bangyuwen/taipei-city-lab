@@ -91,3 +91,5 @@ open the hundred-day plan.
 
 Rebuild with root `npm run build`, or run this folder's `build.py` from a
 standalone site. Run the decision-plan and affected site tests/checks.
+
+Q05 (2026-10-23) adds worker phone-use, bin-route and staffing evidence before real app use. Its role hypothesis and research delivery are in `../crew-persona-2026-10-23/`; this builder renders them while retaining the existing day-0 inauguration timeline. No interviews or field outcomes are claimed.
