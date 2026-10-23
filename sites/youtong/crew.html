@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261023b"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261023b"><title>清潔隊｜今日清運｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261023b"><link rel="stylesheet" href="tokens.css?v=20261023b"><link rel="stylesheet" href="ui.css?v=20261023b">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261023f"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261023f"><title>清潔隊｜今日清運｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261023f"><link rel="stylesheet" href="tokens.css?v=20261023f"><link rel="stylesheet" href="ui.css?v=20261023f">
 <style>
 /* ===== 有桶・清潔隊（測試版：清單為主）=====
    手機：地圖在上、清單在底部抽屜（同行人頁收合箭頭，預設半開）；桌機：清單在左側欄 */
@@ -28,6 +28,7 @@ html,body{height:100%;overflow:hidden;background:var(--map-bg)}
 .undo{position:fixed;left:50%;transform:translateX(-50%);z-index:3000;display:flex;align-items:center;gap:6px;padding:4px 4px 4px 16px;border-radius:999px;background:var(--ink);color:var(--surface);font:14px var(--font);box-shadow:var(--shadow-2);white-space:nowrap}
 .undo button{min-height:var(--touch);padding:0 16px;border:0;border-radius:999px;background:var(--scrim);color:var(--surface);font:700 15px var(--font);cursor:pointer}
 .bm{display:flex;align-items:center;justify-content:center;border-radius:50%;box-shadow:0 0 0 2px #fff,0 1px 4px #0004;font:700 10px/1 var(--font);color:#fff}.bm.other{opacity:.45}.bmw{background:none;border:0}
+.stopw{background:none;border:0}.stop{display:flex;align-items:center;justify-content:center;border-radius:50%;color:var(--surface);font:700 12px/1 var(--font);box-shadow:0 0 0 2px var(--surface)}.stop.cur{font-size:15px;box-shadow:0 0 0 3px var(--surface),0 0 0 9px var(--scrim)}.stop.ok{font-size:10px;background:var(--gray-2)!important;color:var(--mute)}
 .small{font-size:12px;color:var(--mute);line-height:1.5}
 .navw{display:block!important;width:100%}.ncw{display:flex;flex-wrap:wrap;align-items:baseline;min-width:0;flex:1}.ncw .nn{flex-basis:100%;font:400 13px/1.4 var(--font,system-ui);color:#7d8b8b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media (min-width:761px){#card{top:calc(66px + env(safe-area-inset-top));left:12px;right:auto;bottom:12px;width:400px;height:auto;border-radius:var(--r)}#card .tog{display:none}#card.collapsed #cardBody>*{display:revert}#map{left:424px}}
@@ -52,7 +53,7 @@ html,body{height:100%;overflow:hidden;background:var(--map-bg)}
   <li><b>進度</b>：選的路線和略過的站只存在這台手機，台北時間每天換新；回報寫入既有的回報事件（Firebase 同步），路線和「清單」分頁共用，任一邊回報都算完成。離線時先存在本機，恢復連線後上傳。</li>
   <li><b>導航</b>：App 內行車導航（OSRM）；抵達後跳出回報，回報後自動前往下一站，可「復原」。Google 地圖只當備用連結。</li></ul>
 </div></div>
-<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261023b"></script><script src="common.js?v=20261023b"></script><script src="cloud.js?v=20261023b"></script><script src="ui.js?v=20261023b"></script><script src="bin-icons.js?v=20261023b"></script><script src="forecast.js?v=20261023b"></script><script src="crew-zones.js?v=20261023b"></script>
+<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261023f"></script><script src="common.js?v=20261023f"></script><script src="cloud.js?v=20261023f"></script><script src="ui.js?v=20261023f"></script><script src="bin-icons.js?v=20261023f"></script><script src="forecast.js?v=20261023f"></script><script src="crew-zones.js?v=20261023f"></script>
 <script>
 roleSwitch('crew.html');
 // ===== 清潔隊（beta）：主畫面＝分區路線導航；「清單」為次要分頁，兩邊共用同一份回報狀態 =====
@@ -71,7 +72,7 @@ const optColor=o=>o.pct>=100?rampColor(100):o.pct>=70?rampColor(70):rampColor(0)
 const optsHTML=()=>`<div class="opts">${OPTS.map(o=>`<button class="opt" data-opt="${o.k}"><i style="background:${optColor(o)}"></i>${o.t}</button>`).join('')}</div>`;
 const A=CONFIG.demoArea,CENTER=A.center,ZN={A:'南・公館',B:'東・大安',C:'西北・古亭'},ORDER_LBL='建議順序（依人流推估，可略過）';
 const map=quietMap(CENTER,A.zoom||15),binL=L.layerGroup().addTo(map),rtL=L.layerGroup().addTo(map);
-let P=[],ZONE={},RANK={},gps=null,gpsAcc=999,me=null,tab='route',view='list',cur=null,zone=null;
+let P=[],ZONE={},RANK={},FILL={},gps=null,gpsAcc=999,me=null,tab='route',view='list',cur=null,zone=null;
 try{const z=localStorage.getItem(LS_ZONE);if(/^[ABC]$/.test(z))zone=z}catch(e){}
 // 台北日期（YYYY-MM-DD）
 const TPE=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit'});
@@ -122,9 +123,9 @@ function render(){if(window.NAV)return;draw();
     <ul id="rows">${R.map(li).join('')}</ul>`}
 function draw(){binL.clearLayers();rtL.clearLayers();
   if(tab==='route'&&zone){const R=stops(),i=nextIdx(R);
-    if(R.length)L.polyline(R.map(s=>[s.b.la,s.b.lo]),{color:'#5b6670',weight:3,opacity:.35,dashArray:'4 6',interactive:false}).addTo(rtL);
-    R.forEach((s,j)=>{const done=!pending(s),c=s.me?optColor(optOf(s.me)||OPT.half):done?'#c4c9cc':'#5b6670',sz=j===i?30:done?18:22;
-      L.marker([s.b.la,s.b.lo],{title:`${j+1} ${s.b.addr}`,zIndexOffset:j===i?3000:done?-1000:1000-j,icon:L.divIcon({className:'bmw',iconSize:[sz,sz],html:`<div class="bm${s.other||s.skip?' other':''}${j===i?' cur':''}" style="width:${sz}px;height:${sz}px;background:${c}">${s.me?'✓':j+1}</div>`})}).on('click',()=>openReport(s.b.id)).addTo(binL)});
+    if(R.length)L.polyline(R.map(s=>[s.b.la,s.b.lo]),{color:getComputedStyle(document.documentElement).getPropertyValue('--ink-2').trim()||'#3f4549',weight:3,opacity:.55,lineJoin:'round',interactive:false}).addTo(rtL);
+    R.forEach((s,j)=>{const done=!pending(s),f=FILL[s.b.id]||0,c=s.me?optColor(optOf(s.me)||OPT.half):rampColor(f,f>100),sz=j===i?30:done?18:22;
+      L.marker([s.b.la,s.b.lo],{title:`${j+1} ${s.b.addr}`,zIndexOffset:j===i?3000:done?-1000:1000-j,icon:L.divIcon({className:'stopw',iconSize:[sz,sz],html:`<div class="stop${done&&!s.me?' ok':''}${j===i?' cur':''}" style="width:${sz}px;height:${sz}px;background:${c};color:${s.me||f>=100?'#fff':'#2b2b2b'}">${s.me?'✓':j+1}</div>`})}).on('click',()=>openReport(s.b.id)).addTo(binL)});
     for(const b of P)if(ZONE[b.id]!==zone)L.circleMarker([b.la,b.lo],{radius:4,color:'#fff',weight:1,fillColor:'#9aa0a4',fillOpacity:.6,interactive:false}).addTo(binL);return}
   for(const r of rows()){const o=optOf(r.me||r.other),c=o?optColor(o):'#9aa0a4',s=r.b.id===cur?26:18;
     L.marker([r.b.la,r.b.lo],{title:`${r.b.id} ${r.b.addr}`,zIndexOffset:r.other?-1000:0,icon:L.divIcon({className:'bmw',iconSize:[s,s],html:`<div class="bm${r.other?' other':''}" style="width:${s}px;height:${s}px;background:${c}">${r.me?'✓':''}</div>`})}).on('click',()=>openReport(r.b.id)).addTo(binL)}}
@@ -167,7 +168,7 @@ function tpeNow(){const p=Object.fromEntries(new Intl.DateTimeFormat('en-US',{ti
 Promise.all([loadJSON('bins.geojson'),loadJSON('footfall_hourly.json').catch(()=>null)]).then(([g,h])=>{const[[a1,b1],[c1,d1]]=A.bounds;
   P=g.features.filter(f=>f.properties.source.startsWith('main')).map(f=>({id:f.properties.id,la:ll(f)[0],lo:ll(f)[1],addr:f.properties.address})).filter(x=>x.la>=a1&&x.la<=c1&&x.lo>=b1&&x.lo<=d1);
   ZONE=crewZones(P);
-  try{const n=tpeNow(),E=FC.evaluate(FC.prepare(P,h),n.k,n.t,FC.state());E.forEach((e,i)=>RANK[e.b.id]=i)}catch(e){console.warn('[有桶] 人流推估失敗，改用桶號排序',e&&e.message);P.forEach((b,i)=>RANK[b.id]=i)}
+  try{const n=tpeNow(),E=FC.evaluate(FC.prepare(P,h),n.k,n.t,FC.state());E.forEach((e,i)=>{RANK[e.b.id]=i;FILL[e.b.id]=e.fill})}catch(e){console.warn('[有桶] 人流推估失敗，改用桶號排序',e&&e.message);P.forEach((b,i)=>RANK[b.id]=i)}
   if(!zone)view='pick';render();requestAnimationFrame(fitZone)}).catch(e=>toast('資料載入失敗：'+e.message));
 // ===== App 內行車導航（沿用 nav.js）：路線模式＝抵達跳出回報 → 回報後自動前往下一站；最後一站後顯示今日路線完成 =====
 const crewGm=(la,lo)=>`https://www.google.com/maps/dir/?api=1&destination=${la},${lo}&travelmode=driving`;
@@ -201,4 +202,4 @@ window.NAVH={osrm:'https://routing.openstreetmap.de/routed-car/route/v1/driving/
     const w=writeReport(id,a.dataset.opt);routeNext();showUndo(`已記錄・${w.o.t}`,()=>{w.undo();reopenArr(b)});return true}};
 // 導航中「略過此站」（還沒抵達）
 card.addEventListener('click',e=>{if(window.NAV&&NAV.route&&e.target.closest('#navSkip')){e.stopImmediatePropagation();const id=NAV.bin.id;skipMark(id,true);routeNext();showUndo('已略過此站',()=>{skipMark(id,false);const b=P.find(x=>x.id===id);softEnd();setCol(true);navStart(b,{route:true})})}},true);
-</script><script src="nav.js?v=20261023b"></script></body></html>
+</script><script src="nav.js?v=20261023f"></script></body></html>
