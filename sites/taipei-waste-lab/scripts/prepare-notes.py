@@ -271,6 +271,9 @@ def main():
     if args.check:
         stale = [name for name, text in files.items()
                  if not (OUTPUT / name).is_file() or (OUTPUT / name).read_text() != text]
+        stale += [str(path.relative_to(OUTPUT)) + ' (not in inventory)'
+                  for path in sorted(OUTPUT.rglob('*.md'))
+                  if path.relative_to(OUTPUT).as_posix() not in files]
         if stale:
             parser.exit(1, 'Notes need regeneration: ' + ', '.join(stale) + '\n')
     else:

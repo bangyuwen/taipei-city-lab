@@ -90,8 +90,8 @@ This command requires the full repository, including `topics/bins/` and
 Keep editing the owners listed in each note. Existing research Markdown stays
 canonical; authored HTML, JSON and their renderers retain their current ownership.
 After rebuilding affected website content, rerun `npm run prepare-notes`.
-`npm run check-notes` detects missing or stale exports relative to those local
-HTML files; it does not verify that upstream research has already been rebuilt.
+`npm run check-notes` detects missing, stale or no-longer-inventoried Markdown
+exports relative to those local HTML files; it does not verify that upstream research has already been rebuilt.
 The export never edits website content or research inputs. Do not edit `notes/`:
 it is reproducible, Git-ignored and excluded from public publication. Maps, 3D
 views and browser-local simulation state remain interactive website content.

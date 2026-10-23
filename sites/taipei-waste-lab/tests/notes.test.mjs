@@ -118,6 +118,16 @@ with tempfile.TemporaryDirectory() as directory:
     m['main']()
     sys.argv = ['prepare-notes.py', '--check']
     m['main']()
+    retired = root / 'notes/retired.md'
+    retired.write_text('Former reading export')
+    try:
+        m['main']()
+    except SystemExit as error:
+        assert error.code == 1
+    else:
+        raise AssertionError('A retired export passed freshness validation')
+    retired.unlink()
+    m['main']()
     html.write_text(html.read_text().replace('Unknown', 'Still unknown'))
     try:
         m['main']()
