@@ -116,6 +116,7 @@ function initReaders(){
     for(const item of items){const option=document.createElement('option');option.value=item.id;option.textContent=item.dataset.readerItem;select.append(option);}
     select.addEventListener('change',()=>{location.hash=select.value;});
     reader.querySelector('[data-reader-controls]').hidden=false;
+    const paging=reader.querySelector('[data-reader-paging]');if(paging)paging.hidden=false;
     for(const index of reader.querySelectorAll('.reader-index'))index.hidden=true;
   }
 }
@@ -127,6 +128,9 @@ function syncReader(page,target){
   items.forEach((item,i)=>{item.hidden=i!==index;});
   reader.querySelector('select').value=items[index].id;
   reader.querySelector('.reader-position').textContent=`第 ${index+1} 項，共 ${items.length} 項`;
+  for(const link of reader.querySelectorAll('[data-reader-link]')){
+    if(link.hash==='#'+items[index].id)link.setAttribute('aria-current','true');else link.removeAttribute('aria-current');
+  }
   for(const [attribute,offset] of [['prev',-1],['next',1]]){
     const link=reader.querySelector(`[data-reader-${attribute}]`);const next=items[index+offset];
     link.hidden=!next;
@@ -158,7 +162,7 @@ function panel(){
       const mainTarget=target?.id==='main'?target:null;
       const heading=mainTarget||anchor||document.querySelector(`#panel-${currentPage} h2`);
       for(let parent=heading;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;
-      heading?.setAttribute('tabindex','-1');
+      if(heading&&!heading.matches('summary'))heading.setAttribute('tabindex','-1');
       if(previousPage||anchor||mainTarget)heading?.focus({preventScroll:true});
       if(mainTarget||anchor){
         const scrollTarget=anchor?.matches('[data-reader-item]')&&anchor.closest('[data-reader]').dataset.readerMode!=='document'?anchor.closest('[data-reader]').querySelector('[data-reader-controls]'):heading;
