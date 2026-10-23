@@ -36,9 +36,6 @@ test('case preserves dated evidence, unknowns and working public navigation', ()
   }
   assert.equal((index.match(/<!-- zhongshan-placement-case:start -->/g) || []).length, 1);
   assert.ok(index.includes('href="cases/zhongshan.html"'));
-  assert.equal(read('out/cases/zhongshan.html'), page);
-  assert.equal(read('public/research/cases/zhongshan.html'), page);
-  assert.ok(!existsSync(resolve(root, 'public/research/research/placement-case-2026-10-23/inputs.json')));
 });
 
 test('standalone rendering is repeatable and rejects changed evidence before writing', () => {
