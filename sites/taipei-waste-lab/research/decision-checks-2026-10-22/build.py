@@ -76,14 +76,15 @@ def render(plan):
         outcomes = ''.join(f'<li><strong>{label}：</strong>{e(c[key])}</li>' for label, key in [
             ('若確認成立', 'yes'), ('若不成立或有反例', 'no'), ('若仍未知', 'unknown')])
         cases.append(f'<section class="project-section" id="plan-check-{e(c["id"])}" data-decision-check="{e(c["id"])}"><h4>{e(c["title"])}</h4><dl class="project-contract">{rows}</dl><details class="persona-detail"><summary>查完能決定什麼</summary><ul>{outcomes}</ul></details><p><a href="{e(c["source"], quote=True)}">{e(c["source_label"])}</a></p></section>')
+    crew_plan = (HERE.parent / 'crew-persona-2026-10-23/plan.html').read_text()
     return '''<section class="project-section" aria-labelledby="plan-checks-heading" id="field-priority"><span id="methods" class="page-route" aria-hidden="true"></span><span id="methods-heading" tabindex="-1"></span>
 <h3 id="plan-checks-heading">配置決定需要時，才補這些查核</h3>
 <p>本期先從現有桶位與清運前回報建立基線。以下保留既有服務與需求查核題目，僅在配置判斷缺少相關證據時啟用，不替代日常回報或自動排成現勘。</p>
-<p><strong>取消每區一點與固定三輪配額。</strong>下列是待釐清的決策疑點，不是必去場址清單，也不是需求排名。前3項先做資料或管理條件核對；第4項只有出現具體方案取捨才啟動。尚未聯繫機關、排定走查或取得現場結果。</p>
+<p><strong>取消每區一點與固定三輪配額。</strong>下列是待釐清的決策疑點，不是必去場址清單，也不是需求排名。前3項先做資料或管理條件核對；第4項只有出現具體方案取捨才啟動；第5項在實際試用前補查清潔人員手機、路線與人力，確認App的使用對象。尚未聯繫機關、排定走查或取得現場結果。</p>
 <nav class="reading-path" aria-label="百日計畫查核疑點">'''+''.join(f'<a href="#plan-check-{e(c["id"])}">{e(c["title"].split('：')[0])}</a>' for c in plan['checks'])+'''</nav>
 <details class="persona-detail"><summary>什麼情況不查？</summary><ul><li>位置圖、既有明細或管理規則已足以支持該決定，就記下來源後結案。</li><li>答案不會改變任何選項，就移出本輪；不為補齊行政區或湊點數安排觀察。</li><li>沒有要比較的方案、查核無法分辨方案，或對照用途未定，就暫緩。其餘原候選點保留為資料索引，取消自動排程。</li><li>選點只對距離門檻敏感，尚未影響實際比較範圍時，先做桌面敏感度分析，不因此直接出勤。</li></ul></details>
 '''+''.join(cases)+'''<p>查核紀錄至少寫明：待選方案、來源、未知、觸發理由、實際結果、因此採取或暫緩的決定。沒有改變決定的資訊不列為必做成果。<a href="#reader-field-forms">必要時使用空白紀錄表</a>。</p></section>
-'''+render_schedule()+'''
+'''+render_schedule()+crew_plan+'''
 '''
 
 
@@ -93,6 +94,27 @@ def build(page_path=None):
     page = path.read_text()
     assert page.count(START) == page.count(END) == 1
     page = re.sub(re.escape(START)+r'.*?'+re.escape(END), lambda _: START+render(plan)+END, page, flags=re.S)
+    # Worker evidence is a separate role hypothesis, not a fifth comment journey.
+    crew = (HERE.parent / 'crew-persona-2026-10-23/persona.html').read_text()
+    crew_start, crew_end = '<!-- crew-persona-start -->', '<!-- crew-persona-end -->'
+    block = crew_start + crew + crew_end
+    if crew_start in page:
+        assert page.count(crew_start) == page.count(crew_end) == 1
+        page = re.sub(re.escape(crew_start)+r'.*?'+re.escape(crew_end), lambda _: block, page, flags=re.S)
+    else:
+        anchor = '<section class="research-overview-section" aria-labelledby="persona-related">'
+        assert page.count(anchor) == 1
+        page = page.replace(anchor, block + anchor, 1)
+    page = page.replace('四種人物處境，各用一段旅程說清楚：發生了什麼、原文說了什麼、還要查什麼。',
+                        '四則投放經驗，加上待訪談的清潔人員工作角色；各自說明依據、未知與下一步。')
+    page = page.replace('四則選例呈現不同投放處境，包含一次完成投放的對照。',
+                        '四則選例呈現投放處境；清潔人員另有官方職掌資料，尚無第一線經驗。')
+    page = page.replace('<a href="#persona-walking">步行途中</a></nav>',
+                        '<a href="#persona-walking">步行途中</a><a href="#persona-crew">清潔人員（待驗證）</a></nav>')
+    page = page.replace('以下是情境型 Persona，同一人可以處於不同情境，順序不代表需求量。',
+                        '前四段是回饋形成的情境型 Persona，同一人可以處於不同情境，順序不代表需求量；清潔人員另列為待驗證工作角色。')
+    page = page.replace('目前不指定新桶位、不估算增設數量，也不把家戶收運或清潔人力配置併入本輪。',
+                        '目前不指定新桶位、不估算增設數量，也不調整家戶收運。2026-10-23補入清潔人員手機、巡收路線與人力配置資料查核，銜接百日計畫Q05；尚未提出實際調派或增補人力方案。')
     path.write_text(page)
     return plan
 
