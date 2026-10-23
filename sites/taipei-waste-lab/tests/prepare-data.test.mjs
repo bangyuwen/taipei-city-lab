@@ -29,6 +29,8 @@ for (const monorepo of [true, false]) {
     for(const name of ['siting-overlay.json','siting-overlay.provenance.json','field-priorities.json'])await cp(new URL('data/'+name,site),join(output,'data',name));
     await mkdir(join(output, 'dist'), {recursive: true});
     await cp(new URL('dist/', site), join(output, 'dist'), {recursive: true, filter: source => !/[\\/]dist[\\/](data|research)([\\/]|$)/.test(source)});
+    // The case must be generated before the offline archive is packaged.
+    await rm(join(output, 'dist/cases/zhongshan.html'));
     const bundle = monorepo ? join(fixture, 'topics/bins/research') : join(output, 'research');
     await cp(new URL('research/', site), bundle, {recursive: true});
     const inputs = monorepo ? join(fixture, 'topics/bins') : join(output, 'data');

@@ -277,7 +277,8 @@ def main():
     paths += [p for p in (DIST / 'data').glob('*') if p.is_file()]
     paths += [p for p in (DIST / 'research').glob('*.md') if p.is_file()]
     paths += [ROOT / 'data/research' / name for name in DOCS]
-    paths += [DIST / 'index.html', ROOT / 'scripts/package-research.py',
+    paths += [DIST / 'index.html', DIST / 'cases/zhongshan.html', DIST / 'mark.svg',
+              ROOT / 'scripts/package-research.py',
               ROOT / 'scripts/prepare-research-execution.py',
               ROOT / 'scripts/compare-snapshots.py', ROOT / 'scripts/analyze-coordinate-distances.py',
               ROOT / 'scripts/estimate-budget.py', ROOT / 'scripts/analyze-feedback.py',

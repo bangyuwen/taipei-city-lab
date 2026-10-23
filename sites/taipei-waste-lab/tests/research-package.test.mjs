@@ -14,6 +14,16 @@ with tempfile.TemporaryDirectory() as directory:
  with zipfile.ZipFile(archive) as bundle:
   assert not any('retired' in name for name in bundle.namelist())
   bundle.extractall(root)
+ case=root/'dist/cases/zhongshan.html'
+ assert case.read_bytes()==(site/'dist/cases/zhongshan.html').read_bytes()
+ assert '{{' not in case.read_text()
+ assert 'href="cases/zhongshan.html"' in (root/'dist/index.html').read_text()
+ for href in re.findall(r'href="([^"\s]+)"',case.read_text()):
+  if href.startswith('https://'): continue
+  file, _, fragment=href.partition('#')
+  target=case.parent/file if file else case
+  assert target.is_file(),f'Offline case link: {href}'
+  if fragment: assert f'id="{fragment}"' in target.read_text(),href
  for directory in ('research','dist/research'):
   for note in (root/directory).rglob('*.md'):
    for href in re.findall(r'\]\(([^()\s]+)\)',note.read_text()):
