@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 import {pageFromHash,workspaceForPage} from '../dist/data-utils.js';
 
 test('persona and core-problem deep links retain research ownership without capturing historical problem maps',()=>{
-  for(const anchor of ['personas','personas-heading','persona-meal','persona-dog','persona-basket','persona-walking','persona-journey','journey-reading-note']){
+  for(const anchor of ['personas','personas-heading','persona-meal','persona-dog','persona-basket','persona-walking','persona-crew','persona-journey','journey-reading-note']){
     assert.equal(pageFromHash('#'+anchor),'personas',anchor);
   }
   for(const anchor of ['problem','problem-heading','problem-known','problem-contrast','problem-unknown','problem-boundary']){
