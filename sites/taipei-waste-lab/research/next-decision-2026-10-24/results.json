@@ -1,0 +1,130 @@
+{
+  "prepared_on": "2026-10-24",
+  "status": "desk_assessment_complete_field_links_unverified",
+  "source_personas": 4,
+  "verified_event_links": 0,
+  "source_disposal_completed_accounts": 1,
+  "other_source_final_outcomes_unknown": 3,
+  "proposed_desk_cases": 3,
+  "observed_events": [],
+  "scheduled_visits": [],
+  "scenarios": [
+    {
+      "id": "meal",
+      "evidence_id": "E01",
+      "label": "用餐後持有垃圾",
+      "known": "用餐後持續拿著垃圾、未找到投放處；原文未交代最後處理。",
+      "candidate_id": "D11-2",
+      "comparison": "以劍潭基河路口至士林夜市用餐區作研究者提出的餐後情境範圍。市場處提供夜市範圍與17:00至00:00營業資料，可用來限定時段；這不是E01的已知行程，也不是已約定的觀察時段。",
+      "decision": "先比較沿路既有服務與指引；清冊有近處紀錄，不能直接採用『未找到＝沒有桶』作增設理由。",
+      "residual": "實際道路側、步行銜接、收受物、夜間可用與最後投放結果仍須查核。",
+      "source_ids": [
+        "market"
+      ],
+      "plan_refs": [
+        "Q04"
+      ],
+      "source_last_stage": null,
+      "event_time": null,
+      "verified_candidate_id": null,
+      "link_status": "unverified",
+      "desk_lead": {
+        "candidate_id": "D11-2",
+        "name": "劍潭基河路口",
+        "address": "劍潭路基河路口(捷運站橋下空間)",
+        "street_name": "中山北路劍潭1號出口北側",
+        "venue_name": "劍潭捷運站",
+        "street_nearest_m": 41.81,
+        "venue_nearest_m": 74.5,
+        "venue_relation": "不同場域",
+        "physical_identity": null,
+        "walkable_distance_m": null,
+        "usable_now": null
+      }
+    },
+    {
+      "id": "dog",
+      "evidence_id": "E02",
+      "label": "遛狗並撿拾狗便",
+      "known": "已撿拾、攜帶並自述氣味與不便；缺少發生位置、路線及最後結果。",
+      "candidate_id": null,
+      "comparison": "已補上官方狗便袋設施來源。官方頁說明免費袋供取用；附掛在清潔箱、公園或其他管理場域的領袋設施，須與實際收受狗便的投放設施分開辨識。",
+      "decision": "先辨識投放物與可收受設施；E02沒有路線依據，暫不指派到某個高活動站或公園。",
+      "residual": "未取得逐點接收規則、可走路線與可用時段；領袋紀錄不能補成已確認的投放點。",
+      "source_ids": [
+        "dog_bags"
+      ],
+      "plan_refs": [
+        "Q04"
+      ],
+      "source_last_stage": null,
+      "event_time": null,
+      "verified_candidate_id": null,
+      "link_status": "unverified",
+      "desk_lead": null
+    },
+    {
+      "id": "basket",
+      "evidence_id": "E06",
+      "label": "主動清理車籃垃圾",
+      "known": "自述主動選車、繞往捷運站外並完成投放；繞行負擔未量得。",
+      "candidate_id": "D03-1",
+      "comparison": "以公館站2號出口的YouBike、街道紀錄與捷運場所線索作研究者提出的服務比較案例。街道與場所來源分列，兩者是否同一設施未知；不將E06定位到公館。",
+      "decision": "保留完成投放的正例，先比較沿線指引與服務銜接；只有證實繞行造成負擔，才把減少繞行列為改善目標。",
+      "residual": "缺少原行程、實際繞行距離／時間、接手方式與本人負擔；借還次數不能填成清理次數。",
+      "source_ids": [],
+      "plan_refs": [
+        "Q04"
+      ],
+      "source_last_stage": "自述到該處丟垃圾。",
+      "event_time": null,
+      "verified_candidate_id": null,
+      "link_status": "unverified",
+      "desk_lead": {
+        "candidate_id": "D03-1",
+        "name": "捷運公館站(2號出口)",
+        "address": "捷運公館站(2號出口)外側",
+        "street_name": "羅斯福路4段68號",
+        "venue_name": "公館捷運站",
+        "street_nearest_m": 40.89,
+        "venue_nearest_m": 12.4,
+        "venue_relation": "同站名",
+        "physical_identity": null,
+        "walkable_distance_m": null,
+        "usable_now": null
+      }
+    },
+    {
+      "id": "walking",
+      "evidence_id": "E15",
+      "label": "步行途中持有垃圾",
+      "known": "自述拿著垃圾經過三個站牌仍未找到去處；不據此推定要搭車或趕時間。",
+      "candidate_id": "D04-3",
+      "comparison": "沿用Q03的林森長春路口作條件比較：最近場所線索是欣欣百貨，屬不同場域；距離較近不能取代開放、身分與收受物條件。這不是E15的原路線。",
+      "decision": "把百貨服務列為有條件選項；確認能進入且可收受後才納入比較，不能用場所處數補成路口的公共供給。",
+      "residual": "仍缺指定路線、營業外時段、進入與接收條件；三個站牌不能換算公尺。",
+      "source_ids": [],
+      "plan_refs": [
+        "Q03",
+        "Q04"
+      ],
+      "source_last_stage": null,
+      "event_time": null,
+      "verified_candidate_id": null,
+      "link_status": "unverified",
+      "desk_lead": {
+        "candidate_id": "D04-3",
+        "name": "林森長春路口",
+        "address": "長春路29號前",
+        "street_name": "南京東路2段38號(對面公車專用道上)",
+        "venue_name": "欣欣百貨",
+        "street_nearest_m": 532.99,
+        "venue_nearest_m": 186.39,
+        "venue_relation": "不同場域",
+        "physical_identity": null,
+        "walkable_distance_m": null,
+        "usable_now": null
+      }
+    }
+  ]
+}

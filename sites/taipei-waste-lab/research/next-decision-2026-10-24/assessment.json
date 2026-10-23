@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-24",
+  "status": "desk_assessment_complete_field_links_unverified",
+  "recommendation": "先比較既有服務的可用性與指引；配置變更須另有兩側基線與管理承接。",
+  "scheduled_visits": [],
+  "observed_events": [],
+  "scenarios": [
+    {
+      "id": "meal",
+      "evidence_id": "E01",
+      "label": "用餐後持有垃圾",
+      "known": "用餐後持續拿著垃圾、未找到投放處；原文未交代最後處理。",
+      "candidate_id": "D11-2",
+      "comparison": "以劍潭基河路口至士林夜市用餐區作研究者提出的餐後情境範圍。市場處提供夜市範圍與17:00至00:00營業資料，可用來限定時段；這不是E01的已知行程，也不是已約定的觀察時段。",
+      "decision": "先比較沿路既有服務與指引；清冊有近處紀錄，不能直接採用『未找到＝沒有桶』作增設理由。",
+      "residual": "實際道路側、步行銜接、收受物、夜間可用與最後投放結果仍須查核。",
+      "source_ids": [
+        "market"
+      ],
+      "plan_refs": [
+        "Q04"
+      ]
+    },
+    {
+      "id": "dog",
+      "evidence_id": "E02",
+      "label": "遛狗並撿拾狗便",
+      "known": "已撿拾、攜帶並自述氣味與不便；缺少發生位置、路線及最後結果。",
+      "candidate_id": null,
+      "comparison": "已補上官方狗便袋設施來源。官方頁說明免費袋供取用；附掛在清潔箱、公園或其他管理場域的領袋設施，須與實際收受狗便的投放設施分開辨識。",
+      "decision": "先辨識投放物與可收受設施；E02沒有路線依據，暫不指派到某個高活動站或公園。",
+      "residual": "未取得逐點接收規則、可走路線與可用時段；領袋紀錄不能補成已確認的投放點。",
+      "source_ids": [
+        "dog_bags"
+      ],
+      "plan_refs": [
+        "Q04"
+      ]
+    },
+    {
+      "id": "basket",
+      "evidence_id": "E06",
+      "label": "主動清理車籃垃圾",
+      "known": "自述主動選車、繞往捷運站外並完成投放；繞行負擔未量得。",
+      "candidate_id": "D03-1",
+      "comparison": "以公館站2號出口的YouBike、街道紀錄與捷運場所線索作研究者提出的服務比較案例。街道與場所來源分列，兩者是否同一設施未知；不將E06定位到公館。",
+      "decision": "保留完成投放的正例，先比較沿線指引與服務銜接；只有證實繞行造成負擔，才把減少繞行列為改善目標。",
+      "residual": "缺少原行程、實際繞行距離／時間、接手方式與本人負擔；借還次數不能填成清理次數。",
+      "source_ids": [],
+      "plan_refs": [
+        "Q04"
+      ]
+    },
+    {
+      "id": "walking",
+      "evidence_id": "E15",
+      "label": "步行途中持有垃圾",
+      "known": "自述拿著垃圾經過三個站牌仍未找到去處；不據此推定要搭車或趕時間。",
+      "candidate_id": "D04-3",
+      "comparison": "沿用Q03的林森長春路口作條件比較：最近場所線索是欣欣百貨，屬不同場域；距離較近不能取代開放、身分與收受物條件。這不是E15的原路線。",
+      "decision": "把百貨服務列為有條件選項；確認能進入且可收受後才納入比較，不能用場所處數補成路口的公共供給。",
+      "residual": "仍缺指定路線、營業外時段、進入與接收條件；三個站牌不能換算公尺。",
+      "source_ids": [],
+      "plan_refs": [
+        "Q03",
+        "Q04"
+      ]
+    }
+  ],
+  "decision_rules": [
+    {
+      "condition": "有可用設施，但未發現或不知可用",
+      "action": "比較現況與原位指引；記錄同一範圍的尋找過程及投放結果，不先移桶。"
+    },
+    {
+      "condition": "設施存在，但時段、身分或接收物不符合",
+      "action": "先排除該情境不可用的選項，核對替代服務或使用條件協調；不把名錄列數當可用供給。"
+    },
+    {
+      "condition": "滿溢、損壞或清運間隔造成受阻",
+      "action": "優先比較清運、維修與回報交接；用清運前紀錄核對，不把一次滿溢直接轉成新設需求。"
+    },
+    {
+      "condition": "指定路線仍無可達、可收受且可用的服務",
+      "action": "才進入配置方案比較；先補移入區需求、原區服務損失、可比基線、權責、清運與回退條件，證據不足就保留現況。"
+    }
+  ],
+  "join_fields": [
+    "event_id",
+    "visit_id",
+    "scope_version",
+    "evidence_kind",
+    "source_ref",
+    "event_time",
+    "event_location",
+    "waste_origin",
+    "waste_type",
+    "route",
+    "service_point_record_ids",
+    "observable_barrier",
+    "burden_quote",
+    "attempt_in_window",
+    "outcome",
+    "outcome_basis",
+    "dedup_status",
+    "canonical_event_id",
+    "reviewer_code",
+    "missing_reason"
+  ],
+  "join_rule": "新事件以event_id連visit_id及scope_version，再由設施列ID回查實體設施。情境由直接觀察或本人明說的來源與物品人工覆核，可複選；缺少依據保留未知。E01等舊留言只作問題依據，不填入新的event_id、訪次或分母。"
+}
