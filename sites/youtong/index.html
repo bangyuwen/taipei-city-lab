@@ -74,7 +74,7 @@ section.plan{margin:0 0 14px;border:0;border-radius:0;padding:0 0 12px;backgroun
   <h4 class="psub">重點</h4><ul class="pkeys"><li>先查核：依查核優先序安排現勘，不直接推薦新增箱位</li><li>不加成本先做：原位改善與同桶數挪位優先</li><li>回報持續校正：民眾與清潔隊回報持續更新缺口與滿度</li></ul>
   <h4 class="psub">和誰一起做</h4>
   <div class="pchips"><span>環保局／清潔隊（桶位與清運）</span><span>交通局／YouBike（站點與借還資料）</span><span>捷運公司（出口與站內設施）</span><span>里辦公處（現勘與在地回報）</span></div>
-  <p class="psrc">來源：<a href="https://github.com/bangyuwen/taipei-city-lab/tree/44738ca/sites/taipei-waste-lab" target="_blank" rel="noopener">台北城市實驗室 taipei-waste-lab（commit 44738ca，研究計畫 2026-10-23 版）</a><br><small>月份為本團隊推估，非官方規劃</small></p>
+  <p class="psrc">來源：<a href="https://taipei-waste-lab.bangyuwen.chatgpt.site/research/#plan" target="_blank" rel="noopener">台北城市實驗室 taipei-waste-lab 研究網站（研究計畫 2026-10-23 版）</a><br><small>月份為本團隊推估，非官方規劃</small></p>
   </div>
   <button type="button" class="pmore" id="planBtn" aria-expanded="false" aria-controls="planMore">展開完整計畫</button>
  </section>
@@ -89,7 +89,7 @@ section.plan{margin:0 0 14px;border:0;border-radius:0;padding:0 0 12px;backgroun
  <p id="assume" style="margin:8px 0 0"><b>推估與假設</b>：每箱約 120 公升、每日巡查清運約 3–6 次（環保局，聯合報 2025-08-17）；滿度預測以「示範區人流中位數桶平日一天滿 3 次」校準，例行清運時間 05:00／08:00／12:00／16:00 為假設（官方未公布時間）；B2 容量／頻率是可調整的模擬。借＋還次數與停靠路線數只是人流代理指標，不等於垃圾量。研究計畫（2026-10-23 版）以現有桶位為初始配置、尚未啟動，未排定任何現勘站次，候選順序不是固定行程或設點安排。</p>
  <p id="auditNote" style="margin:8px 0 0;color:var(--ink)"><b>本頁支援安排查核；人流不是垃圾量，清冊列數不是現場可用桶數，尚不能推薦新增箱位。</b></p>
  <p id="mrtHow" style="margin:8px 0 0">捷運站圖層與三張全市卡片引用台北城市實驗室 taipei-waste-lab（commit 44738ca，MIT；此段數字與 42c14f8 相同）的交叉分析，數字照原文：每日人次＝2026-07（排除 7/10、7/11，29 日）整站進＋出站紀錄 ÷ 29；出口 300 m 內清冊桶位為研究團隊以直線距離計的不同座標數，與本頁步行距離不同。</p>
- <p id="md5How" style="margin:8px 0 0">⚠️ 資料完整性：來源說明捷運七月 OD 下載回應的 HTTP Content-MD5（VtCA+GFASJBW3VN7h+kO1A==）與保存內容不符，尚未釐清；SHA-256 只綁定保存的內容，不代表官方真實性或完整性，計算只描述這份保存內容。2026-10-22 第二次下載得到相同大小與 SHA-256，仍未解決 MD5 不符。（<a href="https://github.com/bangyuwen/taipei-city-lab/blob/44738ca/sites/taipei-waste-lab/docs/cross-analysis.md" target="_blank" rel="noopener">來源</a>）</p></details>
+ <p id="md5How" style="margin:8px 0 0">⚠️ 資料完整性：來源說明捷運七月 OD 下載回應的 HTTP Content-MD5（VtCA+GFASJBW3VN7h+kO1A==）與保存內容不符，尚未釐清；SHA-256 只綁定保存的內容，不代表官方真實性或完整性，計算只描述這份保存內容。2026-10-22 第二次下載得到相同大小與 SHA-256，仍未解決 MD5 不符。（<a href="https://taipei-waste-lab.bangyuwen.chatgpt.site/research/#map" target="_blank" rel="noopener">來源</a>）</p></details>
  <div class="seg" id="thrSeg" role="group" aria-label="距離門檻"><button data-thr="100" class="on">100 m</button><button data-thr="200" class="">200 m</button><button data-thr="300" class="">300 m</button></div>
  <div id="hot"></div><p class="srcn">資料：月借還量＝<a href="https://data.taipei/dataset/detail?id=c5924c17-25db-4f1e-99c4-f8ada40f2445" target="_blank" rel="noopener">YouBike 2.0 租借紀錄</a> 2026-07；最近清潔箱＝<a href="https://data.taipei/dataset/detail?id=a835f3ba-7f50-4b0d-91a6-9df128632d1c" target="_blank" rel="noopener">街道清冊</a> 2026-09-30、<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OSM</a> 步行距離（有桶團隊計算）；民眾回報為本站資料，不計入排序</p>
  </section>
@@ -181,7 +181,7 @@ let _busRen;function busRen(){if(!_busRen){map.createPane('busPane').style.zInde
 const MRT_SVG=s=>`<span class="mrtM" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.62)}px">M</span>`;
 function drawMRT(){if(!LY.mrt||!MRT)return;for(const s of MRT.stations){const z=Math.round(Math.max(14,Math.sqrt(s.daily)/15));
   L.marker(mPos(s),{icon:L.divIcon({className:'mrtmk',iconSize:[z,z],iconAnchor:[z/2,z/2],html:MRT_SVG(z)}),keyboard:false}).bindPopup(`<b>${mName(s.name)}</b><br>每日 ${fmt(s.daily)} 人次（2026-07 進＋出站，29 日平均）<br>出口 300 m 內清冊桶位 ${s.bins300} 處`).addTo(baseL)}}
-function renderMrtCards(){const doc='https://github.com/bangyuwen/taipei-city-lab/blob/44738ca/sites/taipei-waste-lab/docs/cross-analysis.md',fv='https://github.com/bangyuwen/taipei-city-lab/blob/44738ca/sites/taipei-waste-lab/docs/cross-analysis-field-visits.md',src=u=>`<a href="${u}" target="_blank" rel="noopener">來源</a>`;
+function renderMrtCards(){const doc='https://taipei-waste-lab.bangyuwen.chatgpt.site/research/#map',fv='https://taipei-waste-lab.bangyuwen.chatgpt.site/research/#map',src=u=>`<a href="${u}" target="_blank" rel="noopener">來源</a>`;
   mrtCards.innerHTML=[['33 / 73','捷運 73 站中 33 站 300 m 內無清冊桶','',doc],['63,188','台北車站每桶位每日 63,188 人次','整站每日 315,942 人次 ÷ 出口 300 m 內 5 個清冊桶位（研究原文）',fv],['62.7%','公車站位 62.7% 在 300 m 內無清冊桶','YouBike 站 300 m 範圍內的 2,741 個公車站位中 1,719 個；不是全臺北市公車站的比例',doc]]
    .map(([v,t,s,u])=>`<div class="stat src"><b>${v}</b><span>${t}${src(u)}</span>${s?`<span class="sl">${s}</span>`:''}<span class="mn">${MNOTE}</span></div>`).join('')}
 renderMrtCards();
