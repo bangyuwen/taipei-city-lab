@@ -1,5 +1,5 @@
 <!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261022q"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261022q"><title>設點規劃｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261022q"><link rel="stylesheet" href="tokens.css?v=20261022q"><link rel="stylesheet" href="ui.css?v=20261022q">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261023c"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261023c"><title>設點規劃｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261023c"><link rel="stylesheet" href="tokens.css?v=20261023c"><link rel="stylesheet" href="ui.css?v=20261023c">
 <style>.needmk::after{content:'';position:absolute;inset:-2px;border-radius:50%;border:2px solid var(--need);animation:needPulse 1.8s ease-out infinite;pointer-events:none}
 @keyframes needPulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.6);opacity:0}}
 @media (prefers-reduced-motion:reduce){.needmk::after{animation:none;opacity:0}}
@@ -74,7 +74,7 @@ section.plan{margin:0 0 14px;border:0;border-radius:0;padding:0 0 12px;backgroun
   <h4 class="psub">重點</h4><ul class="pkeys"><li>先查核：依查核優先序安排現勘，不直接推薦新增箱位</li><li>不加成本先做：原位改善與同桶數挪位優先</li><li>回報持續校正：民眾與清潔隊回報持續更新缺口與滿度</li></ul>
   <h4 class="psub">和誰一起做</h4>
   <div class="pchips"><span>環保局／清潔隊（桶位與清運）</span><span>交通局／YouBike（站點與借還資料）</span><span>捷運公司（出口與站內設施）</span><span>里辦公處（現勘與在地回報）</span></div>
-  <p class="psrc">來源：<a href="https://github.com/bangyuwen/taipei-city-lab/tree/42c14f8/sites/taipei-waste-lab" target="_blank" rel="noopener">台北城市實驗室 taipei-waste-lab（commit 42c14f8）</a><br><small>月份為本團隊依研究現勘工時推估，非官方規劃</small></p>
+  <p class="psrc">來源：<a href="https://github.com/bangyuwen/taipei-city-lab/tree/44738ca/sites/taipei-waste-lab" target="_blank" rel="noopener">台北城市實驗室 taipei-waste-lab（commit 44738ca，研究計畫 2026-10-23 版）</a><br><small>月份為本團隊推估，非官方規劃</small></p>
   </div>
   <button type="button" class="pmore" id="planBtn" aria-expanded="false" aria-controls="planMore">展開完整計畫</button>
  </section>
@@ -86,8 +86,9 @@ section.plan{margin:0 0 14px;border:0;border-radius:0;padding:0 0 12px;backgroun
  <div id="sens"></div>
  <p id="binDef" style="margin:8px 0 0"></p>
  <p id="srcHow" style="margin:8px 0 0"></p>
+ <p id="assume" style="margin:8px 0 0"><b>推估與假設</b>：每箱約 120 公升、每日巡查清運約 3–6 次（環保局，聯合報 2025-08-17）；滿度預測以「示範區人流中位數桶平日一天滿 3 次」校準，例行清運時間 05:00／08:00／12:00／16:00 為假設（官方未公布時間）；B2 容量／頻率是可調整的模擬。借＋還次數與停靠路線數只是人流代理指標，不等於垃圾量。研究計畫（2026-10-23 版）以現有桶位為初始配置、尚未啟動，未排定任何現勘站次，候選順序不是固定行程或設點安排。</p>
  <p id="auditNote" style="margin:8px 0 0;color:var(--ink)"><b>本頁支援安排查核；人流不是垃圾量，清冊列數不是現場可用桶數，尚不能推薦新增箱位。</b></p>
- <p id="mrtHow" style="margin:8px 0 0">捷運站圖層與三張全市卡片引用台北城市實驗室 taipei-waste-lab（commit 42c14f8，MIT）的交叉分析，數字照原文：每日人次＝2026-07（排除 7/10、7/11，29 日）整站進＋出站紀錄 ÷ 29；出口 300 m 內清冊桶位為研究團隊以直線距離計的不同座標數，與本頁步行距離不同。</p>
+ <p id="mrtHow" style="margin:8px 0 0">捷運站圖層與三張全市卡片引用台北城市實驗室 taipei-waste-lab（commit 44738ca，MIT；此段數字與 42c14f8 相同）的交叉分析，數字照原文：每日人次＝2026-07（排除 7/10、7/11，29 日）整站進＋出站紀錄 ÷ 29；出口 300 m 內清冊桶位為研究團隊以直線距離計的不同座標數，與本頁步行距離不同。</p>
  <p id="md5How" style="margin:8px 0 0">⚠️ 資料完整性：來源說明捷運七月 OD 下載回應的 HTTP Content-MD5（VtCA+GFASJBW3VN7h+kO1A==）與保存內容不符，尚未釐清；SHA-256 只綁定保存的內容，不代表官方真實性或完整性，計算只描述這份保存內容。2026-10-22 第二次下載得到相同大小與 SHA-256，仍未解決 MD5 不符。（<a href="https://github.com/bangyuwen/taipei-city-lab/blob/42c14f8/sites/taipei-waste-lab/docs/cross-analysis.md" target="_blank" rel="noopener">來源</a>）</p></details>
  <div class="seg" id="thrSeg" role="group" aria-label="距離門檻"><button data-thr="100" class="on">100 m</button><button data-thr="200" class="">200 m</button><button data-thr="300" class="">300 m</button></div>
  <div id="hot"></div>
@@ -95,25 +96,25 @@ section.plan{margin:0 0 14px;border:0;border-radius:0;padding:0 0 12px;backgroun
  <h3>人流最高 ≠ 最優先</h3><div class="card" id="vs"></div>
  <h3 class="sec">全市數據<small class="secn">・人流不是垃圾量</small></h3><p class="sub" id="statsNote" style="margin:-6px 0 10px">捷運站圖層（大小＝每日人次，2026-07 進＋出站 29 日平均）與下方三張研究卡片引用 taipei-waste-lab，研究為直線距離，與本頁步行距離不同。</p>
  <div class="stats" id="cards"></div><div class="stats mrt" id="mrtCards"></div><p class="sub" id="hCaveat" style="margin-top:10px"></p>
- <button class="needcard" id="needCard" type="button"></button>
- <label class="ck"><input type="checkbox" id="lyAnc"> 🔶 研究團隊觀察錨點（39 處，每區活動量前 3）</label>
+ <button class="needcard" id="needCard" type="button" hidden></button>
+ <label class="ck" hidden><input type="checkbox" id="lyAnc"> 🔶 研究團隊觀察錨點（39 處，每區活動量前 3；歷史觀察，非現行排程）</label>
  <h3>各行政區街道清冊點位</h3><div id="bars"></div>
  <div class="note">⚠️ 北投區街道清冊 0 列、南港區 4 列：<b>資料缺漏，非實際覆蓋率</b>。備用垃圾桶（青色菱形，120 點）是場所約略位置，不計入桶數。</div>
 </div>
 <div id="detail" hidden></div>
-<div class="foot">交通活動量是人流的推估，不等於垃圾量。到桶的距離用步行路網（全臺北市）；半徑內的數量用直線（OpenStreetMap，2026-10-18 預先計算）；點離道路超過 150 m 無法對應時才用直線並標示。B2 的滿溢時數為模擬值（有桶團隊加的，不在研究 PRD 內）。方案定義依研究團隊「A 現況／B 原位改善指引／C 同桶數微調一處」。</div>
+
 </aside></main></div>
 <div class="sheet" id="menuSheet" hidden><div class="sh" role="dialog" aria-label="資料說明">
   <div class="hd"><b>資料說明</b><button class="x" data-close aria-label="關閉">✕</button></div>
   <h3>資料說明</h3>
-  <ul><li><b>即時同步</b>：回報會即時同步到所有裝置；離線時先存在本機，恢復連線後上傳。「回報、清運、需求回報」是真實資料（Firebase 同步）；滿度預測、例行清運時間、出發點仍是模擬。</li><li><b>真實資料</b>：垃圾桶位置（臺北市行人專用清潔箱街道清冊，2026-09-30）、YouBike 站點與 2026-07 借還次數、公車站位、景點商圈備用垃圾桶（2026-08-18）。</li>
+  <ul><li><b>真實資料</b>：垃圾桶位置（臺北市行人專用清潔箱街道清冊，2026-09-30）、YouBike 站點與 2026-07 借還次數、公車站位、景點商圈備用垃圾桶（2026-08-18）。</li>
   <li><b>推估</b>：借＋還次數與停靠路線數只是人流的代理指標，不等於垃圾量；所有距離（開場數字、查核優先序、中位數、A/B/C 指標）都用全臺北市步行路網距離（© OpenStreetMap contributors，ODbL；2026-10-18 預先計算）；點無法對應路網時才用直線並標示。到桶的距離用步行計算；半徑內的數量用直線計算。</li>
   <li><b>民眾回報需求</b>：行人頁「這裡需要垃圾桶」的回報（50 m 內只算一次），只當佐證，<b>不計入查核優先序</b>。需求回報已同步到雲端。沒有預設資料。</li>
   <li><b>模擬</b>（標 <span class="sim"></span>）：B2 容量／清運參數與滿溢時數、本工具的方案建議規則，皆為可調整的假設。</li></ul>
   <h3>查核優先序</h3><ul><li>＝ 2026-07 借＋還次數（全月 activity_all）×（步行到最近街道清潔箱的距離 − 門檻），只列步行距離超過門檻的 YouBike 站。是建議先去現場查核的順序，不代表現場沒有桶。門檻可切 100／200／300 m，開場數字、排名與地圖範圍圈一起更新。</li></ul>
   <h3>方案</h3><ul><li><b>熱點到最近桶的步行距離</b>：從所選熱點（YouBike 站）沿步行路網（OpenStreetMap）走到該方案下最近的街道清潔箱的距離。A、B1、B2 不改變桶位，所以三者相同；只有 C 會移桶。</li><li><b>A 維持現況</b>：比較基準。</li><li><b>B1 原位改善指引</b>（研究定義）：位置與容量不變，只改善指示牌、地圖標示與清潔箱標示；指標與 A 相同，本工具不推估時間或垃圾量的改善。</li><li><b>B2 容量／頻率（模擬）</b>：有桶團隊加的模擬，不在研究 PRD 內；容量與清運頻率參數在 config.js。</li><li><b>C 同桶數挪一處</b>：總桶數不變，移出熱點 1km 內、周邊 200m 活動量最低、且不會讓原位置 600m 內有站點從「200m 內有桶」變成沒有的桶。</li></ul>
 </div></div>
-<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261022q"></script><script src="common.js?v=20261022q"></script><script src="cloud.js?v=20261022q"></script><script src="scenario.js?v=20261022q"></script><script src="routing.js?v=20261022q"></script><script src="ui.js?v=20261022q"></script><script src="bin-icons.js?v=20261022q"></script>
+<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261023c"></script><script src="common.js?v=20261023c"></script><script src="cloud.js?v=20261023c"></script><script src="scenario.js?v=20261023c"></script><script src="routing.js?v=20261023c"></script><script src="ui.js?v=20261023c"></script><script src="bin-icons.js?v=20261023c"></script>
 <script>
 let THR=CONFIG.hotspot.gapThresholdM;
 // 手機抽屜三段：min（只剩把手＋一行）／half（預設）／exp（上方留 96px 地圖）；點箭頭：half→min，min／exp→half；只有上滑才到 exp；拖地圖不自動收合
@@ -165,16 +166,16 @@ function mrtLine(h){if(!MRT)return'';let b=null;for(const s of MRT.stations)for(
   return b?`<br><span id="mrtNear">附近捷運：${mName(b.s.name)} 每日 ${fmt(b.s.daily)} 人次</span><span class="tag">只顯示，不計入排序</span>`:''}
 // ---- 推動計畫（本團隊提案；月份為本團隊推估） ----
 const PLAN_V=['查核','現勘','改善','擴查','試點']; // 進度條兩字標籤（完整階段文字不改）
-const PLAN=[['①','0–1 月','第 0–1 個月，排出查核順序','在公館–大安示範區排出優先查核的熱點，並開放民眾回報「這裡沒有桶」和「桶子滿了」。'],['②','1–3 月','第 1–3 個月，現勘第一批','研究規劃的 12 點，共 72 站次、約 18 純觀察小時。'],['③','3–6 月','第 3–6 個月，先改善現有的桶','原位改善（指示牌、地圖標示）或同桶數挪位試點。'],['④','6–12 月','第 6–12 個月，擴大到全市','全市共 216 站次、約 54 純觀察小時；現勘和回報資料夠了才評估新增箱位。'],['⑤','1–2 年','第 1–2 年，與 YouBike 結合','高借還站試點智慧垃圾桶，自動回報滿度，接上清潔隊的動態路線。']],PLAN_CUR=0;
+const PLAN=[['①','0–1 月','第 0–1 個月，排出查核順序','在公館–大安示範區排出優先查核的熱點，並開放民眾回報「這裡沒有桶」和「桶子滿了」。<br><small>依據：街道清冊 681 列（有效 680，2026-09-30）；示範區 43 個桶，以現有桶位為初始配置（研究計畫 2026-10-23）。</small>'],['②','1–3 月','第 1–3 個月，現勘第一批','清潔隊在清運前回報滿度與異常，累積可比較的紀錄，再挑點現勘。<br><small>依據：研究計畫 2026-10-23 版尚未啟動、目前 0 個排定站次；每箱約 120 公升、每日清運約 3–6 次（環保局公開說法，本頁當作假設）。</small>'],['③','3–6 月','第 3–6 個月，先改善現有的桶','原位改善（指示牌、地圖標示）或同桶數挪位試點。<br><small>依據：研究要求先確認權責、比較期間與復原方式才做小幅調整，並同時追蹤原位置與新位置。</small>'],['④','6–12 月','第 6–12 個月，擴大查核範圍','把查核範圍從示範區擴大到全市。<br><small>依據：全市 YouBike 1,644／1,821 站、公車站位 3,129／3,460 個步行 100m 內無清冊桶（只是查核線索，不是缺桶結論）；研究不設行政區配額。</small>'],['⑤','1–2 年','第 1–2 年，與 YouBike 結合','高借還站試點智慧垃圾桶，自動回報滿度，接上清潔隊的動態路線。<br><small>依據：2026-07 YouBike 借＋還次數（人流代理指標，不是垃圾量）；試點結果分為維持、修正、復原或證據不足。</small>']],PLAN_CUR=0;
 function planPick(i){pbar.querySelectorAll('button').forEach((b,k)=>b.setAttribute('aria-pressed',k===i));const s=PLAN[i];pcur.innerHTML=`<b>${s[0]}</b> ${s[2]}${i===PLAN_CUR?'<span class="now">目前階段</span>':''}`;pbox.innerHTML=`<b>${s[0]} ${s[2]}${i===PLAN_CUR?'<span class="now">目前階段</span>':''}</b>${s[3]}`}
 pbar.innerHTML=PLAN.map((s,i)=>`<button type="button" data-st="${i}" class="${i===PLAN_CUR?'cur':''}" aria-label="${s[0]} ${s[2]}"><span class="lb">${s[0]}${PLAN_V[i]}<small>${s[1]}</small></span></button>`).join('');
 pbar.onclick=e=>{const b=e.target.closest('[data-st]');if(b)planPick(+b.dataset.st)};planPick(PLAN_CUR);
-function miniPlan(h){const c=SV&&SV.candidates.find(x=>x.sno===String(h.id)),st=c&&c.wave==='W1'?1:0;
-  return `<div class="mini" id="miniPlan"><div class="mbar">${PLAN.map((s,i)=>`<i class="${i===st?'cur':''}">${s[0]}${PLAN_V[i]}<small>${s[1]}</small></i>`).join('')}</div><p>這個熱點目前在：${st?'② 已排入第 1 批現勘':'① 待查核'}</p><a id="toPlan" role="link" tabindex="0">看完整計畫</a></div>`}
+function miniPlan(h){const c=SV&&SV.candidates.find(x=>x.sno===String(h.id)),st=0;
+  return `<div class="mini" id="miniPlan"><div class="mbar">${PLAN.map((s,i)=>`<i class="${i===st?'cur':''}">${s[0]}${PLAN_V[i]}<small>${s[1]}</small></i>`).join('')}</div><p>這個熱點目前在：${c?'① 待查核（研究歷史候選，現已未排程）':'① 待查核'}</p><a id="toPlan" role="link" tabindex="0">看完整計畫</a></div>`}
 function planOpen(o){planMore.hidden=!o;planSec.open=o;planBtn.textContent=o?'收合完整計畫':'展開完整計畫';planBtn.setAttribute('aria-expanded',o)}
 planBtn.onclick=()=>planOpen(planMore.hidden);
 function toPlan(){home();planOpen(true);if(isMobile()&&window.drawer)drawer('exp');requestAnimationFrame(()=>planSec.scrollIntoView({block:'start',behavior:'smooth'}))}
-function svHTML(id){const c=SV&&SV.candidates.find(x=>x.sno===String(id));if(!c)return'';return `<div class="sv" data-sv="${c.id}"><span class="svtag">研究現勘 ${c.wave==='W1'?'第 1 批':c.wave}</span><p class="svq">「${c.q}」</p></div>`}
+function svHTML(id){const c=SV&&SV.candidates.find(x=>x.sno===String(id));if(!c)return'';return `<div class="sv" data-sv="${c.id}"><span class="svtag">歷史候選・未排程</span><p class="svq">「${c.q}」</p></div>`}
 // 公車站：白底空心圈，畫在最底層 pane；捷運站：#0070BD 圓角方塊＋白 M，邊長＝每日人次（最小 14px）
 let _busRen;function busRen(){if(!_busRen){map.createPane('busPane').style.zIndex=350;_busRen=L.canvas({pane:'busPane'})}return _busRen}
 const MRT_SVG=s=>`<span class="mrtM" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.62)}px">M</span>`;
@@ -200,7 +201,7 @@ onAppSync(k=>{if(k!==LS_NEEDS||!D)return;renderNeedCard();if(lastBase)drawBase(l
 function home(){renderNeedCard();cur=null;detail.hidden=true;document.getElementById('home').hidden=false;chgL.clearLayers();drawBase(D.street);drawHot()}
 function renderHot(){HS=SC.hotspots(ST,D.street,THR);
   const gmax=HS[0]?HS[0].gap:1,near=h=>SC.all.filter(s=>hav(h.la,h.lo,s.la,s.lo)<=200).length;
-  hot.innerHTML=HS.slice(0,CONFIG.hotspot.maxList).map((h,i)=>`<div class="card item hs" data-i="${i}"><span class="num">${i+1}</span><div class="bd"><div class="t">${h.name}</div><div class="ev"><span><b>${fmtM(h.nb)}</b>步行到最近街道清潔箱</span>${(c=>c?`<span class="svtag">研究現勘 ${c.wave==='W1'?'第 1 批':c.wave}</span>`:'')(SV&&SV.candidates.find(x=>x.sno===String(h.id)))}${h.nbKind==='line'?'<span class="tag">直線（無法對應路網）</span>':''}<span><b>${fmt(h.act)}</b>月借還量</span><span><b>${near(h)}</b>200 m 內站點</span>${(()=>{const k=getNeeds().filter(n=>hav(h.la,h.lo,n.la,n.lo)<=200).length;return k?`<span class="tag need">民眾回報 ${k}</span>`:''})()}</div><div class="gi"><i style="width:${Math.max(4,h.gap/gmax*100)}%"></i></div></div><span class="go">›</span></div>`).join('')||'<p class="sub">示範區沒有缺口熱點</p>';
+  hot.innerHTML=HS.slice(0,CONFIG.hotspot.maxList).map((h,i)=>`<div class="card item hs" data-i="${i}"><span class="num">${i+1}</span><div class="bd"><div class="t">${h.name}</div><div class="ev"><span><b>${fmtM(h.nb)}</b>步行到最近街道清潔箱</span>${(c=>c?`<span class="svtag">歷史候選・未排程</span>`:'')(SV&&SV.candidates.find(x=>x.sno===String(h.id)))}${h.nbKind==='line'?'<span class="tag">直線（無法對應路網）</span>':''}<span><b>${fmt(h.act)}</b>月借還量</span><span><b>${near(h)}</b>200 m 內站點</span>${(()=>{const k=getNeeds().filter(n=>hav(h.la,h.lo,n.la,n.lo)<=200).length;return k?`<span class="tag need">民眾回報 ${k}</span>`:''})()}</div><div class="gi"><i style="width:${Math.max(4,h.gap/gmax*100)}%"></i></div></div><span class="go">›</span></div>`).join('')||'<p class="sub">示範區沒有缺口熱點</p>';
   if(D)drawHot()}
 function drawHot(){hotL.clearLayers();HS.slice(0,CONFIG.hotspot.maxList).forEach((h,i)=>L.circle([h.la,h.lo],{radius:THR,color:getComputedStyle(document.documentElement).getPropertyValue('--mute').trim(),weight:1,dashArray:'3',fillOpacity:.04,interactive:false}).addTo(hotL));HS.slice(0,CONFIG.hotspot.maxList).forEach((h,i)=>L.marker([h.la,h.lo],{icon:L.divIcon({className:'mk hot',html:i+1,iconSize:[26,26]}),zIndexOffset:800}).on('click',()=>open(h)).addTo(hotL))}
 function open(h){cur=h;const saved=SC.load();const E=SC.evaluate(h,ST,D.street);h.E=E;opt=(saved&&saved.hotspotId===h.id)?saved.option:E.rec;
@@ -250,7 +251,7 @@ Promise.all([loadCore(),RT.load('walk').catch(()=>null)]).then(([d,w])=>{SC.walk
   hot.onclick=e=>{const c=e.target.closest('[data-i]');if(c)open(HS[+c.dataset.i])};
   window.renderVs=()=>{vs.innerHTML=CONFIG.compare.map((c,i)=>{const s=D.yb.find(x=>x.name===c.name);if(!s)return'';const[d]=SC.nearestDist(s,D.street);return `<div class="row" style="flex-wrap:nowrap;padding:6px 0;${i?'border-top:1px solid var(--line)':''}"><div style="flex:1"><div class="t" style="font-weight:600;font-size:14px">${c.label}｜${s.name}</div><div class="m" style="color:var(--mute);font-size:13px">借＋還 ${fmt(s.act||0)}・步行到最近街道清潔箱 ${fmtM(d)}${(()=>{const k=HS.findIndex(h=>h.name===s.name);return k>=0?`・查核優先序第 ${k+1}／${HS.length}`:`・不在查核優先序（≤ ${THR} m）`})()}</div></div><button class="btn sm" data-vs="${i}">前往 ›</button></div>`}).join('')+(()=>{const ar=[...D.yb].sort((a,b)=>(b.act||0)-(a.act||0)),parts=CONFIG.compare.map((c,i)=>{const s=D.yb.find(x=>x.name===c.name);if(!s)return'';const w=Math.round(SC.nearestDist(s,D.street)[0]).toLocaleString('zh-TW'),k=HS.findIndex(h=>h.name===s.name),rk=k>=0?`查核優先序第 ${k+1}`:'查核優先序未列入';return i===0?`${c.short}：活動量全市第 ${ar.indexOf(s)+1}，步行 ${w} m，${rk}`:`${c.short}：步行 ${w} m，${k>=0?`第 ${k+1}`:'未列入'}`}).filter(Boolean);return `<p class="sub" id="vsLine" style="margin:6px 0 0;font-variant-numeric:tabular-nums;color:var(--ink-2);font-family:var(--font)">${parts.join('；')}</p>`})()+'<p class="sub" style="margin:6px 0 0">查核優先序同時看活動量與步行距離，活動量最高的站不一定排在前面。</p>';};renderVs();
   vs.onclick=e=>{const b=e.target.closest('[data-vs]');if(!b)return;const c=CONFIG.compare[+b.dataset.vs],s=D.yb.find(x=>x.name===c.name);const[d,bn,k]=SC.nearestDist(s,D.street);open({...s,nb:d,nbBin:bn,nbKind:k,gap:(s.act||0)*Math.max(0,d-THR)})};
-  loadJSON('anchors.json').then(A=>{for(const a of A)if(a.lat)L.circleMarker([a.lat,a.lon],{radius:7,color:'#fff',weight:2,fillColor:'#c8743a',fillOpacity:.9}).bindPopup(`🔶 研究錨點 ${a.id}<br><b>${a.name}</b><br>2026-07 活動量 ${fmt(a.activity_2026_07)}（全市第 ${a.city_rank}）<br>研究註記最近清冊 ${a.research_nearest_bin_m}m<br>${a.research_next_step}${svHTML(a.sno)}`,{maxWidth:280}).addTo(ancL)});
+  loadJSON('anchors.json').then(A=>{for(const a of A)if(a.lat)L.circleMarker([a.lat,a.lon],{radius:7,color:'#fff',weight:2,fillColor:'#c8743a',fillOpacity:.9}).bindPopup(`🔶 研究錨點 ${a.id}（歷史・未排程）<br><b>${a.name}</b><br>2026-07 活動量 ${fmt(a.activity_2026_07)}（全市第 ${a.city_rank}）<br>研究註記最近清冊 ${a.research_nearest_bin_m}m<br>${a.research_next_step}${svHTML(a.sno)}`,{maxWidth:280}).addTo(ancL)});
   lyAnc.onchange=()=>lyAnc.checked?ancL.addTo(map):ancL.remove();
   const cnt={};D.street.forEach(b=>cnt[b.d]=(cnt[b.d]||0)+1);const ds=['士林區','中正區','內湖區','萬華區','信義區','松山區','大安區','中山區','文山區','大同區','南港區','北投區'];const mx=Math.max(...Object.values(cnt));
   bars.innerHTML=ds.map(n=>`<div class="bar"><span>${n.replace('區','')}</span><i class="${['北投區','南港區'].includes(n)?'gap':''}" style="width:${Math.max(1,(cnt[n]||0)/mx*100)}%"></i><span>${cnt[n]||0}${['北投區','南港區'].includes(n)?' ⚠️':''}</span></div>`).join('');
