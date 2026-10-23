@@ -1,0 +1,32 @@
+{
+  "sources": [
+    {
+      "path": "assessment.json",
+      "sha256": "2647a720e15bcb0879c6611f847298935ea3f5f94e2eb746cbbc5e8e1b87e50a"
+    },
+    {
+      "path": "web-evidence.json",
+      "sha256": "53c961a81b773103b5fc4395d77647ef257fe75043beabdf13e51353ef0ae0e3"
+    },
+    {
+      "path": "../demand-evidence-2026-10-20/journey-table.json",
+      "sha256": "12e038e787b7bf2cae66d12242eeb3349e9e1a3fede18dd39aebdfcbcd85c025"
+    },
+    {
+      "path": "../taipei-citywide-2026-10-19/results/candidates.csv",
+      "sha256": "f9f237990671d1bc2815761779d349eb304d4c200c123b028917246067a182cc"
+    },
+    {
+      "path": "../taipei-citywide-2026-10-19/delivery/field-record-forms.json",
+      "sha256": "566e8e7ec83d611f61606a877d2cd5d185d796029986a869e41853b3534eb218"
+    },
+    {
+      "path": "../other-districts-recheck-2026-10-20/point-checks.json",
+      "sha256": "5733d95d018c899e87a809e0ec0d42553adb8c19c523567d7050c31fa490c093"
+    },
+    {
+      "path": "../decision-checks-2026-10-22/checks.json",
+      "sha256": "a1ca253499b14bc8ff876f4260e73ef112bbd3a66a4a5a518623089106559948"
+    }
+  ]
+}

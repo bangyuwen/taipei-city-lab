@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-24",
+  "status": "desk_assessment_complete_field_links_unverified",
+  "recommendation": "先比較既有服務的可用性與指引；配置變更須另有兩側基線與管理承接。",
+  "scheduled_visits": [],
+  "observed_events": [],
+  "scenarios": [
+    {
+      "id": "meal",
+      "evidence_id": "E01",
+      "label": "個別留言與可重建個人內容已因隱私移除。",
+      "known": "個別留言與可重建個人內容已因隱私移除。",
+      "candidate_id": "D11-2",
+      "comparison": "個別留言與可重建個人內容已因隱私移除。",
+      "decision": "個別留言與可重建個人內容已因隱私移除。",
+      "residual": "個別留言與可重建個人內容已因隱私移除。",
+      "source_ids": [
+        "market"
+      ],
+      "plan_refs": [
+        "Q04"
+      ]
+    },
+    {
+      "id": "dog",
+      "evidence_id": "E02",
+      "label": "個別留言與可重建個人內容已因隱私移除。",
+      "known": "個別留言與可重建個人內容已因隱私移除。",
+      "candidate_id": null,
+      "comparison": "個別留言與可重建個人內容已因隱私移除。",
+      "decision": "個別留言與可重建個人內容已因隱私移除。",
+      "residual": "個別留言與可重建個人內容已因隱私移除。",
+      "source_ids": [
+        "dog_bags"
+      ],
+      "plan_refs": [
+        "Q04"
+      ]
+    },
+    {
+      "id": "basket",
+      "evidence_id": "E06",
+      "label": "個別留言與可重建個人內容已因隱私移除。",
+      "known": "個別留言與可重建個人內容已因隱私移除。",
+      "candidate_id": "D03-1",
+      "comparison": "個別留言與可重建個人內容已因隱私移除。",
+      "decision": "個別留言與可重建個人內容已因隱私移除。",
+      "residual": "個別留言與可重建個人內容已因隱私移除。",
+      "source_ids": [],
+      "plan_refs": [
+        "Q04"
+      ]
+    },
+    {
+      "id": "walking",
+      "evidence_id": "E15",
+      "label": "個別留言與可重建個人內容已因隱私移除。",
+      "known": "個別留言與可重建個人內容已因隱私移除。",
+      "candidate_id": "D04-3",
+      "comparison": "個別留言與可重建個人內容已因隱私移除。",
+      "decision": "個別留言與可重建個人內容已因隱私移除。",
+      "residual": "個別留言與可重建個人內容已因隱私移除。",
+      "source_ids": [],
+      "plan_refs": [
+        "Q03",
+        "Q04"
+      ]
+    }
+  ],
+  "decision_rules": [
+    {
+      "condition": "有可用設施，但未發現或不知可用",
+      "action": "比較現況與原位指引；記錄同一範圍的尋找過程及投放結果，不先移桶。"
+    },
+    {
+      "condition": "設施存在，但時段、身分或接收物不符合",
+      "action": "先排除該情境不可用的選項，核對替代服務或使用條件協調；不把名錄列數當可用供給。"
+    },
+    {
+      "condition": "滿溢、損壞或清運間隔造成受阻",
+      "action": "優先比較清運、維修與回報交接；用清運前紀錄核對，不把一次滿溢直接轉成新設需求。"
+    },
+    {
+      "condition": "指定路線仍無可達、可收受且可用的服務",
+      "action": "才進入配置方案比較；先補移入區需求、原區服務損失、可比基線、權責、清運與回退條件，證據不足就保留現況。"
+    }
+  ],
+  "join_fields": [
+    "event_id",
+    "visit_id",
+    "scope_version",
+    "evidence_kind",
+    "source_ref",
+    "event_time",
+    "event_location",
+    "waste_origin",
+    "waste_type",
+    "route",
+    "service_point_record_ids",
+    "observable_barrier",
+    "burden_quote",
+    "attempt_in_window",
+    "outcome",
+    "outcome_basis",
+    "dedup_status",
+    "canonical_event_id",
+    "reviewer_code",
+    "missing_reason"
+  ],
+  "join_rule": "新事件以event_id連visit_id及scope_version，再由設施列ID回查實體設施。情境由直接觀察或本人明說的來源與物品人工覆核，可複選；缺少依據保留未知。E01等舊留言只作問題依據，不填入新的event_id、訪次或分母。"
+}

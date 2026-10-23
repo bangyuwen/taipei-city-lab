@@ -56,7 +56,7 @@ export function pageFromHash(hash,currentPage='research') {
   if(/^problem-(?:heading|known|contrast|unknown|boundary)$/.test(page))return 'problem';
   if(/^persona(?:s)?-/.test(page)||page==='journey-reading-note')return 'personas';
   if(page==='data-methods-heading')return 'data-methods';
-  if(/^analysis-/.test(page)||page==='hotspot-candidates')return 'analysis';
+  if(/^analysis-|^decision-(?:context-|choice-rules$|event-link$|source-dates$)/.test(page)||page==='hotspot-candidates')return 'analysis';
   if(/^ideas-|^definition-current-/.test(page)||['t1-process-heading','definition-evidence-heading'].includes(page))return 'plan';
   if(['t1-thinking-heading','definition-cycle-heading'].includes(page))return 'plan';
   if(['research-overview-mvp','research-overview-unknowns'].includes(page))return 'spec';

@@ -1,0 +1,130 @@
+{
+  "prepared_on": "2026-10-24",
+  "status": "desk_assessment_complete_field_links_unverified",
+  "source_personas": 4,
+  "verified_event_links": 0,
+  "source_disposal_completed_accounts": 1,
+  "other_source_final_outcomes_unknown": 3,
+  "proposed_desk_cases": 3,
+  "observed_events": [],
+  "scheduled_visits": [],
+  "scenarios": [
+    {
+      "id": "meal",
+      "evidence_id": "E01",
+      "label": "個別留言與可重建個人內容已因隱私移除。",
+      "known": "個別留言與可重建個人內容已因隱私移除。",
+      "candidate_id": "D11-2",
+      "comparison": "個別留言與可重建個人內容已因隱私移除。",
+      "decision": "個別留言與可重建個人內容已因隱私移除。",
+      "residual": "個別留言與可重建個人內容已因隱私移除。",
+      "source_ids": [
+        "market"
+      ],
+      "plan_refs": [
+        "Q04"
+      ],
+      "source_last_stage": null,
+      "event_time": null,
+      "verified_candidate_id": null,
+      "link_status": "unverified",
+      "desk_lead": {
+        "candidate_id": "D11-2",
+        "name": "劍潭基河路口",
+        "address": "劍潭路基河路口(捷運站橋下空間)",
+        "street_name": "中山北路劍潭1號出口北側",
+        "venue_name": "劍潭捷運站",
+        "street_nearest_m": 41.81,
+        "venue_nearest_m": 74.5,
+        "venue_relation": "不同場域",
+        "physical_identity": null,
+        "walkable_distance_m": null,
+        "usable_now": null
+      }
+    },
+    {
+      "id": "dog",
+      "evidence_id": "E02",
+      "label": "個別留言與可重建個人內容已因隱私移除。",
+      "known": "個別留言與可重建個人內容已因隱私移除。",
+      "candidate_id": null,
+      "comparison": "個別留言與可重建個人內容已因隱私移除。",
+      "decision": "個別留言與可重建個人內容已因隱私移除。",
+      "residual": "個別留言與可重建個人內容已因隱私移除。",
+      "source_ids": [
+        "dog_bags"
+      ],
+      "plan_refs": [
+        "Q04"
+      ],
+      "source_last_stage": null,
+      "event_time": null,
+      "verified_candidate_id": null,
+      "link_status": "unverified",
+      "desk_lead": null
+    },
+    {
+      "id": "basket",
+      "evidence_id": "E06",
+      "label": "個別留言與可重建個人內容已因隱私移除。",
+      "known": "個別留言與可重建個人內容已因隱私移除。",
+      "candidate_id": "D03-1",
+      "comparison": "個別留言與可重建個人內容已因隱私移除。",
+      "decision": "個別留言與可重建個人內容已因隱私移除。",
+      "residual": "個別留言與可重建個人內容已因隱私移除。",
+      "source_ids": [],
+      "plan_refs": [
+        "Q04"
+      ],
+      "source_last_stage": "個別留言與可重建個人內容已因隱私移除。",
+      "event_time": null,
+      "verified_candidate_id": null,
+      "link_status": "unverified",
+      "desk_lead": {
+        "candidate_id": "D03-1",
+        "name": "捷運公館站(2號出口)",
+        "address": "捷運公館站(2號出口)外側",
+        "street_name": "羅斯福路4段68號",
+        "venue_name": "公館捷運站",
+        "street_nearest_m": 40.89,
+        "venue_nearest_m": 12.4,
+        "venue_relation": "同站名",
+        "physical_identity": null,
+        "walkable_distance_m": null,
+        "usable_now": null
+      }
+    },
+    {
+      "id": "walking",
+      "evidence_id": "E15",
+      "label": "個別留言與可重建個人內容已因隱私移除。",
+      "known": "個別留言與可重建個人內容已因隱私移除。",
+      "candidate_id": "D04-3",
+      "comparison": "個別留言與可重建個人內容已因隱私移除。",
+      "decision": "個別留言與可重建個人內容已因隱私移除。",
+      "residual": "個別留言與可重建個人內容已因隱私移除。",
+      "source_ids": [],
+      "plan_refs": [
+        "Q03",
+        "Q04"
+      ],
+      "source_last_stage": null,
+      "event_time": null,
+      "verified_candidate_id": null,
+      "link_status": "unverified",
+      "desk_lead": {
+        "candidate_id": "D04-3",
+        "name": "林森長春路口",
+        "address": "長春路29號前",
+        "street_name": "南京東路2段38號(對面公車專用道上)",
+        "venue_name": "欣欣百貨",
+        "street_nearest_m": 532.99,
+        "venue_nearest_m": 186.39,
+        "venue_relation": "不同場域",
+        "physical_identity": null,
+        "walkable_distance_m": null,
+        "usable_now": null
+      }
+    }
+  ]
+}
