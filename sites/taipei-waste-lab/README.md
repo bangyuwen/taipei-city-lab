@@ -2,7 +2,7 @@
 
 本期聚焦台北行人專用清潔箱的設置、清運與維護。家戶服務不列入百日工作、預算及驗收；相關研究與早期分布、撤除歷程保留作背景。這是獨立的靜態站，資料與程式都由本站提供。
 
-網站：[台北垃圾箱研究](https://taipei-waste-lab.bangyuwen.chatgpt.site)。網站程式與部署產物位於 `sites/taipei-waste-lab/`；本題資料、模型與研究入口見[垃圾箱題目目錄](../../topics/bins/README.md)。Sites 部署使用本站自己的 Git 與 `.openai/hosting.json`。
+正式站：[youtong](https://youtong.bangyuwen.chatgpt.site)，只發布 GitHub `main`。原[台北垃圾箱研究](https://taipei-waste-lab.bangyuwen.chatgpt.site)保留為測試站。發布流程與五分鐘自動檢查見[正式站部署](docs/production-deployment.md)。網站程式與部署產物位於 `sites/taipei-waste-lab/`；本題資料、模型與研究入口見[垃圾箱題目目錄](../../topics/bins/README.md)。Sites 部署使用本站自己的 Git 與 `.openai/hosting.json`。
 
 ## Combined publication
 
