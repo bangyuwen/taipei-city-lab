@@ -6,3 +6,10 @@ shared/skills/impeccable/scripts/bin/
 !.impeccable/config.json
 !.impeccable/design.json
 !.impeccable/surfaces/
+
+# Exclude private feedback inputs from the canonical bins research source.
+/topics/bins/research/**/source.tsv
+/topics/bins/research/**/Pasted text*.txt
+/topics/bins/research/feedback-*/*.jsonl
+/topics/bins/research/feedback-*/retained-inputs/
+/topics/bins/research/feedback-*/place-assignments.json

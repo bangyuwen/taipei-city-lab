@@ -13,3 +13,14 @@ qa/
 
 # Private Markdown reading exports; rebuild with npm run prepare-notes.
 /notes/
+
+# Keep private feedback inputs and reconstructed research artifacts local.
+private/
+Pasted text*.txt
+source.tsv
+/research/feedback-*/*.jsonl
+/research/feedback-*/retained-inputs/
+/research/feedback-*/place-assignments.json
+/research/demand-evidence-2026-10-20/journey-table.json
+/dist/research/demand-evidence-2026-10-20/journey-table.json
+/dist/research/research-execution-2026-10-15.zip

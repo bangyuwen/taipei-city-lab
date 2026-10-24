@@ -64,12 +64,19 @@ assert m['field_visits_completed']==0 and m['agency_commitments_confirmed']==0
 before={f:hashlib.sha256((delivery/f).read_bytes()).hexdigest() for f in ['hotspot-handoff.md','field-plan.md','field-plan.json','planned-visits.csv','district-readiness.csv','handoff-manifest.json']}
 runpy.run_path(str(delivery/'build_handoff.py'))['build']()
 assert before=={f:hashlib.sha256((delivery/f).read_bytes()).hexdigest() for f in before}
-page=Path('dist/index.html')
-saved_page=page.read_bytes()
-runpy.run_path(str(priority_root/'update_site.py'))['update']()
+# Keep the idempotence check isolated from other test files reading the site.
+import tempfile
+page=Path('dist/index.html');saved_page=page.read_bytes()
+with tempfile.TemporaryDirectory() as directory:
+ target=Path(directory);(target/'dist').mkdir()
+ copy=target/'dist/index.html';copy.write_bytes(saved_page)
+ publisher=runpy.run_path(str(priority_root/'update_site.py'))
+ publisher['update'].__globals__['SITE']=target
+ publisher['update']()
+ assert copy.read_bytes()==saved_page
+ text=copy.read_text()
 assert page.read_bytes()==saved_page
 import re
-text=page.read_text()
 assert set(re.findall(r'data-priority-id="([^"]+)"',text))==first
 for point in priority['candidates']:
  code=point['candidate_id'][1:3]

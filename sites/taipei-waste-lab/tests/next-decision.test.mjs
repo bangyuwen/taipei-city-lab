@@ -25,7 +25,8 @@ for case in r['scenarios']:
  lead=case['desk_lead']
  if lead:
   assert all(lead[k] is None for k in ('physical_identity','walkable_distance_m','usable_now'))
- if case['evidence_id']=='E06': assert '丟垃圾' in case['source_last_stage']
+ for key in ('label','known','comparison','decision','residual'): assert case[key]=='個別留言與可重建個人內容已因隱私移除。'
+ if case['evidence_id']=='E06': assert case['source_last_stage']=='個別留言與可重建個人內容已因隱私移除。'
  else: assert case['source_last_stage'] is None
 meal=r['scenarios'][0]['desk_lead'];basket=r['scenarios'][2]['desk_lead']
 assert (meal['street_nearest_m'],meal['venue_nearest_m'])==(41.81,74.5)
@@ -72,6 +73,8 @@ with tempfile.TemporaryDirectory() as tmp:
  assert '不能當成投放失敗率' in block
  assert '不是10/24現場狀態' in block
  assert '原Persona的空白保留' in block
+ assert 'data-feedback-privacy="redacted"' in block
+ assert '個別內容不公開' in block
  for target in re.findall(r'href="#([^"]+)"',block): assert f'id="{target}"' in first,target
  for source in ('tcma.gov.taipei','dep.gov.taipei'): assert source in block
  assert 'assessment.json' not in block and 'results.json' not in block

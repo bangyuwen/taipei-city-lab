@@ -80,7 +80,7 @@ with tempfile.TemporaryDirectory() as directory:
  p['inventoryRefs']=refs;fails(lambda:m['validate_comparisons'](root,c,fixture()))
  p['inventoryRefs']=refs[:2]+refs[:1];fails(lambda:m['validate_comparisons'](root,c,fixture()))
 `));
-test('saved analysis renders all district cells and reconciled places from the retained evidence',()=>python(setup+String.raw`
+test('privacy-cleaned analysis preserves district aggregates and omits individual place links',()=>python(setup+String.raw`
 from html.parser import HTMLParser
 base=runpy.run_path('scripts/analyze-feedback.py')
 research=Path('research');prior=json.loads((research/'feedback-access-2026-10-18/summary.json').read_text())
@@ -97,7 +97,14 @@ class Parser(HTMLParser):
   if tag=='table':self.table=None
 p=Parser();p.feed(page)
 assert len(p.ids)==len(set(p.ids)) and 'feedback-removal' in p.ids
-assert len(p.places)==len(d['places']) and set(p.places)=={x['id'] for x in d['places']}
+assert d['places']==c['places']==c['examples']==c['featuredPlaces']==[]
+missing=copy.deepcopy(d);missing.pop('privacyNotice');fails(lambda:m['validate'](missing,prior))
+restored=copy.deepcopy(c);restored['examples']=[{'account':'Synthetic individual example'}];fails(lambda:m['validate_comparisons'](research,restored,d))
+notice=copy.deepcopy(c);notice.pop('privacyNotice');fails(lambda:m['validate_comparisons'](research,notice,d))
+assert p.places==[] and 'data-feedback-privacy="redacted"' in page
+assert '不代表原始資料沒有地點或例子' in page
+assert '本清理版不保存原文' in page and '本清理版不保留逐則裁決理由' in page
+assert '--private-dir' not in markdown and '不代表原始內容可取回' in markdown
 assert len(p.cells)==12*(len(m['EFFECTS'])+len(m['REQUESTS'])) and len(set(p.cells))==len(p.cells)
 assert all(x['id'] in p.places for x in c['places'])
 assert d['overall']['selectedRecords']==913 and d['audit']['sampleSize']==144

@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-24",
+  "status": "privacy_redacted_aggregate_only",
+  "notice": "Individual comments, reconstructions and place-linked examples were removed. These identities bind the cleaned retained inputs; they do not restore access to private source records. Original aggregate denominators and source identities remain unchanged.",
+  "history_source_revision": "ff5b5646",
+  "sanitizer_sha256": "4ee70773ae476efae29e35de54383ec7cc46b6ef6b7cabf5f9bd9b8f66910498",
+  "input_rebindings": [
+    {
+      "manifest": "topics/bins/research/decision-checks-2026-10-22/inputs.json",
+      "input": "../demand-evidence-2026-10-20/journey-table.json",
+      "previous_sha256": "12e038e787b7bf2cae66d12242eeb3349e9e1a3fede18dd39aebdfcbcd85c025",
+      "cleaned_sha256": "44226efaeb9b1cc9b34ec0075fbefac3b9701816bcf052ecc1b6689d5c53bc1d"
+    },
+    {
+      "manifest": "topics/bins/research/next-decision-2026-10-24/inputs.json",
+      "input": "assessment.json",
+      "previous_sha256": "2647a720e15bcb0879c6611f847298935ea3f5f94e2eb746cbbc5e8e1b87e50a",
+      "cleaned_sha256": "fb234adf103d8f8430ad3fa4b1d21054bb86f21c29f16cb0979928a6adace2db"
+    },
+    {
+      "manifest": "topics/bins/research/next-decision-2026-10-24/inputs.json",
+      "input": "../demand-evidence-2026-10-20/journey-table.json",
+      "previous_sha256": "12e038e787b7bf2cae66d12242eeb3349e9e1a3fede18dd39aebdfcbcd85c025",
+      "cleaned_sha256": "44226efaeb9b1cc9b34ec0075fbefac3b9701816bcf052ecc1b6689d5c53bc1d"
+    },
+    {
+      "manifest": "topics/bins/research/feedback-removal-2026-10-18/summary.json",
+      "input": "comparisons.json",
+      "previous_sha256": "bcf4dc67c1ad5c1a8c7077d18fe2fbf6b8412c56977ffbab4b8dce8be9778903",
+      "cleaned_sha256": "a22764d63c1ba3fa1c1abe36e289f2f0cdd38c29a3b723d4f9a5c06985bd372f"
+    }
+  ]
+}
