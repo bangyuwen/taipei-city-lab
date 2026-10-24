@@ -1,66 +1,42 @@
-# Research reading architecture
+# 研究網站的閱讀架構
 
-Baseline: main `284577042b0cca9e315612bad4c51684faa5b312`, checked 2026-10-22.
-Scope: the independent Taipei Waste Lab site. Preserve its petrol/paper design,
-research evidence, public/private boundary, and existing hash links. Publish updates to the existing Site after validation.
+基準：main `284577042b0cca9e315612bad4c51684faa5b312`，2026-10-22 查核。範圍為獨立的臺北垃圾研究網站。保留深藍綠／紙張設計、研究證據、公私界線與既有 hash 連結；驗證後更新既有 Site。
 
-## Problems to resolve
+## 待解決問題
 
-- The seven-item hotspot navigation mixes personal accounts, city comparisons,
-  field preparation and source records without a clear reading task.
-- The methods page puts city tables and two MRT studies before field priorities
-  and blank observation forms. A reader preparing fieldwork must traverse unrelated detail.
-- The home page repeats its purpose, reading path, deliverables and pending work.
-- Current problem definition, older problem classifications and historical PRDs
-  can appear equally current. Team and government responsibilities are separated.
+- 七項熱點導覽混合人物自述、全市比較、現勘準備及來源紀錄，缺少清楚閱讀任務。
+- 方法頁將全市表格及兩項捷運研究排在現勘優先順序與空白觀察表前，準備現勘的讀者須先穿過無關細節。
+- 首頁重複目的、閱讀路徑、交付物與待辦。
+- 現行問題定義、較早問題分類與歷史 PRD 容易被視為同樣現行；團隊與政府責任分散。
 
-## Target sitemap and ownership
+## 目標網站結構與內容權責
 
-| Primary entry | Pages and purpose | Previous location |
+| 主要入口 | 頁面與用途 | 原位置 |
 | --- | --- | --- |
-| Research overview `#research` | Current evidence, limits, reading path and scope | Work overview; consolidate repeated status and next-step lists |
-| Understand the problem `#personas` | Personas and journeys; current definition `#problem`; feedback analysis `#feedback`; evidence index `#evidence` | Hotspot research |
-| Check distribution `#analysis` | City summary; district checks `#districts`; comparisons, methods and source limitations `#data-methods` | Hotspot research and the first seven chapters of Methods |
-| Hundred-day plan `#plan` | The current proposal: goal, options, checks, schedule, requirements `#spec`, work packages `#work`, team handoff `#team` and optional forms | Former separate Ideas, field preparation and government plan pages |
-| References and history `#library` | Sources `#sources`; countries `#countries`; history `#history`; saved map `#map`; inventory comparison `#comparison`; decisions `#definition`; older materials `#materials`; old proposals `#archive`, `#siting`, `#design` | Reference library and decision records |
+| 研究總覽 `#research` | 現行證據、限制、閱讀路徑及範圍 | 工作總覽；合併重複狀態及下一步清單 |
+| 理解問題 `#personas` | 人物與旅程；現行定義 `#problem`；留言分析 `#feedback`；證據索引 `#evidence` | 熱點研究 |
+| 檢查分布 `#analysis` | 全市摘要；行政區查核 `#districts`；比較、方法及來源限制 `#data-methods` | 熱點研究及方法前七章 |
+| 百日計畫 `#plan` | 現行提案：目標、選項、查核、時程、需求 `#spec`、工作包 `#work`、團隊交接 `#team` 及選用表單 | 原本分開的構想、現勘準備及政府計畫頁 |
+| 參考與歷史 `#library` | 來源 `#sources`；各國 `#countries`；歷程 `#history`；保存地圖 `#map`；清冊比較 `#comparison`；決策 `#definition`；舊材料 `#materials`；舊提案 `#archive`、`#siting`、`#design` | 參考庫及決策紀錄 |
 
-Read: overview → personas → current problem → city comparison → district/detail
-checks → decision-dependent hundred-day plan. Options and history remain available as separate
-branches; this reading path does not imply that quantitative activity is matched
-to personal accounts or that fieldwork has happened.
+閱讀順序：總覽 → 人物 → 現行問題 → 全市比較 → 行政區／細節查核 → 依決策條件啟用的百日計畫。選項與歷史另保留閱讀分支；此路徑不表示量化活動已與人物自述配對，也不表示已現勘。
 
-## Content rules
+## 內容規則
 
-- The current definition belongs to `#problem`. Evidence pages own provenance
-  and interpretation; earlier classifications stay explicitly historical.
-- Each persona keeps its journey, short quote and unknowns together. E06 remains
-  a self-reported completed disposal; E01/E02/E15 outcomes remain unknown.
-- Move quantitative chapters byte-for-byte. Keep 9/30 ten-station and 10/21
-  two-station snapshots distinct. Keep their source limitations adjacent.
-- The current plan starts with existing bin locations, then crew reporting,
-  reviewed configuration adjustment and before/after follow-up. Analysis remains
-  a research input. Low fullness alone does not justify moving a bin. No district
-  quota or automatic visits. Historical schedules remain closed by default.
-- `topics/bins/research/decision-checks-2026-10-22` owns current plan metadata (revised 2026-10-23) and conditional checks. Preserve
-  frozen source protocols and all unknown outcomes. `#methods` routes to `#plan`.
-- Home links to page owners instead of repeating their detailed task lists.
-- Retain old IDs and resolve moved chapter links to their new panel. Plain HTML
-  remains readable without JavaScript. No new public research files/downloads.
+- 現行定義由 `#problem` 維護；證據頁維護溯源及判讀；早期分類明列歷史。
+- 各人物的旅程、短摘錄及未知放在一起。E06 保留為自述已完成投放；E01／E02／E15 結果仍未知。
+- 量化章節須逐位元組搬移。9/30 十站與 10/21 兩站快照分開，來源限制緊鄰內容。
+- 現行計畫從既有桶位開始，接續清潔隊回報、經審查的配置調整與前後追蹤。分析仍是研究輸入，低滿載本身不足以移桶。沒有行政區配額或自動訪視；歷史時程預設收合。
+- `topics/bins/research/decision-checks-2026-10-22` 維護現行計畫資料（2026-10-23 修訂）與條件式查核。保留凍結來源協定及所有未知結果。`#methods` 導向 `#plan`。
+- 首頁連向各內容頁，不重複詳細工作清單。
+- 保留舊 ID；搬移章節的連結導向新區塊。不啟用 JavaScript 也能閱讀純 HTML。不新增公開研究檔／下載。
 
-## Verification
+## 驗證方式
 
-Run root build and affected site tests/checks. Verify that rebuilding does not
-change the authored HTML. In one browser batch, check desktop and phone reading,
-primary/local navigation, old deep links, keyboard/menu behavior and public
-asset boundaries. Preserve screenshots and receipts outside version control.
+執行根目錄建置及受影響網站的測試／檢查，確認重建不改動正文 HTML。以同一批瀏覽器檢查涵蓋桌機／手機閱讀、主／區域導覽、舊深連結、鍵盤／選單行為及公開資產界線。截圖與驗證紀錄留在版本控制外。
 
-## Current validation
+## 現行驗證範圍
 
-Verify all retained IDs and quantitative chapters, current/legacy plan routing,
-desktop and mobile navigation, no-JavaScript reading, generator stability and
-the existing public asset allowlist. Historical fixed rounds are explicitly
-superseded, not overwritten or represented as completed observations.
+確認全部保留 ID 與量化章節、現行／舊計畫導向、桌機與手機導覽、無 JavaScript 閱讀、產生器穩定性及既有公開白名單。歷史固定輪次須明確標示已被取代，不覆寫，也不當作已完成觀察。
 
-The proposal and hundred-day plan are one current document, not separate generations.
-`#ideas` and all its chapter links resolve inside `#plan`. Specification versions
-are revision records of that proposal. Four primary entries remain.
+提案與百日計畫是同一份現行文件，不是不同世代。`#ideas` 及全部章節連結均在 `#plan` 中解析。需求規格版本是該提案的修訂紀錄，保留四個主要入口。
