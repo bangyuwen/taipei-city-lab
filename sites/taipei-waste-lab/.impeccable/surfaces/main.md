@@ -24,29 +24,20 @@ existing petrol/paper tokens rather than adding another visual system.
 
 ## Plan overview
 
-`#plan` presents purpose/MVP scope, a short schedule summary, the four resource
-requests, acceptance and responsibility, pending questions and next steps.
-Its local index names those reading destinations. Resource requests remain fully
-visible. Execution details follow in five native disclosures: configuration
-methods, candidate fields, crew research, conditional checks and blank records.
-Deep links open containing disclosures before focus and scroll.
+`#plan` is the short entry for purpose, status and next action. Its question-based
+index links to focused reading pages. Deep links open containing disclosures
+before focus and scroll on the destination page.
 
-## Dedicated Gantt page
+### Plan reading destinations
 
-`#plan-timeline` owns the generated inauguration-relative chart, delivery milestones,
-and delay rules. Separate pre-inauguration preparation from post-inauguration
-execution. Show each of ten tasks, its days, duration, deliverable and proposed
-roles without disclosure; keep full work and decision gates in a native disclosure.
-The chart uses available space up to 1140px; prose stays at 76ch. Below 800px,
-each task becomes a reading block with labeled outputs and roles and no page-wide
-horizontal scroll. All tracks share the day -45 to 100 scale, with day 0 marking
-inauguration. Bars are planned time windows, not progress or proof of execution.
-Dates, agreements and actual participants are still unconfirmed.
+The plan hub contains purpose, current status, next step and a question-based index.
+Resources, acceptance/responsibility and execution tools have separate pages.
+The inauguration-relative Gantt is split into preparation (-45 to -1) and execution
+(1 to 100); each preserves visible task, day, output and proposed role. Detailed
+schedule gates live with acceptance. Existing anchors follow moved content.
+The shared six-item plan navigation names these reading tasks; PRD, collaboration
+and team handoff remain linked from the hub. Preserve all proposal boundaries.
 
-All five plan pages share 計畫總覽 / 百日甘特圖 / 需求規格 / 協作與承接 / 團隊交接.
-The Gantt page returns to the overview, resources and acceptance. Existing
-`#plan-100day`, `#plan-100day-heading` and `#plan-schedule-details` anchors belong
-to `#plan-timeline`; crew research and blank forms remain in `#plan`.
 
 ## Information ownership and evidence boundaries
 

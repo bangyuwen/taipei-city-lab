@@ -53,10 +53,10 @@ def render_schedule_summary():
             f'<p>以市長上任日為第 0 天，規劃從第 {first} 天至第 {last} 天。'
             '上任前整理現有桶位、候選與原型；上任後先確認承接及基線，'
             '再依核准方案試調、回看與交接。實際日期與承接待確認，未過關卡就延後。</p>'
-            '<p><a href="#plan-timeline">開啟百日甘特圖：查看工作期間、交付節點與責任</a></p></section>')
+            '<p><a href="#plan-preparation">上任前準備</a> · <a href="#plan-timeline">上任後百日</a>：查看工作期間、交付成果與建議角色。</p></section>')
 
 
-def render_schedule():
+def render_schedule_full():
     e = html.escape
     chart = []
     phase = None
@@ -95,6 +95,27 @@ def render_schedule():
         '<p>未過關卡就維持現況或補查；不訂行政區配額、搬桶數或改善百分比。候選表可以沒有可提案位置，百日成果也可以是維持現況及其證據。目前沒有已啟動、已核准或已執行的試辦結果。</p></section>')
 
 
+def render_schedule(phase='after'):
+    full = render_schedule_full()
+    full = re.sub(r'(<h3[^>]*>.*?</h3>)<p>.*?</p>', r'\1<p>第 0 天為市長上任日；長條為預定期間。實際日期、承接與人選待確認，計畫尚未啟動。</p>', full, count=1, flags=re.S)
+    # Each period is a separate reading destination; the source schedule stays shared.
+    full = re.sub(r'<table class="plan-gantt-table">.*?</table>',
+                  lambda m: m[0] if f'data-phase="{phase}"' in m[0] else '', full, flags=re.S)
+    full = re.sub(r'<p><strong>交付節點：</strong>.*?</p>', '', full, flags=re.S)
+    full = re.sub(r'<details class="persona-detail plan-detail">.*?</details>', '', full, flags=re.S)
+    tail = full.index('<p><strong>持續工作與延後規則：')
+    full = full[:tail] + '<p><a href="#plan-readiness">查看完整工作細節、決策關卡與延後規則</a></p></section>'
+    if phase == 'before':
+        full = full.replace('plan-100day', 'plan-preparation-chart')
+    return full
+
+
+def render_schedule_gates():
+    full = render_schedule_full()
+    start = full.index('<details class="persona-detail plan-detail">')
+    return full[start:full.rindex('</section>')]
+
+
 def render(plan):
     e = html.escape
     cases = []
@@ -125,6 +146,12 @@ def build(page_path=None):
     assert page.count(SCHEDULE_START) == page.count(SCHEDULE_END) == 1
     page = re.sub(re.escape(SCHEDULE_START)+r'.*?'+re.escape(SCHEDULE_END),
                   lambda _: SCHEDULE_START+render_schedule()+SCHEDULE_END, page, flags=re.S)
+    for marker, content in [('plan-preparation', render_schedule('before')),
+                            ('plan-gates', render_schedule_gates())]:
+        start, end = f'<!-- {marker}-start -->', f'<!-- {marker}-end -->'
+        assert page.count(start) == page.count(end) == 1
+        page = re.sub(re.escape(start)+r'.*?'+re.escape(end),
+                      lambda _: start+content+end, page, flags=re.S)
     assert page.count(SUMMARY_START) == page.count(SUMMARY_END) == 1
     page = re.sub(re.escape(SUMMARY_START)+r'.*?'+re.escape(SUMMARY_END),
                   lambda _: SUMMARY_START+render_schedule_summary()+SUMMARY_END, page, flags=re.S)

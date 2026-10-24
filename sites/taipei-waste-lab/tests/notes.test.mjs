@@ -53,9 +53,9 @@ paths = {root / e['page'] for e in inventory}
 before = {p: hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
 files = m['build']()
 assert files == m['build'](), 'Reading export must be deterministic'
-assert len(files) == 18
+assert len(files) == 22
 index = files['README.md']
-assert '## 本次補齊的 17 份筆記' in index
+assert '## 本次補齊的 21 份筆記' in index
 for entry in inventory:
     if entry.get('output'):
         assert f'- [{entry["title"]}]({entry["output"]})' in index
