@@ -174,7 +174,7 @@
     "page": "dist/index.html",
     "selector": "#panel-plan",
     "coverage": "部分對應",
-    "reason": "現行權威、查核原則及清潔人員研究已有說明；總覽、四項資源需求、驗收、五項查核與表單整理為同一份正文，完整時程另見百日甘特圖筆記。",
+    "reason": "總覽只保留目標、狀態、下一步與各工作入口；詳細內容各有獨立正文。",
     "notes": [
       "../../topics/bins/research/CURRENT-PLAN.md",
       "../../topics/bins/research/decision-checks-2026-10-22/README.md",
@@ -449,5 +449,57 @@
     "owners": [
       "../youtong/README.md"
     ]
+  },
+  {
+    "title": "上任前準備",
+    "page": "dist/index.html",
+    "selector": "#panel-plan-preparation",
+    "coverage": "缺少完整正文",
+    "reason": "依工作目的拆開的百日計畫內頁，沿用既有內容及證據限制。",
+    "notes": [],
+    "owners": [
+      "dist/index.html",
+      "../../topics/bins/research/decision-checks-2026-10-22/build.py"
+    ],
+    "output": "plan-preparation.md"
+  },
+  {
+    "title": "資源需求",
+    "page": "dist/index.html",
+    "selector": "#panel-plan-resourcing",
+    "coverage": "缺少完整正文",
+    "reason": "依工作目的拆開的百日計畫內頁，沿用既有內容及證據限制。",
+    "notes": [],
+    "owners": [
+      "dist/index.html",
+      "../../topics/bins/research/decision-checks-2026-10-22/build.py"
+    ],
+    "output": "plan-resourcing.md"
+  },
+  {
+    "title": "驗收與責任",
+    "page": "dist/index.html",
+    "selector": "#panel-plan-readiness",
+    "coverage": "缺少完整正文",
+    "reason": "依工作目的拆開的百日計畫內頁，沿用既有內容及證據限制。",
+    "notes": [],
+    "owners": [
+      "dist/index.html",
+      "../../topics/bins/research/decision-checks-2026-10-22/build.py"
+    ],
+    "output": "plan-readiness.md"
+  },
+  {
+    "title": "執行工具",
+    "page": "dist/index.html",
+    "selector": "#panel-plan-tools",
+    "coverage": "缺少完整正文",
+    "reason": "依工作目的拆開的百日計畫內頁，沿用既有內容及證據限制。",
+    "notes": [],
+    "owners": [
+      "dist/index.html",
+      "../../topics/bins/research/decision-checks-2026-10-22/build.py"
+    ],
+    "output": "plan-tools.md"
   }
 ]
