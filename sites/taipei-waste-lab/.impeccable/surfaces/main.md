@@ -69,3 +69,13 @@ checks, and keep the original dirty checkout out of the release.
 Brand comes before primary navigation; website/demo return links form a compact
 secondary group below it. The phone menu continues to toggle both groups.
 Phase jump links and the timeline chart use spacing rather than stacked borders.
+
+
+### Reading section divider ownership
+
+Use one rule at each content boundary. On personas, problem and analysis pages,
+phase/jump navigation is unframed. On the research hub and retained materials,
+the last summary/list row yields its bottom rule to the next section. The map's
+cross-analysis sections use top rules only. On the data-methods document, the
+outer reader item owns the rule and top spacing; its first nested overview section
+adds neither. Keep independent table-row separators and disclosure boundaries.
