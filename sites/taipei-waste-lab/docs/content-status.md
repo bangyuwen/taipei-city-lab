@@ -67,13 +67,14 @@ The current schedule uses inauguration as day 0, preparation from day -45,
 and post-inauguration work through day 100. Pre-inauguration operational trials
 need management/crew agreement; earlier baselines require a comparability check.
 
-The plan overview presents purpose/scope, a short schedule summary, four
-resource categories, acceptance, responsibility and next steps before execution
-details. The dedicated `#plan-timeline` page owns the full Gantt chart, milestones and
-stage handoff table. Existing `#plan-100day`, `#plan-100day-heading` and
-`#plan-schedule-details` links open this page. The schedule has its own
-generated marker pair; a separate generated summary uses the same schedule; the existing decision
-checks marker owns crew research and optional checks in native disclosures.
-Configuration methods, candidate fields and blank observation tools remain in
-the plan under execution details. Existing anchors retain their IDs and open
-the containing disclosures through the shared navigation handler.
+The plan overview contains purpose, current status, next action and a reading index.
+Five plan navigation entries lead to overview, timeline, resources, acceptance /
+responsibility, and execution tools. The dedicated `#plan-timeline` page owns one
+continuous Gantt: preparation from day -45 to -1 followed by execution through
+day 100, with task, deliverable and proposed role visible on every row. Phase
+links jump within the page. Old `#plan-preparation` and `#plan-100day` anchors
+resolve here; `#plan-schedule-details` opens the acceptance page's detailed gates.
+Resources retain all four categories on their own page. Methods, candidate fields,
+crew research, conditional checks and blank forms live in execution tools, using
+native disclosures. The canonical generator owns the timeline and hub summary;
+private notes export one timeline document. Existing anchor IDs are preserved.

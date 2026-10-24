@@ -38,8 +38,8 @@ test('schedule deep links belong to a dedicated page with one generated chart',(
  assert.ok(schedule.includes('href="#plan-resources"'));
  assert.ok(overview.includes('href="#plan-timeline"'));
  assert.ok(!overview.includes('class="plan-timeline"'));
- assert.equal((page.match(/class="plan-timeline"/g)||[]).length,2);
- assert.equal((schedule.match(/class="plan-timeline-label"/g)||[]).length,6);
+ assert.equal((page.match(/class="plan-timeline"/g)||[]).length,1);
+ assert.equal((schedule.match(/class="plan-timeline-label"/g)||[]).length,10);
  const ids=[...page.matchAll(/\sid="([^"]+)"/g)].map(m=>m[1]);
  assert.equal(new Set(ids).size,ids.length,'New route must not shadow historical timeline IDs');
 });
@@ -51,8 +51,8 @@ test('Gantt exposes task outputs and proposed roles in separate before/after pha
  assert.equal((chart.match(/class="plan-gantt-mobile-label"/g)||[]).length,20);
  assert.ok(!chart.includes('class="plan-gantt-mobile-label" aria-hidden'));
  const phases=[...chart.matchAll(/<tbody data-phase="(before|after)">(.*?)<\/tbody>/gs)];
- assert.deepEqual(phases.map(m=>m[1]),['after','before']);
- assert.deepEqual(phases.map(m=>(m[2].match(/class="plan-gantt-task"/g)||[]).length),[6,4]);
+ assert.deepEqual(phases.map(m=>m[1]),['before','after']);
+ assert.deepEqual(phases.map(m=>(m[2].match(/class="plan-gantt-task"/g)||[]).length),[4,6]);
  const rows=[...chart.matchAll(/<tr class="plan-gantt-task">(.*?)<\/tr>/gs)].map(m=>m[1]);
  for(const row of rows){
   assert.match(row,/class="plan-timeline-label"/);
@@ -76,10 +76,23 @@ test('plan hub is short and all moved deep links resolve to the panel containing
  assert.ok(!hub.includes('id="plan-validation"'));
  assert.ok(!hub.includes('id="plan-execution"'));
  assert.ok(hub.replace(/<[^>]+>/g,'').length<1800);
- for(const route of ['plan-preparation','plan-resourcing','plan-readiness','plan-tools']){
+ for(const route of ['plan-resourcing','plan-readiness','plan-tools']){
   assert.equal(workspaceForPage(route),'plan');
   const block=page.split('<section id="panel-'+route+'"')[1].split('<section id="panel-')[0];
   for(const id of [...block.matchAll(/\sid="([^"]+)"/g)].map(m=>m[1]))assert.equal(pageFromHash('#'+id),route,id);
  }
  assert.equal(pageFromHash('#plan-acceptance'),'archive');
+});
+
+test('preparation links jump into the unified timeline, never a second page',()=>{
+ const page=read('dist/index.html');
+ assert.ok(!allowedPages.includes('plan-preparation'));
+ const schedule=page.split('<section id="panel-plan-timeline"')[1].split('<section id="panel-plan-resourcing"')[0];
+ assert.ok(!page.includes('<section id="panel-plan-preparation"'));
+ for(const id of ['plan-preparation','plan-preparation-heading','plan-preparation-chart','plan-preparation-chart-heading','panel-plan-preparation','plan-after-inauguration']){
+  assert.equal(pageFromHash('#'+id),'plan-timeline');
+  assert.ok(schedule.includes('id="'+id+'"'));
+ }
+ assert.ok(schedule.includes('aria-label="時間軸階段"'));
+ assert.ok(schedule.indexOf('data-phase="before"')<schedule.indexOf('data-phase="after"'));
 });

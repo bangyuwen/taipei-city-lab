@@ -190,11 +190,11 @@
     "output": "plan.md"
   },
   {
-    "title": "百日甘特圖與交付關卡",
+    "title": "完整時間軸：上任前準備與上任後百日",
     "page": "dist/index.html",
     "selector": "#panel-plan-timeline",
     "coverage": "部分對應",
-    "reason": "保留以市長上任為第0天的規劃窗口、交付、責任與延後條件；獨立頁面與計畫總覽互相連結。",
+    "reason": "同一時間軸頁連續呈現上任前後十項工作、交付成果與建議角色；頁內階段入口可快速跳轉，詳細關卡連至驗收與責任。",
     "notes": [
       "../../topics/bins/research/CURRENT-PLAN.md",
       "../../topics/bins/research/decision-checks-2026-10-22/README.md"
@@ -449,19 +449,6 @@
     "owners": [
       "../youtong/README.md"
     ]
-  },
-  {
-    "title": "上任前準備",
-    "page": "dist/index.html",
-    "selector": "#panel-plan-preparation",
-    "coverage": "缺少完整正文",
-    "reason": "依工作目的拆開的百日計畫內頁，沿用既有內容及證據限制。",
-    "notes": [],
-    "owners": [
-      "dist/index.html",
-      "../../topics/bins/research/decision-checks-2026-10-22/build.py"
-    ],
-    "output": "plan-preparation.md"
   },
   {
     "title": "資源需求",
