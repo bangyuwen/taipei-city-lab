@@ -4,24 +4,13 @@
 
 正式站：[youtong](https://youtong.bangyuwen.chatgpt.site)，只發布 GitHub `main`。原[台北垃圾箱研究](https://taipei-waste-lab.bangyuwen.chatgpt.site)保留為測試站。發布流程與五分鐘自動檢查見[正式站部署](docs/production-deployment.md)。網站程式與部署產物位於 `sites/taipei-waste-lab/`；本題資料、模型與研究入口見[垃圾箱題目目錄](../../topics/bins/README.md)。Sites 部署使用本站自己的 Git 與 `.openai/hosting.json`。
 
-## Combined publication
+## 整合發布
 
-The homepage has equal entrances for residents and research readers. `/research/`
-keeps the research interface; `/demo/` opens the pedestrian prototype, with role
-links to planning and simulated collection. Old root hash/query links redirect to
-`/research/` while preserving both values. Historical standalone HTML links also
-redirect to their research paths.
+首頁並列居民與研究讀者入口。`/research/` 保留研究介面；`/demo/` 開啟行人原型，並提供規劃與模擬清運角色連結。舊根目錄 hash／query 連結轉至 `/research/`，兩者值均保留；歷史獨立 HTML 連結也轉至對應研究路徑。
 
-Use Python 3.12 or newer. `npm run prepare-data` and `npm run check` build the
-combined `public/` output; `npm run preview` serves that directory. To assemble
-already-generated research without regenerating retained research packages, run
-`python scripts/prepare-public.py` followed by `python scripts/prepare-portal.py`.
-The hosting project identity is unchanged; its static directory is `public`.
+使用 Python 3.12 以上版本。`npm run prepare-data` 與 `npm run check` 建置整合 `public/` 輸出；`npm run preview` 提供該目錄預覽。若僅組裝已產生的研究內容、不重建保存研究包，依序執行 `python scripts/prepare-public.py` 與 `python scripts/prepare-portal.py`。託管專案身分不變，靜態目錄為 `public`。
 
-The demo uses `有桶demo_v1_` local storage and makes no Firebase requests. Reports
-and collection actions remain browser-local simulations. The displayed plan
-version is generated from the canonical decision-check source. See
-[demo scope](../youtong/README.md) and `tests/portal.test.mjs`.
+體驗使用 `有桶demo_v1_` 本機儲存，不發送 Firebase 請求。回報與清運操作仍為瀏覽器本機模擬。顯示的計畫版本由正式決策查核來源產生。見[體驗範圍](../youtong/README.md)與 `tests/portal.test.mjs`。
 
 ## 閱讀入口與資訊歸屬
 
@@ -78,23 +67,13 @@ version is generated from the canonical decision-check source. See
 
 ## 研究筆記
 
-### Website-to-Markdown coverage
+### 網站與 Markdown 筆記對應
 
-The [coverage inventory](docs/website-notes.json) maps all 23 research panels
-and seven other page/interface groups to their existing notes and content owners.
-Run `npm run prepare-notes` in this site directory to generate the private
-[reading index](notes/README.md) and the 16 missing or partial reading notes.
-This command requires the full repository, including `topics/bins/` and
-`sites/youtong/`, and reads the current local site, not the deployed website.
+[內容盤點](docs/website-notes.json) 將全部 23 個研究區塊及另外七組頁面／介面，對應到既有筆記與內容維護來源。在本站目錄執行 `npm run prepare-notes`，產生私人[閱讀索引](notes/README.md)，以及原本缺少或不完整的 16 份閱讀筆記。此命令須使用完整儲存庫，包含 `topics/bins/` 與 `sites/youtong/`；它讀取目前本機網站，不讀取已部署網站。
 
-Keep editing the owners listed in each note. Existing research Markdown stays
-canonical; authored HTML, JSON and their renderers retain their current ownership.
-After rebuilding affected website content, rerun `npm run prepare-notes`.
-`npm run check-notes` detects missing, stale or no-longer-inventoried Markdown
-exports relative to those local HTML files; it does not verify that upstream research has already been rebuilt.
-The export never edits website content or research inputs. Do not edit `notes/`:
-it is reproducible, Git-ignored and excluded from public publication. Maps, 3D
-views and browser-local simulation state remain interactive website content.
+仍編輯各筆記列出的正式來源。既有研究 Markdown 維持唯一原稿；HTML、JSON 及其產生器維持既有權責。重建受影響網站內容後，再執行 `npm run prepare-notes`。`npm run check-notes` 依本機 HTML 檢查缺少、過期或已不在盤點中的 Markdown 匯出，不驗證上游研究是否已重建。匯出不改動網站內容或研究輸入。
+
+筆記與索引說明採繁體中文；檔名、命令、識別碼及原文書目保留原文。索引篇名直接取自正式 Markdown 的標題或既有內容盤點，不另維護翻譯對照表。請勿直接編輯 `notes/`：它可重建、由 Git 忽略，且不公開發布。地圖、3D 與瀏覽器本機模擬狀態仍留在互動網站。
 
 - [中山站配置決策案例](dist/cases/zhongshan.html)：以既有站內服務與街道清冊走過保留、指引、清運、移位與增設的判斷；預算與現場缺口維持未知。正式來源在 `topics/bins/research/placement-case-2026-10-23/`，由 `scripts/prepare-placement-case.py` 重建，網站路徑為 `/research/cases/zhongshan.html`。
 
@@ -147,11 +126,11 @@ npm run preview
 
 概念設計入口為 `#design`，從材料頁的舊研究判讀進入。四款均為本站概念；選用途後，依固定投放／清運步驟查看分流、滿載、感測離線與家戶確認的示意，尺寸與物件不另提供自訂。WebGL 失效時文字流程仍可完整操作。沒有實際感測、身分辨識、付款或成效預測；假設見[用途體驗文件](../../topics/bins/docs/bin-design.md)。
 
-The project workspace has five stable areas: `#research` (work overview), `#analysis` (hotspot research), `#ideas` (scenario comparison), `#plan` (execution responsibilities), and `#library` (reference library). The home page links completed desktop deliverables to planned next steps and unresolved ownership, without inventing task assignments, deadlines or completion percentages. Each page belongs to exactly one workspace through `workspacePages` in `dist/data-utils.js`; the main navigation highlights that workspace, and static breadcrumbs plus local navigation show the page's location even for direct links.
+專案工作區分為五個固定區域：`#research`（工作總覽）、`#analysis`（熱點研究）、`#ideas`（方案比較）、`#plan`（執行分工）及 `#library`（參考庫）。首頁將已完成的案頭交付物連到規劃中的下一步及待確認權責，不虛構任務指派、期限或完成百分比。`dist/data-utils.js` 的 `workspacePages` 將每頁歸於一個工作區；主導覽標示該區，靜態麵包屑與區域導覽讓直接進入連結的讀者也能辨識位置。
 
-Team responsibilities and the development handoff live at `#team` under execution, separate from government work packages at `#work`. Methods and shared requirements use continuous documents with section indexes. Districts, evidence records, government work packages and historical chapters retain native selectors. All former fragments remain addressable; old PRD responsibility links now open their team-owned destination. Historical Taipei records, country cases, source documents and older decisions are found through the library.
+團隊責任與開發交接位於執行區的 `#team`，與 `#work` 的政府工作包分開。方法與共同需求採附章節索引的連續文件。行政區、證據紀錄、政府工作包與歷史章節保留原生選擇器。所有舊 fragment 仍可定位；舊 PRD 責任連結開啟團隊所屬頁。臺北歷史紀錄、各國案例、來源文件與早期決策由參考庫進入。
 
-The existing source and materials pages retain their full references, earlier prototypes and unexecuted estimates. `package-research.py` generates the historical plan in `#archive`; the citywide publisher writes separate summary and reader regions. Research runtime assets remain protected by the `out/` allowlist and are published under `public/research/`, with no private attachments or download entry points.
+既有來源及材料頁保留完整引用、早期原型與未執行估計。`package-research.py` 產生 `#archive` 歷史計畫；全市發布程式分別寫入摘要及閱讀區。研究執行資產仍受 `out/` 白名單保護，發布於 `public/research/`，不含私人附件或下載入口。
 
 版本比較 `#comparison` 共用行政區與地址範圍，範圍摘要、五類組數及距離分布隨之連動。分類選擇只縮小結果清單，不改寫範圍分母。預設顯示全部分類；同址座標差距納入同一清單排序，不另重複前十名。完整全市行政區表放在清單之後直接閱讀，明示不受篩選影響；完整配對及距離方法歸來源頁。追加結果、距離延遲載入及從來源地圖返回會保留已展開證據；主資料與距離資料各有重試入口。
 
@@ -174,38 +153,29 @@ The existing source and materials pages retain their full references, earlier pr
 - `dist/research/`：私人研究文件與離線 ZIP；公開輸出只保留候選清單顯示所需的 `desk-results.json`。
 - `.openai/hosting.json`：本站部署身分與靜態目錄。
 
-### Redesign checks
+### 視覺改版檢查
 
-The standalone visual system is recorded in [DESIGN.md](DESIGN.md) and
-`.impeccable/design.json`. Its scope is this site, not the shared topic template.
+獨立視覺系統記於 [DESIGN.md](DESIGN.md) 與 `.impeccable/design.json`，範圍僅本站，不含共用主題模板。
 
-With `out/` served at `http://127.0.0.1:4174/`, run:
+將 `out/` 提供於 `http://127.0.0.1:4174/` 後執行：
 
 ```sh
 node scripts/check-redesign-browser.mjs
 ```
 
-Use `REDESIGN_QA_URL` to change the URL, `PLAYWRIGHT_MODULE` for an existing
-Playwright module, and `CHROME_PATH` for an installed browser. The check covers
-nine routes at 320, 390, 720 and 1440 px; both sides of the 640 and 960 px
-breakpoints; menu focus; map keyboard order; route scroll and filter retention;
-comparison retry; image fallback; and the absence of download controls.
-Viewport and full-page evidence is generated in ignored `.impeccable/review/`.
-External map tiles require network access; this check does not certify the
-availability of the tile provider. The separate design browser check covers
-the four simulation purposes and WebGL fallback.
+使用 `REDESIGN_QA_URL` 變更網址，`PLAYWRIGHT_MODULE` 指定既有 Playwright 模組，`CHROME_PATH` 指定已安裝瀏覽器。檢查涵蓋九條路徑在 320、390、720、1440 px 的呈現，640／960 px 斷點兩側、選單焦點、地圖鍵盤順序、切頁捲動及篩選保留、比較重試、圖片備援及無下載控制。視窗與整頁證據產生於忽略的 `.impeccable/review/`。外部圖磚須連網，此檢查不保證圖磚供應者可用。另一項設計瀏覽器檢查涵蓋四種模擬用途與 WebGL 備援。
 
 ## 授權
 
 自寫程式採 MIT。Leaflet 與 Three.js 保留原 MIT 授權；字型保留 OFL 授權；政府資料及歷史副本依各來源條款使用。OpenStreetMap 底圖保留出處，按瀏覽範圍載入。
 
-## Country 3D viewer
+## 各國 3D 閱讀器
 
-The country reader shows one selected case, using a single native selector grouped by service purpose. Real photos are the default; photo and 3D share one media area. All captions, attribution, licenses, identity limitations, operational evidence and costs remain readable. Australia explicitly has no embedded redistributable photo. Three.js loads only on the first model request and reuses its canvas. The viewer offers play/pause/replay, reset and zoom, with drag and keyboard camera controls. Switching to the photo, leaving the viewport, hiding the tab or changing routes suspends rendering. Reduced motion displays the completed action without animation. Timeline, turntable, preset-view menus, quizzes and layered disclosures are removed. Taipei's two official recycling notes have one readable home in Sources and Methods.
+各國閱讀器一次顯示一個案例，以依服務用途分組的單一原生選單選取。預設實拍，照片與 3D 共用影像區；圖說、署名、授權、身分對應限制、作業證據與成本均可閱讀。澳洲明示沒有內嵌可再散布照片。Three.js 第一次要求模型時才載入，並重用畫布。閱讀器提供播放／暫停／重播、重設、縮放，以及拖曳／鍵盤鏡頭控制。切換照片、離開可視範圍、隱藏分頁或切頁時暫停繪製。減少動態模式直接顯示完成動作，不播放動畫。已移除時間軸、旋轉展示台、預設視角選單、測驗及多層展開。臺北兩則官方回收說明集中於來源與方法，只維護一份可讀內容。
 
-The authored Three.js meshes and their actions are photo-reference illustrations, not measured or manufacturer models. Hidden surfaces, proportions and movement paths are inferred; animated flaps, lids, items and collection steps do not establish the real equipment's operating mechanism. Case-specific photo mismatches appear alongside each model. India depicts a collection service; Australia uses a generic receiving-station concept because no redistributable equipment photo is embedded. These models do not establish dimensions, capacity or performance.
+自製 Three.js 網格與動作是參考照片的示意，不是量測或製造商模型。隱藏表面、比例與移動路徑含推定；活動擋板、上蓋、物件及清運步驟不確立真實設備機制。各模型旁保留與案例照片不符之處。印度呈現收運服務；澳洲因未內嵌可再散布設備照片，採通用收受站概念。模型不證明尺寸、容量或性能。
 
-The metadata lives in `dist/country-model-data.js`; geometry lives in `dist/country-models.js`. Keep these distinct from the purpose simulator. Add any runtime file to `scripts/prepare-public.py`. Run `npm test`, `npm run check`, `node scripts/check-country-browser.mjs`, and `node scripts/check-country-play-browser.mjs` against the preview (optional `COUNTRY_QA_URL`, `PLAYWRIGHT_MODULE`, `CHROME_PATH`). The browser checks cover all twelve cases and their photo/source preservation; representative opening, deposit and collection sequences cover play/pause/replay/reset, tap versus drag, reduced motion and suspended rendering on desktop and mobile. All twelve model action poses also have deterministic unit coverage. Screenshots and browser evidence are generated under ignored `.impeccable/review/`. Rebuild the private research ZIP with `npm run prepare-data` after editing HTML.
+描述資料位於 `dist/country-model-data.js`，幾何位於 `dist/country-models.js`，與用途模擬器分開。新增執行檔須加入 `scripts/prepare-public.py`。對預覽執行 `npm test`、`npm run check`、`node scripts/check-country-browser.mjs` 及 `node scripts/check-country-play-browser.mjs`，可選設 `COUNTRY_QA_URL`、`PLAYWRIGHT_MODULE`、`CHROME_PATH`。瀏覽器檢查涵蓋十二案例與照片／來源保留；代表性的開啟、投放、清運流程涵蓋桌機／手機的播放／暫停／重播／重設、點按與拖曳、減少動態及暫停繪製。十二模型動作姿態亦有確定性單元測試。截圖及瀏覽器證據產生於忽略的 `.impeccable/review/`。編輯 HTML 後，以 `npm run prepare-data` 重建私人研究 ZIP。
 
 ## 設點與歷史疊圖
 
@@ -217,57 +187,49 @@ The metadata lives in `dist/country-model-data.js`; geometry lives in `dist/coun
 
 預覽 `out/` 後，以 `SITING_QA_URL` 指定網址，執行 `node scripts/check-siting-browser.mjs`。可沿用 `PLAYWRIGHT_MODULE` 與 `CHROME_PATH`；檢查延後載入、頁籤與設計入口、返回時篩選保留、桌機／手機尺寸、點選定位、載入重試與私人輸入路徑，畫面證據留在忽略的 `.impeccable/review/siting/`。
 
-Use `--functional-only` with `check-redesign-browser.mjs` or `check-browser.py` to rerun behavior and responsive bounds without writing screenshots.
+對 `check-redesign-browser.mjs` 或 `check-browser.py` 加上 `--functional-only`，可重跑行為及響應式邊界檢查而不寫入截圖。
 
-### Desktop assessments for ten retained sites
+### 十個保存地點的案頭評估
 
-The siting overlay and printable `field-checklist.html` now present desktop-only judgments from the same curated `data/field-priorities.json`. The existing `#siting` path remains addressable under Research results. The old field-visit P1/P2 assignments are replaced by two explicit dimensions: addition-evaluation priority (one review, five lower, four hold) and evidence confidence (seven medium, three low). Confidence describes consistency of the saved evidence, not field accuracy or a probability. Shilin deliberately combines medium confidence with hold priority: consistent scene/record evidence does not establish spatial feasibility.
+設點疊圖與可列印 `field-checklist.html` 使用同一份編輯資料 `data/field-priorities.json`，呈現僅限案頭證據的判斷。既有 `#siting` 路徑仍可由研究成果進入。舊現勘 P1／P2 分派改為兩個明確面向：增設評估優先程度（一處複核、五處較低、四處暫緩），以及證據信心（七處中等、三處低）。信心描述保存證據的一致性，不是實地準確率或機率。士林刻意同時標為中等信心及暫緩：場景／紀錄一致不證明空間可行。
 
-Each map marker, shortlist entry, popup and printable sheet identifies both dimensions. Details explain the priority and confidence reasons, retained evidence, limits and current recommendation. The source snapshot remains dated 2026-10-17; no new observations, demand measurements, weighted score or citywide ranking were created. The 425 polygons and five historical snapshots remain unchanged. Private research inputs and attachments remain excluded from the 56-file public allowlist.
+各地圖標記、短清單、彈出視窗及列印表均標明兩面向。細節說明優先程度與信心理由、保存證據、限制及目前建議。來源快照仍為 2026-10-17，未新增觀察、需求量測、加權分數或全市排名。425 個多邊形及五份歷史快照不變。私人研究輸入及附件仍排除於當時 56 檔的公開白名單。
 
-The existing map priority filter uses the new categories and retains its district/search intersections. The printable data-reading table has its own category filter; visible sheets, index, page count and sequential page numbers update together, while source site IDs stay fixed. Printing uses the selected sheets. No field visit tasks, record uploads or stored form data are introduced. Browser checks cover content parity, filters, printing, responsive layout and private attachment exclusions.
+既有地圖優先篩選採新類別，保留行政區／搜尋交集。列印資料閱讀表有獨立類別篩選；可見表單、索引、頁數及連續頁碼同步更新，來源地點 ID 不變。列印使用選取表單，不新增現勘任務、紀錄上傳或表單儲存。瀏覽器檢查涵蓋內容一致、篩選、列印、響應式版面及私人附件排除。
 
 ## 百日計畫
 
 `#plan` 提供完整的百日建置與營運交接提案，研究與執行材料及頁尾皆有入口。`package-research.py` 由 canonical `topics/bins/research/hundred-day-plan-2026-10-17/README.md`（獨立 checkout 使用 `research/` 副本）產生正文、章節連結與表格。第 100 天須完成行人服務的設備、人員與實際服務驗收；家戶服務不列入本期工作、預算或驗收。30 處、備援、預算及權責仍待承接單位確認。舊估算與 180 日營運材料保留並註明與百日建置的關係。僅公開 HTML 正文，不公開 Markdown、參數附件或離線 ZIP。
 
-## Preserved location evidence summary
+## 保存的位置證據摘要
 
-The materials page retains the dated 2026 public location records and 2025 annual statistics at `#current-evidence-heading`. The homepage now leads with the current problem conclusions and their comment evidence; it links to the preserved records for deeper reading. The summary uses the retained 2026-10-15 source recovery and source audit under `topics/bins/research/`; it is not a live inventory. Record counts, statistical units, source dates and unresolved coverage stay together. Field confirmation and the unstarted hundred-day proposal have separate labels. The summary is maintained in `dist/index.html` outside generated research markers, so the existing package rebuild preserves it. No route, runtime asset or public attachment was added.
+材料頁在 `#current-evidence-heading` 保留附日期的 2026 年公開位置紀錄及 2025 年統計。首頁先呈現現行問題結論及留言證據，再連向保存紀錄供深入閱讀。摘要使用 `topics/bins/research/` 的 2026-10-15 來源回復及查核，不是即時清冊。筆數、統計單位、來源日期與未解覆蓋問題放在一起；現地確認與尚未啟動的百日提案另標。摘要由 `dist/index.html` 維護，位於研究產生標記外，既有封裝重建會保留。未新增路徑、執行資產或公開附件。
 
-### Problem definition audit
+### 問題定義盤點
 
-`#definition-audit-heading` records the 2026-10-18 retrospective analysis summary.
-The canonical public record is authored in `dist/index.html`: five grouping logs,
-four original-to-draft problem explanations, six attributed user decisions, and
-28 anonymized evidence paraphrases with bidirectional links. E identifiers are
-stable lookup keys, not frequency or priority ranks. Original comments and the
-E-to-source-row crosswalk remain in the private research workspace; do not add
-them to the public asset allowlist. Publication does not confirm the hypotheses.
+`#definition-audit-heading` 記錄 2026-10-18 回溯分析摘要。正式公開紀錄寫於 `dist/index.html`：五份分組紀錄、四組原問題至草稿說明、六項標明歸屬的使用者決策，以及 28 則附雙向連結的匿名證據轉述。E 識別碼是穩定查詢鍵，不是頻率或優先排名。原始留言及 E 與來源列的對照仍在私人研究工作區，不加入公開白名單。發布不代表假設已確認。
 
-Run `scripts/check-definition-browser.mjs` against a prepared local preview to
-check deep links, evidence round trips, attribution counts and mobile bounds.
+對準備好的本機預覽執行 `scripts/check-definition-browser.mjs`，檢查深連結、證據往返、歸屬數量及手機邊界。
 
 先前局部案例（已由D18更正為全市範圍）：`research/gongguan-hotspots-2026-10-19/README.md`，含可重跑 notebook、完整來源／結果、五處觀察錨點、政府分工與交接方案。公開摘要位於 `#hotspot-heading`；原始附件仍不公開。
 
 範圍修正：使用者要求全臺北市規劃，D18取代公館單一生活圈作為研究邊界。全市成果：`research/taipei-citywide-2026-10-19/README.md`，Notebook、全站表與12區政府分工均保留；公館舊版只作歷史案例。
 
 
-### Citywide handoff and first-round field plan
+### 全市交接與首輪現勘計畫
 
-`research/taipei-citywide-2026-10-19/delivery/` contains the hotspot and government handoffs, 39 anchor records, 13 area readiness rows, 234 unexecuted visit templates, scope setup, per-service-point form, three-wave plan and capacity scenarios. All rows remain planned or unknown until fieldwork. The public site presents summaries under analysis, district checks and execution work records; raw tables and attachments remain private. `delivery/build_handoff.py` regenerates templates from fixed analysis results without changing the analysis protocol. Copy templates before entering real observations.
+`research/taipei-citywide-2026-10-19/delivery/` 包含熱點與政府交接、39 筆錨點、13 列區域準備度、234 份未執行訪視模板、範圍設定、逐服務點表單、三波計畫及容量情境。現勘前，所有列仍屬規劃或未知。公開站於分析、行政區查核及執行工作紀錄呈現摘要；原表與附件保持私有。`delivery/build_handoff.py` 由固定分析結果重建模板，不改分析協定。填入實際觀察前，先複製模板。
 
-`npm run prepare-data` refreshes the citywide publisher from canonical topic inputs (or the standalone source package) before packaging private research and staging public assets. Source changes therefore update the derived field records and public summary together.
+`npm run prepare-data` 在封裝私人研究及準備公開資產前，由正式主題輸入或獨立來源包更新全市發布程式，使來源變動同步反映於衍生現勘紀錄及公開摘要。
 
-## Research synchronization (2026-10-22)
+## 研究同步（2026-10-22）
 
-The research pages now cover personas and disposal journeys, quantitative citywide evidence, the current problem definition, PRD v0.5 and blank field records. Canonical evidence and generators remain in `topics/bins/research/`; `npm run build` refreshes the standalone copies and private offline archive. The citywide publisher retains its historical layout and is not replayed during normal builds. Field handoffs and blank forms are regenerated without replacing the current research pages.
+當次研究頁涵蓋人物與投放旅程、全市量化證據、現行問題定義、PRD v0.5 及空白現勘紀錄。正式證據與產生器仍位於 `topics/bins/research/`；`npm run build` 更新獨立副本與私人離線封存。全市發布程式保留歷史版面，一般建置不重播；現勘交接及空白表單重建時，不取代目前研究頁。
 
-The 12-district venue rechecks, proposed fieldwork order, MRT top-10 comparison, and Zhongshan / Zhongxiao Xinsheng follow-up retain separate dates, source rows and unknowns. Venue place counts are never converted to usable bin counts. The September OD raw file is too large for Git; its official URL, retrieval receipts and compact station/day extract are retained in the MRT study. Public output remains restricted by the existing runtime asset allowlist.
+12 區場所複查、現勘順序提案、捷運前十站比較及中山／忠孝新生追查，分別保留日期、來源列及未知。場所處數絕不轉成可用桶數。9 月 OD 原檔過大，不存入 Git；官方網址、取得紀錄及精簡站日摘錄保留於捷運研究。公開輸出仍限於既有執行資產白名單。
 
-## Transport and bin cross-check
+## 交通與桶位交叉檢查
 
-The `#map` page joins retained July YouBike endpoint activity, the official bus snapshot updated on 2026-10-22, and the 2026 bin inventory. Run `npm run prepare-cross-analysis` to regenerate the runtime data. See [cross-analysis.md](docs/cross-analysis.md) for scope, provenance and limitations. Raw inputs stay private; only the required map data is staged.
+`#map` 整合保存的 7 月 YouBike 端點活動、2026-10-22 更新的官方公車快照及 2026 桶位清冊。執行 `npm run prepare-cross-analysis` 重建執行資料。範圍、溯源及限制見[交通活動與垃圾桶位置交叉檢查](docs/cross-analysis.md)。原始輸入保持私有，只輸出必要地圖資料。
 
-
-The map now also compares July MRT OD activity with the union of station-exit buffers, nearby YouBike activity and retained bus stops. Citywide complaint acceptance-hour charts are kept separate because the official case file has no locations. Run `npm run prepare-transport-time` to regenerate the retained raw-source aggregates, then `npm run prepare-cross-analysis`. See [cross-analysis methodology](docs/cross-analysis.md) for source custody, period exclusions, unmatched stations and interpretation limits.
+地圖另比較 7 月捷運 OD 活動、車站出口範圍聯集、附近 YouBike 活動及保存公車站位。官方案件檔沒有位置，全市陳情受理時段圖因此分開呈現。先執行 `npm run prepare-transport-time` 重建保存來源彙總，再執行 `npm run prepare-cross-analysis`。來源保存與追溯、期間排除、未配對車站及判讀限制見[交叉分析方法](docs/cross-analysis.md)。

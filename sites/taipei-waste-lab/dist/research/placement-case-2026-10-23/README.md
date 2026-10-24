@@ -1,32 +1,13 @@
-# Zhongshan placement decision case
+# 中山站設點決策案例
 
-Prepared on 2026-10-23 from retained evidence checked on 2026-10-22. This case
-applies the user's selected rule: cap total operating cost, compare adjustments
-to existing bins first, and consider additions only for confirmed unmet demand.
+於 2026-10-23 編製，使用 2026-10-22 已查核並保存的證據。本案例套用使用者選定的規則：限制總營運成本，優先比較既有桶位調整，僅在確認未滿足需求後才考慮新增。
 
-The reader follows one unresolved service question around Zhongshan station's
-information desk and exits 1 and 4. It is a proposed use scenario, not an observed
-journey. No fieldwork, manager response, budget allocation, relocation candidate,
-cost estimate, pilot result, or approved installation is introduced.
+讀者沿著中山站詢問處及 1、4 號出口附近的一個未解服務問題閱讀。這是使用情境提案，不是已觀察旅程。未新增現勘、管理者回應、預算分配、移桶候選、成本估算、試行結果或核准設置。
 
-`page.html` owns the case narrative and its local presentation. `render.py`
-validates `inputs.json`, fills quantitative fields from the retained two-station
-results, generates `dist/cases/zhongshan.html`, and inserts one bounded link beside
-the existing Zhongshan evidence. It works from the canonical topic package or its
-generated standalone-site copy. It does not fetch current sources or modify
-historical inputs. The page preserves dates and null/unknown meanings.
+`page.html` 維護案例正文及頁面呈現。`render.py` 驗證 `inputs.json`，由保存的兩站結果填入量化欄位，產生 `dist/cases/zhongshan.html`，並在既有中山證據旁加入一個限定範圍的連結。可由正式主題資料包或其獨立網站產生副本執行，不抓取最新來源、不改動歷史輸入。頁面保留日期及 null／未知的意義。
 
-Rebuild from the site with `python3 scripts/prepare-placement-case.py`,
-`python3 scripts/prepare-public.py`, then
-`python3 scripts/prepare-portal.py`. The first command renders the case; the second stages
-only allowlisted runtime files. The raw evidence, source manifest, and source
-package remain private. The delivered route is `/research/cases/zhongshan.html`.
+由網站目錄依序執行 `python3 scripts/prepare-placement-case.py`、`python3 scripts/prepare-public.py` 及 `python3 scripts/prepare-portal.py`。第一個命令產生案例；第二個僅輸出白名單執行檔。原始證據、來源清單與來源包保持私有。交付路徑為 `/research/cases/zhongshan.html`。
 
-The new page inherits the existing petrol navigation, cool paper background,
-system typography, quiet rules and native disclosures. It adds no shared visual
-system changes. Verify desktop/mobile rendering, source links, disclosure
-operation, generated values, idempotence and historical input digests.
+新頁沿用既有深藍綠導覽、冷色紙張背景、系統字體、低調分隔線與原生展開元件，不修改共用視覺系統。須驗證桌機／手機呈現、來源連結、展開操作、產生數值、冪等性及歷史輸入雜湊。
 
-The full `npm run prepare-data` build renders the case before creating the
-private research ZIP. The ZIP contains `dist/cases/zhongshan.html`; its local
-links name `index.html` explicitly so they also resolve after extraction.
+完整 `npm run prepare-data` 會先產生案例，再建立私人研究 ZIP。ZIP 包含 `dist/cases/zhongshan.html`；本機連結明列 `index.html`，解壓後也能解析。

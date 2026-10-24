@@ -1,25 +1,25 @@
-# Zhongshan and Zhongxiao Xinsheng venue recheck
+# 中山與忠孝新生站場所紀錄複查
 
-Checked on 2026-10-22. This bounded follow-up checks venue location, access conditions and duplicate relationships for two stations. It does not estimate usable bins, select new installations, or replace the frozen ten-station comparison.
+查核日期：2026-10-22。本次有限追查檢查兩站場所位置、使用條件及重複關係，不估算可用桶數、不選定新增位置，也不取代已凍結的十站比較。
 
-## Findings and claim boundaries
+## 發現與論述界線
 
-- The freshly retrieved August 18 venue file has 130 parsed rows, identical to the retained prior file. Preserve rows 34, 54 and 68 (including header). The two Xinsheng rows differ only in district; matching attributes do not prove that the same physical facilities were counted. Physical overlap and usable-bin counts remain null in `results.json`.
-- Metro's November 7, 2022 announcement identifies a service strip containing trash bins at the Tamsui-Xinyi Zhongshan station. Metro reiterated it on October 20, 2023. TDRI's December 12, 2025 project case identifies integrated facilities extending to either side of the information desk. None gives the venue file's ten individual locations, unique bin IDs, present status, or a mapping to the August venue record.
-- Current Metro pages provide station addresses and information-desk locations. These are fieldwork starting points, not verified trash-bin locations. Zhongshan's venue district and station-address district differ; neither was silently corrected.
-- Both official maps were visually inspected. The retained Zhongshan map is labeled G14R11-SW(26.05); Xinsheng is BL14O07-SW(24.01). Neither legend identifies trash bins. This is a map limitation, not evidence of absence. The diagrams do not resolve paid-area placement of unidentified bins.
-- The official bilingual glossary includes the Metro label “禁止丟棄家庭垃圾”. It establishes official wording only, not its presence on each station's bins, accepted waste types, public access or opening hours.
-- October 21 street data contains 661 records, 659 with valid coordinates. With the same August 4 exit coordinates, both stations remain at zero rows within 100/200/300 m. Zhongshan has one within 500 m; Xinsheng has zero. Record changes do not establish actual installation/removal dates. Only these two stations were recalculated.
+- 重新取得的 8 月 18 日場所檔，解析後有 130 列，與先前保存檔相同。保留第 34、54、68 列（含表頭）。兩筆新生紀錄僅行政區不同；屬性相同不證明計入同一批實體設施。實體重疊與可用桶數在 `results.json` 中維持 null。
+- 北捷 2022 年 11 月 7 日公告指出，淡水信義線中山站有整合垃圾桶的服務帶，2023 年 10 月 20 日再次說明。TDRI 2025 年 12 月 12 日專案案例指出，整合設施延伸至詢問處兩側。這些來源均未提供場所檔所列十處的個別位置、唯一桶號、現況或與 8 月場所紀錄的對照。
+- 現行北捷頁面提供站址與詢問處位置，可作為現勘起點，但不是核實的垃圾桶位置。中山場所紀錄的行政區與站址行政區不同，未擅自修正任一來源。
+- 已目視檢查兩站官方地圖。保存的中山圖標示 G14R11-SW(26.05)，新生圖為 BL14O07-SW(24.01)。兩者圖例均未標垃圾桶；這是地圖限制，不是不存在的證據。圖面也無法判定未識別垃圾桶是否位於付費區。
+- 官方雙語詞彙包含「禁止丟棄家庭垃圾」。它只確認官方用語，不證明每站桶上均有標示，也不確認收受種類、公共使用條件或開放時間。
+- 10 月 21 日街道資料含 661 筆，其中 659 筆座標有效。沿用 8 月 4 日出口座標，兩站在 100／200／300 m 內仍均為零列；500 m 內中山有一列，新生為零。紀錄變動不能確定實際設置／撤除日期。本次只重算這兩站。
 
-## Evidence retained
+## 保存的證據
 
-`inputs/` retains original official CSV, HTML and PDF bytes because live resources change in place. `retrieval.json` and `additional-retrieval.json` record URLs, timestamps, lengths and SHA-256 values. `evidence.json` contains short supporting excerpts and limits. Full source snapshots are research inputs, excluded from the public runtime allowlist. The public article provides source links and bounded excerpts.
+由於線上資源可能原址更新，`inputs/` 保存官方 CSV、HTML 與 PDF 原始位元組。`retrieval.json` 及 `additional-retrieval.json` 記錄網址、時間戳、長度及 SHA-256。`evidence.json` 保存短篇佐證摘錄與限制。完整來源快照是研究輸入，不列入公開執行資產白名單；公開文章提供來源連結及有限摘錄。
 
-Searches included official Metro and Taipei government pages for each station plus trash-bin terms, current station pages/maps, Metro signage and TDRI's project case. No published per-bin list or station-specific access conditions were obtained for Xinsheng. This limited search does not establish that such records do not exist. No agency was contacted and no field observation was performed.
+搜尋涵蓋北捷及臺北市政府的兩站與垃圾桶相關頁面、現行車站頁／地圖、北捷標示及 TDRI 專案案例。未取得忠孝新生的公開逐桶清單或車站專屬使用條件。這次有限搜尋不證明這些紀錄不存在。未聯絡機關，也未實地觀察。
 
-## Reproduce from retained inputs
+## 由保存輸入重現
 
-From the Site source checkout:
+由網站來源 checkout 執行：
 
 ```sh
 python3 research/station-venue-recheck-2026-10-22/analyze.py
@@ -30,6 +30,6 @@ node scripts/check.mjs
 npm test
 ```
 
-The analysis validates input digests, compares all parsed venue rows with the prior source, verifies the duplicate fields, and independently checks distances with the spherical law of cosines. `article.html` is the authored public narrative consumed by `render.py`. Computed tables come from `results.json`. Regeneration is idempotent. The earlier MRT renderer owns links from analysis, districts, and its own comparison article; this renderer owns the follow-up article.
+分析驗證輸入雜湊、比較新舊場所檔全部解析列、確認重複欄位，並以球面餘弦定律獨立查核距離。`article.html` 是供 `render.py` 使用的公開正文原稿；計算表格來自 `results.json`。重建具冪等性。較早的 MRT 產生器維護分析頁、行政區頁及原比較文章的連結；本產生器維護後續複查文章。
 
-Do not rerun retrieval over this historical evidence set. For a later source version, create a separately dated input set and receipt. Screenshots and QA output remain outside Git.
+不得重新下載並覆寫這組歷史證據。後續來源版本應另建附日期的輸入組及取得紀錄。截圖及 QA 輸出留在 Git 外。

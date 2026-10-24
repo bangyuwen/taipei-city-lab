@@ -54,6 +54,16 @@ before = {p: hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
 files = m['build']()
 assert files == m['build'](), 'Reading export must be deterministic'
 assert len(files) == 17
+index = files['README.md']
+assert '## 本次補齊的 16 份筆記' in index
+for entry in inventory:
+    if entry.get('output'):
+        assert f'- [{entry["title"]}]({entry["output"]})' in index
+    for name in entry['notes']:
+        title = m['note_title'](name)
+        assert re.search(r'[\u4e00-\u9fff]', title), (name, title)
+        assert f'[{title}](<' in index
+        assert f'[{Path(name).parent.name}/{Path(name).name}]' not in index
 assert before == {p: hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
 
 def visible_leaves(node):
