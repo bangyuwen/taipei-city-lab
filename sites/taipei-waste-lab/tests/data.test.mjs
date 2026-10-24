@@ -81,14 +81,14 @@ test('reader entry and evidence links resolve to their owning pages',()=>{
   for(const hash of ['#reference-L01','#reference-L13','#reference-P04','#research-literature-heading','#source-comparison-method','#research-audit-heading','#research-papers-heading'])assert.equal(pageFromHash(hash),'sources');
   for(const hash of ['#materials','#research-materials-heading','#research-candidates-heading'])assert.equal(pageFromHash(hash),'materials');
   for(const hash of ['#definition','#definition-needs-heading','#t1-problems-heading'])assert.equal(pageFromHash(hash),'definition');
-  for(const hash of ['#ideas','#t1-process-heading'])assert.equal(pageFromHash(hash),'plan');
+  for(const hash of ['#t1-process-heading'])assert.equal(pageFromHash(hash),'plan');
   for(const hash of ['#analysis','#analysis-findings','#hotspot-candidates'])assert.equal(pageFromHash(hash),'analysis');
   for(const hash of ['#plan'])assert.equal(pageFromHash(hash),'plan');
   for(const hash of ['#design','#t1-specification','#t1-product-process-heading'])assert.equal(pageFromHash(hash),'design');
   for(const [owner,hashes] of Object.entries({
     'data-methods':['hotspot-heading','hotspot-quality','reader-method-scope','method-mrt-table','method-venue-street-update'],
-    plan:['methods','methods-heading','field-priority','reader-field-forms','plan-check-Q01'],
-    'plan-timeline':['plan-timeline','plan-timeline-heading','plan-100day','plan-100day-heading','plan-schedule-details'],
+    'plan-tools':['methods','methods-heading','field-priority','reader-field-forms','plan-check-Q01'],
+    'plan-timeline':['plan-timeline','plan-timeline-heading','plan-100day','plan-100day-heading'],
     districts:['citywide-area-12','plan-area-13','reader-district-01'],
     evidence:['definition-evidence-E06-S2','definition-focus-P01','reader-definition-evidence-E01'],
     work:['work-current-questions','work-current-handoff'],
@@ -108,7 +108,7 @@ test('the main landmark fragment keeps the active route',()=>{
 });
 
 test('hundred-day plan and its source links open the owning readable panel', () => {
-  for(const hash of ['#plan','#plan-heading','#plan-validation','#plan-resources'])assert.equal(pageFromHash(hash),'plan');
+  for(const hash of ['#plan','#plan-heading'])assert.equal(pageFromHash(hash),'plan');
   for(const hash of ['#plan-schedule','#plan-budget','#plan-responsibilities','#plan-acceptance'])assert.equal(pageFromHash(hash),'archive');
   for(const hash of ['#budget-heading','#implementation-heading'])assert.equal(pageFromHash(hash),'materials');
   assert.equal(pageFromHash('#main','plan'),'plan');
@@ -172,7 +172,7 @@ test('retained research fragments open their materials while summary and definit
   assert.equal(pageFromHash('#research-overview-evidence'),'evidence');
   assert.equal(pageFromHash('#research-overview-scope'),'archive');
   assert.equal(pageFromHash('#research-overview-unknowns'),'archive');
-  assert.equal(pageFromHash('#definition-evidence-heading'),'plan');
+  assert.equal(pageFromHash('#definition-evidence-heading'),'plan-tools');
 });
 
 
@@ -184,7 +184,7 @@ test('each detail page belongs to one project workspace', async()=>{
  for(const fragment of ['definition-prd-roles','definition-prd-roles-heading','reader-definition-prd-next','definition-prd-next'])assert.equal(pageFromHash('#'+fragment),'team');
  assert.equal(pageFromHash('#definition-prd-validation'),'archive');
  for(const fragment of ['field-schedule','field-capacity','field-record','reader-field-schedule','reader-work-observation','hotspot-times','reader-field-priority'])assert.equal(pageFromHash('#'+fragment),'archive',fragment);
- for(const fragment of ['t1-thinking-heading','definition-cycle-heading','ideas-conclusion','ideas-details','ideas-pending','ideas-next'])assert.equal(pageFromHash('#'+fragment),'plan',fragment);
+ for(const fragment of ['t1-thinking-heading','definition-cycle-heading'])assert.equal(pageFromHash('#'+fragment),'plan',fragment);
  for(const fragment of ['plan-conclusion','plan-details','plan-pending','plan-next'])assert.equal(pageFromHash('#'+fragment),'plan',fragment);
  assert.equal(pageFromHash('#plan-districts'),'analysis');
 });
@@ -196,7 +196,7 @@ test('local navigation separates personal evidence, distribution and field prepa
     ['理解問題',['personas','problem','feedback','evidence'],4],
     ['資料分析',['analysis','districts','data-methods'],3],
     ['現勘準備',[],0],
-    ['百日計畫',['plan','plan-timeline','spec','work','team'],5],
+    ['百日計畫',['plan','plan-preparation','plan-timeline','plan-resourcing','plan-readiness','plan-tools'],9],
     ['方案與需求',[],0],
   ]){
     const navs=[...html.matchAll(new RegExp('<nav class="project-subnav" aria-label="'+label+'內頁">(.*?)</nav>','g'))];
