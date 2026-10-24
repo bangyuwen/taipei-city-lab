@@ -1,25 +1,28 @@
-# Disposal-demand evidence audit — 2026-10-20
+# 投放需求證據盤點（2026-10-20）
 
-Scope: re-read all 28 previously selected E01–E28 records against their original TSV rows. This is not a new coding pass over all 2,663 records. No population prevalence, demand ranking, or causal bin shortage is established.
+範圍：將先前選取的 E01–E28 共 28 筆，逐一對照原始 TSV 列重新閱讀。這不是對全部 2,663 筆重新編碼，也未建立母體盛行率、需求排名或垃圾桶短缺的因果結論。
 
-Source SHA-256: `bc4d005ce9a9c4d97341204da5a576badc85c80e8ff4266e73f227ab89089851`. All 28 existing private crosswalk texts matched the TSV exactly. Raw text and row crosswalk remain private; the public site contains paraphrases only.
+來源 SHA-256：`bc4d005ce9a9c4d97341204da5a576badc85c80e8ff4266e73f227ab89089851`。28 筆既有私人對照文字均與 TSV 完全一致。原文及列號對照保持私有；公開網站只提供轉述。
 
-## Supported contexts
+## 證據支持的情境
 
-- E01 — 用餐後持有垃圾的人: 夜市吃完後，仍拿著垃圾並表示找不到垃圾桶。 Scope: 確認有消費後持有、尋找未果的自述；未記錄時長、垃圾量或沿途實際桶數。
-- E02 — 遛狗並撿拾狗便的人: 自述遛狗會撿便，沒有投放去處，隨身攜帶有氣味且不便。 Scope: 確認特定投放物與攜帶負擔的自述；不代表所有飼主，也未查明設施收受條件。
-- E06 — 主動處理車籃垃圾的騎車者: 自述挑選有垃圾的 YouBike，繞往捷運站外的垃圾桶投放。 Scope: 確認主動清理及繞行投放的自述；未量測繞行成本、頻率，不能代表所有騎車者。
-- E15 — 步行途中持有垃圾的人: 自述拿著垃圾走過三個公車站，仍沒有找到投放處。 Scope: 確認持有、步行及尋找未果的自述；三站是路程描述，不能推定正在通勤或趕車。
-- E14 — 轉運站上車前飲食的投放情境: 留言指出圓山轉運站附近，上車前吃東西、吃完沒有去處。 Scope: 確認留言明述此情境；未明說是自己的完整經歷，不能推定旅客數、趕車壓力或發生頻率。
-- E23 — 操作垃圾桶的使用者: 留言描述投放時手容易碰到外框，並提出設備改造建議。 Scope: 確認操作接觸的陳述；沒有傷害、感染或改善效果證據，也沒有年齡或障礙身分資料。
+- E01 — 用餐後持有垃圾的人：夜市吃完後，仍拿著垃圾並表示找不到垃圾桶。範圍：確認有消費後持有、尋找未果的自述；未記錄時長、垃圾量或沿途實際桶數。
+- E02 — 遛狗並撿拾狗便的人：自述遛狗會撿便，沒有投放去處，隨身攜帶有氣味且不便。範圍：確認特定投放物與攜帶負擔的自述；不代表所有飼主，也未查明設施收受條件。
+- E06 — 主動處理車籃垃圾的騎車者：自述挑選有垃圾的 YouBike，繞往捷運站外的垃圾桶投放。範圍：確認主動清理及繞行投放的自述；未量測繞行成本、頻率，不能代表所有騎車者。
+- E15 — 步行途中持有垃圾的人：自述拿著垃圾走過三個公車站，仍沒有找到投放處。範圍：確認持有、步行及尋找未果的自述；三站是路程描述，不能推定正在通勤或趕車。
+- E14 — 轉運站上車前飲食的投放情境：留言指出圓山轉運站附近，上車前吃東西、吃完沒有去處。範圍：確認留言明述此情境；未明說是自己的完整經歷，不能推定旅客數、趕車壓力或發生頻率。
+- E23 — 操作垃圾桶的使用者：留言描述投放時手容易碰到外框，並提出設備改造建議。範圍：確認操作接觸的陳述；沒有傷害、感染或改善效果證據，也沒有年齡或障礙身分資料。
 
-## Exclusions
-E05: inability to help, reason unspecified. E28: conditional intention, not an observed act. E07: cleanup burden, not direct public-bin demand. E21/E22: household collection outside current scope. E14 is a stated context, not an explicitly first-person complete trip. E23 is operation friction, not quantified unmet capacity.
+## 排除與限制
 
-## Research checked
-- Leeabai et al. (2019), DOI 10.1016/j.wasman.2019.05.039. Author abstract read via https://pubmed.ncbi.nlm.nih.gov/31279396/ . Off-route distance affected combustible-waste collection; along-route distance did not significantly affect studied outcomes. No Taipei group estimates or spacing standard.
-- Piñeiro-Rodríguez et al. (2025), DOI 10.1016/j.cities.2025.105913. Accepted manuscript abstract and study scope read at https://pure.manchester.ac.uk/ws/portalfiles/portal/361973089/Intervening_public_spaces_by_subtraction.pdf . Small/medium Montevideo squares; estimated litter-item reduction 43.5% after removal, perceived cleanliness not significantly changed. Not Taipei demand evidence or removal recommendation.
-- NCCU 2020 and NCL 2016 thesis pages could not be fetched this pass; Macquarie thesis returned 403. Prior notes are not represented as fresh primary verification.
+E05：無法幫忙，原因未明。E28：有條件的意願，不是已觀察行動。E07：清理負擔，不是直接的公共垃圾桶需求。E21／E22：家戶收運，不在本次範圍。E14：陳述的情境，並未明確描述第一人稱完整旅程。E23：操作阻力，不是量化的未滿足容量。
 
-## Website changes
-Lead analysis with verified statements and bounded scope. Add a permanent source/context/support table before the historical evidence reader. Preserve historical decisions, maps, candidate anchors and individual evidence IDs.
+## 已查閱的研究
+
+- Leeabai 等（2019），DOI 10.1016/j.wasman.2019.05.039。由 https://pubmed.ncbi.nlm.nih.gov/31279396/ 閱讀作者摘要。偏離路線的距離影響可燃垃圾收集；沿路線距離對研究結果未見顯著影響。未提供臺北族群估計或間距標準。
+- Piñeiro-Rodríguez 等（2025），DOI 10.1016/j.cities.2025.105913。由 https://pure.manchester.ac.uk/ws/portalfiles/portal/361973089/Intervening_public_spaces_by_subtraction.pdf 閱讀接受稿摘要及研究範圍。對象為蒙特維多中小型廣場；撤桶後估計散落垃圾件數減少 43.5%，感知清潔度未顯著改變。這不是臺北需求證據，也不是撤桶建議。
+- 本次無法取得政大 2020 年與國圖 2016 年論文頁；Macquarie 論文回傳 403。先前筆記不當作本次新查核的一手來源。
+
+## 網站調整
+
+分析先呈現已核對陳述及其有限範圍。在歷史證據閱讀器前加入固定的來源／情境／支持範圍表。保留歷史決策、地圖、候選錨點及個別證據 ID。

@@ -1,21 +1,21 @@
-# Country strategy evidence
+# 各國策略的證據與閱讀方式
 
-The canonical authoring input lives in `topics/bins/research/country-strategies/`. The monorepo data build copies it to this standalone site at `research/country-strategies/`, where it is compiled into `dist/index.html`. In a standalone Sites checkout, edit this packaged input directly. The JSON files are not included in the public asset allowlist. Each of 14 country/region entries contains locally scoped cases, a four-step service or evaluation flow, qualitative comparison fields, explicit outcome limits, and dated primary references. There are 24 cases; the original 12 equipment supplements remain in `templates/country-media.html` with unchanged photo provenance.
+正式編輯來源位於 `topics/bins/research/country-strategies/`。整合儲存庫的資料建置會將其複製到獨立網站的 `research/country-strategies/`，再編入 `dist/index.html`。在獨立 Sites checkout 中，直接編輯這份隨包保存的來源。JSON 不列入公開資產白名單。14 個國家／地區項目各自包含限定地方範圍的案例、四步驟服務或評估流程、質性比較欄位、明確成效限制及附日期的一手來源。共 24 個案例；原有 12 項設備補充仍位於 `templates/country-media.html`，照片來源紀錄不變。
 
-## Regenerate and validate
+## 重建與驗證
 
-1. In the monorepo, edit the matching regional JSON file in `topics/bins/research/country-strategies/` and run `npm run prepare-data` from the site first. In a standalone checkout, edit the matching local regional JSON file and retain the geographic scope, source year, observed/planned distinction, and limits.
-2. Run `npm run prepare-countries` to regenerate the static country panel.
-3. Run `npm test` and `npm run check`. The latter also regenerates this panel and stages only the fixed public runtime asset allowlist.
+1. 在整合儲存庫中，編輯 `topics/bins/research/country-strategies/` 對應地區的 JSON，再先於網站目錄執行 `npm run prepare-data`。獨立 checkout 則編輯本機對應的地區 JSON，保留地理範圍、來源年份、已觀察／規劃中狀態及限制。
+2. 執行 `npm run prepare-countries`，重建各國策略的靜態頁面區塊。
+3. 執行 `npm test` 與 `npm run check`。後者也會重建此區塊，且只輸出固定白名單內的公開執行資產。
 
-The machine checks enforce unique anchors, source references, required limitations, chart denominators and valid percentage bounds. They do not independently establish source accuracy. Source URLs and dates remain attached to each case and figure for human verification. References were checked for the 2026-10-18 integration; unavailable follow-up evaluations are stated as not found, never as proof of failure or continued operation.
+自動檢查涵蓋錨點唯一性、來源引用、必要限制、圖表分母及百分比範圍，不能獨立證明來源正確。各案例及圖表保留來源網址與日期，供人工查核。引用資料於 2026-10-18 整合時查核；未取得後續評估時，標示「未找到」，不得視為失敗或持續運作的證明。
 
-## Reading and evidence rules
+## 閱讀與證據規則
 
-- Compare the service population and waste stream before equipment: pedestrian litter, household food waste, property collection and commercial shared collection are distinct services.
-- A city case does not establish national policy. Public deployment announcements, proposed budgets, historical costs and measured results remain distinct.
-- The Netherlands bar chart compares the reported closed-door rates (83% and 38%) on a common 0–100% scale. Sample bin counts and observation counts were not supplied; the chart does not measure litter reduction.
-- Belfast's bottle capture by count and recycling-stream composition by weight have different denominators and are not charted as competing percentages.
-- Montevideo's randomized plaza study retains its sample and time boundaries, subjective outcomes and unmeasured neighboring-street displacement.
-- Missing costs remain unknown. Do not convert currencies, infer annual savings, or score countries from incomparable outcome measures.
-- Taipei takeaways are research interpretation, not locally validated results. Three-dimensional models illustrate existing equipment cases and do not provide efficacy evidence.
+- 比較設備前，先比較服務對象與垃圾種類：行人垃圾、家戶廚餘、物業清運及商業共用清運是不同服務。
+- 城市案例不能代表全國政策。公開部署公告、提案預算、歷史成本與實測結果須分開呈現。
+- 荷蘭長條圖以相同的 0–100% 刻度比較來源所述關門率（83% 與 38%）。來源未提供樣本桶數及觀察次數；此圖不衡量散落垃圾減量。
+- 貝爾法斯特的瓶罐回收數量占比與回收物流的重量組成，分母不同，不畫成互相競爭的百分比。
+- 蒙特維多的廣場隨機研究保留樣本及時間範圍、主觀結果，以及未量測鄰近街道垃圾轉移的限制。
+- 缺少成本就保留未知，不換匯、不推估年度節省，也不以不可比的成效指標為國家評分。
+- 對臺北的啟示是研究判讀，並非在地驗證結果。3D 模型用於說明既有設備案例，不能作為成效證據。

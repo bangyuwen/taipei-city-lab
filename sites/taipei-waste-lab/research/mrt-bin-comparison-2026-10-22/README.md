@@ -1,30 +1,30 @@
-# MRT station activity and recorded street facilities
+# 捷運站活動量與街道設施紀錄比較
 
-Analysis date: 2026-10-22. This study tests recorded provision differences, not actual bin adequacy. The frozen protocol predates the computed comparison. The public article is generated from retained inputs and outputs by `render.py`.
+分析日期：2026-10-22。本研究檢查清冊記錄的供給差異，不判斷實際垃圾桶是否足夠。比較計算前已凍結分析協定。`render.py` 由保存的輸入及輸出產生公開文章。
 
-## Scope and counts
+## 範圍與計數方式
 
-- The official station catalog contains 75 Taipei City records representing 74 station names; Nangang Exhibition Center has two line records. The OD label `大橋頭站` maps explicitly to `大橋頭`; `臺` normalizes to `台`. All 74 Taipei names have both directions on all 30 September dates.
-- Rank the 74 names by September OD entries plus exits and retain the first 10. This is the ranking within this OD file, not a verified count of unique people, outdoor pedestrians or garbage disposal demand.
-- Sum origins and destinations once each. A journey produces two endpoints; same-station trips also contribute an entry and an exit. Paid-area transfers do not create a new recorded OD endpoint unless the source records one. This study does not infer exit-level pedestrian volume.
-- Use all listed exits for each selected name. Taipei Main uses the source's M1–M8 only; connected rail, airport and underground-mall exits are not a complete catchment here.
-- For each station, count each valid street CSV row once if within 300 m of any exit. Use 100/200/500 m checks with the same cohort. Catchments differ in shape and may overlap between stations; never sum station rows as a city inventory. Distances are straight-line, not walking distances. No adequacy standard is supplied.
-- The street input contains 681 rows, 680 valid coordinates and one invalid longitude preserved in the input. Keep co-located source rows and also count distinct coordinates; for the selected stations their counts are identical at all four radii. This does not verify equipment identity or availability.
-- The venue input contains 130 records. Match exact station names, with the explicit alias `101站/世貿捷運站` to `台北101/世貿`. Keep every original district and remark. No summing of identical or conflicting `處` values. No name match is not proof of absence.
+- 官方車站目錄含臺北市 75 筆紀錄，對應 74 個站名；南港展覽館有兩條路線紀錄。明確將 OD 標籤 `大橋頭站` 對應為 `大橋頭`，並將 `臺` 正規化為 `台`。74 個臺北站名在 9 月全部 30 天均有進出兩方向資料。
+- 以 9 月 OD 進站加出站量排序 74 個站名，保留前 10 名。這是該 OD 檔內的排名，不是不重複人數、戶外行人或垃圾投放需求的核實計數。
+- 起點與終點各加總一次。一趟旅次產生兩個端點；同站旅次也各貢獻一次進站及出站。付費區轉乘除非來源另有記錄，否則不新增 OD 端點。本研究不推算各出口行人量。
+- 使用每個入選站名列出的全部出口。臺北車站僅使用來源的 M1–M8；此處未完整涵蓋相連鐵路、機場捷運及地下街出口。
+- 每站的有效街道 CSV 列，只要在任一出口 300 m 內就計一次。以相同站群做 100／200／500 m 檢查。各站涵蓋範圍形狀不同，也可能重疊，不得將各站列數加總為全市清冊。距離為直線距離，非步行距離；未設定足夠與否的標準。
+- 街道來源含 681 列，680 列座標有效，另 1 列無效經度保留在輸入中。同座標來源列仍分開保留，另計不重複座標數；入選站在四種半徑下，兩種計數均相同。這不核實設備身分或可用性。
+- 場所來源含 130 筆。以完整站名配對，並明列 `101站/世貿捷運站` 對應 `台北101/世貿`。保留每筆原行政區及備註。不加總相同或衝突的 `處` 數值。名稱未配對不證明沒有設施。
 
-## Quality and interpretation
+## 品質與判讀限制
 
-The raw file has 8,240,400 unique date/hour/origin/destination records across 30 dates and 21 hour labels (00, 01 and 05–23). Hours 02–04 are absent, not filled with zeros. The source retains some New Taipei labels differently between origins and destinations. Missing directions remain blank in the station/day extract; all Taipei names used here have both directions. No cross-jurisdiction aliases are forced.
+原始檔含 8,240,400 筆不重複的日期／小時／起站／迄站紀錄，跨 30 天與 21 個小時標籤（00、01 及 05–23）。02–04 時缺列，不補零。部分新北站名在起站與迄站欄的寫法不同；站日摘錄的缺少方向保留空白，本研究使用的全部臺北站名均有雙向資料。不強制套用跨轄區別名。
 
-The OD total is 64,273,963 journeys. The separate official system table totals 64,319,630, a difference of 45,667 (0.0710% of the system total). The reason is unverified. Both values and all 30 daily differences are retained in `results/validation.json`. Do not rescale station counts. The top-10 boundary is specific to the OD file; its order is not certified against complete station totals.
+OD 總計 64,273,963 旅次；另一份官方全系統表為 64,319,630，相差 45,667（全系統總量的 0.0710%），原因未核實。兩個總數及全部 30 天差異保留在 `results/validation.json`。不按比例調整各站計數。前 10 名界線僅適用此 OD 檔，其順序尚未依完整車站總量認證。
 
-The quantitative table supports a descriptive claim about **street records**. It cannot establish physical bin counts, available capacity, service fairness, shortage, why people leave litter, or new-bin locations. Venue notes indicate another inventory scope, not a correction factor for street rows. Qualitative personas remain unmatched to these station catchments.
+量化表僅支持對**街道紀錄**的描述，不能推定實體桶數、可用容量、服務公平性、短缺、亂丟原因或新桶位置。場所備註屬另一清冊範圍，不是街道列數的修正係數。質性人物情境尚未與這些車站範圍配對。
 
-The same official URL was downloaded twice (one repeat with a no-cache request). Both 302,444,881-byte bodies have identical SHA-256. The declared HTTP Content-MD5 does not match the body MD5. This unresolved source-header inconsistency is retained in `inputs/retrieval-validation.json`, not marked as a pass. The public article discloses this and restricts findings to the retained content. No data repair was attempted.
+同一官方網址下載兩次，其中一次使用 no-cache 請求。兩份 302,444,881 位元組內容的 SHA-256 相同，但 HTTP 宣告的 Content-MD5 與內容 MD5 不符。這項尚未解決的來源標頭矛盾保留在 `inputs/retrieval-validation.json`，未標記為通過。公開文章揭露此限制，結果限於保存內容，未嘗試修補資料。
 
-## Reproduce
+## 重現分析
 
-Run from the standalone site root:
+由獨立網站根目錄執行：
 
 ```sh
 python3 research/mrt-bin-comparison-2026-10-22/aggregate_od.py /path/to/od-202609.csv
@@ -33,6 +33,6 @@ python3 research/mrt-bin-comparison-2026-10-22/validate.py
 python3 research/mrt-bin-comparison-2026-10-22/render.py
 ```
 
-The official OD download URL and the locally retained original are in `inputs/od-receipt.json`. The 302 MB raw input is retained outside Git; the source includes the official URL/index, retrieval headers, fingerprints, and compact station/day counts for rerunning the comparison. `aggregate_od.py` reconstructs those counts from the raw file. Small original coordinate and catalog files are retained byte-for-byte, including their encodings. Street and venue snapshots reuse the already preserved source-recovery inputs and provenance.
+官方 OD 下載網址與本機原檔位置見 `inputs/od-receipt.json`。302 MB 原始輸入保留在 Git 外；來源包保存官方網址／索引、下載標頭、指紋及精簡站日計數，以重跑比較。`aggregate_od.py` 可由原檔重建計數。小型座標及目錄原檔逐位元組保留，包含編碼。街道及場所快照沿用已保存的來源回復輸入及溯源紀錄。
 
-`validate.py` independently recounts all selected station/radius combinations with the spherical cosine distance formula, checks the fixed selection, verifies all monthly entry/exit sums and retains the separate system-total mismatch. Generated tables and article are public consumers; raw snapshots and fieldwork records are not added to the public asset allowlist.
+`validate.py` 使用球面餘弦距離公式，獨立重算全部入選車站與半徑組合，檢查固定選取、驗證各月進出加總，並保留與全系統總量的差異。產生的表格與文章供公開閱讀；原始快照及現勘紀錄不加入公開資產白名單。
