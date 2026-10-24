@@ -32,10 +32,11 @@ before focus and scroll on the destination page.
 
 The plan hub contains purpose, current status, next step and a question-based index.
 Resources, acceptance/responsibility and execution tools have separate pages.
-The inauguration-relative Gantt is split into preparation (-45 to -1) and execution
-(1 to 100); each preserves visible task, day, output and proposed role. Detailed
-schedule gates live with acceptance. Existing anchors follow moved content.
-The shared six-item plan navigation names these reading tasks; PRD, collaboration
+The dedicated timeline page contains preparation (-45 to -1) followed by execution
+(1 to 100), with visible task, day, output and proposed role on all ten rows.
+In-page phase links jump within the continuous chart; old preparation-page links
+resolve to its first phase. Detailed schedule gates stay with acceptance.
+The shared five-item navigation is overview, timeline, resources, acceptance and tools; PRD, collaboration
 and team handoff remain linked from the hub. Preserve all proposal boundaries.
 
 
