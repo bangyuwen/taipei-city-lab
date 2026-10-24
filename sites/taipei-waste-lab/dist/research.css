@@ -460,3 +460,10 @@
 /* Phase links and the chart share one reading block, without stacked rules. */
 .plan-schedule-page .reading-path{border:0;margin:16px 0 20px;padding:0}
 .plan-schedule-page .plan-timeline{border-top:0;margin-top:0;padding-top:0}
+
+/* One divider per reading boundary; jump links do not frame the same content. */
+:is(#panel-personas,#panel-problem,#panel-analysis)>.reading-path{border:0;padding-block:0}
+#panel-research .project-work-list>article:last-child,
+#panel-materials .research-flow>article:last-child{border-bottom:0}
+#panel-data-methods .reader-index{border-bottom:0}
+#panel-data-methods .reader-item>.research-overview-section:first-child{border-top:0;padding-top:0}
