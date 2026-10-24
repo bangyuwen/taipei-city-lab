@@ -42,3 +42,26 @@ test('schedule deep links belong to a dedicated page with one generated chart',(
  const ids=[...page.matchAll(/\sid="([^"]+)"/g)].map(m=>m[1]);
  assert.equal(new Set(ids).size,ids.length,'New route must not shadow historical timeline IDs');
 });
+
+test('Gantt exposes task outputs and proposed roles in separate before/after phases',()=>{
+ const page=read('dist/index.html');
+ const chart=page.split('<figure class="plan-timeline">')[1].split('</figure>')[0];
+ assert.ok(!chart.includes('<details'));
+ const phases=[...chart.matchAll(/<tbody data-phase="(before|after)">(.*?)<\/tbody>/gs)];
+ assert.deepEqual(phases.map(m=>m[1]),['before','after']);
+ assert.deepEqual(phases.map(m=>(m[2].match(/class="plan-gantt-task"/g)||[]).length),[4,6]);
+ const rows=[...chart.matchAll(/<tr class="plan-gantt-task">(.*?)<\/tr>/gs)].map(m=>m[1]);
+ for(const row of rows){
+  assert.match(row,/class="plan-timeline-label"/);
+  assert.match(row,/class="plan-gantt-output"/);
+  assert.match(row,/class="plan-gantt-owner"/);
+ }
+ for(const [task,output,owner] of [
+  ['試用與候選覆核','初步基線或待辦缺口','清潔／管理者＋分析者'],
+  ['配對與方案比較','配置提案或維持現況理由','規劃者＋覆核者'],
+  ['核准後小範圍試調','未執行原因','管理者＋執行者'],
+  ['成效判讀與交接','後續責任','覆核者＋管理者']
+ ]){const row=rows.find(r=>r.includes(task));assert.ok(row?.includes(output));assert.ok(row?.includes(owner));}
+ assert.ok(page.includes('未核准不搬'));
+ assert.ok(page.includes('未取得同意就維持模擬與資料準備'));
+});
