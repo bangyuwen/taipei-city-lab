@@ -11,6 +11,8 @@ if (HERE.parents[3] / 'sites/taipei-waste-lab').is_dir():
     SITE = HERE.parents[3] / 'sites/taipei-waste-lab'
 START = '<!-- decision-checks-start -->'
 END = '<!-- decision-checks-end -->'
+SCHEDULE_START = '<!-- plan-schedule-start -->'
+SCHEDULE_END = '<!-- plan-schedule-end -->'
 
 
 def load():
@@ -60,8 +62,8 @@ def render_schedule():
         '<div class="plan-timeline-scale" aria-hidden="true"><span style="left:0%">-45</span><span style="left:30.8219%">0 上任</span><span style="left:51.3699%">30</span><span style="left:71.9178%">60</span><span style="left:100%">100天</span></div>'
         '<ol>'+''.join(chart)+'</ol></figure>'
         '<p><strong>交付節點：</strong>第 -31 天底圖；第 -16 天候選初版與原型；第 -1 天覆核表與初步基線或缺口；第 0 天上任；第 15 天承接與現況確認；第 30 天兩側基線與配置提案；第 45 天實際變更紀錄；第 90 天前後紀錄；第 100 天決策與交接。</p>'
-        '<h4 id="plan-schedule-details">工作、責任與決策關卡</h4>'
-        '<table class="plan-table"><thead><tr><th scope="col">天數與工作</th><th scope="col">工作與交付</th><th scope="col">建議責任角色</th><th scope="col">通過條件／未達處理</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table>'
+        '<details class="persona-detail plan-detail"><summary>展開逐階段工作、責任與決策關卡</summary><h4 id="plan-schedule-details">工作、責任與決策關卡</h4>'
+        '<table class="plan-table"><thead><tr><th scope="col">天數與工作</th><th scope="col">工作與交付</th><th scope="col">建議責任角色</th><th scope="col">通過條件／未達處理</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table></details>'
         '<p><strong>持續工作與延後規則：</strong>清潔回報自取得同意並開始實際試用後持續至回看結束，不因第 0 天而中斷。上任前基線須確認與調整時的桶位、清運及觀察條件可比；不同條件分開，必要時補測。每次實際調整另計前後窗口，執行後即記異常；第 46–90 天是集中回看安排。若位置確認、核准或執行延後，依事前窗口延後判讀；第100天如實交付未完成及後續日期，不縮短觀察。</p>'
         '<p>未過關卡就維持現況或補查；不訂行政區配額、搬桶數或改善百分比。候選表可以沒有可提案位置，百日成果也可以是維持現況及其證據。目前沒有已啟動、已核准或已執行的試辦結果。</p></section>')
 
@@ -77,15 +79,14 @@ def render(plan):
             ('若確認成立', 'yes'), ('若不成立或有反例', 'no'), ('若仍未知', 'unknown')])
         cases.append(f'<section class="project-section" id="plan-check-{e(c["id"])}" data-decision-check="{e(c["id"])}"><h4>{e(c["title"])}</h4><dl class="project-contract">{rows}</dl><details class="persona-detail"><summary>查完能決定什麼</summary><ul>{outcomes}</ul></details><p><a href="{e(c["source"], quote=True)}">{e(c["source_label"])}</a></p></section>')
     crew_plan = (HERE.parent / 'crew-persona-2026-10-23/plan.html').read_text()
-    return '''<section class="project-section" aria-labelledby="plan-checks-heading" id="field-priority"><span id="methods" class="page-route" aria-hidden="true"></span><span id="methods-heading" tabindex="-1"></span>
+    return '<details class="persona-detail plan-detail"><summary>清潔人員研究｜手機、路線與人力的補證流程</summary>'+crew_plan+'</details><details class="persona-detail plan-detail"><summary>必要時的查核｜五項決策疑點與現場觸發條件</summary>'+'''<section class="project-section" aria-labelledby="plan-checks-heading" id="field-priority"><span id="methods" class="page-route" aria-hidden="true"></span><span id="methods-heading" tabindex="-1"></span>
 <h3 id="plan-checks-heading">配置決定需要時，才補這些查核</h3>
 <p>本期先從現有桶位與清運前回報建立基線。以下保留既有服務與需求查核題目，僅在配置判斷缺少相關證據時啟用，不替代日常回報或自動排成現勘。</p>
 <p><strong>取消每區一點與固定三輪配額。</strong>下列是待釐清的決策疑點，不是必去場址清單，也不是需求排名。前3項先做資料或管理條件核對；第4項只有出現具體方案取捨才啟動；第5項在實際試用前補查清潔人員手機、路線與人力，確認App的使用對象。尚未聯繫機關、排定走查或取得現場結果。</p>
 <nav class="reading-path" aria-label="百日計畫查核疑點">'''+''.join(f'<a href="#plan-check-{e(c["id"])}">{e(c["title"].split('：')[0])}</a>' for c in plan['checks'])+'''</nav>
 <details class="persona-detail"><summary>什麼情況不查？</summary><ul><li>位置圖、既有明細或管理規則已足以支持該決定，就記下來源後結案。</li><li>答案不會改變任何選項，就移出本輪；不為補齊行政區或湊點數安排觀察。</li><li>沒有要比較的方案、查核無法分辨方案，或對照用途未定，就暫緩。其餘原候選點保留為資料索引，取消自動排程。</li><li>選點只對距離門檻敏感，尚未影響實際比較範圍時，先做桌面敏感度分析，不因此直接出勤。</li></ul></details>
 '''+''.join(cases)+'''<p>查核紀錄至少寫明：待選方案、來源、未知、觸發理由、實際結果、因此採取或暫緩的決定。沒有改變決定的資訊不列為必做成果。<a href="#reader-field-forms">必要時使用空白紀錄表</a>。</p></section>
-'''+render_schedule()+crew_plan+'''
-'''
+</details>'''
 
 
 def build(page_path=None):
@@ -94,6 +95,9 @@ def build(page_path=None):
     page = path.read_text()
     assert page.count(START) == page.count(END) == 1
     page = re.sub(re.escape(START)+r'.*?'+re.escape(END), lambda _: START+render(plan)+END, page, flags=re.S)
+    assert page.count(SCHEDULE_START) == page.count(SCHEDULE_END) == 1
+    page = re.sub(re.escape(SCHEDULE_START)+r'.*?'+re.escape(SCHEDULE_END),
+                  lambda _: SCHEDULE_START+render_schedule()+SCHEDULE_END, page, flags=re.S)
     # Worker evidence is a separate role hypothesis, not a fifth comment journey.
     crew = (HERE.parent / 'crew-persona-2026-10-23/persona.html').read_text()
     crew_start, crew_end = '<!-- crew-persona-start -->', '<!-- crew-persona-end -->'

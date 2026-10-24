@@ -12,7 +12,7 @@ test('current checks are conditional decisions with frozen inputs and no field o
  for(const s of JSON.parse(read(dir+'inputs.json')).sources)assert.equal(createHash('sha256').update(read(dir+s.path)).digest('hex'),s.sha256,s.path);
  const page=read('dist/index.html');
  assert.ok(!allowedPages.includes('methods'));assert.equal(workspaceForPage('team'),'plan');
- for(const route of ['ideas','ideas-options','ideas-heading','methods','field-priority','reader-field-forms','plan-check-Q01','plan-check-Q05','plan-crew-research','plan-crew-research-heading','plan-100day','plan-100day-heading','plan-overlay','plan-overlay-heading','plan-candidates','plan-candidates-heading','plan-schedule-details'])assert.equal(pageFromHash('#'+route),'plan');
+ for(const route of ['ideas','ideas-options','ideas-heading','methods','field-priority','reader-field-forms','plan-check-Q01','plan-check-Q05','plan-crew-research','plan-crew-research-heading','plan-100day','plan-100day-heading','plan-overlay','plan-overlay-heading','plan-candidates','plan-candidates-heading','plan-schedule-details','plan-execution'])assert.equal(pageFromHash('#'+route),'plan');
  for(const route of ['plan-crew-research-history','plan-prior-field-plan'])assert.equal(pageFromHash('#'+route),'archive');
  assert.ok(!page.includes('id="panel-methods"'));
  assert.ok(!page.includes('id="panel-ideas"'));assert.ok(!page.includes('先前方案'));

@@ -66,3 +66,11 @@ its underlying research figure and original proposal data remain preserved.
 The current schedule uses inauguration as day 0, preparation from day -45,
 and post-inauguration work through day 100. Pre-inauguration operational trials
 need management/crew agreement; earlier baselines require a comparability check.
+
+The plan overview presents purpose/scope, inauguration-relative schedule, four
+resource categories, acceptance, responsibility and next steps before execution
+details. The schedule has its own generated marker pair; the existing decision
+checks marker owns crew research and optional checks in native disclosures.
+Configuration methods, candidate fields and blank observation tools remain in
+the plan under execution details. Existing anchors retain their IDs and open
+the containing disclosures through the shared navigation handler.
