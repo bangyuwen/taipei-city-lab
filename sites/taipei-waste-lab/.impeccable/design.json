@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-16T00:20:13Z",
+  "generatedAt": "2026-10-24T00:27:01.647021Z",
   "title": "Design System: Taipei Waste Lab",
   "extensions": {
     "colorMeta": {
@@ -331,7 +331,7 @@
       "kind": "nav",
       "refersTo": "navigation-current",
       "description": "The current page stays legible inside the dark navigation rail.",
-      "html": "<a class=\"ds-nav-link\" href=\"#locations\" aria-current=\"page\">Locations</a>",
+      "html": "<a class=\"ds-nav-link\" href=\"#plan\" aria-current=\"page\">百日計畫</a>",
       "css": ".ds-nav-link { display: flex; align-items: center; min-height: 52px; padding: 12px 16px; border: 1px solid transparent; border-radius: 6px; color: var(--nav-muted); font: 400 16px/1.8 var(--sans); text-decoration: none; transition: background-color 160ms ease-out, color 160ms ease-out; }\n.ds-nav-link:hover { background: #1a5060; color: var(--white); }\n.ds-nav-link[aria-current=page] { background: #d9ecf1; color: var(--nav); font-weight: 700; }\n.ds-nav-link:focus-visible { outline: 3px solid #ffc287; outline-offset: 4px; }"
     },
     {
@@ -373,11 +373,18 @@
       "description": "A warm note keeps a dataset or source limitation beside the claim it qualifies.",
       "html": "<aside class=\"ds-limit-note\"><strong>Coverage limit</strong><p>This count describes the dated source only.</p></aside>",
       "css": ".ds-limit-note { padding: 12px 16px; background: var(--warning); color: #734917; font: 400 14px/1.8 var(--sans); }\n.ds-limit-note strong { display: block; }\n.ds-limit-note p { margin: 6px 0 0; }"
+    },
+    {
+      "name": "Plan Detail",
+      "kind": "custom",
+      "description": "Native disclosure for optional execution detail; status, resources and acceptance remain visible in the overview.",
+      "html": "<details class=\"ds-plan-detail\"><summary>配置方法｜現有桶位、調整規則與人流交叉比對</summary><p>先核對來源與服務條件，再人工覆核候選；尚未執行試調。</p></details>",
+      "css": ".ds-plan-detail { border-block-start: 1px solid var(--line); padding-block: 8px; margin-block: 16px; color: var(--ink); font: 400 16px/1.8 var(--sans); } .ds-plan-detail > summary { cursor: pointer; min-height: 44px; font-weight: 700; } .ds-plan-detail > summary:hover { color: var(--green); } .ds-plan-detail > summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; } .ds-plan-detail[open] > summary { margin-bottom: 16px; }"
     }
   ],
   "narrative": {
     "northStar": "The Open-Shelf Research Index",
-    "overview": "The site borrows the clarity of a public library index: a deep petrol rail anchors cool paper pages, and pale blue marks the selected entry. Short rows, aligned counts, quiet rules, and familiar web controls carry dense public information without turning research into promotional cards.\n\nResidents and researchers move from a dated record or place to its source, comparison, and service implications. The map starts with its location task; evidence pages use a continuous reading column with limits beside the claims they qualify. Four purpose choices and twelve photo-backed country cases remain distinct, with each real image kept beside its caption, credit, and license. Costs, observed results, and local interpretation stay separate.",
+    "overview": "The current research workspace has four primary destinations: 理解問題, 資料分析, 百日計畫 and 參考資料. The brand link opens 研究總覽. Each secondary page has a stable parent, a breadcrumb and local navigation. Current plan and requirement pages remain separate from dated drafts in the reference archive. This structure preserves the petrol/paper identity, existing data boundaries and interaction tokens.\n\nThe site borrows the clarity of a public library index: a deep petrol rail anchors cool paper pages, and pale blue marks the selected entry. Short rows, aligned counts, quiet rules, and familiar web controls carry dense public information without turning research into promotional cards.\n\nResidents and researchers move from a dated record or place to its source, comparison, and service implications. The map starts with its location task; evidence pages use a continuous reading column with limits beside the claims they qualify. Four purpose choices remain distinct from the fourteen country strategies. Twelve photo-backed equipment supplements keep each real image beside its caption, credit, and license. Costs, observed results, and local interpretation stay separate.",
     "keyCharacteristics": [
       "Deep petrol navigation with pale labels and a clear current-page state.",
       "Cool paper surfaces, pale blue selections, and restrained line borders.",

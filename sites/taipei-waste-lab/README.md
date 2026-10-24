@@ -69,7 +69,7 @@
 
 ### 網站與 Markdown 筆記對應
 
-[內容盤點](docs/website-notes.json) 將全部 23 個研究區塊及另外七組頁面／介面，對應到既有筆記與內容維護來源。在本站目錄執行 `npm run prepare-notes`，產生私人[閱讀索引](notes/README.md)，以及原本缺少或不完整的 16 份閱讀筆記。此命令須使用完整儲存庫，包含 `topics/bins/` 與 `sites/youtong/`；它讀取目前本機網站，不讀取已部署網站。
+[內容盤點](docs/website-notes.json) 將全部 24 個研究區塊及另外七組頁面／介面，對應到既有筆記與內容維護來源。在本站目錄執行 `npm run prepare-notes`，產生私人[閱讀索引](notes/README.md)，以及原本缺少或不完整的 17 份閱讀筆記。此命令須使用完整儲存庫，包含 `topics/bins/` 與 `sites/youtong/`；它讀取目前本機網站，不讀取已部署網站。
 
 仍編輯各筆記列出的正式來源。既有研究 Markdown 維持唯一原稿；HTML、JSON 及其產生器維持既有權責。重建受影響網站內容後，再執行 `npm run prepare-notes`。`npm run check-notes` 依本機 HTML 檢查缺少、過期或已不在盤點中的 Markdown 匯出，不驗證上游研究是否已重建。匯出不改動網站內容或研究輸入。
 
@@ -199,7 +199,7 @@ node scripts/check-redesign-browser.mjs
 
 ## 百日計畫
 
-`#plan` 提供完整的百日建置與營運交接提案，研究與執行材料及頁尾皆有入口。`package-research.py` 由 canonical `topics/bins/research/hundred-day-plan-2026-10-17/README.md`（獨立 checkout 使用 `research/` 副本）產生正文、章節連結與表格。第 100 天須完成行人服務的設備、人員與實際服務驗收；家戶服務不列入本期工作、預算或驗收。30 處、備援、預算及權責仍待承接單位確認。舊估算與 180 日營運材料保留並註明與百日建置的關係。僅公開 HTML 正文，不公開 Markdown、參數附件或離線 ZIP。
+`#plan` 提供現行計畫總覽、四項資源需求、驗收責任與可展開的執行細節；`#plan-timeline` 獨立呈現百日甘特圖、交付節點及逐階段責任關卡，原 `#plan-100day` 等時程連結維持有效。時程由 canonical `topics/bins/research/decision-checks-2026-10-22/build.py` 產生，以市長上任為第 0 天，涵蓋上任前 45 天及上任後 100 天。日期、參與者、承接與實體調整均待確認，圖表不表示完成比例。2026-10-17 的舊百日提案與估算保留在 `#archive`，不作現行承諾。僅公開 HTML 正文，不公開私人閱讀筆記、參數附件或離線 ZIP。
 
 ## 保存的位置證據摘要
 
