@@ -5,5 +5,5 @@ if (header) {
   nav.className = 'portal-return';
   nav.setAttribute('aria-label', '網站入口');
   nav.innerHTML = '<a href="../">網站首頁</a><a href="../demo/">有桶體驗</a>';
-  header.prepend(nav);
+  header.insertBefore(nav, header.querySelector('.header-note'));
 }

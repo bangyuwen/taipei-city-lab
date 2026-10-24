@@ -62,3 +62,10 @@ parent/local navigation and browser history. Inspect desktop and phone together;
 verify the phase table opens from its deep link. Rebuild the canonical research
 copies and offline package, run the existing site tests and public allowlist
 checks, and keep the original dirty checkout out of the release.
+
+
+## Rail and timeline refinement
+
+Brand comes before primary navigation; website/demo return links form a compact
+secondary group below it. The phone menu continues to toggle both groups.
+Phase jump links and the timeline chart use spacing rather than stacked borders.

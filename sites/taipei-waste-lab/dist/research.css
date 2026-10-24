@@ -456,3 +456,7 @@
 .plan-schedule-page .project-section>p{max-width:76ch}
 
 .plan-schedule-page #plan-100day{margin-top:0;padding-top:0;border-top:0}
+
+/* Phase links and the chart share one reading block, without stacked rules. */
+.plan-schedule-page .reading-path{border:0;margin:16px 0 20px;padding:0}
+.plan-schedule-page .plan-timeline{border-top:0;margin-top:0;padding-top:0}
