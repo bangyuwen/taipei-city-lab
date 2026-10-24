@@ -34,11 +34,13 @@ Deep links open containing disclosures before focus and scroll.
 ## Dedicated Gantt page
 
 `#plan-timeline` owns the generated inauguration-relative chart, delivery milestones,
-work/owner/gate table and delay rules. The table is a native disclosure. The
-chart uses available space up to 1140px; prose stays at 76ch. On phones, each
-label/day range moves above its track so there is no page-wide horizontal scroll.
-Day 0 is inauguration; preparation starts at day -45 and follow-up runs through
-day 100. Bars are planned time windows, not progress or proof of execution.
+and delay rules. Separate pre-inauguration preparation from post-inauguration
+execution. Show each of ten tasks, its days, duration, deliverable and proposed
+roles without disclosure; keep full work and decision gates in a native disclosure.
+The chart uses available space up to 1140px; prose stays at 76ch. Below 800px,
+each task becomes a reading block with labeled outputs and roles and no page-wide
+horizontal scroll. All tracks share the day -45 to 100 scale, with day 0 marking
+inauguration. Bars are planned time windows, not progress or proof of execution.
 Dates, agreements and actual participants are still unconfirmed.
 
 All five plan pages share 計畫總覽 / 百日甘特圖 / 需求規格 / 協作與承接 / 團隊交接.

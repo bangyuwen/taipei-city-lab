@@ -266,12 +266,15 @@ crew research, conditional checks and blank forms use labeled native disclosures
 Keep their labels useful while closed; open containing disclosures before
 focusing an existing deep link.
 
-The dedicated `#plan-timeline` page owns the full Gantt chart, delivery milestones,
-and a disclosure for the row-level work, responsibility and decision gates.
-Its chart may use 1140px of available width while prose stays within 76ch.
-At 639px and below, each task label and day range sit above its track; preserve
-text day ranges so the chart does not depend on color or horizontal scrolling.
-Day 0 means inauguration and the bars show planned periods, never completion.
+The dedicated `#plan-timeline` page groups ten tasks into pre-inauguration
+preparation and post-inauguration execution. The default-visible Gantt table
+aligns each task and day range with its planned duration, deliverable and
+proposed responsible roles. Preserve parallel tasks as separate rows. Detailed
+work, decision gates and unmet-condition handling remain in a native disclosure.
+Its chart may use 1140px while prose stays within 76ch. Below 800px each row
+stacks the task, day range, track, labeled deliverable and labeled roles without
+horizontal scrolling. Day 0 means inauguration; all tracks share the -45 to 100
+scale and show planned periods, never completion. Roles remain proposed.
 The five plan destinations are 計畫總覽, 百日甘特圖, 需求規格, 協作與承接 and 團隊交接.
 The overview links to the full chart; the chart links back to resources and
 acceptance. Old schedule anchors keep their IDs and resolve to the new page.
