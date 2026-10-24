@@ -173,10 +173,32 @@ def validate(data, prior):
 def load(research, prior):
     folder = research / FOLDER
     data = json.loads((folder / 'summary.json').read_text())
+    # This dated saved-artifact owner is permanently aggregate-only. Its policy
+    # comes from committed provenance, never from editable artifact notices.
+    try:
+        privacy = json.loads((research / 'privacy-redaction-2026-10-24.json').read_text())
+    except (OSError, ValueError):
+        raise ValueError('Missing or invalid committed privacy provenance') from None
+    if not isinstance(privacy, dict) or privacy.get('status') != 'privacy_redacted_aggregate_only':
+        raise ValueError('Saved feedback requires aggregate-only privacy provenance')
+    rebindings = privacy.get('input_rebindings')
+    if not isinstance(rebindings, list):
+        raise ValueError('Missing committed cleaned input bindings')
+    bindings = [item for item in rebindings
+                if isinstance(item, dict) and item.get('input') == 'comparisons.json'
+                and isinstance(item.get('manifest'), str)
+                and item['manifest'].endswith(FOLDER + '/summary.json')]
+    if len(bindings) != 1 or bindings[0].get('cleaned_sha256') != digest(folder / 'comparisons.json'):
+        raise ValueError('Saved feedback differs from the committed cleaned input')
     for key, path in [('protocolSha256', folder / 'protocol.md'), ('accessSummarySha256', research / 'feedback-access-2026-10-18/summary.json'), ('adjudicationNotesSha256', folder / 'adjudication.md'), ('comparisonsSha256', folder / 'comparisons.json'), ('sourceCheckSha256', folder / 'source-check.json')]:
         if digest(path) != data['source'][key]:
             raise ValueError('Retained removal evidence changed: ' + key)
     comparisons = json.loads((folder / 'comparisons.json').read_text())
+    if (data.get('privacyNotice') != PRIVACY_NOTICE
+            or comparisons.get('privacyNotice') != PRIVACY_NOTICE
+            or data.get('places') != []
+            or any(comparisons.get(key) != [] for key in ('places', 'examples', 'featuredPlaces'))):
+        raise ValueError('Saved aggregate-only feedback cannot restore individual or place-linked content')
     receipt = json.loads((folder / 'source-check.json').read_text())
     for item in receipt['sources']:
         path = folder / item['file']

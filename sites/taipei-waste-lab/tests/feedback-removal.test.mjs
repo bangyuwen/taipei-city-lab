@@ -112,3 +112,42 @@ assert '<a href="#feedback-removal">' in m['home'](d)
 index=Path('dist/index.html').read_text();assert page in index and m['home'](d) in index
 assert markdown==(research/m['FOLDER']/'README.md').read_text()
 `));
+
+test('saved loader and page build cannot downgrade committed aggregate-only privacy',()=>python(setup+String.raw`
+import hashlib,shutil,subprocess,sys
+with tempfile.TemporaryDirectory() as directory:
+ site=Path(directory)/'site';research=site/'research'
+ shutil.copytree(Path('research'),research)
+ (site/'scripts').mkdir();(site/'dist').mkdir()
+ for name in ('analyze-feedback.py','feedback_access.py','feedback_removal.py'):
+  shutil.copy(Path('scripts')/name,site/'scripts'/name)
+ page=site/'dist/index.html';shutil.copy('dist/index.html',page);saved_page=page.read_bytes()
+ folder=research/m['FOLDER'];summary=folder/'summary.json';comparison=folder/'comparisons.json'
+ policy=research/'privacy-redaction-2026-10-24.json';saved_policy=policy.read_bytes()
+ original_summary=summary.read_bytes();original_comparison=comparison.read_bytes()
+ saved_prior=json.loads((research/'feedback-access-2026-10-18/summary.json').read_text())
+ def reject_saved():
+  fails(lambda:m['load'](research,saved_prior))
+  result=subprocess.run([sys.executable,'scripts/analyze-feedback.py'],cwd=site,capture_output=True,text=True)
+  assert result.returncode!=0 and ('privacy provenance' in result.stderr or 'committed cleaned input' in result.stderr or 'aggregate-only feedback' in result.stderr),result.stderr
+  assert page.read_bytes()==saved_page
+ d=json.loads(original_summary);c=json.loads(original_comparison)
+ d.pop('privacyNotice');c.pop('privacyNotice')
+ g=copy.deepcopy(d['overall']);n=g['selectedRecords']
+ d['places']=[dict(g,id='synthetic-restored',mentions=n,roles={key:n if key=='affected' else 0 for key in m['ROLES']})]
+ c['places']=[dict(id='synthetic-restored',label='Synthetic place',scale='coarse',inventoryRefs=[],eventRefs=[],eventMatch='unresolved',reading='Synthetic reading',nextCheck='Synthetic check')]
+ c['featuredPlaces']=['synthetic-restored'];c['examples']=[dict(title='Synthetic example',account='SYNTHETIC_PRIVATE_ACCOUNT_DO_NOT_RENDER',action='Synthetic action')]
+ comparison.write_text(json.dumps(c));d['source']['comparisonsSha256']=hashlib.sha256(comparison.read_bytes()).hexdigest();summary.write_text(json.dumps(d))
+ # Self-declared artifact hashes cannot override the independently committed cleaned pin.
+ reject_saved()
+ # Even a maintained pin cannot downgrade the provenance's aggregate-only status.
+ record=json.loads(saved_policy)
+ next(row for row in record['input_rebindings'] if row['input']=='comparisons.json')['cleaned_sha256']=d['source']['comparisonsSha256']
+ policy.write_text(json.dumps(record));reject_saved()
+ # Current saved artifacts fail closed if provenance disappears or changes mode.
+ summary.write_bytes(original_summary);comparison.write_bytes(original_comparison)
+ policy.unlink();reject_saved()
+ record=json.loads(saved_policy);record['status']='unredacted';policy.write_text(json.dumps(record));reject_saved()
+ # Pure synthetic nonredacted validation retains its separate ordinary fixture contract.
+ ordinary=fixture();assert 'privacyNotice' not in ordinary;m['validate'](ordinary,prior_summary)
+`));
