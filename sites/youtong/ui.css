@@ -80,11 +80,11 @@ html body .top{padding-top:calc(var(--row2) + env(safe-area-inset-top))!importan
 .roles .wm .wt{color:#fff!important;font:700 12px/1.1 var(--font)!important;letter-spacing:1px}
 @media (min-width:761px){.roles .wm{width:56px;height:64px!important;border-radius:16px;margin-top:-2px}.roles .wm img{width:40px!important;height:40px!important}.roles .wm .wt{font-size:14px!important}}
 .meta .rep{display:inline-flex;align-items:center;min-height:23px}/* 與 .stchip 同高，回報後卡片不跳動 */
-/* v5 logo：方形綠色徽章（logo.svg 內含綠底＋桶＋「有桶」字樣），大於 44px 切換器 */
-.roles .wm{width:52px!important;height:52px!important;border-radius:11px;overflow:hidden;background:none!important;margin-top:0!important;flex:none}
-.roles .wm img{width:52px!important;height:52px!important;margin:0!important;display:block}
+/* v6 logo：走路的「有桶」吉祥物（logo.svg 透明底、3:4 直式、內含 CSS 動畫，遵守 prefers-reduced-motion）；不包底，白色柔光保地圖上可讀 */
+.roles .wm{width:45px!important;height:60px!important;border-radius:0;overflow:visible;background:none!important;box-shadow:none!important;margin-top:0!important;flex:none;filter:drop-shadow(0 0 4px rgba(255,255,255,.95)) drop-shadow(0 0 1px rgba(255,255,255,.9))}
+.roles .wm img{width:45px!important;height:60px!important;margin:0!important;display:block}
 .roles .wm .wt{display:none!important}
-@media (min-width:761px){.roles .wm{width:60px!important;height:60px!important;border-radius:12px}.roles .wm img{width:60px!important;height:60px!important}}
+@media (min-width:761px){.roles .wm{width:51px!important;height:68px!important}.roles .wm img{width:51px!important;height:68px!important}}
 
 /* The portal adds a home link and an always-visible local-demo boundary. */
 .roles{flex-wrap:wrap;gap:4px 8px;max-width:calc(100vw - 72px)}
