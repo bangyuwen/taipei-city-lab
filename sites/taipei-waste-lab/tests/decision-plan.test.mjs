@@ -12,7 +12,7 @@ test('current checks are conditional decisions with frozen inputs and no field o
  for(const s of JSON.parse(read(dir+'inputs.json')).sources)assert.equal(createHash('sha256').update(read(dir+s.path)).digest('hex'),s.sha256,s.path);
  const page=read('dist/index.html');
  assert.ok(!allowedPages.includes('methods'));assert.equal(workspaceForPage('team'),'plan');
- for(const route of ['ideas','ideas-options','ideas-heading','methods','field-priority','reader-field-forms','plan-check-Q01','plan-check-Q05','plan-crew-research','plan-crew-research-heading','plan-100day','plan-100day-heading','plan-overlay','plan-overlay-heading','plan-candidates','plan-candidates-heading','plan-schedule-details','plan-execution'])assert.equal(pageFromHash('#'+route),'plan');
+ for(const route of ['ideas','ideas-options','ideas-heading','methods','field-priority','reader-field-forms','plan-check-Q01','plan-check-Q05','plan-crew-research','plan-crew-research-heading','plan-overlay','plan-overlay-heading','plan-candidates','plan-candidates-heading','plan-execution','plan-schedule-summary'])assert.equal(pageFromHash('#'+route),'plan');
  for(const route of ['plan-crew-research-history','plan-prior-field-plan'])assert.equal(pageFromHash('#'+route),'archive');
  assert.ok(!page.includes('id="panel-methods"'));
  assert.ok(!page.includes('id="panel-ideas"'));assert.ok(!page.includes('先前方案'));
@@ -23,4 +23,22 @@ test('current checks are conditional decisions with frozen inputs and no field o
  const current=page.split('<!-- decision-checks-start -->')[1].split('<!-- decision-checks-end -->')[0];
  assert.equal((current.match(/data-decision-check=/g)||[]).length,plan.checks.length);
  assert.ok(current.includes('取消每區一點與固定三輪配額'));
+});
+
+test('schedule deep links belong to a dedicated page with one generated chart',()=>{
+ const page=read('dist/index.html');
+ assert.ok(allowedPages.includes('plan-timeline'));
+ assert.equal(workspaceForPage('plan-timeline'),'plan');
+ for(const id of ['plan-timeline','plan-timeline-heading','plan-100day','plan-100day-heading','plan-schedule-details'])assert.equal(pageFromHash('#'+id),'plan-timeline');
+ const schedule=page.split('id="panel-plan-timeline"')[1].split('<section id="panel-plan"')[0];
+ const overview=page.split('id="panel-plan"')[1].split('<section id="panel-')[0];
+ assert.ok(schedule.includes('id="plan-100day"'));
+ assert.ok(schedule.includes('id="plan-schedule-details"'));
+ assert.ok(schedule.includes('href="#plan-resources"'));
+ assert.ok(overview.includes('href="#plan-timeline"'));
+ assert.ok(!overview.includes('class="plan-timeline"'));
+ assert.equal((page.match(/class="plan-timeline"/g)||[]).length,1);
+ assert.equal((schedule.match(/class="plan-timeline-label"/g)||[]).length,10);
+ const ids=[...page.matchAll(/\sid="([^"]+)"/g)].map(m=>m[1]);
+ assert.equal(new Set(ids).size,ids.length,'New route must not shadow historical timeline IDs');
 });

@@ -134,7 +134,7 @@ components:
 
 ## Overview
 
-The 2026-10-19 project workspace serves the research team. Five primary destinations organize work: 工作總覽, 熱點研究, 方案比較, 執行分工 and 資料庫. The overview connects completed desktop deliverables to planned next steps and unresolved decisions. Every secondary page has one stable parent, a breadcrumb and local navigation; history and reference material live in the library. Methods and requirements are continuous indexed documents, while districts and individual work packages remain selectable records. This structure preserves the petrol/paper identity, existing data boundaries and interaction tokens.
+The current research workspace has four primary destinations: 理解問題, 資料分析, 百日計畫 and 參考資料. The brand link opens 研究總覽. Each secondary page has a stable parent, a breadcrumb and local navigation. Current plan and requirement pages remain separate from dated drafts in the reference archive. This structure preserves the petrol/paper identity, existing data boundaries and interaction tokens.
 
 **Creative North Star: "The Open-Shelf Research Index"**
 
@@ -239,6 +239,43 @@ The desktop rail is fixed, petrol, and vertically stacked. Links use 16px text a
 - **Country strategy:** Fourteen country and region entries lead with a four-step flow, expanded city facts, sources, and limits. Twelve equipment media supplements retain their photo, caption, credit, and license below the strategy.
 - **Evidence note:** Warm fill and contrasting text keep a coverage or source limit attached to the relevant record.
 
+### Country discovery and parts
+
+The country page shows one selected country at a time and leads with its strategy. Keep the four-step operating flow, optional 0–100% chart, expanded city cases with eight shared facts, source lists, and warm-tinted limitation rows together in the reading column. The index covers fourteen countries and regions, including Hong Kong and Uruguay; those two have no matching media. Twelve photo and 3D supplements follow the strategy and keep their provenance with the relevant equipment case. On wide screens, use a roughly 190px sticky index with a 76ch content column; on smaller screens, show the native country select. Place the cross-country comparison below the browser and convert its cells into labeled rows at phone widths without changing table semantics. Keep the equipment media optional and preserve its source, cost, and model limitations.
+
+The shared Three.js renderer loads only when the visitor selects 3D in a country's media supplement. Keep direct part selection with labeled button alternatives, deterministic seeking, and reduced-motion/offscreen suspension. Switching country ends the old guide. Preserve the photo, full caption, credit, license, and case limitations in the supplement. Source labels retain date and coverage text on narrow layouts; never normalize currencies or turn unknown costs into numbers.
+
+### T1 physical proposal
+
+The design route pairs the fixed T1 street-bin proposal with the existing four-purpose experience. Lead with the street/shopping-district use and three actions: demonstrate cleaning, open the current specification, or read the design process. Keep drawings, proposed dimensions, material choices, siting, maintenance, validation and unquoted costs in four native disclosures. Readable 16px copy and aligned specification rows carry detail without adding a second navigation system.
+
+T1 defaults to a 48 × 42 × 110 cm envelope and a 22 × 14.3 cm opening centered at 82.5 cm. The 60 L capacity is a target, not measured volume. Sliders change the interactive appearance only; the fixed proposal remains explicit. Three.js shows the hood, replaceable panels, door and rolling liner. Motion respects reduced-motion settings. Preserve all other purposes and the text-only/WebGL-failure path. No drawing or animation is a fabrication document or a verified physical result.
+
+The T1 design process is a Read surface between the interactive workspace and the detailed proposal. Use five primary ordered native disclosures: needs and evidence, same-need comparison, complete design, full-size operation mock-up, and engineering/metal prototype. Each closed stage shows its deliverable and current evidence status. Expanded content explains participants, the question, actions and advancement conditions. Keep acceptance, approved pilot and production/operations in one secondary disclosure after the five stages. T1 remains a candidate until comparison supports selection. The existing process jump control focuses its heading without changing the route hash; specification links open and focus their existing disclosure. Keep 16px body copy, one-column phone details and no completion percentages or invented field results.
+
+### Siting history overlay
+
+Keep `#siting` as a saved candidate-streets reference under 參考資料, linked from the existing T1 actions. The dated chronology, historical distribution and inventory comparison remain reference pages. Candidate streets retain historical evidence links and an explicit desktop-only, not-field-verified notice. Reuse the petrol and cool-paper palette. Load the same-origin overlay document only on first activation, size it to its content to avoid nested scrolling, and preserve its filters when switching routes. Keep a full-page navigation link and retry state. The embedded document hides its duplicate masthead, while the standalone page retains its return navigation. Actual sidewalk polygons and separately dated snapshot markers remain distinct; coverage, provisional width units and unverified installation status stay adjacent to the controls and details. Publish only the display document and its runtime controller; preserve research inputs privately.
+
+### Hundred-day plan and schedule
+
+The plan overview is a Read surface. Its local index follows purpose/scope,
+schedule summary, resources, acceptance/responsibility, then execution details.
+Keep status and all four resource requests visible. Methods, candidate fields,
+crew research, conditional checks and blank forms use labeled native disclosures.
+Keep their labels useful while closed; open containing disclosures before
+focusing an existing deep link.
+
+The dedicated `#plan-timeline` page owns the full Gantt chart, delivery milestones,
+and a disclosure for the row-level work, responsibility and decision gates.
+Its chart may use 1140px of available width while prose stays within 76ch.
+At 639px and below, each task label and day range sit above its track; preserve
+text day ranges so the chart does not depend on color or horizontal scrolling.
+Day 0 means inauguration and the bars show planned periods, never completion.
+The five plan destinations are 計畫總覽, 百日甘特圖, 需求規格, 協作與承接 and 團隊交接.
+The overview links to the full chart; the chart links back to resources and
+acceptance. Old schedule anchors keep their IDs and resolve to the new page.
+
 ## Do's and Don'ts
 
 ### Do:
@@ -253,32 +290,3 @@ The desktop rail is fixed, petrol, and vertically stacked. Links use 16px text a
 - **Don't** separate a claim from the source and coverage limit that bounds it.
 - **Don't** add public downloads or attachments to the research presentation.
 - **Don't** borrow decorative motifs from unrelated visual worlds.
-
-## Country discovery and parts
-
-The country page shows one selected country at a time and leads with its strategy. Keep the four-step operating flow, optional 0–100% chart, expanded city cases with eight shared facts, source lists, and warm-tinted limitation rows together in the reading column. The index covers fourteen countries and regions, including Hong Kong and Uruguay; those two have no matching media. Twelve photo and 3D supplements follow the strategy and keep their provenance with the relevant equipment case. On wide screens, use a roughly 190px sticky index with a 76ch content column; on smaller screens, show the native country select. Place the cross-country comparison below the browser and convert its cells into labeled rows at phone widths without changing table semantics. Keep the equipment media optional and preserve its source, cost, and model limitations.
-
-The shared Three.js renderer loads only when the visitor selects 3D in a country's media supplement. Keep direct part selection with labeled button alternatives, deterministic seeking, and reduced-motion/offscreen suspension. Switching country ends the old guide. Preserve the photo, full caption, credit, license, and case limitations in the supplement. Source labels retain date and coverage text on narrow layouts; never normalize currencies or turn unknown costs into numbers.
-
-## T1 physical proposal
-
-The design route pairs the fixed T1 street-bin proposal with the existing four-purpose experience. Lead with the street/shopping-district use and three actions: demonstrate cleaning, open the current specification, or read the design process. Keep drawings, proposed dimensions, material choices, siting, maintenance, validation and unquoted costs in four native disclosures. Readable 16px copy and aligned specification rows carry detail without adding a second navigation system.
-
-T1 defaults to a 48 × 42 × 110 cm envelope and a 22 × 14.3 cm opening centered at 82.5 cm. The 60 L capacity is a target, not measured volume. Sliders change the interactive appearance only; the fixed proposal remains explicit. Three.js shows the hood, replaceable panels, door and rolling liner. Motion respects reduced-motion settings. Preserve all other purposes and the text-only/WebGL-failure path. No drawing or animation is a fabrication document or a verified physical result.
-
-The T1 design process is a Read surface between the interactive workspace and the detailed proposal. Use five primary ordered native disclosures: needs and evidence, same-need comparison, complete design, full-size operation mock-up, and engineering/metal prototype. Each closed stage shows its deliverable and current evidence status. Expanded content explains participants, the question, actions and advancement conditions. Keep acceptance, approved pilot and production/operations in one secondary disclosure after the five stages. T1 remains a candidate until comparison supports selection. The existing process jump control focuses its heading without changing the route hash; specification links open and focus their existing disclosure. Keep 16px body copy, one-column phone details and no completion percentages or invented field results.
-
-## Siting history overlay
-
-Keep `#siting` as the candidate-streets tab under 研究結果, alongside 研究結論, and link it from the existing T1 actions. The history navigation contains only chronology, historical distribution and inventory comparisons. Candidate streets retain historical evidence links and an explicit desktop-only, not-field-verified notice. Reuse the petrol and cool-paper palette. Load the same-origin overlay document only on first activation, size it to its content to avoid nested scrolling, and preserve its filters when switching routes. Keep a full-page navigation link and retry state. The embedded document hides its duplicate masthead, while the standalone page retains its return navigation. Actual sidewalk polygons and separately dated snapshot markers remain distinct; coverage, provisional width units and unverified installation status stay adjacent to the controls and details. Publish only the display document and its runtime controller; preserve research inputs privately.
-
-## Hundred-day plan reading order
-
-The plan is a Read surface. Its local index follows the reader's questions:
-purpose/scope, schedule/deliverables, resources, acceptance/responsibility, then
-execution details. Keep status and all four resource requests visible. Keep the
-timeline visible and put its duplicate row-level handoff table in a native
-disclosure. Methods, candidate fields, crew research, conditional checks and
-blank forms use labeled disclosures after the overview. Preserve every deep
-link and open its ancestors before focus/scroll. Reuse the petrol/paper palette,
-reading width and native keyboard controls on desktop and phone.

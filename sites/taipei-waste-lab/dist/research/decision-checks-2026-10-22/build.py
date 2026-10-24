@@ -13,6 +13,8 @@ START = '<!-- decision-checks-start -->'
 END = '<!-- decision-checks-end -->'
 SCHEDULE_START = '<!-- plan-schedule-start -->'
 SCHEDULE_END = '<!-- plan-schedule-end -->'
+SUMMARY_START = '<!-- plan-summary-start -->'
+SUMMARY_END = '<!-- plan-summary-end -->'
 
 
 def load():
@@ -43,6 +45,17 @@ SCHEDULE = [
 ]
 
 
+def render_schedule_summary():
+    first = min(row[0] for row in SCHEDULE)
+    last = max(row[1] for row in SCHEDULE)
+    return ('<section class="project-section" aria-labelledby="plan-schedule-summary">'
+            '<h3 id="plan-schedule-summary">時程摘要</h3>'
+            f'<p>以市長上任日為第 0 天，規劃從第 {first} 天至第 {last} 天。'
+            '上任前整理現有桶位、候選與原型；上任後先確認承接及基線，'
+            '再依核准方案試調、回看與交接。實際日期與承接待確認，未過關卡就延後。</p>'
+            '<p><a href="#plan-timeline">開啟百日甘特圖：查看工作期間、交付節點與責任</a></p></section>')
+
+
 def render_schedule():
     e = html.escape
     chart = []
@@ -56,7 +69,7 @@ def render_schedule():
         chart.append(f'<li><div class="plan-timeline-label"><strong>{e(title)}</strong><span>{days}</span></div><div class="plan-timeline-track" aria-hidden="true"><span style="--start:{offset:.4f}%;--span:{width:.4f}%"></span></div></li>')
         rows.append(f'<tr><th scope="row">{days}<br>{e(title)}</th><td data-label="工作與交付">{e(work)}</td><td data-label="建議責任角色">{e(owner)}</td><td data-label="通過條件／未達處理">{e(gate)}</td></tr>')
     return ('<section class="project-section" id="plan-100day" aria-labelledby="plan-100day-heading">'
-        '<h3 id="plan-100day-heading">百日時間圖：第幾天做什麼</h3>'
+        '<h3 id="plan-100day-heading" class="visually-hidden">百日時間圖：第幾天做什麼</h3>'
         '<p>第 0 天＝市長上任日；負數為上任前，正數為上任後。先以第 -45 天開始準備作為規劃，實際上任日期與人選尚未在本計畫填定。長條表示工作期間，不表示完成比例。上任前先整理、做原型並協調試用；上任後確認承接，再依證據試調。</p>'
         '<figure class="plan-timeline"><figcaption>清潔回報 × 人流疊圖 → 候選覆核 → 配置試調 → 兩側回看</figcaption>'
         '<div class="plan-timeline-scale" aria-hidden="true"><span style="left:0%">-45</span><span style="left:30.8219%">0 上任</span><span style="left:51.3699%">30</span><span style="left:71.9178%">60</span><span style="left:100%">100天</span></div>'
@@ -98,6 +111,9 @@ def build(page_path=None):
     assert page.count(SCHEDULE_START) == page.count(SCHEDULE_END) == 1
     page = re.sub(re.escape(SCHEDULE_START)+r'.*?'+re.escape(SCHEDULE_END),
                   lambda _: SCHEDULE_START+render_schedule()+SCHEDULE_END, page, flags=re.S)
+    assert page.count(SUMMARY_START) == page.count(SUMMARY_END) == 1
+    page = re.sub(re.escape(SUMMARY_START)+r'.*?'+re.escape(SUMMARY_END),
+                  lambda _: SUMMARY_START+render_schedule_summary()+SUMMARY_END, page, flags=re.S)
     # Worker evidence is a separate role hypothesis, not a fifth comment journey.
     crew = (HERE.parent / 'crew-persona-2026-10-23/persona.html').read_text()
     crew_start, crew_end = '<!-- crew-persona-start -->', '<!-- crew-persona-end -->'

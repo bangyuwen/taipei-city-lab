@@ -39,12 +39,12 @@ package-research.py owns archive and saved-prototype contextual rendering;
 prepare-siting-overlay.py plus templates own saved map/checklist status.
 Do not rewrite frozen source protocols or observations to correct presentation.
 
-Checked public surfaces: 23 integrated panels, map/assessment standalone pages,
+Checked public surfaces: 24 integrated panels, map/assessment standalone pages,
 legacy design-thinking/PRD entries and dynamic country/design UI. Current
 source facts, numerical calculations, source limitations, and unknown results
 are preserved. This is a consistency check, not a new factual-source audit.
 
-The current reading path (`#plan`, `#spec`, `#work`, `#team`) contains current
+The current reading path (`#plan`, `#plan-timeline`, `#spec`, `#work`, `#team`) contains current
 purpose, decision rules, requirements and handoffs only. The dated field plan,
 v0.4 specification, old government work packages and build/budget draft are
 physically in `#archive`, reached from `#library` (參考資料). Old anchors stay
@@ -67,9 +67,12 @@ The current schedule uses inauguration as day 0, preparation from day -45,
 and post-inauguration work through day 100. Pre-inauguration operational trials
 need management/crew agreement; earlier baselines require a comparability check.
 
-The plan overview presents purpose/scope, inauguration-relative schedule, four
+The plan overview presents purpose/scope, a short schedule summary, four
 resource categories, acceptance, responsibility and next steps before execution
-details. The schedule has its own generated marker pair; the existing decision
+details. The dedicated `#plan-timeline` page owns the full Gantt chart, milestones and
+stage handoff table. Existing `#plan-100day`, `#plan-100day-heading` and
+`#plan-schedule-details` links open this page. The schedule has its own
+generated marker pair; a separate generated summary uses the same schedule; the existing decision
 checks marker owns crew research and optional checks in native disclosures.
 Configuration methods, candidate fields and blank observation tools remain in
 the plan under execution details. Existing anchors retain their IDs and open

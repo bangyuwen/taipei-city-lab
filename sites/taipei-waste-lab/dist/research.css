@@ -431,3 +431,9 @@
 .plan-page .plan-detail>summary{font-weight:700}
 .plan-page .plan-detail[open]>summary{margin-bottom:16px}
 .plan-page .plan-detail>.project-section:first-of-type{margin-top:16px}
+
+/* The dedicated schedule uses the available width; prose stays readable. */
+.plan-schedule-page{max-width:1140px}
+.plan-schedule-page .project-section>p{max-width:76ch}
+
+.plan-schedule-page #plan-100day{margin-top:0;padding-top:0;border-top:0}

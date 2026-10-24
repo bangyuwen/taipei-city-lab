@@ -174,7 +174,7 @@
     "page": "dist/index.html",
     "selector": "#panel-plan",
     "coverage": "部分對應",
-    "reason": "現行權威、查核原則及清潔人員研究已有說明；完整計畫、五項查核、規劃窗口與表單尚無整合正文。",
+    "reason": "現行權威、查核原則及清潔人員研究已有說明；總覽、四項資源需求、驗收、五項查核與表單整理為同一份正文，完整時程另見百日甘特圖筆記。",
     "notes": [
       "../../topics/bins/research/CURRENT-PLAN.md",
       "../../topics/bins/research/decision-checks-2026-10-22/README.md",
@@ -188,6 +188,22 @@
       "../../topics/bins/research/taipei-citywide-2026-10-19/delivery/build_field_records.py"
     ],
     "output": "plan.md"
+  },
+  {
+    "title": "百日甘特圖與交付關卡",
+    "page": "dist/index.html",
+    "selector": "#panel-plan-timeline",
+    "coverage": "部分對應",
+    "reason": "保留以市長上任為第0天的規劃窗口、交付、責任與延後條件；獨立頁面與計畫總覽互相連結。",
+    "notes": [
+      "../../topics/bins/research/CURRENT-PLAN.md",
+      "../../topics/bins/research/decision-checks-2026-10-22/README.md"
+    ],
+    "owners": [
+      "dist/index.html",
+      "../../topics/bins/research/decision-checks-2026-10-22/build.py"
+    ],
+    "output": "timeline.md"
   },
   {
     "title": "保存的研究與執行材料",
