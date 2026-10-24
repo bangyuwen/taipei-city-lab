@@ -87,7 +87,8 @@ test('reader entry and evidence links resolve to their owning pages',()=>{
   for(const hash of ['#design','#t1-specification','#t1-product-process-heading'])assert.equal(pageFromHash(hash),'design');
   for(const [owner,hashes] of Object.entries({
     'data-methods':['hotspot-heading','hotspot-quality','reader-method-scope','method-mrt-table','method-venue-street-update'],
-    plan:['methods','methods-heading','field-priority','reader-field-forms','plan-check-Q01','plan-100day'],
+    plan:['methods','methods-heading','field-priority','reader-field-forms','plan-check-Q01'],
+    'plan-timeline':['plan-timeline','plan-timeline-heading','plan-100day','plan-100day-heading','plan-schedule-details'],
     districts:['citywide-area-12','plan-area-13','reader-district-01'],
     evidence:['definition-evidence-E06-S2','definition-focus-P01','reader-definition-evidence-E01'],
     work:['work-current-questions','work-current-handoff'],
@@ -179,7 +180,7 @@ test('each detail page belongs to one project workspace', async()=>{
  const {workspacePages,workspaceForPage,allowedPages}=await import('../dist/data-utils.js');
  const pages=Object.values(workspacePages).flat();assert.equal(pages.length,new Set(pages).size);
  assert.deepEqual([...pages].sort(),[...allowedPages].sort());
- for(const [page,owner] of [['districts','analysis'],['evidence','personas'],['work','plan'],['team','plan'],['data-methods','analysis'],['spec','plan'],['design','library'],['siting','library'],['definition','library'],['countries','library'],['archive','library'],['map','library']])assert.equal(workspaceForPage(page),owner,page);
+ for(const [page,owner] of [['districts','analysis'],['evidence','personas'],['work','plan'],['team','plan'],['data-methods','analysis'],['spec','plan'],['plan-timeline','plan'],['design','library'],['siting','library'],['definition','library'],['countries','library'],['archive','library'],['map','library']])assert.equal(workspaceForPage(page),owner,page);
  for(const fragment of ['definition-prd-roles','definition-prd-roles-heading','reader-definition-prd-next','definition-prd-next'])assert.equal(pageFromHash('#'+fragment),'team');
  assert.equal(pageFromHash('#definition-prd-validation'),'archive');
  for(const fragment of ['field-schedule','field-capacity','field-record','reader-field-schedule','reader-work-observation','hotspot-times','reader-field-priority'])assert.equal(pageFromHash('#'+fragment),'archive',fragment);
@@ -195,7 +196,7 @@ test('local navigation separates personal evidence, distribution and field prepa
     ['理解問題',['personas','problem','feedback','evidence'],4],
     ['資料分析',['analysis','districts','data-methods'],3],
     ['現勘準備',[],0],
-    ['百日計畫',['plan','spec','work','team'],4],
+    ['百日計畫',['plan','plan-timeline','spec','work','team'],5],
     ['方案與需求',[],0],
   ]){
     const navs=[...html.matchAll(new RegExp('<nav class="project-subnav" aria-label="'+label+'內頁">(.*?)</nav>','g'))];
