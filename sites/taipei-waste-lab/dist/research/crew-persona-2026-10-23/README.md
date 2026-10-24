@@ -1,34 +1,34 @@
-# Cleaning-worker persona and app suitability
+# 清潔人員角色與 App 適用性
 
-Research date: 2026-10-23 (Asia/Taipei). Status: desk research and proposed work only. No worker interviews, agency contact, shadowing, usability tests or staffing commitments have occurred.
+研究日期：2026-10-23（Asia/Taipei）。狀態：僅完成案頭研究與工作提案。尚未進行人員訪談、機關聯絡、隨行觀察、易用性測試或人力承諾。
 
-The user requested a cleaning-worker persona, evidence about phone use, routes and staffing, and inclusion of missing evidence in the current hundred-day plan. The decision is whether an app should serve frontline workers, supervisors, or neither until service conditions improve. Smartphone ownership, task competence, safe opportunity to use a device, and operational benefit are separate unknowns. Do not substitute age, national smartphone penetration, resident apps or a manager's ability for frontline evidence.
+使用者要求清潔人員角色、手機使用／路線／人力證據，並將缺少的證據納入現行百日計畫。待決策的是 App 應服務第一線人員、主管，或待服務條件改善前暫不採用。智慧型手機持有、任務操作能力、安全使用時機與作業效益，是各自獨立的未知。不得以年齡、全國手機普及率、居民 App 或管理者能力替代第一線證據。
 
-`persona.html` owns the public role hypothesis, official evidence and gaps. `plan.html` owns the proposed Q05 research delivery aligned to the current mayor-inauguration timeline (day 0), including pre-inauguration preparation and post-inauguration follow-up. The current `decision-checks-2026-10-22/build.py` renders both. The four comment-based journeys remain unchanged and are not a worker sample. Do not edit the historical 2026-10-17 deployment plan as if it were current.
+`persona.html` 維護公開角色假設、官方證據與缺口。`plan.html` 維護對齊市長就職時程（第 0 天）的 Q05 研究交付提案，含就職前準備及就職後追蹤。現行 `decision-checks-2026-10-22/build.py` 產生兩者。四段來自留言的旅程不變，也不是清潔人員樣本。不得把歷史 2026-10-17 部署計畫改寫成現行計畫。
 
-## Official sources checked
+## 已查閱的官方來源
 
-| Source | What was checked | Boundary |
-|---|---|---|
-| [DEP organization](https://www.dep.gov.taipei/cp.aspx?n=DD34C671F97B74E5) | District teams' street and bin cleaning; direct team's bin repair and installation/removal responsibilities. | Institutional responsibility, not observed practice or allocation. |
-| [Environmental cleaning duty rules](https://laws.gov.taipei/Law/LawSearch/LawArticleContent/FL015308) | Page shows amendment 2020-07-07; sections 4 and 6 describe supervisory preparation and protective gloves. | A phone interaction constraint to investigate, not proof that workers cannot use phones. Current local arrangements still need confirmation. |
-| [Garbage-truck route dataset](https://data.taipei/dataset/detail?id=6bb3304b-4f46-4bb0-8cd1-60c66dcd1cae) | Metadata shows 2026-10-16 resource update, district, squad, vehicle, route, trip, arrival/departure time, location and coordinates. | Metadata only; not a downloaded/validated route map, bin collection route, street-sweeping area or GPS trace. |
-| [Annual cleaning personnel dataset](https://data.gov.tw/dataset/156680) | Catalog fields include year, total, workers, collection, recycling and other categories. | CSV could not be read through this search tool; no current totals or staffing allocation claimed. Search snippets and localized catalog views differed in update metadata, so no freshness claim is made. |
-| [2026 short-term recruitment](https://www.dep.gov.taipei/News_Content.aspx?n=CB6D5C560DE4D2DD&s=FDC07E2872A7FD42) | Announcement and linked attachment 1: planned 854 workers across 12 districts. PDF body explicitly says year 115 even though its metadata title is older. | Planned recruitment, not actual hires, permanent establishment or staff assigned to bins. |
-| [Resident garbage-truck app announcement](https://www.gov.taipei/News_Content.aspx?n=F0DDAF49B89E9413&s=04E4B398C7814090&sms=72544237BBE4C5F6) | 2018 announcement describes arrival reminders for residents. | Not evidence of workers' phone proficiency or adoption. |
+| 來源 | 查閱內容 | 證據限制 |
+| --- | --- | --- |
+| [環保局組織](https://www.dep.gov.taipei/cp.aspx?n=DD34C671F97B74E5) | 區清潔隊的道路與垃圾桶清潔；直屬隊的垃圾桶修繕、設置及撤除責任。 | 是制度權責，不是實際作業或配置觀察。 |
+| [環境清潔勤務規範](https://laws.gov.taipei/Law/LawSearch/LawArticleContent/FL015308) | 頁面顯示 2020-07-07 修正；第 4、6 節說明督導準備及防護手套。 | 是待調查的手機操作限制，不證明人員不能使用手機。現地安排仍待確認。 |
+| [垃圾車路線資料集](https://data.taipei/dataset/detail?id=6bb3304b-4f46-4bb0-8cd1-60c66dcd1cae) | 詮釋資料顯示資源更新日 2026-10-16，欄位含行政區、分隊、車輛、路線、車次、到離時間、地點與座標。 | 僅查閱詮釋資料，尚非下載驗證的路線圖，也不是垃圾桶清運路線、掃街區域或 GPS 軌跡。 |
+| [年度清潔人員資料集](https://data.gov.tw/dataset/156680) | 目錄欄位含年度、總數、清潔人員、清運、回收及其他類別。 | 本次搜尋工具無法讀取 CSV；不宣稱現有人數或配置。搜尋摘要與不同語系目錄的更新資訊不一致，不據此宣稱資料新鮮度。 |
+| [2026 年短期招募](https://www.dep.gov.taipei/News_Content.aspx?n=CB6D5C560DE4D2DD&s=FDC07E2872A7FD42) | 公告及附件 1：規劃於 12 區招募 854 人。PDF 正文明列民國 115 年，雖然其詮釋資料標題較舊。 | 是招募計畫，不是實際錄用、常設編制或垃圾桶勤務人力。 |
+| [居民垃圾車 App 公告](https://www.gov.taipei/News_Content.aspx?n=F0DDAF49B89E9413&s=04E4B398C7814090&sms=72544237BBE4C5F6) | 2018 年公告說明給居民的到站提醒。 | 不證明清潔人員的手機熟練度或採用情形。 |
 
-Search scope included Taipei official duties, cleaning-worker phone/app use, cleaning routes, and staffing datasets. No representative Taipei bin-worker phone-use survey or complete bin-route-to-shift roster was obtained in this bounded search. This is a research gap, not proof that the agency has no such records. No nationwide or other-city finding is presented as Taipei prevalence.
+搜尋範圍涵蓋臺北官方勤務、清潔人員手機／App 使用、清潔路線及人力資料集。本次有限搜尋未取得具代表性的臺北垃圾桶勤務人員手機調查，或完整的桶位路線與班表對照。這是研究缺口，不證明機關沒有資料。全國或其他城市發現不當作臺北盛行率。
 
-## Information to request before choosing an app workflow
+## 選擇 App 流程前應取得的資訊
 
-Request dated, de-identified responsibility-area maps, bin route/order/frequency, stable route/bin identifiers, shift roles, established/attending/available staffing, vehicles, relief arrangements, dispatch authority, current reporting examples and phone policies. Separate road sweeping, bin emptying, driving, repairs and supervision. Do not infer staffing from total headcount divided by bins. Only request districts and shifts needed for a concrete decision.
+索取附日期且去識別的責任區圖、垃圾桶路線／順序／頻率、穩定路線／桶位 ID、班別角色、編制／出勤／可用人力、車輛、代班安排、派遣權限、現行回報範例及手機政策。分開道路清掃、倒桶、駕駛、修繕與督導，不以總人數除以桶數推估人力。僅索取具體決策所需的行政區及班別。
 
-Observe device access, task completion, safety constraints, reporting burden and willingness separately. Compare the same tasks with the current method and a simple prototype, balance order, count assistance and failures, and include supervisor time. Set acceptable time/error criteria and a time budget before results. Retain negative outcomes. There is no assumed representative sample, fixed district quota, universal numerical pass threshold or promised efficiency gain.
+分別觀察設備取得、任務完成、安全限制、回報負擔及意願。以現行方法與簡單原型比較相同任務，平衡操作順序，計入協助與失敗，也納入主管時間。得知結果前先定可接受時間／錯誤標準及時間預算，保留負面結果。不預設代表性樣本、固定行政區配額、通用數值通過門檻或效率提升承諾。
 
-The existing Youtong crew demo describes simulated ordering and browser-local records. It is not a verified official route or evidence of worker adoption. This research does not change the demo, issue work orders or alter actual staffing.
+既有有桶清潔隊體驗展示模擬排序及瀏覽器本機紀錄，並非核實的官方路線或人員採用證據。本研究不改動體驗、不派發工單，也不調整實際人力。
 
-## Rebuild and verification
+## 重建與驗證
 
-Run `python3 topics/bins/research/decision-checks-2026-10-22/build.py` from the repository root, then synchronize the two changed research packages into the standalone site without deleting unrelated local work. Assemble the public output with the existing prepare-public and prepare-portal commands. Run the site tests and checks. `npm run prepare-data` also renders the content, but its whole research-copy replacement must not be used over unrelated local work.
+由儲存庫根目錄執行 `python3 topics/bins/research/decision-checks-2026-10-22/build.py`，再將兩個變更的研究資料包同步到獨立網站，勿刪除無關的本機工作。使用既有 prepare-public 及 prepare-portal 命令組裝公開輸出，再執行網站測試與檢查。`npm run prepare-data` 也會產生內容，但它會完整替換研究副本，不可覆蓋無關的本機工作。
 
-Publication reconciliation: based on live Sites version 117, commit c82c3583c9e3cd1e0263e2ce23898ed3f62762af. Preserve its timeline, planning changes, demo and styles. Q05 preparation now precedes real app use; no scheduled work or result is implied.
+發布核對基準：當時線上 Sites 版本 117、commit `c82c3583c9e3cd1e0263e2ce23898ed3f62762af`。保留其時程、規劃變更、體驗與樣式。Q05 準備安排在實際使用 App 前，不表示已排定作業或取得結果。

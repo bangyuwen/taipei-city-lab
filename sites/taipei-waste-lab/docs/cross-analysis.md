@@ -1,68 +1,68 @@
-# Transport and bin position cross-check
+# 交通活動與垃圾桶位置交叉檢查
 
-The map provides an initial configuration reference. Use its comparisons to form provisional options, then adjust actual bin positions, counts and collection using field evidence on access, disposal, overflow and maintenance. Keep the initial assumption and the evidence, date and reason for each change or decision to retain the current configuration. Candidate order is not a fixed itinerary or siting arrangement; an activity comparison alone does not establish insufficient bins. The user requested transport and pedestrian activity to be compared with existing bins on 2026-10-22. The implementation preserves the site's existing routes and explicitly dated historical queries; the default map now uses the fixed September 2026 bin inventory.
+地圖提供初始配置參考。先用比較形成暫定選項，再依可及性、投放、溢出與維護的實地證據，調整實際桶位、數量及清運。每次變更或維持配置的決定，均保留初始假設、證據、日期及理由。候選排序不是固定行程或設點安排；活動量比較本身不證明垃圾桶不足。使用者於 2026-10-22 要求將交通與行人活動和既有桶位比較。實作保留既有網站路徑及明列日期的歷史查詢；預設地圖使用固定的 2026 年 9 月垃圾桶清冊。
 
-## Inputs and reproducibility
+## 輸入與重現方式
 
-Run `npm run prepare-cross-analysis` from the site, then `python3 scripts/prepare-public.py`. The full `prepare-data.py` workflow also regenerates this join. The generator stores SHA-256 digests of all source inputs in `dist/data/cross-analysis.json`.
+由網站目錄執行 `npm run prepare-cross-analysis`，再執行 `python3 scripts/prepare-public.py`。完整 `prepare-data.py` 流程也會重建此整合資料。產生器將全部來源輸入的 SHA-256 記於 `dist/data/cross-analysis.json`。
 
-- `research/taipei-citywide-2026-10-19/results/stations.csv`: retained citywide analysis of 1,821 YouBike stations. The station snapshot is dated 2026-10-18. Activity uses July endpoint events excluding July 10 and 11, following the existing quality flags. Unique matching and other source limitations remain those of the retained analysis.
-- `data/cross-analysis-inputs/bus-stops-2026-10-22.json.gz`: the retained official response from https://tcgbusfs.blob.core.windows.net/blobbus/GetStop.gz, retrieved on 2026-10-22. Its embedded update is `2026/10/22 08:03:04`, coordinate system WGS84. The 28,826 route-stop rows form 5,375 stop-location groups. Two groups (833 and 14604) have conflicting coordinates and are excluded. Group by `stopLocationId`, retain distinct route counts, and choose the lowest source Id for display labels. Route counts are neither frequencies nor passenger counts.
-- `dist/data/datasets.json`: the fixed `2026-main` baseline, 681 rows with 680 plottable coordinates. Source update 2026-09-30; download 2026-10-15. Citywide completeness is unverified. Beitou has zero rows and Nangang four; these require inventory verification before any service-gap claim.
+- `research/taipei-citywide-2026-10-19/results/stations.csv`：保存的全市 1,821 個 YouBike 站分析。站點快照日期為 2026-10-18；活動量沿用原品質旗標，採 7 月端點事件並排除 7 月 10、11 日。唯一配對及其他來源限制沿用原分析。
+- `data/cross-analysis-inputs/bus-stops-2026-10-22.json.gz`：2026-10-22 由 https://tcgbusfs.blob.core.windows.net/blobbus/GetStop.gz 取得並保存的官方回應。內嵌更新時間為 `2026/10/22 08:03:04`，座標系統 WGS84。28,826 筆路線站牌列形成 5,375 個站位群組；833、14604 兩組座標衝突，予以排除。以 `stopLocationId` 分組，保留不重複路線數，選最小來源 Id 作為顯示名稱。路線數不是班次或乘客數。
+- `dist/data/datasets.json`：固定 `2026-main` 基線，共 681 列、680 筆可繪座標。來源更新 2026-09-30，下載 2026-10-15。全市完整性未核實；北投零列、南港四列，提出服務缺口論述前須先核實清冊。
 
-Only aggregate map data, the UI module and stylesheet are added to the public runtime allowlist. The raw response and research files remain private. The runtime JSON is required by the map; it is not exposed as a research download link.
+公開執行白名單僅新增地圖彙整資料、介面模組及樣式表。原始回應及研究檔仍私有。執行 JSON 是地圖所需資料，不另提供研究下載連結。
 
-## Rules
+## 規則
 
-Use all 1,790 active, coordinate-valid YouBike stations. Preserve unknown activity as null. Of these, 1,743 have positive observed activity. Define high activity using the nearest-rank 75th percentile of these positive observations (10,925 events); ties are included. Do not combine activity, distances and station counts into a synthetic score.
+使用全部 1,790 個啟用且座標有效的 YouBike 站，未知活動量保留 null。其中 1,743 站有正值觀察活動量；以正值觀察的最近秩第 75 百分位（10,925 事件）定義高活動，包含同值。不把活動、距離與站數合成綜合分數。
 
-Calculate Haversine distances on WGS84 coordinates with a 6,371,000 m sphere. Find the nearest plottable bin in the complete fixed inventory before applying any UI filters. Retain bus locations within 300 m of an eligible station; this proximity scope can include cross-city locations and is not an administrative boundary. Bus-only areas outside these station buffers are not evaluated. Excluding conflicted bus groups may omit nearby service.
+以 WGS84 座標及半徑 6,371,000 m 的球面計算 Haversine 距離。套用介面篩選前，先在完整固定清冊找最近可繪桶位。保留合格站點 300 m 內的公車站位；此範圍可能跨市，不是行政界線。站點緩衝區外的純公車區域未評估。排除座標衝突群組可能遺漏附近服務。
 
-Default candidates have activity at or above the threshold, a nearest recorded bin over 100 m away, and at least one retained bus location within 300 m. Sort by activity descending, then station ID. The UI also offers all active stations and 200/300 m distance thresholds. These are desktop prompts, not legal service radii or measured walking distances. Candidate counts are 332 / 259 / 201 for 100 / 200 / 300 m; nearby station buffers overlap, so counts are not independent service gaps.
+預設候選須活動量達門檻、最近紀錄桶位超過 100 m，且 300 m 內至少有一個保存公車站位。先依活動量遞減，再依站點 ID 排序。介面另提供全部啟用站及 200／300 m 距離門檻。這些是案頭查核提示，不是法定服務半徑或實測步行距離。100／200／300 m 候選分別為 332／259／201；附近站點範圍重疊，不能當成獨立服務缺口。
 
-Click a station to draw its nearest-bin line and inspect each nearby bus stop's distance to its nearest recorded bin. The fixed inventory is never filtered before the nearest-bin calculation. At city scale, bus markers are hidden to keep the map readable; they appear at zoom 14 and above. Historical inventory selections hide cross-analysis layers and results.
+點選站點會畫出最近桶位連線，並可查看各附近公車站位至其最近紀錄桶位的距離。最近桶位計算前不篩選固定清冊。全市尺度隱藏公車標記以維持可讀性，縮放 14 以上才顯示。選擇歷史清冊時，隱藏交叉分析圖層及結果。
 
-## Missing evidence and interpretation
+## 缺少的證據與判讀
 
-Pedestrian counts and bus boarding/alighting counts are unavailable in these inputs and remain null. YouBike events are travel endpoints, not distinct people; one trip can contribute two events. No garbage-demand measure, route-based walking distance, capacity, usable-bin status, causality or siting approval is inferred. July activity, September inventory and October station locations are a cross-period comparison.
+輸入沒有行人數或公車上下車人數，維持 null。YouBike 事件是旅程端點，不是不重複人數；一趟旅次可能貢獻兩事件。不推定垃圾需求、依路線步行距離、容量、可用桶況、因果或設點核准。7 月活動、9 月清冊及 10 月站點位置屬跨期間比較。
 
-Near recorded bins: inspect visibility, access and maintenance. Far from recorded bins: inspect omitted records, alternatives and crossing/route barriers. In low-coverage districts, verify the inventory first. Add actual pedestrian or passenger measurements only after a compatible spatial unit and observation period are established.
+接近紀錄桶位時，查核可見性、可及性及維護；遠離紀錄桶位時，查核清冊遺漏、替代設施及過街／路線障礙。低覆蓋行政區先核實清冊。只有確立相容空間單位及觀察期間後，才能加入實際行人或乘客量測。
 
-## Reference-driven comparison extension (2026-10-22)
+## 參考案例帶動的比較擴充（2026-10-22）
 
-The supplied example motivates three additional views. Its displayed values are not input data. Freeze these rules before generating the extension:
+提供的範例啟發三項新增視圖，範例顯示值不作輸入資料。產生擴充結果前，先凍結以下規則：
 
-1. Count distinct retained bin coordinates within each station's 100/200/300 m radius (inclusive). Keep source-row counts separately. Divide observed YouBike endpoint events by the 29 retained calendar days, then by the coordinate count when positive. Label this as daily endpoint events per recorded bin location, never people served, capacity or waste demand. Separate zero-bin and unknown-activity cases; neither receives an infinite or zero ratio. Overlapping station circles can share bin locations, so these ratios are not additive.
-2. Within the selected stations' 300 m buffers, take the union of bus stop-location IDs. Report how many have no recorded bin within the selected radius, with numerator and denominator. A district comparison means buffers around that district's YouBike stations; it is not an administrative assignment of the bus stops. Never label this as the proportion of all Taipei bus stops. Preserve low inventory coverage caveats.
-3. Reuse the existing citywide district hourly profiles, excluding the two flagged July dates. Weekday and weekend daily means use 22 and 7 days respectively. Compute weekend/weekday daily activity and each day type's peak hour. These are district-level YouBike profiles, not station typologies, pedestrian peaks, complaint times or approved cleaning schedules. Search terms do not filter these district aggregates.
+1. 計算各站 100／200／300 m 半徑內（含邊界）不重複保存桶位座標，來源列數另留。YouBike 端點事件先除以保存的 29 個曆日，座標數為正值時再除以該數。標為「每日端點事件／紀錄桶位」，不得稱服務人數、容量或垃圾需求。零桶位與活動未知分列，不給無限大或零比值。站點圓形範圍可能共用桶位，比值不可加總。
+2. 對入選站的 300 m 範圍取公車站位 ID 聯集，附分子與分母，報告選定半徑內沒有紀錄桶位的站位數。行政區比較指該區 YouBike 站周邊範圍，不是公車站的行政歸屬，不得標為全臺北公車站比例。保留清冊低覆蓋限制。
+3. 沿用既有全市行政區逐時活動分布，排除兩個標記的 7 月日期。平日、週末日均分母分別為 22、7 天。計算週末／平日日均活動比與各日型尖峰時段。這是行政區層級 YouBike 分布，不是站型、行人尖峰、陳情時間或核准清運時程。搜尋字詞不篩選行政區彙總。
 
-The subsequent MRT/complaint extension below fills these two input gaps. Do not reproduce the example's station ranking, 54% claim, complaint peak or cleaning recommendation without its underlying data.
+下方捷運／陳情擴充補上這兩類輸入缺口。沒有範例的底層資料，不得重現其站點排名、54% 論述、陳情尖峰或清潔建議。
 
-At 300 m, the complete station scope has 729 stations with a calculable ratio, 1,014 observed stations with zero recorded bin coordinates, and 47 stations with unknown activity. The median calculable ratio is approximately 80 daily endpoint events per recorded bin location; the maximum is approximately 993. The bus-buffer union contains 2,741 distinct stop locations, of which 1,719 (62.7%) have no recorded bin within 300 m. These are source coverage and activity comparisons, not observed service capacity.
+300 m 下，完整站群有 729 站可計比值、1,014 站有活動觀察但零紀錄桶位座標、47 站活動未知。可計比值中位數約為每日每紀錄桶位 80 端點事件，最大約 993。公車範圍聯集有 2,741 個不重複站位，其中 1,719（62.7%）在 300 m 內無紀錄桶位。這些是來源覆蓋及活動比較，不是實測服務容量。
 
-Verification: all 140 site tests pass, including portable regeneration, independent distance/count checks, zero-denominator handling, unknown activity, shared bus deduplication, and district day denominators. Public asset integrity checks pass. Desktop (1440 px) and phone (390 px) views, district/search filters, empty results and chart-to-map selection were checked in the local browser. No production publication was performed.
+當時驗證：140 項網站測試全數通過，涵蓋可攜重建、獨立距離／計數、零分母、未知活動、共用公車去重及行政區日數分母。公開資產完整性檢查通過。本機瀏覽器檢查桌機 1440 px、手機 390 px、行政區／搜尋篩選、空結果及圖表連動地圖。未發布正式站。
 
+## 捷運與陳情擴充（2026-10-22）
 
-## MRT and complaint extension (2026-10-22)
+先以 `npm run prepare-transport-time` 重建原始彙總，再執行 `npm run prepare-cross-analysis` 與 `python3 scripts/prepare-public.py`。一般建置沿用保存彙總，使用前核對兩份原始來源雜湊。原始彙總刻意獨立執行，因須串流處理 8,366,652 筆 OD 列。來源位元組與衍生彙總均保留供離線重現；原始陳情及案件 ID 不進入公開白名單。下載網址與原始位元組雜湊見 `data/cross-analysis-inputs/source-receipts.json` 及 `mrt-od-202607.csv.receipt.json`。
 
-Rebuild raw aggregates with `npm run prepare-transport-time`, then `npm run prepare-cross-analysis` and `python3 scripts/prepare-public.py`. Ordinary builds reuse the retained aggregate and check both raw source hashes before using it. Raw aggregation is deliberately separate because it streams 8,366,652 OD rows. Both source bytes and derived aggregates are retained for offline reproduction; none of the raw complaint records or case identifiers enter the public allowlist. Download URLs and original-byte hashes are in `data/cross-analysis-inputs/source-receipts.json` and `mrt-od-202607.csv.receipt.json`.
+主要期間為 2026 年 7 月，排除 7 月 10、11 日以對齊 YouBike 品質排除：29 天，含 22 平日、7 週末日。另保留完整 7 月總量作敏感度檢查。不假設下載月份就是陳情受理月份。來源結構決策如下。
 
-Primary period is July 2026 excluding July 10 and 11, matching YouBike quality exclusions: 29 days, 22 weekdays and seven weekend days. Full July totals are also retained as a sensitivity check. The download month is not assumed to be the complaint acceptance month. Source-schema decisions are recorded below.
+- 官方 OD：https://data.taipei/dataset/detail?id=63f31c7e-7fc3-418b-bd82-b95158755b4d 。來源逐時區塊含 119 個起站名、108 個迄站名，不宣稱跨路線完整覆蓋。僅正規化三個 G／O 迄站前綴。驗證各日期／小時的起迄組合唯一、每個提供區塊為完整矩形矩陣、31 個日期，以及起迄總量相等。觀察小時為 00、01、05–23；02–04 是缺列，不是測得零。保存 29 天總和為 62,555,809 來源旅次，完整月份為 63,379,613。逐時圖使用來源記錄小時欄下的起站計數，不推定為目的地抵達時刻；該時鐘的確切意義未核實。
+- 官方出口：https://data.taipei/dataset/detail?id=cfa4778c-62c1-497b-b704-756231de348b ，390 列、CP950 編碼。解析站名，明確將大橋頭對應大橋頭站。只要任一出口在保存的臺北 YouBike 站 300 m 內就保留該站；這是鄰近範圍，不是市界。有 73 站配對、45 站在範圍外、1 站在範圍內但未配對（廣慈／奉天宮）。未配對流量為未知，非零。在出口圓形範圍聯集中計桶位座標，不把全站流量分攤至出口。行政區篩選採附近 YouBike 區域標籤，不斷言車站行政歸屬。公車統計沿用保存站群，不含全部官方公車列。
+- 官方陳情：https://data.taipei/dataset/detail?id=cb423c17-88eb-4231-a725-f1b93247d1bf ，7 月資源。45,763 列案件 ID 均唯一，其中 698 筆受理日期不在 7 月。使用完整類別標籤、受理時間戳及案件 ID 去重；若重複即失敗，不默默決定保留哪列。街道清潔為 785 來源列，扣除 18 筆月外及 18 筆排除日案件後為 749；垃圾車服務為 358 減 2 再減 36，得 320。來源無地址或座標，不將案件空間配對至車站，也不由受理機關／科室推定地點。
 
-- Official OD source: https://data.taipei/dataset/detail?id=63f31c7e-7fc3-418b-bd82-b95158755b4d. Source hourly blocks have 119 origin names and 108 destination names, so no claim of complete cross-line coverage is made. Normalize the three G/O destination prefixes only. Validate unique origin/destination pairs per date/hour, a complete rectangular matrix per supplied block, 31 dates, and equal total origin/destination counts. Observed hours are 00, 01 and 05–23; 02–04 are absent, not measured zero. The retained 29-day sum is 62,555,809 source trips; full month 63,379,613. Hourly plots use origin counts under the source's record-hour field, not inferred destination arrival hours. The exact meaning of that clock remains unverified.
-- Official exits: https://data.taipei/dataset/detail?id=cfa4778c-62c1-497b-b704-756231de348b, 390 CP950-encoded rows. Parse station names and explicitly match 大橋頭 to 大橋頭站. Retain stations with any exit within 300 m of a retained Taipei YouBike station. This is a proximity scope, not a city boundary. There are 73 matched stations, 45 outside scope and one unmatched in scope (廣慈/奉天宮). Unmatched flow is unknown, not zero. Count bin coordinates in the union of exit circles; do not distribute station traffic across exits. District filters use nearby YouBike area labels, not asserted station administrative assignments. Bus statistics use the existing retained bus universe, not all official bus rows.
-- Official complaints: https://data.taipei/dataset/detail?id=cb423c17-88eb-4231-a725-f1b93247d1bf, July resource. All 45,763 rows have unique case IDs; 698 acceptance dates fall outside July. Use exact category labels, acceptance timestamps, and deduplicate by case ID (fail on duplicates rather than silently decide which row to retain). Street cleanliness has 785 source rows minus 18 outside-month and 18 excluded-day cases = 749. Garbage-truck service has 358 minus 2 and 36 = 320. No address or coordinate fields exist. Do not spatially join cases to stations or infer location from receiving agency/department.
+300 m 下，73 個捷運站中 40 站有正值桶位座標分母，33 站零紀錄座標。台北車站每日來源進出事件為 315,942、紀錄桶位五處（每日每處 63,188 事件）；東門為 53,170、一處；行天宮為 53,779、兩處。這是查核指標，不是容量或服務人數。中山（每日 108,553）、忠孝新生（72,573）、南港展覽館（71,368）、龍山寺（55,434）及石牌（55,117）列於獨立零座標清單前列。歸因為設施不足前，須確認來源完整性、替代桶及實際步行路線。
 
-At 300 m, 40 of 73 MRT stations have a positive bin-coordinate denominator and 33 have zero recorded coordinates. 台北車站 has 315,942 source-recorded daily entry/exit events and five recorded bin locations (63,188 events/day/location); 東門 has 53,170 and one; 行天宮 has 53,779 and two. These are inspection indicators, not capacity or persons served. 中山 (108,553 daily events), 忠孝新生 (72,573), 南港展覽館 (71,368), 龍山寺 (55,434) and 石牌 (55,117) lead the separate zero-coordinate list. Source completeness, substitute bins and real walking paths must be checked before attributing these to missing infrastructure.
+29 天範圍內，已配對捷運起站紀錄與全市 YouBike 端點事件均於 18–19 時達峰。街道清潔受理尖峰為 09–10 時（70／749 案），垃圾車服務為 21–22 時（35／320）。完整 7 月有 767／356 案，類別尖峰相同（71／38 案）。平日／週末選項各自重算總量及尖峰，以 22／7 作日均分母。四張圖各用自身總量占比，共用同一百分比刻度，明列不同地理範圍與單位。
+這些分布用來提出初步觀察問題。實際觀察及比較期間須依現地活動、投放及清運紀錄選定；全市陳情受理尖峰不直接指定站點訪視，也不證明因果延遲、溢出、桶位短缺或特定清潔時程。
 
-In the 29-day scope, matched MRT origin records and citywide YouBike endpoint events both peak at 18–19. Street-cleanliness acceptance peaks at 09–10 (70/749 cases); garbage-truck-service acceptance peaks at 21–22 (35/320). Full July has 767/356 cases with the same category peaks (71/38). Weekday/weekend selectors recompute totals and peaks independently, using 22/7 daily denominators. All four plots use shares of their own totals and one common percentage scale. Different geography and units remain explicit. These distributions inform initial observation questions. Select actual observation and comparison windows using site activity, disposal and collection records; citywide complaint acceptance peaks do not prescribe station-level visits. They do not prove a causal delay, overflow, bin shortage or a specific cleaning schedule.
+驗證涵蓋原始輸入保存與追溯、彙總守恆、排除日期、類別分母、日型可加性、缺少小時、未知站點配對、獨立出口至桶位距離／計數及零分母。新增桌機／手機互動由本機預覽驗證；對外發布不在此項工作範圍。
 
-Validation covers raw-input custody, aggregate conservation, excluded dates, category denominators, day-type additivity, absent hourly data, unknown station matching, independent exit-to-bin distance/count calculations, and zero-denominator handling. New desktop/mobile interactions are verified with the local preview; public publication is outside this task.
+此擴充當時最終驗證：143 項網站測試通過；執行完整性確認 72 個公開資產與 876 個唯一 HTML ID。桌機 1440 px、手機 390 px 確認站點連動地圖、距離變更、行政區／搜尋／空結果篩選、歷史模式隱藏及全部／平日／週末圖表。未觀察到瀏覽器主控台錯誤。完整來源 OD 重建與可攜來源包建置均成功。
 
-Final verification for this extension: 143 site tests passed; runtime integrity verified 72 public assets and 876 unique HTML IDs. Desktop 1440 px and mobile 390 px confirmed station-to-map selection, distance changes, district/search/empty filters, historical hiding, and all/weekday/weekend charts. No browser console errors were observed. Full-source OD regeneration and portable source-package builds both completed successfully.
+主分支另保留 9 月捷運比較及較後的車站／場所複查。本次 7 月對齊期間分析是獨立群組，不更新其排名。現勘清單連結這些證據：已知站內設施線索須查核可及性與可用性，不能把街道零列當成站內無桶證據。
 
-The main branch also retains a September MRT comparison and a later station/venue recheck. This July aligned-period analysis is a separate cohort, not an update of their ranking. The field list links their evidence: known station-interior facility clues must be checked for access and availability, rather than treating zero street rows as evidence of no station bins.
+7 月 OD 的 HTTP Content-MD5（`VtCA+GFASJBW3VN7h+kO1A==`）與保存內容不符。取得紀錄保存標頭及計算值。SHA-256 綁定保存內容，不證明官方真實性或完整性。介面揭露這項尚未解決的完整性差異，計算僅描述保存的位元組。
 
-The July OD HTTP Content-MD5 (`VtCA+GFASJBW3VN7h+kO1A==`) does not match the retained body. The receipt records both header and computed values. SHA-256 binds the retained content, not official authenticity or completeness. The UI discloses this unresolved integrity discrepancy; calculations describe only those retained bytes.
-
-A second retrieval on 2026-10-22 returned the same 305,954,434 bytes and SHA-256. This supports repeatability of the retained body but does not resolve the header MD5 mismatch.
+2026-10-22 第二次取得相同的 305,954,434 位元組及 SHA-256，支持保存內容的可重複取得性，但未解決標頭 MD5 不符。

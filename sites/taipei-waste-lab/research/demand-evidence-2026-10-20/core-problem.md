@@ -1,37 +1,37 @@
-# Current problem definition — revised 2026-10-22
+# 現行問題定義（2026-10-22 修訂）
 
-This revision separates the supported main problem, an independent basket-waste lead, and research data gaps. It reuses the 2026-10-20 evidence audit and 12-district rechecks. It adds no observations, prevalence estimates, interventions or PRD decisions.
+本次修訂分開呈現有證據支持的主問題、獨立的車籃垃圾線索及研究資料缺口。沿用 2026-10-20 證據盤點與 12 區複查，未新增觀察、盛行率估計、介入或 PRD 決策。
 
-## Main problem: disposal remains unfinished in the described trip segment
-
-個別留言與可重建個人內容已因隱私移除。
-
-個別留言與可重建個人內容已因隱私移除。
-個別留言與可重建個人內容已因隱私移除。
-個別留言與可重建個人內容已因隱私移除。
+## 主問題：陳述的旅程片段中，投放尚未完成
 
 個別留言與可重建個人內容已因隱私移除。
 
-## Separate lead: basket waste and voluntary cleanup
+個別留言與可重建個人內容已因隱私移除。
+個別留言與可重建個人內容已因隱私移除。
+個別留言與可重建個人內容已因隱私移除。
 
 個別留言與可重建個人內容已因隱私移除。
 
-Unknown: who left the waste, when, what kind, how often, whether it affects taking or using a bike or storing belongings, how cleanup happens, who takes it over, the actual route and detour time, and whether there is a burden. The account establishes neither forced cleanup, responsibility, nor a causal connection to nearby bin supply.
+## 獨立線索：車籃垃圾與主動清理
 
 個別留言與可重建個人內容已因隱私移除。
 
-## Research gaps, separate from user problems
+未知包括：誰留下、何時留下、垃圾種類與頻率；是否影響借車、騎乘或放置物品；如何清理、誰接手、實際路線及繞行時間、是否造成負擔。這則自述未確立被迫清理、責任歸屬，也未建立與附近桶位供給的因果關係。
 
-- The venue source's physical row 88 (header included), 萬隆捷運站, has the remark `4處`. D08-1 and D08-2 cite the same row. This is not evidence of two distinct supplies; identify actual facilities, locations, IDs, counts and any duplicate street/venue records.
-- Row 121, 後山埤捷運站, is assigned to 信義區 and says `12處`. Candidate D09-3 is a Nangang third-exit anchor. Preserve the cross-area source without transferring its count. Check exact exits, street sides, access, opening/acceptance conditions and management.
 個別留言與可重建個人內容已因隱私移除。
 
-The venue file is dated 2026-08-18; the 2026-10-20 recheck found unchanged contents. Preserve `處` as original text, not physical bin counts or values to add to street rows. Coordinate distances cannot establish walking access. The recheck data are retained in ../beitou-nangang-recheck-2026-10-20/results.json, ../other-districts-recheck-2026-10-20/results.json and ../field-priority-2026-10-20/priority.json.
+## 研究缺口：與使用者問題分開
 
-## Scope and source boundary
+- 場所來源實體第 88 列（含表頭）為萬隆捷運站，備註 `4處`。D08-1 與 D08-2 引用同一列，不能視為兩份獨立供給；須確認實際設施、位置、ID、數量及街道／場所紀錄是否重複。
+- 第 121 列後山埤捷運站歸於信義區，標示 `12處`。候選 D09-3 是南港第三出口錨點。保留跨區來源，不轉移其數量；須查核具體出口、道路側、可及性、開放／收受條件及管理權責。
+個別留言與可重建個人內容已因隱私移除。
 
-The main problem remains disposal difficulty; basket waste is a separate lead to define, and facility/event gaps describe what research cannot yet answer. Preserve completed disposal, no-burden accounts, negative observations and unknowns. This structure is an analyst synthesis, not a measured priority ranking. Household collection changes remain outside this round. The 2026-10-23 user request adds cleaning-worker phone use, bin routes and staffing evidence to Q05; this does not authorize operational staffing changes. See ../crew-persona-2026-10-23/README.md. No new-bin location, quantity or solution follows from these data.
+場所檔日期為 2026-08-18；2026-10-20 複查未發現內容變動。`處` 保留為來源文字，不換成實體桶數，也不加到街道列數。座標距離不能確立步行可及性。複查資料保留在 `../beitou-nangang-recheck-2026-10-20/results.json`、`../other-districts-recheck-2026-10-20/results.json` 及 `../field-priority-2026-10-20/priority.json`。
 
-The four previously selected comments were checked against original source.tsv on 2026-10-20, SHA-256 bc4d005ce9a9c4d97341204da5a576badc85c80e8ff4266e73f227ab89089851. This revision uses the retained exact excerpts in journey-table.json; it does not claim a new full-source audit. Raw full comments and row crosswalk remain private. Public evidence-ID pages contain paraphrased summaries; this page clearly labels the short original excerpts.
+## 範圍與來源界線
 
-Reading order: personas and journeys, citywide quantitative analysis, current problem definition, field evidence collection. The next link leads to the proposed field-priority list, not solution comparison. Existing proposals and PRDs remain prior decisions, not evidence for this problem definition. The 36 city anchors, 12 first-wave choices, source counts and visit schedule are unchanged.
+主問題仍是投放困難；車籃垃圾是待定義的獨立線索，設施／事件缺口則說明研究尚無法回答之處。保留已完成投放、無負擔自述、負面觀察及未知。這是分析者的綜合整理，不是實測優先排名。家戶收運變更仍不在本輪範圍。2026-10-23 使用者要求將清潔人員手機使用、桶位路線與人力證據納入 Q05，但不授權調整實際人力。見 `../crew-persona-2026-10-23/README.md`。這些資料不直接導出新桶位置、數量或解法。
+
+先前選取的四則留言已於 2026-10-20 對照原始 `source.tsv`，SHA-256 為 `bc4d005ce9a9c4d97341204da5a576badc85c80e8ff4266e73f227ab89089851`。本次沿用 `journey-table.json` 保存的精確摘錄，不宣稱重新完成全來源盤點。原始留言全文與列號對照保持私有。公開證據 ID 頁面採轉述摘要；本頁清楚標示短篇原文摘錄。
+
+閱讀順序：人物與旅程、全市量化分析、現行問題定義、現勘證據蒐集。下一個連結通往現勘優先順序提案，並非解法比較。既有提案與 PRD 是先前決策，不是此問題定義的證據。36 個全市錨點、12 個首波選點、來源筆數與訪視時程均不變。
