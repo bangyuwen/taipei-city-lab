@@ -2,7 +2,6 @@
   "date": "2026-10-24",
   "status": "privacy_redacted_aggregate_only",
   "notice": "Individual comments, reconstructions and place-linked examples were removed. These identities bind the cleaned retained inputs; they do not restore access to private source records. Original aggregate denominators and source identities remain unchanged.",
-  "history_source_revision": "ff5b5646",
   "sanitizer_sha256": "4ee70773ae476efae29e35de54383ec7cc46b6ef6b7cabf5f9bd9b8f66910498",
   "input_rebindings": [
     {
