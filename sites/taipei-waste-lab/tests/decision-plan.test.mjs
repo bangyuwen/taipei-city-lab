@@ -47,6 +47,8 @@ test('Gantt exposes task outputs and proposed roles in separate before/after pha
  const page=read('dist/index.html');
  const chart=page.split('<figure class="plan-timeline">')[1].split('</figure>')[0];
  assert.ok(!chart.includes('<details'));
+ assert.equal((chart.match(/class="plan-gantt-mobile-label"/g)||[]).length,20);
+ assert.ok(!chart.includes('class="plan-gantt-mobile-label" aria-hidden'));
  const phases=[...chart.matchAll(/<tbody data-phase="(before|after)">(.*?)<\/tbody>/gs)];
  assert.deepEqual(phases.map(m=>m[1]),['before','after']);
  assert.deepEqual(phases.map(m=>(m[2].match(/class="plan-gantt-task"/g)||[]).length),[4,6]);

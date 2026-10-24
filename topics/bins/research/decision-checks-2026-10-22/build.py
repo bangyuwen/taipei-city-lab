@@ -80,8 +80,8 @@ def render_schedule():
             phase = next_phase
         chart.append(f'<tr class="plan-gantt-task"><th scope="row"><div class="plan-timeline-label"><strong>{e(title)}</strong><span>{days}</span></div></th>'
                      f'<td class="plan-gantt-period"><span class="visually-hidden">{days}</span><div class="plan-timeline-track" aria-hidden="true"><span style="--start:{offset:.4f}%;--span:{width:.4f}%"></span></div></td>'
-                     f'<td class="plan-gantt-output"><span class="plan-gantt-mobile-label" aria-hidden="true">交付成果</span>{e(deliverable)}</td>'
-                     f'<td class="plan-gantt-owner"><span class="plan-gantt-mobile-label" aria-hidden="true">建議負責角色</span>{e(owner)}</td></tr>')
+                     f'<td class="plan-gantt-output"><span class="plan-gantt-mobile-label">交付成果</span>{e(deliverable)}</td>'
+                     f'<td class="plan-gantt-owner"><span class="plan-gantt-mobile-label">建議負責角色</span>{e(owner)}</td></tr>')
         rows.append(f'<tr><th scope="row">{days}<br>{e(title)}</th><td data-label="工作與交付">{e(work)}</td><td data-label="建議責任角色">{e(owner)}</td><td data-label="通過條件／未達處理">{e(gate)}</td></tr>')
     return ('<section class="project-section" id="plan-100day" aria-labelledby="plan-100day-heading">'
         '<h3 id="plan-100day-heading" class="visually-hidden">百日時間圖：第幾天做什麼</h3>'
