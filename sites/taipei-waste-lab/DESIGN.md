@@ -293,3 +293,13 @@ navigation. Place the website/demo links below that navigation as a compact,
 separately labeled group; they must not inherit the primary links' spacing.
 At mobile widths, the menu toggle controls both navigation groups. Timeline
 phase links and the chart form one reading block without adjacent border rules.
+
+
+### Reading section divider ownership
+
+Use one rule at each content boundary. On personas, problem and analysis pages,
+phase/jump navigation is unframed. On the research hub and retained materials,
+the last summary/list row yields its bottom rule to the next section. The map's
+cross-analysis sections use top rules only. On the data-methods document, the
+outer reader item owns the rule and top spacing; its first nested overview section
+adds neither. Keep independent table-row separators and disclosure boundaries.
