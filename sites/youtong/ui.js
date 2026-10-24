@@ -27,7 +27,7 @@ const REPORTED_LEGEND={c:REPORTED,t:'紅色＝已被回報滿了'};
 // 角色切換（示範導覽）：常駐分段控制「行人｜清潔隊｜設點規劃」；host 給定時放進該容器，否則固定在左上
 const ROLES=[['pedestrian.html','行人'],['crew.html','清潔隊'],['planning.html','設點規劃']];
 function roleSwitch(active,host){const n=document.createElement('nav');n.className='roles'+(host?'':' fixed');n.setAttribute('aria-label','切換角色（示範導覽）');
-  n.innerHTML='<a class="wm" href="../" aria-label="返回網站首頁"><img src="assets/logo.svg?v=20261024a" alt="有桶" width="45" height="60"></a><span class="seg3">'+ROLES.map(r=>`<a href="${r[0]}"${r[0]===active?' class="on" aria-current="page"':''}>${r[1]}</a>`).join('')+'</span>';
+  n.innerHTML='<a class="wm" href="../" aria-label="返回網站首頁"><img src="assets/logo.svg?v=20261024b" alt="有桶" width="39" height="52"></a><span class="seg3">'+ROLES.map(r=>`<a href="${r[0]}"${r[0]===active?' class="on" aria-current="page"':''}>${r[1]}</a>`).join('')+'</span>';
   n.insertAdjacentHTML('beforeend','<span class="demo-note">本機示範・不會通知機關 <a href="../research/">研究與證據</a></span>');
   host?host.prepend(n):document.body.appendChild(n);
   const size=()=>{const bottom=n.getBoundingClientRect().bottom;document.documentElement.style.setProperty('--demo-header-bottom',bottom+'px');document.documentElement.style.setProperty('--row2',(bottom+8)+'px')};

@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261024a"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261024a"><title>清潔隊｜今日清運｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261023z4"><link rel="stylesheet" href="tokens.css?v=20261023z4"><link rel="stylesheet" href="ui.css?v=20261024a">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261024b"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png?v=20261024b"><title>清潔隊｜今日清運｜有桶</title><link rel="stylesheet" href="vendor/leaflet/leaflet.css"><link rel="stylesheet" href="common.css?v=20261023z4"><link rel="stylesheet" href="tokens.css?v=20261023z4"><link rel="stylesheet" href="ui.css?v=20261024b">
 <style>
 /* ===== 有桶・清潔隊（mobile-first 390x844；以正式版為底：A 選路線（A/B/C 分區）→ B 執行）===== */
 html,body{height:100%;overflow:hidden;background:var(--map-bg)}
@@ -145,7 +145,7 @@ body.navon .tchip.ab{display:none} /* 導航中不顯示「全部桶」 */
   <h3>回報與進度</h3><ul><li>抵達後回報收運量（空／半／滿／滿溢），約 3 秒內可「復原」，之後自動前往下一站；也可「略過此站」。收運量回報寫入既有回報事件，只存在這個瀏覽器（本機示範，不會上傳或通知機關）。</li><li>路線進度（完成、略過）只存在這台手機，台北時間每天換新；別人的回報不影響你的進度。</li><li>地圖上灰色＋✓＝今天清潔隊已有有效收運量回報（已清）；只有完成紀錄、沒有收運量時仍未回報。批次略過只更新本輪進度，不會寫入清運事件或校正預測。路線上的站若今天已有別的隊員回報清運（之後沒有新的行人「滿了」），會變灰並自動略過，不算入待清。一輪全部回報完後，新的行人「滿了」回報不會插進已完成的這一輪，而是列入下一輪（從第 1 站排起）；已完成的輪次留在「今日清運輪次」紀錄。行人回報「滿了」只會讓桶變紅、列為必清，不算已清；也不和民眾的「這裡需要垃圾桶」需求回報混算。</li></ul>
 </div></div>
 
-<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261023z4"></script><script src="common.js?v=20261023z4"></script><script src="cloud.js?v=20261023z4"></script><script src="ui.js?v=20261024a"></script><script src="bin-icons.js?v=20261023z4"></script><script src="forecast.js?v=20261023z4"></script><script src="crew-list.js?v=20261023z4"></script><script src="routing.js?v=20261023z4"></script><script>/* 路線 A/B/C 分區（原 crew-zones.js，內嵌以符合入口網站的發布清單） */
+<script src="vendor/leaflet/leaflet.js"></script><script src="config.js?v=20261023z4"></script><script src="common.js?v=20261023z4"></script><script src="cloud.js?v=20261023z4"></script><script src="ui.js?v=20261024b"></script><script src="bin-icons.js?v=20261023z4"></script><script src="forecast.js?v=20261023z4"></script><script src="crew-list.js?v=20261023z4"></script><script src="routing.js?v=20261023z4"></script><script>/* 路線 A/B/C 分區（原 crew-zones.js，內嵌以符合入口網站的發布清單） */
 // 清潔隊路線分區（A/B/C）：示範區桶位依地理位置做「容量平衡 k-means」（每區最多 ceil(n/3)+3 桶，避免為了平均把相鄰桶拆開），結果確定性（同資料同分區）。
 // 分區名稱依區中心由南到北排 A→B→C。只用來分工，不代表派工或垃圾量。
 function crewZones(P,K=3){if(!P.length)return{};const la0=P.reduce((s,b)=>s+b.la,0)/P.length,kx=111320*Math.cos(la0*Math.PI/180),ky=110540;
