@@ -271,3 +271,14 @@ The T1 design process is a Read surface between the interactive workspace and th
 ## Siting history overlay
 
 Keep `#siting` as the candidate-streets tab under 研究結果, alongside 研究結論, and link it from the existing T1 actions. The history navigation contains only chronology, historical distribution and inventory comparisons. Candidate streets retain historical evidence links and an explicit desktop-only, not-field-verified notice. Reuse the petrol and cool-paper palette. Load the same-origin overlay document only on first activation, size it to its content to avoid nested scrolling, and preserve its filters when switching routes. Keep a full-page navigation link and retry state. The embedded document hides its duplicate masthead, while the standalone page retains its return navigation. Actual sidewalk polygons and separately dated snapshot markers remain distinct; coverage, provisional width units and unverified installation status stay adjacent to the controls and details. Publish only the display document and its runtime controller; preserve research inputs privately.
+
+## Hundred-day plan reading order
+
+The plan is a Read surface. Its local index follows the reader's questions:
+purpose/scope, schedule/deliverables, resources, acceptance/responsibility, then
+execution details. Keep status and all four resource requests visible. Keep the
+timeline visible and put its duplicate row-level handoff table in a native
+disclosure. Methods, candidate fields, crew research, conditional checks and
+blank forms use labeled disclosures after the overview. Preserve every deep
+link and open its ancestors before focus/scroll. Reuse the petrol/paper palette,
+reading width and native keyboard controls on desktop and phone.

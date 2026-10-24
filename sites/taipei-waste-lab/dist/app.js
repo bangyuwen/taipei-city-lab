@@ -165,7 +165,7 @@ function panel(){
       if(heading&&!heading.matches('summary'))heading.setAttribute('tabindex','-1');
       if(previousPage||anchor||mainTarget)heading?.focus({preventScroll:true});
       if(mainTarget||anchor){
-        const scrollTarget=anchor?.matches('[data-reader-item]')&&anchor.closest('[data-reader]').dataset.readerMode!=='document'?anchor.closest('[data-reader]').querySelector('[data-reader-controls]'):heading;
+        const scrollTarget=anchor?.matches('[data-reader-item]')&&anchor.closest('[data-reader]')&&anchor.closest('[data-reader]').dataset.readerMode!=='document'?anchor.closest('[data-reader]').querySelector('[data-reader-controls]'):heading;
         scrollTarget.scrollIntoView({block:'start',behavior:'instant'});
       }
       else window.scrollTo({top:pageScroll.get(currentPage)??0,behavior:'instant'});

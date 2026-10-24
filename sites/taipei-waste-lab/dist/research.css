@@ -425,3 +425,9 @@
 .plan-timeline-scale>span{position:absolute;transform:translateX(-50%);white-space:nowrap}
 .plan-timeline-scale>span:first-child{transform:none}.plan-timeline-scale>span:last-child{transform:translateX(-100%)}
 .plan-timeline-track::after{content:"";position:absolute;left:30.8219%;top:-4px;bottom:-4px;border-left:1px solid var(--muted)}
+
+/* Plan overview keeps decision inputs visible; execution procedures open on demand. */
+.plan-page .plan-detail{border-block-start:1px solid var(--line);padding-block:8px;margin-block:16px}
+.plan-page .plan-detail>summary{font-weight:700}
+.plan-page .plan-detail[open]>summary{margin-bottom:16px}
+.plan-page .plan-detail>.project-section:first-of-type{margin-top:16px}
