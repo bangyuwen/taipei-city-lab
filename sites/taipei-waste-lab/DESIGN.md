@@ -284,3 +284,12 @@ and team handoff remain linked from the hub. Preserve all proposal boundaries.
 - **Don't** separate a claim from the source and coverage limit that bounds it.
 - **Don't** add public downloads or attachments to the research presentation.
 - **Don't** borrow decorative motifs from unrelated visual worlds.
+
+
+### Research navigation and timeline spacing
+
+Keep the research brand first in the desktop rail, followed by primary research
+navigation. Place the website/demo links below that navigation as a compact,
+separately labeled group; they must not inherit the primary links' spacing.
+At mobile widths, the menu toggle controls both navigation groups. Timeline
+phase links and the chart form one reading block without adjacent border rules.
