@@ -27,8 +27,8 @@ export function csvForPoints(points, dataset) {
     ...points.map(p=>[...context,p.id,p.district,p.address,p.rawX??p.x,p.rawY??p.y,p.quality])].map(r=>r.map(safe).join(',')).join('\r\n')+'\r\n';
 }
 export const historyPages=['map','comparison','history'];
-export const allowedPages=[...historyPages,'siting','countries','design','definition','research','analysis','sources','materials','plan','feedback','districts','evidence','work','spec','archive','library','team','personas','problem','data-methods'];
-export const workspacePages={"research":["research"],"personas":["personas","problem","feedback","evidence"],"analysis":["analysis","districts","data-methods"],"plan":["plan","spec","work","team"],"library":["library","history","map","comparison","countries","sources","materials","archive","siting","design","definition"]};
+export const allowedPages=[...historyPages,'siting','countries','design','definition','research','analysis','sources','materials','plan','plan-timeline','feedback','districts','evidence','work','spec','archive','library','team','personas','problem','data-methods'];
+export const workspacePages={"research":["research"],"personas":["personas","problem","feedback","evidence"],"analysis":["analysis","districts","data-methods"],"plan":["plan","plan-timeline","spec","work","team"],"library":["library","history","map","comparison","countries","sources","materials","archive","siting","design","definition"]};
 export function workspaceForPage(page){return Object.keys(workspacePages).find(key=>workspacePages[key].includes(page))||'research';}
 export function pageFromHash(hash,currentPage='research') {
   const page=hash.replace(/^#/,'');
@@ -36,6 +36,7 @@ export function pageFromHash(hash,currentPage='research') {
   if(page==='methods'||page==='methods-heading')return 'plan';
   if(page==='main'&&allowedPages.includes(currentPage))return currentPage;
   if(allowedPages.includes(page))return page;
+  if(/^(?:plan-timeline-heading|plan-100day(?:-heading)?|plan-schedule-details)$/.test(page))return 'plan-timeline';
   if(/^(?:reader-)?definition-prd-(?:roles|next)(?:-|$)/.test(page))return 'team';
   // Dated drafts live under references; current forms and requirements stay in the plan.
   if(/^plan-prior-field-plan$|^archive-build-draft$|^reader-field-priority$|^(?:reader-)?field-(?!forms$|form-|priority$)|^reader-work-|^(?:reader-)?government-|^reader-WP|^work-(?:WP|prior-contract)|^hotspot-(?:times|government|handoff)$/.test(page))return 'archive';
@@ -44,7 +45,7 @@ export function pageFromHash(hash,currentPage='research') {
 
   if(/^(?:reader-)?field-|^reader-work-observation$/.test(page)||page==='hotspot-times')return 'plan';
   if(['plan-districts'].includes(page))return 'analysis';
-  if(/^plan-(?:conclusion|details|pending|next|validation|resources|execution|checks-heading|check-Q\d+|overlay(?:-heading)?|candidates(?:-heading)?|100day(?:-heading)?|schedule-details|crew-research(?:-heading)?|support|prior-field-plan)$/.test(page))return 'plan';
+  if(/^plan-(?:conclusion|details|pending|next|validation|resources|execution|schedule-summary|checks-heading|check-Q\d+|overlay(?:-heading)?|candidates(?:-heading)?|crew-research(?:-heading)?|support|prior-field-plan)$/.test(page))return 'plan';
   if(/^reader-district-|^citywide-area-|^plan-area-/.test(page))return 'districts';
   if(/^reader-method-|^method-|^hotspot-(?:heading|quality|sources|source-)|^citywide-(?:heading|districts)$/.test(page))return 'data-methods';
   if(page==='demand-evidence')return 'evidence';
