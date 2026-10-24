@@ -107,15 +107,16 @@ layout=Layout(); layout.feed(Path('dist/index.html').read_text())
 home=layout.panels['panel-research']; materials=layout.panels['panel-materials']
 assert home['details']==1 and home['articles']==3
 assert {'research-overview-conclusions','research-overview-reading'}<=home['ids']
-analysis=layout.panels['panel-analysis']; ideas=layout.panels['panel-plan']; plan=layout.panels['panel-plan']
+analysis=layout.panels['panel-analysis']; ideas=layout.panels['panel-plan-tools']; plan=layout.panels['panel-plan']
 assert {'analysis-findings','hotspot-candidates','analysis-city-map'}<=analysis['ids']
 assert {'ideas-options','definition-evidence-heading'}<=ideas['ids']
-assert {'plan-work-heading','plan-departments','plan-conclusion','plan-pending','plan-next'}<=plan['ids']
+assert {'plan-conclusion','plan-pending','plan-next'}<=plan['ids']
+assert {'plan-work-heading','plan-departments','plan-validation','plan-schedule-details'}<=layout.panels['panel-plan-readiness']['ids']
 assert 'plan-districts' in analysis['ids']
 assert '資料分析：全市活動與桶位分布' in ''.join(analysis['text'])
 assert '實際事件連結尚未驗證' in ''.join(analysis['text']) and '0／4' in ''.join(analysis['text'])
-for name in ['analysis','plan','ideas']:
- assert {name+'-'+stage for stage in ['conclusion','details','pending','next']}<=layout.panels['panel-plan' if name=='ideas' else 'panel-'+name]['ids']
+for name in ['analysis','plan']:
+ assert {name+'-'+stage for stage in ['conclusion','details','pending','next']}<=layout.panels['panel-plan-tools' if name=='ideas' else 'panel-'+name]['ids']
 # Analysis explains measure boundaries; plan owns current options and execution.
 # Includes the map legend, controls and closed disclosure summaries. Supporting
 # evidence may grow while the default analysis reading remains bounded.
@@ -123,7 +124,8 @@ for name,limit in [('analysis',4000)]:
  assert len(''.join(layout.panels['panel-'+name]['default_text']))<limit,name
 assert all('citywide-area-%02d'%i in layout.panels['panel-districts']['ids'] for i in range(1,14))
 assert all('plan-area-%02d'%i in layout.panels['panel-districts']['ids'] for i in range(1,14))
-assert {'field-priority','reader-field-forms','plan-purpose'}<=layout.panels['panel-plan']['ids']
+assert {'field-priority','reader-field-forms'}<=layout.panels['panel-plan-tools']['ids']
+assert 'plan-purpose' in plan['ids']
 assert {'hotspot-times','field-schedule','field-capacity','field-record'}<=layout.panels['panel-archive']['ids']
 assert {'hotspot-heading','hotspot-quality','method-mrt-table','method-venue-street-update'}<=layout.panels['panel-data-methods']['ids']
 assert not {'hotspot-heading','hotspot-quality'} & layout.panels['panel-plan']['ids']

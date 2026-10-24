@@ -259,25 +259,15 @@ Keep `#siting` as a saved candidate-streets reference under 參考資料, linked
 
 ### Hundred-day plan and schedule
 
-The plan overview is a Read surface. Its local index follows purpose/scope,
-schedule summary, resources, acceptance/responsibility, then execution details.
-Keep status and all four resource requests visible. Methods, candidate fields,
-crew research, conditional checks and blank forms use labeled native disclosures.
-Keep their labels useful while closed; open containing disclosures before
-focusing an existing deep link.
+### Plan reading destinations
 
-The dedicated `#plan-timeline` page groups ten tasks into pre-inauguration
-preparation and post-inauguration execution. The default-visible Gantt table
-aligns each task and day range with its planned duration, deliverable and
-proposed responsible roles. Preserve parallel tasks as separate rows. Detailed
-work, decision gates and unmet-condition handling remain in a native disclosure.
-Its chart may use 1140px while prose stays within 76ch. Below 800px each row
-stacks the task, day range, track, labeled deliverable and labeled roles without
-horizontal scrolling. Day 0 means inauguration; all tracks share the -45 to 100
-scale and show planned periods, never completion. Roles remain proposed.
-The five plan destinations are 計畫總覽, 百日甘特圖, 需求規格, 協作與承接 and 團隊交接.
-The overview links to the full chart; the chart links back to resources and
-acceptance. Old schedule anchors keep their IDs and resolve to the new page.
+The plan hub contains purpose, current status, next step and a question-based index.
+Resources, acceptance/responsibility and execution tools have separate pages.
+The inauguration-relative Gantt is split into preparation (-45 to -1) and execution
+(1 to 100); each preserves visible task, day, output and proposed role. Detailed
+schedule gates live with acceptance. Existing anchors follow moved content.
+The shared six-item plan navigation names these reading tasks; PRD, collaboration
+and team handoff remain linked from the hub. Preserve all proposal boundaries.
 
 ## Do's and Don'ts
 
