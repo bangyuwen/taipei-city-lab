@@ -196,7 +196,7 @@ test('local navigation separates personal evidence, distribution and field prepa
     ['理解問題',['personas','problem','feedback','evidence'],4],
     ['資料分析',['analysis','districts','data-methods'],3],
     ['現勘準備',[],0],
-    ['百日計畫',['plan','plan-preparation','plan-timeline','plan-resourcing','plan-readiness','plan-tools'],9],
+    ['百日計畫',['plan','plan-timeline','plan-resourcing','plan-readiness','plan-tools'],8],
     ['方案與需求',[],0],
   ]){
     const navs=[...html.matchAll(new RegExp('<nav class="project-subnav" aria-label="'+label+'內頁">(.*?)</nav>','g'))];

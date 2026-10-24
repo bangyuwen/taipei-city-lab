@@ -199,7 +199,7 @@ node scripts/check-redesign-browser.mjs
 
 ## 百日計畫
 
-`#plan` 提供現行計畫總覽、四項資源需求、驗收責任與可展開的執行細節；`#plan-timeline` 獨立呈現百日甘特圖、交付節點及逐階段責任關卡，原 `#plan-100day` 等時程連結維持有效。時程由 canonical `topics/bins/research/decision-checks-2026-10-22/build.py` 產生，以市長上任為第 0 天，涵蓋上任前 45 天及上任後 100 天。日期、參與者、承接與實體調整均待確認，圖表不表示完成比例。2026-10-17 的舊百日提案與估算保留在 `#archive`，不作現行承諾。僅公開 HTML 正文，不公開私人閱讀筆記、參數附件或離線 ZIP。
+`#plan` 保留目標、現況、下一步與閱讀入口；五個入口依序為計畫總覽、時間軸、資源需求、驗收與責任、執行工具。`#plan-timeline` 將上任前準備與上任後百日合併為連續甘特圖，直接對照工作、交付成果與建議角色，並提供頁內階段跳轉。舊 `#plan-preparation` 與 `#plan-100day` 連結仍有效；詳細關卡 `#plan-schedule-details` 位於驗收與責任。時程由 canonical `topics/bins/research/decision-checks-2026-10-22/build.py` 產生，以市長上任為第 0 天，涵蓋上任前 45 天及上任後 100 天。日期、參與者、承接與實體調整均待確認，圖表不表示完成比例。2026-10-17 的舊百日提案與估算保留在 `#archive`，不作現行承諾。僅公開 HTML 正文，不公開私人閱讀筆記、參數附件或離線 ZIP。
 
 ## 保存的位置證據摘要
 
