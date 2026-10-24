@@ -294,7 +294,7 @@
     "reason": "查核報告已有 Markdown；E01–E28 公開摘要、逐段判讀及舊需求工作版補為連續閱讀副本。",
     "notes": [
       "../../topics/bins/research/demand-evidence-2026-10-20/README.md",
-      "../../topics/bins/research/feedback-2026-10-17/semantic-adjudication-notes.md"
+      "../../topics/bins/research/feedback-2026-10-17/README.md"
     ],
     "owners": [
       "dist/index.html"
@@ -314,7 +314,7 @@
     "output": "work.md"
   },
   {
-    "title": "PRD v0.5 與現行驗收條件",
+    "title": "現行需求規格與驗收條件",
     "page": "dist/index.html",
     "selector": "#panel-spec",
     "coverage": "缺少完整正文",

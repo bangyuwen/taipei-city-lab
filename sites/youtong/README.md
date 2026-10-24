@@ -1,22 +1,19 @@
 # 有桶體驗 /demo/
 
-This directory owns the interactive prototype in the combined Taipei waste site.
-It was imported from [evachen0927/youtong](https://github.com/evachen0927/youtong),
-branch `beta`, commit `c42a8d3`. The integration now changes navigation, local
-state isolation, report wording and the current research-plan reference.
+本目錄維護整合臺北垃圾網站中的互動原型，匯入自 [evachen0927/youtong](https://github.com/evachen0927/youtong) 的 `beta` 分支、commit `c42a8d3`。整合後調整導覽、本機狀態隔離、回報文案及現行研究計畫引用。
 
-## Entrances
+## 入口
 
-| Published path | Purpose |
+| 發布路徑 | 用途 |
 | --- | --- |
-| `/` | Equal entrances to the demo and research |
-| `/demo/` | Opens the pedestrian prototype |
-| `/demo/pedestrian.html` | Saved bin locations, walking navigation and local report simulation |
-| `/demo/planning.html` | Scenario comparison and historical research context |
-| `/demo/crew.html` | Assigned-bin list, optional location map and local amount reports |
-| `/research/` | Evidence, sources and the current decision plan |
+| `/` | 並列體驗與研究入口 |
+| `/demo/` | 開啟行人原型 |
+| `/demo/pedestrian.html` | 保存桶位、步行導航及本機回報模擬 |
+| `/demo/planning.html` | 情境比較與歷史研究脈絡 |
+| `/demo/crew.html` | 分派桶位清單、選用位置地圖及本機垃圾量回報 |
+| `/research/` | 證據、來源與現行決策計畫 |
 
-Build and serve from `sites/taipei-waste-lab`, using Python 3.12 or newer:
+以 Python 3.12 以上版本，在 `sites/taipei-waste-lab` 建置及提供預覽：
 
 ```sh
 python scripts/prepare-public.py
@@ -24,79 +21,35 @@ python scripts/prepare-portal.py
 python -m http.server 4186 --bind 127.0.0.1 --directory public
 ```
 
-The normal research `prepare-data` flow and `npm run check` also assemble this
-publication. Only the explicit runtime allowlist in `prepare-portal.py` is
-published. Source scripts, private research attachments, Firebase administration
-tools and test fixtures stay out of `public/`.
+正常研究 `prepare-data` 流程及 `npm run check` 也會組裝發布內容。僅發布 `prepare-portal.py` 明列的執行白名單；來源腳本、私人研究附件、Firebase 管理工具及測試資料不進入 `public/`。
 
-## Demo data boundary
+## 體驗資料界線
 
-- `CONFIG.demo` is true and `firebaseConfig` is empty. Cloud startup and queue
-  writes refuse demo mode, including test configuration overrides.
-- All state uses the `有桶demo_v1_` prefix. Existing `有桶_`, `有桶beta_`,
-  `有桶tcl_` and research keys are neither imported nor cleared.
-- Reports, needs and simulated collection records stay in the same browser.
-  Role tabs can share them through the existing local storage event flow.
-  Devices and browser profiles do not synchronize.
-- Reports do not notify an authority or create real dispatches. Confirmation
-  copy and the persistent demo notice state that boundary.
-- `?reset=1` clears only the demo prefix. It does not touch any remote database.
-- Maps and optional route/navigation services still use the network. Local-only
-  refers to demo reports and operational state, not to map-tile requests.
+- `CONFIG.demo` 為 true，`firebaseConfig` 為空。雲端啟動與佇列寫入拒絕體驗模式，包含測試設定覆寫。
+- 所有狀態採 `有桶demo_v1_` 前綴；既有 `有桶_`、`有桶beta_`、`有桶tcl_` 及研究鍵值均不匯入、不清除。
+- 回報、需求及模擬清運紀錄留在同一瀏覽器。角色分頁可透過既有本機儲存事件共用；不同裝置及瀏覽器設定檔不會同步。
+- 回報不通知主管機關，也不建立真實派遣。確認文案與持續顯示的體驗提示均說明此界線。
+- `?reset=1` 只清除體驗前綴，不接觸遠端資料庫。
+- 地圖及選用路線／導航服務仍使用網路。「僅限本機」指體驗回報及作業狀態，不包含圖磚請求。
 
-## Plan and research boundary
+## 計畫與研究界線
 
-`/demo/current-plan.json` is generated from the same canonical
-`topics/bins/research/decision-checks-2026-10-22/checks.json` used by the research
-site; the standalone source package uses its retained research copy. The
-publication records that source's SHA-256. No district quota or scheduled visits
-are authorized. The former 12-point / 72-visit schedule is no longer displayed.
-Old anchors and candidates remain historical context, never a current schedule.
-The complete current plan is linked at `/research/#plan`.
+`/demo/current-plan.json` 與研究站共用正式來源 `topics/bins/research/decision-checks-2026-10-22/checks.json`；獨立來源包使用保存的研究副本。發布內容記錄來源 SHA-256。不授權行政區配額或排定訪視，原 12 點／72 次訪視時程已不顯示。舊錨點與候選是歷史脈絡，不是現行時程。完整現行計畫連至 `/research/#plan`。
 
-A is the saved baseline. B1 changes information only. B2 is an additional
-capacity/frequency simulation, not a research finding. C simulates relocating one
-bin without increasing the count. Saving a scenario is a local demonstration,
-not approval to relocate a bin. Traffic activity is not observed waste volume;
-inventory rows are not verified usable facilities. Predicted fullness and crew
-order remain simulations.
+A 是保存基線。B1 僅改資訊。B2 是額外容量／頻率模擬，不是研究發現。C 模擬在不增總數下移動一桶。儲存情境是本機示範，不是移桶核准。交通活動不等於觀察垃圾量，清冊列也不是核實可用設施。滿載預測與清潔隊順序仍屬模擬。
 
-## Verification
+## 驗證
 
-The integrated Node tests cover publication boundaries, source identity, legacy
-research links, demo storage isolation and reset behavior. The browser check is
-`sites/taipei-waste-lab/scripts/check-portal-browser.cjs`; it exercises both
-desktop and mobile, report/undo, a crew tab, research links and zero Firebase
-requests. Set `PLAYWRIGHT_MODULE` and `CHROME_PATH` for your installed tooling.
+整合 Node 測試涵蓋發布界線、來源身分、舊研究連結、體驗儲存隔離與重設行為。瀏覽器檢查為 `sites/taipei-waste-lab/scripts/check-portal-browser.cjs`，涵蓋桌機／手機、回報／復原、清潔隊分頁、研究連結與零 Firebase 請求。依已安裝工具設定 `PLAYWRIGHT_MODULE` 與 `CHROME_PATH`。
 
-The imported Python recordings and cloud/emulator scripts remain upstream
-reference tools. They are not the acceptance suite for this local-only demo and
-must not be used to enable or clear the former live database.
+匯入的 Python 錄製與雲端／模擬器腳本保留為上游參考工具，不是本機體驗的驗收套件，不得用來啟用或清空原線上資料庫。
 
-## Current MVP requirements (2026-10-23)
+## 現行 MVP 需求（2026-10-23）
 
-The hundred-day plan and PRD v0.7 start with existing bin locations. The MVP
-requirements are pre-collection crew reports, reviewed configuration changes,
-and follow-up of both receiving and original service areas. This repository's
-current interactions remain a local demonstration; reporting fields, durable
-handoff, approval/execution states and comparable outcome review have not been
-accepted against v0.7. Full pedestrian navigation, prediction and automatic
-relocation are deferred from current MVP acceptance. See
-[the current plan](../taipei-waste-lab/dist/index.html#plan) and
-[PRD v0.7](../taipei-waste-lab/dist/index.html#spec).
+百日計畫與 PRD v0.7 從既有桶位開始。MVP 要求清運前回報、經審查的配置調整，以及接收區與原服務區的追蹤。目前儲存庫互動仍是本機示範；回報欄位、持久交接、核准／執行狀態及可比結果審查，尚未按 v0.7 驗收。完整行人導航、預測及自動移桶延後，不納入目前 MVP 驗收。見[現行計畫](../taipei-waste-lab/dist/index.html#plan)及 [PRD v0.7](../taipei-waste-lab/dist/index.html#spec)。
 
-## Assigned-bin reporting entry
+## 分派桶位回報入口
 
-The crew page opens a list of every street-inventory bin in the existing
-Gongguan–Daan demo bounds, in source inventory order. This is a demo assignment,
-not a confirmed staff roster or collection route. Forecast fullness, traffic
-activity, threshold settings and pedestrian reports never filter or reorder it.
-The map is optional and opens the same bin report as the list.
+清潔隊頁列出既有公館—大安體驗範圍內，全部街道清冊桶位，順序沿用來源。這是體驗分派，不是已確認人員名冊或清運路線。預測滿載、交通活動、門檻設定及行人回報均不篩選或重排清單。地圖為選用功能，開啟與清單相同的桶位回報。
 
-Today means the Asia/Taipei calendar day. Only retained crew amount reports
-count as reported; missing records, old route progress, pedestrian reports, and
-legacy completion events without an amount do not imply an empty or reported bin.
-Reload and same-browser tabs read the same local events. Undo recomputes status
-from any earlier report that remains. The existing amount action still also
-records simulated collection completion; separating those actions is a later
-product decision. Forecast and navigation remain secondary simulation controls.
+「今天」採 Asia/Taipei 曆日。只有保存的清潔隊垃圾量回報才算已回報；缺紀錄、舊路線進度、行人回報及沒有垃圾量的舊完成事件，都不代表空桶或已回報。重載與同瀏覽器分頁讀取相同本機事件。復原後，依仍保留的較早回報重新計算狀態。既有垃圾量操作仍同時記錄模擬清運完成；拆開兩者是後續產品決策。預測與導航維持次要模擬控制。

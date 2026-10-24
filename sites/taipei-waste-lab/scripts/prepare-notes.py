@@ -192,6 +192,13 @@ def resolve_source(name):
     raise FileNotFoundError(f'Missing content owner or note: {name}')
 
 
+def note_title(name):
+    """Use the canonical note heading, without a second title catalog."""
+    title = next((line[2:].strip() for line in resolve_source(name).read_text().splitlines()
+                  if line.startswith('# ')), Path(name).stem)
+    return re.sub(r'([\\\[\]|])', r'\\\1', title)
+
+
 def build():
     inventory = json.loads((ROOT / 'docs/website-notes.json').read_text())
     documents = {}
@@ -210,7 +217,7 @@ def build():
     if len(mapped) != len(set(mapped)) or panels != set(mapped):
         raise ValueError(f'Panel inventory drift: {panels.symmetric_difference(mapped)}')
 
-    outputs = {e['output'] for e in inventory if e.get('output')}
+    outputs = {e['output']: e['title'] for e in inventory if e.get('output')}
     for entry in inventory:
         if entry.get('reading') and entry['reading'] not in outputs:
             raise ValueError(f'Unknown reading note: {entry["reading"]}')
@@ -220,15 +227,19 @@ def build():
               '由 `npm run prepare-notes` 重建；`npm run check-notes` 檢查是否過期。', '',
               '既有筆記沿用原來源；缺少的完整正文由網站單向產生閱讀副本。修改下列正式來源後，先重建網站，再重建筆記。', '',
               '地圖篩選、3D 狀態與模擬操作保留在網站；筆記不推算互動結果。歷史草稿、未知與未執行狀態照原文保留。', '',
+              '筆記以繁體中文閱讀；來源檔名、命令、識別碼與原文書目保留原文。', '',
+              f'## 本次補齊的 {len(outputs)} 份筆記', '',
+              *[f'- [{title}]({name})' for name, title in outputs.items()], '',
+              '## 完整內容對應', '',
               '| 網站內容 | 原有對應程度 | 既有 Markdown | 補齊的閱讀副本 | 缺口與範圍 |',
               '| --- | --- | --- | --- | --- |']
     for entry in inventory:
         path = resolve_source(entry['page'])
         fragment = entry.get('selector', '')
         page_link = relative(path) + (fragment.replace('#panel-', '#') if fragment.startswith('#') else '')
-        notes = ' · '.join(f'[{Path(n).parent.name}/{Path(n).name}](<{relative(resolve_source(n))}>)'
+        notes = ' · '.join(f'[{note_title(n)}](<{relative(resolve_source(n))}>)'
                            for n in entry['notes']) or '—'
-        generated = (f'[{entry["reading"]}]({entry["reading"]})'
+        generated = (f'[{outputs[entry["reading"]]}]({entry["reading"]})'
                      if entry.get('reading') else '—')
         if entry.get('output'):
             name = entry['output']
@@ -247,7 +258,7 @@ def build():
             header += ['', f'讀取檔案 SHA-256：`{hashlib.sha256(path.read_bytes()).hexdigest()}`', '',
                        '---', '', body, '']
             files[name] = '\n'.join(header)
-            generated = f'[{name}]({name})'
+            generated = f'[{entry["title"]}]({name})'
         report.append(f'| [{entry["title"]}](<{page_link}>) | {entry["coverage"]} | {notes} | {generated} | {entry["reason"]} |')
     report += ['', f'共盤點 {len(panels)} 個研究區塊及 {len(inventory) - len(panels)} 個其他頁面／介面群組；補齊 {len(files)} 份自動產生的正文筆記。', '',
                '## 使用與公開範圍', '',
