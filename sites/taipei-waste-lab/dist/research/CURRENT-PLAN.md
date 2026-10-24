@@ -1,24 +1,10 @@
-# Current hundred-day planning authority
+# 現行百日計畫的正式依據
 
-Revision 2026-10-23: use `decision-checks-2026-10-22/checks.json` and its README.
-Initial configuration means existing bin locations, confirmed with participating
-crews and managers. The MVP is crew pre-collection reporting, reviewed
-configuration adjustment supported by activity/service overlays and a receiving
-location candidate table, and before/after follow-up of both receiving and
-original service areas. PRD v0.7 and the current plan are authored in
-`sites/taipei-waste-lab/dist/index.html`.
+2026-10-23 修訂：以 `decision-checks-2026-10-22/checks.json` 及其 README 為準。
+初始配置採既有垃圾桶位置，並與參與的清潔隊及管理者確認。MVP 範圍包括清運前回報、經審查的配置調整，以及接收區與原服務區的前後追蹤。配置調整以活動／服務疊圖及接收位置候選表輔助。PRD v0.7 與現行計畫的正式正文位於 `sites/taipei-waste-lab/dist/index.html`。
 
-Q01–Q04 remain conditional evidence checks when a decision needs them. They are
-not a mandatory schedule. Low fullness alone does not authorize relocation;
-receiving-area need, original-area service, comparable baseline, approval and
-rollback must be considered. No actual launch, field result or physical change
-has occurred through this revision.
+Q01–Q04 是決策需要時才啟用的條件式證據查核，不是強制時程。低滿載率本身不構成移桶依據；必須考慮接收區需求、原區服務、可比基線、核准及回復安排。截至本次修訂，沒有因此實際啟動服務、取得現勘成果或變更實體配置。
 
-The 2026-10-20 district-first priorities and citywide field schedule are
-superseded, unexecuted planning records. Preserve their numbers for historical
-reproduction; do not use them as the current workload, budget or completion goal.
-Research observations and original quantitative analysis remain unchanged.
+2026-10-20 的行政區優先順序與全市現勘時程，已由現行計畫取代，仍屬未執行的歷史規劃紀錄。保留原數字供重現，不得用作目前工作量、預算或完成目標。研究觀察與原始量化分析維持不變。
 
-The current schedule uses inauguration as day 0, preparation from day -45,
-and post-inauguration work through day 100. Pre-inauguration operational trials
-need management/crew agreement; earlier baselines require a comparability check.
+現行時程以市長就職為第 0 天，第 -45 天起準備，就職後工作至第 100 天。就職前的實務試行須取得管理者及清潔隊同意；沿用較早基線前，須先確認可比性。

@@ -1,95 +1,47 @@
-# Hundred-day plan and conditional evidence checks
+# 百日計畫與條件式證據查核
 
-Current revision: 2026-10-23. The user selected existing bin locations as the
-initial configuration and scoped the MVP to crew reporting, reviewed
-configuration adjustment, and before/after follow-up. This is a planning change,
-not a measured result, field deployment, or authorization to move physical bins.
+現行修訂日期：2026-10-23。使用者選擇以既有垃圾桶位置為初始配置，MVP 限於清潔隊回報、經審查的配置調整及前後追蹤。這是規劃變更，不是實測結果、實地部署或移動實體垃圾桶的授權。
 
-## Current plan
+## 現行計畫
 
-1. Confirm participating crews, existing bins and collection arrangements.
-   Retained inventories are source leads, not a complete verified live baseline.
-2. Record fullness and exceptions before collection, with observation time,
-   capacity and the last known collection time. Record collection completion
-   separately. Missing observations and unknown intervals never become empty bins.
-3. Review repeated, comparable observations before proposing a change. A low
-   fullness observation is not surplus capacity: check interval, capacity,
-   access, time-specific demand and original-area service. A receiving location
-   needs separate evidence of a disposal problem; traffic activity alone is not
-   sufficient. Retain no-change and further-check outcomes.
-4. Confirm management approval, collection ownership, actual implementation,
-   comparison windows and rollback before a small physical adjustment. Track
-   both receiving and original service areas, including where the bin was removed.
-5. Compare matched conditions and, where available, an unchanged reference.
-   Preserve missingness and confounders. Report retain, revise, revert or
-   insufficient evidence; do not equate sampled fullness with overflow duration.
+1. 確認參與清潔隊、既有垃圾桶及清運安排。保存清冊是來源線索，並非完整核實的現況基線。
+2. 在清運前記錄滿載程度及例外，並附觀察時間、容量與最近已知清運時間。清運完成另行記錄。缺少觀察或間隔未知，都不能當成空桶。
+3. 提議變更前，審查多次且可比的觀察。低滿載觀察不等於容量過剩：須查核間隔、容量、可及性、特定時段需求及原區服務。接收位置須有獨立的投放問題證據；交通活動本身不足。保留不變更與進一步查核的結果。
+4. 小規模實體調整前，確認管理核准、清運權責、實際執行、比較期間及回復安排。同步追蹤接收區與原服務區，包括移出垃圾桶的位置。
+5. 比較條件相符的觀察；若有未變更的參考區，納入比較。保留缺值及混淆因素。結果分為保留、修正、回復或證據不足；不得把抽樣滿載程度當成溢出持續時間。
 
-Before launch, agree on the participating inventory, reporting opportunities,
-minimum coverage, low-use/overflow rules, review windows, success/stop thresholds
-and owners. No invented percentage, bin quota or promised staff saving is set.
-Day 0 is the mayor's inauguration. Negative days are preparation before
-inauguration; positive days are the first 100 days afterward. Day -45 is a
-proposed preparation start, not a claimed actual start. The calendar date and
-role assignments are not yet fixed in this plan.
+啟動前，先議定參與清冊、可回報時機、最低覆蓋、低使用／溢出規則、審查期間、成功／停止門檻及負責者。不虛構百分比、桶數配額或節省人力的承諾。
+第 0 天為市長就職日；負數日為就職前準備，正數日為就職後前 100 天。第 -45 天是建議的準備起點，不代表已實際開始。本計畫尚未確定曆日與角色指派。
 
-| Days | Work and deliverable | Suggested owner (not yet assigned) |
+| 天數 | 工作與交付物 | 建議負責角色（尚未指派） |
 | --- | --- | --- |
-| -45 to -31 | Prepare existing-bin/service inventory and source gaps | Analyst and management contact |
-| -30 to -16 | Activity/service overlay; candidate table v1 on day -16 | Analyst |
-| -30 to -16 | Minimal prototype and simulated exercise; propose comparison/stop rules | Product and reviewer |
-| -15 to -1 | With current management/crew agreement, trial reporting and targeted candidate checks; initial baseline or gaps | Crews, manager and analyst |
-| 0 | Mayor takes office; timeline reference, not automatic operating permission | — |
-| 1–15 | Confirm handoff, roles, inventory and comparability of pre-inauguration data | Manager and crews |
-| 16–30 | Fill two-area baseline gaps and update candidates | Crews and follow-up owner |
-| 16–30 | Pair donors/receivers and compare alternatives; proposal on day 30 | Planner and reviewer |
-| 31–45 | Approve and execute eligible changes; actual record on day 45 | Manager and operator |
-| 46–90 | Track both areas from each actual change under agreed windows | Crews and follow-up owner |
-| 91–100 | Assess retain/revise/revert/insufficient evidence and hand off | Reviewer and manager |
+| -45 至 -31 | 準備既有桶位／服務清冊與來源缺口 | 分析者及管理窗口 |
+| -30 至 -16 | 活動／服務疊圖；第 -16 天提出候選表 v1 | 分析者 |
+| -30 至 -16 | 最小原型與模擬演練；提出比較／停止規則 | 產品及審查者 |
+| -15 至 -1 | 取得現任管理者／清潔隊同意後，試行回報及針對性候選查核；形成初始基線或缺口紀錄 | 清潔隊、管理者及分析者 |
+| 0 | 市長就職；是時程基準，不會自動取得作業許可 | — |
+| 1–15 | 確認交接、角色、清冊及就職前資料可比性 | 管理者及清潔隊 |
+| 16–30 | 補齊兩區基線缺口並更新候選 | 清潔隊及追蹤負責者 |
+| 16–30 | 配對移出／接收位置並比較替代方案；第 30 天提出提案 | 規劃者及審查者 |
+| 31–45 | 核准並執行符合條件的變更；第 45 天留下實際紀錄 | 管理者及執行者 |
+| 46–90 | 自各次實際變更起，按議定期間追蹤兩區 | 清潔隊及追蹤負責者 |
+| 91–100 | 評估保留／修正／回復／證據不足並交接 | 審查者及管理者 |
 
-Pre-inauguration operational records and crew participation require agreement;
-without it, stay with simulation and source preparation. Reporting continues
-through follow-up once actual trials start. Check the date, bin positions,
-collection and observation conditions before reusing an earlier baseline.
-Keep non-comparable periods separate and fill gaps before physical adjustments.
-Late candidates or changes delay comparison; never shorten an agreed window to
-meet day 100. Failed gates retain the current configuration.
+就職前作業紀錄與清潔隊參與須取得同意；未取得時，僅做模擬及來源準備。實際試行開始後，回報持續至追蹤階段。沿用較早基線前，確認日期、桶位、清運及觀察條件。不可比期間分開保留；實體調整前先補缺口。候選或變更延後時，比較也延後，不得為趕第 100 天而縮短議定期間。未通過條件時，維持現行配置。
 
-The receiving-location table is defined in `#plan-candidates`: candidate ID and
-version; road side/entrance and coordinate precision; activity source/date/unit
-and coverage; existing services/access/time; crew reports or separate disposal
-obstacles; reasons and counterevidence; feasibility/owner; donor pairing and
-original-area impact; two-area baseline/reference/windows; unknowns, reviewer
-and status. It starts with no invented candidate observations. Day -16 is a draft; day -1 is a reviewed list or an explicit gap record.
-Update the list on day 30; deferred and rejected locations remain visible.
-Retained July YouBike endpoints, MRT entries and bus locations remain distinct
-proxies; do not sum them into unique pedestrians or correlate them as concurrent
-with new crew reports. Source coverage gaps never imply no demand.
+接收位置候選表定義於 `#plan-candidates`，包含：候選 ID 與版本；道路側／入口及座標精度；活動來源／日期／單位與覆蓋；既有服務／可及性／時間；清潔隊回報或獨立投放障礙；理由與反證；可行性／權責；移出位置配對與原區影響；兩區基線／參考／比較期間；未知、審查者及狀態。不預填虛構的候選觀察。第 -16 天提出草稿；第 -1 天提出已審查清單或明確缺口紀錄。第 30 天更新，延後與否決位置仍保留可見。
+保存的 7 月 YouBike 端點、捷運進站與公車位置是不同代理指標，不得加總為不重複行人，也不得當作與新清潔隊回報同期而做關聯分析。來源覆蓋缺口不代表沒有需求。
 
-## Ownership and evidence
+## 內容權責與證據
 
-`checks.json` owns the current revision/status, initial-configuration and MVP
-scope metadata, plus the retained Q01–Q04 source-specific checks. Those checks
-are conditional supplements to the reporting loop, not the new primary workload.
-Their original evidence and null outcomes remain unchanged; `inputs.json`
-binds the retained source files. No agency contact, field findings, scheduled
-visits or approved installation is implied.
+`checks.json` 維護現行修訂／狀態、初始配置、MVP 範圍，以及保留的 Q01–Q04 來源別查核。這些查核是回報流程的條件式補充，不是新的主要工作量。原始證據與空值結果不變；`inputs.json` 綁定保存的來源檔。不得因此暗示已聯絡機關、取得現勘發現、排定訪視或核准設置。
 
-`build.py` renders the conditional checks and current relative schedule.
-`sites/taipei-waste-lab/dist/index.html` owns the current plan, PRD v0.7,
-coordination and handoff narrative. PRD v0.5 remains retrievable at repository
-commit `8cbc2b5e82d9977ba80392bc8f329d25c6ceabfa`; existing journey/basket forms
-remain optional evidence tools, not crew-reporting or follow-up deliverables.
+`build.py` 產生條件式查核及現行相對時程。`sites/taipei-waste-lab/dist/index.html` 維護現行計畫、PRD v0.7、協調及交接正文。PRD v0.5 仍可由儲存庫 commit `8cbc2b5e82d9977ba80392bc8f329d25c6ceabfa` 取得；既有旅程／車籃表單是選用證據工具，不是清潔隊回報或追蹤交付物。
 
-The existing demo remains a local simulation and has not passed v0.7 acceptance.
-Full pedestrian navigation, prediction, automatic relocation, smart hardware,
-citywide optimization and new-bin procurement are deferred from this MVP.
+既有體驗仍是本機模擬，尚未通過 v0.7 驗收。完整行人導航、預測、自動移桶、智慧硬體、全市最佳化及新桶採購，不納入本次 MVP 驗收。
 
-Historical district quotas, three waves, 234 visits and derived work estimates
-remain unexecuted history. Original research records, candidate indices, source
-dates and limitations remain intact. `#methods` and retained field links still
-open the hundred-day plan.
+歷史行政區配額、三波、234 次訪視及衍生工作估計，仍是未執行的歷史紀錄。原始研究紀錄、候選索引、來源日期及限制完整保留。`#methods` 與既有現勘連結仍開啟百日計畫。
 
-Rebuild with root `npm run build`, or run this folder's `build.py` from a
-standalone site. Run the decision-plan and affected site tests/checks.
+在根目錄執行 `npm run build` 重建；獨立網站則執行本目錄的 `build.py`。執行決策計畫及受影響網站的測試與檢查。
 
-Q05 (2026-10-23) adds worker phone-use, bin-route and staffing evidence before real app use. Its role hypothesis and research delivery are in `../crew-persona-2026-10-23/`; this builder renders them while retaining the existing day-0 inauguration timeline. No interviews or field outcomes are claimed.
+Q05（2026-10-23）要求在實際使用 App 前補足清潔人員手機使用、桶位路線與人力證據。角色假設及研究交付物位於 `../crew-persona-2026-10-23/`；此建置程式會產生其內容，並保留以就職日為第 0 天的既有時程。不宣稱已完成訪談或取得實地結果。

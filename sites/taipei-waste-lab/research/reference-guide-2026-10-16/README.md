@@ -1,23 +1,23 @@
-# Research reference guide
+# 研究參考導讀
 
-Prepared 2026-10-16; synthesis updated 2026-10-17 (Asia/Taipei) for the standalone waste site's `#research` page.
+於 2026-10-16 編製，2026-10-17 更新綜合判讀（Asia/Taipei），供獨立垃圾研究網站的 `#research` 頁面使用。
 
-`catalog.json` is the editorial input for six selected academic references, four practice records and three evidence-linked Taipei interpretations. Each record separates the source method and findings from this project's lesson, limitations and reading scope. These selections do not replace the thirteen preserved bibliography entries in `literature-2026-10-15`.
+`catalog.json` 是六篇選讀學術文獻、四項實務紀錄及三項附證據的臺北判讀之編輯來源。每筆分開說明來源方法與發現、本專案啟示、限制及閱讀範圍。這些選讀不取代 `literature-2026-10-15` 保存的十三筆完整書目。
 
-Primary publisher, university and official-government sources were consulted. The Copenhagen documents describe a new trial plan, not a completed effect estimate; the RFID case describes household food-waste operations, not evidence about anonymous street bins. No claim here establishes a Taipei intervention effect. Original full titles and citations are retained beside the shorter reading titles.
+已查閱出版者、大學及政府的一手來源。哥本哈根文件是新的試行計畫，不是已完成的效果估計；RFID 案例是家戶廚餘作業，不是匿名街頭垃圾桶的證據。本處不據此宣稱臺北介入成效。原文完整篇名與引用保留在短篇名旁。
 
-`sites/taipei-waste-lab/scripts/package-research.py` renders this catalog into the page during the normal root build and retains portable private source copies. The public runtime contains the reading page, not this JSON, research ZIP or downloadable attachments. The original service advice, paid-disposal conditions, budget assumptions, candidate tools and complete bibliography remain accessible in the page's expandable materials.
+`sites/taipei-waste-lab/scripts/package-research.py` 在正常根目錄建置時，將目錄產生為網頁，並保留可攜的私人來源副本。公開執行內容只包含閱讀頁，不含此 JSON、研究 ZIP 或可下載附件。原有服務建議、付費投放條件、預算假設、候選工具與完整書目，仍可由頁面展開材料閱讀。
 
-## Feedback integration, 2026-10-17
+## 留言分析整合（2026-10-17）
 
-The homepage now combines the existing public-record snapshot with the selected [garbage-related feedback analysis](../feedback-2026-10-17/README.md). Its 2,663 records describe this supplied file only. The observations are not a representative city survey, a stance tally, geocoded demand evidence, verified field conditions, or an intervention-effect estimate. No raw response text or anonymous identifiers are added to the publication.
+首頁整合既有公開紀錄快照與選取的[垃圾相關留言分析](../feedback-2026-10-17/README.md)。2,663 筆僅描述這份提供的檔案，不是具代表性的全市調查、立場票數、已定位需求證據、核實現況或介入效果估計。公開內容不新增原始留言全文或匿名識別碼。
 
-The three interpretations in `catalog.json` now connect the feedback to distinct questions:
+`catalog.json` 的三項判讀，將留言分別對應以下問題：
 
-| Research question | Feedback adds | Remaining gap | Next step |
+| 研究問題 | 留言提供的線索 | 仍缺少的證據 | 下一步 |
 | --- | --- | --- | --- |
-| Pedestrian access and siting | Difficulty finding bins coexists with opposition to bins near homes. | Event locations and times, actual access, bin condition, local demand, and street clearance remain unverified. | Clarify identifiable scenarios, compare existing service and walking routes, and retain addition, relocation, and no-change options until there is a baseline. |
-| Collection and maintenance | Overflow, pests, and possible household dumping are reported alongside requests to restore bins. | No linked collection, overflow, cleaning, waste-origin, or labor records establish these conditions or their causes. | Connect identifiable scenarios with management and collection records; verify capacity, cleaning and response before comparing extra equipment. |
-| Household collection | Work, shift schedules, and care arrangements may conflict with truck schedules. | Each household's lawful alternatives, access, intervention acceptance, and source-specific dumping remain unmeasured. | Compare available collection times and access with reported scenarios, then assess information, timing, receiving-point and paid-station options separately from pedestrian service. |
+| 行人可及性與設點 | 個別留言與可重建個人內容已因隱私移除。與反對住家附近設桶的陳述並存。 | 事件地點／時間、實際可及性、桶況、在地需求及街道淨寬仍未核實。 | 釐清可辨識情境，比較既有服務及步行路線；建立基線前，保留新增、移設及不變更選項。 |
+| 清運與維護 | 溢出、蟲鼠與可能的家戶棄置陳述，與恢復設桶要求並存。 | 尚無對應清運、溢出、清潔、垃圾來源或人力紀錄，足以確認狀況及原因。 | 將可辨識情境連到管理及清運紀錄；比較增加設備前，先確認容量、清潔及回應能力。 |
+| 家戶收運 | 工作、輪班與照顧安排可能和垃圾車時間衝突。 | 各家戶的合法替代方案、可及性、介入接受度與特定來源棄置仍未量測。 | 比較可用收運時間、可及性與陳述情境，再評估資訊、時間、收受點及付費站選項；與行人服務分開。 |
 
-The homepage explicitly asks for the missing collection period, recruitment process, selection rules and full feedback denominator, while retaining the existing official-register count discrepancy and field/operational gaps. Its next step is to prepare a checkable scenario list and establish a baseline. Fieldwork, user tasks and the hundred-day proposal remain unexecuted. District counts and literal keyword matches must not rank siting priorities or stand in for policy support.
+首頁明列尚缺的蒐集期間、招募過程、選取規則與完整留言分母，並保留官方清冊數量差異及現勘／作業缺口。下一步是準備可查核情境清單並建立基線。現勘、使用者任務與百日提案均未執行。行政區筆數與字面關鍵字命中，不得作為設點優先排序或政策支持度。
